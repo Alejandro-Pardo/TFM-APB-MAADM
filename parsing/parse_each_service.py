@@ -45,8 +45,8 @@ def scrape_api_details(url):
                 'methods_links': []
             },
             'paginators': {
-                'names': [],
-                'links': []
+                'paginators_names': [],
+                'paginators_links': []
             }
         }
     
@@ -74,8 +74,8 @@ def scrape_api_details(url):
             'methods_links': []
         },
         'paginators': {
-            'names': [],
-            'links': []
+            'paginators_names': [],
+            'paginators_links': []
         }
     }
     
@@ -124,8 +124,8 @@ def scrape_api_details(url):
                     elif not paginator_link.startswith('http'):
                         paginator_link = f"{url.rsplit('/', 1)[0]}/{paginator_link}"
                     
-                    result['paginators']['names'].append(paginator_name)
-                    result['paginators']['links'].append(paginator_link)
+                    result['paginators']['paginators_names'].append(paginator_name)
+                    result['paginators']['paginators_links'].append(paginator_link)
     
     return result
 
