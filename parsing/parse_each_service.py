@@ -168,6 +168,6 @@ def scrape_all_apis(input_file, output_folder):
     print(f"Scraped all API details and saved to individual files in {output_folder}")
 
 if __name__ == "__main__":
-    input_file = "aws_api_links.txt"
+    input_file = "TFM-APB-MAADM/aws_api_links.txt"
     output_folder = "TFM-APB-MAADM/parsing/services"
     scrape_all_apis(input_file, output_folder)
