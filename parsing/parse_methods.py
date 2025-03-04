@@ -480,7 +480,7 @@ class ServiceProcessor:
                     'file_path': method_output_path
                 })
             
-            # Be nice to the server and avoid rate limiting
+            # Avoid rate limiting
             time.sleep(0.5)
         
         # Create and save service summary
