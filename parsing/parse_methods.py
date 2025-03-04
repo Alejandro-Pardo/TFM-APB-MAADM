@@ -1,12 +1,11 @@
 import requests
-from bs4 import BeautifulSoup, Tag
 import json
 import os
 import re
-from tqdm import tqdm
 import time
-from urllib.parse import urljoin
 import html
+from tqdm import tqdm
+from bs4 import BeautifulSoup, Tag
 
 def scrape_method_details(method_url, method_name):
     """
@@ -113,16 +112,21 @@ def scrape_method_details(method_url, method_name):
             # Extract parameters from this UL
             result['parameters'] = extract_parameters_from_ul(params_ul)
     
-    # Extract return structure
-    returns_dt = dd_element.find('dt', class_='field-even')
-    if returns_dt and 'Returns' in returns_dt.text:
-        returns_dd = returns_dt.find_next('dd', class_='field-even')
+    # Extract return structure - specifically look for Returns, not Return type
+    returns_dt = None
+    for dt in dd_element.find_all('dt'):
+        if dt.text.strip() == 'Returns:':
+            returns_dt = dt
+            break
+
+    if returns_dt:
+        returns_dd = returns_dt.find_next('dd')
         if returns_dd:
             # Check if return is None
             if "None" in returns_dd.text and not returns_dd.find('h3', string=re.compile('Response Structure')):
-                result['return_structure'] = [{'type': None}]
+                result['return_structure'] = [{'type': 'None'}]
             else:
-                # Check if there's a "Response Structure" section
+                # Look for Response Structure section anywhere in the dd_element
                 response_structure_h3 = dd_element.find('h3', string=re.compile('Response Structure'))
                 
                 if response_structure_h3:
@@ -131,16 +135,16 @@ def scrape_method_details(method_url, method_name):
                     if response_ul:
                         result['return_structure'] = extract_return_structure(response_ul)
                 else:
-                    # If no Response Structure section, get the simple return description
+                    # Try alternate approach - look for return information in the text
                     return_p = returns_dd.find('p')
                     if return_p:
-                        clean_text = clean_description(return_p.text.strip())
+                        clean_text = (clean_description(return_p.text.strip()))
                         if clean_text.lower() == "none":
-                            result['return_structure'] = [{'type': None}]
+                            result['return_structure'] = [{'type': 'None'}]
                         else:
                             result['return_structure'] = [{'type': '', 'description': clean_text}]
-    
-    return result
+        
+        return result
 
 def extract_parameters(params_dd):
     """
@@ -332,9 +336,50 @@ def extract_parameter_info(li_element):
     sub_ul = li_element.find('ul')
     if sub_ul:
         for sub_li in sub_ul.find_all('li', recursive=False):
-            sub_param = extract_parameter_info(sub_li)
-            if sub_param:
-                param['nested_params'].append(sub_param)
+            # Check if this is just a dict type declaration
+            first_p = sub_li.find('p')
+            is_just_type = False
+            
+            if first_p and len(first_p.text.strip()) < 20 and '(dict)' in first_p.text:
+                # This is likely just a type declaration like "*(dict) –*"
+                is_just_type = True
+            
+            if is_just_type:
+                # Add a dict container with the right type
+                dict_param = {
+                    'name': '',
+                    'type': 'dict',
+                    'required': False,
+                    'description': '',
+                    'nested_params': []
+                }
+                
+                # Look for additional paragraphs that might contain description
+                next_elements = first_p.find_next_siblings()
+                for elem in next_elements:
+                    if elem.name == 'ul':
+                        # Stop at the next list which contains nested params
+                        break
+                    elif elem.name == 'p':
+                        # Add this paragraph to the description
+                        if elem.text.strip():
+                            if dict_param['description']:
+                                dict_param_description = re.sub(r'^[a-zA-Z0-9_]+ \([^)]+\)\s*-?\s*', '', elem.text.strip())
+                                dict_param['description'] += ' ' + clean_description(dict_param_description)
+                            else:
+                                dict_param_description = re.sub(r'^[a-zA-Z0-9_]+ \([^)]+\)\s*-?\s*', '', elem.text.strip())
+                                dict_param['description'] = clean_description(dict_param_description)
+                
+                # Find any sub-elements for this dict
+                dict_ul = sub_li.find('ul')
+                if dict_ul:
+                    # Extract the actual parameters from this list
+                    for dict_li in dict_ul.find_all('li', recursive=False):
+                        sub_param = extract_parameter_info(dict_li)
+                        if sub_param:
+                            dict_param['nested_params'].append(sub_param)
+                
+                param['nested_params'].append(dict_param)
     
     return param
 
@@ -363,24 +408,37 @@ def extract_return_structure(ul_element):
         if type_match:
             item['type'] = type_match.group(1).strip()
         
-        # Extract description from the first paragraph
-        main_p = li.find('p')
-        if main_p:
-            # Full text
-            text = main_p.text.strip()
-            
-            # Try to extract name if it's in the description
-            name_match = re.search(r'\*\*([^*]+)\*\*', text)
-            if name_match:
-                item['name'] = name_match.group(1).strip()
-            
-            # Clean up the description text
-            item['description'] = clean_description(text)
+        # Get the first paragraph to check if it's just a type declaration
+        first_p = li.find('p')
+        is_just_type = False
         
-        # Process nested items
-        sub_ul = li.find('ul')
-        if sub_ul:
-            item['nested_items'] = extract_return_structure(sub_ul)
+        if first_p and len(first_p.text.strip()) < 20 and '(dict)' in first_p.text:
+            # This is likely just a type declaration like "*(dict) –*"
+            is_just_type = True
+            
+        # Try to extract name from strong tag if present, but only if not just a type
+        if not is_just_type:
+            strong_tag = li.find('strong')
+            if strong_tag:
+                item['name'] = strong_tag.text.strip()
+        
+        # Extract description from paragraph only if not just a type
+        if not is_just_type:
+            p_tags = li.find_all('p')
+            if p_tags:
+                # Use the paragraph after the strong tag (if any)
+                for p in p_tags:
+                    if not p.find('strong') or p.find('strong') != strong_tag:
+                        desc_text = clean_description(p.text.strip())
+                        # Clean up the description
+                        desc_text = re.sub(r'^\([^)]+\)\s*–\s*', '', desc_text)
+                        item['description'] = desc_text
+                        break
+        
+        # Process nested items if present
+        nested_ul = li.find('ul')
+        if nested_ul:
+            item['nested_items'] = extract_return_structure(nested_ul)
         
         structure.append(item)
     
@@ -432,7 +490,11 @@ def process_service_file(service_file_path, output_folder):
     # Process each method
     service_methods = []
     
-    for i, (method_name, method_url) in enumerate(zip(methods, method_links)):
+    # Use tqdm to show progress for methods within this service
+    for i, (method_name, method_url) in enumerate(tqdm(list(zip(methods, method_links)), 
+                                                    desc=f"Methods for {service_name}",
+                                                    leave=False)):
+        
         print(f"  Scraping method {i+1}/{len(methods)}: {method_name}")
         
         # Scrape method details
