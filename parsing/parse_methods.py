@@ -124,7 +124,7 @@ def scrape_method_details(method_url, method_name):
         if returns_dd:
             # Check if return is None
             if "None" in returns_dd.text and not returns_dd.find('h3', string=re.compile('Response Structure')):
-                result['return_structure'] = [{'type': 'None'}]
+                result['return_structure'] = [{'type': None}]
             else:
                 # Look for Response Structure section anywhere in the dd_element
                 response_structure_h3 = dd_element.find('h3', string=re.compile('Response Structure'))
@@ -140,7 +140,7 @@ def scrape_method_details(method_url, method_name):
                     if return_p:
                         clean_text = (clean_description(return_p.text.strip()))
                         if clean_text.lower() == "none":
-                            result['return_structure'] = [{'type': 'None'}]
+                            result['return_structure'] = [{'type': None}]
                         else:
                             result['return_structure'] = [{'type': '', 'description': clean_text}]
         
@@ -321,6 +321,10 @@ def extract_parameter_info(li_element):
     
     # Extract and clean description
     description_parts = []
+
+    admonition_notes = li_element.find_all('div', class_='admonition note')
+    for note in admonition_notes:
+        note.decompose()  # Remove it from the DOM
     
     for p in li_element.find_all('p'):
         text = p.text.strip()
@@ -396,6 +400,19 @@ def extract_return_structure(ul_element):
     structure = []
     
     for li in ul_element.find_all('li', recursive=False):
+        item = {
+            'name': '',
+            'type': '',
+            'description': '',
+            'nested_items': []
+        }
+        
+        li_copy = BeautifulSoup(str(li), 'html.parser')
+        
+        # Remove admonition notes from the copy
+        for note in li_copy.find_all('div', class_='admonition note'):
+            note.decompose()
+            
         item = {
             'name': '',
             'type': '',
@@ -495,7 +512,6 @@ def process_service_file(service_file_path, output_folder):
                                                     desc=f"Methods for {service_name}",
                                                     leave=False)):
         
-        print(f"  Scraping method {i+1}/{len(methods)}: {method_name}")
         
         # Scrape method details
         method_details = scrape_method_details(method_url, method_name)
@@ -581,9 +597,9 @@ if __name__ == "__main__":
     output_folder = "TFM-APB-MAADM/parsing/methods"
     
     # For testing with a single file, uncomment these lines:
-    # service_file = "AccessAnalyzer.json"
-    # service_file_path = os.path.join(services_folder, service_file)
-    # process_service_file(service_file_path, output_folder)
+    service_file = "AccessAnalyzer.json"
+    service_file_path = os.path.join(services_folder, service_file)
+    process_service_file(service_file_path, output_folder)
     
     # For processing all services:
-    process_all_services(services_folder, output_folder)
+    #process_all_services(services_folder, output_folder)
