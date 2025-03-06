@@ -34,15 +34,13 @@ class DescriptionCleaner:
         Returns:
             str: Cleaned description text
         """
-        # Remove any remaining note patterns that might have been incorporated in text
-        text = re.sub(r'Note\s*This is a Tagged Union structure\..*?set:', '', text, flags=re.DOTALL)
-        text = re.sub(r'Note\s*Only one of the.*?can be set:', '', text, flags=re.DOTALL)
-        
         # Decode HTML entities
         text = html.unescape(text)
         
         # Fix specific problematic Unicode sequences
         text = text.replace('\u00e2\u0080\u0099', "'")
+        text = text.replace('\u00e2\u0080\u009c', "'")
+        text = text.replace('\u00e2\u0080\u009d', "'")
         text = re.sub(r'[\u00e2\u0080\u0093–—]', '-', text)
         
         # Fix common patterns of duplication
