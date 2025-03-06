@@ -8,6 +8,18 @@ from tqdm import tqdm
 from bs4 import BeautifulSoup, Tag
 
 
+def preprocess_html(html_content):
+    """Pre-process the HTML to remove all admonition notes before parsing."""
+    soup = BeautifulSoup(html_content, 'html.parser')
+    
+    # Find and remove all admonition notes
+    admonition_notes = soup.find_all('div', class_='admonition')
+    for note in admonition_notes:
+        note.extract()
+    
+    return str(soup)
+
+
 class DescriptionCleaner:
     """Utility class for cleaning and formatting description text."""
     
@@ -22,6 +34,10 @@ class DescriptionCleaner:
         Returns:
             str: Cleaned description text
         """
+        # Remove any remaining note patterns that might have been incorporated in text
+        text = re.sub(r'Note\s*This is a Tagged Union structure\..*?set:', '', text, flags=re.DOTALL)
+        text = re.sub(r'Note\s*Only one of the.*?can be set:', '', text, flags=re.DOTALL)
+        
         # Decode HTML entities
         text = html.unescape(text)
         
@@ -84,8 +100,11 @@ class MethodParser:
         if not response:
             return None
         
-        # Parse the HTML content
-        soup = BeautifulSoup(response.text, 'html.parser')
+        # Preprocess HTML to remove admonition notes
+        preprocessed_html = preprocess_html(response.text)
+        
+        # Parse the preprocessed HTML content
+        soup = BeautifulSoup(preprocessed_html, 'html.parser')
         
         # Find the main article and method section
         main_article = soup.find('article', attrs={'role': 'main'})
@@ -235,17 +254,103 @@ class MethodParser:
             return self.description_cleaner.clean(' '.join(description_parts))
         return ''
     
-    def _extract_parameters_from_ul(self, ul_element):
-        """Extract parameters from an unordered list element."""
+    def _extract_parameters_from_ul(self, ul_element, depth=0):
+        """Extract parameters from an unordered list element with proper depth tracking."""
         parameters = []
         
-        # Process each list item (parameter)
         for li in ul_element.find_all('li', recursive=False):
-            param_info = self._extract_parameter_info(li)
-            if param_info:
-                parameters.append(param_info)
+            first_p = li.find('p')
+            if first_p and first_p.find('em'):
+                # Check if this is a type declaration for a parent parameter (e.g., "(dict)")
+                type_match = re.search(r'\(([^)]+)\)', first_p.text)
+                if type_match:
+                    param_type = type_match.group(1).strip()
+                    # Check if there's a parent parameter name (strong tag)
+                    strong_tag = first_p.find('strong')
+                    if strong_tag:
+                        # This is a named parameter with type (e.g., "configurations (dict)")
+                        param_name = strong_tag.text.strip('*')
+                        param = self._create_basic_param(param_name)
+                        param['type'] = param_type
+                        # Extract description from subsequent elements
+                        desc_parts = []
+                        for elem in first_p.next_siblings:
+                            if isinstance(elem, Tag):
+                                if elem.name == 'ul':
+                                    break  # Stop at nested list
+                                if elem.name == 'p' and not elem.find('strong'):
+                                    desc_parts.append(elem.text.strip())
+                        param['description'] = self.description_cleaner.clean(' '.join(desc_parts))
+                        # Process nested ULs for this parameter
+                        nested_ul = li.find('ul')
+                        if nested_ul:
+                            param['nested_params'] = self._extract_parameters_from_ul(nested_ul, depth + 1)
+                        parameters.append(param)
+                    else:
+                        # This is a standalone type declaration (e.g., "(string)"), process nested ULs
+                        nested_ul = li.find('ul')
+                        if nested_ul:
+                            parameters.extend(self._extract_parameters_from_ul(nested_ul, depth))
+                else:
+                    # Regular parameter extraction
+                    param_info = self._extract_parameter_info(li)
+                    if param_info:
+                        parameters.append(param_info)
+            else:
+                # Regular parameter extraction
+                param_info = self._extract_parameter_info(li)
+                if param_info:
+                    parameters.append(param_info)
         
         return parameters
+
+    def _extract_parameter_info(self, li_element):
+        """Extract parameter information from a list item."""
+        # Find all paragraphs in the list item
+        paragraphs = li_element.find_all('p')
+        if not paragraphs:
+            return None
+        
+        # First paragraph should contain the parameter name
+        main_p = paragraphs[0]
+        strong_tag = main_p.find('strong')
+        if not strong_tag:
+            return None
+        
+        param = self._create_basic_param(strong_tag.text.strip('*'))
+        
+        # Extract type from the main paragraph
+        type_match = re.search(r'\(([^)]+)\)', main_p.text)
+        if type_match:
+            param['type'] = type_match.group(1).strip()
+        
+        # Check if required - look through all paragraphs
+        for p in paragraphs:
+            if '[REQUIRED]' in p.text:
+                param['required'] = True
+                break
+        
+        # Extract description - look for paragraphs after the parameter name and [REQUIRED] ones
+        desc_parts = []
+        for p in paragraphs:
+            # Skip the parameter name paragraph and [REQUIRED] paragraphs
+            if p == main_p or '[REQUIRED]' in p.text:
+                continue
+            
+            # Add this paragraph text to description
+            desc_text = p.text.strip()
+            if desc_text:
+                desc_parts.append(desc_text)
+        
+        if desc_parts:
+            param['description'] = self.description_cleaner.clean(' '.join(desc_parts))
+        
+        # Process nested parameters
+        nested_ul = li_element.find('ul')
+        if nested_ul:
+            param['nested_params'] = self._extract_parameters_from_ul(nested_ul)
+        
+        return param
     
     def _create_basic_param(self, name):
         """Create a basic parameter dictionary."""
@@ -257,76 +362,6 @@ class MethodParser:
             'nested_params': []
         }
     
-    def _extract_parameter_info(self, li_element):
-        """Extract parameter information from a list item."""
-        # Find the main parameter description
-        main_p = li_element.find('p')
-        if not main_p:
-            return None
-        
-        # Extract parameter name and type
-        strong_tag = main_p.find('strong')
-        if not strong_tag:
-            return None
-            
-        param = self._create_basic_param(strong_tag.text.strip('*'))
-        
-        # Extract parameter type
-        type_match = re.search(r'\(([^)]+)\)', main_p.text)
-        if type_match:
-            param['type'] = type_match.group(1).strip()
-        
-        # Check if parameter is required
-        if li_element.find(string=re.compile(r'\[REQUIRED\]', re.IGNORECASE)):
-            param['required'] = True
-        
-        # Extract and clean description
-        description_parts = []
-        for p in li_element.find_all('p'):
-            text = p.text.strip()
-            if text:
-                description_parts.append(text)
-        
-        if description_parts:
-            param['description'] = self.description_cleaner.clean(' '.join(description_parts))
-        
-        # Check for nested parameters (sub-lists)
-        self._process_nested_parameters(li_element, param)
-        
-        return param
-    
-    def _process_nested_parameters(self, li_element, param):
-        """Process nested parameters in a parameter list item."""
-        sub_ul = li_element.find('ul')
-        if not sub_ul:
-            return
-            
-        for sub_li in sub_ul.find_all('li', recursive=False):
-            first_p = sub_li.find('p')
-            is_just_type = first_p and len(first_p.text.strip()) < 20 and '(dict)' in first_p.text
-            
-            if is_just_type:
-                # Add a dict container with the right type
-                dict_param = self._create_basic_param('')
-                dict_param['type'] = 'dict'
-                
-                # Look for additional paragraphs that might contain description
-                for elem in first_p.find_next_siblings():
-                    if elem.name == 'ul':
-                        break
-                    elif elem.name == 'p' and elem.text.strip():
-                        desc_text = self.description_cleaner.clean(re.sub(r'^[a-zA-Z0-9_]+ \([^)]+\)\s*-?\s*', '', elem.text.strip()))
-                        dict_param['description'] = desc_text if not dict_param['description'] else f"{dict_param['description']} {desc_text}"
-                
-                # Find any sub-elements for this dict
-                dict_ul = sub_li.find('ul')
-                if dict_ul:
-                    for dict_li in dict_ul.find_all('li', recursive=False):
-                        sub_param = self._extract_parameter_info(dict_li)
-                        if sub_param:
-                            dict_param['nested_params'].append(sub_param)
-                
-                param['nested_params'].append(dict_param)
     
     def _extract_return_section(self, dd_element):
         """Extract the return structure section from the method details."""
@@ -480,7 +515,7 @@ class ServiceProcessor:
                     'file_path': method_output_path
                 })
             
-            # Avoid rate limiting
+            # Be nice to the server and avoid rate limiting
             time.sleep(0.5)
         
         # Create and save service summary
