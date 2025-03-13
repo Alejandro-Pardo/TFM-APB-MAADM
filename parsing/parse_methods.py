@@ -286,6 +286,21 @@ class MethodParser:
                         parameters.append(param)
                     else:
                         # This is a standalone type declaration (e.g., "(string)"), process nested ULs
+                        """                     
+                        param_name = param_type
+                        param = self._create_basic_param(param_name)
+                        param['type'] = param_type
+                        desc_parts = []
+                        for elem in first_p.next_siblings:
+                            if isinstance(elem, Tag):
+                                if elem.name == 'ul':
+                                    break
+                                if elem.name == 'p':
+                                    desc_parts.append(elem.text.strip())
+                        param['description'] = self.description_cleaner.clean(' '.join(desc_parts))
+                        nested_ul = li.find('ul')
+                        if nested_ul:
+                            parameters.extend(self._extract_parameters_from_ul(nested_ul, depth))  """      
                         nested_ul = li.find('ul')
                         if nested_ul:
                             parameters.extend(self._extract_parameters_from_ul(nested_ul, depth))
@@ -604,12 +619,12 @@ def main():
     processor = ServiceProcessor(services_folder, output_folder)
     
     # For testing with a single file
-    service_file = "AccessAnalyzer.json"
-    service_file_path = os.path.join(services_folder, service_file)
-    processor.process_service_file(service_file_path)
+    #service_file = "AccessAnalyzer.json"
+    #service_file_path = os.path.join(services_folder, service_file)
+    #processor.process_service_file(service_file_path)
     
     # For processing all services (uncomment to use):
-    # processor.process_all_services()
+    processor.process_all_services()
 
 
 if __name__ == "__main__":

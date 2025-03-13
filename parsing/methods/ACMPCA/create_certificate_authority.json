@@ -1,0 +1,553 @@
+{
+  "method_name": "create_certificate_authority",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/acm-pca/client/create_certificate_authority.html",
+  "description": "Creates a root or subordinate private certificate authority (CA). You must specify the CA configuration, an optional configuration for Online Certificate Status Protocol (OCSP) and/or a certificate revocation list (CRL), the CA type, and an optional idempotency token to avoid accidental creation of multiple CAs. The CA configuration specifies the name of the algorithm and key size to be used to create the CA private key, the type of signing algorithm that the CA uses, and X.500 subject information. The OCSP configuration can optionally specify a custom URL for the OCSP responder. The CRL configuration specifies the CRL expiration period in days (the validity period of the CRL), the Amazon S3 bucket that will contain the CRL, and a CNAME alias for the S3 bucket that is included in certificates issued by the CA. If successful, this action returns the Amazon Resource Name (ARN) of the CA. Amazon Web Services Private CA assets that are stored in Amazon S3 can be protected with encryption. For more information, see Encrypting Your CRLs.",
+  "parameters": [
+    {
+      "name": "CertificateAuthorityConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Name and bit size of the private key algorithm, the name of the signing algorithm, and X.500 certificate subject information. Type of the public key algorithm and size, in bits, of the key pair that your CA creates when it issues a certificate. When you create a subordinate CA, you must use a key algorithm supported by the parent CA. Name of the algorithm your private CA uses to sign certificate requests. This parameter should not be confused with the SigningAlgorithm parameter used to sign certificates when they are issued. Structure that contains X.500 distinguished name information for your private CA. Country (string) --- Two-digit code that specifies the country in which the certificate subject located. Organization (string) --- Legal name of the organization with which the certificate subject is affiliated. OrganizationalUnit (string) --- A subdivision or unit of the organization (such as sales or finance) with which the certificate subject is affiliated. DistinguishedNameQualifier (string) --- Disambiguating information for the certificate subject. State (string) --- State in which the subject of the certificate is located. CommonName (string) --- For CA and end-entity certificates in a private PKI, the common name (CN) can be any string within the length limit. Note: In publicly trusted certificates, the common name must be a fully qualified domain name (FQDN) associated with the certificate subject. SerialNumber (string) --- The certificate serial number. Locality (string) --- The locality (such as a city or town) in which the certificate subject is located. Title (string) --- A title such as Mr. or Ms., which is pre-pended to the name to refer formally to the certificate subject. Surname (string) --- Family name. In the US and the UK, for example, the surname of an individual is ordered last. In Asian cultures the surname is typically ordered first. GivenName (string) --- First name. Initials (string) --- Concatenation that typically contains the first letter of the GivenName, the first letter of the middle name if one exists, and the first letter of the Surname. Pseudonym (string) --- Typically a shortened version of a longer GivenName. For example, Jonathan is often shortened to John. Elizabeth is often shortened to Beth, Liz, or Eliza. GenerationQualifier (string) --- Typically a qualifier appended to the name of an individual. Examples include Jr. for junior, Sr. for senior, and III for third. CustomAttributes (list) --- Contains a sequence of one or more X.500 relative distinguished names (RDNs), each of which consists of an object identifier (OID) and a value. For more information, see NIST's definition of Object Identifier (OID). (dict) --- Defines the X.500 relative distinguished name (RDN). Specifies the object identifier (OID) of the attribute type of the relative distinguished name (RDN). Specifies the attribute value of relative distinguished name (RDN). CsrExtensions (dict) --- Specifies information to be added to the extension section of the certificate signing request (CSR). KeyUsage (dict) --- Indicates the purpose of the certificate and of the key contained in the certificate. DigitalSignature (boolean) --- Key can be used for digital signing. NonRepudiation (boolean) --- Key can be used for non-repudiation. KeyEncipherment (boolean) --- Key can be used to encipher data. DataEncipherment (boolean) --- Key can be used to decipher data. KeyAgreement (boolean) --- Key can be used in a key-agreement protocol. KeyCertSign (boolean) --- Key can be used to sign certificates. CRLSign (boolean) --- Key can be used to sign CRLs. EncipherOnly (boolean) --- Key can be used only to encipher data. DecipherOnly (boolean) --- Key can be used only to decipher data. SubjectInformationAccess (list) --- For CA certificates, provides a path to additional information pertaining to the CA, such as revocation and policy. For more information, see Subject Information Access in RFC 5280. (dict) --- Provides access information used by the authorityInfoAccess and subjectInfoAccess extensions described in RFC 5280. The type and format of AccessDescription information. CustomObjectIdentifier (string) --- An object identifier (OID) specifying the AccessMethod. The OID must satisfy the regular expression shown below. AccessMethodType (string) --- Specifies the AccessMethod. The location of AccessDescription information. OtherName (dict) --- Represents GeneralName using an OtherName object. Specifies an OID. Specifies an OID value. Rfc822Name (string) --- Represents GeneralName as an RFC 822 email address. DnsName (string) --- Represents GeneralName as a DNS name. DirectoryName (dict) --- Contains information about the certificate subject. The Subject field in the certificate identifies the entity that owns or controls the public key in the certificate. The entity can be a user, computer, device, or service. The ``Subject ``must contain an X.500 distinguished name (DN). A DN is a sequence of relative distinguished names (RDNs). The RDNs are separated by commas in the certificate. EdiPartyName (dict) --- Represents GeneralName as an EdiPartyName object. Specifies the party name. NameAssigner (string) --- Specifies the name assigner. UniformResourceIdentifier (string) --- Represents GeneralName as a URI. IpAddress (string) --- Represents GeneralName as an IPv4 or IPv6 address. RegisteredId (string) --- Represents GeneralName as an object identifier (OID).",
+      "nested_params": [
+        {
+          "name": "KeyAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "Type of the public key algorithm and size, in bits, of the key pair that your CA creates when it issues a certificate. When you create a subordinate CA, you must use a key algorithm supported by the parent CA.",
+          "nested_params": []
+        },
+        {
+          "name": "SigningAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "Name of the algorithm your private CA uses to sign certificate requests. This parameter should not be confused with the SigningAlgorithm parameter used to sign certificates when they are issued.",
+          "nested_params": []
+        },
+        {
+          "name": "Subject",
+          "type": "dict",
+          "required": false,
+          "description": "Structure that contains X.500 distinguished name information for your private CA.",
+          "nested_params": [
+            {
+              "name": "Country",
+              "type": "string",
+              "required": false,
+              "description": "Two-digit code that specifies the country in which the certificate subject located.",
+              "nested_params": []
+            },
+            {
+              "name": "Organization",
+              "type": "string",
+              "required": false,
+              "description": "Legal name of the organization with which the certificate subject is affiliated.",
+              "nested_params": []
+            },
+            {
+              "name": "OrganizationalUnit",
+              "type": "string",
+              "required": false,
+              "description": "A subdivision or unit of the organization (such as sales or finance) with which the certificate subject is affiliated.",
+              "nested_params": []
+            },
+            {
+              "name": "DistinguishedNameQualifier",
+              "type": "string",
+              "required": false,
+              "description": "Disambiguating information for the certificate subject.",
+              "nested_params": []
+            },
+            {
+              "name": "State",
+              "type": "string",
+              "required": false,
+              "description": "State in which the subject of the certificate is located.",
+              "nested_params": []
+            },
+            {
+              "name": "CommonName",
+              "type": "string",
+              "required": false,
+              "description": "For CA and end-entity certificates in a private PKI, the common name (CN) can be any string within the length limit. Note: In publicly trusted certificates, the common name must be a fully qualified domain name (FQDN) associated with the certificate subject.",
+              "nested_params": []
+            },
+            {
+              "name": "SerialNumber",
+              "type": "string",
+              "required": false,
+              "description": "The certificate serial number.",
+              "nested_params": []
+            },
+            {
+              "name": "Locality",
+              "type": "string",
+              "required": false,
+              "description": "The locality (such as a city or town) in which the certificate subject is located.",
+              "nested_params": []
+            },
+            {
+              "name": "Title",
+              "type": "string",
+              "required": false,
+              "description": "A title such as Mr. or Ms., which is pre-pended to the name to refer formally to the certificate subject.",
+              "nested_params": []
+            },
+            {
+              "name": "Surname",
+              "type": "string",
+              "required": false,
+              "description": "Family name. In the US and the UK, for example, the surname of an individual is ordered last. In Asian cultures the surname is typically ordered first.",
+              "nested_params": []
+            },
+            {
+              "name": "GivenName",
+              "type": "string",
+              "required": false,
+              "description": "First name.",
+              "nested_params": []
+            },
+            {
+              "name": "Initials",
+              "type": "string",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "Pseudonym",
+              "type": "string",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "GenerationQualifier",
+              "type": "string",
+              "required": false,
+              "description": "Typically a qualifier appended to the name of an individual. Examples include Jr. for junior, Sr. for senior, and III for third.",
+              "nested_params": []
+            },
+            {
+              "name": "CustomAttributes",
+              "type": "list",
+              "required": false,
+              "description": "Contains a sequence of one or more X.500 relative distinguished names (RDNs), each of which consists of an object identifier (OID) and a value. For more information, see NIST's definition of Object Identifier (OID).",
+              "nested_params": [
+                {
+                  "name": "ObjectIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the object identifier (OID) of the attribute type of the relative distinguished name (RDN).",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the attribute value of relative distinguished name (RDN).",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CsrExtensions",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies information to be added to the extension section of the certificate signing request (CSR).",
+          "nested_params": [
+            {
+              "name": "KeyUsage",
+              "type": "dict",
+              "required": false,
+              "description": "Indicates the purpose of the certificate and of the key contained in the certificate.",
+              "nested_params": [
+                {
+                  "name": "DigitalSignature",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used for digital signing.",
+                  "nested_params": []
+                },
+                {
+                  "name": "NonRepudiation",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used for non-repudiation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyEncipherment",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used to encipher data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DataEncipherment",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used to decipher data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAgreement",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used in a key-agreement protocol.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyCertSign",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used to sign certificates.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CRLSign",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used to sign CRLs.",
+                  "nested_params": []
+                },
+                {
+                  "name": "EncipherOnly",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used only to encipher data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DecipherOnly",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Key can be used only to decipher data.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "SubjectInformationAccess",
+              "type": "list",
+              "required": false,
+              "description": "For CA certificates, provides a path to additional information pertaining to the CA, such as revocation and policy. For more information, see Subject Information Access in RFC 5280.",
+              "nested_params": [
+                {
+                  "name": "AccessMethod",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The type and format of AccessDescription information.",
+                  "nested_params": [
+                    {
+                      "name": "CustomObjectIdentifier",
+                      "type": "string",
+                      "required": false,
+                      "description": "An object identifier (OID) specifying the AccessMethod. The OID must satisfy the regular expression shown below. For more information, see NIST's definition of Object Identifier (OID).",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AccessMethodType",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the AccessMethod.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AccessLocation",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The location of AccessDescription information.",
+                  "nested_params": [
+                    {
+                      "name": "OtherName",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Represents GeneralName using an OtherName object.",
+                      "nested_params": [
+                        {
+                          "name": "TypeId",
+                          "type": "string",
+                          "required": false,
+                          "description": "Specifies an OID.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "required": false,
+                          "description": "Specifies an OID value.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Rfc822Name",
+                      "type": "string",
+                      "required": false,
+                      "description": "Represents GeneralName as an RFC 822 email address.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DnsName",
+                      "type": "string",
+                      "required": false,
+                      "description": "Represents GeneralName as a DNS name.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DirectoryName",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Contains information about the certificate subject. The Subject field in the certificate identifies the entity that owns or controls the public key in the certificate. The entity can be a user, computer, device, or service. The ``Subject ``must contain an X.500 distinguished name (DN). A DN is a sequence of relative distinguished names (RDNs). The RDNs are separated by commas in the certificate.",
+                      "nested_params": [
+                        {
+                          "name": "Country",
+                          "type": "string",
+                          "required": false,
+                          "description": "Two-digit code that specifies the country in which the certificate subject located.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Organization",
+                          "type": "string",
+                          "required": false,
+                          "description": "Legal name of the organization with which the certificate subject is affiliated.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "OrganizationalUnit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A subdivision or unit of the organization (such as sales or finance) with which the certificate subject is affiliated.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "DistinguishedNameQualifier",
+                          "type": "string",
+                          "required": false,
+                          "description": "Disambiguating information for the certificate subject.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "State",
+                          "type": "string",
+                          "required": false,
+                          "description": "State in which the subject of the certificate is located.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CommonName",
+                          "type": "string",
+                          "required": false,
+                          "description": "For CA and end-entity certificates in a private PKI, the common name (CN) can be any string within the length limit. Note: In publicly trusted certificates, the common name must be a fully qualified domain name (FQDN) associated with the certificate subject.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "SerialNumber",
+                          "type": "string",
+                          "required": false,
+                          "description": "The certificate serial number.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Locality",
+                          "type": "string",
+                          "required": false,
+                          "description": "The locality (such as a city or town) in which the certificate subject is located.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Title",
+                          "type": "string",
+                          "required": false,
+                          "description": "A title such as Mr. or Ms., which is pre-pended to the name to refer formally to the certificate subject.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Surname",
+                          "type": "string",
+                          "required": false,
+                          "description": "Family name. In the US and the UK, for example, the surname of an individual is ordered last. In Asian cultures the surname is typically ordered first.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "GivenName",
+                          "type": "string",
+                          "required": false,
+                          "description": "First name.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Initials",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Pseudonym",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "GenerationQualifier",
+                          "type": "string",
+                          "required": false,
+                          "description": "Typically a qualifier appended to the name of an individual. Examples include Jr. for junior, Sr. for senior, and III for third.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CustomAttributes",
+                          "type": "list",
+                          "required": false,
+                          "description": "Contains a sequence of one or more X.500 relative distinguished names (RDNs), each of which consists of an object identifier (OID) and a value. For more information, see NIST's definition of Object Identifier (OID).",
+                          "nested_params": [
+                            {
+                              "name": "ObjectIdentifier",
+                              "type": "string",
+                              "required": false,
+                              "description": "Specifies the object identifier (OID) of the attribute type of the relative distinguished name (RDN).",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Value",
+                              "type": "string",
+                              "required": false,
+                              "description": "Specifies the attribute value of relative distinguished name (RDN).",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "EdiPartyName",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Represents GeneralName as an EdiPartyName object.",
+                      "nested_params": [
+                        {
+                          "name": "PartyName",
+                          "type": "string",
+                          "required": false,
+                          "description": "Specifies the party name.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "NameAssigner",
+                          "type": "string",
+                          "required": false,
+                          "description": "Specifies the name assigner.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UniformResourceIdentifier",
+                      "type": "string",
+                      "required": false,
+                      "description": "Represents GeneralName as a URI.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "IpAddress",
+                      "type": "string",
+                      "required": false,
+                      "description": "Represents GeneralName as an IPv4 or IPv6 address.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "RegisteredId",
+                      "type": "string",
+                      "required": false,
+                      "description": "Represents GeneralName as an object identifier (OID).",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RevocationConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Contains information to enable support for Online Certificate Status Protocol (OCSP), certificate revocation list (CRL), both protocols, or neither. By default, both certificate validation mechanisms are disabled. The following requirements apply to revocation configurations. A configuration disabling CRLs or OCSP must contain only the Enabled=False parameter, and will fail if other parameters such as CustomCname or ExpirationInDays are included. In a CRL configuration, the S3BucketName parameter must conform to Amazon S3 bucket naming rules. A configuration containing a custom Canonical Name (CNAME) parameter for CRLs or OCSP must conform to RFC2396 restrictions on the use of special characters in a CNAME. In a CRL or OCSP configuration, the value of a CNAME parameter must not include a protocol prefix such as 'http://' or 'https://'. For more information, see the OcspConfiguration and CrlConfiguration types. CrlConfiguration (dict) --- Configuration of the certificate revocation list (CRL), if any, maintained by your private CA. A CRL is typically updated approximately 30 minutes after a certificate is revoked. If for any reason a CRL update fails, Amazon Web Services Private CA makes further attempts every 15 minutes. Boolean value that specifies whether certificate revocation lists (CRLs) are enabled. You can use this value to enable certificate revocation for a new CA when you call the CreateCertificateAuthority action or for an existing CA when you call the UpdateCertificateAuthority action. ExpirationInDays (integer) --- Validity period of the CRL in days. CustomCname (string) --- Name inserted into the certificate CRL Distribution Points extension that enables the use of an alias for the CRL distribution point. Use this value if you don't want the name of your S3 bucket to be public. S3BucketName (string) --- Name of the S3 bucket that contains the CRL. If you do not provide a value for the CustomCname argument, the name of your S3 bucket is placed into the CRL Distribution Points extension of the issued certificate. You can change the name of your bucket by calling the UpdateCertificateAuthority operation. You must specify a bucket policy that allows Amazon Web Services Private CA to write the CRL to your bucket. S3ObjectAcl (string) --- Determines whether the CRL will be publicly readable or privately held in the CRL Amazon S3 bucket. If you choose PUBLIC_READ, the CRL will be accessible over the public internet. If you choose BUCKET_OWNER_FULL_CONTROL, only the owner of the CRL S3 bucket can access the CRL, and your PKI clients may need an alternative method of access. If no value is specified, the default is PUBLIC_READ. Note: This default can cause CA creation to fail in some circumstances. If you have have enabled the Block Public Access (BPA) feature in your S3 account, then you must specify the value of this parameter as BUCKET_OWNER_FULL_CONTROL, and not doing so results in an error. If you have disabled BPA in S3, then you can specify either BUCKET_OWNER_FULL_CONTROL or PUBLIC_READ as the value. For more information, see Blocking public access to the S3 bucket. CrlDistributionPointExtensionConfiguration (dict) --- Configures the behavior of the CRL Distribution Point extension for certificates issued by your certificate authority. If this field is not provided, then the CRl Distribution Point Extension will be present and contain the default CRL URL. Configures whether the CRL Distribution Point extension should be populated with the default URL to the CRL. If set to true, then the CDP extension will not be present in any certificates issued by that CA unless otherwise specified through CSR or API passthrough. CrlType (string) --- Specifies whether to create a complete or partitioned CRL. This setting determines the maximum number of certificates that the certificate authority can issue and revoke. For more information, see Amazon Web Services Private CA quotas. COMPLETE - The default setting. Amazon Web Services Private CA maintains a single CRL \u00ef\u00ac\u0081le for all unexpired certi\u00ef\u00ac\u0081cates issued by a CA that have been revoked for any reason. Each certi\u00ef\u00ac\u0081cate that Amazon Web Services Private CA issues is bound to a speci\u00ef\u00ac\u0081c CRL through its CRL distribution point (CDP) extension, de\u00ef\u00ac\u0081ned in RFC 5280. PARTITIONED - Compared to complete CRLs, partitioned CRLs dramatically increase the number of certi\u00ef\u00ac\u0081cates your private CA can issue. CustomPath (string) --- Designates a custom \u00ef\u00ac\u0081le path in S3 for CRL(s). For example, http://<CustomName>/ <CustomPath>/<CrlPartition_GUID>.crl. OcspConfiguration (dict) --- Configuration of Online Certificate Status Protocol (OCSP) support, if any, maintained by your private CA. When you revoke a certificate, OCSP responses may take up to 60 minutes to reflect the new status. Flag enabling use of the Online Certificate Status Protocol (OCSP) for validating certificate revocation status. OcspCustomCname (string) --- By default, Amazon Web Services Private CA injects an Amazon Web Services domain into certificates being validated by the Online Certificate Status Protocol (OCSP). A customer can alternatively use this object to define a CNAME specifying a customized OCSP domain. For more information, see Customizing Online Certificate Status Protocol (OCSP) in the Amazon Web Services Private Certificate Authority User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "CertificateAuthorityType",
+      "type": "string",
+      "required": true,
+      "description": "The type of the certificate authority.",
+      "nested_params": []
+    },
+    {
+      "name": "IdempotencyToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "KeyStorageSecurityStandard",
+      "type": "string",
+      "required": false,
+      "description": "Specifies a cryptographic key management compliance standard used for handling CA keys. Default: FIPS_140_2_LEVEL_3_OR_HIGHER.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Key-value pairs that will be attached to the new private CA. You can associate up to 50 tags with a private CA. For information using tags with IAM to manage permissions, see Controlling Access Using IAM Tags. (dict) --- Tags are labels that you can use to identify and organize your private CAs. Each tag consists of a key and an optional value. To add one or more tags to a private CA, call the TagCertificateAuthority action. To remove a tag, call the UntagCertificateAuthority action. Key (name) of the tag. Value (string) --- Value of the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "of the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "Value of the tag.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "UsageMode",
+      "type": "string",
+      "required": false,
+      "description": "Specifies whether the CA issues general-purpose certificates that typically require a revocation mechanism, or short-lived certificates that may optionally omit revocation because they expire quickly. Short-lived certificate validity is limited to seven days. The default value is GENERAL_PURPOSE.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CertificateAuthorityArn",
+          "type": "string",
+          "description": "If successful, the Amazon Resource Name (ARN) of the certificate authority (CA). This is of the form:",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

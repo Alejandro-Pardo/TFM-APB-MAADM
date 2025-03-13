@@ -1,0 +1,33 @@
+{
+  "method_name": "update_certificate_authority",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/acm-pca/client/update_certificate_authority.html",
+  "description": "Updates the status or configuration of a private certificate authority (CA). Your private CA must be in the ACTIVE or DISABLED state before you can update it. You can disable a private CA that is in the ACTIVE state or make a CA that is in the DISABLED state active again.",
+  "parameters": [
+    {
+      "name": "CertificateAuthorityArn",
+      "type": "string",
+      "required": true,
+      "description": "Amazon Resource Name (ARN) of the private CA that issued the certificate to be revoked. This must be of the form: arn:aws:acm-pca:region:account:certificate-authority/12345678-1234-1234-1234-123456789012",
+      "nested_params": []
+    },
+    {
+      "name": "RevocationConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Contains information to enable support for Online Certificate Status Protocol (OCSP), certificate revocation list (CRL), both protocols, or neither. If you don't supply this parameter, existing capibilites remain unchanged. For more information, see the OcspConfiguration and CrlConfiguration types. The following requirements apply to revocation configurations. A configuration disabling CRLs or OCSP must contain only the Enabled=False parameter, and will fail if other parameters such as CustomCname or ExpirationInDays are included. In a CRL configuration, the S3BucketName parameter must conform to Amazon S3 bucket naming rules. A configuration containing a custom Canonical Name (CNAME) parameter for CRLs or OCSP must conform to RFC2396 restrictions on the use of special characters in a CNAME. In a CRL or OCSP configuration, the value of a CNAME parameter must not include a protocol prefix such as 'http://' or 'https://'. CrlConfiguration (dict) --- Configuration of the certificate revocation list (CRL), if any, maintained by your private CA. A CRL is typically updated approximately 30 minutes after a certificate is revoked. If for any reason a CRL update fails, Amazon Web Services Private CA makes further attempts every 15 minutes. Boolean value that specifies whether certificate revocation lists (CRLs) are enabled. You can use this value to enable certificate revocation for a new CA when you call the CreateCertificateAuthority action or for an existing CA when you call the UpdateCertificateAuthority action. ExpirationInDays (integer) --- Validity period of the CRL in days. CustomCname (string) --- Name inserted into the certificate CRL Distribution Points extension that enables the use of an alias for the CRL distribution point. Use this value if you don't want the name of your S3 bucket to be public. S3BucketName (string) --- Name of the S3 bucket that contains the CRL. If you do not provide a value for the CustomCname argument, the name of your S3 bucket is placed into the CRL Distribution Points extension of the issued certificate. You can change the name of your bucket by calling the UpdateCertificateAuthority operation. You must specify a bucket policy that allows Amazon Web Services Private CA to write the CRL to your bucket. S3ObjectAcl (string) --- Determines whether the CRL will be publicly readable or privately held in the CRL Amazon S3 bucket. If you choose PUBLIC_READ, the CRL will be accessible over the public internet. If you choose BUCKET_OWNER_FULL_CONTROL, only the owner of the CRL S3 bucket can access the CRL, and your PKI clients may need an alternative method of access. If no value is specified, the default is PUBLIC_READ. Note: This default can cause CA creation to fail in some circumstances. If you have have enabled the Block Public Access (BPA) feature in your S3 account, then you must specify the value of this parameter as BUCKET_OWNER_FULL_CONTROL, and not doing so results in an error. If you have disabled BPA in S3, then you can specify either BUCKET_OWNER_FULL_CONTROL or PUBLIC_READ as the value. For more information, see Blocking public access to the S3 bucket. CrlDistributionPointExtensionConfiguration (dict) --- Configures the behavior of the CRL Distribution Point extension for certificates issued by your certificate authority. If this field is not provided, then the CRl Distribution Point Extension will be present and contain the default CRL URL. Configures whether the CRL Distribution Point extension should be populated with the default URL to the CRL. If set to true, then the CDP extension will not be present in any certificates issued by that CA unless otherwise specified through CSR or API passthrough. CrlType (string) --- Specifies whether to create a complete or partitioned CRL. This setting determines the maximum number of certificates that the certificate authority can issue and revoke. For more information, see Amazon Web Services Private CA quotas. COMPLETE - The default setting. Amazon Web Services Private CA maintains a single CRL \u00ef\u00ac\u0081le for all unexpired certi\u00ef\u00ac\u0081cates issued by a CA that have been revoked for any reason. Each certi\u00ef\u00ac\u0081cate that Amazon Web Services Private CA issues is bound to a speci\u00ef\u00ac\u0081c CRL through its CRL distribution point (CDP) extension, de\u00ef\u00ac\u0081ned in RFC 5280. PARTITIONED - Compared to complete CRLs, partitioned CRLs dramatically increase the number of certi\u00ef\u00ac\u0081cates your private CA can issue. CustomPath (string) --- Designates a custom \u00ef\u00ac\u0081le path in S3 for CRL(s). For example, http://<CustomName>/ <CustomPath>/<CrlPartition_GUID>.crl. OcspConfiguration (dict) --- Configuration of Online Certificate Status Protocol (OCSP) support, if any, maintained by your private CA. When you revoke a certificate, OCSP responses may take up to 60 minutes to reflect the new status. Flag enabling use of the Online Certificate Status Protocol (OCSP) for validating certificate revocation status. OcspCustomCname (string) --- By default, Amazon Web Services Private CA injects an Amazon Web Services domain into certificates being validated by the Online Certificate Status Protocol (OCSP). A customer can alternatively use this object to define a CNAME specifying a customized OCSP domain. For more information, see Customizing Online Certificate Status Protocol (OCSP) in the Amazon Web Services Private Certificate Authority User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Status",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

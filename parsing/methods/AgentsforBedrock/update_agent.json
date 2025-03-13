@@ -1,0 +1,677 @@
+{
+  "method_name": "update_agent",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-agent/client/update_agent.html",
+  "description": "Updates the configuration of an agent.",
+  "parameters": [
+    {
+      "name": "agentCollaboration",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "agentId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of the agent.",
+      "nested_params": []
+    },
+    {
+      "name": "agentName",
+      "type": "string",
+      "required": true,
+      "description": "Specifies a new name for the agent.",
+      "nested_params": []
+    },
+    {
+      "name": "agentResourceRoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the IAM role with permissions to invoke API operations on the agent.",
+      "nested_params": []
+    },
+    {
+      "name": "customOrchestration",
+      "type": "dict",
+      "required": false,
+      "description": "Contains details of the custom orchestration configured for the agent. executor (dict) --- The structure of the executor invoking the actions in custom orchestration. lambda (string) --- The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.",
+      "nested_params": [
+        {
+          "name": "executor",
+          "type": "dict",
+          "required": false,
+          "description": "The structure of the executor invoking the actions in custom orchestration.",
+          "nested_params": [
+            {
+              "name": "lambda",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "customerEncryptionKeyArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "foundationModel",
+      "type": "string",
+      "required": true,
+      "description": "The identifier for the model that you want to be used for orchestration by the agent you create. The modelId to provide depends on the type of model or throughput that you use: If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see Amazon Bedrock base model IDs (on-demand throughput) in the Amazon Bedrock User Guide. If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see Supported Regions and models for cross-region inference in the Amazon Bedrock User Guide. If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see Run inference using a Provisioned Throughput in the Amazon Bedrock User Guide. If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see Use a custom model in Amazon Bedrock in the Amazon Bedrock User Guide. If you use an imported model, specify the ARN of the imported model. You can get the model ARN from a successful call to CreateModelImportJob or from the Imported models page in the Amazon Bedrock console.",
+      "nested_params": []
+    },
+    {
+      "name": "guardrailConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "The unique Guardrail configuration assigned to the agent when it is updated. guardrailIdentifier (string) --- The unique identifier of the guardrail. guardrailVersion (string) --- The version of the guardrail.",
+      "nested_params": [
+        {
+          "name": "guardrailIdentifier",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the guardrail.",
+          "nested_params": []
+        },
+        {
+          "name": "guardrailVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of the guardrail.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "idleSessionTTLInSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "The number of seconds for which Amazon Bedrock keeps information about a user's conversation with the agent. A user interaction remains active for the amount of time specified. If no conversation occurs during this time, the session expires and Amazon Bedrock deletes any data provided before the timeout.",
+      "nested_params": []
+    },
+    {
+      "name": "instruction",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "memoryConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the new memory configuration for the agent. The type of memory that is stored. (string) --- sessionSummaryConfiguration (dict) --- Contains the configuration for SESSION_SUMMARY memory type enabled for the agent. maxRecentSessions (integer) --- Maximum number of recent session summaries to include in the agent's prompt context. storageDays (integer) --- The number of days the agent is configured to retain the conversational context.",
+      "nested_params": [
+        {
+          "name": "enabledMemoryTypes",
+          "type": "list",
+          "required": false,
+          "description": "The type of memory that is stored.",
+          "nested_params": []
+        },
+        {
+          "name": "sessionSummaryConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Contains the configuration for SESSION_SUMMARY memory type enabled for the agent.",
+          "nested_params": [
+            {
+              "name": "maxRecentSessions",
+              "type": "integer",
+              "required": false,
+              "description": "Maximum number of recent session summaries to include in the agent's prompt context.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "storageDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days the agent is configured to retain the conversational context.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "orchestrationType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "promptOverrideConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Contains configurations to override prompts in different parts of an agent sequence. For more information, see Advanced prompts. overrideLambda (string) --- The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the promptConfigurations must contain a parserMode value that is set to OVERRIDDEN. For more information, see Parser Lambda function in Amazon Bedrock Agents. Contains configurations to override a prompt template in one part of an agent sequence. (dict) --- Contains configurations to override a prompt template in one part of an agent sequence. additionalModelRequestFields (document) --- If the Converse or ConverseStream operations support the model, additionalModelRequestFields contains additional inference parameters, beyond the base set of inference parameters in the inferenceConfiguration field. For more information, see Inference request parameters and response fields for foundation models in the Amazon Bedrock user guide. basePromptTemplate (string) --- Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see Prompt template placeholder variables. For more information, see Configure the prompt templates. foundationModel (string) --- The agent's foundation model. inferenceConfiguration (dict) --- Contains inference parameters to use when the agent invokes a foundation model in the part of the agent sequence defined by the promptType. For more information, see Inference parameters for foundation models. maximumLength (integer) --- The maximum number of tokens to allow in the generated response. stopSequences (list) --- A list of stop sequences. A stop sequence is a sequence of characters that causes the model to stop generating the response. (string) --- temperature (float) --- The likelihood of the model selecting higher-probability options while generating a response. A lower value makes the model more likely to choose higher-probability options, while a higher value makes the model more likely to choose lower-probability options. topK (integer) --- While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for topK is the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set topK to 50, the model selects the next token from among the top 50 most likely choices. topP (float) --- While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for Top P determines the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set topP to 80, the model only selects the next token from the top 80% of the probability distribution of next tokens. parserMode (string) --- Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the promptType. If you set the field as OVERRIDDEN, the overrideLambda field in the PromptOverrideConfiguration must be specified with the ARN of a Lambda function. promptCreationMode (string) --- Specifies whether to override the default prompt template for this promptType. Set this value to OVERRIDDEN to use the prompt that you provide in the basePromptTemplate. If you leave it as DEFAULT, the agent uses a default prompt template. promptState (string) --- Specifies whether to allow the agent to carry out the step specified in the promptType. If you set this value to DISABLED, the agent skips that step. The default state for each promptType is as follows. PRE_PROCESSING --- ENABLED ORCHESTRATION --- ENABLED KNOWLEDGE_BASE_RESPONSE_GENERATION --- ENABLED POST_PROCESSING --- DISABLED promptType (string) --- The step in the agent sequence that this prompt configuration applies to.",
+      "nested_params": [
+        {
+          "name": "overrideLambda",
+          "type": "string",
+          "required": false,
+          "description": "The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the promptConfigurations must contain a parserMode value that is set to OVERRIDDEN. For more information, see Parser Lambda function in Amazon Bedrock Agents.",
+          "nested_params": []
+        },
+        {
+          "name": "promptConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "Contains configurations to override a prompt template in one part of an agent sequence. For more information, see Advanced prompts.",
+          "nested_params": [
+            {
+              "name": "additionalModelRequestFields",
+              "type": "document",
+              "required": false,
+              "description": "If the Converse or ConverseStream operations support the model, additionalModelRequestFields contains additional inference parameters, beyond the base set of inference parameters in the inferenceConfiguration field. For more information, see Inference request parameters and response fields for foundation models in the Amazon Bedrock user guide.",
+              "nested_params": []
+            },
+            {
+              "name": "basePromptTemplate",
+              "type": "string",
+              "required": false,
+              "description": "Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see Prompt template placeholder variables. For more information, see Configure the prompt templates.",
+              "nested_params": []
+            },
+            {
+              "name": "foundationModel",
+              "type": "string",
+              "required": false,
+              "description": "The agent's foundation model.",
+              "nested_params": []
+            },
+            {
+              "name": "inferenceConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Contains inference parameters to use when the agent invokes a foundation model in the part of the agent sequence defined by the promptType. For more information, see Inference parameters for foundation models.",
+              "nested_params": [
+                {
+                  "name": "maximumLength",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The maximum number of tokens to allow in the generated response.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stopSequences",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of stop sequences. A stop sequence is a sequence of characters that causes the model to stop generating the response.",
+                  "nested_params": []
+                },
+                {
+                  "name": "temperature",
+                  "type": "float",
+                  "required": false,
+                  "description": "The likelihood of the model selecting higher-probability options while generating a response. A lower value makes the model more likely to choose higher-probability options, while a higher value makes the model more likely to choose lower-probability options.",
+                  "nested_params": []
+                },
+                {
+                  "name": "topK",
+                  "type": "integer",
+                  "required": false,
+                  "description": "While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for topK is the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set topK to 50, the model selects the next token from among the top 50 most likely choices.",
+                  "nested_params": []
+                },
+                {
+                  "name": "topP",
+                  "type": "float",
+                  "required": false,
+                  "description": "While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for Top P determines the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set topP to 80, the model only selects the next token from the top 80% of the probability distribution of next tokens.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "parserMode",
+              "type": "string",
+              "required": false,
+              "description": "Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the promptType. If you set the field as OVERRIDDEN, the overrideLambda field in the PromptOverrideConfiguration must be specified with the ARN of a Lambda function.",
+              "nested_params": []
+            },
+            {
+              "name": "promptCreationMode",
+              "type": "string",
+              "required": false,
+              "description": "Specifies whether to override the default prompt template for this promptType. Set this value to OVERRIDDEN to use the prompt that you provide in the basePromptTemplate. If you leave it as DEFAULT, the agent uses a default prompt template.",
+              "nested_params": []
+            },
+            {
+              "name": "promptState",
+              "type": "string",
+              "required": false,
+              "description": "Specifies whether to allow the agent to carry out the step specified in the promptType. If you set this value to DISABLED, the agent skips that step. The default state for each promptType is as follows.",
+              "nested_params": []
+            },
+            {
+              "name": "promptType",
+              "type": "string",
+              "required": false,
+              "description": "The step in the agent sequence that this prompt configuration applies to.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "agentArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "agentCollaboration",
+              "type": "string",
+              "description": "The agent's collaboration settings.",
+              "nested_items": []
+            },
+            {
+              "name": "agentId",
+              "type": "string",
+              "description": "The unique identifier of the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "agentName",
+              "type": "string",
+              "description": "The name of the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "agentResourceRoleArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the IAM role with permissions to invoke API operations on the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "agentStatus",
+              "type": "string",
+              "description": "The status of the agent and whether it is ready for use. The following statuses are possible:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATING --- The agent is being created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "PREPARING --- The agent is being prepared.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "PREPARED --- The agent is prepared and ready to be invoked.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "NOT_PREPARED --- The agent has been created but not yet prepared.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED --- The agent API operation failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UPDATING --- The agent is being updated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETING --- The agent is being deleted.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "agentVersion",
+              "type": "string",
+              "description": "The version of the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "clientToken",
+              "type": "string",
+              "description": "A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see Ensuring idempotency.",
+              "nested_items": []
+            },
+            {
+              "name": "createdAt",
+              "type": "datetime",
+              "description": "The time at which the agent was created.",
+              "nested_items": []
+            },
+            {
+              "name": "customOrchestration",
+              "type": "dict",
+              "description": "Contains custom orchestration configurations for the agent.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "lambda",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "customerEncryptionKeyArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the KMS key that encrypts the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "description": "The description of the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "failureReasons",
+              "type": "list",
+              "description": "Contains reasons that the agent-related API that you invoked failed.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "foundationModel",
+              "type": "string",
+              "description": "The foundation model used for orchestration by the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "guardrailConfiguration",
+              "type": "dict",
+              "description": "Details about the guardrail associated with the agent.",
+              "nested_items": [
+                {
+                  "name": "guardrailIdentifier",
+                  "type": "string",
+                  "description": "The unique identifier of the guardrail.",
+                  "nested_items": []
+                },
+                {
+                  "name": "guardrailVersion",
+                  "type": "string",
+                  "description": "The version of the guardrail.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "idleSessionTTLInSeconds",
+              "type": "integer",
+              "description": "The number of seconds for which Amazon Bedrock keeps information about a user's conversation with the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "instruction",
+              "type": "string",
+              "description": "Instructions that tell the agent what it should do and how it should interact with users.",
+              "nested_items": []
+            },
+            {
+              "name": "memoryConfiguration",
+              "type": "dict",
+              "description": "Contains memory configuration for the agent.",
+              "nested_items": [
+                {
+                  "name": "enabledMemoryTypes",
+                  "type": "list",
+                  "description": "The type of memory that is stored.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "sessionSummaryConfiguration",
+                  "type": "dict",
+                  "description": "Contains the configuration for SESSION_SUMMARY memory type enabled for the agent.",
+                  "nested_items": [
+                    {
+                      "name": "maxRecentSessions",
+                      "type": "integer",
+                      "description": "Maximum number of recent session summaries to include in the agent's prompt context.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "storageDays",
+                  "type": "integer",
+                  "description": "The number of days the agent is configured to retain the conversational context.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "orchestrationType",
+              "type": "string",
+              "description": "Specifies the orchestration strategy for the agent.",
+              "nested_items": []
+            },
+            {
+              "name": "preparedAt",
+              "type": "datetime",
+              "description": "The time at which the agent was last prepared.",
+              "nested_items": []
+            },
+            {
+              "name": "promptOverrideConfiguration",
+              "type": "dict",
+              "description": "Contains configurations to override prompt templates in different parts of an agent sequence. For more information, see Advanced prompts.",
+              "nested_items": [
+                {
+                  "name": "overrideLambda",
+                  "type": "string",
+                  "description": "The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the promptConfigurations must contain a parserMode value that is set to OVERRIDDEN. For more information, see Parser Lambda function in Amazon Bedrock Agents.",
+                  "nested_items": []
+                },
+                {
+                  "name": "promptConfigurations",
+                  "type": "list",
+                  "description": "Contains configurations to override a prompt template in one part of an agent sequence. For more information, see Advanced prompts.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "additionalModelRequestFields",
+                          "type": "document",
+                          "description": "If the Converse or ConverseStream operations support the model, additionalModelRequestFields contains additional inference parameters, beyond the base set of inference parameters in the inferenceConfiguration field.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "basePromptTemplate",
+                          "type": "string",
+                          "description": "Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see Prompt template placeholder variables. For more information, see Configure the prompt templates.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "foundationModel",
+                          "type": "string",
+                          "description": "The agent's foundation model.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "inferenceConfiguration",
+                          "type": "dict",
+                          "description": "Contains inference parameters to use when the agent invokes a foundation model in the part of the agent sequence defined by the promptType. For more information, see Inference parameters for foundation models.",
+                          "nested_items": [
+                            {
+                              "name": "maximumLength",
+                              "type": "integer",
+                              "description": "The maximum number of tokens to allow in the generated response.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "stopSequences",
+                              "type": "list",
+                              "description": "A list of stop sequences. A stop sequence is a sequence of characters that causes the model to stop generating the response.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "temperature",
+                              "type": "float",
+                              "description": "The likelihood of the model selecting higher-probability options while generating a response. A lower value makes the model more likely to choose higher-probability options, while a higher value makes the model more likely to choose lower-probability options.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "topK",
+                              "type": "integer",
+                              "description": "While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for topK is the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set topK to 50, the model selects the next token from among the top 50 most likely choices.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "topP",
+                              "type": "float",
+                              "description": "While generating a response, the model determines the probability of the following token at each point of generation. The value that you set for Top P determines the number of most-likely candidates from which the model chooses the next token in the sequence. For example, if you set topP to 80, the model only selects the next token from the top 80% of the probability distribution of next tokens.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "parserMode",
+                          "type": "string",
+                          "description": "Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the promptType. If you set the field as OVERRIDDEN, the overrideLambda field in the PromptOverrideConfiguration must be specified with the ARN of a Lambda function.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "promptCreationMode",
+                          "type": "string",
+                          "description": "Specifies whether to override the default prompt template for this promptType. Set this value to OVERRIDDEN to use the prompt that you provide in the basePromptTemplate. If you leave it as DEFAULT, the agent uses a default prompt template.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "promptState",
+                          "type": "string",
+                          "description": "Specifies whether to allow the agent to carry out the step specified in the promptType. If you set this value to DISABLED, the agent skips that step. The default state for each promptType is as follows.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRE_PROCESSING --- ENABLED.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "ORCHESTRATION --- ENABLED.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "KNOWLEDGE_BASE_RESPONSE_GENERATION --- ENABLED.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "POST_PROCESSING --- DISABLED.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "promptType",
+                          "type": "string",
+                          "description": "The step in the agent sequence that this prompt configuration applies to.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "recommendedActions",
+              "type": "list",
+              "description": "Contains recommended actions to take for the agent-related API that you invoked to succeed.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "updatedAt",
+              "type": "datetime",
+              "description": "The time at which the agent was last updated.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
