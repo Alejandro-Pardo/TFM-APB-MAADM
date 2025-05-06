@@ -1,0 +1,133 @@
+{
+  "method_name": "batch_evaluate_feature",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/evidently/client/batch_evaluate_feature.html",
+  "description": "This operation assigns feature variation to user sessions. For each user session, you pass in an entityID that represents the user. Evidently then checks the evaluation rules and assigns the variation. The first rules that are evaluated are the override rules. If the user's entityID matches an override rule, the user is served the variation specified by that rule. Next, if there is a launch of the feature, the user might be assigned to a variation in the launch. The chance of this depends on the percentage of users that are allocated to that launch. If the user is enrolled in the launch, the variation they are served depends on the allocation of the various feature variations used for the launch. If the user is not assigned to a launch, and there is an ongoing experiment for this feature, the user might be assigned to a variation in the experiment. The chance of this depends on the percentage of users that are allocated to that experiment. If the user is enrolled in the experiment, the variation they are served depends on the allocation of the various feature variations used for the experiment. If the user is not assigned to a launch or experiment, they are served the default variation.",
+  "parameters": [
+    {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "description": "The name or ARN of the project that contains the feature being evaluated.",
+      "nested_params": []
+    },
+    {
+      "name": "requests",
+      "type": "list",
+      "required": true,
+      "description": "An array of structures, where each structure assigns a feature variation to one user session. (dict) --- This structure assigns a feature variation to one user session. An internal ID that represents a unique user session of the application. This entityID is checked against any override rules assigned for this feature. evaluationContext (string) --- A JSON block of attributes that you can optionally pass in. This JSON block is included in the evaluation events sent to Evidently from the user session. The name of the feature being evaluated.",
+      "nested_params": [
+        {
+          "name": "entityId",
+          "type": "string",
+          "required": false,
+          "description": "An internal ID that represents a unique user session of the application. This entityID is checked against any override rules assigned for this feature.",
+          "nested_params": []
+        },
+        {
+          "name": "evaluationContext",
+          "type": "string",
+          "required": false,
+          "description": "A JSON block of attributes that you can optionally pass in. This JSON block is included in the evaluation events sent to Evidently from the user session.",
+          "nested_params": []
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "required": false,
+          "description": "The name of the feature being evaluated.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "results",
+          "type": "list",
+          "description": "An array of structures, where each structure displays the results of one feature evaluation assignment to one user session.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "details",
+                  "type": "string",
+                  "description": "If this user was assigned to a launch or experiment, this field lists the launch or experiment name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "entityId",
+                  "type": "string",
+                  "description": "An internal ID that represents a unique user session of the application.",
+                  "nested_items": []
+                },
+                {
+                  "name": "feature",
+                  "type": "string",
+                  "description": "The name of the feature being evaluated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "project",
+                  "type": "string",
+                  "description": "The name or ARN of the project that contains the feature being evaluated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "reason",
+                  "type": "string",
+                  "description": "Specifies the reason that the user session was assigned this variation. Possible values include DEFAULT, meaning the user was served the default variation; LAUNCH_RULE_MATCH, if the user session was enrolled in a launch; or EXPERIMENT_RULE_MATCH, if the user session was enrolled in an experiment.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "boolValue",
+                      "type": "boolean",
+                      "description": "If this feature uses the Boolean variation type, this field contains the Boolean value of this variation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "doubleValue",
+                      "type": "float",
+                      "description": "If this feature uses the double integer variation type, this field contains the double integer value of this variation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "longValue",
+                      "type": "integer",
+                      "description": "If this feature uses the long variation type, this field contains the long value of this variation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "stringValue",
+                      "type": "string",
+                      "description": "If this feature uses the string variation type, this field contains the string value of this variation.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "variation",
+                  "type": "string",
+                  "description": "The name of the variation that was served to the user session.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2177 @@
+{
+  "method_name": "start_build",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/codebuild/client/start_build.html",
+  "description": "Starts running a build with the settings defined in the project. These setting include: how to run a build, where to get the source code, which build environment to use, which build commands to run, and where to store the build output. You can also start a build run by overriding some of the build settings in the project. The overrides only apply for that specific start build request. The settings in the project are unaltered.",
+  "parameters": [
+    {
+      "name": "projectName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the CodeBuild build project to start running a build.",
+      "nested_params": []
+    },
+    {
+      "name": "secondarySourcesOverride",
+      "type": "list",
+      "required": true,
+      "description": "An array of ProjectSource objects. (dict) --- Information about the build input source code for the build project. The type of repository that contains the source code to be built. Valid values include: BITBUCKET: The source code is in a Bitbucket repository. CODECOMMIT: The source code is in an CodeCommit repository. CODEPIPELINE: The source code settings are specified in the source action of a pipeline in CodePipeline. GITHUB: The source code is in a GitHub repository. GITHUB_ENTERPRISE: The source code is in a GitHub Enterprise Server repository. GITLAB: The source code is in a GitLab repository. GITLAB_SELF_MANAGED: The source code is in a self-managed GitLab repository. NO_SOURCE: The project does not have input source code. S3: The source code is in an Amazon S3 bucket. location (string) --- Information about the location of the source code to be built. Valid values include: For source code settings that are specified in the source action of a pipeline in CodePipeline, location should not be specified. If it is specified, CodePipeline ignores it. This is because CodePipeline uses the settings in a pipeline's source action instead of this value. For source code in an CodeCommit repository, the HTTPS clone URL to the repository that contains the source code and the buildspec file (for example, https://git-codecommit.<region-ID>.amazonaws.com/v1/repos/<repo-name>). For source code in an Amazon S3 input bucket, one of the following. The path to the ZIP file that contains the source code (for example, <bucket-name>/<path>/<object-name>.zip). The path to the folder that contains the source code (for example, <bucket-name>/<path-to-source-code>/<folder>/). For source code in a GitHub repository, the HTTPS clone URL to the repository that contains the source and the buildspec file. You must connect your Amazon Web Services account to your GitHub account. Use the CodeBuild console to start creating a build project. When you use the console to connect (or reconnect) with GitHub, on the GitHub Authorize application page, for Organization access, choose Request access next to each repository you want to allow CodeBuild to have access to, and then choose Authorize application. (After you have connected to your GitHub account, you do not need to finish creating the build project. You can leave the CodeBuild console.) To instruct CodeBuild to use this connection, in the source object, set the auth object's type value to OAUTH. For source code in an GitLab or self-managed GitLab repository, the HTTPS clone URL to the repository that contains the source and the buildspec file. You must connect your Amazon Web Services account to your GitLab account. When you use the console to connect (or reconnect) with GitLab, on the Connections Authorize application page, choose Authorize. Then on the CodeConnections Create GitLab connection page, choose Connect to GitLab. (After you have connected to your GitLab account, you do not need to finish creating the build project. You can leave the CodeBuild console.) To instruct CodeBuild to override the default connection and use this connection instead, set the auth object's type value to CODECONNECTIONS in the source object. For source code in a Bitbucket repository, the HTTPS clone URL to the repository that contains the source and the buildspec file. You must connect your Amazon Web Services account to your Bitbucket account. When you use the console to connect (or reconnect) with Bitbucket, on the Bitbucket Confirm access to your account page, choose Grant access. (After you have connected to your Bitbucket account, you do not need to finish creating the build project. If you specify CODEPIPELINE for the Type property, don't specify this property. For all of the other types, you must specify Location. gitCloneDepth (integer) --- Information about the Git clone depth for the build project. gitSubmodulesConfig (dict) --- Information about the Git submodules configuration for the build project. Set to true to fetch Git submodules for your CodeBuild build project. buildspec (string) --- The buildspec file declaration to use for the builds in this build project. If this value is set, it can be either an inline buildspec definition, the path to an alternate buildspec file relative to the value of the built-in CODEBUILD_SRC_DIR environment variable, or the path to an S3 bucket. The bucket must be in the same Amazon Web Services Region as the build project. Specify the buildspec file using its ARN (for example, arn:aws:s3:::my-codebuild-sample2/buildspec.yml). If this value is not provided or is set to an empty string, the source code must contain a buildspec file in its root directory. For more information, see Buildspec File Name and Storage Location. auth (dict) --- Information about the authorization settings for CodeBuild to access the source code to be built. The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER. resource (string) --- The resource value that applies to the specified authorization type. reportBuildStatus (boolean) --- Set to true to report the status of a build's start and finish to your source provider. This option is valid only when your source provider is GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, GitLab, GitLab Self Managed, or Bitbucket. If this is set and you use a different source provider, an invalidInputException is thrown. To be able to report the build status to the source provider, the user associated with the source provider must have write access to the repo. If the user does not have write access, the build status cannot be updated. For more information, see Source provider access in the CodeBuild User Guide. The status of a build triggered by a webhook is always reported to your source provider. If your project's builds are triggered by a webhook, you must push a new commit to the repo for a change to this property to take effect. buildStatusConfig (dict) --- Contains information that defines how the build project reports the build status to the source provider. This option is only used when the source provider is GITHUB, GITHUB_ENTERPRISE, or BITBUCKET. context (string) --- Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider. Bitbucket This parameter is used for the name parameter in the Bitbucket commit status. For more information, see build in the Bitbucket API documentation. GitHub/GitHub Enterprise Server This parameter is used for the context parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide. targetUrl (string) --- Specifies the target url of the build status CodeBuild sends to the source provider. Bitbucket This parameter is used for the url parameter in the Bitbucket commit status. GitHub/GitHub Enterprise Server This parameter is used for the target_url parameter in the GitHub commit status. insecureSsl (boolean) --- Enable this flag to ignore SSL warnings while connecting to the project source code. sourceIdentifier (string) --- An identifier for this project source. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of repository that contains the source code to be built. Valid values include:",
+          "nested_params": []
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "description": "Information about the location of the source code to be built. Valid values include:",
+          "nested_params": [
+            {
+              "name": "Authorize application",
+              "type": "or reconnect",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "Authorize application",
+              "type": "or reconnect",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "Confirm access to your account",
+              "type": "or reconnect",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "gitCloneDepth",
+          "type": "integer",
+          "required": false,
+          "description": "Information about the Git clone depth for the build project.",
+          "nested_params": []
+        },
+        {
+          "name": "gitSubmodulesConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Information about the Git submodules configuration for the build project.",
+          "nested_params": [
+            {
+              "name": "fetchSubmodules",
+              "type": "boolean",
+              "required": false,
+              "description": "Set to true to fetch Git submodules for your CodeBuild build project.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "buildspec",
+          "type": "string",
+          "required": false,
+          "description": "The buildspec file declaration to use for the builds in this build project. If this value is set, it can be either an inline buildspec definition, the path to an alternate buildspec file relative to the value of the built-in CODEBUILD_SRC_DIR environment variable, or the path to an S3 bucket. The bucket must be in the same Amazon Web Services Region as the build project. Specify the buildspec file using its ARN (for example, arn:aws:s3:::my-codebuild-sample2/buildspec.yml). If this value is not provided or is set to an empty string, the source code must contain a buildspec file in its root directory. For more information, see Buildspec File Name and Storage Location.",
+          "nested_params": []
+        },
+        {
+          "name": "auth",
+          "type": "dict",
+          "required": false,
+          "description": "Information about the authorization settings for CodeBuild to access the source code to be built.",
+          "nested_params": [
+            {
+              "name": "type",
+              "type": "string",
+              "required": false,
+              "description": "The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER.",
+              "nested_params": []
+            },
+            {
+              "name": "resource",
+              "type": "string",
+              "required": false,
+              "description": "The resource value that applies to the specified authorization type.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "reportBuildStatus",
+          "type": "boolean",
+          "required": false,
+          "description": "Set to true to report the status of a build's start and finish to your source provider. This option is valid only when your source provider is GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, GitLab, GitLab Self Managed, or Bitbucket. If this is set and you use a different source provider, an invalidInputException is thrown. To be able to report the build status to the source provider, the user associated with the source provider must have write access to the repo. If the user does not have write access, the build status cannot be updated. For more information, see Source provider access in the CodeBuild User Guide. The status of a build triggered by a webhook is always reported to your source provider. If your project's builds are triggered by a webhook, you must push a new commit to the repo for a change to this property to take effect.",
+          "nested_params": []
+        },
+        {
+          "name": "buildStatusConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Contains information that defines how the build project reports the build status to the source provider. This option is only used when the source provider is GITHUB, GITHUB_ENTERPRISE, or BITBUCKET.",
+          "nested_params": [
+            {
+              "name": "context",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider. This parameter is used for the name parameter in the Bitbucket commit status. For more information, see build in the Bitbucket API documentation. This parameter is used for the context parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide.",
+              "nested_params": []
+            },
+            {
+              "name": "targetUrl",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the target url of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider. This parameter is used for the url parameter in the Bitbucket commit status. For more information, see build in the Bitbucket API documentation. This parameter is used for the target_url parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "insecureSsl",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable this flag to ignore SSL warnings while connecting to the project source code.",
+          "nested_params": []
+        },
+        {
+          "name": "sourceIdentifier",
+          "type": "string",
+          "required": false,
+          "description": "An identifier for this project source. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "secondarySourcesVersionOverride",
+      "type": "list",
+      "required": true,
+      "description": "An array of ProjectSourceVersion objects that specify one or more versions of the project's secondary sources to be used for this build only. (dict) --- A source identifier and its corresponding version. An identifier for a source in the build project. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length. The source version for the corresponding source identifier. If specified, must be one of: For CodeCommit: the commit ID, branch, or Git tag to use. For GitHub: the commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format pr/pull-request-ID (for example, pr/25). If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used. For GitLab: the commit ID, branch, or Git tag to use. For Bitbucket: the commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. For Amazon S3: the version ID of the object that represents the build input ZIP file to use. For more information, see Source Version Sample with CodeBuild in the CodeBuild User Guide.",
+      "nested_params": [
+        {
+          "name": "sourceIdentifier",
+          "type": "string",
+          "required": false,
+          "description": "An identifier for a source in the build project. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length.",
+          "nested_params": []
+        },
+        {
+          "name": "sourceVersion",
+          "type": "string",
+          "required": false,
+          "description": "The source version for the corresponding source identifier. If specified, must be one of:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "sourceVersion",
+      "type": "string",
+      "required": false,
+      "description": "The version of the build input to be built, for this build only. If not specified, the latest version is used. If specified, the contents depends on the source provider: CodeCommit The commit ID, branch, or Git tag to use. GitHub The commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format pr/pull-request-ID (for example pr/25). If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used. GitLab The commit ID, branch, or Git tag to use. Bitbucket The commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. Amazon S3 The version ID of the object that represents the build input ZIP file to use. If sourceVersion is specified at the project level, then this sourceVersion (at the build level) takes precedence. For more information, see Source Version Sample with CodeBuild in the CodeBuild User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "artifactsOverride",
+      "type": "dict",
+      "required": true,
+      "description": "Build output artifact settings that override, for this build only, the latest ones already defined in the build project. The type of build output artifact. Valid values include: CODEPIPELINE: The build project has build output generated through CodePipeline. NO_ARTIFACTS: The build project does not produce any build output. S3: The build project stores build output in Amazon S3. location (string) --- Information about the build output artifact location: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. This is because CodePipeline manages its build output locations instead of CodeBuild. If type is set to NO_ARTIFACTS, this value is ignored if specified, because no build output is produced. If type is set to S3, this is the name of the output bucket. path (string) --- Along with namespaceType and name, the pattern that CodeBuild uses to name and store the output artifact: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. This is because CodePipeline manages its build output names instead of CodeBuild. If type is set to S3, this is the path to the output artifact. If path is not specified, path is not used. For example, if path is set to MyArtifacts, namespaceType is set to NONE, and name is set to MyArtifact.zip, the output artifact is stored in the output bucket at MyArtifacts/MyArtifact.zip. namespaceType (string) --- Along with path and name, the pattern that CodeBuild uses to determine the name and location to store the output artifact: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. If type is set to S3, valid values include: BUILD_ID: Include the build ID in the location of the build output artifact. NONE: Do not include the build ID. This is the default if namespaceType is not specified. For example, if path is set to MyArtifacts, namespaceType is set to BUILD_ID, and name is set to MyArtifact.zip, the output artifact is stored in MyArtifacts/<build-ID>/MyArtifact.zip. name (string) --- Along with path and namespaceType, the pattern that CodeBuild uses to name and store the output artifact: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. If type is set to S3, this is the name of the output artifact object. If you set the name to be a forward slash ('/'), the artifact is stored in the root of the output bucket. For example: If path is set to MyArtifacts, namespaceType is set to BUILD_ID, and name is set to MyArtifact.zip, then the output artifact is stored in MyArtifacts/<build-ID>/MyArtifact.zip. If path is empty, namespaceType is set to NONE, and name is set to ' /', the output artifact is stored in the root of the output bucket. If path is set to MyArtifacts, namespaceType is set to BUILD_ID, and name is set to ' /', the output artifact is stored in MyArtifacts/<build-ID>. packaging (string) --- The type of build output artifact to create: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. This is because CodePipeline manages its build output artifacts instead of CodeBuild. If type is set to S3, valid values include: NONE: CodeBuild creates in the output bucket a folder that contains the build output. This is the default if packaging is not specified. ZIP: CodeBuild creates in the output bucket a ZIP file that contains the build output. overrideArtifactName (boolean) --- If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique. encryptionDisabled (boolean) --- Set to true if you do not want your output artifacts encrypted. This option is valid only if your artifacts type is Amazon S3. If this is set with another artifacts type, an invalidInputException is thrown. artifactIdentifier (string) --- An identifier for this artifact definition. bucketOwnerAccess (string) --- Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects. This property can be one of the following values: NONE The bucket owner does not have access to the objects. This is the default. READ_ONLY The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects. FULL The bucket owner has full access to the objects. Object ownership is determined by the following criteria: If the bucket is configured with the Bucket owner preferred setting, the bucket owner owns the objects. The uploading account will have object access as specified by the bucket's policy. Otherwise, the uploading account retains ownership of the objects. For more information about Amazon S3 object ownership, see Controlling ownership of uploaded objects using S3 Object Ownership in the Amazon Simple Storage Service User Guide.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of build output artifact. Valid values include:",
+          "nested_params": []
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "description": "Information about the build output artifact location:",
+          "nested_params": []
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Along with namespaceType and name, the pattern that CodeBuild uses to name and store the output artifact:",
+          "nested_params": []
+        },
+        {
+          "name": "namespaceType",
+          "type": "string",
+          "required": false,
+          "description": "Along with path and name, the pattern that CodeBuild uses to determine the name and location to store the output artifact:",
+          "nested_params": []
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Along with path and namespaceType, the pattern that CodeBuild uses to name and store the output artifact:",
+          "nested_params": []
+        },
+        {
+          "name": "packaging",
+          "type": "string",
+          "required": false,
+          "description": "The type of build output artifact to create:",
+          "nested_params": []
+        },
+        {
+          "name": "overrideArtifactName",
+          "type": "boolean",
+          "required": false,
+          "description": "If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique.",
+          "nested_params": []
+        },
+        {
+          "name": "encryptionDisabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Set to true if you do not want your output artifacts encrypted. This option is valid only if your artifacts type is Amazon S3. If this is set with another artifacts type, an invalidInputException is thrown.",
+          "nested_params": []
+        },
+        {
+          "name": "artifactIdentifier",
+          "type": "string",
+          "required": false,
+          "description": "An identifier for this artifact definition.",
+          "nested_params": []
+        },
+        {
+          "name": "bucketOwnerAccess",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects. This property can be one of the following values: The bucket owner does not have access to the objects. This is the default. The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects. The bucket owner has full access to the objects. Object ownership is determined by the following criteria:",
+          "nested_params": [
+            {
+              "name": "Bucket owner preferred",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "secondaryArtifactsOverride",
+      "type": "list",
+      "required": true,
+      "description": "An array of ProjectArtifacts objects. (dict) --- Information about the build output artifacts for the build project. The type of build output artifact. Valid values include: CODEPIPELINE: The build project has build output generated through CodePipeline. NO_ARTIFACTS: The build project does not produce any build output. S3: The build project stores build output in Amazon S3. location (string) --- Information about the build output artifact location: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. This is because CodePipeline manages its build output locations instead of CodeBuild. If type is set to NO_ARTIFACTS, this value is ignored if specified, because no build output is produced. If type is set to S3, this is the name of the output bucket. path (string) --- Along with namespaceType and name, the pattern that CodeBuild uses to name and store the output artifact: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. This is because CodePipeline manages its build output names instead of CodeBuild. If type is set to S3, this is the path to the output artifact. If path is not specified, path is not used. For example, if path is set to MyArtifacts, namespaceType is set to NONE, and name is set to MyArtifact.zip, the output artifact is stored in the output bucket at MyArtifacts/MyArtifact.zip. namespaceType (string) --- Along with path and name, the pattern that CodeBuild uses to determine the name and location to store the output artifact: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. If type is set to S3, valid values include: BUILD_ID: Include the build ID in the location of the build output artifact. NONE: Do not include the build ID. This is the default if namespaceType is not specified. For example, if path is set to MyArtifacts, namespaceType is set to BUILD_ID, and name is set to MyArtifact.zip, the output artifact is stored in MyArtifacts/<build-ID>/MyArtifact.zip. name (string) --- Along with path and namespaceType, the pattern that CodeBuild uses to name and store the output artifact: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. If type is set to S3, this is the name of the output artifact object. If you set the name to be a forward slash ('/'), the artifact is stored in the root of the output bucket. For example: If path is set to MyArtifacts, namespaceType is set to BUILD_ID, and name is set to MyArtifact.zip, then the output artifact is stored in MyArtifacts/<build-ID>/MyArtifact.zip. If path is empty, namespaceType is set to NONE, and name is set to ' /', the output artifact is stored in the root of the output bucket. If path is set to MyArtifacts, namespaceType is set to BUILD_ID, and name is set to ' /', the output artifact is stored in MyArtifacts/<build-ID>. packaging (string) --- The type of build output artifact to create: If type is set to CODEPIPELINE, CodePipeline ignores this value if specified. This is because CodePipeline manages its build output artifacts instead of CodeBuild. If type is set to S3, valid values include: NONE: CodeBuild creates in the output bucket a folder that contains the build output. This is the default if packaging is not specified. ZIP: CodeBuild creates in the output bucket a ZIP file that contains the build output. overrideArtifactName (boolean) --- If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique. encryptionDisabled (boolean) --- Set to true if you do not want your output artifacts encrypted. This option is valid only if your artifacts type is Amazon S3. If this is set with another artifacts type, an invalidInputException is thrown. artifactIdentifier (string) --- An identifier for this artifact definition. bucketOwnerAccess (string) --- Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects. This property can be one of the following values: NONE The bucket owner does not have access to the objects. This is the default. READ_ONLY The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects. FULL The bucket owner has full access to the objects. Object ownership is determined by the following criteria: If the bucket is configured with the Bucket owner preferred setting, the bucket owner owns the objects. The uploading account will have object access as specified by the bucket's policy. Otherwise, the uploading account retains ownership of the objects. For more information about Amazon S3 object ownership, see Controlling ownership of uploaded objects using S3 Object Ownership in the Amazon Simple Storage Service User Guide.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of build output artifact. Valid values include:",
+          "nested_params": []
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "description": "Information about the build output artifact location:",
+          "nested_params": []
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Along with namespaceType and name, the pattern that CodeBuild uses to name and store the output artifact:",
+          "nested_params": []
+        },
+        {
+          "name": "namespaceType",
+          "type": "string",
+          "required": false,
+          "description": "Along with path and name, the pattern that CodeBuild uses to determine the name and location to store the output artifact:",
+          "nested_params": []
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Along with path and namespaceType, the pattern that CodeBuild uses to name and store the output artifact:",
+          "nested_params": []
+        },
+        {
+          "name": "packaging",
+          "type": "string",
+          "required": false,
+          "description": "The type of build output artifact to create:",
+          "nested_params": []
+        },
+        {
+          "name": "overrideArtifactName",
+          "type": "boolean",
+          "required": false,
+          "description": "If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique.",
+          "nested_params": []
+        },
+        {
+          "name": "encryptionDisabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Set to true if you do not want your output artifacts encrypted. This option is valid only if your artifacts type is Amazon S3. If this is set with another artifacts type, an invalidInputException is thrown.",
+          "nested_params": []
+        },
+        {
+          "name": "artifactIdentifier",
+          "type": "string",
+          "required": false,
+          "description": "An identifier for this artifact definition.",
+          "nested_params": []
+        },
+        {
+          "name": "bucketOwnerAccess",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects. This property can be one of the following values: The bucket owner does not have access to the objects. This is the default. The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects. The bucket owner has full access to the objects. Object ownership is determined by the following criteria:",
+          "nested_params": [
+            {
+              "name": "Bucket owner preferred",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "environmentVariablesOverride",
+      "type": "list",
+      "required": true,
+      "description": "A set of environment variables that overrides, for this build only, the latest ones already defined in the build project. (dict) --- Information about an environment variable for a build project or a build. The name or key of the environment variable. The value of the environment variable. type (string) --- The type of environment variable. Valid values include: PARAMETER_STORE: An environment variable stored in Systems Manager Parameter Store. For environment variables of this type, specify the name of the parameter as the value of the EnvironmentVariable. The parameter value will be substituted for the name at runtime. You can also define Parameter Store environment variables in the buildspec. To learn how to do so, see env/parameter-store in the CodeBuild User Guide. PLAINTEXT: An environment variable in plain text format. This is the default value. SECRETS_MANAGER: An environment variable stored in Secrets Manager. For environment variables of this type, specify the name of the secret as the value of the EnvironmentVariable. The secret value will be substituted for the name at runtime. You can also define Secrets Manager environment variables in the buildspec. To learn how to do so, see env/secrets-manager in the CodeBuild User Guide.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name or key of the environment variable.",
+          "nested_params": []
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the environment variable.",
+          "nested_params": []
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of environment variable. Valid values include:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "sourceTypeOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "sourceLocationOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "sourceAuthOverride",
+      "type": "dict",
+      "required": true,
+      "description": "An authorization type for this build that overrides the one defined in the build project. This override applies only if the build project's source is BitBucket, GitHub, GitLab, or GitLab Self Managed. The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER. resource (string) --- The resource value that applies to the specified authorization type.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER.",
+          "nested_params": []
+        },
+        {
+          "name": "resource",
+          "type": "string",
+          "required": false,
+          "description": "The resource value that applies to the specified authorization type.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "gitCloneDepthOverride",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "gitSubmodulesConfigOverride",
+      "type": "dict",
+      "required": true,
+      "description": "Information about the Git submodules configuration for this build of an CodeBuild build project. Set to true to fetch Git submodules for your CodeBuild build project.",
+      "nested_params": [
+        {
+          "name": "fetchSubmodules",
+          "type": "boolean",
+          "required": false,
+          "description": "Set to true to fetch Git submodules for your CodeBuild build project.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "buildspecOverride",
+      "type": "string",
+      "required": false,
+      "description": "A buildspec file declaration that overrides the latest one defined in the build project, for this build only. The buildspec defined on the project is not changed. If this value is set, it can be either an inline buildspec definition, the path to an alternate buildspec file relative to the value of the built-in CODEBUILD_SRC_DIR environment variable, or the path to an S3 bucket. The bucket must be in the same Amazon Web Services Region as the build project. Specify the buildspec file using its ARN (for example, arn:aws:s3:::my-codebuild-sample2/buildspec.yml). If this value is not provided or is set to an empty string, the source code must contain a buildspec file in its root directory. For more information, see Buildspec File Name and Storage Location.",
+      "nested_params": []
+    },
+    {
+      "name": "insecureSslOverride",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "reportBuildStatusOverride",
+      "type": "boolean",
+      "required": false,
+      "description": "Set to true to report to your source provider the status of a build's start and completion. If you use this option with a source provider other than GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket, an invalidInputException is thrown. To be able to report the build status to the source provider, the user associated with the source provider must have write access to the repo. If the user does not have write access, the build status cannot be updated. For more information, see Source provider access in the CodeBuild User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "buildStatusConfigOverride",
+      "type": "dict",
+      "required": false,
+      "description": "Contains information that defines how the build project reports the build status to the source provider. This option is only used when the source provider is GITHUB, GITHUB_ENTERPRISE, or BITBUCKET. context (string) --- Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider. Bitbucket This parameter is used for the name parameter in the Bitbucket commit status. For more information, see build in the Bitbucket API documentation. GitHub/GitHub Enterprise Server This parameter is used for the context parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide. targetUrl (string) --- Specifies the target url of the build status CodeBuild sends to the source provider. Bitbucket This parameter is used for the url parameter in the Bitbucket commit status. GitHub/GitHub Enterprise Server This parameter is used for the target_url parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide.",
+      "nested_params": [
+        {
+          "name": "context",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider. This parameter is used for the name parameter in the Bitbucket commit status. For more information, see build in the Bitbucket API documentation. This parameter is used for the context parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide.",
+          "nested_params": []
+        },
+        {
+          "name": "targetUrl",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the target url of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider. This parameter is used for the url parameter in the Bitbucket commit status. For more information, see build in the Bitbucket API documentation. This parameter is used for the target_url parameter in the GitHub commit status. For more information, see Create a commit status in the GitHub developer guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "environmentTypeOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "imageOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "computeTypeOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "certificateOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "cacheOverride",
+      "type": "dict",
+      "required": true,
+      "description": "A ProjectCache object specified for this build that overrides the one defined in the build project. The type of cache used by the build project. Valid values include: NO_CACHE: The build project does not use any cache. S3: The build project reads and writes from and to S3. LOCAL: The build project stores a cache locally on a build host that is only available to that build host. location (string) --- Information about the cache location: NO_CACHE or LOCAL: This value is ignored. S3: This is the S3 bucket name/prefix. modes (list) --- An array of strings that specify the local cache modes. You can use one or more local cache modes at the same time. This is only used for LOCAL cache types. Possible values are: LOCAL_SOURCE_CACHE Caches Git metadata for primary and secondary sources. After the cache is created, subsequent builds pull only the change between commits. This mode is a good choice for projects with a clean working directory and a source that is a large Git repository. If you choose this option and your project does not use a Git repository (GitHub, GitHub Enterprise, or Bitbucket), the option is ignored. LOCAL_DOCKER_LAYER_CACHE Caches existing Docker layers. This mode is a good choice for projects that build or pull large Docker images. It can prevent the performance issues caused by pulling large Docker images down from the network. Caches directories you specify in the buildspec file. This mode is a good choice if your build scenario is not suited to one of the other three local cache modes. If you use a custom cache: Only directories can be specified for caching. You cannot specify individual files. Symlinks are used to reference cached directories. Cached directories are linked to your build before it downloads its project sources. Cached items are overridden if a source item has the same name. Directories are specified using cache paths in the buildspec file. (string) --- cacheNamespace (string) --- Defines the scope of the cache. You can use this namespace to share a cache across multiple projects. For more information, see Cache sharing between projects in the CodeBuild User Guide.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of cache used by the build project. Valid values include:",
+          "nested_params": []
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "description": "Information about the cache location:",
+          "nested_params": []
+        },
+        {
+          "name": "modes",
+          "type": "list",
+          "required": false,
+          "description": "An array of strings that specify the local cache modes. You can use one or more local cache modes at the same time. This is only used for LOCAL cache types. Possible values are: Caches Git metadata for primary and secondary sources. After the cache is created, subsequent builds pull only the change between commits. This mode is a good choice for projects with a clean working directory and a source that is a large Git repository. If you choose this option and your project does not use a Git repository (GitHub, GitHub Enterprise, or Bitbucket), the option is ignored. Caches existing Docker layers. This mode is a good choice for projects that build or pull large Docker images. It can prevent the performance issues caused by pulling large Docker images down from the network. Caches directories you specify in the buildspec file. This mode is a good choice if your build scenario is not suited to one of the other three local cache modes. If you use a custom cache:",
+          "nested_params": []
+        },
+        {
+          "name": "cacheNamespace",
+          "type": "string",
+          "required": false,
+          "description": "Defines the scope of the cache. You can use this namespace to share a cache across multiple projects. For more information, see Cache sharing between projects in the CodeBuild User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "serviceRoleOverride",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "privilegedModeOverride",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "timeoutInMinutesOverride",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "queuedTimeoutInMinutesOverride",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "encryptionKeyOverride",
+      "type": "string",
+      "required": false,
+      "description": "The Key Management Service customer master key (CMK) that overrides the one specified in the build project. The CMK key encrypts the build output artifacts. You can specify either the Amazon Resource Name (ARN) of the CMK or, if available, the CMK's alias (using the format alias/<alias-name>).",
+      "nested_params": []
+    },
+    {
+      "name": "idempotencyToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "logsConfigOverride",
+      "type": "dict",
+      "required": true,
+      "description": "Log settings for this build that override the log settings defined in the build project. cloudWatchLogs (dict) --- Information about CloudWatch Logs for a build project. CloudWatch Logs are enabled by default. The current status of the logs in CloudWatch Logs for a build project. Valid values are: ENABLED: CloudWatch Logs are enabled for this build project. DISABLED: CloudWatch Logs are not enabled for this build project. groupName (string) --- The group name of the logs in CloudWatch Logs. For more information, see Working with Log Groups and Log Streams. streamName (string) --- The prefix of the stream name of the CloudWatch Logs. s3Logs (dict) --- Information about logs built to an S3 bucket for a build project. S3 logs are not enabled by default. The current status of the S3 build logs. Valid values are: ENABLED: S3 build logs are enabled for this build project. DISABLED: S3 build logs are not enabled for this build project. location (string) --- The ARN of an S3 bucket and the path prefix for S3 logs. If your Amazon S3 bucket name is my-bucket, and your path prefix is build-log, then acceptable formats are my-bucket/build-log or arn:aws:s3:::my-bucket/build-log. encryptionDisabled (boolean) --- Set to true if you do not want your S3 build log output encrypted. By default S3 build logs are encrypted. bucketOwnerAccess (string) --- Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects. This property can be one of the following values: NONE The bucket owner does not have access to the objects. This is the default. READ_ONLY The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects. FULL The bucket owner has full access to the objects. Object ownership is determined by the following criteria: If the bucket is configured with the Bucket owner preferred setting, the bucket owner owns the objects. The uploading account will have object access as specified by the bucket's policy. Otherwise, the uploading account retains ownership of the objects. For more information about Amazon S3 object ownership, see Controlling ownership of uploaded objects using S3 Object Ownership in the Amazon Simple Storage Service User Guide.",
+      "nested_params": [
+        {
+          "name": "cloudWatchLogs",
+          "type": "dict",
+          "required": false,
+          "description": "Information about CloudWatch Logs for a build project. CloudWatch Logs are enabled by default.",
+          "nested_params": [
+            {
+              "name": "status",
+              "type": "string",
+              "required": false,
+              "description": "The current status of the logs in CloudWatch Logs for a build project. Valid values are:",
+              "nested_params": []
+            },
+            {
+              "name": "groupName",
+              "type": "string",
+              "required": false,
+              "description": "The group name of the logs in CloudWatch Logs. For more information, see Working with Log Groups and Log Streams.",
+              "nested_params": []
+            },
+            {
+              "name": "streamName",
+              "type": "string",
+              "required": false,
+              "description": "The prefix of the stream name of the CloudWatch Logs. For more information, see Working with Log Groups and Log Streams.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "s3Logs",
+          "type": "dict",
+          "required": false,
+          "description": "Information about logs built to an S3 bucket for a build project. S3 logs are not enabled by default.",
+          "nested_params": [
+            {
+              "name": "status",
+              "type": "string",
+              "required": false,
+              "description": "The current status of the S3 build logs. Valid values are:",
+              "nested_params": []
+            },
+            {
+              "name": "location",
+              "type": "string",
+              "required": false,
+              "description": "The ARN of an S3 bucket and the path prefix for S3 logs. If your Amazon S3 bucket name is my-bucket, and your path prefix is build-log, then acceptable formats are my-bucket/build-log or arn:aws:s3:::my-bucket/build-log.",
+              "nested_params": []
+            },
+            {
+              "name": "encryptionDisabled",
+              "type": "boolean",
+              "required": false,
+              "description": "Set to true if you do not want your S3 build log output encrypted. By default S3 build logs are encrypted.",
+              "nested_params": []
+            },
+            {
+              "name": "bucketOwnerAccess",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects. This property can be one of the following values: The bucket owner does not have access to the objects. This is the default. The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects. The bucket owner has full access to the objects. Object ownership is determined by the following criteria:",
+              "nested_params": [
+                {
+                  "name": "Bucket owner preferred",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "registryCredentialOverride",
+      "type": "dict",
+      "required": true,
+      "description": "The credentials for access to a private registry. The Amazon Resource Name (ARN) or name of credentials created using Secrets Manager. The service that created the credentials to access a private Docker registry. The valid value, SECRETS_MANAGER, is for Secrets Manager.",
+      "nested_params": [
+        {
+          "name": "credential",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) or name of credentials created using Secrets Manager.",
+          "nested_params": []
+        },
+        {
+          "name": "credentialProvider",
+          "type": "string",
+          "required": false,
+          "description": "The service that created the credentials to access a private Docker registry. The valid value, SECRETS_MANAGER, is for Secrets Manager.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "imagePullCredentialsTypeOverride",
+      "type": "string",
+      "required": false,
+      "description": "The type of credentials CodeBuild uses to pull images in your build. There are two valid values: CODEBUILD Specifies that CodeBuild uses its own credentials. This requires that you modify your ECR repository policy to trust CodeBuild's service principal. SERVICE_ROLE Specifies that CodeBuild uses your build project's service role. When using a cross-account or private registry image, you must use SERVICE_ROLE credentials. When using an CodeBuild curated image, you must use CODEBUILD credentials.",
+      "nested_params": []
+    },
+    {
+      "name": "debugSessionEnabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "fleetOverride",
+      "type": "dict",
+      "required": false,
+      "description": "A ProjectFleet object specified for this build that overrides the one defined in the build project. fleetArn (string) --- Specifies the compute fleet ARN for the build project.",
+      "nested_params": [
+        {
+          "name": "fleetArn",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the compute fleet ARN for the build project.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "autoRetryLimitOverride",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "id",
+              "type": "string",
+              "description": "The unique ID for the build.",
+              "nested_items": []
+            },
+            {
+              "name": "arn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the build.",
+              "nested_items": []
+            },
+            {
+              "name": "buildNumber",
+              "type": "integer",
+              "description": "The number of the build. For each project, the buildNumber of its first build is 1. The buildNumber of each subsequent build is incremented by 1. If a build is deleted, the buildNumber of other builds does not change.",
+              "nested_items": []
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "description": "When the build process started, expressed in Unix time format.",
+              "nested_items": []
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "description": "When the build process ended, expressed in Unix time format.",
+              "nested_items": []
+            },
+            {
+              "name": "currentPhase",
+              "type": "string",
+              "description": "The current build phase.",
+              "nested_items": []
+            },
+            {
+              "name": "buildStatus",
+              "type": "string",
+              "description": "The current status of the build. Valid values include:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED: The build failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAULT: The build faulted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IN_PROGRESS: The build is still in progress.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "STOPPED: The build stopped.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SUCCEEDED: The build succeeded.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TIMED_OUT: The build timed out.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "sourceVersion",
+              "type": "string",
+              "description": "Any version identifier for the version of the source code to be built. If sourceVersion is specified at the project level, then this sourceVersion (at the build level) takes precedence.",
+              "nested_items": []
+            },
+            {
+              "name": "resolvedSourceVersion",
+              "type": "string",
+              "description": "An identifier for the version of this build's source code.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For CodeCommit, GitHub, GitHub Enterprise, and BitBucket, the commit ID.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For CodePipeline, the source revision provided by CodePipeline.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For Amazon S3, this does not apply.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "projectName",
+              "type": "string",
+              "description": "The name of the CodeBuild project.",
+              "nested_items": []
+            },
+            {
+              "name": "phases",
+              "type": "list",
+              "description": "Information about all previous build phases that are complete and information about any current build phase that is not yet complete.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "phaseType",
+                      "type": "string",
+                      "description": "The name of the build phase. Valid values include:",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "phaseStatus",
+                      "type": "string",
+                      "description": "The current status of the build phase. Valid values include:",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "startTime",
+                      "type": "datetime",
+                      "description": "When the build phase started, expressed in Unix time format.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "endTime",
+                      "type": "datetime",
+                      "description": "When the build phase ended, expressed in Unix time format.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "durationInSeconds",
+                      "type": "integer",
+                      "description": "How long, in seconds, between the starting and ending times of the build's phase.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "contexts",
+                      "type": "list",
+                      "description": "Additional information about a build phase, especially to help troubleshoot a failed build.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "statusCode",
+                              "type": "string",
+                              "description": "The status code for the context of the build phase.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "message",
+                              "type": "string",
+                              "description": "An explanation of the build phase's context. This might include a command ID and an exit code.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The type of repository that contains the source code to be built. Valid values include:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "BITBUCKET: The source code is in a Bitbucket repository.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CODECOMMIT: The source code is in an CodeCommit repository.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CODEPIPELINE: The source code settings are specified in the source action of a pipeline in CodePipeline.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "GITHUB: The source code is in a GitHub repository.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "GITHUB_ENTERPRISE: The source code is in a GitHub Enterprise Server repository.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "GITLAB: The source code is in a GitLab repository.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "GITLAB_SELF_MANAGED: The source code is in a self-managed GitLab repository.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NO_SOURCE: The project does not have input source code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "S3: The source code is in an Amazon S3 bucket.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "location",
+                  "type": "string",
+                  "description": "Information about the location of the source code to be built. Valid values include:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For source code settings that are specified in the source action of a pipeline in CodePipeline, location should not be specified. If it is specified, CodePipeline ignores it. This is because CodePipeline uses the settings in a pipeline's source action instead of this value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "for example, https://git-codecommit.<region-ID>.amazonaws.com/v1/repos/<repo-name>",
+                      "description": "For source code in an CodeCommit repository, the HTTPS clone URL to the repository that contains the source code and the buildspec file (for example, https://git-codecommit.<region-ID>.amazonaws.com/v1/repos/<repo-name>).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "for example, <bucket-name>/<path>/<object-name>.zip",
+                      "description": "For source code in an Amazon S3 input bucket, one of the following.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "for example, <bucket-name>/<path>/<object-name>.zip",
+                          "description": "The path to the ZIP file that contains the source code (for example, <bucket-name>/<path>/<object-name>.zip).",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "for example, <bucket-name>/<path-to-source-code>/<folder>/",
+                          "description": "The path to the folder that contains the source code (for example, <bucket-name>/<path-to-source-code>/<folder>/).",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Authorize application",
+                      "type": "or reconnect",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Authorize application",
+                      "type": "or reconnect",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Confirm access to your account",
+                      "type": "or reconnect",
+                      "description": "",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "gitCloneDepth",
+                  "type": "integer",
+                  "description": "Information about the Git clone depth for the build project.",
+                  "nested_items": []
+                },
+                {
+                  "name": "gitSubmodulesConfig",
+                  "type": "dict",
+                  "description": "Information about the Git submodules configuration for the build project.",
+                  "nested_items": [
+                    {
+                      "name": "fetchSubmodules",
+                      "type": "boolean",
+                      "description": "Set to true to fetch Git submodules for your CodeBuild build project.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "buildspec",
+                  "type": "string",
+                  "description": "The buildspec file declaration to use for the builds in this build project.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "resource",
+                      "type": "string",
+                      "description": "The resource value that applies to the specified authorization type.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "reportBuildStatus",
+                  "type": "boolean",
+                  "description": "Set to true to report the status of a build's start and finish to your source provider. This option is valid only when your source provider is GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, GitLab, GitLab Self Managed, or Bitbucket. If this is set and you use a different source provider, an invalidInputException is thrown.",
+                  "nested_items": []
+                },
+                {
+                  "name": "buildStatusConfig",
+                  "type": "dict",
+                  "description": "Contains information that defines how the build project reports the build status to the source provider. This option is only used when the source provider is GITHUB, GITHUB_ENTERPRISE, or BITBUCKET.",
+                  "nested_items": [
+                    {
+                      "name": "context",
+                      "type": "string",
+                      "description": "Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "targetUrl",
+                      "type": "string",
+                      "description": "Specifies the target url of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "insecureSsl",
+                  "type": "boolean",
+                  "description": "Enable this flag to ignore SSL warnings while connecting to the project source code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "sourceIdentifier",
+                  "type": "string",
+                  "description": "An identifier for this project source. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "secondarySources",
+              "type": "list",
+              "description": "An array of ProjectSource objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The type of repository that contains the source code to be built. Valid values include:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "BITBUCKET: The source code is in a Bitbucket repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CODECOMMIT: The source code is in an CodeCommit repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CODEPIPELINE: The source code settings are specified in the source action of a pipeline in CodePipeline.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "GITHUB: The source code is in a GitHub repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "GITHUB_ENTERPRISE: The source code is in a GitHub Enterprise Server repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "GITLAB: The source code is in a GitLab repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "GITLAB_SELF_MANAGED: The source code is in a self-managed GitLab repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NO_SOURCE: The project does not have input source code.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "S3: The source code is in an Amazon S3 bucket.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "location",
+                      "type": "string",
+                      "description": "Information about the location of the source code to be built. Valid values include:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For source code settings that are specified in the source action of a pipeline in CodePipeline, location should not be specified. If it is specified, CodePipeline ignores it. This is because CodePipeline uses the settings in a pipeline's source action instead of this value.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "for example, https://git-codecommit.<region-ID>.amazonaws.com/v1/repos/<repo-name>",
+                          "description": "For source code in an CodeCommit repository, the HTTPS clone URL to the repository that contains the source code and the buildspec file (for example, https://git-codecommit.<region-ID>.amazonaws.com/v1/repos/<repo-name>).",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "for example, <bucket-name>/<path>/<object-name>.zip",
+                          "description": "For source code in an Amazon S3 input bucket, one of the following.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "for example, <bucket-name>/<path>/<object-name>.zip",
+                              "description": "The path to the ZIP file that contains the source code (for example, <bucket-name>/<path>/<object-name>.zip).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "for example, <bucket-name>/<path-to-source-code>/<folder>/",
+                              "description": "The path to the folder that contains the source code (for example, <bucket-name>/<path-to-source-code>/<folder>/).",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Authorize application",
+                          "type": "or reconnect",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Authorize application",
+                          "type": "or reconnect",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Confirm access to your account",
+                          "type": "or reconnect",
+                          "description": "",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "gitCloneDepth",
+                      "type": "integer",
+                      "description": "Information about the Git clone depth for the build project.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "gitSubmodulesConfig",
+                      "type": "dict",
+                      "description": "Information about the Git submodules configuration for the build project.",
+                      "nested_items": [
+                        {
+                          "name": "fetchSubmodules",
+                          "type": "boolean",
+                          "description": "Set to true to fetch Git submodules for your CodeBuild build project.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "buildspec",
+                      "type": "string",
+                      "description": "The buildspec file declaration to use for the builds in this build project.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "description": "The authorization type to use. Valid options are OAUTH, CODECONNECTIONS, or SECRETS_MANAGER.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "resource",
+                          "type": "string",
+                          "description": "The resource value that applies to the specified authorization type.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "reportBuildStatus",
+                      "type": "boolean",
+                      "description": "Set to true to report the status of a build's start and finish to your source provider. This option is valid only when your source provider is GitHub, GitHub Enterprise, GitLab, GitLab Self Managed, GitLab, GitLab Self Managed, or Bitbucket. If this is set and you use a different source provider, an invalidInputException is thrown.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "buildStatusConfig",
+                      "type": "dict",
+                      "description": "Contains information that defines how the build project reports the build status to the source provider. This option is only used when the source provider is GITHUB, GITHUB_ENTERPRISE, or BITBUCKET.",
+                      "nested_items": [
+                        {
+                          "name": "context",
+                          "type": "string",
+                          "description": "Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "targetUrl",
+                          "type": "string",
+                          "description": "Specifies the target url of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "insecureSsl",
+                      "type": "boolean",
+                      "description": "Enable this flag to ignore SSL warnings while connecting to the project source code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "sourceIdentifier",
+                      "type": "string",
+                      "description": "An identifier for this project source. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "secondarySourceVersions",
+              "type": "list",
+              "description": "An array of ProjectSourceVersion objects. Each ProjectSourceVersion must be one of:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For CodeCommit: the commit ID, branch, or Git tag to use.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "for example, pr/25",
+                  "description": "For GitHub: the commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format pr/pull-request-ID (for example, pr/25). If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For Bitbucket: the commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For Amazon S3: the version ID of the object that represents the build input ZIP file to use.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "artifacts",
+              "type": "dict",
+              "description": "Information about the output artifacts for the build.",
+              "nested_items": [
+                {
+                  "name": "location",
+                  "type": "string",
+                  "description": "Information about the location of the build artifacts.",
+                  "nested_items": []
+                },
+                {
+                  "name": "sha256sum",
+                  "type": "string",
+                  "description": "The SHA-256 hash of the build artifact.",
+                  "nested_items": []
+                },
+                {
+                  "name": "md5sum",
+                  "type": "string",
+                  "description": "The MD5 hash of the build artifact.",
+                  "nested_items": []
+                },
+                {
+                  "name": "overrideArtifactName",
+                  "type": "boolean",
+                  "description": "If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique.",
+                  "nested_items": []
+                },
+                {
+                  "name": "encryptionDisabled",
+                  "type": "boolean",
+                  "description": "Information that tells you if encryption for build artifacts is disabled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "artifactIdentifier",
+                  "type": "string",
+                  "description": "An identifier for this artifact definition.",
+                  "nested_items": []
+                },
+                {
+                  "name": "bucketOwnerAccess",
+                  "type": "string",
+                  "description": "Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects.",
+                  "nested_items": [
+                    {
+                      "name": "Bucket owner preferred",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Otherwise, the uploading account retains ownership of the objects.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "secondaryArtifacts",
+              "type": "list",
+              "description": "An array of ProjectArtifacts objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "location",
+                      "type": "string",
+                      "description": "Information about the location of the build artifacts.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "sha256sum",
+                      "type": "string",
+                      "description": "The SHA-256 hash of the build artifact.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "md5sum",
+                      "type": "string",
+                      "description": "The MD5 hash of the build artifact.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "overrideArtifactName",
+                      "type": "boolean",
+                      "description": "If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "encryptionDisabled",
+                      "type": "boolean",
+                      "description": "Information that tells you if encryption for build artifacts is disabled.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "artifactIdentifier",
+                      "type": "string",
+                      "description": "An identifier for this artifact definition.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "bucketOwnerAccess",
+                      "type": "string",
+                      "description": "Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects.",
+                      "nested_items": [
+                        {
+                          "name": "Bucket owner preferred",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Otherwise, the uploading account retains ownership of the objects.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The type of cache used by the build project. Valid values include:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NO_CACHE: The build project does not use any cache.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "S3: The build project reads and writes from and to S3.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "LOCAL: The build project stores a cache locally on a build host that is only available to that build host.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "location",
+                  "type": "string",
+                  "description": "Information about the cache location:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NO_CACHE or LOCAL: This value is ignored.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "S3: This is the S3 bucket name/prefix.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "modes",
+                  "type": "list",
+                  "description": "An array of strings that specify the local cache modes. You can use one or more local cache modes at the same time. This is only used for LOCAL cache types.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Only directories can be specified for caching. You cannot specify individual files.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Symlinks are used to reference cached directories.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Cached directories are linked to your build before it downloads its project sources. Cached items are overridden if a source item has the same name. Directories are specified using cache paths in the buildspec file.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "cacheNamespace",
+                  "type": "string",
+                  "description": "Defines the scope of the cache. You can use this namespace to share a cache across multiple projects. For more information, see Cache sharing between projects in the CodeBuild User Guide.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "environment",
+              "type": "dict",
+              "description": "Information about the build environment for this build.",
+              "nested_items": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The type of build environment to use for related builds.",
+                  "nested_items": []
+                },
+                {
+                  "name": "image",
+                  "type": "string",
+                  "description": "The image tag or image digest that identifies the Docker image to use for this build project. Use the following formats:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For an image tag: <registry>/<repository>:<tag>. For example, in the Docker repository that CodeBuild uses to manage its Docker images, this would be aws/codebuild/standard:4.0.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For an image digest: <registry>/<repository>@<digest>. For example, to specify an image with the digest 'sha256:cbbf2f9a99b47fc460d422812b6a5adff7dfee951d8fa2e4a98caa0382cfbdbf,' use <registry>/<repository>@sha256:cbbf2f9a99b47fc460d422812b6a5adff7dfee951d8fa2e4a98caa0382cfbdbf.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "computeType",
+                  "type": "string",
+                  "description": "Information about the compute resources the build project uses. Available values include:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ATTRIBUTE_BASED_COMPUTE: Specify the amount of vCPUs, memory, disk space, and the type of machine.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "computeConfiguration",
+                  "type": "dict",
+                  "description": "The compute configuration of the build project. This is only required if computeType is set to ATTRIBUTE_BASED_COMPUTE.",
+                  "nested_items": [
+                    {
+                      "name": "vCpu",
+                      "type": "integer",
+                      "description": "The number of vCPUs of the instance type included in your fleet.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "memory",
+                      "type": "integer",
+                      "description": "The amount of memory of the instance type included in your fleet.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "disk",
+                      "type": "integer",
+                      "description": "The amount of disk space of the instance type included in your fleet.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "machineType",
+                      "type": "string",
+                      "description": "The machine type of the instance type included in your fleet.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "instanceType",
+                      "type": "string",
+                      "description": "The EC2 instance type to be launched in your fleet.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "fleetArn",
+                      "type": "string",
+                      "description": "Specifies the compute fleet ARN for the build project.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "environmentVariables",
+                  "type": "list",
+                  "description": "A set of environment variables to make available to builds for this build project.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name or key of the environment variable.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "string",
+                          "description": "The value of the environment variable.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "description": "The type of environment variable. Valid values include:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PARAMETER_STORE: An environment variable stored in Systems Manager Parameter Store. For environment variables of this type, specify the name of the parameter as the value of the EnvironmentVariable. The parameter value will be substituted for the name at runtime. You can also define Parameter Store environment variables in the buildspec. To learn how to do so, see env/parameter-store in the CodeBuild User Guide.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PLAINTEXT: An environment variable in plain text format. This is the default value.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "SECRETS_MANAGER: An environment variable stored in Secrets Manager. For environment variables of this type, specify the name of the secret as the value of the EnvironmentVariable. The secret value will be substituted for the name at runtime. You can also define Secrets Manager environment variables in the buildspec. To learn how to do so, see env/secrets-manager in the CodeBuild User Guide.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "privilegedMode",
+                  "type": "boolean",
+                  "description": "Enables running the Docker daemon inside a Docker container. Set to true only if the build project is used to build Docker images. Otherwise, a build that attempts to interact with the Docker daemon fails. The default setting is false.",
+                  "nested_items": []
+                },
+                {
+                  "name": "certificate",
+                  "type": "string",
+                  "description": "The ARN of the Amazon S3 bucket, path prefix, and object key that contains the PEM-encoded certificate for the build project. For more information, see certificate in the CodeBuild User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "registryCredential",
+                  "type": "dict",
+                  "description": "The credentials for access to a private registry.",
+                  "nested_items": [
+                    {
+                      "name": "credential",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) or name of credentials created using Secrets Manager.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "credentialProvider",
+                      "type": "string",
+                      "description": "The service that created the credentials to access a private Docker registry. The valid value, SECRETS_MANAGER, is for Secrets Manager.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "imagePullCredentialsType",
+                  "type": "string",
+                  "description": "The type of credentials CodeBuild uses to pull images in your build. There are two valid values:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CODEBUILD specifies that CodeBuild uses its own credentials. This requires that you modify your ECR repository policy to trust CodeBuild service principal.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SERVICE_ROLE specifies that CodeBuild uses your build project's service role.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "serviceRole",
+              "type": "string",
+              "description": "The name of a service role used for this build.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "groupName",
+                  "type": "string",
+                  "description": "The name of the CloudWatch Logs group for the build logs.",
+                  "nested_items": []
+                },
+                {
+                  "name": "streamName",
+                  "type": "string",
+                  "description": "The name of the CloudWatch Logs stream for the build logs.",
+                  "nested_items": []
+                },
+                {
+                  "name": "deepLink",
+                  "type": "string",
+                  "description": "The URL to an individual build log in CloudWatch Logs. The log stream is created during the PROVISIONING phase of a build and the deeplink will not be valid until it is created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "s3DeepLink",
+                  "type": "string",
+                  "description": "The URL to a build log in an S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "cloudWatchLogsArn",
+                  "type": "string",
+                  "description": "The ARN of the CloudWatch Logs stream for a build execution. Its format is arn:${Partition}:logs:${Region}:${Account}:log-group:${LogGroupName}:log-stream:${LogStreamName}. The CloudWatch Logs stream is created during the PROVISIONING phase of a build and the ARN will not be valid until it is created. For more information, see Resources Defined by CloudWatch Logs.",
+                  "nested_items": []
+                },
+                {
+                  "name": "s3LogsArn",
+                  "type": "string",
+                  "description": "The ARN of S3 logs for a build project. Its format is arn:${Partition}:s3:::${BucketName}/${ObjectName}. For more information, see Resources Defined by Amazon S3.",
+                  "nested_items": []
+                },
+                {
+                  "name": "cloudWatchLogs",
+                  "type": "dict",
+                  "description": "Information about CloudWatch Logs for a build project.",
+                  "nested_items": [
+                    {
+                      "name": "status",
+                      "type": "string",
+                      "description": "The current status of the logs in CloudWatch Logs for a build project. Valid values are:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ENABLED: CloudWatch Logs are enabled for this build project.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DISABLED: CloudWatch Logs are not enabled for this build project.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "groupName",
+                      "type": "string",
+                      "description": "The group name of the logs in CloudWatch Logs. For more information, see Working with Log Groups and Log Streams.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "streamName",
+                      "type": "string",
+                      "description": "The prefix of the stream name of the CloudWatch Logs. For more information, see Working with Log Groups and Log Streams.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "status",
+                      "type": "string",
+                      "description": "The current status of the S3 build logs. Valid values are:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ENABLED: S3 build logs are enabled for this build project.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DISABLED: S3 build logs are not enabled for this build project.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "location",
+                      "type": "string",
+                      "description": "The ARN of an S3 bucket and the path prefix for S3 logs. If your Amazon S3 bucket name is my-bucket, and your path prefix is build-log, then acceptable formats are my-bucket/build-log or arn:aws:s3:::my-bucket/build-log.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "encryptionDisabled",
+                      "type": "boolean",
+                      "description": "Set to true if you do not want your S3 build log output encrypted. By default S3 build logs are encrypted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "bucketOwnerAccess",
+                      "type": "string",
+                      "description": "Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects.",
+                      "nested_items": [
+                        {
+                          "name": "Bucket owner preferred",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Otherwise, the uploading account retains ownership of the objects.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "timeoutInMinutes",
+              "type": "integer",
+              "description": "How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to wait before timing out this build if it does not get marked as completed.",
+              "nested_items": []
+            },
+            {
+              "name": "queuedTimeoutInMinutes",
+              "type": "integer",
+              "description": "The number of minutes a build is allowed to be queued before it times out.",
+              "nested_items": []
+            },
+            {
+              "name": "buildComplete",
+              "type": "boolean",
+              "description": "Whether the build is complete. True if complete; otherwise, false.",
+              "nested_items": []
+            },
+            {
+              "name": "initiator",
+              "type": "string",
+              "description": "The entity that started the build. Valid values include:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "for example, codepipeline/my-demo-pipeline",
+                  "description": "If CodePipeline started the build, the pipeline's name (for example, codepipeline/my-demo-pipeline).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "for example, MyUserName",
+                  "description": "If a user started the build, the user's name (for example, MyUserName).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "If the Jenkins plugin for CodeBuild started the build, the string CodeBuild-Jenkins-Plugin.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "vpcConfig",
+              "type": "dict",
+              "description": "If your CodeBuild project accesses resources in an Amazon VPC, you provide this parameter that identifies the VPC ID and the list of security group IDs and subnet IDs. The security groups and subnets must belong to the same VPC. You must provide at least one security group and one subnet ID.",
+              "nested_items": [
+                {
+                  "name": "vpcId",
+                  "type": "string",
+                  "description": "The ID of the Amazon VPC.",
+                  "nested_items": []
+                },
+                {
+                  "name": "subnets",
+                  "type": "list",
+                  "description": "A list of one or more subnet IDs in your Amazon VPC.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "securityGroupIds",
+                  "type": "list",
+                  "description": "A list of one or more security groups IDs in your Amazon VPC.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "networkInterface",
+              "type": "dict",
+              "description": "Describes a network interface.",
+              "nested_items": [
+                {
+                  "name": "subnetId",
+                  "type": "string",
+                  "description": "The ID of the subnet.",
+                  "nested_items": []
+                },
+                {
+                  "name": "networkInterfaceId",
+                  "type": "string",
+                  "description": "The ID of the network interface.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "encryptionKey",
+              "type": "string",
+              "description": "The Key Management Service customer master key (CMK) to be used for encrypting the build output artifacts.",
+              "nested_items": []
+            },
+            {
+              "name": "exportedEnvironmentVariables",
+              "type": "list",
+              "description": "A list of exported environment variables for this build.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "description": "The name of the exported environment variable.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "description": "The value assigned to the exported environment variable.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "reportArns",
+              "type": "list",
+              "description": "An array of the ARNs associated with this build's reports.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "fileSystemLocations",
+              "type": "list",
+              "description": "An array of ProjectFileSystemLocation objects for a CodeBuild build project. A ProjectFileSystemLocation object specifies the identifier, location, mountOptions, mountPoint, and type of a file system created using Amazon Elastic File System.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The type of the file system. The one supported type is EFS.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "location",
+                      "type": "string",
+                      "description": "A string that specifies the location of the file system created by Amazon EFS. Its format is efs-dns-name:/directory-path. You can find the DNS name of file system when you view it in the Amazon EFS console. The directory path is a path to a directory in the file system that CodeBuild mounts. For example, if the DNS name of a file system is fs-abcd1234.efs.us-west-2.amazonaws.com, and its mount directory is my-efs-mount-directory, then the location is fs-abcd1234.efs.us-west-2.amazonaws.com:/my-efs-mount-directory.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "mountPoint",
+                      "type": "string",
+                      "description": "The location in the container where you mount the file system.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "identifier",
+                      "type": "string",
+                      "description": "The name used to access a file system created by Amazon EFS. CodeBuild creates an environment variable by appending the identifier in all capital letters to CODEBUILD_. For example, if you specify my_efs for identifier, a new environment variable is create named CODEBUILD_MY_EFS.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "mountOptions",
+                      "type": "string",
+                      "description": "The mount options for a file system created by Amazon EFS. The default mount options used by CodeBuild are nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2. For more information, see Recommended NFS Mount Options.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "debugSession",
+              "type": "dict",
+              "description": "Contains information about the debug session for this build.",
+              "nested_items": [
+                {
+                  "name": "sessionEnabled",
+                  "type": "boolean",
+                  "description": "Specifies if session debugging is enabled for this build.",
+                  "nested_items": []
+                },
+                {
+                  "name": "sessionTarget",
+                  "type": "string",
+                  "description": "Contains the identifier of the Session Manager session used for the build. To work with the paused build, you open this session to examine, control, and resume the build.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "buildBatchArn",
+              "type": "string",
+              "description": "The ARN of the batch build that this build is a member of, if applicable.",
+              "nested_items": []
+            },
+            {
+              "name": "autoRetryConfig",
+              "type": "dict",
+              "description": "Information about the auto-retry configuration for the build.",
+              "nested_items": [
+                {
+                  "name": "autoRetryLimit",
+                  "type": "integer",
+                  "description": "The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the RetryBuild API to automatically retry your build for up to 2 additional times.",
+                  "nested_items": []
+                },
+                {
+                  "name": "autoRetryNumber",
+                  "type": "integer",
+                  "description": "The number of times that the build has been retried. The initial build will have an auto-retry number of 0.",
+                  "nested_items": []
+                },
+                {
+                  "name": "nextAutoRetry",
+                  "type": "string",
+                  "description": "The build ARN of the auto-retried build triggered by the current build. The next auto-retry will be null for builds that don't trigger an auto-retry.",
+                  "nested_items": []
+                },
+                {
+                  "name": "previousAutoRetry",
+                  "type": "string",
+                  "description": "The build ARN of the build that triggered the current auto-retry build. The previous auto-retry will be null for the initial build.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

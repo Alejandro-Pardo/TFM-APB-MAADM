@@ -415,7 +415,7 @@
       "name": "storageConfiguration",
       "type": "dict",
       "required": true,
-      "description": "Specifies the configuration for the vector store used for the knowledge base. You must use the same configuration as when the knowledge base was created. mongoDbAtlasConfiguration (dict) --- Contains the storage configuration of the knowledge base in MongoDB Atlas. The collection name of the knowledge base in MongoDB Atlas. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that contains user credentials for your MongoDB Atlas cluster. The database name in your MongoDB Atlas cluster for your knowledge base. The endpoint URL of your MongoDB Atlas cluster for your knowledge base. endpointServiceName (string) --- The name of the VPC endpoint service in your account that is connected to your MongoDB Atlas cluster. Contains the names of the fields to which to map information about the vector store. The name of the field in which Amazon Bedrock stores metadata about the vector store. The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose. The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources. The name of the MongoDB Atlas vector search index. neptuneAnalyticsConfiguration (dict) --- Contains details about the Neptune Analytics configuration of the knowledge base in Amazon Neptune. For more information, see Create a vector index in Amazon Neptune Analytics.. The Amazon Resource Name (ARN) of the Neptune Analytics vector store. opensearchServerlessConfiguration (dict) --- Contains the storage configuration of the knowledge base in Amazon OpenSearch Service. The Amazon Resource Name (ARN) of the OpenSearch Service vector store. The name of the vector store. pineconeConfiguration (dict) --- Contains the storage configuration of the knowledge base in Pinecone. The endpoint URL for your index management page. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Pinecone API key. namespace (string) --- The namespace to be used to write new data to your database. rdsConfiguration (dict) --- Contains details about the storage configuration of the knowledge base in Amazon RDS. For more information, see Create a vector index in Amazon RDS. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Amazon RDS database. The name of your Amazon RDS database. The name of the field in which Amazon Bedrock stores the ID for each entry. The Amazon Resource Name (ARN) of the vector store. The name of the table in the database. redisEnterpriseCloudConfiguration (dict) --- Contains the storage configuration of the knowledge base in Redis Enterprise Cloud. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Redis Enterprise Cloud database. The endpoint URL of the Redis Enterprise Cloud database. The name of the vector index. The vector store service in which the knowledge base is stored.",
+      "description": "Specifies the configuration for the vector store used for the knowledge base. You must use the same configuration as when the knowledge base was created. mongoDbAtlasConfiguration (dict) --- Contains the storage configuration of the knowledge base in MongoDB Atlas. The collection name of the knowledge base in MongoDB Atlas. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that contains user credentials for your MongoDB Atlas cluster. The database name in your MongoDB Atlas cluster for your knowledge base. The endpoint URL of your MongoDB Atlas cluster for your knowledge base. endpointServiceName (string) --- The name of the VPC endpoint service in your account that is connected to your MongoDB Atlas cluster. Contains the names of the fields to which to map information about the vector store. The name of the field in which Amazon Bedrock stores metadata about the vector store. The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose. The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources. textIndexName (string) --- The name of the text search index in the MongoDB collection. This is required for using the hybrid search feature. The name of the MongoDB Atlas vector search index. neptuneAnalyticsConfiguration (dict) --- Contains details about the Neptune Analytics configuration of the knowledge base in Amazon Neptune. For more information, see Create a vector index in Amazon Neptune Analytics.. The Amazon Resource Name (ARN) of the Neptune Analytics vector store. opensearchManagedClusterConfiguration (dict) --- Contains details about the storage configuration of the knowledge base in OpenSearch Managed Cluster. For more information, see Create a vector index in Amazon OpenSearch Service. The Amazon Resource Name (ARN) of the OpenSearch domain. The endpoint URL the OpenSearch domain. The name of the vector store. opensearchServerlessConfiguration (dict) --- Contains the storage configuration of the knowledge base in Amazon OpenSearch Service. The Amazon Resource Name (ARN) of the OpenSearch Service vector store. pineconeConfiguration (dict) --- Contains the storage configuration of the knowledge base in Pinecone. The endpoint URL for your index management page. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Pinecone API key. namespace (string) --- The namespace to be used to write new data to your database. rdsConfiguration (dict) --- Contains details about the storage configuration of the knowledge base in Amazon RDS. For more information, see Create a vector index in Amazon RDS. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Amazon RDS database. The name of your Amazon RDS database. customMetadataField (string) --- Provide a name for the universal metadata field where Amazon Bedrock will store any custom metadata from your data source. The name of the field in which Amazon Bedrock stores the ID for each entry. The Amazon Resource Name (ARN) of the vector store. The name of the table in the database. redisEnterpriseCloudConfiguration (dict) --- Contains the storage configuration of the knowledge base in Redis Enterprise Cloud. The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Redis Enterprise Cloud database. The endpoint URL of the Redis Enterprise Cloud database. The name of the vector index. The vector store service in which the knowledge base is stored.",
       "nested_params": [
         {
           "name": "mongoDbAtlasConfiguration",
@@ -488,6 +488,13 @@
               ]
             },
             {
+              "name": "textIndexName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the text search index in the MongoDB collection. This is required for using the hybrid search feature.",
+              "nested_params": []
+            },
+            {
               "name": "vectorIndexName",
               "type": "string",
               "required": false,
@@ -529,6 +536,64 @@
               "type": "string",
               "required": false,
               "description": "The Amazon Resource Name (ARN) of the Neptune Analytics vector store.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "opensearchManagedClusterConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Contains details about the storage configuration of the knowledge base in OpenSearch Managed Cluster. For more information, see Create a vector index in Amazon OpenSearch Service.",
+          "nested_params": [
+            {
+              "name": "domainArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the OpenSearch domain.",
+              "nested_params": []
+            },
+            {
+              "name": "domainEndpoint",
+              "type": "string",
+              "required": false,
+              "description": "The endpoint URL the OpenSearch domain.",
+              "nested_params": []
+            },
+            {
+              "name": "fieldMapping",
+              "type": "dict",
+              "required": false,
+              "description": "Contains the names of the fields to which to map information about the vector store.",
+              "nested_params": [
+                {
+                  "name": "metadataField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the field in which Amazon Bedrock stores metadata about the vector store.",
+                  "nested_params": []
+                },
+                {
+                  "name": "textField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.",
+                  "nested_params": []
+                },
+                {
+                  "name": "vectorField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "vectorIndexName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the vector store.",
               "nested_params": []
             }
           ]
@@ -661,6 +726,13 @@
               "required": false,
               "description": "Contains the names of the fields to which to map information about the vector store.",
               "nested_params": [
+                {
+                  "name": "customMetadataField",
+                  "type": "string",
+                  "required": false,
+                  "description": "Provide a name for the universal metadata field where Amazon Bedrock will store any custom metadata from your data source.",
+                  "nested_params": []
+                },
                 {
                   "name": "metadataField",
                   "type": "string",
@@ -1309,6 +1381,12 @@
                       ]
                     },
                     {
+                      "name": "textIndexName",
+                      "type": "string",
+                      "description": "The name of the text search index in the MongoDB collection. This is required for using the hybrid search feature.",
+                      "nested_items": []
+                    },
+                    {
                       "name": "vectorIndexName",
                       "type": "string",
                       "description": "The name of the MongoDB Atlas vector search index.",
@@ -1344,6 +1422,56 @@
                       "name": "graphArn",
                       "type": "string",
                       "description": "The Amazon Resource Name (ARN) of the Neptune Analytics vector store.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "opensearchManagedClusterConfiguration",
+                  "type": "dict",
+                  "description": "Contains details about the storage configuration of the knowledge base in OpenSearch Managed Cluster. For more information, see Create a vector index in Amazon OpenSearch Service.",
+                  "nested_items": [
+                    {
+                      "name": "domainArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the OpenSearch domain.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "domainEndpoint",
+                      "type": "string",
+                      "description": "The endpoint URL the OpenSearch domain.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "fieldMapping",
+                      "type": "dict",
+                      "description": "Contains the names of the fields to which to map information about the vector store.",
+                      "nested_items": [
+                        {
+                          "name": "metadataField",
+                          "type": "string",
+                          "description": "The name of the field in which Amazon Bedrock stores metadata about the vector store.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "textField",
+                          "type": "string",
+                          "description": "The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "vectorField",
+                          "type": "string",
+                          "description": "The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "vectorIndexName",
+                      "type": "string",
+                      "description": "The name of the vector store.",
                       "nested_items": []
                     }
                   ]
@@ -1458,6 +1586,12 @@
                       "type": "dict",
                       "description": "Contains the names of the fields to which to map information about the vector store.",
                       "nested_items": [
+                        {
+                          "name": "customMetadataField",
+                          "type": "string",
+                          "description": "Provide a name for the universal metadata field where Amazon Bedrock will store any custom metadata from your data source.",
+                          "nested_items": []
+                        },
                         {
                           "name": "metadataField",
                           "type": "string",

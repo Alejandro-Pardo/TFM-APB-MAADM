@@ -1,0 +1,396 @@
+{
+  "method_name": "create_webhook",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/codebuild/client/create_webhook.html",
+  "description": "For an existing CodeBuild build project that has its source code stored in a GitHub or Bitbucket repository, enables CodeBuild to start rebuilding the source code every time a code change is pushed to the repository.",
+  "parameters": [
+    {
+      "name": "projectName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the CodeBuild project.",
+      "nested_params": []
+    },
+    {
+      "name": "branchFilter",
+      "type": "string",
+      "required": false,
+      "description": "A regular expression used to determine which repository branches are built when a webhook is triggered. If the name of a branch matches the regular expression, then it is built. If branchFilter is empty, then all branches are built.",
+      "nested_params": []
+    },
+    {
+      "name": "filterGroups",
+      "type": "list",
+      "required": true,
+      "description": "An array of arrays of WebhookFilter objects used to determine which webhooks are triggered. At least one WebhookFilter in the array must specify EVENT as its type. For a build to be triggered, at least one filter group in the filterGroups array must pass. For a filter group to pass, each of its filters must pass. (list) --- (dict) --- A filter used to determine which webhooks trigger a build. The type of webhook filter. There are 11 webhook filter types: EVENT, ACTOR_ACCOUNT_ID, HEAD_REF, BASE_REF, FILE_PATH, COMMIT_MESSAGE, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME, ORGANIZATION_NAME, and WORKFLOW_NAME. EVENT A webhook event triggers a build when the provided pattern matches one of nine event types: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_CLOSED, PULL_REQUEST_REOPENED, PULL_REQUEST_MERGED, RELEASED, PRERELEASED, and WORKFLOW_JOB_QUEUED. The EVENT patterns are specified as a comma-separated string. For example, PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED filters all push, pull request created, and pull request updated events. ACTOR_ACCOUNT_ID A webhook event triggers a build when a GitHub, GitHub Enterprise, or Bitbucket account ID matches the regular expression pattern. HEAD_REF A webhook event triggers a build when the head reference matches the regular expression pattern. For example, refs/heads/branch-name and refs/tags/tag-name. BASE_REF A webhook event triggers a build when the base reference matches the regular expression pattern. For example, refs/heads/branch-name. FILE_PATH A webhook triggers a build when the path of a changed file matches the regular expression pattern. COMMIT_MESSAGE A webhook triggers a build when the head commit message matches the regular expression pattern. TAG_NAME A webhook triggers a build when the tag name of the release matches the regular expression pattern. RELEASE_NAME A webhook triggers a build when the release name matches the regular expression pattern. REPOSITORY_NAME A webhook triggers a build when the repository name matches the regular expression pattern. ORGANIZATION_NAME A webhook triggers a build when the organization name matches the regular expression pattern. WORKFLOW_NAME A webhook triggers a build when the workflow name matches the regular expression pattern. For a WebHookFilter that uses EVENT type, a comma-separated string that specifies one or more events. For example, the webhook filter PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED allows all push, pull request created, and pull request updated events to trigger a build. For a WebHookFilter that uses any of the other filter types, a regular expression pattern. For example, a WebHookFilter that uses HEAD_REF for its type and the pattern ^refs/heads/ triggers a build when the head reference is a branch with a reference name refs/heads/branch-name. excludeMatchedPattern (boolean) --- Used to indicate that the pattern determines which webhook events do not trigger a build. If true, then a webhook event that does not match the pattern triggers a build. If false, then a webhook event that matches the pattern triggers a build.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of webhook filter. There are 11 webhook filter types: EVENT, ACTOR_ACCOUNT_ID, HEAD_REF, BASE_REF, FILE_PATH, COMMIT_MESSAGE, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME, ORGANIZATION_NAME, and WORKFLOW_NAME.",
+          "nested_params": []
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": false,
+          "description": "For a WebHookFilter that uses EVENT type, a comma-separated string that specifies one or more events. For example, the webhook filter PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED allows all push, pull request created, and pull request updated events to trigger a build. For a WebHookFilter that uses any of the other filter types, a regular expression pattern. For example, a WebHookFilter that uses HEAD_REF for its type and the pattern ^refs/heads/ triggers a build when the head reference is a branch with a reference name refs/heads/branch-name.",
+          "nested_params": []
+        },
+        {
+          "name": "excludeMatchedPattern",
+          "type": "boolean",
+          "required": false,
+          "description": "Used to indicate that the pattern determines which webhook events do not trigger a build. If true, then a webhook event that does not match the pattern triggers a build. If false, then a webhook event that matches the pattern triggers a build.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "buildType",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the type of build this webhook will trigger.",
+      "nested_params": []
+    },
+    {
+      "name": "manualCreation",
+      "type": "boolean",
+      "required": false,
+      "description": "If manualCreation is true, CodeBuild doesn't create a webhook in GitHub and instead returns payloadUrl and secret values for the webhook. The payloadUrl and secret values in the output can be used to manually create a webhook within GitHub.",
+      "nested_params": []
+    },
+    {
+      "name": "scopeConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The scope configuration for global or organization webhooks. The name of either the group, enterprise, or organization that will send webhook events to CodeBuild, depending on the type of webhook. domain (string) --- The domain of the GitHub Enterprise organization or the GitLab Self Managed group. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE or GITLAB_SELF_MANAGED. The type of scope for a GitHub or GitLab webhook. The scope default is GITHUB_ORGANIZATION.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of either the group, enterprise, or organization that will send webhook events to CodeBuild, depending on the type of webhook.",
+          "nested_params": []
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "required": false,
+          "description": "The domain of the GitHub Enterprise organization or the GitLab Self Managed group. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE or GITLAB_SELF_MANAGED.",
+          "nested_params": []
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "required": false,
+          "description": "The type of scope for a GitHub or GitLab webhook. The scope default is GITHUB_ORGANIZATION.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "url",
+              "type": "string",
+              "description": "The URL to the webhook.",
+              "nested_items": []
+            },
+            {
+              "name": "payloadUrl",
+              "type": "string",
+              "description": "The CodeBuild endpoint where webhook events are sent.",
+              "nested_items": []
+            },
+            {
+              "name": "secret",
+              "type": "string",
+              "description": "The secret token of the associated repository.",
+              "nested_items": []
+            },
+            {
+              "name": "branchFilter",
+              "type": "string",
+              "description": "A regular expression used to determine which repository branches are built when a webhook is triggered. If the name of a branch matches the regular expression, then it is built. If branchFilter is empty, then all branches are built.",
+              "nested_items": []
+            },
+            {
+              "name": "filterGroups",
+              "type": "list",
+              "description": "An array of arrays of WebhookFilter objects used to determine which webhooks are triggered. At least one WebhookFilter in the array must specify EVENT as its type.",
+              "nested_items": [
+                {
+                  "name": "type",
+                  "type": "list",
+                  "description": "(list) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "description": "The type of webhook filter. There are 11 webhook filter types: EVENT, ACTOR_ACCOUNT_ID, HEAD_REF, BASE_REF, FILE_PATH, COMMIT_MESSAGE, TAG_NAME, RELEASE_NAME, REPOSITORY_NAME, ORGANIZATION_NAME, and WORKFLOW_NAME.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "EVENT.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook event triggers a build when the provided pattern matches one of nine event types: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_CLOSED, PULL_REQUEST_REOPENED, PULL_REQUEST_MERGED, RELEASED, PRERELEASED, and WORKFLOW_JOB_QUEUED. The EVENT patterns are specified as a comma-separated string. For example, PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED filters all push, pull request created, and pull request updated events.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "ACTOR_ACCOUNT_ID.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook event triggers a build when a GitHub, GitHub Enterprise, or Bitbucket account ID matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "HEAD_REF.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook event triggers a build when the head reference matches the regular expression pattern. For example, refs/heads/branch-name and refs/tags/tag-name.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "BASE_REF.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook event triggers a build when the base reference matches the regular expression pattern. For example, refs/heads/branch-name.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "FILE_PATH.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the path of a changed file matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "COMMIT_MESSAGE.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the head commit message matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "TAG_NAME.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the tag name of the release matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "RELEASE_NAME.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the release name matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "REPOSITORY_NAME.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the repository name matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "ORGANIZATION_NAME.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the organization name matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "WORKFLOW_NAME.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A webhook triggers a build when the workflow name matches the regular expression pattern.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "pattern",
+                          "type": "string",
+                          "description": "For a WebHookFilter that uses EVENT type, a comma-separated string that specifies one or more events. For example, the webhook filter PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED allows all push, pull request created, and pull request updated events to trigger a build.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "excludeMatchedPattern",
+                          "type": "boolean",
+                          "description": "Used to indicate that the pattern determines which webhook events do not trigger a build. If true, then a webhook event that does not match the pattern triggers a build. If false, then a webhook event that matches the pattern triggers a build.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "buildType",
+              "type": "string",
+              "description": "Specifies the type of build this webhook will trigger.",
+              "nested_items": []
+            },
+            {
+              "name": "manualCreation",
+              "type": "boolean",
+              "description": "If manualCreation is true, CodeBuild doesn't create a webhook in GitHub and instead returns payloadUrl and secret values for the webhook. The payloadUrl and secret values in the output can be used to manually create a webhook within GitHub.",
+              "nested_items": []
+            },
+            {
+              "name": "lastModifiedSecret",
+              "type": "datetime",
+              "description": "A timestamp that indicates the last time a repository's secret token was modified.",
+              "nested_items": []
+            },
+            {
+              "name": "scopeConfiguration",
+              "type": "dict",
+              "description": "The scope configuration for global or organization webhooks.",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of either the group, enterprise, or organization that will send webhook events to CodeBuild, depending on the type of webhook.",
+                  "nested_items": []
+                },
+                {
+                  "name": "domain",
+                  "type": "string",
+                  "description": "The domain of the GitHub Enterprise organization or the GitLab Self Managed group. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE or GITLAB_SELF_MANAGED.",
+                  "nested_items": []
+                },
+                {
+                  "name": "scope",
+                  "type": "string",
+                  "description": "The type of scope for a GitHub or GitLab webhook. The scope default is GITHUB_ORGANIZATION.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The status of the webhook. Valid values include:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATING: The webhook is being created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATE_FAILED: The webhook has failed to create.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ACTIVE: The webhook has succeeded and is active.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETING: The webhook is being deleted.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "statusMessage",
+              "type": "string",
+              "description": "A message associated with the status of a webhook.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

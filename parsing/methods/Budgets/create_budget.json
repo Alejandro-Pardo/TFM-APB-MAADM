@@ -1,0 +1,500 @@
+{
+  "method_name": "create_budget",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/budgets/client/create_budget.html",
+  "description": "Creates a budget and, if included, notifications and subscribers.",
+  "parameters": [
+    {
+      "name": "AccountId",
+      "type": "string",
+      "required": true,
+      "description": "The accountId that is associated with the budget.",
+      "nested_params": []
+    },
+    {
+      "name": "Budget",
+      "type": "dict",
+      "required": true,
+      "description": "The budget object that you want to create. The name of a budget. The name must be unique within an account. The : and \\ characters, and the '/action/' substring, aren't allowed in BudgetName. BudgetLimit (dict) --- The total amount of cost, usage, RI utilization, RI coverage, Savings Plans utilization, or Savings Plans coverage that you want to track with your budget. BudgetLimit is required for cost or usage budgets, but optional for RI or Savings Plans utilization or coverage budgets. RI and Savings Plans utilization or coverage budgets default to 100. This is the only valid value for RI or Savings Plans utilization or coverage budgets. You can't use BudgetLimit with PlannedBudgetLimits for CreateBudget and UpdateBudget actions. The cost or usage amount that's associated with a budget forecast, actual spend, or budget threshold. The unit of measurement that's used for the budget forecast, actual spend, or budget threshold. PlannedBudgetLimits (dict) --- A map containing multiple BudgetLimit, including current or future limits. PlannedBudgetLimits is available for cost or usage budget and supports both monthly and quarterly TimeUnit. For monthly budgets, provide 12 months of PlannedBudgetLimits values. This must start from the current month and include the next 11 months. The key is the start of the month, UTC in epoch seconds. For quarterly budgets, provide four quarters of PlannedBudgetLimits value entries in standard calendar quarter increments. This must start from the current quarter and include the next three quarters. The key is the start of the quarter, UTC in epoch seconds. If the planned budget expires before 12 months for monthly or four quarters for quarterly, provide the PlannedBudgetLimits values only for the remaining periods. If the budget begins at a date in the future, provide PlannedBudgetLimits values from the start date of the budget. After all of the BudgetLimit values in PlannedBudgetLimits are used, the budget continues to use the last limit as the BudgetLimit. At that point, the planned budget provides the same experience as a fixed budget. DescribeBudget and DescribeBudgets response along with PlannedBudgetLimits also contain BudgetLimit representing the current month or quarter limit present in PlannedBudgetLimits. This only applies to budgets that are created with PlannedBudgetLimits. Budgets that are created without PlannedBudgetLimits only contain BudgetLimit. They don't contain PlannedBudgetLimits. (string) --- A generic string. (dict) --- The amount of cost or usage that's measured for a budget. Cost example: A Spend for 3 USD of costs has the following parameters: An Amount of 3 A Unit of USD Usage example: A Spend for 3 GB of S3 usage has the following parameters: An Amount of 3 A Unit of GB The cost or usage amount that's associated with a budget forecast, actual spend, or budget threshold. CostFilters (dict) --- The cost filters, such as Region, Service, LinkedAccount, Tag, or CostCategory, that are applied to a budget. Amazon Web Services Budgets supports the following services as a Service filter for RI budgets: Amazon EC2 Amazon Redshift Amazon Relational Database Service Amazon ElastiCache Amazon OpenSearch Service (string) --- A generic string. (list) --- (string) --- CostTypes (dict) --- The types of costs that are included in this COST budget. USAGE, RI_UTILIZATION, RI_COVERAGE, SAVINGS_PLANS_UTILIZATION, and SAVINGS_PLANS_COVERAGE budgets do not have CostTypes. IncludeTax (boolean) --- Specifies whether a budget includes taxes. The default value is true. IncludeSubscription (boolean) --- Specifies whether a budget includes subscriptions. UseBlended (boolean) --- Specifies whether a budget uses a blended rate. The default value is false. IncludeRefund (boolean) --- Specifies whether a budget includes refunds. IncludeCredit (boolean) --- Specifies whether a budget includes credits. IncludeUpfront (boolean) --- Specifies whether a budget includes upfront RI costs. IncludeRecurring (boolean) --- Specifies whether a budget includes recurring fees such as monthly RI fees. IncludeOtherSubscription (boolean) --- Specifies whether a budget includes non-RI subscription costs. IncludeSupport (boolean) --- Specifies whether a budget includes support subscription fees. IncludeDiscount (boolean) --- Specifies whether a budget includes discounts. UseAmortized (boolean) --- Specifies whether a budget uses the amortized rate. The length of time until a budget resets the actual and forecasted spend. TimePeriod (dict) --- The period of time that's covered by a budget. You set the start date and end date. The start date must come before the end date. The end date must come before 06/15/87 00:00 UTC. If you create your budget and don't specify a start date, Amazon Web Services defaults to the start of your chosen time period (DAILY, MONTHLY, QUARTERLY, or ANNUALLY). For example, if you created your budget on January 24, 2018, chose DAILY, and didn't set a start date, Amazon Web Services set your start date to 01/24/18 00:00 UTC. If you chose MONTHLY, Amazon Web Services set your start date to 01/01/18 00:00 UTC. If you didn't specify an end date, Amazon Web Services set your end date to 06/15/87 00:00 UTC. The defaults are the same for the Billing and Cost Management console and the API. You can change either date with the UpdateBudget operation. After the end date, Amazon Web Services deletes the budget and all the associated notifications and subscribers. Start (datetime) --- The start date for a budget. If you created your budget and didn't specify a start date, Amazon Web Services defaults to the start of your chosen time period (DAILY, MONTHLY, QUARTERLY, or ANNUALLY). You can change your start date with the UpdateBudget operation. End (datetime) --- The end date for a budget. You can change your end date with the UpdateBudget operation. CalculatedSpend (dict) --- The actual and forecasted cost or usage that the budget tracks. The amount of cost, usage, RI units, or Savings Plans units that you used. ForecastedSpend (dict) --- The amount of cost, usage, RI units, or Savings Plans units that you're forecasted to use. Specifies whether this budget tracks costs, usage, RI utilization, RI coverage, Savings Plans utilization, or Savings Plans coverage. LastUpdatedTime (datetime) --- The last time that you updated this budget. AutoAdjustData (dict) --- The parameters that determine the budget amount for an auto-adjusting budget. The string that defines whether your budget auto-adjusts based on historical or forecasted data. HistoricalOptions (dict) --- The parameters that define or describe the historical data that your auto-adjusting budget is based on. The number of budget periods included in the moving-average calculation that determines your auto-adjusted budget amount. The maximum value depends on the TimeUnit granularity of the budget: For the DAILY granularity, the maximum value is 60. For the MONTHLY granularity, the maximum value is 12. For the QUARTERLY granularity, the maximum value is 4. For the ANNUALLY granularity, the maximum value is 1. LookBackAvailablePeriods (integer) --- The integer that describes how many budget periods in your BudgetAdjustmentPeriod are included in the calculation of your current BudgetLimit. If the first budget period in your BudgetAdjustmentPeriod has no cost data, then that budget period isn't included in the average that determines your budget limit. For example, if you set BudgetAdjustmentPeriod as 4 quarters, but your account had no cost data in the first quarter, then only the last three quarters are included in the calculation. In this scenario, LookBackAvailablePeriods returns 3. You can't set your own LookBackAvailablePeriods. The value is automatically calculated from the BudgetAdjustmentPeriod and your historical cost data. LastAutoAdjustTime (datetime) --- The last time that your budget was auto-adjusted. FilterExpression (dict) --- The filtering dimensions for the budget and their corresponding values. Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Budgets APIs. And (list) --- Return results that match both Dimension objects. Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. The name of the dimension that you want to filter on. The metadata values you can specify to filter upon, so that the results all match at least one of the specified values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. You can specify only one of these values in the array. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. (string) --- CostCategories (dict) --- The filter that's based on CostCategoryValues. Key (string) --- The unique name of the cost category. Values (list) --- The specific value of the cost category. (string) --- Metrics (list) --- The definition for how the budget data is aggregated. (string) ---",
+      "nested_params": [
+        {
+          "name": "BudgetName",
+          "type": "string",
+          "required": false,
+          "description": "The name of a budget. The name must be unique within an account. The : and \\ characters, and the '/action/' substring, aren't allowed in BudgetName.",
+          "nested_params": []
+        },
+        {
+          "name": "BudgetLimit",
+          "type": "dict",
+          "required": false,
+          "description": "The total amount of cost, usage, RI utilization, RI coverage, Savings Plans utilization, or Savings Plans coverage that you want to track with your budget. BudgetLimit is required for cost or usage budgets, but optional for RI or Savings Plans utilization or coverage budgets. RI and Savings Plans utilization or coverage budgets default to 100. This is the only valid value for RI or Savings Plans utilization or coverage budgets. You can't use BudgetLimit with PlannedBudgetLimits for CreateBudget and UpdateBudget actions.",
+          "nested_params": [
+            {
+              "name": "Amount",
+              "type": "string",
+              "required": false,
+              "description": "The cost or usage amount that's associated with a budget forecast, actual spend, or budget threshold.",
+              "nested_params": []
+            },
+            {
+              "name": "Unit",
+              "type": "string",
+              "required": false,
+              "description": "The unit of measurement that's used for the budget forecast, actual spend, or budget threshold.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "PlannedBudgetLimits",
+          "type": "dict",
+          "required": false,
+          "description": "A map containing multiple BudgetLimit, including current or future limits. PlannedBudgetLimits is available for cost or usage budget and supports both monthly and quarterly TimeUnit. For monthly budgets, provide 12 months of PlannedBudgetLimits values. This must start from the current month and include the next 11 months. The key is the start of the month, UTC in epoch seconds. For quarterly budgets, provide four quarters of PlannedBudgetLimits value entries in standard calendar quarter increments. This must start from the current quarter and include the next three quarters. The key is the start of the quarter, UTC in epoch seconds. If the planned budget expires before 12 months for monthly or four quarters for quarterly, provide the PlannedBudgetLimits values only for the remaining periods. If the budget begins at a date in the future, provide PlannedBudgetLimits values from the start date of the budget. After all of the BudgetLimit values in PlannedBudgetLimits are used, the budget continues to use the last limit as the BudgetLimit. At that point, the planned budget provides the same experience as a fixed budget. DescribeBudget and DescribeBudgets response along with PlannedBudgetLimits also contain BudgetLimit representing the current month or quarter limit present in PlannedBudgetLimits. This only applies to budgets that are created with PlannedBudgetLimits. Budgets that are created without PlannedBudgetLimits only contain BudgetLimit. They don't contain PlannedBudgetLimits.",
+          "nested_params": []
+        },
+        {
+          "name": "CostFilters",
+          "type": "dict",
+          "required": false,
+          "description": "The cost filters, such as Region, Service, LinkedAccount, Tag, or CostCategory, that are applied to a budget. Amazon Web Services Budgets supports the following services as a Service filter for RI budgets:",
+          "nested_params": []
+        },
+        {
+          "name": "CostTypes",
+          "type": "dict",
+          "required": false,
+          "description": "The types of costs that are included in this COST budget. USAGE, RI_UTILIZATION, RI_COVERAGE, SAVINGS_PLANS_UTILIZATION, and SAVINGS_PLANS_COVERAGE budgets do not have CostTypes.",
+          "nested_params": [
+            {
+              "name": "IncludeTax",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes taxes. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeSubscription",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes subscriptions. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "UseBlended",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget uses a blended rate. The default value is false.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeRefund",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes refunds. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeCredit",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes credits. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeUpfront",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes upfront RI costs. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeRecurring",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes recurring fees such as monthly RI fees. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeOtherSubscription",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes non-RI subscription costs. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeSupport",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes support subscription fees. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "IncludeDiscount",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget includes discounts. The default value is true.",
+              "nested_params": []
+            },
+            {
+              "name": "UseAmortized",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether a budget uses the amortized rate. The default value is false.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "TimeUnit",
+          "type": "string",
+          "required": false,
+          "description": "The length of time until a budget resets the actual and forecasted spend.",
+          "nested_params": []
+        },
+        {
+          "name": "TimePeriod",
+          "type": "dict",
+          "required": false,
+          "description": "The period of time that's covered by a budget. You set the start date and end date. The start date must come before the end date. The end date must come before 06/15/87 00:00 UTC. If you create your budget and don't specify a start date, Amazon Web Services defaults to the start of your chosen time period (DAILY, MONTHLY, QUARTERLY, or ANNUALLY). For example, if you created your budget on January 24, 2018, chose DAILY, and didn't set a start date, Amazon Web Services set your start date to 01/24/18 00:00 UTC. If you chose MONTHLY, Amazon Web Services set your start date to 01/01/18 00:00 UTC. If you didn't specify an end date, Amazon Web Services set your end date to 06/15/87 00:00 UTC. The defaults are the same for the Billing and Cost Management console and the API. You can change either date with the UpdateBudget operation. After the end date, Amazon Web Services deletes the budget and all the associated notifications and subscribers.",
+          "nested_params": [
+            {
+              "name": "Start",
+              "type": "datetime",
+              "required": false,
+              "description": "The start date for a budget. If you created your budget and didn't specify a start date, Amazon Web Services defaults to the start of your chosen time period (DAILY, MONTHLY, QUARTERLY, or ANNUALLY). For example, if you created your budget on January 24, 2018, chose DAILY, and didn't set a start date, Amazon Web Services set your start date to 01/24/18 00:00 UTC. If you chose MONTHLY, Amazon Web Services set your start date to 01/01/18 00:00 UTC. The defaults are the same for the Billing and Cost Management console and the API. You can change your start date with the UpdateBudget operation.",
+              "nested_params": []
+            },
+            {
+              "name": "End",
+              "type": "datetime",
+              "required": false,
+              "description": "The end date for a budget. If you didn't specify an end date, Amazon Web Services set your end date to 06/15/87 00:00 UTC. The defaults are the same for the Billing and Cost Management console and the API. After the end date, Amazon Web Services deletes the budget and all the associated notifications and subscribers. You can change your end date with the UpdateBudget operation.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "CalculatedSpend",
+          "type": "dict",
+          "required": false,
+          "description": "The actual and forecasted cost or usage that the budget tracks.",
+          "nested_params": [
+            {
+              "name": "ActualSpend",
+              "type": "dict",
+              "required": false,
+              "description": "The amount of cost, usage, RI units, or Savings Plans units that you used.",
+              "nested_params": [
+                {
+                  "name": "Amount",
+                  "type": "string",
+                  "required": false,
+                  "description": "The cost or usage amount that's associated with a budget forecast, actual spend, or budget threshold.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Unit",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unit of measurement that's used for the budget forecast, actual spend, or budget threshold.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ForecastedSpend",
+              "type": "dict",
+              "required": false,
+              "description": "The amount of cost, usage, RI units, or Savings Plans units that you're forecasted to use.",
+              "nested_params": [
+                {
+                  "name": "Amount",
+                  "type": "string",
+                  "required": false,
+                  "description": "The cost or usage amount that's associated with a budget forecast, actual spend, or budget threshold.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Unit",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unit of measurement that's used for the budget forecast, actual spend, or budget threshold.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "BudgetType",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether this budget tracks costs, usage, RI utilization, RI coverage, Savings Plans utilization, or Savings Plans coverage.",
+          "nested_params": []
+        },
+        {
+          "name": "LastUpdatedTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The last time that you updated this budget.",
+          "nested_params": []
+        },
+        {
+          "name": "AutoAdjustData",
+          "type": "dict",
+          "required": false,
+          "description": "The parameters that determine the budget amount for an auto-adjusting budget.",
+          "nested_params": [
+            {
+              "name": "AutoAdjustType",
+              "type": "string",
+              "required": false,
+              "description": "The string that defines whether your budget auto-adjusts based on historical or forecasted data.",
+              "nested_params": []
+            },
+            {
+              "name": "HistoricalOptions",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters that define or describe the historical data that your auto-adjusting budget is based on.",
+              "nested_params": [
+                {
+                  "name": "BudgetAdjustmentPeriod",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of budget periods included in the moving-average calculation that determines your auto-adjusted budget amount. The maximum value depends on the TimeUnit granularity of the budget:",
+                  "nested_params": []
+                },
+                {
+                  "name": "LookBackAvailablePeriods",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The integer that describes how many budget periods in your BudgetAdjustmentPeriod are included in the calculation of your current BudgetLimit. If the first budget period in your BudgetAdjustmentPeriod has no cost data, then that budget period isn't included in the average that determines your budget limit. For example, if you set BudgetAdjustmentPeriod as 4 quarters, but your account had no cost data in the first quarter, then only the last three quarters are included in the calculation. In this scenario, LookBackAvailablePeriods returns 3. You can't set your own LookBackAvailablePeriods. The value is automatically calculated from the BudgetAdjustmentPeriod and your historical cost data.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "LastAutoAdjustTime",
+              "type": "datetime",
+              "required": false,
+              "description": "The last time that your budget was auto-adjusted.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "FilterExpression",
+          "type": "dict",
+          "required": false,
+          "description": "The filtering dimensions for the budget and their corresponding values.",
+          "nested_params": [
+            {
+              "name": "Or",
+              "type": "list",
+              "required": false,
+              "description": "Return results that match either Dimension object.",
+              "nested_params": []
+            },
+            {
+              "name": "And",
+              "type": "list",
+              "required": false,
+              "description": "Return results that match both Dimension objects.",
+              "nested_params": []
+            },
+            {
+              "name": "Not",
+              "type": "dict",
+              "required": false,
+              "description": "Return results that don't match a Dimension object.",
+              "nested_params": []
+            },
+            {
+              "name": "Dimensions",
+              "type": "dict",
+              "required": false,
+              "description": "The specific Dimension to use for Expression.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the dimension that you want to filter on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Values",
+                  "type": "list",
+                  "required": false,
+                  "description": "The metadata values you can specify to filter upon, so that the results all match at least one of the specified values.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MatchOptions",
+                  "type": "list",
+                  "required": false,
+                  "description": "The match options that you can use to filter your results. You can specify only one of these values in the array.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Tags",
+              "type": "dict",
+              "required": false,
+              "description": "The specific Tag to use for Expression.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key for the tag.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Values",
+                  "type": "list",
+                  "required": false,
+                  "description": "The specific value of the tag.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MatchOptions",
+                  "type": "list",
+                  "required": false,
+                  "description": "The match options that you can use to filter your results.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "CostCategories",
+              "type": "dict",
+              "required": false,
+              "description": "The filter that's based on CostCategoryValues.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique name of the cost category.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Values",
+                  "type": "list",
+                  "required": false,
+                  "description": "The specific value of the cost category.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MatchOptions",
+                  "type": "list",
+                  "required": false,
+                  "description": "The match options that you can use to filter your results.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Metrics",
+          "type": "list",
+          "required": false,
+          "description": "The definition for how the budget data is aggregated.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "NotificationsWithSubscribers",
+      "type": "list",
+      "required": true,
+      "description": "A notification that you want to associate with a budget. A budget can have up to five notifications, and each notification can have one SNS subscriber and up to 10 email subscribers. If you include notifications and subscribers in your CreateBudget call, Amazon Web Services creates the notifications and subscribers for you. (dict) --- A notification with subscribers. A notification can have one SNS subscriber and up to 10 email subscribers, for a total of 11 subscribers. The notification that's associated with a budget. Specifies whether the notification is for how much you have spent ( ACTUAL) or for how much that you're forecasted to spend ( FORECASTED). The comparison that's used for this notification. The threshold that's associated with a notification. Thresholds are always a percentage, and many customers find value being alerted between 50% - 200% of the budgeted amount. The maximum limit for your threshold is 1,000,000% above the budgeted amount. ThresholdType (string) --- The type of threshold for a notification. For ABSOLUTE_VALUE thresholds, Amazon Web Services notifies you when you go over or are forecasted to go over your total cost threshold. For PERCENTAGE thresholds, Amazon Web Services notifies you when you go over or are forecasted to go over a certain percentage of your forecasted spend. For example, if you have a budget for 200 dollars and you have a PERCENTAGE threshold of 80%, Amazon Web Services notifies you when you go over 160 dollars. NotificationState (string) --- Specifies whether this notification is in alarm. If a budget notification is in the ALARM state, you passed the set threshold for the budget. A list of subscribers who are subscribed to this notification. (dict) --- The subscriber to a budget notification. The subscriber consists of a subscription type and either an Amazon SNS topic or an email address. For example, an email subscriber has the following parameters: A subscriptionType of EMAIL An address of example@example.com The type of notification that Amazon Web Services sends to a subscriber. The address that Amazon Web Services sends budget notifications to, either an SNS topic or an email. When you create a subscriber, the value of Address can't contain line breaks.",
+      "nested_params": [
+        {
+          "name": "Notification",
+          "type": "dict",
+          "required": false,
+          "description": "The notification that's associated with a budget.",
+          "nested_params": [
+            {
+              "name": "NotificationType",
+              "type": "string",
+              "required": false,
+              "description": "Specifies whether the notification is for how much you have spent ( ACTUAL) or for how much that you're forecasted to spend ( FORECASTED).",
+              "nested_params": []
+            },
+            {
+              "name": "ComparisonOperator",
+              "type": "string",
+              "required": false,
+              "description": "The comparison that's used for this notification.",
+              "nested_params": []
+            },
+            {
+              "name": "Threshold",
+              "type": "float",
+              "required": false,
+              "description": "The threshold that's associated with a notification. Thresholds are always a percentage, and many customers find value being alerted between 50% - 200% of the budgeted amount. The maximum limit for your threshold is 1,000,000% above the budgeted amount.",
+              "nested_params": []
+            },
+            {
+              "name": "ThresholdType",
+              "type": "string",
+              "required": false,
+              "description": "The type of threshold for a notification. For ABSOLUTE_VALUE thresholds, Amazon Web Services notifies you when you go over or are forecasted to go over your total cost threshold. For PERCENTAGE thresholds, Amazon Web Services notifies you when you go over or are forecasted to go over a certain percentage of your forecasted spend. For example, if you have a budget for 200 dollars and you have a PERCENTAGE threshold of 80%, Amazon Web Services notifies you when you go over 160 dollars.",
+              "nested_params": []
+            },
+            {
+              "name": "NotificationState",
+              "type": "string",
+              "required": false,
+              "description": "Specifies whether this notification is in alarm. If a budget notification is in the ALARM state, you passed the set threshold for the budget.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Subscribers",
+          "type": "list",
+          "required": false,
+          "description": "A list of subscribers who are subscribed to this notification.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ResourceTags",
+      "type": "list",
+      "required": true,
+      "description": "An optional list of tags to associate with the specified budget. Each tag consists of a key and a value, and each key must be unique for the resource. (dict) --- The tag structure that contains a tag key and value. The key that's associated with the tag. The value that's associated with the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key that's associated with the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value that's associated with the tag.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

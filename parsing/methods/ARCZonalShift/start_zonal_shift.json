@@ -1,0 +1,120 @@
+{
+  "method_name": "start_zonal_shift",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/arc-zonal-shift/client/start_zonal_shift.html",
+  "description": "You start a zonal shift to temporarily move load balancer traffic away from an Availability Zone in an Amazon Web Services Region, to help your application recover immediately, for example, from a developer's bad code deployment or from an Amazon Web Services infrastructure failure in a single Availability Zone. You can start a zonal shift in ARC only for managed resources in your Amazon Web Services account in an Amazon Web Services Region. Resources are automatically registered with ARC by Amazon Web Services services. At this time, you can only start a zonal shift for Network Load Balancers and Application Load Balancers with cross-zone load balancing turned off. When you start a zonal shift, traffic for the resource is no longer routed to the Availability Zone. The zonal shift is created immediately in ARC. However, it can take a short time, typically up to a few minutes, for existing, in-progress connections in the Availability Zone to complete. For more information, see Zonal shift in the Amazon Route 53 Application Recovery Controller Developer Guide.",
+  "parameters": [
+    {
+      "name": "awayFrom",
+      "type": "string",
+      "required": true,
+      "description": "The Availability Zone (for example, use1-az1) that traffic is moved away from for a resource when you start a zonal shift. Until the zonal shift expires or you cancel it, traffic for the resource is instead moved to other Availability Zones in the Amazon Web Services Region.",
+      "nested_params": []
+    },
+    {
+      "name": "comment",
+      "type": "string",
+      "required": true,
+      "description": "A comment that you enter about the zonal shift. Only the latest comment is retained; no comment history is maintained. A new comment overwrites any existing comment string.",
+      "nested_params": []
+    },
+    {
+      "name": "expiresIn",
+      "type": "string",
+      "required": true,
+      "description": "The length of time that you want a zonal shift to be active, which ARC converts to an expiry time (expiration time). Zonal shifts are temporary. You can set a zonal shift to be active initially for up to three days (72 hours). If you want to still keep traffic away from an Availability Zone, you can update the zonal shift and set a new expiration. You can also cancel a zonal shift, before it expires, for example, if you're ready to restore traffic to the Availability Zone. To set a length of time for a zonal shift to be active, specify a whole number, and then one of the following, with no space: A lowercase letter m: To specify that the value is in minutes. A lowercase letter h: To specify that the value is in hours. For example: 20h means the zonal shift expires in 20 hours. 120m means the zonal shift expires in 120 minutes (2 hours).",
+      "nested_params": [
+        {
+          "name": "A lowercase letter m:",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        },
+        {
+          "name": "A lowercase letter h:",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "resourceIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The identifier for the resource that Amazon Web Services shifts traffic for. The identifier is the Amazon Resource Name (ARN) for the resource. At this time, supported resources are Network Load Balancers and Application Load Balancers with cross-zone load balancing turned off.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "awayFrom",
+          "type": "string",
+          "description": "The Availability Zone (for example, use1-az1) that traffic is moved away from for a resource when you start a zonal shift. Until the zonal shift expires or you cancel it, traffic for the resource is instead moved to other Availability Zones in the Amazon Web Services Region.",
+          "nested_items": []
+        },
+        {
+          "name": "comment",
+          "type": "string",
+          "description": "A comment that you enter about the zonal shift. Only the latest comment is retained; no comment history is maintained. A new comment overwrites any existing comment string.",
+          "nested_items": []
+        },
+        {
+          "name": "expiryTime",
+          "type": "datetime",
+          "description": "The expiry time (expiration time) for a customer-initiated zonal shift. A zonal shift is temporary and must be set to expire when you start the zonal shift. You can initially set a zonal shift to expire in a maximum of three days (72 hours). However, you can update a zonal shift to set a new expiration at any time.",
+          "nested_items": []
+        },
+        {
+          "name": "resourceIdentifier",
+          "type": "string",
+          "description": "The identifier for the resource that Amazon Web Services shifts traffic for. The identifier is the Amazon Resource Name (ARN) for the resource.",
+          "nested_items": []
+        },
+        {
+          "name": "startTime",
+          "type": "datetime",
+          "description": "The time (UTC) when the zonal shift starts.",
+          "nested_items": []
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "A status for a zonal shift.",
+          "nested_items": [
+            {
+              "name": "ACTIVE:",
+              "type": "",
+              "description": "",
+              "nested_items": []
+            },
+            {
+              "name": "EXPIRED:",
+              "type": "the expiry time was exceeded",
+              "description": "",
+              "nested_items": []
+            },
+            {
+              "name": "CANCELED:",
+              "type": "",
+              "description": "",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "zonalShiftId",
+          "type": "string",
+          "description": "The identifier of a zonal shift.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

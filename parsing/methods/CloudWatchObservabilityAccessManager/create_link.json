@@ -1,0 +1,240 @@
+{
+  "method_name": "create_link",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/oam/client/create_link.html",
+  "description": "Creates a link between a source account and a sink that you have created in a monitoring account. After the link is created, data is sent from the source account to the monitoring account. When you create a link, you can optionally specify filters that specify which metric namespaces and which log groups are shared from the source account to the monitoring account. Before you create a link, you must create a sink in the monitoring account and create a sink policy in that account. The sink policy must permit the source account to link to it. You can grant permission to source accounts by granting permission to an entire organization or to individual accounts. For more information, see CreateSink and PutSinkPolicy. Each monitoring account can be linked to as many as 100,000 source accounts. Each source account can be linked to as many as five monitoring accounts.",
+  "parameters": [
+    {
+      "name": "LabelTemplate",
+      "type": "string",
+      "required": true,
+      "description": "Specify a friendly human-readable name to use to identify this source account when you are viewing data from it in the monitoring account. You can use a custom label or use the following variables: $AccountName is the name of the account $AccountEmail is the globally unique email address of the account $AccountEmailNoDomain is the email address of the account without the domain name.",
+      "nested_params": []
+    },
+    {
+      "name": "LinkConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Use this structure to optionally create filters that specify that only some metric namespaces or log groups are to be shared from the source account to the monitoring account. LogGroupConfiguration (dict) --- Use this structure to filter which log groups are to send log events from the source account to the monitoring account. Use this field to specify which log groups are to share their log events with the monitoring account. Use the term LogGroupName and one or more of the following operands. Use single quotation marks (') around log group names. The matching of log group names is case sensitive. Each filter has a limit of five conditional operands. Conditional operands are AND and OR. = and != AND OR LIKE and NOT LIKE. These can be used only as prefix searches. Include a % at the end of the string that you want to search for and include. IN and NOT IN, using parentheses ( ) Examples: LogGroupName IN ('This-Log-Group', 'Other-Log-Group') includes only the log groups with names This-Log-Group and Other-Log-Group. LogGroupName NOT IN ('Private-Log-Group', 'Private-Log-Group-2') includes all log groups except the log groups with names Private-Log-Group and Private-Log-Group-2. LogGroupName LIKE 'aws/lambda/%' OR LogGroupName LIKE 'AWSLogs%' includes all log groups that have names that start with aws/lambda/ or AWSLogs. MetricConfiguration (dict) --- Use this structure to filter which metric namespaces are to be shared from the source account to the monitoring account. Use this field to specify which metrics are to be shared with the monitoring account. Use the term Namespace and one or more of the following operands. Use single quotation marks (') around namespace names. The matching of namespace names is case sensitive. IN and NOT IN, using parentheses ( ) Examples: Namespace NOT LIKE 'AWS/%' includes only namespaces that don't start with AWS/, such as custom namespaces. Namespace IN ('AWS/EC2', 'AWS/ELB', 'AWS/S3') includes only the metrics in the EC2, Elastic Load Balancing, and Amazon S3 namespaces. Namespace = 'AWS/EC2' OR Namespace NOT LIKE 'AWS/%' includes only the EC2 namespace and your custom namespaces.",
+      "nested_params": [
+        {
+          "name": "LogGroupConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Use this structure to filter which log groups are to send log events from the source account to the monitoring account.",
+          "nested_params": [
+            {
+              "name": "Filter",
+              "type": "string",
+              "required": false,
+              "description": "Use this field to specify which log groups are to share their log events with the monitoring account. Use the term LogGroupName and one or more of the following operands. Use single quotation marks (') around log group names. The matching of log group names is case sensitive. Each filter has a limit of five conditional operands. Conditional operands are AND and OR.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "MetricConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Use this structure to filter which metric namespaces are to be shared from the source account to the monitoring account.",
+          "nested_params": [
+            {
+              "name": "Filter",
+              "type": "string",
+              "required": false,
+              "description": "Use this field to specify which metrics are to be shared with the monitoring account. Use the term Namespace and one or more of the following operands. Use single quotation marks (') around namespace names. The matching of namespace names is case sensitive. Each filter has a limit of five conditional operands. Conditional operands are AND and OR.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ResourceTypes",
+      "type": "list",
+      "required": true,
+      "description": "An array of strings that define which types of data that the source account shares with the monitoring account. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "SinkIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the sink to use to create this link. You can use ListSinks to find the ARNs of sinks. For more information about sinks, see CreateSink.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "Assigns one or more tags (key-value pairs) to the link. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. For more information about using tags to control access, see Controlling access to Amazon Web Services resources using tags. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Arn",
+          "type": "string",
+          "description": "The ARN of the link that is newly created.",
+          "nested_items": []
+        },
+        {
+          "name": "Id",
+          "type": "string",
+          "description": "The random ID string that Amazon Web Services generated as part of the link ARN.",
+          "nested_items": []
+        },
+        {
+          "name": "Label",
+          "type": "string",
+          "description": "The label that you assigned to this link. If the labelTemplate includes variables, this field displays the variables resolved to their actual values.",
+          "nested_items": []
+        },
+        {
+          "name": "LabelTemplate",
+          "type": "string",
+          "description": "The exact label template that you specified, with the variables not resolved.",
+          "nested_items": []
+        },
+        {
+          "name": "LinkConfiguration",
+          "type": "dict",
+          "description": "This structure includes filters that specify which metric namespaces and which log groups are shared from the source account to the monitoring account.",
+          "nested_items": [
+            {
+              "name": "LogGroupConfiguration",
+              "type": "dict",
+              "description": "Use this structure to filter which log groups are to send log events from the source account to the monitoring account.",
+              "nested_items": [
+                {
+                  "name": "Filter",
+                  "type": "string",
+                  "description": "Use this field to specify which log groups are to share their log events with the monitoring account. Use the term LogGroupName and one or more of the following operands. Use single quotation marks (') around log group names. The matching of log group names is case sensitive. Each filter has a limit of five conditional operands. Conditional operands are AND and OR.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "= and !=",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "AND.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "OR.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "LIKE and NOT LIKE. These can be used only as prefix searches. Include a % at the end of the string that you want to search for and include.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "IN and NOT IN, using parentheses ( )",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "MetricConfiguration",
+              "type": "dict",
+              "description": "Use this structure to filter which metric namespaces are to be shared from the source account to the monitoring account.",
+              "nested_items": [
+                {
+                  "name": "Filter",
+                  "type": "string",
+                  "description": "Use this field to specify which metrics are to be shared with the monitoring account. Use the term Namespace and one or more of the following operands. Use single quotation marks (') around namespace names. The matching of namespace names is case sensitive. Each filter has a limit of five conditional operands. Conditional operands are AND and OR.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "= and !=",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "AND.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "OR.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "LIKE and NOT LIKE. These can be used only as prefix searches. Include a % at the end of the string that you want to search for and include.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "IN and NOT IN, using parentheses ( )",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ResourceTypes",
+          "type": "list",
+          "description": "The resource types supported by this link.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "SinkArn",
+          "type": "string",
+          "description": "The ARN of the sink that is used for this link.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

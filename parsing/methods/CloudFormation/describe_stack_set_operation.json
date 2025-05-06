@@ -1,0 +1,423 @@
+{
+  "method_name": "describe_stack_set_operation",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/describe_stack_set_operation.html",
+  "description": "Returns the description of the specified StackSet operation.",
+  "parameters": [
+    {
+      "name": "StackSetName",
+      "type": "string",
+      "required": true,
+      "description": "The name or the unique stack ID of the stack set for the stack operation.",
+      "nested_params": []
+    },
+    {
+      "name": "OperationId",
+      "type": "string",
+      "required": true,
+      "description": "The unique ID of the stack set operation.",
+      "nested_params": []
+    },
+    {
+      "name": "CallAs",
+      "type": "string",
+      "required": false,
+      "description": "[Service-managed permissions] Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. By default, SELF is specified. Use SELF for stack sets with self-managed permissions. If you are signed in to the management account, specify SELF. If you are signed in to a delegated administrator account, specify DELEGATED_ADMIN. Your Amazon Web Services account must be registered as a delegated administrator in the management account. For more information, see Register a delegated administrator in the CloudFormation User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "StackSetOperation",
+          "type": "dict",
+          "description": "The specified stack set operation.",
+          "nested_items": [
+            {
+              "name": "OperationId",
+              "type": "string",
+              "description": "The unique ID of a stack set operation.",
+              "nested_items": []
+            },
+            {
+              "name": "StackSetId",
+              "type": "string",
+              "description": "The ID of the stack set.",
+              "nested_items": []
+            },
+            {
+              "name": "Action",
+              "type": "string",
+              "description": "The type of stack set operation: CREATE, UPDATE, or DELETE. Create and delete operations affect only the specified stack set instances that are associated with the specified stack set. Update operations affect both the stack set itself, in addition to all associated stack set instances.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The status of the operation.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED: The operation exceeded the specified failure tolerance. The failure tolerance value that you've set for an operation is applied for each Region during stack create and update operations. If the number of failed stacks within a Region exceeds the failure tolerance, the status of the operation in the Region is set to FAILED. This in turn sets the status of the operation as a whole to FAILED, and CloudFormation cancels the operation in any remaining Regions.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "QUEUED: [Service-managed permissions] For automatic deployments that require a sequence of operations, the operation is queued to be performed. For more information, see the StackSets status codes in the CloudFormation User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "RUNNING: The operation is currently being performed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "STOPPED: The user has canceled the operation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "STOPPING: The operation is in the process of stopping, at user request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SUCCEEDED: The operation completed creating or updating all the specified stacks without exceeding the failure tolerance for the operation.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "OperationPreferences",
+              "type": "dict",
+              "description": "The preferences for how CloudFormation performs this stack set operation.",
+              "nested_items": [
+                {
+                  "name": "RegionConcurrencyType",
+                  "type": "string",
+                  "description": "The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RegionOrder",
+                  "type": "list",
+                  "description": "The order of the Regions where you want to perform the stack operation.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "FailureToleranceCount",
+                  "type": "integer",
+                  "description": "The number of accounts, per Region, for which this operation can fail before CloudFormation stops the operation in that Region. If the operation is stopped in a Region, CloudFormation doesn't attempt the operation in any subsequent Regions.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FailureTolerancePercentage",
+                  "type": "integer",
+                  "description": "The percentage of accounts, per Region, for which this stack operation can fail before CloudFormation stops the operation in that Region. If the operation is stopped in a Region, CloudFormation doesn't attempt the operation in any subsequent Regions.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxConcurrentCount",
+                  "type": "integer",
+                  "description": "The maximum number of accounts in which to perform this operation at one time. This can depend on the value of FailureToleranceCount depending on your ConcurrencyMode. MaxConcurrentCount is at most one more than the FailureToleranceCount if you're using STRICT_FAILURE_TOLERANCE.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxConcurrentPercentage",
+                  "type": "integer",
+                  "description": "The maximum percentage of accounts in which to perform this operation at one time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ConcurrencyMode",
+                  "type": "string",
+                  "description": "Specifies how the concurrency level behaves during the operation execution.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "STRICT_FAILURE_TOLERANCE: This option dynamically lowers the concurrency level to ensure the number of failed accounts never exceeds the value of FailureToleranceCount +1. The initial actual concurrency is set to the lower of either the value of the MaxConcurrentCount, or the value of FailureToleranceCount +1. The actual concurrency is then reduced proportionally by the number of failures. This is the default behavior. If failure tolerance or Maximum concurrent accounts are set to percentages, the behavior is similar.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SOFT_FAILURE_TOLERANCE: This option decouples FailureToleranceCount from the actual concurrency. This allows stack set operations to run at the concurrency level set by the MaxConcurrentCount value, or MaxConcurrentPercentage, regardless of the number of failures.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RetainStacks",
+              "type": "boolean",
+              "description": "For stack set operations of action type DELETE, specifies whether to remove the stack instances from the specified stack set, but doesn't delete the stacks. You can't re-associate a retained stack, or add an existing, saved stack to a new stack set.",
+              "nested_items": []
+            },
+            {
+              "name": "AdministrationRoleARN",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the IAM role used to perform this stack set operation.",
+              "nested_items": []
+            },
+            {
+              "name": "ExecutionRoleName",
+              "type": "string",
+              "description": "The name of the IAM execution role used to create or update the stack set.",
+              "nested_items": []
+            },
+            {
+              "name": "CreationTimestamp",
+              "type": "datetime",
+              "description": "The time at which the operation was initiated. Note that the creation times for the stack set operation might differ from the creation time of the individual stacks themselves. This is because CloudFormation needs to perform preparatory work for the operation, such as dispatching the work to the requested Regions, before actually creating the first stacks.",
+              "nested_items": []
+            },
+            {
+              "name": "EndTimestamp",
+              "type": "datetime",
+              "description": "The time at which the stack set operation ended, across all accounts and Regions specified. Note that this doesn't necessarily mean that the stack set operation was successful, or even attempted, in each account or Region.",
+              "nested_items": []
+            },
+            {
+              "name": "DeploymentTargets",
+              "type": "dict",
+              "description": "[Service-managed permissions] The Organizations accounts affected by the stack operation.",
+              "nested_items": [
+                {
+                  "name": "Accounts",
+                  "type": "list",
+                  "description": "The account IDs of the Amazon Web Services accounts. If you have many account numbers, you can provide those accounts using the AccountsUrl property instead.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AccountsUrl",
+                  "type": "string",
+                  "description": "The Amazon S3 URL path to a file that contains a list of Amazon Web Services account IDs. The file format must be either .csv or .txt, and the data can be comma-separated or new-line-separated. There is currently a 10MB limit for the data (approximately 800,000 accounts).",
+                  "nested_items": []
+                },
+                {
+                  "name": "OrganizationalUnitIds",
+                  "type": "list",
+                  "description": "The organization root ID or organizational unit (OU) IDs.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AccountFilterType",
+                  "type": "string",
+                  "description": "Limit deployment targets to individual accounts or include additional accounts with provided OUs.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "INTERSECTION: StackSets deploys to the accounts specified in Accounts parameter.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DIFFERENCE: StackSets excludes the accounts specified in Accounts parameter. This enables user to avoid certain accounts within an OU such as suspended accounts.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "UNION: StackSets includes additional accounts deployment targets. This is the default value if AccountFilterType is not provided. This enables user to update an entire OU and individual accounts from a different OU in one request, which used to be two separate requests.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "OU",
+                      "description": "NONE: Deploys to all the accounts in specified organizational units (OU).",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "StackSetDriftDetectionDetails",
+              "type": "dict",
+              "description": "Detailed information about the drift status of the stack set. This includes information about drift operations currently being performed on the stack set.",
+              "nested_items": [
+                {
+                  "name": "DriftStatus",
+                  "type": "string",
+                  "description": "Status of the stack set's actual configuration compared to its expected template and parameter configuration. A stack set is considered to have drifted if one or more of its stack instances have drifted from their expected template and parameter configuration.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DRIFTED: One or more of the stack instances belonging to the stack set stack differs from the expected template and parameter configuration. A stack instance is considered to have drifted if one or more of the resources in the associated stack have drifted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NOT_CHECKED: CloudFormation hasn't checked the stack set for drift.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "IN_SYNC: All of the stack instances belonging to the stack set stack match from the expected template and parameter configuration.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DriftDetectionStatus",
+                  "type": "string",
+                  "description": "The status of the stack set drift detection operation.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "COMPLETED: The drift detection operation completed without failing on any stack instances.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "FAILED: The drift detection operation exceeded the specified failure tolerance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PARTIAL_SUCCESS: The drift detection operation completed without exceeding the failure tolerance for the operation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "IN_PROGRESS: The drift detection operation is currently being performed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "STOPPED: The user has canceled the drift detection operation.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "LastDriftCheckTimestamp",
+                  "type": "datetime",
+                  "description": "Most recent time when CloudFormation performed a drift detection operation on the stack set. This value will be NULL for any stack set on which drift detection hasn't yet been performed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TotalStackInstancesCount",
+                  "type": "integer",
+                  "description": "The total number of stack instances belonging to this stack set.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Stack instances that match the stack set configuration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Stack instances that have drifted from the stack set configuration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Stack instances where the drift detection operation has failed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Stack instances currently being checked for drift.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DriftedStackInstancesCount",
+                  "type": "integer",
+                  "description": "The number of stack instances that have drifted from the expected template and parameter configuration of the stack set. A stack instance is considered to have drifted if one or more of the resources in the associated stack don't match their expected configuration.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InSyncStackInstancesCount",
+                  "type": "integer",
+                  "description": "The number of stack instances which match the expected template and parameter configuration of the stack set.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InProgressStackInstancesCount",
+                  "type": "integer",
+                  "description": "The number of stack instances that are currently being checked for drift.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FailedStackInstancesCount",
+                  "type": "integer",
+                  "description": "The number of stack instances for which the drift detection operation failed.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "StatusReason",
+              "type": "string",
+              "description": "The status of the operation in details.",
+              "nested_items": []
+            },
+            {
+              "name": "StatusDetails",
+              "type": "dict",
+              "description": "Detailed information about the StackSet operation.",
+              "nested_items": [
+                {
+                  "name": "FailedStackInstancesCount",
+                  "type": "integer",
+                  "description": "The number of stack instances for which the StackSet operation failed.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

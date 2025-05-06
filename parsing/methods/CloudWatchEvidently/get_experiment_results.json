@@ -1,0 +1,188 @@
+{
+  "method_name": "get_experiment_results",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/evidently/client/get_experiment_results.html",
+  "description": "Retrieves the results of a running or completed experiment. No results are available until there have been 100 events for each variation and at least 10 minutes have passed since the start of the experiment. To increase the statistical power, Evidently performs an additional offline p-value analysis at the end of the experiment. Offline p-value analysis can detect statistical significance in some cases where the anytime p-values used during the experiment do not find statistical significance. Experiment results are available up to 63 days after the start of the experiment. They are not available after that because of CloudWatch data retention policies.",
+  "parameters": [
+    {
+      "name": "baseStat",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "endTime",
+      "type": "datetime",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "experiment",
+      "type": "string",
+      "required": true,
+      "description": "The name of the experiment to retrieve the results of.",
+      "nested_params": []
+    },
+    {
+      "name": "metricNames",
+      "type": "list",
+      "required": true,
+      "description": "The names of the experiment metrics that you want to see the results of. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "period",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "description": "The name or ARN of the project that contains the experiment that you want to see the results of.",
+      "nested_params": []
+    },
+    {
+      "name": "reportNames",
+      "type": "list",
+      "required": false,
+      "description": "The names of the report types that you want to see. Currently, BayesianInference is the only valid value. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "resultStats",
+      "type": "list",
+      "required": false,
+      "description": "The statistics that you want to see in the returned results. PValue specifies to use p-values for the results. A p-value is used in hypothesis testing to measure how often you are willing to make a mistake in rejecting the null hypothesis. A general practice is to reject the null hypothesis and declare that the results are statistically significant when the p-value is less than 0.05. ConfidenceInterval specifies a confidence interval for the results. The confidence interval represents the range of values for the chosen metric that is likely to contain the true difference between the baseStat of a variation and the baseline. Evidently returns the 95% confidence interval. TreatmentEffect is the difference in the statistic specified by the baseStat parameter between each variation and the default variation. BaseStat returns the statistical values collected for the metric for each variation. The statistic uses the same statistic specified in the baseStat parameter. Therefore, if baseStat is mean, this returns the mean of the values collected for each variation. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "startTime",
+      "type": "datetime",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "treatmentNames",
+      "type": "list",
+      "required": true,
+      "description": "The names of the experiment treatments that you want to see the results for. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "details",
+          "type": "string",
+          "description": "If the experiment doesn't yet have enough events to provide valid results, this field is returned with the message Not enough events to generate results. If there are enough events to provide valid results, this field is not returned.",
+          "nested_items": []
+        },
+        {
+          "name": "reports",
+          "type": "list",
+          "description": "An array of structures that include the reports that you requested.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "content",
+                  "type": "string",
+                  "description": "The content of the report.",
+                  "nested_items": []
+                },
+                {
+                  "name": "metricName",
+                  "type": "string",
+                  "description": "The name of the metric that is analyzed in this experiment report.",
+                  "nested_items": []
+                },
+                {
+                  "name": "reportName",
+                  "type": "string",
+                  "description": "The type of analysis used for this report.",
+                  "nested_items": []
+                },
+                {
+                  "name": "treatmentName",
+                  "type": "string",
+                  "description": "The name of the variation that this report pertains to.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "resultsData",
+          "type": "list",
+          "description": "An array of structures that include experiment results including metric names and values.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "metricName",
+                  "type": "string",
+                  "description": "The name of the metric.",
+                  "nested_items": []
+                },
+                {
+                  "name": "resultStat",
+                  "type": "string",
+                  "description": "The experiment statistic that these results pertain to.",
+                  "nested_items": []
+                },
+                {
+                  "name": "treatmentName",
+                  "type": "string",
+                  "description": "The treatment, or variation, that returned the values in this structure.",
+                  "nested_items": []
+                },
+                {
+                  "name": "values",
+                  "type": "list",
+                  "description": "The values for the metricName that were recorded in the experiment.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "float",
+                      "description": "(float) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "timestamps",
+          "type": "list",
+          "description": "The timestamps of each result returned.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "datetime",
+              "description": "(datetime) ---",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

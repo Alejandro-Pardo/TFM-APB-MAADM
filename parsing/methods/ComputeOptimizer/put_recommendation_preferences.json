@@ -1,0 +1,123 @@
+{
+  "method_name": "put_recommendation_preferences",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/compute-optimizer/client/put_recommendation_preferences.html",
+  "description": "Creates a new recommendation preference or updates an existing recommendation preference, such as enhanced infrastructure metrics. For more information, see Activating enhanced infrastructure metrics in the Compute Optimizer User Guide.",
+  "parameters": [
+    {
+      "name": "resourceType",
+      "type": "string",
+      "required": true,
+      "description": "The target resource type of the recommendation preference to create. The Ec2Instance option encompasses standalone instances and instances that are part of Auto Scaling groups. The AutoScalingGroup option encompasses only instances that are part of an Auto Scaling group.",
+      "nested_params": []
+    },
+    {
+      "name": "scope",
+      "type": "dict",
+      "required": false,
+      "description": "An object that describes the scope of the recommendation preference to create. You can create recommendation preferences at the organization level (for management accounts of an organization only), account level, and resource level. For more information, see Activating enhanced infrastructure metrics in the Compute Optimizer User Guide. name (string) --- The name of the scope. The following scopes are possible: Organization - Specifies that the recommendation preference applies at the organization level, for all member accounts of an organization. AccountId - Specifies that the recommendation preference applies at the account level, for all resources of a given resource type in an account. ResourceArn - Specifies that the recommendation preference applies at the individual resource level. value (string) --- The value of the scope. If you specified the name of the scope as: Organization - The value must be ALL_ACCOUNTS. AccountId - The value must be a 12-digit Amazon Web Services account ID. ResourceArn - The value must be the Amazon Resource Name (ARN) of an EC2 instance or an Auto Scaling group. Only EC2 instance and Auto Scaling group ARNs are currently supported.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the scope. The following scopes are possible:",
+          "nested_params": []
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the scope. If you specified the name of the scope as:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "enhancedInfrastructureMetrics",
+      "type": "string",
+      "required": false,
+      "description": "The status of the enhanced infrastructure metrics recommendation preference to create or update. Specify the Active status to activate the preference, or specify Inactive to deactivate the preference. For more information, see Enhanced infrastructure metrics in the Compute Optimizer User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "inferredWorkloadTypes",
+      "type": "string",
+      "required": false,
+      "description": "The status of the inferred workload types recommendation preference to create or update. Specify the Inactive status to deactivate the feature, or specify Active to activate it. For more information, see Inferred workload types in the Compute Optimizer User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "externalMetricsPreference",
+      "type": "dict",
+      "required": false,
+      "description": "The provider of the external metrics recommendation preference to create or update. Specify a valid provider in the source field to activate the preference. To delete this preference, see the  DeleteRecommendationPreferences action. This preference can only be set for the Ec2Instance resource type. For more information, see External metrics ingestion in the Compute Optimizer User Guide. source (string) --- Contains the source options for external metrics preferences.",
+      "nested_params": [
+        {
+          "name": "source",
+          "type": "string",
+          "required": false,
+          "description": "Contains the source options for external metrics preferences.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "lookBackPeriod",
+      "type": "string",
+      "required": false,
+      "description": "The preference to control the number of days the utilization metrics of the Amazon Web Services resource are analyzed. When this preference isn't specified, we use the default value DAYS_14. You can only set this preference for the Amazon EC2 instance and Auto Scaling group resource types.",
+      "nested_params": []
+    },
+    {
+      "name": "utilizationPreferences",
+      "type": "list",
+      "required": false,
+      "description": "The preference to control the resource's CPU utilization threshold, CPU utilization headroom, and memory utilization headroom. When this preference isn't specified, we use the following default values. CPU utilization: P99_5 for threshold PERCENT_20 for headroom Memory utilization: PERCENT_20 for headroom (dict) --- The preference to control the resource's CPU utilization threshold, CPU utilization headroom, and memory utilization headroom. metricName (string) --- The name of the resource utilization metric name to customize. metricParameters (dict) --- The parameters to set when customizing the resource utilization thresholds. threshold (string) --- The threshold value used for the specified metric parameter. headroom (string) --- The headroom value in percentage used for the specified metric parameter. The following lists the valid values for CPU and memory utilization. CPU utilization: PERCENT_30 | PERCENT_20 | PERCENT_0 Memory utilization: PERCENT_30 | PERCENT_20 | PERCENT_10",
+      "nested_params": []
+    },
+    {
+      "name": "preferredResources",
+      "type": "list",
+      "required": false,
+      "description": "The preference to control which resource type values are considered when generating rightsizing recommendations. You can specify this preference as a combination of include and exclude lists. You must specify either an includeList or excludeList. If the preference is an empty set of resource type values, an error occurs. (dict) --- The preference to control which resource type values are considered when generating rightsizing recommendations. For more information, see Rightsizing recommendation preferences in the Compute Optimizer User Guide. name (string) --- The type of preferred resource to customize. includeList (list) --- The preferred resource type values to include in the recommendation candidates. You can specify the exact resource type value, such as m5.large, or use wild card expressions, such as m5. If this isn't specified, all supported resources are included by default. You can specify up to 1000 values in this list. (string) --- excludeList (list) --- The preferred resource type values to exclude from the recommendation candidates. (string) ---",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The type of preferred resource to customize.",
+          "nested_params": []
+        },
+        {
+          "name": "includeList",
+          "type": "list",
+          "required": false,
+          "description": "The preferred resource type values to include in the recommendation candidates. You can specify the exact resource type value, such as m5.large, or use wild card expressions, such as m5. If this isn't specified, all supported resources are included by default. You can specify up to 1000 values in this list.",
+          "nested_params": []
+        },
+        {
+          "name": "excludeList",
+          "type": "list",
+          "required": false,
+          "description": "The preferred resource type values to exclude from the recommendation candidates. If this isn't specified, all supported resources are included by default. You can specify up to 1000 values in this list.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "savingsEstimationMode",
+      "type": "string",
+      "required": false,
+      "description": "The status of the savings estimation mode preference to create or update. Specify the AfterDiscounts status to activate the preference, or specify BeforeDiscounts to deactivate the preference. Only the account manager or delegated administrator of your organization can activate this preference. For more information, see Savings estimation mode in the Compute Optimizer User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

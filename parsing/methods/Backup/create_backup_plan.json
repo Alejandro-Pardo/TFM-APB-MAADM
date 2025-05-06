@@ -1,0 +1,275 @@
+{
+  "method_name": "create_backup_plan",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/backup/client/create_backup_plan.html",
+  "description": "Creates a backup plan using a backup plan name and backup rules. A backup plan is a document that contains information that Backup uses to schedule tasks that create recovery points for resources. If you call CreateBackupPlan with a plan that already exists, you receive an AlreadyExistsException exception.",
+  "parameters": [
+    {
+      "name": "BackupPlan",
+      "type": "dict",
+      "required": true,
+      "description": "The body of a backup plan. Includes a BackupPlanName and one or more sets of Rules. The display name of a backup plan. Must contain 1 to 50 alphanumeric or --\u0098-_.' characters. An array of BackupRule objects, each of which specifies a scheduled task that is used to back up a selection of resources. (dict) --- Specifies a scheduled task used to back up a selection of resources. A display name for a backup rule. The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created. ScheduleExpression (string) --- A CRON expression in UTC specifying when Backup initiates a backup job. StartWindowMinutes (integer) --- A value in minutes after a backup is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, it must be at least 60 minutes to avoid errors. This parameter has a maximum value of 100 years (52,560,000 minutes). During the start window, the backup job status remains in CREATED status until it has successfully begun or until the start window time has run out. If within the start window time Backup receives an error that allows the job to be retried, Backup will automatically retry to begin the job at least every 10 minutes until the backup successfully begins (the job status changes to RUNNING) or until the job status changes to EXPIRED (which is expected to occur when the start window time is over). CompletionWindowMinutes (integer) --- A value in minutes after a backup job is successfully started before it must be completed or it will be canceled by Backup. Lifecycle (dict) --- The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the 'retention' setting must be 90 days greater than the 'transition to cold after days' setting. The 'transition to cold after days' setting cannot be changed after a backup has been transitioned to cold storage. Resource types that can transition to cold storage are listed in the Feature availability by resource table. Backup ignores this expression for other resource types. This parameter has a maximum value of 100 years (36,500 days). MoveToColdStorageAfterDays (integer) --- The number of days after creation that a recovery point is moved to cold storage. DeleteAfterDays (integer) --- The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays. OptInToArchiveForSupportedResources (boolean) --- If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings. RecoveryPointTags (dict) --- The tags to assign to the resources. (string) --- (string) --- CopyActions (list) --- An array of CopyAction objects, which contains the details of the copy operation. (dict) --- The details of the copy operation. Lifecycle (dict) --- Specifies the time period, in days, before a recovery point transitions to cold storage or is deleted. Therefore, on the console, the retention setting must be 90 days greater than the transition to cold after days setting. The transition to cold after days setting can't be changed after a backup has been transitioned to cold. To remove the existing lifecycle and retention periods and keep your recovery points indefinitely, specify -1 for MoveToColdStorageAfterDays and DeleteAfterDays. An Amazon Resource Name (ARN) that uniquely identifies the destination backup vault for the copied backup. For example, arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault. EnableContinuousBackup (boolean) --- Specifies whether Backup creates continuous backups. True causes Backup to create continuous backups capable of point-in-time restore (PITR). False (or not specified) causes Backup to create snapshot backups. ScheduleExpressionTimezone (string) --- The timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone. IndexActions (list) --- There can up to one IndexAction in each BackupRule, as each backup can have 0 or 1 backup index associated with it. Within the array is ResourceTypes. Only 1 resource type will be accepted for each BackupRule. Valid values: EBS for Amazon Elastic Block Store S3 for Amazon Simple Storage Service (Amazon S3) (dict) --- This is an optional array within a BackupRule. IndexAction consists of one ResourceTypes. ResourceTypes (list) --- 0 or 1 index action will be accepted for each BackupRule. Valid values: EBS for Amazon Elastic Block Store S3 for Amazon Simple Storage Service (Amazon S3) (string) --- AdvancedBackupSettings (list) --- Specifies a list of BackupOptions for each resource type. These settings are only available for Windows Volume Shadow Copy Service (VSS) backup jobs. (dict) --- The backup options for each resource type. ResourceType (string) --- Specifies an object containing resource type and backup options. The only supported resource type is Amazon EC2 instances with Windows Volume Shadow Copy Service (VSS). For a CloudFormation example, see the sample CloudFormation template to enable Windows VSS in the Backup User Guide. Valid values: EC2. BackupOptions (dict) --- Specifies the backup option for a selected resource. This option is only available for Windows VSS backup jobs. Valid values: Set to \"WindowsVSS\":\"enabled\" to enable the WindowsVSS backup option and create a Windows VSS backup. Set to \"WindowsVSS\":\"disabled\" to create a regular backup. The WindowsVSS option is not enabled by default. If you specify an invalid option, you get an InvalidParameterValueException exception. For more information about Windows VSS backups, see Creating a VSS-Enabled Windows Backup. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "BackupPlanName",
+          "type": "string",
+          "required": false,
+          "description": "The display name of a backup plan. Must contain 1 to 50 alphanumeric or --\u0098-_.' characters.",
+          "nested_params": []
+        },
+        {
+          "name": "Rules",
+          "type": "list",
+          "required": false,
+          "description": "An array of BackupRule objects, each of which specifies a scheduled task that is used to back up a selection of resources.",
+          "nested_params": [
+            {
+              "name": "RuleName",
+              "type": "string",
+              "required": false,
+              "description": "A display name for a backup rule. Must contain 1 to 50 alphanumeric or --\u0098-_.' characters.",
+              "nested_params": []
+            },
+            {
+              "name": "TargetBackupVaultName",
+              "type": "string",
+              "required": false,
+              "description": "The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.",
+              "nested_params": []
+            },
+            {
+              "name": "ScheduleExpression",
+              "type": "string",
+              "required": false,
+              "description": "A CRON expression in UTC specifying when Backup initiates a backup job.",
+              "nested_params": []
+            },
+            {
+              "name": "StartWindowMinutes",
+              "type": "integer",
+              "required": false,
+              "description": "A value in minutes after a backup is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, it must be at least 60 minutes to avoid errors. This parameter has a maximum value of 100 years (52,560,000 minutes). During the start window, the backup job status remains in CREATED status until it has successfully begun or until the start window time has run out. If within the start window time Backup receives an error that allows the job to be retried, Backup will automatically retry to begin the job at least every 10 minutes until the backup successfully begins (the job status changes to RUNNING) or until the job status changes to EXPIRED (which is expected to occur when the start window time is over).",
+              "nested_params": []
+            },
+            {
+              "name": "CompletionWindowMinutes",
+              "type": "integer",
+              "required": false,
+              "description": "A value in minutes after a backup job is successfully started before it must be completed or it will be canceled by Backup. This value is optional.",
+              "nested_params": []
+            },
+            {
+              "name": "Lifecycle",
+              "type": "dict",
+              "required": false,
+              "description": "The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the 'retention' setting must be 90 days greater than the 'transition to cold after days' setting. The 'transition to cold after days' setting cannot be changed after a backup has been transitioned to cold storage. Resource types that can transition to cold storage are listed in the Feature availability by resource table. Backup ignores this expression for other resource types. This parameter has a maximum value of 100 years (36,500 days).",
+              "nested_params": [
+                {
+                  "name": "MoveToColdStorageAfterDays",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of days after creation that a recovery point is moved to cold storage.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DeleteAfterDays",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays.",
+                  "nested_params": []
+                },
+                {
+                  "name": "OptInToArchiveForSupportedResources",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "RecoveryPointTags",
+              "type": "dict",
+              "required": false,
+              "description": "The tags to assign to the resources.",
+              "nested_params": []
+            },
+            {
+              "name": "CopyActions",
+              "type": "list",
+              "required": false,
+              "description": "An array of CopyAction objects, which contains the details of the copy operation.",
+              "nested_params": [
+                {
+                  "name": "Lifecycle",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies the time period, in days, before a recovery point transitions to cold storage or is deleted. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, on the console, the retention setting must be 90 days greater than the transition to cold after days setting. The transition to cold after days setting can't be changed after a backup has been transitioned to cold. Resource types that can transition to cold storage are listed in the Feature availability by resource table. Backup ignores this expression for other resource types. To remove the existing lifecycle and retention periods and keep your recovery points indefinitely, specify -1 for MoveToColdStorageAfterDays and DeleteAfterDays.",
+                  "nested_params": [
+                    {
+                      "name": "MoveToColdStorageAfterDays",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The number of days after creation that a recovery point is moved to cold storage.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DeleteAfterDays",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "OptInToArchiveForSupportedResources",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DestinationBackupVaultArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "An Amazon Resource Name (ARN) that uniquely identifies the destination backup vault for the copied backup. For example, arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "EnableContinuousBackup",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether Backup creates continuous backups. True causes Backup to create continuous backups capable of point-in-time restore (PITR). False (or not specified) causes Backup to create snapshot backups.",
+              "nested_params": []
+            },
+            {
+              "name": "ScheduleExpressionTimezone",
+              "type": "string",
+              "required": false,
+              "description": "The timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.",
+              "nested_params": []
+            },
+            {
+              "name": "IndexActions",
+              "type": "list",
+              "required": false,
+              "description": "There can up to one IndexAction in each BackupRule, as each backup can have 0 or 1 backup index associated with it. Within the array is ResourceTypes. Only 1 resource type will be accepted for each BackupRule. Valid values:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AdvancedBackupSettings",
+          "type": "list",
+          "required": false,
+          "description": "Specifies a list of BackupOptions for each resource type. These settings are only available for Windows Volume Shadow Copy Service (VSS) backup jobs.",
+          "nested_params": [
+            {
+              "name": "ResourceType",
+              "type": "string",
+              "required": false,
+              "description": "Specifies an object containing resource type and backup options. The only supported resource type is Amazon EC2 instances with Windows Volume Shadow Copy Service (VSS). For a CloudFormation example, see the sample CloudFormation template to enable Windows VSS in the Backup User Guide. Valid values: EC2.",
+              "nested_params": []
+            },
+            {
+              "name": "BackupOptions",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the backup option for a selected resource. This option is only available for Windows VSS backup jobs. Valid values: Set to \"WindowsVSS\":\"enabled\" to enable the WindowsVSS backup option and create a Windows VSS backup. Set to \"WindowsVSS\":\"disabled\" to create a regular backup. The WindowsVSS option is not enabled by default. If you specify an invalid option, you get an InvalidParameterValueException exception. For more information about Windows VSS backups, see Creating a VSS-Enabled Windows Backup.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BackupPlanTags",
+      "type": "dict",
+      "required": false,
+      "description": "The tags to assign to the backup plan. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "CreatorRequestId",
+      "type": "string",
+      "required": false,
+      "description": "Identifies the request and allows failed requests to be retried without the risk of running the operation twice. If the request includes a CreatorRequestId that matches an existing backup plan, that plan is returned. This parameter is optional. If used, this parameter must contain 1 to 50 alphanumeric or --\u0098-_.' characters.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "BackupPlanId",
+          "type": "string",
+          "description": "The ID of the backup plan.",
+          "nested_items": []
+        },
+        {
+          "name": "BackupPlanArn",
+          "type": "string",
+          "description": "An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationDate",
+          "type": "datetime",
+          "description": "The date and time that a backup plan is created, in Unix format and Coordinated Universal Time (UTC). The value of CreationDate is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.",
+          "nested_items": []
+        },
+        {
+          "name": "VersionId",
+          "type": "string",
+          "description": "Unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. They cannot be edited.",
+          "nested_items": []
+        },
+        {
+          "name": "AdvancedBackupSettings",
+          "type": "list",
+          "description": "The settings for a resource type. This option is only available for Windows Volume Shadow Copy Service (VSS) backup jobs.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ResourceType",
+                  "type": "string",
+                  "description": "Specifies an object containing resource type and backup options. The only supported resource type is Amazon EC2 instances with Windows Volume Shadow Copy Service (VSS). For a CloudFormation example, see the sample CloudFormation template to enable Windows VSS in the Backup User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupOptions",
+                  "type": "dict",
+                  "description": "Specifies the backup option for a selected resource. This option is only available for Windows VSS backup jobs.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "method_name": "start_backup_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/backup/client/start_backup_job.html",
+  "description": "Starts an on-demand backup job for the specified resource.",
+  "parameters": [
+    {
+      "name": "BackupVaultName",
+      "type": "string",
+      "required": true,
+      "description": "The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceArn",
+      "type": "string",
+      "required": true,
+      "description": "An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.",
+      "nested_params": []
+    },
+    {
+      "name": "IamRoleArn",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the IAM role ARN used to create the target recovery point; for example, arn:aws:iam::123456789012:role/S3Access.",
+      "nested_params": []
+    },
+    {
+      "name": "IdempotencyToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StartWindowMinutes",
+      "type": "integer",
+      "required": false,
+      "description": "A value in minutes after a backup is scheduled before a job will be canceled if it doesn't start successfully. This value is optional, and the default is 8 hours. If this value is included, it must be at least 60 minutes to avoid errors. This parameter has a maximum value of 100 years (52,560,000 minutes). During the start window, the backup job status remains in CREATED status until it has successfully begun or until the start window time has run out. If within the start window time Backup receives an error that allows the job to be retried, Backup will automatically retry to begin the job at least every 10 minutes until the backup successfully begins (the job status changes to RUNNING) or until the job status changes to EXPIRED (which is expected to occur when the start window time is over).",
+      "nested_params": []
+    },
+    {
+      "name": "CompleteWindowMinutes",
+      "type": "integer",
+      "required": false,
+      "description": "A value in minutes during which a successfully started backup must complete, or else Backup will cancel the job. This value is optional. This value begins counting down from when the backup was scheduled. It does not add additional time for StartWindowMinutes, or if the backup started later than scheduled. Like StartWindowMinutes, this parameter has a maximum value of 100 years (52,560,000 minutes).",
+      "nested_params": []
+    },
+    {
+      "name": "Lifecycle",
+      "type": "dict",
+      "required": false,
+      "description": "The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup will transition and expire backups automatically according to the lifecycle that you define. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the 'retention' setting must be 90 days greater than the 'transition to cold after days' setting. The 'transition to cold after days' setting cannot be changed after a backup has been transitioned to cold. Resource types that can transition to cold storage are listed in the Feature availability by resource table. Backup ignores this expression for other resource types. This parameter has a maximum value of 100 years (36,500 days). MoveToColdStorageAfterDays (integer) --- The number of days after creation that a recovery point is moved to cold storage. DeleteAfterDays (integer) --- The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays. OptInToArchiveForSupportedResources (boolean) --- If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+      "nested_params": [
+        {
+          "name": "MoveToColdStorageAfterDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days after creation that a recovery point is moved to cold storage.",
+          "nested_params": []
+        },
+        {
+          "name": "DeleteAfterDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays.",
+          "nested_params": []
+        },
+        {
+          "name": "OptInToArchiveForSupportedResources",
+          "type": "boolean",
+          "required": false,
+          "description": "If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "RecoveryPointTags",
+      "type": "dict",
+      "required": false,
+      "description": "The tags to assign to the resources. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "BackupOptions",
+      "type": "dict",
+      "required": false,
+      "description": "The backup option for a selected resource. This option is only available for Windows Volume Shadow Copy Service (VSS) backup jobs. Valid values: Set to \"WindowsVSS\":\"enabled\" to enable the WindowsVSS backup option and create a Windows VSS backup. Set to \"WindowsVSS\"\"disabled\" to create a regular backup. The WindowsVSS option is not enabled by default. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Index",
+      "type": "string",
+      "required": false,
+      "description": "Include this parameter to enable index creation if your backup job has a resource type that supports backup indexes. Resource types that support backup indexes include: EBS for Amazon Elastic Block Store S3 for Amazon Simple Storage Service (Amazon S3) Index can have 1 of 2 possible values, either ENABLED or DISABLED. To create a backup index for an eligible ACTIVE recovery point that does not yet have a backup index, set value to ENABLED. To delete a backup index, set value to DISABLED.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "BackupJobId",
+          "type": "string",
+          "description": "Uniquely identifies a request to Backup to back up a resource.",
+          "nested_items": []
+        },
+        {
+          "name": "RecoveryPointArn",
+          "type": "string",
+          "description": "Note: This field is only returned for Amazon EFS and Advanced DynamoDB resources.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationDate",
+          "type": "datetime",
+          "description": "The date and time that a backup job is created, in Unix format and Coordinated Universal Time (UTC). The value of CreationDate is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.",
+          "nested_items": []
+        },
+        {
+          "name": "IsParent",
+          "type": "boolean",
+          "description": "This is a returned boolean value indicating this is a parent (composite) backup job.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

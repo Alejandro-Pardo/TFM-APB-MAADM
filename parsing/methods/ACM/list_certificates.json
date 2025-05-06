@@ -1,7 +1,7 @@
 {
   "method_name": "list_certificates",
   "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/acm/client/list_certificates.html",
-  "description": "Retrieves a list of certificate ARNs and domain names. By default, the API returns RSA_2048 certificates. To return all certificates in the account, include the keyType filter with the values [RSA_1024, RSA_2048, RSA_3072, RSA_4096, EC_prime256v1, EC_secp384r1, EC_secp521r1]. In addition to keyType, you can also filter by the CertificateStatuses, keyUsage, and extendedKeyUsage attributes on the certificate. For more information, see  Filters.",
+  "description": "Retrieves a list of certificate ARNs and domain names. You can request that only certificates that match a specific status be listed. You can also filter by specific attributes of the certificate. Default filtering returns only RSA_2048 certificates. For more information, see  Filters.",
   "parameters": [
     {
       "name": "CertificateStatuses",
@@ -14,7 +14,7 @@
       "name": "Includes",
       "type": "dict",
       "required": false,
-      "description": "Filter the certificate list. For more information, see the  Filters structure. extendedKeyUsage (list) --- Specify one or more  ExtendedKeyUsage extension values. (string) --- keyUsage (list) --- Specify one or more  KeyUsage extension values. (string) --- keyTypes (list) --- Specify one or more algorithms that can be used to generate key pairs. Default filtering returns only RSA_1024 and RSA_2048 certificates that have at least one domain. To return other certificate types, provide the desired type signatures in a comma-separated list. For example, \"keyTypes\": [\"RSA_2048\",\"RSA_4096\"] returns both RSA_2048 and RSA_4096 certificates. (string) ---",
+      "description": "Filter the certificate list. For more information, see the  Filters structure. extendedKeyUsage (list) --- Specify one or more  ExtendedKeyUsage extension values. (string) --- keyUsage (list) --- Specify one or more  KeyUsage extension values. (string) --- keyTypes (list) --- Specify one or more algorithms that can be used to generate key pairs. Default filtering returns only RSA_1024 and RSA_2048 certificates that have at least one domain. To return other certificate types, provide the desired type signatures in a comma-separated list. For example, \"keyTypes\": [\"RSA_2048\",\"RSA_4096\"] returns both RSA_2048 and RSA_4096 certificates. (string) --- managedBy (string) --- Identifies the Amazon Web Services service that manages the certificate issued by ACM.",
       "nested_params": [
         {
           "name": "extendedKeyUsage",
@@ -35,6 +35,13 @@
           "type": "list",
           "required": false,
           "description": "Specify one or more algorithms that can be used to generate key pairs. Default filtering returns only RSA_1024 and RSA_2048 certificates that have at least one domain. To return other certificate types, provide the desired type signatures in a comma-separated list. For example, \"keyTypes\": [\"RSA_2048\",\"RSA_4096\"] returns both RSA_2048 and RSA_4096 certificates.",
+          "nested_params": []
+        },
+        {
+          "name": "managedBy",
+          "type": "string",
+          "required": false,
+          "description": "Identifies the Amazon Web Services service that manages the certificate issued by ACM.",
           "nested_params": []
         }
       ]
@@ -118,7 +125,7 @@
                 {
                   "name": "HasAdditionalSubjectAlternativeNames",
                   "type": "boolean",
-                  "description": "When called by  ListCertificates, indicates whether the full list of subject alternative names has been included in the response. If false, the response includes all of the subject alternative names included in the certificate. If true, the response only includes the first 100 subject alternative names included in the certificate. To display the full list of subject alternative names, use  DescribeCertificate.",
+                  "description": "When called by ListCertificates, indicates whether the full list of subject alternative names has been included in the response. If false, the response includes all of the subject alternative names included in the certificate. If true, the response only includes the first 100 subject alternative names included in the certificate. To display the full list of subject alternative names, use DescribeCertificate.",
                   "nested_items": []
                 },
                 {
@@ -217,6 +224,12 @@
                   "name": "RevokedAt",
                   "type": "datetime",
                   "description": "The time at which the certificate was revoked. This value exists only when the certificate status is REVOKED.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ManagedBy",
+                  "type": "string",
+                  "description": "Identifies the Amazon Web Services service that manages the certificate issued by ACM.",
                   "nested_items": []
                 }
               ]

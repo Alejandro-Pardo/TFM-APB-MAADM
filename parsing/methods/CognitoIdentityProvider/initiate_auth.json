@@ -1,0 +1,256 @@
+{
+  "method_name": "initiate_auth",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cognito-idp/client/initiate_auth.html",
+  "description": "Declares an authentication flow and initiates sign-in for a user in the Amazon Cognito user directory. Amazon Cognito might respond with an additional challenge or an AuthenticationResult that contains the outcome of a successful authentication. You can't sign in a user with a federated IdP with InitiateAuth. For more information, see Authentication.",
+  "parameters": [
+    {
+      "name": "AuthFlow",
+      "type": "string",
+      "required": true,
+      "description": "The authentication flow that you want to initiate. Each AuthFlow has linked AuthParameters that you must submit. The following are some example flows. USER_AUTH The entry point for choice-based authentication with passwords, one-time passwords, and WebAuthn authenticators. Request a preferred authentication type or review available authentication types. From the offered authentication types, select one in a challenge response and then authenticate with that method in an additional challenge response. To activate this setting, your user pool must be in the Essentials tier or higher. USER_SRP_AUTH Username-password authentication with the Secure Remote Password (SRP) protocol. For more information, see Use SRP password verification in custom authentication flow. REFRESH_TOKEN_AUTH and REFRESH_TOKEN Receive new ID and access tokens when you pass a REFRESH_TOKEN parameter with a valid refresh token as the value. For more information, see Using the refresh token. CUSTOM_AUTH Custom authentication with Lambda triggers. For more information, see Custom authentication challenge Lambda triggers. USER_PASSWORD_AUTH Client-side username-password authentication with the password sent directly in the request. For more information about client-side and server-side authentication, see SDK authorization models. ADMIN_USER_PASSWORD_AUTH is a flow type of AdminInitiateAuth and isn't valid for InitiateAuth. ADMIN_NO_SRP_AUTH is a legacy server-side username-password flow and isn't valid for InitiateAuth.",
+      "nested_params": []
+    },
+    {
+      "name": "AuthParameters",
+      "type": "dict",
+      "required": false,
+      "description": "The authentication parameters. These are inputs corresponding to the AuthFlow that you're invoking. The required values are specific to the  InitiateAuthRequest$AuthFlow. The following are some authentication flows and their parameters. Add a SECRET_HASH parameter if your app client has a client secret. USER_AUTH: USERNAME (required), PREFERRED_CHALLENGE. If you don't provide a value for PREFERRED_CHALLENGE, Amazon Cognito responds with the AvailableChallenges parameter that specifies the available sign-in methods. USER_SRP_AUTH: USERNAME (required), SRP_A (required), DEVICE_KEY. USER_PASSWORD_AUTH: USERNAME (required), PASSWORD (required), DEVICE_KEY. REFRESH_TOKEN_AUTH/REFRESH_TOKEN: REFRESH_TOKEN (required), DEVICE_KEY. CUSTOM_AUTH: USERNAME (required), SECRET_HASH (if app client is configured with client secret), DEVICE_KEY. To start the authentication flow with password verification, include ChallengeName: SRP_A and SRP_A: (The SRP_A Value). For more information about SECRET_HASH, see Computing secret hash values. For information about DEVICE_KEY, see Working with user devices in your user pool. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ClientMetadata",
+      "type": "dict",
+      "required": false,
+      "description": "A map of custom key-value pairs that you can provide as input for certain custom workflows that this action triggers. You create custom workflows by assigning Lambda functions to user pool triggers. When you send an InitiateAuth request, Amazon Cognito invokes the Lambda functions that are specified for various triggers. The ClientMetadata value is passed as input to the functions for only the following triggers. Pre sign-up Pre authentication User migration When Amazon Cognito invokes the functions for these triggers, it passes a JSON payload as input to the function. This payload contains a validationData attribute with the data that you assigned to the ClientMetadata parameter in your InitiateAuth request. In your function, validationData can contribute to operations that require data that isn't in the default payload. InitiateAuth requests invokes the following triggers without ClientMetadata as input. Post authentication Custom message Pre token generation Create auth challenge Define auth challenge Custom email sender Custom SMS sender For more information, see Using Lambda triggers in the Amazon Cognito Developer Guide. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ClientId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the app client that your user wants to sign in to.",
+      "nested_params": []
+    },
+    {
+      "name": "AnalyticsMetadata",
+      "type": "dict",
+      "required": false,
+      "description": "Information that supports analytics outcomes with Amazon Pinpoint, including the user's endpoint ID. The endpoint ID is a destination for Amazon Pinpoint push notifications, for example a device identifier, email address, or phone number. AnalyticsEndpointId (string) --- The endpoint ID. Information that you want to pass to Amazon Pinpoint about where to send notifications.",
+      "nested_params": [
+        {
+          "name": "AnalyticsEndpointId",
+          "type": "string",
+          "required": false,
+          "description": "The endpoint ID. Information that you want to pass to Amazon Pinpoint about where to send notifications.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "UserContextData",
+      "type": "dict",
+      "required": false,
+      "description": "Contextual data about your user session like the device fingerprint, IP address, or location. Amazon Cognito threat protection evaluates the risk of an authentication event based on the context that your app generates and passes to Amazon Cognito when it makes API requests. For more information, see Collecting data for threat protection in applications. IpAddress (string) --- The source IP address of your user's device. EncodedData (string) --- Encoded device-fingerprint details that your app collected with the Amazon Cognito context data collection library. For more information, see Adding user device and session data to API requests.",
+      "nested_params": [
+        {
+          "name": "IpAddress",
+          "type": "string",
+          "required": false,
+          "description": "The source IP address of your user's device.",
+          "nested_params": []
+        },
+        {
+          "name": "EncodedData",
+          "type": "string",
+          "required": false,
+          "description": "Encoded device-fingerprint details that your app collected with the Amazon Cognito context data collection library. For more information, see Adding user device and session data to API requests.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Session",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ChallengeName",
+          "type": "string",
+          "description": "The name of an additional authentication challenge that you must respond to.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "WEB_AUTHN: Respond to the challenge with the results of a successful authentication with a WebAuthn authenticator, or passkey. Examples of WebAuthn authenticators include biometric devices and security keys.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "required",
+              "description": "PASSWORD: Respond with USER_PASSWORD_AUTH parameters: USERNAME (required), PASSWORD (required), SECRET_HASH (required if the app client is configured with a client secret), DEVICE_KEY.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "required",
+              "description": "PASSWORD_SRP: Respond with USER_SRP_AUTH parameters: USERNAME (required), SRP_A (required), SECRET_HASH (required if the app client is configured with a client secret), DEVICE_KEY.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "SELECT_CHALLENGE: Respond to the challenge with USERNAME and an ANSWER that matches one of the challenge types in the AvailableChallenges response parameter.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "SMS_MFA: Respond with an SMS_MFA_CODE that your user pool delivered in an SMS message.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "EMAIL_OTP: Respond with an EMAIL_OTP_CODE that your user pool delivered in an email message.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "PASSWORD_VERIFIER: Respond with PASSWORD_CLAIM_SIGNATURE, PASSWORD_CLAIM_SECRET_BLOCK, and TIMESTAMP after client-side SRP calculations.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "CUSTOM_CHALLENGE: This is returned if your custom authentication flow determines that the user should pass another challenge before tokens are issued. The parameters of the challenge are determined by your Lambda function.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "DEVICE_SRP_AUTH: Respond with the initial parameters of device SRP authentication. For more information, see Signing in with a device.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "DEVICE_PASSWORD_VERIFIER: Respond with PASSWORD_CLAIM_SIGNATURE, PASSWORD_CLAIM_SECRET_BLOCK, and TIMESTAMP after client-side SRP calculations. For more information, see Signing in with a device.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "NEW_PASSWORD_REQUIRED: For users who are required to change their passwords after successful first login. Respond to this challenge with NEW_PASSWORD and any required attributes that Amazon Cognito returned in the requiredAttributes parameter. You can also set values for attributes that aren't required by your user pool and that your app client can write. Amazon Cognito only returns this challenge for users who have temporary passwords. When you create passwordless users, you must provide values for all required attributes.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Session",
+          "type": "string",
+          "description": "The session identifier that links a challenge response to the initial authentication request. If the user must pass another challenge, Amazon Cognito returns a session ID and challenge parameters.",
+          "nested_items": []
+        },
+        {
+          "name": "ChallengeParameters",
+          "type": "dict",
+          "description": "The required parameters of the ChallengeName challenge.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AuthenticationResult",
+          "type": "dict",
+          "description": "The result of a successful and complete authentication request. This result is only returned if the user doesn't need to pass another challenge. If they must pass another challenge before they get tokens, Amazon Cognito returns a challenge in ChallengeName, ChallengeParameters, and Session response parameters.",
+          "nested_items": [
+            {
+              "name": "AccessToken",
+              "type": "string",
+              "description": "Your user's access token.",
+              "nested_items": []
+            },
+            {
+              "name": "ExpiresIn",
+              "type": "integer",
+              "description": "The expiration period of the authentication result in seconds.",
+              "nested_items": []
+            },
+            {
+              "name": "TokenType",
+              "type": "string",
+              "description": "The intended use of the token, for example Bearer.",
+              "nested_items": []
+            },
+            {
+              "name": "RefreshToken",
+              "type": "string",
+              "description": "Your user's refresh token.",
+              "nested_items": []
+            },
+            {
+              "name": "IdToken",
+              "type": "string",
+              "description": "Your user's ID token.",
+              "nested_items": []
+            },
+            {
+              "name": "NewDeviceMetadata",
+              "type": "dict",
+              "description": "The new device metadata from an authentication result.",
+              "nested_items": [
+                {
+                  "name": "DeviceKey",
+                  "type": "string",
+                  "description": "The device key, an identifier used in generating the DEVICE_PASSWORD_VERIFIER for device SRP authentication.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DeviceGroupKey",
+                  "type": "string",
+                  "description": "The device group key, an identifier used in generating the DEVICE_PASSWORD_VERIFIER for device SRP authentication.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AvailableChallenges",
+          "type": "list",
+          "description": "This response parameter lists the available authentication challenges that users can select from in choice-based authentication. For example, they might be able to choose between passkey authentication, a one-time password from an SMS message, and a traditional password.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

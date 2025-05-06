@@ -1,0 +1,746 @@
+{
+  "method_name": "invoke_agent",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock-agent-runtime/client/invoke_agent.html",
+  "description": "Sends a prompt for the agent to process and respond to. Note the following fields for the request: The response contains both chunk and trace attributes. The final response is returned in the bytes field of the chunk object. The InvokeAgent returns one chunk for the entire interaction.",
+  "parameters": [
+    {
+      "name": "agentAliasId",
+      "type": "string",
+      "required": true,
+      "description": "The alias of the agent to use.",
+      "nested_params": []
+    },
+    {
+      "name": "agentId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of the agent to use.",
+      "nested_params": []
+    },
+    {
+      "name": "bedrockModelConfigurations",
+      "type": "dict",
+      "required": false,
+      "description": "Model performance settings for the request. performanceConfig (dict) --- The performance configuration for the model. latency (string) --- To use a latency-optimized version of the model, set to optimized.",
+      "nested_params": [
+        {
+          "name": "performanceConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The performance configuration for the model.",
+          "nested_params": [
+            {
+              "name": "latency",
+              "type": "string",
+              "required": false,
+              "description": "To use a latency-optimized version of the model, set to optimized.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "enableTrace",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "endSession",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "inputText",
+      "type": "string",
+      "required": false,
+      "description": "The prompt text to send the agent.",
+      "nested_params": []
+    },
+    {
+      "name": "memoryId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "sessionId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of the session. Use the same value across requests to continue the same conversation.",
+      "nested_params": []
+    },
+    {
+      "name": "sessionState",
+      "type": "dict",
+      "required": true,
+      "description": "Contains parameters that specify various attributes of the session. For more information, see Control session context. conversationHistory (dict) --- The state's conversation history. messages (list) --- The conversation's messages. (dict) --- Details about a message. The message's content. (dict) --- A content block. text (string) --- The block's text. The message's role. files (list) --- Contains information about the files used by code interpreter. (dict) --- Contains details of the source files. The name of the source file. Specifies where the files are located. byteContent (dict) --- The data and the text of the attached files. The raw bytes of the file to attach. The maximum size of all files that is attached is 10MB. You can attach a maximum of 5 files. The MIME type of data contained in the file used for chat. s3Location (dict) --- The s3 location of the files to attach. The uri of the s3 object. The source type of the files to attach. Specifies how the source files will be used by the code interpreter. invocationId (string) --- The identifier of the invocation of an action. This value must match the invocationId returned in the InvokeAgent response for the action whose results are provided in the returnControlInvocationResults field. For more information, see Return control to the agent developer and Control session context. knowledgeBaseConfigurations (list) --- An array of configurations, each of which applies to a knowledge base attached to the agent. (dict) --- Configurations to apply to a knowledge base attached to the agent during query. For more information, see Knowledge base retrieval configurations. The unique identifier for a knowledge base attached to the agent. The configurations to apply to the knowledge base during query. For more information, see Query configurations. Contains details about how the results from the vector search should be returned. filter (dict) --- Specifies the filters to use on the metadata in the knowledge base data sources before returning results. andAll (list) --- Knowledge base data sources are returned if their metadata attributes fulfill all the filter conditions inside this list. (dict) --- Specifies the filters to use on the metadata attributes in the knowledge base data sources before returning results. See the examples below to see how to use these filters. This data type is used in the following API operations: Retrieve request --- in the filter field RetrieveAndGenerate request --- in the filter field equals (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value matches the value in this object. The following example would return data sources with an animal attribute whose value is cat: \"equals\": { \"key\": \"animal\", \"value\": \"cat\" } The name that the metadata attribute must match. The value to whcih to compare the value of the metadata attribute. greaterThan (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than the value in this object. The following example would return data sources with an year attribute whose value is greater than 1989: \"greaterThan\": { \"key\": \"year\", \"value\": 1989 } The name that the metadata attribute must match. greaterThanOrEquals (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than or equal to the value in this object. The following example would return data sources with an year attribute whose value is greater than or equal to 1989: \"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 } The name that the metadata attribute must match. in (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object. The following example would return data sources with an animal attribute that is either cat or dog: \"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] } The name that the metadata attribute must match. lessThan (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than the value in this object. The following example would return data sources with an year attribute whose value is less than to 1989. \"lessThan\": { \"key\": \"year\", \"value\": 1989 } The name that the metadata attribute must match. lessThanOrEquals (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than or equal to the value in this object. The following example would return data sources with an year attribute whose value is less than or equal to 1989. \"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 } The name that the metadata attribute must match. listContains (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members. The following example would return data sources with an animals attribute that is a list containing a cat member (for example [\"dog\", \"cat\"]). \"listContains\": { \"key\": \"animals\", \"value\": \"cat\" } The name that the metadata attribute must match. notEquals (dict) --- Knowledge base data sources are returned when: It contains a metadata attribute whose name matches the key and whose value doesn't match the value in this object. The key is not present in the document. The following example would return data sources that don't contain an animal attribute whose value is cat. \"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" } The name that the metadata attribute must match. notIn (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object. The following example would return data sources whose animal attribute is neither cat nor dog. \"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] } The name that the metadata attribute must match. orAll (list) --- Knowledge base data sources are returned if their metadata attributes fulfill at least one of the filter conditions inside this list. This data type is used in the following API operations: Retrieve request --- in the filter field RetrieveAndGenerate request --- in the filter field startsWith (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores. The following example would return data sources with an animal attribute starts with ca (for example, cat or camel). \"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" } The name that the metadata attribute must match. stringContains (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following: A string that contains the value as a substring. The following example would return data sources with an animal attribute that contains the substring at (for example cat). \"stringContains\": { \"key\": \"animal\", \"value\": \"at\" } A list with a member that contains the value as a substring. The following example would return data sources with an animals attribute that is a list containing a member that contains the substring at (for example [\"dog\", \"cat\"]). \"stringContains\": { \"key\": \"animals\", \"value\": \"at\" } The name that the metadata attribute must match. implicitFilterConfiguration (dict) --- Settings for implicit filtering. Metadata that can be used in a filter. (dict) --- Details about a metadata attribute. The attribute's description. The attribute's key. The attribute's type. The model that generates the filter. numberOfResults (integer) --- The number of source chunks to retrieve. overrideSearchType (string) --- By default, Amazon Bedrock decides a search strategy for you. If you're using an Amazon OpenSearch Serverless vector store that contains a filterable text field, you can specify whether to query the knowledge base with a HYBRID search using both vector embeddings and raw text, or SEMANTIC search using only vector embeddings. For other vector store configurations, only SEMANTIC search is available. For more information, see Test a knowledge base. rerankingConfiguration (dict) --- Contains configurations for reranking the retrieved results. For more information, see Improve the relevance of query responses with a reranker model. bedrockRerankingConfiguration (dict) --- Contains configurations for an Amazon Bedrock reranker model. metadataConfiguration (dict) --- Contains configurations for the metadata to use in reranking. Specifies whether to consider all metadata when reranking, or only the metadata that you select. If you specify SELECTIVE, include the selectiveModeConfiguration field. selectiveModeConfiguration (dict) --- Contains configurations for the metadata fields to include or exclude when considering reranking. fieldsToExclude (list) --- An array of objects, each of which specifies a metadata field to exclude from consideration when reranking. (dict) --- Contains information for a metadata field to include in or exclude from consideration when reranking. The name of a metadata field to include in or exclude from consideration when reranking. fieldsToInclude (list) --- An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored. Contains configurations for the reranker model. additionalModelRequestFields (dict) --- A JSON object whose keys are request fields for the model and whose values are values for those fields. (string) --- (document) --- The ARN of the reranker model to use. numberOfRerankedResults (integer) --- The number of results to return after reranking. The type of reranker model. promptSessionAttributes (dict) --- Contains attributes that persist across a prompt and the values of those attributes. In orchestration prompt template, these attributes replace the $prompt_session_attributes$ placeholder variable. For more information, see Prompt template placeholder variables. In multi-agent collaboration, the promptSessionAttributes will only be used by supervisor agent when $prompt_session_attributes$ is present in prompt template. (string) --- (string) --- returnControlInvocationResults (list) --- Contains information about the results from the action group invocation. (dict) --- A result from the invocation of an action. This data type is used in the following API operations: InvokeAgent request apiResult (dict) --- The result from the API response from the action group invocation. The action group that the API operation belongs to. agentId (string) --- The agent's ID. apiPath (string) --- The path to the API operation. confirmationState (string) --- Controls the API operations or functions to invoke based on the user confirmation. httpMethod (string) --- The HTTP method for the API operation. httpStatusCode (integer) --- http status code from API execution response (for example: 200, 400, 500). responseBody (dict) --- The response body from the API operation. The key of the object is the content type (currently, only TEXT is supported). The response may be returned directly or from the Lambda function. (string) --- (dict) --- Contains the body of the API response. This data type is used in the following API operations: In the returnControlInvocationResults field of the InvokeAgent request body (string) --- The body of the API response. images (list) --- Lists details, including format and source, for the image in the response from the function call. You can specify only one image and the function in the returnControlInvocationResults must be a computer use action. For more information, see Configure an Amazon Bedrock Agent to complete tasks with computer use tools. (dict) --- Details about an image in the result from a function in the action group invocation. You can specify images only when the function is a computer use action. The type of image in the result. The source of the image in the result. bytes (bytes) --- The raw image bytes for the image. If you use an Amazon Web Services SDK, you don't need to encode the image bytes in base64. responseState (string) --- Controls the final response state returned to end user when API/Function execution failed. When this state is FAILURE, the request would fail with dependency failure exception. When this state is REPROMPT, the API/function response will be sent to model for re-prompt functionResult (dict) --- The result from the function from the action group invocation. The action group that the function belongs to. confirmationState (string) --- Contains the user confirmation information about the function that was called. function (string) --- The name of the function that was called. responseBody (dict) --- The response from the function call using the parameters. The response might be returned directly or from the Lambda function. Specify TEXT or IMAGES. The key of the object is the content type. You can only specify one type. If you specify IMAGES, you can specify only one image. You can specify images only when the function in the returnControlInvocationResults is a computer use action. When this state is REPROMPT, the API/function response will be sent to model for re-prompt sessionAttributes (dict) --- Contains attributes that persist across a session and the values of those attributes. If sessionAttributes are passed to a supervisor agent in multi-agent collaboration, it will be forwarded to all agent collaborators. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "conversationHistory",
+          "type": "dict",
+          "required": false,
+          "description": "The state's conversation history.",
+          "nested_params": [
+            {
+              "name": "messages",
+              "type": "list",
+              "required": false,
+              "description": "The conversation's messages.",
+              "nested_params": [
+                {
+                  "name": "content",
+                  "type": "list",
+                  "required": false,
+                  "description": "The message's content.",
+                  "nested_params": [
+                    {
+                      "name": "text",
+                      "type": "string",
+                      "required": false,
+                      "description": "The block's text.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "role",
+                  "type": "string",
+                  "required": false,
+                  "description": "The message's role.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "files",
+          "type": "list",
+          "required": false,
+          "description": "Contains information about the files used by code interpreter.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the source file.",
+              "nested_params": []
+            },
+            {
+              "name": "source",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies where the files are located.",
+              "nested_params": [
+                {
+                  "name": "byteContent",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The data and the text of the attached files.",
+                  "nested_params": [
+                    {
+                      "name": "data",
+                      "type": "bytes",
+                      "required": false,
+                      "description": "The raw bytes of the file to attach. The maximum size of all files that is attached is 10MB. You can attach a maximum of 5 files.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "mediaType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The MIME type of data contained in the file used for chat.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "s3Location",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The s3 location of the files to attach.",
+                  "nested_params": [
+                    {
+                      "name": "uri",
+                      "type": "string",
+                      "required": false,
+                      "description": "The uri of the s3 object.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "sourceType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The source type of the files to attach.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "useCase",
+              "type": "string",
+              "required": false,
+              "description": "Specifies how the source files will be used by the code interpreter.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "invocationId",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the invocation of an action. This value must match the invocationId returned in the InvokeAgent response for the action whose results are provided in the returnControlInvocationResults field. For more information, see Return control to the agent developer and Control session context.",
+          "nested_params": []
+        },
+        {
+          "name": "knowledgeBaseConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "An array of configurations, each of which applies to a knowledge base attached to the agent.",
+          "nested_params": [
+            {
+              "name": "knowledgeBaseId",
+              "type": "string",
+              "required": false,
+              "description": "The unique identifier for a knowledge base attached to the agent.",
+              "nested_params": []
+            },
+            {
+              "name": "retrievalConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "The configurations to apply to the knowledge base during query. For more information, see Query configurations.",
+              "nested_params": [
+                {
+                  "name": "vectorSearchConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Contains details about how the results from the vector search should be returned. For more information, see Query configurations.",
+                  "nested_params": [
+                    {
+                      "name": "filter",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Specifies the filters to use on the metadata in the knowledge base data sources before returning results. For more information, see Query configurations.",
+                      "nested_params": [
+                        {
+                          "name": "andAll",
+                          "type": "list",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if their metadata attributes fulfill all the filter conditions inside this list.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "equals",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value matches the value in this object. The following example would return data sources with an animal attribute whose value is cat: \"equals\": { \"key\": \"animal\", \"value\": \"cat\" }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "greaterThan",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than the value in this object. The following example would return data sources with an year attribute whose value is greater than 1989: \"greaterThan\": { \"key\": \"year\", \"value\": 1989 }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "greaterThanOrEquals",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than or equal to the value in this object. The following example would return data sources with an year attribute whose value is greater than or equal to 1989: \"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "in",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object. The following example would return data sources with an animal attribute that is either cat or dog: \"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "lessThan",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than the value in this object. The following example would return data sources with an year attribute whose value is less than to 1989. \"lessThan\": { \"key\": \"year\", \"value\": 1989 }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "lessThanOrEquals",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than or equal to the value in this object. The following example would return data sources with an year attribute whose value is less than or equal to 1989. \"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "listContains",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members. The following example would return data sources with an animals attribute that is a list containing a cat member (for example [\"dog\", \"cat\"]). \"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "notEquals",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned when:",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "notIn",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object. The following example would return data sources whose animal attribute is neither cat nor dog. \"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "orAll",
+                          "type": "list",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if their metadata attributes fulfill at least one of the filter conditions inside this list.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "startsWith",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores. The following example would return data sources with an animal attribute starts with ca (for example, cat or camel). \"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name that the metadata attribute must match.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "document",
+                              "required": true,
+                              "description": "The value to whcih to compare the value of the metadata attribute.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "stringContains",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following:",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "implicitFilterConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Settings for implicit filtering.",
+                      "nested_params": [
+                        {
+                          "name": "metadataAttributes",
+                          "type": "list",
+                          "required": false,
+                          "description": "Metadata that can be used in a filter.",
+                          "nested_params": [
+                            {
+                              "name": "description",
+                              "type": "string",
+                              "required": false,
+                              "description": "The attribute's description.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The attribute's key.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "type",
+                              "type": "string",
+                              "required": false,
+                              "description": "The attribute's type.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "modelArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The model that generates the filter.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "numberOfResults",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The number of source chunks to retrieve.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "overrideSearchType",
+                      "type": "string",
+                      "required": false,
+                      "description": "By default, Amazon Bedrock decides a search strategy for you. If you're using an Amazon OpenSearch Serverless vector store that contains a filterable text field, you can specify whether to query the knowledge base with a HYBRID search using both vector embeddings and raw text, or SEMANTIC search using only vector embeddings. For other vector store configurations, only SEMANTIC search is available. For more information, see Test a knowledge base.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "rerankingConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Contains configurations for reranking the retrieved results. For more information, see Improve the relevance of query responses with a reranker model.",
+                      "nested_params": [
+                        {
+                          "name": "bedrockRerankingConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Contains configurations for an Amazon Bedrock reranker model.",
+                          "nested_params": [
+                            {
+                              "name": "metadataConfiguration",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains configurations for the metadata to use in reranking.",
+                              "nested_params": [
+                                {
+                                  "name": "selectionMode",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "Specifies whether to consider all metadata when reranking, or only the metadata that you select. If you specify SELECTIVE, include the selectiveModeConfiguration field.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "selectiveModeConfiguration",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Contains configurations for the metadata fields to include or exclude when considering reranking.",
+                                  "nested_params": [
+                                    {
+                                      "name": "fieldsToExclude",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "An array of objects, each of which specifies a metadata field to exclude from consideration when reranking.",
+                                      "nested_params": [
+                                        {
+                                          "name": "fieldName",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of a metadata field to include in or exclude from consideration when reranking.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "fieldsToInclude",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored.",
+                                      "nested_params": [
+                                        {
+                                          "name": "fieldName",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of a metadata field to include in or exclude from consideration when reranking.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "modelConfiguration",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains configurations for the reranker model.",
+                              "nested_params": [
+                                {
+                                  "name": "additionalModelRequestFields",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "A JSON object whose keys are request fields for the model and whose values are values for those fields.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "modelArn",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The ARN of the reranker model to use.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "numberOfRerankedResults",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The number of results to return after reranking.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "required": false,
+                          "description": "The type of reranker model.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "promptSessionAttributes",
+          "type": "dict",
+          "required": false,
+          "description": "Contains attributes that persist across a prompt and the values of those attributes.",
+          "nested_params": []
+        },
+        {
+          "name": "returnControlInvocationResults",
+          "type": "list",
+          "required": false,
+          "description": "Contains information about the results from the action group invocation. For more information, see Return control to the agent developer and Control session context.",
+          "nested_params": []
+        },
+        {
+          "name": "sessionAttributes",
+          "type": "dict",
+          "required": false,
+          "description": "Contains attributes that persist across a session and the values of those attributes. If sessionAttributes are passed to a supervisor agent in multi-agent collaboration, it will be forwarded to all agent collaborators.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "sourceArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "streamingConfigurations",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies the configurations for streaming. applyGuardrailInterval (integer) --- The guardrail interval to apply as response is generated. By default, the guardrail interval is set to 50 characters. If a larger interval is specified, the response will be generated in larger chunks with fewer ApplyGuardrail calls. The following examples show the response generated for Hello, I am an agent input string. 'Hel', 'lo, ','I am', ' an', ' Age', 'nt' Each chunk has at least 3 characters except for the last chunk Hello, I am an Agent streamFinalResponse (boolean) --- Specifies whether to enable streaming for the final response. This is set to false by default.",
+      "nested_params": [
+        {
+          "name": "applyGuardrailInterval",
+          "type": "integer",
+          "required": false,
+          "description": "The guardrail interval to apply as response is generated. By default, the guardrail interval is set to 50 characters. If a larger interval is specified, the response will be generated in larger chunks with fewer ApplyGuardrail calls. The following examples show the response generated for Hello, I am an agent input string. 'Hel', 'lo, ','I am', ' an', ' Age', 'nt' Each chunk has at least 3 characters except for the last chunk Hello, I am an Agent.",
+          "nested_params": []
+        },
+        {
+          "name": "streamFinalResponse",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether to enable streaming for the final response. This is set to false by default.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.ModelNotReadyException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.ResourceNotFoundException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.ConflictException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.ValidationException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.InternalServerException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.DependencyFailedException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.BadGatewayException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.ThrottlingException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.AccessDeniedException.",
+      "nested_items": []
+    },
+    {
+      "name": "",
+      "type": "",
+      "description": "AgentsforBedrockRuntime.Client.exceptions.ServiceQuotaExceededException.",
+      "nested_items": []
+    }
+  ]
+}

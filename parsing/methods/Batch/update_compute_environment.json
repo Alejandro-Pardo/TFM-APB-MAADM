@@ -1,0 +1,292 @@
+{
+  "method_name": "update_compute_environment",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/batch/client/update_compute_environment.html",
+  "description": "Updates an Batch compute environment.",
+  "parameters": [
+    {
+      "name": "computeEnvironment",
+      "type": "string",
+      "required": true,
+      "description": "The name or full Amazon Resource Name (ARN) of the compute environment to update.",
+      "nested_params": []
+    },
+    {
+      "name": "state",
+      "type": "string",
+      "required": false,
+      "description": "The state of the compute environment. Compute environments in the ENABLED state can accept jobs from a queue and scale in or out automatically based on the workload demand of its associated queues. If the state is ENABLED, then the Batch scheduler can attempt to place jobs from an associated job queue on the compute resources within the environment. If the compute environment is managed, then it can scale its instances out or in automatically, based on the job queue demand. If the state is DISABLED, then the Batch scheduler doesn't attempt to place jobs within the environment. Jobs in a STARTING or RUNNING state continue to progress normally. Managed compute environments in the DISABLED state don't scale out. When an instance is idle, the instance scales down to the minvCpus value. However, the instance size doesn't change. For example, consider a c5.8xlarge instance with a minvCpus value of 4 and a desiredvCpus value of 36. This instance doesn't scale down to a c5.large instance.",
+      "nested_params": []
+    },
+    {
+      "name": "unmanagedvCpus",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "computeResources",
+      "type": "dict",
+      "required": true,
+      "description": "Details of the compute resources managed by the compute environment. Required for a managed compute environment. For more information, see Compute Environments in the Batch User Guide. minvCpus (integer) --- The minimum number of vCPUs that an environment should maintain (even if the compute environment is DISABLED). maxvCpus (integer) --- The maximum number of Amazon EC2 vCPUs that an environment can reach. desiredvCpus (integer) --- The desired number of vCPUS in the compute environment. Batch modifies this value between the minimum and maximum values based on job queue demand. subnets (list) --- The VPC subnets where the compute resources are launched. Fargate compute resources can contain up to 16 subnets. For Fargate compute resources, providing an empty list will be handled as if this parameter wasn't specified and no change is made. For Amazon EC2 compute resources, providing an empty list removes the VPC subnets from the compute resource. For more information, see VPCs and subnets in the Amazon VPC User Guide. When updating a compute environment, changing the VPC subnets requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide. (string) --- securityGroupIds (list) --- The Amazon EC2 security groups that are associated with instances launched in the compute environment. This parameter is required for Fargate compute resources, where it can contain up to 5 security groups. For Fargate compute resources, providing an empty list is handled as if this parameter wasn't specified and no change is made. For Amazon EC2 compute resources, providing an empty list removes the security groups from the compute resource. When updating a compute environment, changing the Amazon EC2 security groups requires an infrastructure update of the compute environment. (string) --- allocationStrategy (string) --- The allocation strategy to use for the compute resource if there's not enough instances of the best fitting instance type that can be allocated. This might be because of availability of the instance type in the Region or Amazon EC2 service limits. For more information, see Allocation strategies in the Batch User Guide. When updating a compute environment, changing the allocation strategy requires an infrastructure update of the compute environment. BEST_FIT isn't supported when updating a compute environment. Batch selects additional instance types that are large enough to meet the requirements of the jobs in the queue. Its preference is for instance types with lower cost vCPUs. If additional instances of the previously selected instance types aren't available, Batch selects new instance types. SPOT_CAPACITY_OPTIMIZED Batch selects one or more instance types that are large enough to meet the requirements of the jobs in the queue. Its preference is for instance types that are less likely to be interrupted. This allocation strategy is only available for Spot Instance compute resources. SPOT_PRICE_CAPACITY_OPTIMIZED The price and capacity optimized allocation strategy looks at both price and capacity to select the Spot Instance pools that are the least likely to be interrupted and have the lowest possible price. With BEST_FIT_PROGRESSIVE, SPOT_CAPACITY_OPTIMIZED and SPOT_PRICE_CAPACITY_OPTIMIZED (recommended) strategies using On-Demand or Spot Instances, and the BEST_FIT strategy using Spot Instances, Batch might need to exceed maxvCpus to meet your capacity requirements. In this event, Batch never exceeds maxvCpus by more than a single instance. instanceTypes (list) --- The instances types that can be launched. You can specify instance families to launch any instance type within those families (for example, c5 or p3), or you can specify specific sizes within a family (such as c5.8xlarge). You can also choose optimal to select instance types (from the C4, M4, and R4 instance families) that match the demand of your job queues. When updating a compute environment, changing this setting requires an infrastructure update of the compute environment. (string) --- ec2KeyPair (string) --- The Amazon EC2 key pair that's used for instances launched in the compute environment. You can use this key pair to log in to your instances with SSH. To remove the Amazon EC2 key pair, set this value to an empty string. When updating a compute environment, changing the Amazon EC2 key pair requires an infrastructure update of the compute environment. instanceRole (string) --- The Amazon ECS instance profile applied to Amazon EC2 instances in a compute environment. Required for Amazon EC2 instances. You can specify the short name or full Amazon Resource Name (ARN) of an instance profile. For example, ecsInstanceRole or ``arn:aws:iam::<aws_account_id>:instance-profile/ecsInstanceRole ``. For more information, see Amazon ECS instance role in the Batch User Guide. tags (dict) --- Key-value pair tags to be applied to Amazon EC2 resources that are launched in the compute environment. For Batch, these take the form of \"String1\": \"String2\", where String1 is the tag key and String2 is the tag value (for example, { \"Name\": \"Batch Instance - C4OnDemand\" }). This is helpful for recognizing your Batch instances in the Amazon EC2 console. These tags aren't seen when using the Batch ListTagsForResource API operation. (string) --- (string) --- placementGroup (string) --- The Amazon EC2 placement group to associate with your compute resources. If you intend to submit multi-node parallel jobs to your compute environment, you should consider creating a cluster placement group and associate it with your compute resources. This keeps your multi-node parallel job on a logical grouping of instances within a single Availability Zone with high network flow potential. For more information, see Placement groups in the Amazon EC2 User Guide for Linux Instances. When updating a compute environment, changing the placement group requires an infrastructure update of the compute environment. bidPercentage (integer) --- The maximum percentage that a Spot Instance price can be when compared with the On-Demand price for that instance type before instances are launched. For example, if your maximum percentage is 20%, the Spot price must be less than 20% of the current On-Demand price for that Amazon EC2 instance. You always pay the lowest (market) price and never more than your maximum percentage. For most use cases, we recommend leaving this field empty. When updating a compute environment, changing the bid percentage requires an infrastructure update of the compute environment. launchTemplate (dict) --- The updated launch template to use for your compute resources. You must specify either the launch template ID or launch template name in the request, but not both. For more information, see Launch template support in the Batch User Guide. To remove the custom launch template and use the default launch template, set launchTemplateId or launchTemplateName member of the launch template specification to an empty string. Removing the launch template from a compute environment will not remove the AMI specified in the launch template. In order to update the AMI specified in a launch template, the updateToLatestImageVersion parameter must be set to true. When updating a compute environment, changing the launch template requires an infrastructure update of the compute environment. launchTemplateId (string) --- The ID of the launch template. launchTemplateName (string) --- The name of the launch template. version (string) --- The version number of the launch template, $Default, or $Latest. If the value is $Default, the default version of the launch template is used. If the value is $Latest, the latest version of the launch template is used. Default: $Default Latest: $Latest overrides (list) --- A launch template to use in place of the default launch template. You can specify up to ten (10) launch template overrides that are associated to unique instance types or families for each compute environment. (dict) --- An object that represents a launch template to use in place of the default launch template. If security groups are specified using both the securityGroupIds parameter of CreateComputeEnvironment and the launch template, the values in the securityGroupIds parameter of CreateComputeEnvironment will be used. You can define up to ten (10) overrides for each compute environment. Note: If you specify the launchTemplateId you can't specify the launchTemplateName as well. Note: If you specify the launchTemplateName you can't specify the launchTemplateId as well. Default: $Default Latest: $Latest targetInstanceTypes (list) --- The instance type or family that this override launch template should be applied to. This parameter is required when defining a launch template override. Information included in this parameter must meet the following requirements: Must be a valid Amazon EC2 instance type or family. optimal isn't allowed. targetInstanceTypes can target only instance types and families that are included within the ComputeResource.instanceTypes set. targetInstanceTypes doesn't need to include all of the instances from the instanceType set, but at least a subset. For example, if ComputeResource.instanceTypes includes [m5, g5], targetInstanceTypes can include [m5.2xlarge] and [m5.large] but not [c5.large]. targetInstanceTypes included within the same launch template override or across launch template overrides can't overlap for the same compute environment. For example, you can't define one launch template override to target an instance family and another define an instance type within this same family. (string) --- ec2Configuration (list) --- Provides information used to select Amazon Machine Images (AMIs) for Amazon EC2 instances in the compute environment. If Ec2Configuration isn't specified, the default is ECS_AL2. To remove the Amazon EC2 configuration and any custom AMI ID specified in imageIdOverride, set this value to an empty string. One or two values can be provided. (dict) --- Provides information used to select Amazon Machine Images (AMIs) for instances in the compute environment. If Ec2Configuration isn't specified, the default is ECS_AL2 ( Amazon Linux 2). The image type to match with the instance type to select an AMI. The supported values are different for ECS and EKS resources. ECS If the imageIdOverride parameter isn't specified, then a recent Amazon ECS-optimized Amazon Linux 2 AMI ( ECS_AL2) is used. If a new image type is specified in an update, but neither an imageId nor a imageIdOverride parameter is specified, then the latest Amazon ECS optimized AMI for that image type that's supported by Batch is used. ECS_AL2 Amazon Linux 2: Default for all non-GPU instance families. ECS_AL2_NVIDIA Amazon Linux 2 (GPU): Default for all GPU instance families (for example P4 and G4) and can be used for all non Amazon Web Services Graviton-based instance types. ECS_AL2023 Amazon Linux 2023: Batch supports Amazon Linux 2023. Amazon Linux. Amazon Linux has reached the end-of-life of standard support. For more information, see Amazon Linux AMI. EKS If the imageIdOverride parameter isn't specified, then a recent Amazon EKS-optimized Amazon Linux AMI ( EKS_AL2) is used. If a new image type is specified in an update, but neither an imageId nor a imageIdOverride parameter is specified, then the latest Amazon EKS optimized AMI for that image type that Batch supports is used. EKS_AL2 Amazon Linux 2: Default for all non-GPU instance families. EKS_AL2_NVIDIA Amazon Linux 2 (accelerated): Default for all GPU instance families (for example, P4 and G4) and can be used for all non Amazon Web Services Graviton-based instance types. imageIdOverride (string) --- The AMI ID used for instances launched in the compute environment that match the image type. This setting overrides the imageId set in the computeResource object. imageKubernetesVersion (string) --- The Kubernetes version for the compute environment. If you don't specify a value, the latest version that Batch supports is used. updateToLatestImageVersion (boolean) --- Specifies whether the AMI ID is updated to the latest one that's supported by Batch when the compute environment has an infrastructure update. The default value is false. type (string) --- The type of compute environment: EC2, SPOT, FARGATE, or FARGATE_SPOT. For more information, see Compute environments in the Batch User Guide. If you choose SPOT, you must also specify an Amazon EC2 Spot Fleet role with the spotIamFleetRole parameter. For more information, see Amazon EC2 spot fleet role in the Batch User Guide. When updating a compute environment, changing the type of a compute environment requires an infrastructure update of the compute environment. imageId (string) --- The Amazon Machine Image (AMI) ID used for instances launched in the compute environment. This parameter is overridden by the imageIdOverride member of the Ec2Configuration structure. To remove the custom AMI ID and use the default AMI ID, set this value to an empty string. When updating a compute environment, changing the AMI ID requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+      "nested_params": [
+        {
+          "name": "minvCpus",
+          "type": "integer",
+          "required": false,
+          "description": "The minimum number of vCPUs that an environment should maintain (even if the compute environment is DISABLED).",
+          "nested_params": []
+        },
+        {
+          "name": "maxvCpus",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of Amazon EC2 vCPUs that an environment can reach.",
+          "nested_params": []
+        },
+        {
+          "name": "desiredvCpus",
+          "type": "integer",
+          "required": false,
+          "description": "The desired number of vCPUS in the compute environment. Batch modifies this value between the minimum and maximum values based on job queue demand.",
+          "nested_params": []
+        },
+        {
+          "name": "subnets",
+          "type": "list",
+          "required": false,
+          "description": "The VPC subnets where the compute resources are launched. Fargate compute resources can contain up to 16 subnets. For Fargate compute resources, providing an empty list will be handled as if this parameter wasn't specified and no change is made. For Amazon EC2 compute resources, providing an empty list removes the VPC subnets from the compute resource. For more information, see VPCs and subnets in the Amazon VPC User Guide. When updating a compute environment, changing the VPC subnets requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "securityGroupIds",
+          "type": "list",
+          "required": false,
+          "description": "The Amazon EC2 security groups that are associated with instances launched in the compute environment. This parameter is required for Fargate compute resources, where it can contain up to 5 security groups. For Fargate compute resources, providing an empty list is handled as if this parameter wasn't specified and no change is made. For Amazon EC2 compute resources, providing an empty list removes the security groups from the compute resource. When updating a compute environment, changing the Amazon EC2 security groups requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "allocationStrategy",
+          "type": "string",
+          "required": false,
+          "description": "The allocation strategy to use for the compute resource if there's not enough instances of the best fitting instance type that can be allocated. This might be because of availability of the instance type in the Region or Amazon EC2 service limits. For more information, see Allocation strategies in the Batch User Guide. When updating a compute environment, changing the allocation strategy requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide. BEST_FIT isn't supported when updating a compute environment. Batch selects additional instance types that are large enough to meet the requirements of the jobs in the queue. Its preference is for instance types with lower cost vCPUs. If additional instances of the previously selected instance types aren't available, Batch selects new instance types. Batch selects one or more instance types that are large enough to meet the requirements of the jobs in the queue. Its preference is for instance types that are less likely to be interrupted. This allocation strategy is only available for Spot Instance compute resources. The price and capacity optimized allocation strategy looks at both price and capacity to select the Spot Instance pools that are the least likely to be interrupted and have the lowest possible price. With BEST_FIT_PROGRESSIVE, SPOT_CAPACITY_OPTIMIZED and SPOT_PRICE_CAPACITY_OPTIMIZED (recommended) strategies using On-Demand or Spot Instances, and the BEST_FIT strategy using Spot Instances, Batch might need to exceed maxvCpus to meet your capacity requirements. In this event, Batch never exceeds maxvCpus by more than a single instance.",
+          "nested_params": []
+        },
+        {
+          "name": "instanceTypes",
+          "type": "list",
+          "required": false,
+          "description": "The instances types that can be launched. You can specify instance families to launch any instance type within those families (for example, c5 or p3), or you can specify specific sizes within a family (such as c5.8xlarge). You can also choose optimal to select instance types (from the C4, M4, and R4 instance families) that match the demand of your job queues. When updating a compute environment, changing this setting requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "ec2KeyPair",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon EC2 key pair that's used for instances launched in the compute environment. You can use this key pair to log in to your instances with SSH. To remove the Amazon EC2 key pair, set this value to an empty string. When updating a compute environment, changing the Amazon EC2 key pair requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "instanceRole",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon ECS instance profile applied to Amazon EC2 instances in a compute environment. Required for Amazon EC2 instances. You can specify the short name or full Amazon Resource Name (ARN) of an instance profile. For example, ecsInstanceRole or ``arn:aws:iam::<aws_account_id>:instance-profile/ecsInstanceRole ``. For more information, see Amazon ECS instance role in the Batch User Guide. When updating a compute environment, changing this setting requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "tags",
+          "type": "dict",
+          "required": false,
+          "description": "Key-value pair tags to be applied to Amazon EC2 resources that are launched in the compute environment. For Batch, these take the form of \"String1\": \"String2\", where String1 is the tag key and String2 is the tag value (for example, { \"Name\": \"Batch Instance - C4OnDemand\" }). This is helpful for recognizing your Batch instances in the Amazon EC2 console. These tags aren't seen when using the Batch ListTagsForResource API operation. When updating a compute environment, changing this setting requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "placementGroup",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon EC2 placement group to associate with your compute resources. If you intend to submit multi-node parallel jobs to your compute environment, you should consider creating a cluster placement group and associate it with your compute resources. This keeps your multi-node parallel job on a logical grouping of instances within a single Availability Zone with high network flow potential. For more information, see Placement groups in the Amazon EC2 User Guide for Linux Instances. When updating a compute environment, changing the placement group requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "bidPercentage",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum percentage that a Spot Instance price can be when compared with the On-Demand price for that instance type before instances are launched. For example, if your maximum percentage is 20%, the Spot price must be less than 20% of the current On-Demand price for that Amazon EC2 instance. You always pay the lowest (market) price and never more than your maximum percentage. For most use cases, we recommend leaving this field empty. When updating a compute environment, changing the bid percentage requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "launchTemplate",
+          "type": "dict",
+          "required": false,
+          "description": "The updated launch template to use for your compute resources. You must specify either the launch template ID or launch template name in the request, but not both. For more information, see Launch template support in the Batch User Guide. To remove the custom launch template and use the default launch template, set launchTemplateId or launchTemplateName member of the launch template specification to an empty string. Removing the launch template from a compute environment will not remove the AMI specified in the launch template. In order to update the AMI specified in a launch template, the updateToLatestImageVersion parameter must be set to true. When updating a compute environment, changing the launch template requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": [
+            {
+              "name": "launchTemplateId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the launch template.",
+              "nested_params": []
+            },
+            {
+              "name": "launchTemplateName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the launch template.",
+              "nested_params": []
+            },
+            {
+              "name": "version",
+              "type": "string",
+              "required": false,
+              "description": "The version number of the launch template, $Default, or $Latest. If the value is $Default, the default version of the launch template is used. If the value is $Latest, the latest version of the launch template is used. Default: $Default Latest: $Latest.",
+              "nested_params": []
+            },
+            {
+              "name": "overrides",
+              "type": "list",
+              "required": false,
+              "description": "A launch template to use in place of the default launch template. You must specify either the launch template ID or launch template name in the request, but not both. You can specify up to ten (10) launch template overrides that are associated to unique instance types or families for each compute environment.",
+              "nested_params": [
+                {
+                  "name": "launchTemplateId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ID of the launch template.",
+                  "nested_params": []
+                },
+                {
+                  "name": "launchTemplateName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the launch template.",
+                  "nested_params": []
+                },
+                {
+                  "name": "version",
+                  "type": "string",
+                  "required": false,
+                  "description": "The version number of the launch template, $Default, or $Latest. If the value is $Default, the default version of the launch template is used. If the value is $Latest, the latest version of the launch template is used. Default: $Default Latest: $Latest.",
+                  "nested_params": []
+                },
+                {
+                  "name": "targetInstanceTypes",
+                  "type": "list",
+                  "required": false,
+                  "description": "The instance type or family that this override launch template should be applied to. This parameter is required when defining a launch template override. Information included in this parameter must meet the following requirements:",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ec2Configuration",
+          "type": "list",
+          "required": false,
+          "description": "Provides information used to select Amazon Machine Images (AMIs) for Amazon EC2 instances in the compute environment. If Ec2Configuration isn't specified, the default is ECS_AL2. When updating a compute environment, changing this setting requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide. To remove the Amazon EC2 configuration and any custom AMI ID specified in imageIdOverride, set this value to an empty string. One or two values can be provided.",
+          "nested_params": [
+            {
+              "name": "imageType",
+              "type": "string",
+              "required": false,
+              "description": "The image type to match with the instance type to select an AMI. The supported values are different for ECS and EKS resources. If the imageIdOverride parameter isn't specified, then a recent Amazon ECS-optimized Amazon Linux 2 AMI ( ECS_AL2) is used. If a new image type is specified in an update, but neither an imageId nor a imageIdOverride parameter is specified, then the latest Amazon ECS optimized AMI for that image type that's supported by Batch is used. Amazon Linux 2: Default for all non-GPU instance families. Amazon Linux 2 (GPU): Default for all GPU instance families (for example P4 and G4) and can be used for all non Amazon Web Services Graviton-based instance types. Amazon Linux 2023: Batch supports Amazon Linux 2023. Amazon Linux. Amazon Linux has reached the end-of-life of standard support. For more information, see Amazon Linux AMI. If the imageIdOverride parameter isn't specified, then a recent Amazon EKS-optimized Amazon Linux AMI ( EKS_AL2) is used. If a new image type is specified in an update, but neither an imageId nor a imageIdOverride parameter is specified, then the latest Amazon EKS optimized AMI for that image type that Batch supports is used. Amazon Linux 2 (accelerated): Default for all GPU instance families (for example, P4 and G4) and can be used for all non Amazon Web Services Graviton-based instance types.",
+              "nested_params": []
+            },
+            {
+              "name": "imageIdOverride",
+              "type": "string",
+              "required": false,
+              "description": "The AMI ID used for instances launched in the compute environment that match the image type. This setting overrides the imageId set in the computeResource object.",
+              "nested_params": []
+            },
+            {
+              "name": "imageKubernetesVersion",
+              "type": "string",
+              "required": false,
+              "description": "The Kubernetes version for the compute environment. If you don't specify a value, the latest version that Batch supports is used.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "updateToLatestImageVersion",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether the AMI ID is updated to the latest one that's supported by Batch when the compute environment has an infrastructure update. The default value is false. When updating a compute environment, changing this setting requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The type of compute environment: EC2, SPOT, FARGATE, or FARGATE_SPOT. For more information, see Compute environments in the Batch User Guide. If you choose SPOT, you must also specify an Amazon EC2 Spot Fleet role with the spotIamFleetRole parameter. For more information, see Amazon EC2 spot fleet role in the Batch User Guide. When updating a compute environment, changing the type of a compute environment requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "imageId",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Machine Image (AMI) ID used for instances launched in the compute environment. This parameter is overridden by the imageIdOverride member of the Ec2Configuration structure. To remove the custom AMI ID and use the default AMI ID, set this value to an empty string. When updating a compute environment, changing the AMI ID requires an infrastructure update of the compute environment. For more information, see Updating compute environments in the Batch User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "serviceRole",
+      "type": "string",
+      "required": false,
+      "description": "The full Amazon Resource Name (ARN) of the IAM role that allows Batch to make calls to other Amazon Web Services services on your behalf. For more information, see Batch service IAM role in the Batch User Guide. If your specified role has a path other than /, then you must either specify the full role ARN (recommended) or prefix the role name with the path.",
+      "nested_params": []
+    },
+    {
+      "name": "updatePolicy",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies the updated infrastructure update policy for the compute environment. For more information about infrastructure updates, see Updating compute environments in the Batch User Guide. terminateJobsOnUpdate (boolean) --- Specifies whether jobs are automatically terminated when the computer environment infrastructure is updated. The default value is false. jobExecutionTimeoutMinutes (integer) --- Specifies the job timeout (in minutes) when the compute environment infrastructure is updated. The default value is 30.",
+      "nested_params": [
+        {
+          "name": "terminateJobsOnUpdate",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether jobs are automatically terminated when the computer environment infrastructure is updated. The default value is false.",
+          "nested_params": []
+        },
+        {
+          "name": "jobExecutionTimeoutMinutes",
+          "type": "integer",
+          "required": false,
+          "description": "Specifies the job timeout (in minutes) when the compute environment infrastructure is updated. The default value is 30.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "context",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "computeEnvironmentName",
+          "type": "string",
+          "description": "The name of the compute environment. It can be up to 128 characters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).",
+          "nested_items": []
+        },
+        {
+          "name": "computeEnvironmentArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the compute environment.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

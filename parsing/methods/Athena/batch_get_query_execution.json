@@ -1,0 +1,374 @@
+{
+  "method_name": "batch_get_query_execution",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/athena/client/batch_get_query_execution.html",
+  "description": "Returns the details of a single query execution or a list of up to 50 query executions, which you provide as an array of query execution ID strings. Requires you to have access to the workgroup in which the queries ran. To get a list of query execution IDs, use  ListQueryExecutionsInput$WorkGroup. Query executions differ from named (saved) queries. Use  BatchGetNamedQueryInput to get details about named queries.",
+  "parameters": [],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "QueryExecutions",
+          "type": "list",
+          "description": "Information about a query execution.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "QueryExecutionId",
+                  "type": "string",
+                  "description": "The unique identifier for each query execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Query",
+                  "type": "string",
+                  "description": "The SQL query statements which the query execution ran.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StatementType",
+                  "type": "string",
+                  "description": "The type of query statement that was run. DDL indicates DDL query statements. DML indicates DML (Data Manipulation Language) query statements, such as CREATE TABLE AS SELECT. UTILITY indicates query statements other than DDL and DML, such as SHOW CREATE TABLE, or DESCRIBE TABLE.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ResultConfiguration",
+                  "type": "dict",
+                  "description": "The location in Amazon S3 where query and calculation results are stored and the encryption option, if any, used for query results. These are known as 'client-side settings'. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup.",
+                  "nested_items": [
+                    {
+                      "name": "OutputLocation",
+                      "type": "string",
+                      "description": "The location in Amazon S3 where your query and calculation results are stored, such as s3://path/to/query/bucket/. To run the query, you must specify the query results location using one of the ways: either for individual queries using either this setting (client-side), or in the workgroup, using  WorkGroupConfiguration. If none of them is set, Athena issues an error that no output location is provided. If workgroup settings override client-side settings, then the query uses the settings specified for the workgroup. See  WorkGroupConfiguration$EnforceWorkGroupConfiguration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "EncryptionConfiguration",
+                      "type": "dict",
+                      "description": "If query and calculation results are encrypted in Amazon S3, indicates the encryption option used (for example, SSE_KMS or CSE_KMS) and key information. This is a client-side setting. If workgroup settings override client-side settings, then the query uses the encryption configuration that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See  WorkGroupConfiguration$EnforceWorkGroupConfiguration and Workgroup Settings Override Client-Side Settings.",
+                      "nested_items": [
+                        {
+                          "name": "EncryptionOption",
+                          "type": "string",
+                          "description": "Indicates whether Amazon S3 server-side encryption with Amazon S3-managed keys ( SSE_S3), server-side encryption with KMS-managed keys ( SSE_KMS), or client-side encryption with KMS-managed keys ( CSE_KMS) is used.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "KmsKey",
+                          "type": "string",
+                          "description": "For SSE_KMS and CSE_KMS, this is the KMS key ARN or ID.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ExpectedBucketOwner",
+                      "type": "string",
+                      "description": "The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by  ResultConfiguration$OutputLocation. If set, Athena uses the value for ExpectedBucketOwner when it makes Amazon S3 calls to your specified output location. If the ExpectedBucketOwner Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AclConfiguration",
+                      "type": "dict",
+                      "description": "Indicates that an Amazon S3 canned ACL should be set to control ownership of stored query results. Currently the only supported canned ACL is BUCKET_OWNER_FULL_CONTROL. This is a client-side setting. If workgroup settings override client-side settings, then the query uses the ACL configuration that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. For more information, see  WorkGroupConfiguration$EnforceWorkGroupConfiguration and Workgroup Settings Override Client-Side Settings.",
+                      "nested_items": [
+                        {
+                          "name": "S3AclOption",
+                          "type": "string",
+                          "description": "The Amazon S3 canned ACL that Athena should specify when storing query results, including data files inserted by Athena as the result of statements like CTAS or INSERT INTO. Currently the only supported canned ACL is BUCKET_OWNER_FULL_CONTROL. If a query runs in a workgroup and the workgroup overrides client-side settings, then the Amazon S3 canned ACL specified in the workgroup's settings is used for all queries that run in the workgroup. For more information about Amazon S3 canned ACLs, see Canned ACL in the Amazon S3 User Guide.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ResultReuseConfiguration",
+                  "type": "dict",
+                  "description": "Specifies the query result reuse behavior that was used for the query.",
+                  "nested_items": [
+                    {
+                      "name": "ResultReuseByAgeConfiguration",
+                      "type": "dict",
+                      "description": "Specifies whether previous query results are reused, and if so, their maximum age.",
+                      "nested_items": [
+                        {
+                          "name": "Enabled",
+                          "type": "boolean",
+                          "description": "True if previous query results can be reused when the query is run; otherwise, false. The default is false.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaxAgeInMinutes",
+                          "type": "integer",
+                          "description": "Specifies, in minutes, the maximum age of a previous query result that Athena should consider for reuse. The default is 60.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "QueryExecutionContext",
+                  "type": "dict",
+                  "description": "The database in which the query execution occurred.",
+                  "nested_items": [
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "description": "The name of the database used in the query execution. The database must exist in the catalog.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Catalog",
+                      "type": "string",
+                      "description": "The name of the data catalog used in the query execution.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "State",
+                      "type": "string",
+                      "description": "The state of query execution. QUEUED indicates that the query has been submitted to the service, and Athena will execute the query as soon as resources are available. RUNNING indicates that the query is in execution phase. SUCCEEDED indicates that the query completed without errors. FAILED indicates that the query experienced an error and did not complete processing. CANCELLED indicates that a user input interrupted query execution.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "StateChangeReason",
+                      "type": "string",
+                      "description": "Further detail about the status of the query.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SubmissionDateTime",
+                      "type": "datetime",
+                      "description": "The date and time that the query was submitted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CompletionDateTime",
+                      "type": "datetime",
+                      "description": "The date and time that the query completed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AthenaError",
+                      "type": "dict",
+                      "description": "Provides information about an Athena query error.",
+                      "nested_items": [
+                        {
+                          "name": "ErrorCategory",
+                          "type": "integer",
+                          "description": "An integer value that specifies the category of a query failure error. The following list shows the category for each integer value.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ErrorType",
+                          "type": "integer",
+                          "description": "An integer value that provides specific information about an Athena query error. For the meaning of specific values, see the Error Type Reference in the Amazon Athena User Guide.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Retryable",
+                          "type": "boolean",
+                          "description": "True if the query might succeed if resubmitted.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ErrorMessage",
+                          "type": "string",
+                          "description": "Contains a short description of the error that occurred.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Statistics",
+                  "type": "dict",
+                  "description": "Query execution statistics, such as the amount of data scanned, the amount of time that the query took to process, and the type of statement that was run.",
+                  "nested_items": [
+                    {
+                      "name": "EngineExecutionTimeInMillis",
+                      "type": "integer",
+                      "description": "The number of milliseconds that the query took to execute.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DataScannedInBytes",
+                      "type": "integer",
+                      "description": "The number of bytes in the data that was queried.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DataManifestLocation",
+                      "type": "string",
+                      "description": "The location and file name of a data manifest file. The manifest file is saved to the Athena query results location in Amazon S3. The manifest file tracks files that the query wrote to Amazon S3. If the query fails, the manifest file also tracks files that the query intended to write. The manifest is useful for identifying orphaned files resulting from a failed query. For more information, see Working with Query Results, Output Files, and Query History in the Amazon Athena User Guide.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalExecutionTimeInMillis",
+                      "type": "integer",
+                      "description": "The number of milliseconds that Athena took to run the query.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QueryQueueTimeInMillis",
+                      "type": "integer",
+                      "description": "The number of milliseconds that the query was in your query queue waiting for resources. Note that if transient errors occur, Athena might automatically add the query back to the queue.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ServicePreProcessingTimeInMillis",
+                      "type": "integer",
+                      "description": "The number of milliseconds that Athena took to preprocess the query before submitting the query to the query engine.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QueryPlanningTimeInMillis",
+                      "type": "integer",
+                      "description": "The number of milliseconds that Athena took to plan the query processing flow. This includes the time spent retrieving table partitions from the data source. Note that because the query engine performs the query planning, query planning time is a subset of engine processing time.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ServiceProcessingTimeInMillis",
+                      "type": "integer",
+                      "description": "The number of milliseconds that Athena took to finalize and publish the query results after the query engine finished running the query.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ResultReuseInformation",
+                      "type": "dict",
+                      "description": "Contains information about whether previous query results were reused for the query.",
+                      "nested_items": [
+                        {
+                          "name": "ReusedPreviousResult",
+                          "type": "boolean",
+                          "description": "True if a previous query result was reused; false if the result was generated from a new run of the query.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "WorkGroup",
+                  "type": "string",
+                  "description": "The name of the workgroup in which the query ran.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EngineVersion",
+                  "type": "dict",
+                  "description": "The engine version that executed the query.",
+                  "nested_items": [
+                    {
+                      "name": "SelectedEngineVersion",
+                      "type": "string",
+                      "description": "The engine version requested by the user. Possible values are determined by the output of ListEngineVersions, including AUTO. The default is AUTO.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "EffectiveEngineVersion",
+                      "type": "string",
+                      "description": "Read only. The engine version on which the query runs. If the user requests a valid engine version other than Auto, the effective engine version is the same as the engine version that the user requested. If the user requests Auto, the effective engine version is chosen by Athena. When a request to update the engine version is made by a CreateWorkGroup or UpdateWorkGroup operation, the EffectiveEngineVersion field is ignored.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ExecutionParameters",
+                  "type": "list",
+                  "description": "A list of values for the parameters in a query. The values are applied sequentially to the parameters in the query in the order in which the parameters occur. The list of parameters is not returned in the response.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SubstatementType",
+                  "type": "string",
+                  "description": "The kind of query statement that was run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "QueryResultsS3AccessGrantsConfiguration",
+                  "type": "dict",
+                  "description": "Specifies whether Amazon S3 access grants are enabled for query results.",
+                  "nested_items": [
+                    {
+                      "name": "EnableS3AccessGrants",
+                      "type": "boolean",
+                      "description": "Specifies whether Amazon S3 access grants are enabled for query results.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CreateUserLevelPrefix",
+                      "type": "boolean",
+                      "description": "When enabled, appends the user ID as an Amazon S3 path prefix to the query result output location.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AuthenticationType",
+                      "type": "string",
+                      "description": "The authentication type used for Amazon S3 access grants. Currently, only DIRECTORY_IDENTITY is supported.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UnprocessedQueryExecutionIds",
+          "type": "list",
+          "description": "Information about the query executions that failed to run.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "QueryExecutionId",
+                  "type": "string",
+                  "description": "The unique identifier of the query execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "The error code returned when the query execution failed to process, if applicable.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorMessage",
+                  "type": "string",
+                  "description": "The error message returned when the query execution failed to process, if applicable.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

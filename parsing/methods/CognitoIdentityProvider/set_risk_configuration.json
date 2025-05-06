@@ -1,0 +1,617 @@
+{
+  "method_name": "set_risk_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cognito-idp/client/set_risk_configuration.html",
+  "description": "Configures threat protection for a user pool or app client. Sets configuration for the following. To set the risk configuration for the user pool to defaults, send this request with only the UserPoolId parameter. To reset the threat protection settings of an app client to be inherited from the user pool, send UserPoolId and ClientId parameters only. To change threat protection to audit-only or off, update the value of UserPoolAddOns in an UpdateUserPool request. To activate this setting, your user pool must be on the Plus tier.",
+  "parameters": [
+    {
+      "name": "UserPoolId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the user pool where you want to set a risk configuration. If you include UserPoolId in your request, don't include ClientId. When the client ID is null, the same risk configuration is applied to all the clients in the userPool. When you include both ClientId and UserPoolId, Amazon Cognito maps the configuration to the app client only.",
+      "nested_params": []
+    },
+    {
+      "name": "ClientId",
+      "type": "string",
+      "required": false,
+      "description": "The ID of the app client where you want to set a risk configuration. If ClientId is null, then the risk configuration is mapped to UserPoolId. When the client ID is null, the same risk configuration is applied to all the clients in the userPool. When you include a ClientId parameter, Amazon Cognito maps the configuration to the app client. When you include both ClientId and UserPoolId, Amazon Cognito maps the configuration to the app client only.",
+      "nested_params": []
+    },
+    {
+      "name": "CompromisedCredentialsRiskConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration of automated reactions to detected compromised credentials. Includes settings for blocking future sign-in requests and for the types of password-submission events you want to monitor. EventFilter (list) --- Settings for the sign-in activity where you want to configure compromised-credentials actions. Defaults to all events. (string) --- Settings for the actions that you want your user pool to take when Amazon Cognito detects compromised credentials. The action that Amazon Cognito takes when it detects compromised credentials.",
+      "nested_params": [
+        {
+          "name": "EventFilter",
+          "type": "list",
+          "required": false,
+          "description": "Settings for the sign-in activity where you want to configure compromised-credentials actions. Defaults to all events.",
+          "nested_params": []
+        },
+        {
+          "name": "Actions",
+          "type": "dict",
+          "required": false,
+          "description": "Settings for the actions that you want your user pool to take when Amazon Cognito detects compromised credentials.",
+          "nested_params": [
+            {
+              "name": "EventAction",
+              "type": "string",
+              "required": false,
+              "description": "The action that Amazon Cognito takes when it detects compromised credentials.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AccountTakeoverRiskConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The settings for automated responses and notification templates for adaptive authentication with threat protection. NotifyConfiguration (dict) --- The settings for composing and sending an email message when threat protection assesses a risk level with adaptive authentication. When you choose to notify users in AccountTakeoverRiskConfiguration, Amazon Cognito sends an email message using the method and template that you set with this data type. From (string) --- The email address that sends the email message. The address must be either individually verified with Amazon Simple Email Service, or from a domain that has been verified with Amazon SES. ReplyTo (string) --- The reply-to email address of an email template. The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. This identity permits Amazon Cognito to send for the email address specified in the From parameter. BlockEmail (dict) --- The template for the email message that your user pool sends when a detected risk event is blocked. The subject of the threat protection email notification. HtmlBody (string) --- The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively. TextBody (string) --- The body of an email notification formatted in plaintext. NoActionEmail (dict) --- The template for the email message that your user pool sends when no action is taken in response to a detected risk. MfaEmail (dict) --- The template for the email message that your user pool sends when MFA is challenged in response to a detected risk. A list of account-takeover actions for each level of risk that Amazon Cognito might assess with threat protection. LowAction (dict) --- The action that you assign to a low-risk assessment by threat protection. Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level. The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows: BLOCK: Block the request. MFA_IF_CONFIGURED: Present an MFA challenge if possible. MFA is possible if the user pool has active MFA methods that the user can set up. For example, if the user pool only supports SMS message MFA but the user doesn't have a phone number attribute, MFA setup isn't possible. If MFA setup isn't possible, allow the request. MFA_REQUIRED: Present an MFA challenge if possible. Block the request if a user hasn't set up MFA. To sign in with required MFA, users must have an email address or phone number attribute, or a registered TOTP factor. NO_ACTION: Take no action. Permit sign-in. MediumAction (dict) --- The action that you assign to a medium-risk assessment by threat protection. HighAction (dict) --- The action that you assign to a high-risk assessment by threat protection. Permit sign-in.",
+      "nested_params": [
+        {
+          "name": "NotifyConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The settings for composing and sending an email message when threat protection assesses a risk level with adaptive authentication. When you choose to notify users in AccountTakeoverRiskConfiguration, Amazon Cognito sends an email message using the method and template that you set with this data type.",
+          "nested_params": [
+            {
+              "name": "From",
+              "type": "string",
+              "required": false,
+              "description": "The email address that sends the email message. The address must be either individually verified with Amazon Simple Email Service, or from a domain that has been verified with Amazon SES.",
+              "nested_params": []
+            },
+            {
+              "name": "ReplyTo",
+              "type": "string",
+              "required": false,
+              "description": "The reply-to email address of an email template.",
+              "nested_params": []
+            },
+            {
+              "name": "SourceArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. This identity permits Amazon Cognito to send for the email address specified in the From parameter.",
+              "nested_params": []
+            },
+            {
+              "name": "BlockEmail",
+              "type": "dict",
+              "required": false,
+              "description": "The template for the email message that your user pool sends when a detected risk event is blocked.",
+              "nested_params": [
+                {
+                  "name": "Subject",
+                  "type": "string",
+                  "required": false,
+                  "description": "The subject of the threat protection email notification.",
+                  "nested_params": []
+                },
+                {
+                  "name": "HtmlBody",
+                  "type": "string",
+                  "required": false,
+                  "description": "The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TextBody",
+                  "type": "string",
+                  "required": false,
+                  "description": "The body of an email notification formatted in plaintext. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "NoActionEmail",
+              "type": "dict",
+              "required": false,
+              "description": "The template for the email message that your user pool sends when no action is taken in response to a detected risk.",
+              "nested_params": [
+                {
+                  "name": "Subject",
+                  "type": "string",
+                  "required": false,
+                  "description": "The subject of the threat protection email notification.",
+                  "nested_params": []
+                },
+                {
+                  "name": "HtmlBody",
+                  "type": "string",
+                  "required": false,
+                  "description": "The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TextBody",
+                  "type": "string",
+                  "required": false,
+                  "description": "The body of an email notification formatted in plaintext. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "MfaEmail",
+              "type": "dict",
+              "required": false,
+              "description": "The template for the email message that your user pool sends when MFA is challenged in response to a detected risk.",
+              "nested_params": [
+                {
+                  "name": "Subject",
+                  "type": "string",
+                  "required": false,
+                  "description": "The subject of the threat protection email notification.",
+                  "nested_params": []
+                },
+                {
+                  "name": "HtmlBody",
+                  "type": "string",
+                  "required": false,
+                  "description": "The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TextBody",
+                  "type": "string",
+                  "required": false,
+                  "description": "The body of an email notification formatted in plaintext. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Actions",
+          "type": "dict",
+          "required": false,
+          "description": "A list of account-takeover actions for each level of risk that Amazon Cognito might assess with threat protection.",
+          "nested_params": [
+            {
+              "name": "LowAction",
+              "type": "dict",
+              "required": false,
+              "description": "The action that you assign to a low-risk assessment by threat protection.",
+              "nested_params": [
+                {
+                  "name": "Notify",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level.",
+                  "nested_params": []
+                },
+                {
+                  "name": "EventAction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "MediumAction",
+              "type": "dict",
+              "required": false,
+              "description": "The action that you assign to a medium-risk assessment by threat protection.",
+              "nested_params": [
+                {
+                  "name": "Notify",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level.",
+                  "nested_params": []
+                },
+                {
+                  "name": "EventAction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "HighAction",
+              "type": "dict",
+              "required": false,
+              "description": "The action that you assign to a high-risk assessment by threat protection.",
+              "nested_params": [
+                {
+                  "name": "Notify",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level.",
+                  "nested_params": []
+                },
+                {
+                  "name": "EventAction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows:",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RiskExceptionConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "A set of IP-address overrides to threat protection. You can set up IP-address always-block and always-allow lists. BlockedIPRangeList (list) --- An always-block IP address list. Overrides the risk decision and always blocks authentication requests. This parameter is displayed and set in CIDR notation. (string) --- SkippedIPRangeList (list) --- An always-allow IP address list. Risk detection isn't performed on the IP addresses in this range list. (string) ---",
+      "nested_params": [
+        {
+          "name": "BlockedIPRangeList",
+          "type": "list",
+          "required": false,
+          "description": "An always-block IP address list. Overrides the risk decision and always blocks authentication requests. This parameter is displayed and set in CIDR notation.",
+          "nested_params": []
+        },
+        {
+          "name": "SkippedIPRangeList",
+          "type": "list",
+          "required": false,
+          "description": "An always-allow IP address list. Risk detection isn't performed on the IP addresses in this range list. This parameter is displayed and set in CIDR notation.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "RiskConfiguration",
+          "type": "dict",
+          "description": "The API response that contains the risk configuration that you set and the timestamp of the most recent change.",
+          "nested_items": [
+            {
+              "name": "UserPoolId",
+              "type": "string",
+              "description": "The ID of the user pool that has the risk configuration applied.",
+              "nested_items": []
+            },
+            {
+              "name": "ClientId",
+              "type": "string",
+              "description": "The app client where this configuration is applied. When this parameter isn't present, the risk configuration applies to all user pool app clients that don't have client-level settings.",
+              "nested_items": []
+            },
+            {
+              "name": "CompromisedCredentialsRiskConfiguration",
+              "type": "dict",
+              "description": "Settings for compromised-credentials actions and authentication types with threat protection in full-function ENFORCED mode.",
+              "nested_items": [
+                {
+                  "name": "EventFilter",
+                  "type": "list",
+                  "description": "Settings for the sign-in activity where you want to configure compromised-credentials actions. Defaults to all events.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "EventAction",
+                      "type": "string",
+                      "description": "The action that Amazon Cognito takes when it detects compromised credentials.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AccountTakeoverRiskConfiguration",
+              "type": "dict",
+              "description": "The settings for automated responses and notification templates for adaptive authentication with threat protection.",
+              "nested_items": [
+                {
+                  "name": "NotifyConfiguration",
+                  "type": "dict",
+                  "description": "The settings for composing and sending an email message when threat protection assesses a risk level with adaptive authentication. When you choose to notify users in AccountTakeoverRiskConfiguration, Amazon Cognito sends an email message using the method and template that you set with this data type.",
+                  "nested_items": [
+                    {
+                      "name": "From",
+                      "type": "string",
+                      "description": "The email address that sends the email message. The address must be either individually verified with Amazon Simple Email Service, or from a domain that has been verified with Amazon SES.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ReplyTo",
+                      "type": "string",
+                      "description": "The reply-to email address of an email template.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SourceArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. This identity permits Amazon Cognito to send for the email address specified in the From parameter.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BlockEmail",
+                      "type": "dict",
+                      "description": "The template for the email message that your user pool sends when a detected risk event is blocked.",
+                      "nested_items": [
+                        {
+                          "name": "Subject",
+                          "type": "string",
+                          "description": "The subject of the threat protection email notification.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "HtmlBody",
+                          "type": "string",
+                          "description": "The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TextBody",
+                          "type": "string",
+                          "description": "The body of an email notification formatted in plaintext. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NoActionEmail",
+                      "type": "dict",
+                      "description": "The template for the email message that your user pool sends when no action is taken in response to a detected risk.",
+                      "nested_items": [
+                        {
+                          "name": "Subject",
+                          "type": "string",
+                          "description": "The subject of the threat protection email notification.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "HtmlBody",
+                          "type": "string",
+                          "description": "The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TextBody",
+                          "type": "string",
+                          "description": "The body of an email notification formatted in plaintext. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Subject",
+                          "type": "string",
+                          "description": "The subject of the threat protection email notification.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "HtmlBody",
+                          "type": "string",
+                          "description": "The body of an email notification formatted in HTML. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TextBody",
+                          "type": "string",
+                          "description": "The body of an email notification formatted in plaintext. Choose an HtmlBody or a TextBody to send an HTML-formatted or plaintext message, respectively.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "LowAction",
+                      "type": "dict",
+                      "description": "The action that you assign to a low-risk assessment by threat protection.",
+                      "nested_items": [
+                        {
+                          "name": "Notify",
+                          "type": "boolean",
+                          "description": "Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EventAction",
+                          "type": "string",
+                          "description": "The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "BLOCK: Block the request.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "MFA_IF_CONFIGURED: Present an MFA challenge if possible. MFA is possible if the user pool has active MFA methods that the user can set up. For example, if the user pool only supports SMS message MFA but the user doesn't have a phone number attribute, MFA setup isn't possible. If MFA setup isn't possible, allow the request.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "MFA_REQUIRED: Present an MFA challenge if possible. Block the request if a user hasn't set up MFA. To sign in with required MFA, users must have an email address or phone number attribute, or a registered TOTP factor.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "NO_ACTION: Take no action. Permit sign-in.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "MediumAction",
+                      "type": "dict",
+                      "description": "The action that you assign to a medium-risk assessment by threat protection.",
+                      "nested_items": [
+                        {
+                          "name": "Notify",
+                          "type": "boolean",
+                          "description": "Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EventAction",
+                          "type": "string",
+                          "description": "The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "BLOCK: Block the request.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "MFA_IF_CONFIGURED: Present an MFA challenge if possible. MFA is possible if the user pool has active MFA methods that the user can set up. For example, if the user pool only supports SMS message MFA but the user doesn't have a phone number attribute, MFA setup isn't possible. If MFA setup isn't possible, allow the request.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "MFA_REQUIRED: Present an MFA challenge if possible. Block the request if a user hasn't set up MFA. To sign in with required MFA, users must have an email address or phone number attribute, or a registered TOTP factor.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "NO_ACTION: Take no action. Permit sign-in.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "HighAction",
+                      "type": "dict",
+                      "description": "The action that you assign to a high-risk assessment by threat protection.",
+                      "nested_items": [
+                        {
+                          "name": "Notify",
+                          "type": "boolean",
+                          "description": "Determines whether Amazon Cognito sends a user a notification message when your user pools assesses a user's session at the associated risk level.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EventAction",
+                          "type": "string",
+                          "description": "The action to take for the attempted account takeover action for the associated risk level. Valid values are as follows:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "BLOCK: Block the request.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "MFA_IF_CONFIGURED: Present an MFA challenge if possible. MFA is possible if the user pool has active MFA methods that the user can set up. For example, if the user pool only supports SMS message MFA but the user doesn't have a phone number attribute, MFA setup isn't possible. If MFA setup isn't possible, allow the request.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "MFA_REQUIRED: Present an MFA challenge if possible. Block the request if a user hasn't set up MFA. To sign in with required MFA, users must have an email address or phone number attribute, or a registered TOTP factor.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "NO_ACTION: Take no action. Permit sign-in.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RiskExceptionConfiguration",
+              "type": "dict",
+              "description": "Exceptions to the risk evaluation configuration, including always-allow and always-block IP address ranges.",
+              "nested_items": [
+                {
+                  "name": "BlockedIPRangeList",
+                  "type": "list",
+                  "description": "An always-block IP address list. Overrides the risk decision and always blocks authentication requests. This parameter is displayed and set in CIDR notation.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SkippedIPRangeList",
+                  "type": "list",
+                  "description": "An always-allow IP address list. Risk detection isn't performed on the IP addresses in this range list. This parameter is displayed and set in CIDR notation.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LastModifiedDate",
+              "type": "datetime",
+              "description": "The date and time when the item was modified. Amazon Cognito returns this timestamp in UNIX epoch time format. Your SDK might render the output in a human-readable format like ISO 8601 or a Java Date object.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

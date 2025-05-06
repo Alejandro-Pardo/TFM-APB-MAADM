@@ -1,0 +1,2257 @@
+{
+  "method_name": "create_virtual_node",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/appmesh/client/create_virtual_node.html",
+  "description": "Creates a virtual node within a service mesh. A virtual node acts as a logical pointer to a particular task group, such as an Amazon ECS service or a Kubernetes deployment. When you create a virtual node, you can specify the service discovery information for your task group, and whether the proxy running in a task group will communicate with other proxies using Transport Layer Security (TLS). You define a listener for any inbound traffic that your virtual node expects. Any virtual service that your virtual node expects to communicate to is specified as a backend. The response metadata for your new virtual node contains the arn that is associated with the virtual node. Set this value to the full ARN; for example, arn:aws:appmesh:us-west-2:123456789012:myMesh/default/virtualNode/myApp) as the APPMESH_RESOURCE_ARN environment variable for your task group's Envoy proxy container in your task definition or pod spec. This is then mapped to the node.id and node.cluster Envoy parameters. For more information about virtual nodes, see Virtual nodes. You must be using 1.15.0 or later of the Envoy image when setting these variables. For more information aboutApp Mesh Envoy variables, see Envoy image in the App Mesh User Guide.",
+  "parameters": [
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Up to 36 letters, numbers, hyphens, and underscores are allowed. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "meshName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the service mesh to create the virtual node in.",
+      "nested_params": []
+    },
+    {
+      "name": "meshOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "spec",
+      "type": "dict",
+      "required": true,
+      "description": "The virtual node specification to apply. backendDefaults (dict) --- A reference to an object that represents the defaults for backends. clientPolicy (dict) --- A reference to an object that represents a client policy. tls (dict) --- A reference to an object that represents a Transport Layer Security (TLS) client policy. certificate (dict) --- A reference to an object that represents a client's TLS certificate. file (dict) --- An object that represents a local file certificate. The certificate must meet specific requirements and you must have proxy authorization enabled. For more information, see Transport Layer Security (TLS). The certificate chain for the certificate. The private key for a certificate stored on the file system of the virtual node that the proxy is running on. sds (dict) --- A reference to an object that represents a client's TLS Secret Discovery Service certificate. A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain. enforce (boolean) --- Whether the policy is enforced. The default is True, if a value isn't specified. ports (list) --- One or more ports that the policy is enforced for. (integer) --- A reference to an object that represents a TLS validation context. subjectAlternativeNames (dict) --- A reference to an object that represents the SANs for a Transport Layer Security (TLS) validation context. If you don't specify SANs on the terminating mesh endpoint, the Envoy proxy for that node doesn't verify the SAN on a peer client certificate. If you don't specify SANs on the originating mesh endpoint, the SAN on the certificate provided by the terminating endpoint must match the mesh endpoint service discovery configuration. Since SPIRE vended certificates have a SPIFFE ID as a name, you must set the SAN since the name doesn't match the service discovery name. An object that represents the criteria for determining a SANs match. The values sent must match the specified values exactly. (string) --- A reference to where to retrieve the trust chain when validating a peer's Transport Layer Security (TLS) certificate. acm (dict) --- A reference to an object that represents a Transport Layer Security (TLS) validation context trust for an Certificate Manager certificate. One or more ACM Amazon Resource Name (ARN)s. (string) --- file (dict) --- An object that represents a Transport Layer Security (TLS) validation context trust for a local file. The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on. sds (dict) --- A reference to an object that represents a Transport Layer Security (TLS) Secret Discovery Service validation context trust. A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust. backends (list) --- The backends that the virtual node is expected to send outbound traffic to. (dict) --- An object that represents the backends that a virtual node is expected to send outbound traffic to. virtualService (dict) --- Specifies a virtual service to use as a backend. clientPolicy (dict) --- A reference to an object that represents the client policy for a backend. The name of the virtual service that is acting as a virtual node backend. listeners (list) --- The listener that the virtual node is expected to receive inbound traffic from. You can specify one listener. (dict) --- An object that represents a listener for a virtual node. connectionPool (dict) --- The connection pool information for the listener. grpc (dict) --- An object that represents a type of connection pool. Maximum number of inflight requests Envoy can concurrently support across hosts in upstream cluster. http (dict) --- An object that represents a type of connection pool. Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster. maxPendingRequests (integer) --- Number of overflowing requests after max_connections Envoy will queue to upstream cluster. http2 (dict) --- An object that represents a type of connection pool. tcp (dict) --- An object that represents a type of connection pool. healthCheck (dict) --- The health check information for the listener. The number of consecutive successful health checks that must occur before declaring listener healthy. The time period in milliseconds between each health check execution. path (string) --- The destination path for the health check request. This value is only used if the specified protocol is HTTP or HTTP/2. For any other protocol, this value is ignored. port (integer) --- The destination port for the health check request. This port must match the port defined in the  PortMapping for the listener. The protocol for the health check request. If you specify grpc, then your service must conform to the GRPC Health Checking Protocol. The amount of time to wait when receiving a response from the health check, in milliseconds. The number of consecutive failed health checks that must occur before declaring a virtual node unhealthy. outlierDetection (dict) --- The outlier detection information for the listener. The base amount of time for which a host is ejected. unit (string) --- A unit of time. value (integer) --- A number of time units. The time interval between ejection sweep analysis. Maximum percentage of hosts in load balancing pool for upstream service that can be ejected. Will eject at least one host regardless of the value. Number of consecutive 5xx errors required for ejection. The port mapping information for the listener. The port used for the port mapping. The protocol used for the port mapping. Specify one protocol. timeout (dict) --- An object that represents timeouts for different protocols. grpc (dict) --- An object that represents types of timeouts. idle (dict) --- An object that represents an idle timeout. An idle timeout bounds the amount of time that a connection may be idle. The default value is none. perRequest (dict) --- An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route. http (dict) --- An object that represents types of timeouts. http2 (dict) --- An object that represents types of timeouts. tcp (dict) --- An object that represents types of timeouts. tls (dict) --- A reference to an object that represents the Transport Layer Security (TLS) properties for a listener. A reference to an object that represents a listener's Transport Layer Security (TLS) certificate. acm (dict) --- A reference to an object that represents an Certificate Manager certificate. The Amazon Resource Name (ARN) for the certificate. file (dict) --- A reference to an object that represents a local file certificate. sds (dict) --- A reference to an object that represents a listener's Secret Discovery Service certificate. Specify one of the following modes. STRICT --- Listener only accepts connections with TLS enabled. PERMISSIVE --- Listener accepts connections with or without TLS enabled. DISABLED --- Listener only accepts connections without TLS. validation (dict) --- A reference to an object that represents a listener's Transport Layer Security (TLS) validation context. subjectAlternativeNames (dict) --- A reference to an object that represents the SANs for a listener's Transport Layer Security (TLS) validation context. file (dict) --- An object that represents a Transport Layer Security (TLS) validation context trust for a local file. sds (dict) --- A reference to an object that represents a listener's Transport Layer Security (TLS) Secret Discovery Service validation context trust. logging (dict) --- The inbound and outbound access logging information for the virtual node. accessLog (dict) --- The access log configuration for a virtual node. file (dict) --- The file object to send virtual node access logs to. format (dict) --- The specified format for the logs. The format is either json_format or text_format. json (list) --- (dict) --- An object that represents the key value pairs for the JSON. The specified key for the JSON. The specified value for the JSON. text (string) --- The file path to write access logs to. You can use /dev/stdout to send access logs to standard out and configure your Envoy container to use a log driver, such as awslogs, to export the access logs to a log storage service such as Amazon CloudWatch Logs. You can also specify a path in the Envoy container's file system to write the files to disk. serviceDiscovery (dict) --- The service discovery information for the virtual node. If your virtual node does not expect ingress traffic, you can omit this parameter. If you specify a listener, then you must specify service discovery information. awsCloudMap (dict) --- Specifies any Cloud Map information for the virtual node. attributes (list) --- A string map that contains attributes with values that you can use to filter instances by any custom attribute that you specified when you registered the instance. Only instances that match all of the specified key/value pairs will be returned. (dict) --- An object that represents the Cloud Map attribute information for your virtual node. The name of an Cloud Map service instance attribute key. Any Cloud Map service instance that contains the specified key and value is returned. The value of an Cloud Map service instance attribute key. ipPreference (string) --- The preferred IP version that this virtual node uses. Setting the IP preference on the virtual node only overrides the IP preference set for the mesh on this specific node. The name of the Cloud Map namespace to use. The name of the Cloud Map service to use. dns (dict) --- Specifies the DNS information for the virtual node. Specifies the DNS service discovery hostname for the virtual node. responseType (string) --- Specifies the DNS response type for the virtual node.",
+      "nested_params": [
+        {
+          "name": "backendDefaults",
+          "type": "dict",
+          "required": false,
+          "description": "A reference to an object that represents the defaults for backends.",
+          "nested_params": [
+            {
+              "name": "clientPolicy",
+              "type": "dict",
+              "required": false,
+              "description": "A reference to an object that represents a client policy.",
+              "nested_params": [
+                {
+                  "name": "tls",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A reference to an object that represents a Transport Layer Security (TLS) client policy.",
+                  "nested_params": [
+                    {
+                      "name": "certificate",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents a client's TLS certificate.",
+                      "nested_params": [
+                        {
+                          "name": "file",
+                          "type": "dict",
+                          "required": false,
+                          "description": "An object that represents a local file certificate. The certificate must meet specific requirements and you must have proxy authorization enabled. For more information, see Transport Layer Security (TLS).",
+                          "nested_params": [
+                            {
+                              "name": "certificateChain",
+                              "type": "string",
+                              "required": false,
+                              "description": "The certificate chain for the certificate.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "privateKey",
+                              "type": "string",
+                              "required": false,
+                              "description": "The private key for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sds",
+                          "type": "dict",
+                          "required": false,
+                          "description": "A reference to an object that represents a client's TLS Secret Discovery Service certificate.",
+                          "nested_params": [
+                            {
+                              "name": "secretName",
+                              "type": "string",
+                              "required": false,
+                              "description": "A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "enforce",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Whether the policy is enforced. The default is True, if a value isn't specified.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ports",
+                      "type": "list",
+                      "required": false,
+                      "description": "One or more ports that the policy is enforced for.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "validation",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents a TLS validation context.",
+                      "nested_params": [
+                        {
+                          "name": "subjectAlternativeNames",
+                          "type": "dict",
+                          "required": false,
+                          "description": "A reference to an object that represents the SANs for a Transport Layer Security (TLS) validation context. If you don't specify SANs on the terminating mesh endpoint, the Envoy proxy for that node doesn't verify the SAN on a peer client certificate. If you don't specify SANs on the originating mesh endpoint, the SAN on the certificate provided by the terminating endpoint must match the mesh endpoint service discovery configuration. Since SPIRE vended certificates have a SPIFFE ID as a name, you must set the SAN since the name doesn't match the service discovery name.",
+                          "nested_params": [
+                            {
+                              "name": "match",
+                              "type": "dict",
+                              "required": false,
+                              "description": "An object that represents the criteria for determining a SANs match.",
+                              "nested_params": [
+                                {
+                                  "name": "exact",
+                                  "type": "list",
+                                  "required": false,
+                                  "description": "The values sent must match the specified values exactly.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "trust",
+                          "type": "dict",
+                          "required": false,
+                          "description": "A reference to where to retrieve the trust chain when validating a peer's Transport Layer Security (TLS) certificate.",
+                          "nested_params": [
+                            {
+                              "name": "acm",
+                              "type": "dict",
+                              "required": false,
+                              "description": "A reference to an object that represents a Transport Layer Security (TLS) validation context trust for an Certificate Manager certificate.",
+                              "nested_params": [
+                                {
+                                  "name": "certificateAuthorityArns",
+                                  "type": "list",
+                                  "required": false,
+                                  "description": "One or more ACM Amazon Resource Name (ARN)s.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "file",
+                              "type": "dict",
+                              "required": false,
+                              "description": "An object that represents a Transport Layer Security (TLS) validation context trust for a local file.",
+                              "nested_params": [
+                                {
+                                  "name": "certificateChain",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "sds",
+                              "type": "dict",
+                              "required": false,
+                              "description": "A reference to an object that represents a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                              "nested_params": [
+                                {
+                                  "name": "secretName",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "backends",
+          "type": "list",
+          "required": false,
+          "description": "The backends that the virtual node is expected to send outbound traffic to.",
+          "nested_params": [
+            {
+              "name": "virtualService",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies a virtual service to use as a backend.",
+              "nested_params": [
+                {
+                  "name": "clientPolicy",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A reference to an object that represents the client policy for a backend.",
+                  "nested_params": [
+                    {
+                      "name": "tls",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents a Transport Layer Security (TLS) client policy.",
+                      "nested_params": [
+                        {
+                          "name": "certificate",
+                          "type": "dict",
+                          "required": false,
+                          "description": "A reference to an object that represents a client's TLS certificate.",
+                          "nested_params": [
+                            {
+                              "name": "file",
+                              "type": "dict",
+                              "required": false,
+                              "description": "An object that represents a local file certificate. The certificate must meet specific requirements and you must have proxy authorization enabled. For more information, see Transport Layer Security (TLS).",
+                              "nested_params": [
+                                {
+                                  "name": "certificateChain",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The certificate chain for the certificate.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "privateKey",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The private key for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "sds",
+                              "type": "dict",
+                              "required": false,
+                              "description": "A reference to an object that represents a client's TLS Secret Discovery Service certificate.",
+                              "nested_params": [
+                                {
+                                  "name": "secretName",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "enforce",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "Whether the policy is enforced. The default is True, if a value isn't specified.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "ports",
+                          "type": "list",
+                          "required": false,
+                          "description": "One or more ports that the policy is enforced for.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "validation",
+                          "type": "dict",
+                          "required": false,
+                          "description": "A reference to an object that represents a TLS validation context.",
+                          "nested_params": [
+                            {
+                              "name": "subjectAlternativeNames",
+                              "type": "dict",
+                              "required": false,
+                              "description": "A reference to an object that represents the SANs for a Transport Layer Security (TLS) validation context. If you don't specify SANs on the terminating mesh endpoint, the Envoy proxy for that node doesn't verify the SAN on a peer client certificate. If you don't specify SANs on the originating mesh endpoint, the SAN on the certificate provided by the terminating endpoint must match the mesh endpoint service discovery configuration. Since SPIRE vended certificates have a SPIFFE ID as a name, you must set the SAN since the name doesn't match the service discovery name.",
+                              "nested_params": [
+                                {
+                                  "name": "match",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "An object that represents the criteria for determining a SANs match.",
+                                  "nested_params": [
+                                    {
+                                      "name": "exact",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "The values sent must match the specified values exactly.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "trust",
+                              "type": "dict",
+                              "required": false,
+                              "description": "A reference to where to retrieve the trust chain when validating a peer's Transport Layer Security (TLS) certificate.",
+                              "nested_params": [
+                                {
+                                  "name": "acm",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "A reference to an object that represents a Transport Layer Security (TLS) validation context trust for an Certificate Manager certificate.",
+                                  "nested_params": [
+                                    {
+                                      "name": "certificateAuthorityArns",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "One or more ACM Amazon Resource Name (ARN)s.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "file",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "An object that represents a Transport Layer Security (TLS) validation context trust for a local file.",
+                                  "nested_params": [
+                                    {
+                                      "name": "certificateChain",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "sds",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "A reference to an object that represents a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                                  "nested_params": [
+                                    {
+                                      "name": "secretName",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "virtualServiceName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the virtual service that is acting as a virtual node backend.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "listeners",
+          "type": "list",
+          "required": false,
+          "description": "The listener that the virtual node is expected to receive inbound traffic from. You can specify one listener.",
+          "nested_params": [
+            {
+              "name": "connectionPool",
+              "type": "dict",
+              "required": false,
+              "description": "The connection pool information for the listener.",
+              "nested_params": [
+                {
+                  "name": "grpc",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents a type of connection pool.",
+                  "nested_params": [
+                    {
+                      "name": "maxRequests",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Maximum number of inflight requests Envoy can concurrently support across hosts in upstream cluster.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "http",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents a type of connection pool.",
+                  "nested_params": [
+                    {
+                      "name": "maxConnections",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "maxPendingRequests",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Number of overflowing requests after max_connections Envoy will queue to upstream cluster.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "http2",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents a type of connection pool.",
+                  "nested_params": [
+                    {
+                      "name": "maxRequests",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Maximum number of inflight requests Envoy can concurrently support across hosts in upstream cluster.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "tcp",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents a type of connection pool.",
+                  "nested_params": [
+                    {
+                      "name": "maxConnections",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "healthCheck",
+              "type": "dict",
+              "required": false,
+              "description": "The health check information for the listener.",
+              "nested_params": [
+                {
+                  "name": "healthyThreshold",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of consecutive successful health checks that must occur before declaring listener healthy.",
+                  "nested_params": []
+                },
+                {
+                  "name": "intervalMillis",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The time period in milliseconds between each health check execution.",
+                  "nested_params": []
+                },
+                {
+                  "name": "path",
+                  "type": "string",
+                  "required": false,
+                  "description": "The destination path for the health check request. This value is only used if the specified protocol is HTTP or HTTP/2. For any other protocol, this value is ignored.",
+                  "nested_params": []
+                },
+                {
+                  "name": "port",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The destination port for the health check request. This port must match the port defined in the  PortMapping for the listener.",
+                  "nested_params": []
+                },
+                {
+                  "name": "protocol",
+                  "type": "string",
+                  "required": false,
+                  "description": "The protocol for the health check request. If you specify grpc, then your service must conform to the GRPC Health Checking Protocol.",
+                  "nested_params": []
+                },
+                {
+                  "name": "timeoutMillis",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The amount of time to wait when receiving a response from the health check, in milliseconds.",
+                  "nested_params": []
+                },
+                {
+                  "name": "unhealthyThreshold",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of consecutive failed health checks that must occur before declaring a virtual node unhealthy.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "outlierDetection",
+              "type": "dict",
+              "required": false,
+              "description": "The outlier detection information for the listener.",
+              "nested_params": [
+                {
+                  "name": "baseEjectionDuration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The base amount of time for which a host is ejected.",
+                  "nested_params": [
+                    {
+                      "name": "unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "A unit of time.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A number of time units.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "interval",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The time interval between ejection sweep analysis.",
+                  "nested_params": [
+                    {
+                      "name": "unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "A unit of time.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A number of time units.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "maxEjectionPercent",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Maximum percentage of hosts in load balancing pool for upstream service that can be ejected. Will eject at least one host regardless of the value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "maxServerErrors",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Number of consecutive 5xx errors required for ejection.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "portMapping",
+              "type": "dict",
+              "required": false,
+              "description": "The port mapping information for the listener.",
+              "nested_params": [
+                {
+                  "name": "port",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The port used for the port mapping.",
+                  "nested_params": []
+                },
+                {
+                  "name": "protocol",
+                  "type": "string",
+                  "required": false,
+                  "description": "The protocol used for the port mapping. Specify one protocol.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "timeout",
+              "type": "dict",
+              "required": false,
+              "description": "An object that represents timeouts for different protocols.",
+              "nested_params": [
+                {
+                  "name": "grpc",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents types of timeouts.",
+                  "nested_params": [
+                    {
+                      "name": "idle",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents an idle timeout. An idle timeout bounds the amount of time that a connection may be idle. The default value is none.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "perRequest",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "http",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents types of timeouts.",
+                  "nested_params": [
+                    {
+                      "name": "idle",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents an idle timeout. An idle timeout bounds the amount of time that a connection may be idle. The default value is none.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "perRequest",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "http2",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents types of timeouts.",
+                  "nested_params": [
+                    {
+                      "name": "idle",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents an idle timeout. An idle timeout bounds the amount of time that a connection may be idle. The default value is none.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "perRequest",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "tcp",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents types of timeouts.",
+                  "nested_params": [
+                    {
+                      "name": "idle",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that represents an idle timeout. An idle timeout bounds the amount of time that a connection may be idle. The default value is none.",
+                      "nested_params": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "A unit of time.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A number of time units.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "tls",
+              "type": "dict",
+              "required": false,
+              "description": "A reference to an object that represents the Transport Layer Security (TLS) properties for a listener.",
+              "nested_params": [
+                {
+                  "name": "certificate",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A reference to an object that represents a listener's Transport Layer Security (TLS) certificate.",
+                  "nested_params": [
+                    {
+                      "name": "acm",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents an Certificate Manager certificate.",
+                      "nested_params": [
+                        {
+                          "name": "certificateArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The Amazon Resource Name (ARN) for the certificate. The certificate must meet specific requirements and you must have proxy authorization enabled. For more information, see Transport Layer Security (TLS).",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "file",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents a local file certificate.",
+                      "nested_params": [
+                        {
+                          "name": "certificateChain",
+                          "type": "string",
+                          "required": false,
+                          "description": "The certificate chain for the certificate.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "privateKey",
+                          "type": "string",
+                          "required": false,
+                          "description": "The private key for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "sds",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents a listener's Secret Discovery Service certificate.",
+                      "nested_params": [
+                        {
+                          "name": "secretName",
+                          "type": "string",
+                          "required": false,
+                          "description": "A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "mode",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specify one of the following modes.",
+                  "nested_params": []
+                },
+                {
+                  "name": "validation",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A reference to an object that represents a listener's Transport Layer Security (TLS) validation context.",
+                  "nested_params": [
+                    {
+                      "name": "subjectAlternativeNames",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to an object that represents the SANs for a listener's Transport Layer Security (TLS) validation context.",
+                      "nested_params": [
+                        {
+                          "name": "match",
+                          "type": "dict",
+                          "required": false,
+                          "description": "An object that represents the criteria for determining a SANs match.",
+                          "nested_params": [
+                            {
+                              "name": "exact",
+                              "type": "list",
+                              "required": false,
+                              "description": "The values sent must match the specified values exactly.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "trust",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A reference to where to retrieve the trust chain when validating a peer's Transport Layer Security (TLS) certificate.",
+                      "nested_params": [
+                        {
+                          "name": "file",
+                          "type": "dict",
+                          "required": false,
+                          "description": "An object that represents a Transport Layer Security (TLS) validation context trust for a local file.",
+                          "nested_params": [
+                            {
+                              "name": "certificateChain",
+                              "type": "string",
+                              "required": false,
+                              "description": "The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sds",
+                          "type": "dict",
+                          "required": false,
+                          "description": "A reference to an object that represents a listener's Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                          "nested_params": [
+                            {
+                              "name": "secretName",
+                              "type": "string",
+                              "required": false,
+                              "description": "A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "logging",
+          "type": "dict",
+          "required": false,
+          "description": "The inbound and outbound access logging information for the virtual node.",
+          "nested_params": [
+            {
+              "name": "accessLog",
+              "type": "dict",
+              "required": false,
+              "description": "The access log configuration for a virtual node.",
+              "nested_params": [
+                {
+                  "name": "file",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The file object to send virtual node access logs to.",
+                  "nested_params": [
+                    {
+                      "name": "format",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The specified format for the logs. The format is either json_format or text_format.",
+                      "nested_params": [
+                        {
+                          "name": "json",
+                          "type": "list",
+                          "required": false,
+                          "description": "",
+                          "nested_params": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The specified key for the JSON.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "string",
+                              "required": false,
+                              "description": "The specified value for the JSON.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "text",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "path",
+                      "type": "string",
+                      "required": false,
+                      "description": "The file path to write access logs to. You can use /dev/stdout to send access logs to standard out and configure your Envoy container to use a log driver, such as awslogs, to export the access logs to a log storage service such as Amazon CloudWatch Logs. You can also specify a path in the Envoy container's file system to write the files to disk.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "serviceDiscovery",
+          "type": "dict",
+          "required": false,
+          "description": "The service discovery information for the virtual node. If your virtual node does not expect ingress traffic, you can omit this parameter. If you specify a listener, then you must specify service discovery information.",
+          "nested_params": [
+            {
+              "name": "awsCloudMap",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies any Cloud Map information for the virtual node.",
+              "nested_params": [
+                {
+                  "name": "attributes",
+                  "type": "list",
+                  "required": false,
+                  "description": "A string map that contains attributes with values that you can use to filter instances by any custom attribute that you specified when you registered the instance. Only instances that match all of the specified key/value pairs will be returned.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of an Cloud Map service instance attribute key. Any Cloud Map service instance that contains the specified key and value is returned.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value of an Cloud Map service instance attribute key. Any Cloud Map service instance that contains the specified key and value is returned.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ipPreference",
+                  "type": "string",
+                  "required": false,
+                  "description": "The preferred IP version that this virtual node uses. Setting the IP preference on the virtual node only overrides the IP preference set for the mesh on this specific node.",
+                  "nested_params": []
+                },
+                {
+                  "name": "namespaceName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Cloud Map namespace to use.",
+                  "nested_params": []
+                },
+                {
+                  "name": "serviceName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Cloud Map service to use.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "dns",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the DNS information for the virtual node.",
+              "nested_params": [
+                {
+                  "name": "hostname",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the DNS service discovery hostname for the virtual node.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ipPreference",
+                  "type": "string",
+                  "required": false,
+                  "description": "The preferred IP version that this virtual node uses. Setting the IP preference on the virtual node only overrides the IP preference set for the mesh on this specific node.",
+                  "nested_params": []
+                },
+                {
+                  "name": "responseType",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the DNS response type for the virtual node.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "list",
+      "required": true,
+      "description": "Optional metadata that you can apply to the virtual node to assist with categorization and organization. Each tag consists of a key and an optional value, both of which you define. Tag keys can have a maximum character length of 128 characters, and tag values can have a maximum length of 256 characters. (dict) --- Optional metadata that you apply to a resource to assist with categorization and organization. One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values. The optional part of a key-value pair that make up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": [
+        {
+          "name": "key",
+          "type": "string",
+          "required": false,
+          "description": "One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values.",
+          "nested_params": []
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The optional part of a key-value pair that make up a tag. A value acts as a descriptor within a tag category (key).",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "virtualNodeName",
+      "type": "string",
+      "required": true,
+      "description": "The name to use for the virtual node.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "virtualNode",
+          "type": "dict",
+          "description": "The full description of your virtual node following the create call.",
+          "nested_items": [
+            {
+              "name": "meshName",
+              "type": "string",
+              "description": "The name of the service mesh that the virtual node resides in.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "arn",
+                  "type": "string",
+                  "description": "The full Amazon Resource Name (ARN) for the resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "createdAt",
+                  "type": "datetime",
+                  "description": "The Unix epoch timestamp in seconds for when the resource was created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "lastUpdatedAt",
+                  "type": "datetime",
+                  "description": "The Unix epoch timestamp in seconds for when the resource was last updated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "meshOwner",
+                  "type": "string",
+                  "description": "The Amazon Web Services IAM account ID of the service mesh owner. If the account ID is not your own, then it's the ID of the account that shared the mesh with your account. For more information about mesh sharing, see Working with shared meshes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "resourceOwner",
+                  "type": "string",
+                  "description": "The Amazon Web Services IAM account ID of the resource owner. If the account ID is not your own, then it's the ID of the mesh owner or of another account that the mesh is shared with. For more information about mesh sharing, see Working with shared meshes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "uid",
+                  "type": "string",
+                  "description": "The unique identifier for the resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "version",
+                  "type": "integer",
+                  "description": "The version of the resource. Resources are created at version 1, and this version is incremented each time that they're updated.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "backendDefaults",
+                  "type": "dict",
+                  "description": "A reference to an object that represents the defaults for backends.",
+                  "nested_items": [
+                    {
+                      "name": "clientPolicy",
+                      "type": "dict",
+                      "description": "A reference to an object that represents a client policy.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "certificate",
+                              "type": "dict",
+                              "description": "A reference to an object that represents a client's TLS certificate.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "certificateChain",
+                                      "type": "string",
+                                      "description": "The certificate chain for the certificate.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "privateKey",
+                                      "type": "string",
+                                      "description": "The private key for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "secretName",
+                                      "type": "string",
+                                      "description": "A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "enforce",
+                              "type": "boolean",
+                              "description": "Whether the policy is enforced. The default is True, if a value isn't specified.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ports",
+                              "type": "list",
+                              "description": "One or more ports that the policy is enforced for.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "integer",
+                                  "description": "(integer) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "validation",
+                              "type": "dict",
+                              "description": "A reference to an object that represents a TLS validation context.",
+                              "nested_items": [
+                                {
+                                  "name": "subjectAlternativeNames",
+                                  "type": "dict",
+                                  "description": "A reference to an object that represents the SANs for a Transport Layer Security (TLS) validation context. If you don't specify SANs on the terminating mesh endpoint, the Envoy proxy for that node doesn't verify the SAN on a peer client certificate. If you don't specify SANs on the originating mesh endpoint, the SAN on the certificate provided by the terminating endpoint must match the mesh endpoint service discovery configuration. Since SPIRE vended certificates have a SPIFFE ID as a name, you must set the SAN since the name doesn't match the service discovery name.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "exact",
+                                          "type": "list",
+                                          "description": "The values sent must match the specified values exactly.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "string",
+                                              "description": "(string) ---",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "certificateAuthorityArns",
+                                          "type": "list",
+                                          "description": "One or more ACM Amazon Resource Name (ARN)s.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "string",
+                                              "description": "(string) ---",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "certificateChain",
+                                          "type": "string",
+                                          "description": "The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "secretName",
+                                          "type": "string",
+                                          "description": "A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "backends",
+                  "type": "list",
+                  "description": "The backends that the virtual node is expected to send outbound traffic to.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "virtualService",
+                          "type": "dict",
+                          "description": "Specifies a virtual service to use as a backend.",
+                          "nested_items": [
+                            {
+                              "name": "clientPolicy",
+                              "type": "dict",
+                              "description": "A reference to an object that represents the client policy for a backend.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "certificate",
+                                      "type": "dict",
+                                      "description": "A reference to an object that represents a client's TLS certificate.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "certificateChain",
+                                              "type": "string",
+                                              "description": "The certificate chain for the certificate.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "privateKey",
+                                              "type": "string",
+                                              "description": "The private key for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "secretName",
+                                              "type": "string",
+                                              "description": "A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "enforce",
+                                      "type": "boolean",
+                                      "description": "Whether the policy is enforced. The default is True, if a value isn't specified.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "ports",
+                                      "type": "list",
+                                      "description": "One or more ports that the policy is enforced for.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "integer",
+                                          "description": "(integer) ---",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "validation",
+                                      "type": "dict",
+                                      "description": "A reference to an object that represents a TLS validation context.",
+                                      "nested_items": [
+                                        {
+                                          "name": "subjectAlternativeNames",
+                                          "type": "dict",
+                                          "description": "A reference to an object that represents the SANs for a Transport Layer Security (TLS) validation context. If you don't specify SANs on the terminating mesh endpoint, the Envoy proxy for that node doesn't verify the SAN on a peer client certificate. If you don't specify SANs on the originating mesh endpoint, the SAN on the certificate provided by the terminating endpoint must match the mesh endpoint service discovery configuration. Since SPIRE vended certificates have a SPIFFE ID as a name, you must set the SAN since the name doesn't match the service discovery name.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "exact",
+                                                  "type": "list",
+                                                  "description": "The values sent must match the specified values exactly.",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "",
+                                                      "type": "string",
+                                                      "description": "(string) ---",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "certificateAuthorityArns",
+                                                  "type": "list",
+                                                  "description": "One or more ACM Amazon Resource Name (ARN)s.",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "",
+                                                      "type": "string",
+                                                      "description": "(string) ---",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "certificateChain",
+                                                  "type": "string",
+                                                  "description": "The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "secretName",
+                                                  "type": "string",
+                                                  "description": "A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "virtualServiceName",
+                              "type": "string",
+                              "description": "The name of the virtual service that is acting as a virtual node backend.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "listeners",
+                  "type": "list",
+                  "description": "The listener that the virtual node is expected to receive inbound traffic from. You can specify one listener.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "connectionPool",
+                          "type": "dict",
+                          "description": "The connection pool information for the listener.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "maxRequests",
+                                  "type": "integer",
+                                  "description": "Maximum number of inflight requests Envoy can concurrently support across hosts in upstream cluster.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "maxConnections",
+                                  "type": "integer",
+                                  "description": "Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "maxPendingRequests",
+                                  "type": "integer",
+                                  "description": "Number of overflowing requests after max_connections Envoy will queue to upstream cluster.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "maxRequests",
+                                  "type": "integer",
+                                  "description": "Maximum number of inflight requests Envoy can concurrently support across hosts in upstream cluster.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "maxConnections",
+                                  "type": "integer",
+                                  "description": "Maximum number of outbound TCP connections Envoy can establish concurrently with all hosts in upstream cluster.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "healthCheck",
+                          "type": "dict",
+                          "description": "The health check information for the listener.",
+                          "nested_items": [
+                            {
+                              "name": "healthyThreshold",
+                              "type": "integer",
+                              "description": "The number of consecutive successful health checks that must occur before declaring listener healthy.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "intervalMillis",
+                              "type": "integer",
+                              "description": "The time period in milliseconds between each health check execution.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "path",
+                              "type": "string",
+                              "description": "The destination path for the health check request. This value is only used if the specified protocol is HTTP or HTTP/2. For any other protocol, this value is ignored.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "port",
+                              "type": "integer",
+                              "description": "The destination port for the health check request. This port must match the port defined in the  PortMapping for the listener.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "protocol",
+                              "type": "string",
+                              "description": "The protocol for the health check request. If you specify grpc, then your service must conform to the GRPC Health Checking Protocol.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "timeoutMillis",
+                              "type": "integer",
+                              "description": "The amount of time to wait when receiving a response from the health check, in milliseconds.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "unhealthyThreshold",
+                              "type": "integer",
+                              "description": "The number of consecutive failed health checks that must occur before declaring a virtual node unhealthy.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "outlierDetection",
+                          "type": "dict",
+                          "description": "The outlier detection information for the listener.",
+                          "nested_items": [
+                            {
+                              "name": "baseEjectionDuration",
+                              "type": "dict",
+                              "description": "The base amount of time for which a host is ejected.",
+                              "nested_items": [
+                                {
+                                  "name": "unit",
+                                  "type": "string",
+                                  "description": "A unit of time.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "integer",
+                                  "description": "A number of time units.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "unit",
+                                  "type": "string",
+                                  "description": "A unit of time.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "integer",
+                                  "description": "A number of time units.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "maxEjectionPercent",
+                              "type": "integer",
+                              "description": "Maximum percentage of hosts in load balancing pool for upstream service that can be ejected. Will eject at least one host regardless of the value.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "maxServerErrors",
+                              "type": "integer",
+                              "description": "Number of consecutive 5xx errors required for ejection.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "portMapping",
+                          "type": "dict",
+                          "description": "The port mapping information for the listener.",
+                          "nested_items": [
+                            {
+                              "name": "port",
+                              "type": "integer",
+                              "description": "The port used for the port mapping.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "protocol",
+                              "type": "string",
+                              "description": "The protocol used for the port mapping. Specify one protocol.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "perRequest",
+                                  "type": "dict",
+                                  "description": "An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route.",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "perRequest",
+                                  "type": "dict",
+                                  "description": "An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route.",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "perRequest",
+                                  "type": "dict",
+                                  "description": "An object that represents a per request timeout. The default value is 15 seconds. If you set a higher timeout, then make sure that the higher value is set for each App Mesh resource in a conversation. For example, if a virtual node backend uses a virtual router provider to route to another virtual node, then the timeout should be greater than 15 seconds for the source and destination virtual node and the route.",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "unit",
+                                      "type": "string",
+                                      "description": "A unit of time.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "integer",
+                                      "description": "A number of time units.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "certificate",
+                              "type": "dict",
+                              "description": "A reference to an object that represents a listener's Transport Layer Security (TLS) certificate.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "certificateArn",
+                                      "type": "string",
+                                      "description": "The Amazon Resource Name (ARN) for the certificate. The certificate must meet specific requirements and you must have proxy authorization enabled. For more information, see Transport Layer Security (TLS).",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "certificateChain",
+                                      "type": "string",
+                                      "description": "The certificate chain for the certificate.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "privateKey",
+                                      "type": "string",
+                                      "description": "The private key for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "secretName",
+                                      "type": "string",
+                                      "description": "A reference to an object that represents the name of the secret requested from the Secret Discovery Service provider representing Transport Layer Security (TLS) materials like a certificate or certificate chain.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "mode",
+                              "type": "string",
+                              "description": "Specify one of the following modes.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "STRICT --- Listener only accepts connections with TLS enabled.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "PERMISSIVE --- Listener accepts connections with or without TLS enabled.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "DISABLED --- Listener only accepts connections without TLS.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "validation",
+                              "type": "dict",
+                              "description": "A reference to an object that represents a listener's Transport Layer Security (TLS) validation context.",
+                              "nested_items": [
+                                {
+                                  "name": "subjectAlternativeNames",
+                                  "type": "dict",
+                                  "description": "A reference to an object that represents the SANs for a listener's Transport Layer Security (TLS) validation context.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "exact",
+                                          "type": "list",
+                                          "description": "The values sent must match the specified values exactly.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "string",
+                                              "description": "(string) ---",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "certificateChain",
+                                          "type": "string",
+                                          "description": "The certificate trust chain for a certificate stored on the file system of the virtual node that the proxy is running on.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "secretName",
+                                          "type": "string",
+                                          "description": "A reference to an object that represents the name of the secret for a Transport Layer Security (TLS) Secret Discovery Service validation context trust.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "accessLog",
+                      "type": "dict",
+                      "description": "The access log configuration for a virtual node.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "json",
+                                  "type": "list",
+                                  "description": "(dict) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "description": "The specified key for the JSON.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "string",
+                                          "description": "The specified value for the JSON.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "text",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "path",
+                              "type": "string",
+                              "description": "The file path to write access logs to. You can use /dev/stdout to send access logs to standard out and configure your Envoy container to use a log driver, such as awslogs, to export the access logs to a log storage service such as Amazon CloudWatch Logs. You can also specify a path in the Envoy container's file system to write the files to disk.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "serviceDiscovery",
+                  "type": "dict",
+                  "description": "The service discovery information for the virtual node. If your virtual node does not expect ingress traffic, you can omit this parameter. If you specify a listener, then you must specify service discovery information.",
+                  "nested_items": [
+                    {
+                      "name": "awsCloudMap",
+                      "type": "dict",
+                      "description": "Specifies any Cloud Map information for the virtual node.",
+                      "nested_items": [
+                        {
+                          "name": "attributes",
+                          "type": "list",
+                          "description": "A string map that contains attributes with values that you can use to filter instances by any custom attribute that you specified when you registered the instance. Only instances that match all of the specified key/value pairs will be returned.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The name of an Cloud Map service instance attribute key. Any Cloud Map service instance that contains the specified key and value is returned.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "string",
+                                  "description": "The value of an Cloud Map service instance attribute key. Any Cloud Map service instance that contains the specified key and value is returned.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ipPreference",
+                          "type": "string",
+                          "description": "The preferred IP version that this virtual node uses. Setting the IP preference on the virtual node only overrides the IP preference set for the mesh on this specific node.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "namespaceName",
+                          "type": "string",
+                          "description": "The name of the Cloud Map namespace to use.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "serviceName",
+                          "type": "string",
+                          "description": "The name of the Cloud Map service to use.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "hostname",
+                          "type": "string",
+                          "description": "Specifies the DNS service discovery hostname for the virtual node.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ipPreference",
+                          "type": "string",
+                          "description": "The preferred IP version that this virtual node uses. Setting the IP preference on the virtual node only overrides the IP preference set for the mesh on this specific node.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "responseType",
+                          "type": "string",
+                          "description": "Specifies the DNS response type for the virtual node.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "status",
+                  "type": "string",
+                  "description": "The current status of the virtual node.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "virtualNodeName",
+              "type": "string",
+              "description": "The name of the virtual node.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

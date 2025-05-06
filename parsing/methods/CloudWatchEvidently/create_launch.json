@@ -1,0 +1,493 @@
+{
+  "method_name": "create_launch",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/evidently/client/create_launch.html",
+  "description": "Creates a launch of a given feature. Before you create a launch, you must create the feature to use for the launch. You can use a launch to safely validate new features by serving them to a specified percentage of your users while you roll out the feature. You can monitor the performance of the new feature to help you decide when to ramp up traffic to more users. This helps you reduce risk and identify unintended consequences before you fully launch the feature. Don't use this operation to update an existing launch. Instead, use UpdateLaunch.",
+  "parameters": [
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "groups",
+      "type": "list",
+      "required": true,
+      "description": "An array of structures that contains the feature and variations that are to be used for the launch. (dict) --- A structure that defines one launch group in a launch. A launch group is a variation of the feature that you are including in the launch. description (string) --- A description of the launch group. The feature that this launch is using. A name for this launch group. The feature variation to use for this launch group.",
+      "nested_params": [
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "A description of the launch group.",
+          "nested_params": []
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "required": false,
+          "description": "The feature that this launch is using.",
+          "nested_params": []
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "A name for this launch group.",
+          "nested_params": []
+        },
+        {
+          "name": "variation",
+          "type": "string",
+          "required": false,
+          "description": "The feature variation to use for this launch group.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "metricMonitors",
+      "type": "list",
+      "required": true,
+      "description": "An array of structures that define the metrics that will be used to monitor the launch performance. (dict) --- A structure that defines a metric to be used to monitor performance of the variations during a launch. A structure that defines the metric. The entity, such as a user or session, that does an action that causes a metric value to be recorded. An example is userDetails.userID. eventPattern (string) --- The EventBridge event pattern that defines how the metric is recorded. For more information about EventBridge event patterns, see Amazon EventBridge event patterns. A name for the metric. unitLabel (string) --- A label for the units that the metric is measuring. The value that is tracked to produce the metric.",
+      "nested_params": [
+        {
+          "name": "metricDefinition",
+          "type": "dict",
+          "required": false,
+          "description": "A structure that defines the metric.",
+          "nested_params": [
+            {
+              "name": "entityIdKey",
+              "type": "string",
+              "required": false,
+              "description": "The entity, such as a user or session, that does an action that causes a metric value to be recorded. An example is userDetails.userID.",
+              "nested_params": []
+            },
+            {
+              "name": "eventPattern",
+              "type": "string",
+              "required": false,
+              "description": "The EventBridge event pattern that defines how the metric is recorded. For more information about EventBridge event patterns, see Amazon EventBridge event patterns.",
+              "nested_params": []
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "A name for the metric.",
+              "nested_params": []
+            },
+            {
+              "name": "unitLabel",
+              "type": "string",
+              "required": false,
+              "description": "A label for the units that the metric is measuring.",
+              "nested_params": []
+            },
+            {
+              "name": "valueKey",
+              "type": "string",
+              "required": false,
+              "description": "The value that is tracked to produce the metric.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name for the new launch.",
+      "nested_params": []
+    },
+    {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "description": "The name or ARN of the project that you want to create the launch in.",
+      "nested_params": []
+    },
+    {
+      "name": "randomizationSalt",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "scheduledSplitsConfig",
+      "type": "dict",
+      "required": true,
+      "description": "An array of structures that define the traffic allocation percentages among the feature variations during each step of the launch. This also defines the start time of each step. (dict) --- This structure defines the traffic allocation percentages among the feature variations during one step of a launch, and the start time of that step. The traffic allocation percentages among the feature variations during one step of a launch. This is a set of key-value pairs. The keys are variation names. The values represent the percentage of traffic to allocate to that variation during this step. The values is expressed in thousandths of a percent, so assigning a weight of 50000 assigns 50% of traffic to that variation. If the sum of the weights for all the variations in a segment override does not add up to 100,000, then the remaining traffic that matches this segment is not assigned by this segment override, and instead moves on to the next segment override or the default traffic split. (string) --- (integer) --- segmentOverrides (list) --- Use this parameter to specify different traffic splits for one or more audience segments. A segment is a portion of your audience that share one or more characteristics. Examples could be Chrome browser users, users in Europe, or Firefox browser users in Europe who also fit other criteria that your application collects, such as age. This parameter is an array of up to six segment override objects. Each of these objects specifies a segment that you have already created, and defines the traffic split for that segment. (dict) --- This structure specifies a segment that you have already created, and defines the traffic split for that segment to be used in a launch. A number indicating the order to use to evaluate segment overrides, if there are more than one. Segment overrides with lower numbers are evaluated first. The ARN of the segment to use. The traffic allocation percentages among the feature variations to assign to this segment. The values represent the amount of traffic to allocate to that variation for this segment. This is expressed in thousandths of a percent, so a weight of 50000 represents 50% of traffic. (string) --- (integer) --- The date and time that this step of the launch starts.",
+      "nested_params": [
+        {
+          "name": "steps",
+          "type": "list",
+          "required": false,
+          "description": "An array of structures that define the traffic allocation percentages among the feature variations during each step of the launch. This also defines the start time of each step.",
+          "nested_params": [
+            {
+              "name": "groupWeights",
+              "type": "dict",
+              "required": false,
+              "description": "The traffic allocation percentages among the feature variations during one step of a launch. This is a set of key-value pairs. The keys are variation names. The values represent the percentage of traffic to allocate to that variation during this step. The values is expressed in thousandths of a percent, so assigning a weight of 50000 assigns 50% of traffic to that variation. If the sum of the weights for all the variations in a segment override does not add up to 100,000, then the remaining traffic that matches this segment is not assigned by this segment override, and instead moves on to the next segment override or the default traffic split.",
+              "nested_params": []
+            },
+            {
+              "name": "segmentOverrides",
+              "type": "list",
+              "required": false,
+              "description": "Use this parameter to specify different traffic splits for one or more audience segments. A segment is a portion of your audience that share one or more characteristics. Examples could be Chrome browser users, users in Europe, or Firefox browser users in Europe who also fit other criteria that your application collects, such as age. This parameter is an array of up to six segment override objects. Each of these objects specifies a segment that you have already created, and defines the traffic split for that segment.",
+              "nested_params": [
+                {
+                  "name": "evaluationOrder",
+                  "type": "integer",
+                  "required": false,
+                  "description": "A number indicating the order to use to evaluate segment overrides, if there are more than one. Segment overrides with lower numbers are evaluated first.",
+                  "nested_params": []
+                },
+                {
+                  "name": "segment",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the segment to use.",
+                  "nested_params": []
+                },
+                {
+                  "name": "weights",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The traffic allocation percentages among the feature variations to assign to this segment. This is a set of key-value pairs. The keys are variation names. The values represent the amount of traffic to allocate to that variation for this segment. This is expressed in thousandths of a percent, so a weight of 50000 represents 50% of traffic.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "required": false,
+              "description": "The date and time that this step of the launch starts.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "Assigns one or more tags (key-value pairs) to the launch. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters. You can associate as many as 50 tags with a launch. For more information, see Tagging Amazon Web Services resources. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "arn",
+              "type": "string",
+              "description": "The ARN of the launch.",
+              "nested_items": []
+            },
+            {
+              "name": "createdTime",
+              "type": "datetime",
+              "description": "The date and time that the launch is created.",
+              "nested_items": []
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "description": "The description of the launch.",
+              "nested_items": []
+            },
+            {
+              "name": "execution",
+              "type": "dict",
+              "description": "A structure that contains information about the start and end times of the launch.",
+              "nested_items": [
+                {
+                  "name": "endedTime",
+                  "type": "datetime",
+                  "description": "The date and time that the launch ended.",
+                  "nested_items": []
+                },
+                {
+                  "name": "startedTime",
+                  "type": "datetime",
+                  "description": "The date and time that the launch started.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "groups",
+              "type": "list",
+              "description": "An array of structures that define the feature variations that are being used in the launch.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "description",
+                      "type": "string",
+                      "description": "A description of the launch group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "featureVariations",
+                      "type": "dict",
+                      "description": "The feature variation for this launch group. This is a key-value pair.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "description": "The name of the launch group.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "lastUpdatedTime",
+              "type": "datetime",
+              "description": "The date and time that the launch was most recently updated.",
+              "nested_items": []
+            },
+            {
+              "name": "metricMonitors",
+              "type": "list",
+              "description": "An array of structures that define the metrics that are being used to monitor the launch performance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "metricDefinition",
+                      "type": "dict",
+                      "description": "A structure that defines the metric.",
+                      "nested_items": [
+                        {
+                          "name": "entityIdKey",
+                          "type": "string",
+                          "description": "The entity, such as a user or session, that does an action that causes a metric value to be recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "eventPattern",
+                          "type": "string",
+                          "description": "The EventBridge event pattern that defines how the metric is recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "unitLabel",
+                          "type": "string",
+                          "description": "The label for the units that the metric is measuring.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "valueKey",
+                          "type": "string",
+                          "description": "The value that is tracked to produce the metric.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the launch.",
+              "nested_items": []
+            },
+            {
+              "name": "project",
+              "type": "string",
+              "description": "The name or ARN of the project that contains the launch.",
+              "nested_items": []
+            },
+            {
+              "name": "randomizationSalt",
+              "type": "string",
+              "description": "This value is used when Evidently assigns a particular user session to the launch, to help create a randomization ID to determine which variation the user session is served. This randomization ID is a combination of the entity ID and randomizationSalt.",
+              "nested_items": []
+            },
+            {
+              "name": "scheduledSplitsDefinition",
+              "type": "dict",
+              "description": "An array of structures that define the traffic allocation percentages among the feature variations during each step of the launch.",
+              "nested_items": [
+                {
+                  "name": "steps",
+                  "type": "list",
+                  "description": "An array of structures that define the traffic allocation percentages among the feature variations during each step of the launch. This also defines the start time of each step.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "groupWeights",
+                          "type": "dict",
+                          "description": "The traffic allocation percentages among the feature variations during one step of a launch. This is a set of key-value pairs. The keys are variation names. The values represent the percentage of traffic to allocate to that variation during this step.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "integer",
+                                  "description": "(integer) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "segmentOverrides",
+                          "type": "list",
+                          "description": "Use this parameter to specify different traffic splits for one or more audience segments. A segment is a portion of your audience that share one or more characteristics. Examples could be Chrome browser users, users in Europe, or Firefox browser users in Europe who also fit other criteria that your application collects, such as age.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "evaluationOrder",
+                                  "type": "integer",
+                                  "description": "A number indicating the order to use to evaluate segment overrides, if there are more than one. Segment overrides with lower numbers are evaluated first.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "segment",
+                                  "type": "string",
+                                  "description": "The ARN of the segment to use.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "integer",
+                                          "description": "(integer) ---",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "startTime",
+                          "type": "datetime",
+                          "description": "The date and time that this step of the launch starts.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The current state of the launch.",
+              "nested_items": []
+            },
+            {
+              "name": "statusReason",
+              "type": "string",
+              "description": "If the launch was stopped, this is the string that was entered by the person who stopped the launch, to explain why it was stopped.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of launch.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

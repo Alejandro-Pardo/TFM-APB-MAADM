@@ -1,0 +1,84 @@
+{
+  "method_name": "update_user_attributes",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cognito-idp/client/update_user_attributes.html",
+  "description": "Updates the currently signed-in user's attributes. To delete an attribute from the user, submit the attribute in your API request with a blank value. For custom attributes, you must add a custom: prefix to the attribute name, for example custom:department. Authorize this action with a signed-in user's access token. It must include the scope aws.cognito.signin.user.admin.",
+  "parameters": [
+    {
+      "name": "UserAttributes",
+      "type": "list",
+      "required": true,
+      "description": "An array of name-value pairs representing user attributes. For custom attributes, you must add a custom: prefix to the attribute name. If you have set an attribute to require verification before Amazon Cognito updates its value, this request doesn't immediately update the value of that attribute. After your user receives and responds to a verification message to verify the new value, Amazon Cognito updates the attribute value. Your user can sign in and receive messages with the original attribute value until they verify the new value. (dict) --- The name and value of a user attribute. The name of the attribute. Value (string) --- The value of the attribute.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the attribute.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the attribute.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AccessToken",
+      "type": "string",
+      "required": true,
+      "description": "A valid access token that Amazon Cognito issued to the currently signed-in user. Must include a scope claim for aws.cognito.signin.user.admin.",
+      "nested_params": []
+    },
+    {
+      "name": "ClientMetadata",
+      "type": "dict",
+      "required": false,
+      "description": "A map of custom key-value pairs that you can provide as input for any custom workflows that this action initiates. You create custom workflows by assigning Lambda functions to user pool triggers. When you use the UpdateUserAttributes API action, Amazon Cognito invokes the function that is assigned to the custom message trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a clientMetadata attribute, which provides the data that you assigned to the ClientMetadata parameter in your UpdateUserAttributes request. In your function code in Lambda, you can process the clientMetadata value to enhance your workflow for your specific needs. For more information, see Using Lambda triggers in the Amazon Cognito Developer Guide. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CodeDeliveryDetailsList",
+          "type": "list",
+          "description": "When the attribute-update request includes an email address or phone number attribute, Amazon Cognito sends a message to users with a code that confirms ownership of the new value that they entered. The CodeDeliveryDetails object is information about the delivery destination for that link or code. This behavior happens in user pools configured to automatically verify changes to those attributes. For more information, see Verifying when users change their email or phone number.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Destination",
+                  "type": "string",
+                  "description": "The email address or phone number destination where Amazon Cognito sent the code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DeliveryMedium",
+                  "type": "string",
+                  "description": "The method that Amazon Cognito used to send the code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AttributeName",
+                  "type": "string",
+                  "description": "The name of the attribute that Amazon Cognito verifies with the code.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "method_name": "list_stack_set_operations",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/list_stack_set_operations.html",
+  "description": "Returns summary information about operations performed on a stack set.",
+  "parameters": [
+    {
+      "name": "StackSetName",
+      "type": "string",
+      "required": true,
+      "description": "The name or unique ID of the stack set that you want to get operation summaries for.",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CallAs",
+      "type": "string",
+      "required": false,
+      "description": "[Service-managed permissions] Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. By default, SELF is specified. Use SELF for stack sets with self-managed permissions. If you are signed in to the management account, specify SELF. If you are signed in to a delegated administrator account, specify DELEGATED_ADMIN. Your Amazon Web Services account must be registered as a delegated administrator in the management account. For more information, see Register a delegated administrator in the CloudFormation User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Summaries",
+          "type": "list",
+          "description": "A list of StackSetOperationSummary structures that contain summary information about operations for the specified stack set.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "OperationId",
+                  "type": "string",
+                  "description": "The unique ID of the stack set operation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Action",
+                  "type": "string",
+                  "description": "The type of operation: CREATE, UPDATE, or DELETE. Create and delete operations affect only the specified stack instances that are associated with the specified stack set. Update operations affect both the stack set itself and all associated stack set instances.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The overall status of the operation.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "FAILED: The operation exceeded the specified failure tolerance. The failure tolerance value that you've set for an operation is applied for each Region during stack create and update operations. If the number of failed stacks within a Region exceeds the failure tolerance, the status of the operation in the Region is set to FAILED. This in turn sets the status of the operation as a whole to FAILED, and CloudFormation cancels the operation in any remaining Regions.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "QUEUED: [Service-managed permissions] For automatic deployments that require a sequence of operations, the operation is queued to be performed. For more information, see the stack set operation status codes in the CloudFormation User Guide.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RUNNING: The operation is currently being performed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "STOPPED: The user has canceled the operation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "STOPPING: The operation is in the process of stopping, at user request.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SUCCEEDED: The operation completed creating or updating all the specified stacks without exceeding the failure tolerance for the operation.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CreationTimestamp",
+                  "type": "datetime",
+                  "description": "The time at which the operation was initiated. Note that the creation times for the stack set operation might differ from the creation time of the individual stacks themselves. This is because CloudFormation needs to perform preparatory work for the operation, such as dispatching the work to the requested Regions, before actually creating the first stacks.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EndTimestamp",
+                  "type": "datetime",
+                  "description": "The time at which the stack set operation ended, across all accounts and Regions specified. Note that this doesn't necessarily mean that the stack set operation was successful, or even attempted, in each account or Region.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StatusReason",
+                  "type": "string",
+                  "description": "The status of the operation in details.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StatusDetails",
+                  "type": "dict",
+                  "description": "Detailed information about the stack set operation.",
+                  "nested_items": [
+                    {
+                      "name": "FailedStackInstancesCount",
+                      "type": "integer",
+                      "description": "The number of stack instances for which the StackSet operation failed.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OperationPreferences",
+                  "type": "dict",
+                  "description": "The user-specified preferences for how CloudFormation performs a stack set operation.",
+                  "nested_items": [
+                    {
+                      "name": "RegionConcurrencyType",
+                      "type": "string",
+                      "description": "The concurrency type of deploying StackSets operations in Regions, could be in parallel or one Region at a time.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RegionOrder",
+                      "type": "list",
+                      "description": "The order of the Regions where you want to perform the stack operation.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "FailureToleranceCount",
+                      "type": "integer",
+                      "description": "The number of accounts, per Region, for which this operation can fail before CloudFormation stops the operation in that Region. If the operation is stopped in a Region, CloudFormation doesn't attempt the operation in any subsequent Regions.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FailureTolerancePercentage",
+                      "type": "integer",
+                      "description": "The percentage of accounts, per Region, for which this stack operation can fail before CloudFormation stops the operation in that Region. If the operation is stopped in a Region, CloudFormation doesn't attempt the operation in any subsequent Regions.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxConcurrentCount",
+                      "type": "integer",
+                      "description": "The maximum number of accounts in which to perform this operation at one time. This can depend on the value of FailureToleranceCount depending on your ConcurrencyMode. MaxConcurrentCount is at most one more than the FailureToleranceCount if you're using STRICT_FAILURE_TOLERANCE.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxConcurrentPercentage",
+                      "type": "integer",
+                      "description": "The maximum percentage of accounts in which to perform this operation at one time.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ConcurrencyMode",
+                      "type": "string",
+                      "description": "Specifies how the concurrency level behaves during the operation execution.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "STRICT_FAILURE_TOLERANCE: This option dynamically lowers the concurrency level to ensure the number of failed accounts never exceeds the value of FailureToleranceCount +1. The initial actual concurrency is set to the lower of either the value of the MaxConcurrentCount, or the value of FailureToleranceCount +1. The actual concurrency is then reduced proportionally by the number of failures. This is the default behavior. If failure tolerance or Maximum concurrent accounts are set to percentages, the behavior is similar.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOFT_FAILURE_TOLERANCE: This option decouples FailureToleranceCount from the actual concurrency. This allows stack set operations to run at the concurrency level set by the MaxConcurrentCount value, or MaxConcurrentPercentage, regardless of the number of failures.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the request doesn't return all results, NextToken is set to a token. To retrieve the next set of results, call ListOperationResults again and assign that token to the request object's NextToken parameter. If there are no remaining results, NextToken is set to null.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

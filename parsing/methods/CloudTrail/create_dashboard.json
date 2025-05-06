@@ -1,0 +1,272 @@
+{
+  "method_name": "create_dashboard",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudtrail/client/create_dashboard.html",
+  "description": "Creates a custom dashboard or the Highlights dashboard. CloudTrail runs queries to populate the dashboard's widgets during a manual or scheduled refresh. CloudTrail must be granted permissions to run the StartQuery operation on your behalf. To provide permissions, run the PutResourcePolicy operation to attach a resource-based policy to each event data store. For more information, see Example: Allow CloudTrail to run queries to populate a dashboard in the CloudTrail User Guide. To set a refresh schedule, CloudTrail must be granted permissions to run the StartDashboardRefresh operation to refresh the dashboard on your behalf. To provide permissions, run the PutResourcePolicy operation to attach a resource-based policy to the dashboard. For more information, see Resource-based policy example for a dashboard in the CloudTrail User Guide. For more information about dashboards, see CloudTrail Lake dashboards in the CloudTrail User Guide.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the dashboard. The name must be unique to your account. To create the Highlights dashboard, the name must be AWSCloudTrail-Highlights.",
+      "nested_params": []
+    },
+    {
+      "name": "RefreshSchedule",
+      "type": "dict",
+      "required": false,
+      "description": "The refresh schedule configuration for the dashboard. To create the Highlights dashboard, you must set a refresh schedule and set the Status to ENABLED. The Unit for the refresh schedule must be HOURS and the Value must be 6. Frequency (dict) --- The frequency at which you want the dashboard refreshed. Unit (string) --- The unit to use for the refresh. For custom dashboards, the unit can be HOURS or DAYS. For the Highlights dashboard, the Unit must be HOURS. Value (integer) --- The value for the refresh schedule. For custom dashboards, the following values are valid when the unit is HOURS: 1, 6, 12, 24 For custom dashboards, the only valid value when the unit is DAYS is 1. For the Highlights dashboard, the Value must be 6. Status (string) --- Specifies whether the refresh schedule is enabled. Set the value to ENABLED to enable the refresh schedule, or to DISABLED to turn off the refresh schedule. TimeOfDay (string) --- The time of day in UTC to run the schedule; for hourly only refer to minutes; default is 00:00.",
+      "nested_params": [
+        {
+          "name": "Frequency",
+          "type": "dict",
+          "required": false,
+          "description": "The frequency at which you want the dashboard refreshed.",
+          "nested_params": [
+            {
+              "name": "Unit",
+              "type": "string",
+              "required": false,
+              "description": "The unit to use for the refresh. For custom dashboards, the unit can be HOURS or DAYS. For the Highlights dashboard, the Unit must be HOURS.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "integer",
+              "required": false,
+              "description": "The value for the refresh schedule. For custom dashboards, the following values are valid when the unit is HOURS: 1, 6, 12, 24 For custom dashboards, the only valid value when the unit is DAYS is 1. For the Highlights dashboard, the Value must be 6.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Status",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether the refresh schedule is enabled. Set the value to ENABLED to enable the refresh schedule, or to DISABLED to turn off the refresh schedule.",
+          "nested_params": []
+        },
+        {
+          "name": "TimeOfDay",
+          "type": "string",
+          "required": false,
+          "description": "The time of day in UTC to run the schedule; for hourly only refer to minutes; default is 00:00.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TagsList",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags. (dict) --- A custom key-value pair associated with a resource such as a CloudTrail trail, event data store, dashboard, or channel. The key in a key-value pair. The key must be must be no longer than 128 Unicode characters. The key must be unique for the resource to which it applies. Value (string) --- The value in a key-value pair of a tag. The value must be no longer than 256 Unicode characters.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key in a key-value pair. The key must be must be no longer than 128 Unicode characters. The key must be unique for the resource to which it applies.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value in a key-value pair of a tag. The value must be no longer than 256 Unicode characters.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TerminationProtectionEnabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Widgets",
+      "type": "list",
+      "required": true,
+      "description": "An array of widgets for a custom dashboard. A custom dashboard can have a maximum of ten widgets. You do not need to specify widgets for the Highlights dashboard. (dict) --- Contains information about a widget on a CloudTrail Lake dashboard. The query statement for the widget. For custom dashboard widgets, you can query across multiple event data stores as long as all event data stores exist in your account. QueryParameters (list) --- The optional query parameters. The following query parameters are valid: $StartTime$, $EndTime$, and $Period$. (string) --- The view properties for the widget. For more information about view properties, see View properties for widgets in the CloudTrail User Guide. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "QueryStatement",
+          "type": "string",
+          "required": false,
+          "description": "The query statement for the widget. For custom dashboard widgets, you can query across multiple event data stores as long as all event data stores exist in your account.",
+          "nested_params": []
+        },
+        {
+          "name": "QueryParameters",
+          "type": "list",
+          "required": false,
+          "description": "The optional query parameters. The following query parameters are valid: $StartTime$, $EndTime$, and $Period$.",
+          "nested_params": []
+        },
+        {
+          "name": "ViewProperties",
+          "type": "dict",
+          "required": false,
+          "description": "The view properties for the widget. For more information about view properties, see View properties for widgets in the CloudTrail User Guide.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DashboardArn",
+          "type": "string",
+          "description": "The ARN for the dashboard.",
+          "nested_items": []
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "description": "The name of the dashboard.",
+          "nested_items": []
+        },
+        {
+          "name": "Type",
+          "type": "string",
+          "description": "The dashboard type.",
+          "nested_items": []
+        },
+        {
+          "name": "Widgets",
+          "type": "list",
+          "description": "An array of widgets for the dashboard.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "QueryAlias",
+                  "type": "string",
+                  "description": "The query alias used to identify the query for the widget.",
+                  "nested_items": []
+                },
+                {
+                  "name": "QueryStatement",
+                  "type": "string",
+                  "description": "The SQL query statement for the widget.",
+                  "nested_items": []
+                },
+                {
+                  "name": "QueryParameters",
+                  "type": "list",
+                  "description": "The query parameters for the widget.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ViewProperties",
+                  "type": "dict",
+                  "description": "The view properties for the widget. For more information about view properties, see View properties for widgets in the CloudTrail User Guide..",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TagsList",
+          "type": "list",
+          "description": "A list of tags.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "description": "The key in a key-value pair. The key must be must be no longer than 128 Unicode characters. The key must be unique for the resource to which it applies.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "description": "The value in a key-value pair of a tag. The value must be no longer than 256 Unicode characters.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RefreshSchedule",
+          "type": "dict",
+          "description": "The refresh schedule for the dashboard, if configured.",
+          "nested_items": [
+            {
+              "name": "Frequency",
+              "type": "dict",
+              "description": "The frequency at which you want the dashboard refreshed.",
+              "nested_items": [
+                {
+                  "name": "Unit",
+                  "type": "string",
+                  "description": "The unit to use for the refresh.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Value",
+                  "type": "integer",
+                  "description": "The value for the refresh schedule.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "Specifies whether the refresh schedule is enabled. Set the value to ENABLED to enable the refresh schedule, or to DISABLED to turn off the refresh schedule.",
+              "nested_items": []
+            },
+            {
+              "name": "TimeOfDay",
+              "type": "string",
+              "description": "The time of day in UTC to run the schedule; for hourly only refer to minutes; default is 00:00.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "TerminationProtectionEnabled",
+          "type": "boolean",
+          "description": "Indicates whether termination protection is enabled for the dashboard.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}
