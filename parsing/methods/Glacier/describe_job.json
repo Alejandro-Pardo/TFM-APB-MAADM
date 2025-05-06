@@ -1,0 +1,480 @@
+{
+  "method_name": "describe_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glacier/client/describe_job.html",
+  "description": "This operation returns information about a job you previously initiated, including the job initiation date, the user who initiated the job, the job status code/message and the Amazon SNS topic to notify after Amazon S3 Glacier (Glacier) completes the job. For more information about initiating a job, see  InitiateJob. A job ID will not expire for at least 24 hours after Glacier completes the job. An AWS account has full permission to perform all operations (actions). However, AWS Identity and Access Management (IAM) users don't have any permissions by default. You must grant them explicit permission to perform specific actions. For more information, see Access Control Using AWS Identity and Access Management (IAM). For more information about using this operation, see the documentation for the underlying REST API Describe Job in the Amazon Glacier Developer Guide.",
+  "parameters": [
+    {
+      "name": "accountId",
+      "type": "string",
+      "required": false,
+      "description": "The AccountId value is the AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single --\u0098 -' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, do not include any hyphens (--\u0098-') in the ID. Note: this parameter is set to '-' bydefault if no value is not specified.",
+      "nested_params": []
+    },
+    {
+      "name": "vaultName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the vault.",
+      "nested_params": []
+    },
+    {
+      "name": "jobId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the job to describe.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "An opaque string that identifies an Amazon S3 Glacier job.",
+          "nested_items": []
+        },
+        {
+          "name": "JobDescription",
+          "type": "string",
+          "description": "The job description provided when initiating the job.",
+          "nested_items": []
+        },
+        {
+          "name": "Action",
+          "type": "string",
+          "description": "The job type. This value is either ArchiveRetrieval, InventoryRetrieval, or Select.",
+          "nested_items": []
+        },
+        {
+          "name": "ArchiveId",
+          "type": "string",
+          "description": "The archive ID requested for a select job or archive retrieval. Otherwise, this field is null.",
+          "nested_items": []
+        },
+        {
+          "name": "VaultARN",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the vault from which an archive retrieval was requested.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationDate",
+          "type": "string",
+          "description": "The UTC date when the job was created. This value is a string representation of ISO 8601 date format, for example \"2012-03-20T17:03:43.221Z\".",
+          "nested_items": []
+        },
+        {
+          "name": "Completed",
+          "type": "boolean",
+          "description": "The job status. When a job is completed, you get the job's output using Get Job Output (GET output).",
+          "nested_items": []
+        },
+        {
+          "name": "StatusCode",
+          "type": "string",
+          "description": "The status code can be InProgress, Succeeded, or Failed, and indicates the status of the job.",
+          "nested_items": []
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "A friendly message that describes the job status.",
+          "nested_items": []
+        },
+        {
+          "name": "ArchiveSizeInBytes",
+          "type": "integer",
+          "description": "For an archive retrieval job, this value is the size in bytes of the archive being requested for download. For an inventory retrieval or select job, this value is null.",
+          "nested_items": []
+        },
+        {
+          "name": "InventorySizeInBytes",
+          "type": "integer",
+          "description": "For an inventory retrieval job, this value is the size in bytes of the inventory requested for download. For an archive retrieval or select job, this value is null.",
+          "nested_items": []
+        },
+        {
+          "name": "SNSTopic",
+          "type": "string",
+          "description": "An Amazon SNS topic that receives notification.",
+          "nested_items": []
+        },
+        {
+          "name": "CompletionDate",
+          "type": "string",
+          "description": "The UTC time that the job request completed. While the job is in progress, the value is null.",
+          "nested_items": []
+        },
+        {
+          "name": "SHA256TreeHash",
+          "type": "string",
+          "description": "For an archive retrieval job, this value is the checksum of the archive. Otherwise, this value is null.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "Archive retrieval jobs that specify a range that is not tree-hash aligned.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Archival jobs that specify a range that is equal to the whole archive, when the job status is InProgress.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Inventory jobs.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Select jobs.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ArchiveSHA256TreeHash",
+          "type": "string",
+          "description": "The SHA256 tree hash of the entire archive for an archive retrieval. For inventory retrieval or select jobs, this field is null.",
+          "nested_items": []
+        },
+        {
+          "name": "RetrievalByteRange",
+          "type": "string",
+          "description": "The retrieved byte range for archive retrieval jobs in the form StartByteValue-EndByteValue. If no range was specified in the archive retrieval, then the whole archive is retrieved. In this case, StartByteValue equals 0 and EndByteValue equals the size of the archive minus 1. For inventory retrieval or select jobs, this field is null.",
+          "nested_items": []
+        },
+        {
+          "name": "Tier",
+          "type": "string",
+          "description": "The tier to use for a select or an archive retrieval. Valid values are Expedited, Standard, or Bulk. Standard is the default.",
+          "nested_items": []
+        },
+        {
+          "name": "InventoryRetrievalParameters",
+          "type": "dict",
+          "description": "Parameters used for range inventory retrieval.",
+          "nested_items": [
+            {
+              "name": "Format",
+              "type": "string",
+              "description": "The output format for the vault inventory list, which is set by the InitiateJob request when initiating a job to retrieve a vault inventory. Valid values are CSV and JSON.",
+              "nested_items": []
+            },
+            {
+              "name": "StartDate",
+              "type": "string",
+              "description": "The start of the date range in Universal Coordinated Time (UTC) for vault inventory retrieval that includes archives created on or after this date. This value should be a string in the ISO 8601 date format, for example 2013-03-20T17:03:43Z.",
+              "nested_items": []
+            },
+            {
+              "name": "EndDate",
+              "type": "string",
+              "description": "The end of the date range in UTC for vault inventory retrieval that includes archives created before this date. This value should be a string in the ISO 8601 date format, for example 2013-03-20T17:03:43Z.",
+              "nested_items": []
+            },
+            {
+              "name": "Limit",
+              "type": "string",
+              "description": "The maximum number of inventory items returned per vault inventory retrieval request. This limit is set when initiating the job with the a InitiateJob request.",
+              "nested_items": []
+            },
+            {
+              "name": "Marker",
+              "type": "string",
+              "description": "An opaque string that represents where to continue pagination of the vault inventory retrieval results. You use the marker in a new InitiateJob request to obtain additional inventory items. If there are no more inventory items, this value is null. For more information, see Range Inventory Retrieval.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "JobOutputPath",
+          "type": "string",
+          "description": "Contains the job output location.",
+          "nested_items": []
+        },
+        {
+          "name": "SelectParameters",
+          "type": "dict",
+          "description": "Contains the parameters used for a select.",
+          "nested_items": [
+            {
+              "name": "InputSerialization",
+              "type": "dict",
+              "description": "Describes the serialization format of the object.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "FileHeaderInfo",
+                      "type": "string",
+                      "description": "Describes the first line of input. Valid values are None, Ignore, and Use.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Comments",
+                      "type": "string",
+                      "description": "A single character used to indicate that a row should be ignored when the character is present at the start of that row.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QuoteEscapeCharacter",
+                      "type": "string",
+                      "description": "A single character used for escaping the quotation-mark character inside an already escaped value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RecordDelimiter",
+                      "type": "string",
+                      "description": "A value used to separate individual records from each other.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FieldDelimiter",
+                      "type": "string",
+                      "description": "A value used to separate individual fields from each other within a record.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QuoteCharacter",
+                      "type": "string",
+                      "description": "A value used as an escape character where the field delimiter is part of the value.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ExpressionType",
+              "type": "string",
+              "description": "The type of the provided expression, for example SQL.",
+              "nested_items": []
+            },
+            {
+              "name": "Expression",
+              "type": "string",
+              "description": "The expression that is used to select the object.",
+              "nested_items": []
+            },
+            {
+              "name": "OutputSerialization",
+              "type": "dict",
+              "description": "Describes how the results of the select job are serialized.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "QuoteFields",
+                      "type": "string",
+                      "description": "A value that indicates whether all output fields should be contained within quotation marks.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QuoteEscapeCharacter",
+                      "type": "string",
+                      "description": "A single character used for escaping the quotation-mark character inside an already escaped value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RecordDelimiter",
+                      "type": "string",
+                      "description": "A value used to separate individual records from each other.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FieldDelimiter",
+                      "type": "string",
+                      "description": "A value used to separate individual fields from each other within a record.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QuoteCharacter",
+                      "type": "string",
+                      "description": "A value used as an escape character where the field delimiter is part of the value.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "OutputLocation",
+          "type": "dict",
+          "description": "Contains the location where the data from the select job is stored.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "BucketName",
+                  "type": "string",
+                  "description": "The name of the Amazon S3 bucket where the job results are stored.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Prefix",
+                  "type": "string",
+                  "description": "The prefix that is prepended to the results for this request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Encryption",
+                  "type": "dict",
+                  "description": "Contains information about the encryption used to store the job results in Amazon S3.",
+                  "nested_items": [
+                    {
+                      "name": "EncryptionType",
+                      "type": "string",
+                      "description": "The server-side encryption algorithm used when storing job results in Amazon S3, for example AES256 or aws:kms.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "KMSKeyId",
+                      "type": "string",
+                      "description": "The AWS KMS key ID to use for object encryption. All GET and PUT requests for an object protected by AWS KMS fail if not made by using Secure Sockets Layer (SSL) or Signature Version 4.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "KMSContext",
+                      "type": "string",
+                      "description": "Optional. If the encryption type is aws:kms, you can use this value to specify the encryption context for the job results.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CannedACL",
+                  "type": "string",
+                  "description": "The canned access control list (ACL) to apply to the job results.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AccessControlList",
+                  "type": "list",
+                  "description": "A list of grants that control access to the staged results.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Type",
+                              "type": "string",
+                              "description": "Type of grantee.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "DisplayName",
+                              "type": "string",
+                              "description": "Screen name of the grantee.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "URI",
+                              "type": "string",
+                              "description": "URI of the grantee group.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ID",
+                              "type": "string",
+                              "description": "The canonical user ID of the grantee.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "EmailAddress",
+                              "type": "string",
+                              "description": "Email address of the grantee.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Permission",
+                          "type": "string",
+                          "description": "Specifies the permission given to the grantee.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "UserMetadata",
+                  "type": "dict",
+                  "description": "A map of metadata to store with the job results in Amazon S3.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "StorageClass",
+                  "type": "string",
+                  "description": "The storage class used to store the job results.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

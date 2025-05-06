@@ -1,0 +1,69 @@
+{
+  "method_name": "complete_multipart_upload",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glacier/client/complete_multipart_upload.html",
+  "description": "You call this operation to inform Amazon S3 Glacier (Glacier) that all the archive parts have been uploaded and that Glacier can now assemble the archive from the uploaded parts. After assembling and saving the archive to the vault, Glacier returns the URI path of the newly created archive resource. Using the URI path, you can then access the archive. After you upload an archive, you should save the archive ID returned to retrieve the archive at a later point. You can also get the vault inventory to obtain a list of archive IDs in a vault. For more information, see  InitiateJob. In the request, you must include the computed SHA256 tree hash of the entire archive you have uploaded. For information about computing a SHA256 tree hash, see Computing Checksums. On the server side, Glacier also constructs the SHA256 tree hash of the assembled archive. If the values match, Glacier saves the archive to the vault; otherwise, it returns an error, and the operation fails. The  ListParts operation returns a list of parts uploaded for a specific multipart upload. It includes checksum information for each uploaded part that can be used to debug a bad checksum issue. Additionally, Glacier also checks for any missing content ranges when assembling the archive, if missing content ranges are found, Glacier returns an error and the operation fails. Complete Multipart Upload is an idempotent operation. After your first successful complete multipart upload, if you call the operation again within a short period, the operation will succeed and return the same archive ID. This is useful in the event you experience a network issue that causes an aborted connection or receive a 500 server error, in which case you can repeat your Complete Multipart Upload request and get the same archive ID without creating duplicate archives. Note, however, that after the multipart upload completes, you cannot call the List Parts operation and the multipart upload will not appear in List Multipart Uploads response, even if idempotent complete is possible. An AWS account has full permission to perform all operations (actions). However, AWS Identity and Access Management (IAM) users don't have any permissions by default. You must grant them explicit permission to perform specific actions. For more information, see Access Control Using AWS Identity and Access Management (IAM). For conceptual information and underlying REST API, see Uploading Large Archives in Parts (Multipart Upload) and Complete Multipart Upload in the Amazon Glacier Developer Guide.",
+  "parameters": [
+    {
+      "name": "accountId",
+      "type": "string",
+      "required": false,
+      "description": "The AccountId value is the AWS account ID of the account that owns the vault. You can either specify an AWS account ID or optionally a single --\u0098 -' (hyphen), in which case Amazon S3 Glacier uses the AWS account ID associated with the credentials used to sign the request. If you use an account ID, do not include any hyphens (--\u0098-') in the ID. Note: this parameter is set to '-' bydefault if no value is not specified.",
+      "nested_params": []
+    },
+    {
+      "name": "vaultName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the vault.",
+      "nested_params": []
+    },
+    {
+      "name": "uploadId",
+      "type": "string",
+      "required": true,
+      "description": "The upload ID of the multipart upload.",
+      "nested_params": []
+    },
+    {
+      "name": "archiveSize",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "checksum",
+      "type": "string",
+      "required": false,
+      "description": "The SHA256 tree hash of the entire archive. It is the tree hash of SHA256 tree hash of the individual parts. If the value you specify in the request does not match the SHA256 tree hash of the final assembled archive as computed by Amazon S3 Glacier (Glacier), Glacier returns an error and the request fails. This is a required field. Ideally you will want to compute this value with checksums from\nprevious uploaded parts, using the algorithm described in\nGlacier documentation. But if you prefer, you can also use botocore.utils.calculate_tree_hash()\nto compute it from raw file by:",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "location",
+          "type": "string",
+          "description": "The relative URI path of the newly added archive resource.",
+          "nested_items": []
+        },
+        {
+          "name": "checksum",
+          "type": "string",
+          "description": "The checksum of the archive computed by Amazon S3 Glacier.",
+          "nested_items": []
+        },
+        {
+          "name": "archiveId",
+          "type": "string",
+          "description": "The ID of the archive. This value is also included as part of the location.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

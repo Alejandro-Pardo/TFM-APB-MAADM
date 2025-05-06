@@ -1,0 +1,408 @@
+{
+  "method_name": "get_cost_and_usage",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/get_cost_and_usage.html",
+  "description": "Retrieves cost and usage metrics for your account. You can specify which cost and usage-related metric that you want the request to return. For example, you can specify BlendedCosts or UsageQuantity. You can also filter and group your data by various dimensions, such as SERVICE or AZ, in a specific time range. For a complete list of valid dimensions, see the GetDimensionValues operation. Management account in an organization in Organizations have access to all member accounts. For information about filter limitations, see Quotas and restrictions in the Billing and Cost Management User Guide.",
+  "parameters": [
+    {
+      "name": "TimePeriod",
+      "type": "dict",
+      "required": true,
+      "description": "Sets the start date and end date for retrieving Amazon Web Services costs. The start date is inclusive, but the end date is exclusive. For example, if start is 2017-01-01 and end is 2017-05-01, then the cost and usage data is retrieved from 2017-01-01 up to and including 2017-04-30 but not including 2017-05-01. The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error. The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+      "nested_params": [
+        {
+          "name": "Start",
+          "type": "string",
+          "required": false,
+          "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+          "nested_params": []
+        },
+        {
+          "name": "End",
+          "type": "string",
+          "required": false,
+          "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Granularity",
+      "type": "string",
+      "required": true,
+      "description": "Sets the Amazon Web Services cost granularity to MONTHLY or DAILY, or HOURLY. If Granularity isn't set, the response object doesn't include the Granularity, either MONTHLY or DAILY, or HOURLY.",
+      "nested_params": []
+    },
+    {
+      "name": "Filter",
+      "type": "dict",
+      "required": false,
+      "description": "Filters Amazon Web Services costs by different dimensions. For example, you can specify SERVICE and LINKED_ACCOUNT and get the costs that are associated with that account's usage of that service. You can nest Expression objects to define any combination of dimension filters. For more information, see Expression. Valid values for MatchOptions for Dimensions are EQUALS and CASE_SENSITIVE. Valid values for MatchOptions for CostCategories and Tags are EQUALS, ABSENT, and CASE_SENSITIVE. Default values are EQUALS and CASE_SENSITIVE. Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": [
+        {
+          "name": "Or",
+          "type": "list",
+          "required": false,
+          "description": "Return results that match either Dimension object.",
+          "nested_params": []
+        },
+        {
+          "name": "And",
+          "type": "list",
+          "required": false,
+          "description": "Return results that match both Dimension objects.",
+          "nested_params": []
+        },
+        {
+          "name": "Not",
+          "type": "dict",
+          "required": false,
+          "description": "Return results that don't match a Dimension object.",
+          "nested_params": []
+        },
+        {
+          "name": "Dimensions",
+          "type": "dict",
+          "required": false,
+          "description": "The specific Dimension to use for Expression.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. Refer to the documentation for each specific API to see what is supported. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions.",
+              "nested_params": []
+            },
+            {
+              "name": "Values",
+              "type": "list",
+              "required": false,
+              "description": "The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values.",
+              "nested_params": []
+            },
+            {
+              "name": "MatchOptions",
+              "type": "list",
+              "required": false,
+              "description": "The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. Refer to the documentation for each specific API to see what is supported. The default values for MatchOptions are EQUALS and CASE_SENSITIVE.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Tags",
+          "type": "dict",
+          "required": false,
+          "description": "The specific Tag to use for Expression.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The key for the tag.",
+              "nested_params": []
+            },
+            {
+              "name": "Values",
+              "type": "list",
+              "required": false,
+              "description": "The specific value of the tag.",
+              "nested_params": []
+            },
+            {
+              "name": "MatchOptions",
+              "type": "list",
+              "required": false,
+              "description": "The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category. The default values for MatchOptions are EQUALS and CASE_SENSITIVE.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "CostCategories",
+          "type": "dict",
+          "required": false,
+          "description": "The filter that's based on CostCategory values.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The unique name of the Cost Category.",
+              "nested_params": []
+            },
+            {
+              "name": "Values",
+              "type": "list",
+              "required": false,
+              "description": "The specific value of the Cost Category.",
+              "nested_params": []
+            },
+            {
+              "name": "MatchOptions",
+              "type": "list",
+              "required": false,
+              "description": "The match options that you can use to filter your results. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Metrics",
+      "type": "list",
+      "required": true,
+      "description": "Which metrics are returned in the query. For more information about blended and unblended rates, see Why does the 'blended' annotation appear on some line items in my bill?. Valid values are AmortizedCost, BlendedCost, NetAmortizedCost, NetUnblendedCost, NormalizedUsageAmount, UnblendedCost, and UsageQuantity. Metrics is required for GetCostAndUsage requests. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "GroupBy",
+      "type": "list",
+      "required": false,
+      "description": "You can group Amazon Web Services costs using up to two different groups, either dimensions, tag keys, cost categories, or any two group by types. Valid values for the DIMENSION type are AZ, INSTANCE_TYPE, LEGAL_ENTITY_NAME, INVOICING_ENTITY, LINKED_ACCOUNT, OPERATION, PLATFORM, PURCHASE_TYPE, SERVICE, TENANCY, RECORD_TYPE, and USAGE_TYPE. When you group by the TAG type and include a valid tag key, you get all tag values, including empty strings. (dict) --- Represents a group when you specify a group by criteria or in the response to a query with a specific grouping. Type (string) --- The string that represents the type of group. Key (string) --- The string that represents a key for a specified group.",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The string that represents the type of group.",
+          "nested_params": []
+        },
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The string that represents a key for a specified group.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "BillingViewArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextPageToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "NextPageToken",
+          "type": "string",
+          "description": "The token for the next set of retrievable results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.",
+          "nested_items": []
+        },
+        {
+          "name": "GroupDefinitions",
+          "type": "list",
+          "description": "The groups that are specified by the Filter or GroupBy parameters in the request.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "The string that represents the type of group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "description": "The string that represents a key for a specified group.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ResultsByTime",
+          "type": "list",
+          "description": "The time period that's covered by the results in the response.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "TimePeriod",
+                  "type": "dict",
+                  "description": "The time period that the result covers.",
+                  "nested_items": [
+                    {
+                      "name": "Start",
+                      "type": "string",
+                      "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "string",
+                      "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Amount",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Amount",
+                              "type": "string",
+                              "description": "The actual number that represents the metric.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Unit",
+                              "type": "string",
+                              "description": "The unit that the metric is given in.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Groups",
+                  "type": "list",
+                  "description": "The groups that this time period includes.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Keys",
+                          "type": "list",
+                          "description": "The keys that are included in this group.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Amount",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "Amount",
+                                      "type": "string",
+                                      "description": "The actual number that represents the metric.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Unit",
+                                      "type": "string",
+                                      "description": "The unit that the metric is given in.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Estimated",
+                  "type": "boolean",
+                  "description": "Determines whether the result is estimated.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DimensionValueAttributes",
+          "type": "list",
+          "description": "The attributes that apply to a specific dimension value. For example, if the value is a linked account, the attribute is that account name.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "description": "The value of a dimension with a specific attribute.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Attributes",
+                  "type": "dict",
+                  "description": "The attribute that applies to a specific Dimension.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

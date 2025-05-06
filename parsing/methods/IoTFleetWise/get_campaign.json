@@ -1,0 +1,485 @@
+{
+  "method_name": "get_campaign",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotfleetwise/client/get_campaign.html",
+  "description": "Retrieves information about a campaign.",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the campaign to retrieve information about.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the campaign.",
+          "nested_items": []
+        },
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the campaign.",
+          "nested_items": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "The description of the campaign.",
+          "nested_items": []
+        },
+        {
+          "name": "signalCatalogArn",
+          "type": "string",
+          "description": "The ARN of a signal catalog.",
+          "nested_items": []
+        },
+        {
+          "name": "targetArn",
+          "type": "string",
+          "description": "The ARN of the vehicle or the fleet targeted by the campaign.",
+          "nested_items": []
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "The state of the campaign. The status can be one of: CREATING, WAITING_FOR_APPROVAL, RUNNING, and SUSPENDED.",
+          "nested_items": []
+        },
+        {
+          "name": "startTime",
+          "type": "datetime",
+          "description": "The time, in milliseconds, to deliver a campaign after it was approved.",
+          "nested_items": []
+        },
+        {
+          "name": "expiryTime",
+          "type": "datetime",
+          "description": "The time the campaign expires, in seconds since epoch (January 1, 1970 at midnight UTC time). Vehicle data won't be collected after the campaign expires.",
+          "nested_items": []
+        },
+        {
+          "name": "postTriggerCollectionDuration",
+          "type": "integer",
+          "description": "How long (in seconds) to collect raw data after a triggering event initiates the collection.",
+          "nested_items": []
+        },
+        {
+          "name": "diagnosticsMode",
+          "type": "string",
+          "description": "Option for a vehicle to send diagnostic trouble codes to Amazon Web Services IoT FleetWise.",
+          "nested_items": []
+        },
+        {
+          "name": "spoolingMode",
+          "type": "string",
+          "description": "Whether to store collected data after a vehicle lost a connection with the cloud. After a connection is re-established, the data is automatically forwarded to Amazon Web Services IoT FleetWise.",
+          "nested_items": []
+        },
+        {
+          "name": "compression",
+          "type": "string",
+          "description": "Whether to compress signals before transmitting data to Amazon Web Services IoT FleetWise. If OFF is specified, the signals aren't compressed. If it's not specified, SNAPPY is used.",
+          "nested_items": []
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "description": "A number indicating the priority of one campaign over another campaign for a certain vehicle or fleet. A campaign with the lowest value is deployed to vehicles before any other campaigns.",
+          "nested_items": []
+        },
+        {
+          "name": "signalsToCollect",
+          "type": "list",
+          "description": "Information about a list of signals to collect data on.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the signal.",
+                  "nested_items": []
+                },
+                {
+                  "name": "maxSampleCount",
+                  "type": "integer",
+                  "description": "The maximum number of samples to collect.",
+                  "nested_items": []
+                },
+                {
+                  "name": "minimumSamplingIntervalMs",
+                  "type": "integer",
+                  "description": "The minimum duration of time (in milliseconds) between two triggering events to collect data.",
+                  "nested_items": []
+                },
+                {
+                  "name": "dataPartitionId",
+                  "type": "string",
+                  "description": "The ID of the data partition this signal is associated with.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "collectionScheme",
+          "type": "dict",
+          "description": "Information about the data collection scheme associated with the campaign.",
+          "nested_items": [
+            {
+              "name": "timeBasedCollectionScheme",
+              "type": "dict",
+              "description": "Information about a collection scheme that uses a time period to decide how often to collect data.",
+              "nested_items": [
+                {
+                  "name": "periodMs",
+                  "type": "integer",
+                  "description": "The time period (in milliseconds) to decide how often to collect data. For example, if the time period is 60000, the Edge Agent software collects data once every minute.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "conditionBasedCollectionScheme",
+              "type": "dict",
+              "description": "Information about a collection scheme that uses a simple logical expression to recognize what data to collect.",
+              "nested_items": [
+                {
+                  "name": "expression",
+                  "type": "string",
+                  "description": "The logical expression used to recognize what data to collect. For example, $variable.`Vehicle.OutsideAirTemperature` >= 105.0.",
+                  "nested_items": []
+                },
+                {
+                  "name": "minimumTriggerIntervalMs",
+                  "type": "integer",
+                  "description": "The minimum duration of time between two triggering events to collect data, in milliseconds.",
+                  "nested_items": []
+                },
+                {
+                  "name": "triggerMode",
+                  "type": "string",
+                  "description": "Whether to collect data for all triggering events ( ALWAYS). Specify ( RISING_EDGE), or specify only when the condition first evaluates to false. For example, triggering on 'AirbagDeployed'; Users aren't interested on triggering when the airbag is already exploded; they only care about the change from not deployed => deployed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "conditionLanguageVersion",
+                  "type": "integer",
+                  "description": "Specifies the version of the conditional expression language.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "dataExtraDimensions",
+          "type": "list",
+          "description": "A list of vehicle attributes associated with the campaign.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "creationTime",
+          "type": "datetime",
+          "description": "The time the campaign was created in seconds since epoch (January 1, 1970 at midnight UTC time).",
+          "nested_items": []
+        },
+        {
+          "name": "lastModificationTime",
+          "type": "datetime",
+          "description": "The last time the campaign was modified.",
+          "nested_items": []
+        },
+        {
+          "name": "dataDestinationConfigs",
+          "type": "list",
+          "description": "The destination where the campaign sends data. You can send data to an MQTT topic, or store it in Amazon S3 or Amazon Timestream.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "bucketArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the Amazon S3 bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "dataFormat",
+                      "type": "string",
+                      "description": "Specify the format that files are saved in the Amazon S3 bucket. You can save files in an Apache Parquet or JSON format.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Parquet - Store data in a columnar storage file format. Parquet is optimal for fast data retrieval and can reduce costs. This option is selected by default.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "JSON - Store data in a standard text-based JSON file format.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "storageCompressionFormat",
+                      "type": "string",
+                      "description": "By default, stored data is compressed as a .gzip file. Compressed files have a reduced file size, which can optimize the cost of data storage.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "prefix",
+                      "type": "string",
+                      "description": "Enter an S3 bucket prefix. The prefix is the string of characters after the bucket name and before the object name. You can use the prefix to organize data stored in Amazon S3 buckets. For more information, see Organizing objects using prefixes in the Amazon Simple Storage Service User Guide.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "timestreamConfig",
+                  "type": "dict",
+                  "description": "The Amazon Timestream table where the campaign sends data.",
+                  "nested_items": [
+                    {
+                      "name": "timestreamTableArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the Amazon Timestream table.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "executionRoleArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the task execution role that grants Amazon Web Services IoT FleetWise permission to deliver data to the Amazon Timestream table.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "mqttTopicConfig",
+                  "type": "dict",
+                  "description": "The MQTT topic to which the Amazon Web Services IoT FleetWise campaign routes data.",
+                  "nested_items": [
+                    {
+                      "name": "mqttTopicArn",
+                      "type": "string",
+                      "description": "The ARN of the MQTT topic.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "executionRoleArn",
+                      "type": "string",
+                      "description": "The ARN of the role that grants Amazon Web Services IoT FleetWise permission to access and act on messages sent to the MQTT topic.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "dataPartitions",
+          "type": "list",
+          "description": "The data partitions associated with the signals collected from the vehicle.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The ID of the data partition. The data partition ID must be unique within a campaign. You can establish a data partition as the default partition for a campaign by using default as the ID.",
+                  "nested_items": []
+                },
+                {
+                  "name": "storageOptions",
+                  "type": "dict",
+                  "description": "The storage options for a data partition.",
+                  "nested_items": [
+                    {
+                      "name": "maximumSize",
+                      "type": "dict",
+                      "description": "The maximum storage size of the data stored in the data partition.",
+                      "nested_items": [
+                        {
+                          "name": "unit",
+                          "type": "string",
+                          "description": "The data type of the data to store.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "integer",
+                          "description": "The maximum amount of time to store data.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "storageLocation",
+                      "type": "string",
+                      "description": "The folder name for the data partition under the campaign storage folder.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "minimumTimeToLive",
+                      "type": "dict",
+                      "description": "The amount of time that data in this partition will be kept on disk.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "After the designated amount of time passes, the data can be removed, but it's not guaranteed to be removed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Before the time expires, data in this partition can still be deleted if the partition reaches its configured maximum size.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Newer data will overwrite older data when the partition reaches the maximum size.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "uploadOptions",
+                  "type": "dict",
+                  "description": "The upload options for the data partition.",
+                  "nested_items": [
+                    {
+                      "name": "expression",
+                      "type": "string",
+                      "description": "The logical expression used to recognize what data to collect. For example, $variable.`Vehicle.OutsideAirTemperature` >= 105.0.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "conditionLanguageVersion",
+                      "type": "integer",
+                      "description": "The version of the condition language. Defaults to the most recent condition language version.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "signalsToFetch",
+          "type": "list",
+          "description": "Information about a list of signals to fetch data from.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "fullyQualifiedName",
+                  "type": "string",
+                  "description": "The fully qualified name of the signal to be fetched.",
+                  "nested_items": []
+                },
+                {
+                  "name": "signalFetchConfig",
+                  "type": "dict",
+                  "description": "The configuration of the signal fetch operation.",
+                  "nested_items": [
+                    {
+                      "name": "timeBased",
+                      "type": "dict",
+                      "description": "The configuration of a time-based signal fetch operation.",
+                      "nested_items": [
+                        {
+                          "name": "executionFrequencyMs",
+                          "type": "integer",
+                          "description": "The frequency with which the signal fetch will be executed.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "conditionBased",
+                      "type": "dict",
+                      "description": "The configuration of a condition-based signal fetch operation.",
+                      "nested_items": [
+                        {
+                          "name": "conditionExpression",
+                          "type": "string",
+                          "description": "The condition that must be satisfied to trigger a signal fetch.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "triggerMode",
+                          "type": "string",
+                          "description": "Indicates the mode in which the signal fetch is triggered.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "conditionLanguageVersion",
+                  "type": "integer",
+                  "description": "The version of the condition language used.",
+                  "nested_items": []
+                },
+                {
+                  "name": "actions",
+                  "type": "list",
+                  "description": "The actions to be performed by the signal fetch.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

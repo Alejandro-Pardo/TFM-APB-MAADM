@@ -1,0 +1,301 @@
+{
+  "method_name": "create_knowledge_base",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/wisdom/client/create_knowledge_base.html",
+  "description": "Creates a knowledge base.",
+  "parameters": [
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see Making retries safe with idempotent APIs. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "knowledgeBaseType",
+      "type": "string",
+      "required": true,
+      "description": "The type of knowledge base. Only CUSTOM knowledge bases allow you to upload your own content. EXTERNAL knowledge bases support integrations with third-party systems whose content is synchronized automatically.",
+      "nested_params": []
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the knowledge base.",
+      "nested_params": []
+    },
+    {
+      "name": "renderingConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "Information about how to render the content. templateUri (string) --- A URI template containing exactly one variable in ${variableName} ``format. This can only be set for ``EXTERNAL knowledge bases. For Salesforce, ServiceNow, and Zendesk, the variable must be one of the following: Salesforce: Id, ArticleNumber, VersionNumber, Title, PublishStatus, or IsDeleted ServiceNow: number, short_description, sys_mod_count, workflow_state, or active Zendesk: id, title, updated_at, or draft The variable is replaced with the actual value for a piece of content when calling GetContent.",
+      "nested_params": [
+        {
+          "name": "templateUri",
+          "type": "string",
+          "required": false,
+          "description": "A URI template containing exactly one variable in ${variableName} ``format. This can only be set for ``EXTERNAL knowledge bases. For Salesforce, ServiceNow, and Zendesk, the variable must be one of the following:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "serverSideEncryptionConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "The configuration information for the customer managed key used for encryption. This KMS key must have a policy that allows kms:CreateGrant, kms:DescribeKey, and kms:Decrypt/kms:GenerateDataKey permissions to the IAM identity using the key to invoke Wisdom. For more information about setting up a customer managed key for Wisdom, see Enable Amazon Connect Wisdom for your instance. kmsKeyId (string) --- The customer managed key used for encryption. For information about valid ID values, see Key identifiers (KeyId).",
+      "nested_params": [
+        {
+          "name": "kmsKeyId",
+          "type": "string",
+          "required": false,
+          "description": "The customer managed key used for encryption. For more information about setting up a customer managed key for Wisdom, see Enable Amazon Connect Wisdom for your instance. For information about valid ID values, see Key identifiers (KeyId).",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "sourceConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The source of the knowledge base content. Only set this argument for EXTERNAL knowledge bases. appIntegrations (dict) --- Configuration information for Amazon AppIntegrations to automatically ingest content. The Amazon Resource Name (ARN) of the AppIntegrations DataIntegration to use for ingesting content. For Salesforce, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least Id, ArticleNumber, VersionNumber, Title, PublishStatus, and IsDeleted as source fields. For ServiceNow, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least number, short_description, sys_mod_count, workflow_state, and active as source fields. For Zendesk, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least id, title, updated_at, and draft as source fields. For SharePoint, your AppIntegrations DataIntegration must have a FileConfiguration, including only file extensions that are among docx, pdf, html, htm, and txt. For Amazon S3, the ObjectConfiguration and FileConfiguration of your AppIntegrations DataIntegration must be null. The SourceURI of your DataIntegration must use the following format: s3://your_s3_bucket_name. objectFields (list) --- The fields from the source that are made available to your agents in Wisdom. Optional if ObjectConfiguration is included in the provided DataIntegration. For Salesforce, you must include at least Id, ArticleNumber, VersionNumber, Title, PublishStatus, and IsDeleted. For ServiceNow, you must include at least number, short_description, sys_mod_count, workflow_state, and active. For Zendesk, you must include at least id, title, updated_at, and draft. Make sure to include additional fields. These fields are indexed and used to source recommendations. (string) ---",
+      "nested_params": [
+        {
+          "name": "appIntegrations",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information for Amazon AppIntegrations to automatically ingest content.",
+          "nested_params": [
+            {
+              "name": "appIntegrationArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the AppIntegrations DataIntegration to use for ingesting content.",
+              "nested_params": []
+            },
+            {
+              "name": "objectFields",
+              "type": "list",
+              "required": false,
+              "description": "The fields from the source that are made available to your agents in Wisdom. Optional if ObjectConfiguration is included in the provided DataIntegration.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "The tags used to organize, track, or control access for this resource. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "knowledgeBase",
+          "type": "dict",
+          "description": "The knowledge base.",
+          "nested_items": [
+            {
+              "name": "description",
+              "type": "string",
+              "description": "The description.",
+              "nested_items": []
+            },
+            {
+              "name": "knowledgeBaseArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the knowledge base.",
+              "nested_items": []
+            },
+            {
+              "name": "knowledgeBaseId",
+              "type": "string",
+              "description": "The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base if you're storing Wisdom Content resource to it.",
+              "nested_items": []
+            },
+            {
+              "name": "knowledgeBaseType",
+              "type": "string",
+              "description": "The type of knowledge base.",
+              "nested_items": []
+            },
+            {
+              "name": "lastContentModificationTime",
+              "type": "datetime",
+              "description": "An epoch timestamp indicating the most recent content modification inside the knowledge base. If no content exists in a knowledge base, this value is unset.",
+              "nested_items": []
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the knowledge base.",
+              "nested_items": []
+            },
+            {
+              "name": "renderingConfiguration",
+              "type": "dict",
+              "description": "Information about how to render the content.",
+              "nested_items": [
+                {
+                  "name": "templateUri",
+                  "type": "string",
+                  "description": "A URI template containing exactly one variable in ${variableName} ``format. This can only be set for ``EXTERNAL knowledge bases. For Salesforce, ServiceNow, and Zendesk, the variable must be one of the following:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Salesforce: Id, ArticleNumber, VersionNumber, Title, PublishStatus, or IsDeleted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ServiceNow: number, short_description, sys_mod_count, workflow_state, or active.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Zendesk: id, title, updated_at, or draft.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "serverSideEncryptionConfiguration",
+              "type": "dict",
+              "description": "The configuration information for the customer managed key used for encryption.",
+              "nested_items": [
+                {
+                  "name": "kmsKeyId",
+                  "type": "string",
+                  "description": "The customer managed key used for encryption. For more information about setting up a customer managed key for Wisdom, see Enable Amazon Connect Wisdom for your instance. For information about valid ID values, see Key identifiers (KeyId).",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "sourceConfiguration",
+              "type": "dict",
+              "description": "Source configuration information about the knowledge base.",
+              "nested_items": [
+                {
+                  "name": "appIntegrations",
+                  "type": "dict",
+                  "description": "Configuration information for Amazon AppIntegrations to automatically ingest content.",
+                  "nested_items": [
+                    {
+                      "name": "appIntegrationArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the AppIntegrations DataIntegration to use for ingesting content.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For Salesforce, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least Id, ArticleNumber, VersionNumber, Title, PublishStatus, and IsDeleted as source fields.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For ServiceNow, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least number, short_description, sys_mod_count, workflow_state, and active as source fields.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For Zendesk, your AppIntegrations DataIntegration must have an ObjectConfiguration if objectFields is not provided, including at least id, title, updated_at, and draft as source fields.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For SharePoint, your AppIntegrations DataIntegration must have a FileConfiguration, including only file extensions that are among docx, pdf, html, htm, and txt.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For Amazon S3, the ObjectConfiguration and FileConfiguration of your AppIntegrations DataIntegration must be null. The SourceURI of your DataIntegration must use the following format: s3://your_s3_bucket_name.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "objectFields",
+                      "type": "list",
+                      "description": "The fields from the source that are made available to your agents in Wisdom. Optional if ObjectConfiguration is included in the provided DataIntegration.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For Salesforce, you must include at least Id, ArticleNumber, VersionNumber, Title, PublishStatus, and IsDeleted.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For ServiceNow, you must include at least number, short_description, sys_mod_count, workflow_state, and active.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For Zendesk, you must include at least id, title, updated_at, and draft.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The status of the knowledge base.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

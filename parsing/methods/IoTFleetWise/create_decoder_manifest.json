@@ -1,0 +1,548 @@
+{
+  "method_name": "create_decoder_manifest",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotfleetwise/client/create_decoder_manifest.html",
+  "description": "Creates the decoder manifest associated with a model manifest. To create a decoder manifest, the following must be true:",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The unique name of the decoder manifest to create.",
+      "nested_params": []
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "modelManifestArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the vehicle model (model manifest).",
+      "nested_params": []
+    },
+    {
+      "name": "signalDecoders",
+      "type": "list",
+      "required": true,
+      "description": "A list of information about signal decoders. (dict) --- Information about a signal decoder. The fully qualified name of a signal decoder as defined in a vehicle model. The network protocol for the vehicle. For example, CAN_SIGNAL specifies a protocol that defines how data is communicated between electronic control units (ECUs). OBD_SIGNAL specifies a protocol that defines how self-diagnostic data is communicated between ECUs. The ID of a network interface that specifies what network protocol a vehicle follows. canSignal (dict) --- Information about signal decoder using the Controller Area Network (CAN) protocol. The ID of the message. Whether the byte ordering of a CAN message is big-endian. Determines whether the message is signed ( true) or not ( false). If it's signed, the message can represent both positive and negative numbers. The isSigned parameter only applies to the INTEGER raw signal type, and it doesn't affect the FLOATING_POINT raw signal type. Indicates the beginning of the CAN signal. This should always be the least significant bit (LSB). This value might be different from the value in a DBC file. For little endian signals, startBit is the same value as in the DBC file. For big endian signals in a DBC file, the start bit is the most significant bit (MSB). You will have to calculate the LSB instead and pass it as the startBit. The offset used to calculate the signal value. Combined with factor, the calculation is value = raw_value * factor + offset. A multiplier used to decode the CAN message. How many bytes of data are in the message. name (string) --- The name of the signal. signalValueType (string) --- The value type of the signal. The default value is INTEGER. obdSignal (dict) --- Information about signal decoder using the on-board diagnostic (OBD) II protocol. The length of the requested data. The mode of operation (diagnostic service) in a message. The diagnostic code used to request data from a vehicle for this signal. A multiplier used to decode the message. Combined with scaling, the calculation is value = raw_value * scaling + offset. Indicates the beginning of the message. The length of a message. bitRightShift (integer) --- The number of positions to shift bits in the message. bitMaskLength (integer) --- The number of bits to mask in a message. isSigned (boolean) --- Determines whether the message is signed ( true) or not ( false). The default value is false. messageSignal (dict) --- The decoding information for a specific message which supports higher order data types. The topic name for the message signal. It corresponds to topics in ROS 2. The structured message for the message signal. It can be defined with either a primitiveMessageDefinition, structuredMessageListDefinition, or structuredMessageDefinition recursively. primitiveMessageDefinition (dict) --- Represents a primitive type node of the complex data structure. ros2PrimitiveMessageDefinition (dict) --- Information about a PrimitiveMessage using a ROS 2 compliant primitive type message of the complex data structure. The primitive type (integer, floating point, boolean, etc.) for the ROS 2 primitive message definition. offset (float) --- The offset used to calculate the signal value. scaling (float) --- A multiplier used to decode the message. upperBound (integer) --- An optional attribute specifying the upper bound for STRING and WSTRING. structuredMessageListDefinition (dict) --- Represents a list type node of the complex data structure. The name of the structured message list definition. memberType (dict) --- The member type of the structured message list definition. The type of list of the structured message list definition. capacity (integer) --- The capacity of the structured message list definition when the list type is FIXED_CAPACITY or DYNAMIC_BOUNDED_CAPACITY. structuredMessageDefinition (list) --- Represents a struct type node of the complex data structure. (dict) --- Represents a StructureMessageName to DataType map element. The field name of the structured message. It determines how a data value is referenced in the target language. dataType (dict) --- The data type. customDecodingSignal (dict) --- Information about a custom signal decoder. The ID of the signal.",
+      "nested_params": [
+        {
+          "name": "fullyQualifiedName",
+          "type": "string",
+          "required": false,
+          "description": "The fully qualified name of a signal decoder as defined in a vehicle model.",
+          "nested_params": []
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The network protocol for the vehicle. For example, CAN_SIGNAL specifies a protocol that defines how data is communicated between electronic control units (ECUs). OBD_SIGNAL specifies a protocol that defines how self-diagnostic data is communicated between ECUs.",
+          "nested_params": []
+        },
+        {
+          "name": "interfaceId",
+          "type": "string",
+          "required": false,
+          "description": "The ID of a network interface that specifies what network protocol a vehicle follows.",
+          "nested_params": []
+        },
+        {
+          "name": "canSignal",
+          "type": "dict",
+          "required": false,
+          "description": "Information about signal decoder using the Controller Area Network (CAN) protocol.",
+          "nested_params": [
+            {
+              "name": "messageId",
+              "type": "integer",
+              "required": false,
+              "description": "The ID of the message.",
+              "nested_params": []
+            },
+            {
+              "name": "isBigEndian",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the byte ordering of a CAN message is big-endian.",
+              "nested_params": []
+            },
+            {
+              "name": "isSigned",
+              "type": "boolean",
+              "required": false,
+              "description": "Determines whether the message is signed ( true) or not ( false). If it's signed, the message can represent both positive and negative numbers. The isSigned parameter only applies to the INTEGER raw signal type, and it doesn't affect the FLOATING_POINT raw signal type.",
+              "nested_params": []
+            },
+            {
+              "name": "startBit",
+              "type": "integer",
+              "required": false,
+              "description": "Indicates the beginning of the CAN signal. This should always be the least significant bit (LSB). This value might be different from the value in a DBC file. For little endian signals, startBit is the same value as in the DBC file. For big endian signals in a DBC file, the start bit is the most significant bit (MSB). You will have to calculate the LSB instead and pass it as the startBit.",
+              "nested_params": []
+            },
+            {
+              "name": "offset",
+              "type": "float",
+              "required": false,
+              "description": "The offset used to calculate the signal value. Combined with factor, the calculation is value = raw_value * factor + offset.",
+              "nested_params": []
+            },
+            {
+              "name": "factor",
+              "type": "float",
+              "required": false,
+              "description": "A multiplier used to decode the CAN message.",
+              "nested_params": []
+            },
+            {
+              "name": "length",
+              "type": "integer",
+              "required": false,
+              "description": "How many bytes of data are in the message.",
+              "nested_params": []
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the signal.",
+              "nested_params": []
+            },
+            {
+              "name": "signalValueType",
+              "type": "string",
+              "required": false,
+              "description": "The value type of the signal. The default value is INTEGER.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "obdSignal",
+          "type": "dict",
+          "required": false,
+          "description": "Information about signal decoder using the on-board diagnostic (OBD) II protocol.",
+          "nested_params": [
+            {
+              "name": "pidResponseLength",
+              "type": "integer",
+              "required": false,
+              "description": "The length of the requested data.",
+              "nested_params": []
+            },
+            {
+              "name": "serviceMode",
+              "type": "integer",
+              "required": false,
+              "description": "The mode of operation (diagnostic service) in a message.",
+              "nested_params": []
+            },
+            {
+              "name": "pid",
+              "type": "integer",
+              "required": false,
+              "description": "The diagnostic code used to request data from a vehicle for this signal.",
+              "nested_params": []
+            },
+            {
+              "name": "scaling",
+              "type": "float",
+              "required": false,
+              "description": "A multiplier used to decode the message.",
+              "nested_params": []
+            },
+            {
+              "name": "offset",
+              "type": "float",
+              "required": false,
+              "description": "The offset used to calculate the signal value. Combined with scaling, the calculation is value = raw_value * scaling + offset.",
+              "nested_params": []
+            },
+            {
+              "name": "startByte",
+              "type": "integer",
+              "required": false,
+              "description": "Indicates the beginning of the message.",
+              "nested_params": []
+            },
+            {
+              "name": "byteLength",
+              "type": "integer",
+              "required": false,
+              "description": "The length of a message.",
+              "nested_params": []
+            },
+            {
+              "name": "bitRightShift",
+              "type": "integer",
+              "required": false,
+              "description": "The number of positions to shift bits in the message.",
+              "nested_params": []
+            },
+            {
+              "name": "bitMaskLength",
+              "type": "integer",
+              "required": false,
+              "description": "The number of bits to mask in a message.",
+              "nested_params": []
+            },
+            {
+              "name": "isSigned",
+              "type": "boolean",
+              "required": false,
+              "description": "Determines whether the message is signed ( true) or not ( false). If it's signed, the message can represent both positive and negative numbers. The isSigned parameter only applies to the INTEGER raw signal type, and it doesn't affect the FLOATING_POINT raw signal type. The default value is false.",
+              "nested_params": []
+            },
+            {
+              "name": "signalValueType",
+              "type": "string",
+              "required": false,
+              "description": "The value type of the signal. The default value is INTEGER.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "messageSignal",
+          "type": "dict",
+          "required": false,
+          "description": "The decoding information for a specific message which supports higher order data types.",
+          "nested_params": [
+            {
+              "name": "topicName",
+              "type": "string",
+              "required": false,
+              "description": "The topic name for the message signal. It corresponds to topics in ROS 2.",
+              "nested_params": []
+            },
+            {
+              "name": "structuredMessage",
+              "type": "dict",
+              "required": false,
+              "description": "The structured message for the message signal. It can be defined with either a primitiveMessageDefinition, structuredMessageListDefinition, or structuredMessageDefinition recursively.",
+              "nested_params": [
+                {
+                  "name": "primitiveMessageDefinition",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Represents a primitive type node of the complex data structure.",
+                  "nested_params": [
+                    {
+                      "name": "ros2PrimitiveMessageDefinition",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Information about a PrimitiveMessage using a ROS 2 compliant primitive type message of the complex data structure.",
+                      "nested_params": [
+                        {
+                          "name": "primitiveType",
+                          "type": "string",
+                          "required": false,
+                          "description": "The primitive type (integer, floating point, boolean, etc.) for the ROS 2 primitive message definition.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "offset",
+                          "type": "float",
+                          "required": false,
+                          "description": "The offset used to calculate the signal value. Combined with scaling, the calculation is value = raw_value * scaling + offset.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "scaling",
+                          "type": "float",
+                          "required": false,
+                          "description": "A multiplier used to decode the message.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "upperBound",
+                          "type": "integer",
+                          "required": false,
+                          "description": "An optional attribute specifying the upper bound for STRING and WSTRING.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "structuredMessageListDefinition",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Represents a list type node of the complex data structure.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the structured message list definition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "memberType",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The member type of the structured message list definition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "listType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The type of list of the structured message list definition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "capacity",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The capacity of the structured message list definition when the list type is FIXED_CAPACITY or DYNAMIC_BOUNDED_CAPACITY.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "structuredMessageDefinition",
+                  "type": "list",
+                  "required": false,
+                  "description": "Represents a struct type node of the complex data structure.",
+                  "nested_params": [
+                    {
+                      "name": "fieldName",
+                      "type": "string",
+                      "required": false,
+                      "description": "The field name of the structured message. It determines how a data value is referenced in the target language.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "dataType",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The data type.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "customDecodingSignal",
+          "type": "dict",
+          "required": false,
+          "description": "Information about a custom signal decoder.",
+          "nested_params": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the signal.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "networkInterfaces",
+      "type": "list",
+      "required": true,
+      "description": "A list of information about available network interfaces. (dict) --- Represents a node and its specifications in an in-vehicle communication network. All signal decoders must be associated with a network node. To return this information about all the network interfaces specified in a decoder manifest, use the API operation. The ID of the network interface. The network protocol for the vehicle. For example, CAN_SIGNAL specifies a protocol that defines how data is communicated between electronic control units (ECUs). OBD_SIGNAL specifies a protocol that defines how self-diagnostic data is communicated between ECUs. canInterface (dict) --- Information about a network interface specified by the Controller Area Network (CAN) protocol. The unique name of the interface. protocolName (string) --- The name of the communication protocol for the interface. protocolVersion (string) --- The version of the communication protocol for the interface. obdInterface (dict) --- Information about a network interface specified by the on-board diagnostic (OBD) II protocol. The name of the interface. The ID of the message requesting vehicle data. obdStandard (string) --- The standard OBD II PID. pidRequestIntervalSeconds (integer) --- The maximum number message requests per second. dtcRequestIntervalSeconds (integer) --- The maximum number message requests per diagnostic trouble code per second. useExtendedIds (boolean) --- Whether to use extended IDs in the message. hasTransmissionEcu (boolean) --- Whether the vehicle has a transmission control module (TCM). vehicleMiddleware (dict) --- The vehicle middleware defined as a type of network interface. Examples of vehicle middleware include ROS2 and SOME/IP. The name of the vehicle middleware. The protocol name of the vehicle middleware. customDecodingInterface (dict) --- Information about a custom network interface. The name of the interface.",
+      "nested_params": [
+        {
+          "name": "interfaceId",
+          "type": "string",
+          "required": false,
+          "description": "The ID of the network interface.",
+          "nested_params": []
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The network protocol for the vehicle. For example, CAN_SIGNAL specifies a protocol that defines how data is communicated between electronic control units (ECUs). OBD_SIGNAL specifies a protocol that defines how self-diagnostic data is communicated between ECUs.",
+          "nested_params": []
+        },
+        {
+          "name": "canInterface",
+          "type": "dict",
+          "required": false,
+          "description": "Information about a network interface specified by the Controller Area Network (CAN) protocol.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The unique name of the interface.",
+              "nested_params": []
+            },
+            {
+              "name": "protocolName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the communication protocol for the interface.",
+              "nested_params": []
+            },
+            {
+              "name": "protocolVersion",
+              "type": "string",
+              "required": false,
+              "description": "The version of the communication protocol for the interface.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "obdInterface",
+          "type": "dict",
+          "required": false,
+          "description": "Information about a network interface specified by the on-board diagnostic (OBD) II protocol.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the interface.",
+              "nested_params": []
+            },
+            {
+              "name": "requestMessageId",
+              "type": "integer",
+              "required": false,
+              "description": "The ID of the message requesting vehicle data.",
+              "nested_params": []
+            },
+            {
+              "name": "obdStandard",
+              "type": "string",
+              "required": false,
+              "description": "The standard OBD II PID.",
+              "nested_params": []
+            },
+            {
+              "name": "pidRequestIntervalSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum number message requests per second.",
+              "nested_params": []
+            },
+            {
+              "name": "dtcRequestIntervalSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum number message requests per diagnostic trouble code per second.",
+              "nested_params": []
+            },
+            {
+              "name": "useExtendedIds",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether to use extended IDs in the message.",
+              "nested_params": []
+            },
+            {
+              "name": "hasTransmissionEcu",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether the vehicle has a transmission control module (TCM).",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "vehicleMiddleware",
+          "type": "dict",
+          "required": false,
+          "description": "The vehicle middleware defined as a type of network interface. Examples of vehicle middleware include ROS2 and SOME/IP.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the vehicle middleware.",
+              "nested_params": []
+            },
+            {
+              "name": "protocolName",
+              "type": "string",
+              "required": false,
+              "description": "The protocol name of the vehicle middleware.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "customDecodingInterface",
+          "type": "dict",
+          "required": false,
+          "description": "Information about a custom network interface.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the interface.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "defaultForUnmappedSignals",
+      "type": "string",
+      "required": false,
+      "description": "Use default decoders for all unmapped signals in the model. You don't need to provide any detailed decoding information.",
+      "nested_params": []
+    },
+    {
+      "name": "tags",
+      "type": "list",
+      "required": true,
+      "description": "Metadata that can be used to manage the decoder manifest. (dict) --- A set of key/value pairs that are used to manage the resource. The tag's key. The tag's value.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The tag's key.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The tag's value.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the created decoder manifest.",
+          "nested_items": []
+        },
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The ARN of the created decoder manifest.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

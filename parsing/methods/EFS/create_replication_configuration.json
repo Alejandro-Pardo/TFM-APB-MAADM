@@ -1,0 +1,122 @@
+{
+  "method_name": "create_replication_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/efs/client/create_replication_configuration.html",
+  "description": "Creates a replication con\u00ef\u00ac\u0081guration to either a new or existing EFS file system. For more information, see Amazon EFS replication in the Amazon EFS User Guide. The replication configuration specifies the following: This operation requires permissions for the elasticfilesystem:CreateReplicationConfiguration action. Additionally, other permissions are required depending on how you are replicating file systems. For more information, see Required permissions for replication in the Amazon EFS User Guide.",
+  "parameters": [
+    {
+      "name": "SourceFileSystemId",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the Amazon EFS file system that you want to replicate. This file system cannot already be a source or destination file system in another replication configuration.",
+      "nested_params": []
+    },
+    {
+      "name": "Destinations",
+      "type": "list",
+      "required": true,
+      "description": "An array of destination configuration objects. Only one destination configuration object is supported. (dict) --- Describes the new or existing destination file system for the replication configuration. If you want to replicate to a new file system, do not specify the File System ID for the destination file system. Amazon EFS creates a new, empty file system. For One Zone storage, specify the Availability Zone to create the file system in. To use an Key Management Service key other than the default KMS key, then specify it. For more information, see Configuring replication to new Amazon EFS file system in the Amazon EFS User Guide. If you want to replicate to an existing file system that's in the same account as the source file system, then you need to provide the ID or Amazon Resource Name (ARN) of the file system to which to replicate. The file system's replication overwrite protection must be disabled. For more information, see Replicating to an existing file system in the Amazon EFS User Guide. If you are replicating the file system to a file system that's in a different account than the source file system (cross-account replication), you need to provide the ARN for the file system and the IAM role that allows Amazon EFS to perform replication on the destination account. For more information, see Replicating across Amazon Web Services accounts in the Amazon EFS User Guide. Region (string) --- To create a file system that uses Regional storage, specify the Amazon Web Services Region in which to create the destination file system. The Region must be enabled for the Amazon Web Services account that owns the source file system. For more information, see Managing Amazon Web Services Regions in the Amazon Web Services General Reference Reference Guide. AvailabilityZoneName (string) --- To create a file system that uses One Zone storage, specify the name of the Availability Zone in which to create the destination file system. KmsKeyId (string) --- Specify the Key Management Service (KMS) key that you want to use to encrypt the destination file system. If you do not specify a KMS key, Amazon EFS uses your default KMS key for Amazon EFS, /aws/elasticfilesystem. This ID can be in one of the following formats: Key ID - The unique identifier of the key, for example 1234abcd-12ab-34cd-56ef-1234567890ab. ARN - The ARN for the key, for example arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab. Key alias - A previously created display name for a key, for example alias/projectKey1. Key alias ARN - The ARN for a key alias, for example arn:aws:kms:us-west-2:444455556666:alias/projectKey1. FileSystemId (string) --- The ID or ARN of the file system to use for the destination. For cross-account replication, this must be an ARN. The file system's replication overwrite replication must be disabled. If no ID or ARN is specified, then a new file system is created. RoleArn (string) --- Amazon Resource Name (ARN) of the IAM role in the source account that allows Amazon EFS to perform replication on its behalf. This is optional for same-account replication and required for cross-account replication.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SourceFileSystemId",
+          "type": "string",
+          "description": "The ID of the source Amazon EFS file system that is being replicated.",
+          "nested_items": []
+        },
+        {
+          "name": "SourceFileSystemRegion",
+          "type": "string",
+          "description": "The Amazon Web Services Region in which the source EFS file system is located.",
+          "nested_items": []
+        },
+        {
+          "name": "SourceFileSystemArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the current source file system in the replication configuration.",
+          "nested_items": []
+        },
+        {
+          "name": "OriginalSourceFileSystemArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the original source EFS file system in the replication configuration.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationTime",
+          "type": "datetime",
+          "description": "Describes when the replication configuration was created.",
+          "nested_items": []
+        },
+        {
+          "name": "Destinations",
+          "type": "list",
+          "description": "An array of destination objects. Only one destination object is supported.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "Describes the status of the replication configuration. For more information about replication status, see Viewing replication details in the Amazon EFS User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FileSystemId",
+                  "type": "string",
+                  "description": "The ID of the destination Amazon EFS file system.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Region",
+                  "type": "string",
+                  "description": "The Amazon Web Services Region in which the destination file system is located.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastReplicatedTimestamp",
+                  "type": "datetime",
+                  "description": "The time when the most recent sync was successfully completed on the destination file system. Any changes to data on the source file system that occurred before this time have been successfully replicated to the destination file system. Any changes that occurred after this time might not be fully replicated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "OwnerId",
+                  "type": "string",
+                  "description": "ID of the Amazon Web Services account in which the destination file system resides.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StatusMessage",
+                  "type": "string",
+                  "description": "Message that provides details about the PAUSED or ERRROR state of the replication destination configuration. For more information about replication status messages, see Viewing replication details in the Amazon EFS User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RoleArn",
+                  "type": "string",
+                  "description": "Amazon Resource Name (ARN) of the IAM role in the source account that allows Amazon EFS to perform replication on its behalf. This is optional for same-account replication and required for cross-account replication.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SourceFileSystemOwnerId",
+          "type": "string",
+          "description": "ID of the Amazon Web Services account in which the source file system resides.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

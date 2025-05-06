@@ -1,0 +1,378 @@
+{
+  "method_name": "get_table_optimizer",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue/client/get_table_optimizer.html",
+  "description": "Returns the configuration of all optimizers associated with a specified table.",
+  "parameters": [
+    {
+      "name": "CatalogId",
+      "type": "string",
+      "required": true,
+      "description": "The Catalog ID of the table.",
+      "nested_params": []
+    },
+    {
+      "name": "DatabaseName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the database in the catalog in which the table resides.",
+      "nested_params": []
+    },
+    {
+      "name": "TableName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the table.",
+      "nested_params": []
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "required": true,
+      "description": "The type of table optimizer.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CatalogId",
+          "type": "string",
+          "description": "The Catalog ID of the table.",
+          "nested_items": []
+        },
+        {
+          "name": "DatabaseName",
+          "type": "string",
+          "description": "The name of the database in the catalog in which the table resides.",
+          "nested_items": []
+        },
+        {
+          "name": "TableName",
+          "type": "string",
+          "description": "The name of the table.",
+          "nested_items": []
+        },
+        {
+          "name": "TableOptimizer",
+          "type": "dict",
+          "description": "The optimizer associated with the specified table.",
+          "nested_items": [
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of table optimizer. The valid values are:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "compaction: for managing compaction with a table optimizer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "retention: for managing the retention of snapshot with a table optimizer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "orphan_file_deletion: for managing the deletion of orphan files with a table optimizer.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "configuration",
+              "type": "dict",
+              "description": "A TableOptimizerConfiguration object that was specified when creating or updating a table optimizer.",
+              "nested_items": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "description": "A role passed by the caller which gives the service permission to update the resources associated with the optimizer on the caller's behalf.",
+                  "nested_items": []
+                },
+                {
+                  "name": "enabled",
+                  "type": "boolean",
+                  "description": "Whether table optimization is enabled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "vpcConfiguration",
+                  "type": "dict",
+                  "description": "A TableOptimizerVpcConfiguration object representing the VPC configuration for a table optimizer.",
+                  "nested_items": [
+                    {
+                      "name": "glueConnectionName",
+                      "type": "string",
+                      "description": "The name of the Glue connection used for the VPC for the table optimizer.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "retentionConfiguration",
+                  "type": "dict",
+                  "description": "The configuration for a snapshot retention optimizer.",
+                  "nested_items": [
+                    {
+                      "name": "icebergConfiguration",
+                      "type": "dict",
+                      "description": "The configuration for an Iceberg snapshot retention optimizer.",
+                      "nested_items": [
+                        {
+                          "name": "snapshotRetentionPeriodInDays",
+                          "type": "integer",
+                          "description": "The number of days to retain the Iceberg snapshots. If an input is not provided, the corresponding Iceberg table configuration field will be used or if not present, the default value 5 will be used.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "numberOfSnapshotsToRetain",
+                          "type": "integer",
+                          "description": "The number of Iceberg snapshots to retain within the retention period. If an input is not provided, the corresponding Iceberg table configuration field will be used or if not present, the default value 1 will be used.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "cleanExpiredFiles",
+                          "type": "boolean",
+                          "description": "If set to false, snapshots are only deleted from table metadata, and the underlying data and metadata files are not deleted.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "orphanFileDeletionConfiguration",
+                  "type": "dict",
+                  "description": "The configuration for an orphan file deletion optimizer.",
+                  "nested_items": [
+                    {
+                      "name": "icebergConfiguration",
+                      "type": "dict",
+                      "description": "The configuration for an Iceberg orphan file deletion optimizer.",
+                      "nested_items": [
+                        {
+                          "name": "orphanFileRetentionPeriodInDays",
+                          "type": "integer",
+                          "description": "The number of days that orphan files should be retained before file deletion. If an input is not provided, the default value 3 will be used.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "location",
+                          "type": "string",
+                          "description": "Specifies a directory in which to look for files (defaults to the table's location). You may choose a sub-directory rather than the top-level table location.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "eventType",
+                  "type": "string",
+                  "description": "An event type representing the status of the table optimizer run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "startTimestamp",
+                  "type": "datetime",
+                  "description": "Represents the epoch timestamp at which the compaction job was started within Lake Formation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "endTimestamp",
+                  "type": "datetime",
+                  "description": "Represents the epoch timestamp at which the compaction job ended.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "NumberOfBytesCompacted",
+                      "type": "string",
+                      "description": "The number of bytes removed by the compaction job run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "NumberOfFilesCompacted",
+                      "type": "string",
+                      "description": "The number of files removed by the compaction job run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "NumberOfDpus",
+                      "type": "string",
+                      "description": "The number of DPUs consumed by the job, rounded up to the nearest whole number.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "JobDurationInHour",
+                      "type": "string",
+                      "description": "The duration of the job in hours.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "error",
+                  "type": "string",
+                  "description": "An error that occured during the optimizer run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "compactionMetrics",
+                  "type": "dict",
+                  "description": "A CompactionMetrics object containing metrics for the optimizer run.",
+                  "nested_items": [
+                    {
+                      "name": "IcebergMetrics",
+                      "type": "dict",
+                      "description": "A structure containing the Iceberg compaction metrics for the optimizer run.",
+                      "nested_items": [
+                        {
+                          "name": "NumberOfBytesCompacted",
+                          "type": "integer",
+                          "description": "The number of bytes removed by the compaction job run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NumberOfFilesCompacted",
+                          "type": "integer",
+                          "description": "The number of files removed by the compaction job run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DpuHours",
+                          "type": "float",
+                          "description": "The number of DPU hours consumed by the job.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NumberOfDpus",
+                          "type": "integer",
+                          "description": "The number of DPUs consumed by the job, rounded up to the nearest whole number.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "JobDurationInHour",
+                          "type": "float",
+                          "description": "The duration of the job in hours.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "retentionMetrics",
+                  "type": "dict",
+                  "description": "A RetentionMetrics object containing metrics for the optimizer run.",
+                  "nested_items": [
+                    {
+                      "name": "IcebergMetrics",
+                      "type": "dict",
+                      "description": "A structure containing the Iceberg retention metrics for the optimizer run.",
+                      "nested_items": [
+                        {
+                          "name": "NumberOfDataFilesDeleted",
+                          "type": "integer",
+                          "description": "The number of data files deleted by the retention job run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NumberOfManifestFilesDeleted",
+                          "type": "integer",
+                          "description": "The number of manifest files deleted by the retention job run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NumberOfManifestListsDeleted",
+                          "type": "integer",
+                          "description": "The number of manifest lists deleted by the retention job run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DpuHours",
+                          "type": "float",
+                          "description": "The number of DPU hours consumed by the job.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NumberOfDpus",
+                          "type": "integer",
+                          "description": "The number of DPUs consumed by the job, rounded up to the nearest whole number.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "JobDurationInHour",
+                          "type": "float",
+                          "description": "The duration of the job in hours.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "orphanFileDeletionMetrics",
+                  "type": "dict",
+                  "description": "An OrphanFileDeletionMetrics object containing metrics for the optimizer run.",
+                  "nested_items": [
+                    {
+                      "name": "IcebergMetrics",
+                      "type": "dict",
+                      "description": "A structure containing the Iceberg orphan file deletion metrics for the optimizer run.",
+                      "nested_items": [
+                        {
+                          "name": "NumberOfOrphanFilesDeleted",
+                          "type": "integer",
+                          "description": "The number of orphan files deleted by the orphan file deletion job run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DpuHours",
+                          "type": "float",
+                          "description": "The number of DPU hours consumed by the job.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NumberOfDpus",
+                          "type": "integer",
+                          "description": "The number of DPUs consumed by the job, rounded up to the nearest whole number.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "JobDurationInHour",
+                          "type": "float",
+                          "description": "The duration of the job in hours.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

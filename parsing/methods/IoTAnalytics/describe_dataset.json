@@ -1,0 +1,449 @@
+{
+  "method_name": "describe_dataset",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotanalytics/client/describe_dataset.html",
+  "description": "Retrieves information about a dataset.",
+  "parameters": [
+    {
+      "name": "datasetName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the dataset whose information is retrieved.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the dataset.",
+              "nested_items": []
+            },
+            {
+              "name": "arn",
+              "type": "string",
+              "description": "The ARN of the dataset.",
+              "nested_items": []
+            },
+            {
+              "name": "actions",
+              "type": "list",
+              "description": "The DatasetAction objects that automatically create the dataset contents.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "actionName",
+                      "type": "string",
+                      "description": "The name of the dataset action by which dataset contents are automatically created.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "queryAction",
+                      "type": "dict",
+                      "description": "An SqlQueryDatasetAction object that uses an SQL query to automatically create dataset contents.",
+                      "nested_items": [
+                        {
+                          "name": "sqlQuery",
+                          "type": "string",
+                          "description": "A SQL query string.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "filters",
+                          "type": "list",
+                          "description": "Prefilters applied to message data.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "deltaTime",
+                                  "type": "dict",
+                                  "description": "Used to limit data to that which has arrived since the last execution of the action.",
+                                  "nested_items": [
+                                    {
+                                      "name": "offsetSeconds",
+                                      "type": "integer",
+                                      "description": "The number of seconds of estimated in-flight lag time of message data. When you create dataset contents using message data from a specified timeframe, some message data might still be in flight when processing begins, and so do not arrive in time to be processed. Use this field to make allowances for the in flight time of your message data, so that data not processed from a previous timeframe is included with the next timeframe. Otherwise, missed message data would be excluded from processing during the next timeframe too, because its timestamp places it within the previous timeframe.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "timeExpression",
+                                      "type": "string",
+                                      "description": "An expression by which the time of the message data might be determined. This can be the name of a timestamp field or a SQL expression that is used to derive the time the message data was generated.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "containerAction",
+                      "type": "dict",
+                      "description": "Information that allows the system to run a containerized application to create the dataset contents. The application must be in a Docker container along with any required support libraries.",
+                      "nested_items": [
+                        {
+                          "name": "image",
+                          "type": "string",
+                          "description": "The ARN of the Docker container stored in your account. The Docker container contains an application and required support libraries and is used to generate dataset contents.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "executionRoleArn",
+                          "type": "string",
+                          "description": "The ARN of the role that gives permission to the system to access required resources to run the containerAction. This includes, at minimum, permission to retrieve the dataset contents that are the input to the containerized application.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "resourceConfiguration",
+                          "type": "dict",
+                          "description": "Configuration of the resource that executes the containerAction.",
+                          "nested_items": [
+                            {
+                              "name": "computeType",
+                              "type": "string",
+                              "description": "The type of the compute resource used to execute the containerAction. Possible values are: ACU_1 (vCPU=4, memory=16 GiB) or ACU_2 (vCPU=8, memory=32 GiB).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "volumeSizeInGB",
+                              "type": "integer",
+                              "description": "The size, in GB, of the persistent storage available to the resource instance used to execute the containerAction (min: 1, max: 50).",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "variables",
+                          "type": "list",
+                          "description": "The values of variables used in the context of the execution of the containerized application (basically, parameters passed to the application). Each variable must have a name and a value given by one of stringValue, datasetContentVersionValue, or outputFileUriValue.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The name of the variable.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "stringValue",
+                                  "type": "string",
+                                  "description": "The value of the variable as a string.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "doubleValue",
+                                  "type": "float",
+                                  "description": "The value of the variable as a double (numeric).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "datasetContentVersionValue",
+                                  "type": "dict",
+                                  "description": "The value of the variable as a structure that specifies a dataset content version.",
+                                  "nested_items": [
+                                    {
+                                      "name": "datasetName",
+                                      "type": "string",
+                                      "description": "The name of the dataset whose latest contents are used as input to the notebook or application.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "outputFileUriValue",
+                                  "type": "dict",
+                                  "description": "The value of the variable as a structure that specifies an output file URI.",
+                                  "nested_items": [
+                                    {
+                                      "name": "fileName",
+                                      "type": "string",
+                                      "description": "The URI of the location where dataset contents are stored, usually the URI of a file in an S3 bucket.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "triggers",
+              "type": "list",
+              "description": "The DatasetTrigger objects that specify when the dataset is automatically updated.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "expression",
+                          "type": "string",
+                          "description": "The expression that defines when to trigger an update. For more information, see Schedule Expressions for Rules in the Amazon CloudWatch Events User Guide.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the dataset whose content generation triggers the new dataset content generation.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "contentDeliveryRules",
+              "type": "list",
+              "description": "When dataset contents are created they are delivered to destinations specified here.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "entryName",
+                      "type": "string",
+                      "description": "The name of the dataset content delivery rules entry.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "destination",
+                      "type": "dict",
+                      "description": "The destination to which dataset contents are delivered.",
+                      "nested_items": [
+                        {
+                          "name": "iotEventsDestinationConfiguration",
+                          "type": "dict",
+                          "description": "Configuration information for delivery of dataset contents to IoT Events.",
+                          "nested_items": [
+                            {
+                              "name": "inputName",
+                              "type": "string",
+                              "description": "The name of the IoT Events input to which dataset contents are delivered.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "roleArn",
+                              "type": "string",
+                              "description": "The ARN of the role that grants IoT Analytics permission to deliver dataset contents to an IoT Events input.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "s3DestinationConfiguration",
+                          "type": "dict",
+                          "description": "Configuration information for delivery of dataset contents to Amazon S3.",
+                          "nested_items": [
+                            {
+                              "name": "bucket",
+                              "type": "string",
+                              "description": "The name of the S3 bucket to which dataset contents are delivered.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "description": "The key of the dataset contents object in an S3 bucket. Each object has a key that is a unique identifier. Each object has exactly one key.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Use !{iotanalytics:scheduleTime} to insert the time of a scheduled SQL query run.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Use !{iotanalytics:versionId} to insert a unique hash that identifies a dataset content.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Use !{iotanalytics:creationTime} to insert the creation time of a dataset content.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "glueConfiguration",
+                              "type": "dict",
+                              "description": "Configuration information for coordination with Glue, a fully managed extract, transform and load (ETL) service.",
+                              "nested_items": [
+                                {
+                                  "name": "tableName",
+                                  "type": "string",
+                                  "description": "The name of the table in your Glue Data Catalog that is used to perform the ETL operations. An Glue Data Catalog table contains partitioned data and descriptions of data sources and targets.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "databaseName",
+                                  "type": "string",
+                                  "description": "The name of the database in your Glue Data Catalog in which the table is located. An Glue Data Catalog database contains metadata tables.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "roleArn",
+                              "type": "string",
+                              "description": "The ARN of the role that grants IoT Analytics permission to interact with your Amazon S3 and Glue resources.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The status of the dataset.",
+              "nested_items": []
+            },
+            {
+              "name": "creationTime",
+              "type": "datetime",
+              "description": "When the dataset was created.",
+              "nested_items": []
+            },
+            {
+              "name": "lastUpdateTime",
+              "type": "datetime",
+              "description": "The last time the dataset was updated.",
+              "nested_items": []
+            },
+            {
+              "name": "retentionPeriod",
+              "type": "dict",
+              "description": "Optional. How long, in days, message data is kept for the dataset.",
+              "nested_items": [
+                {
+                  "name": "unlimited",
+                  "type": "boolean",
+                  "description": "If true, message data is kept indefinitely.",
+                  "nested_items": []
+                },
+                {
+                  "name": "numberOfDays",
+                  "type": "integer",
+                  "description": "The number of days that message data is kept. The unlimited parameter must be false.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "versioningConfiguration",
+              "type": "dict",
+              "description": "Optional. How many versions of dataset contents are kept. If not specified or set to null, only the latest version plus the latest succeeded version (if they are different) are kept for the time period specified by the retentionPeriod parameter. For more information, see Keeping Multiple Versions of IoT Analytics datasets in the IoT Analytics User Guide.",
+              "nested_items": [
+                {
+                  "name": "unlimited",
+                  "type": "boolean",
+                  "description": "If true, unlimited versions of dataset contents are kept.",
+                  "nested_items": []
+                },
+                {
+                  "name": "maxVersions",
+                  "type": "integer",
+                  "description": "How many versions of dataset contents are kept. The unlimited parameter must be false.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "lateDataRules",
+              "type": "list",
+              "description": "A list of data rules that send notifications to CloudWatch, when data arrives late. To specify lateDataRules, the dataset must use a DeltaTimer filter.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ruleName",
+                      "type": "string",
+                      "description": "The name of the late data rule.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ruleConfiguration",
+                      "type": "dict",
+                      "description": "The information needed to configure the late data rule.",
+                      "nested_items": [
+                        {
+                          "name": "deltaTimeSessionWindowConfiguration",
+                          "type": "dict",
+                          "description": "The information needed to configure a delta time session window.",
+                          "nested_items": [
+                            {
+                              "name": "timeoutInMinutes",
+                              "type": "integer",
+                              "description": "A time interval. You can use timeoutInMinutes so that IoT Analytics can batch up late data notifications that have been generated since the last execution. IoT Analytics sends one batch of notifications to Amazon CloudWatch Events at one time.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

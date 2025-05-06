@@ -1,0 +1,209 @@
+{
+  "method_name": "batch_get_asset_property_aggregates",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotsitewise/client/batch_get_asset_property_aggregates.html",
+  "description": "Gets aggregated values (for example, average, minimum, and maximum) for one or more asset properties. For more information, see Querying aggregates in the IoT SiteWise User Guide.",
+  "parameters": [
+    {
+      "name": "entries",
+      "type": "list",
+      "required": true,
+      "description": "The list of asset property aggregate entries for the batch get request. You can specify up to 16 entries per request. (dict) --- Contains information for an asset property aggregate entry that is associated with the BatchGetAssetPropertyAggregates API. To identify an asset property, you must specify one of the following: The assetId and propertyId of an asset property. A propertyAlias, which is a data stream alias (for example, /company/windfarm/3/turbine/7/temperature). To define an asset property's alias, see UpdateAssetProperty. The ID of the entry. assetId (string) --- The ID of the asset in which the asset property was created. propertyId (string) --- The ID of the asset property, in UUID format. propertyAlias (string) --- The alias that identifies the property, such as an OPC-UA server data stream path (for example, /company/windfarm/3/turbine/7/temperature). For more information, see Mapping industrial data streams to asset properties in the IoT SiteWise User Guide. The data aggregating function. (string) --- The time interval over which to aggregate data. The exclusive start of the range from which to query historical data, expressed in seconds in Unix epoch time. The inclusive end of the range from which to query historical data, expressed in seconds in Unix epoch time. qualities (list) --- The quality by which to filter asset data. (string) --- timeOrdering (string) --- The chronological sorting order of the requested information. Default: ASCENDING.",
+      "nested_params": []
+    },
+    {
+      "name": "nextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "maxResults",
+      "type": "integer",
+      "required": false,
+      "description": "The maximum number of results to return for each paginated request. A result set is returned in the two cases, whichever occurs first. The size of the result set is equal to 1 MB. The number of data points in the result set is equal to the value of maxResults. The maximum value of maxResults is 4000.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "errorEntries",
+          "type": "list",
+          "description": "A list of the errors (if any) associated with the batch request. Each error entry contains the entryId of the entry that failed.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "errorCode",
+                  "type": "string",
+                  "description": "The error code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "errorMessage",
+                  "type": "string",
+                  "description": "The associated error message.",
+                  "nested_items": []
+                },
+                {
+                  "name": "entryId",
+                  "type": "string",
+                  "description": "The ID of the entry.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "successEntries",
+          "type": "list",
+          "description": "A list of entries that were processed successfully by this batch request. Each success entry contains the entryId of the entry that succeeded and the latest query result.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "entryId",
+                  "type": "string",
+                  "description": "The ID of the entry.",
+                  "nested_items": []
+                },
+                {
+                  "name": "aggregatedValues",
+                  "type": "list",
+                  "description": "The requested aggregated asset property values (for example, average, minimum, and maximum).",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "timestamp",
+                          "type": "datetime",
+                          "description": "The date the aggregating computations occurred, in Unix epoch time.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "quality",
+                          "type": "string",
+                          "description": "The quality of the aggregated data.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "average",
+                              "type": "float",
+                              "description": "The average (mean) value of the time series over a time interval window.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "count",
+                              "type": "float",
+                              "description": "The count of data points in the time series over a time interval window.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "maximum",
+                              "type": "float",
+                              "description": "The maximum value of the time series over a time interval window.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "minimum",
+                              "type": "float",
+                              "description": "The minimum value of the time series over a time interval window.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "sum",
+                              "type": "float",
+                              "description": "The sum of the time series over a time interval window.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "standardDeviation",
+                              "type": "float",
+                              "description": "The standard deviation of the time series over a time interval window.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "skippedEntries",
+          "type": "list",
+          "description": "A list of entries that were not processed by this batch request. because these entries had been completely processed by previous paginated requests. Each skipped entry contains the entryId of the entry that skipped.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "entryId",
+                  "type": "string",
+                  "description": "The ID of the entry.",
+                  "nested_items": []
+                },
+                {
+                  "name": "completionStatus",
+                  "type": "string",
+                  "description": "The completion status of each entry that is associated with the BatchGetAssetPropertyAggregates API.",
+                  "nested_items": []
+                },
+                {
+                  "name": "errorInfo",
+                  "type": "dict",
+                  "description": "The error information, such as the error code and the timestamp.",
+                  "nested_items": [
+                    {
+                      "name": "errorCode",
+                      "type": "string",
+                      "description": "The error code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "errorTimestamp",
+                      "type": "datetime",
+                      "description": "The date the error occurred, in Unix epoch time.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nextToken",
+          "type": "string",
+          "description": "The token for the next set of results, or null if there are no additional results.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

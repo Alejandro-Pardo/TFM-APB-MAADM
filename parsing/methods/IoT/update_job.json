@@ -1,0 +1,203 @@
+{
+  "method_name": "update_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iot/client/update_job.html",
+  "description": "Updates supported fields of the specified job. Requires permission to access the UpdateJob action.",
+  "parameters": [
+    {
+      "name": "jobId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the job to be updated.",
+      "nested_params": []
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "presignedUrlConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Configuration information for pre-signed S3 URLs. roleArn (string) --- The ARN of an IAM role that grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files. expiresInSec (integer) --- How long (in seconds) pre-signed URLs are valid. Valid values are 60 - 3600, the default value is 3600 seconds. Pre-signed URLs are generated when Jobs receives an MQTT request for the job document.",
+      "nested_params": [
+        {
+          "name": "roleArn",
+          "type": "string",
+          "required": false,
+          "description": "The ARN of an IAM role that grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.",
+          "nested_params": []
+        },
+        {
+          "name": "expiresInSec",
+          "type": "integer",
+          "required": false,
+          "description": "How long (in seconds) pre-signed URLs are valid. Valid values are 60 - 3600, the default value is 3600 seconds. Pre-signed URLs are generated when Jobs receives an MQTT request for the job document.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "jobExecutionsRolloutConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Allows you to create a staged rollout of the job. maximumPerMinute (integer) --- The maximum number of things that will be notified of a pending job, per minute. This parameter allows you to create a staged rollout. exponentialRate (dict) --- The rate of increase for a job rollout. This parameter allows you to define an exponential rate for a job rollout. The minimum number of things that will be notified of a pending job, per minute at the start of job rollout. This parameter allows you to define the initial rate of rollout. The exponential factor to increase the rate of rollout for a job. Amazon Web Services IoT Core supports up to one digit after the decimal (for example, 1.5, but not 1.55). The criteria to initiate the increase in rate of rollout for a job. numberOfNotifiedThings (integer) --- The threshold for number of notified things that will initiate the increase in rate of rollout. numberOfSucceededThings (integer) --- The threshold for number of succeeded things that will initiate the increase in rate of rollout.",
+      "nested_params": [
+        {
+          "name": "maximumPerMinute",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of things that will be notified of a pending job, per minute. This parameter allows you to create a staged rollout.",
+          "nested_params": []
+        },
+        {
+          "name": "exponentialRate",
+          "type": "dict",
+          "required": false,
+          "description": "The rate of increase for a job rollout. This parameter allows you to define an exponential rate for a job rollout.",
+          "nested_params": [
+            {
+              "name": "baseRatePerMinute",
+              "type": "integer",
+              "required": false,
+              "description": "The minimum number of things that will be notified of a pending job, per minute at the start of job rollout. This parameter allows you to define the initial rate of rollout.",
+              "nested_params": []
+            },
+            {
+              "name": "incrementFactor",
+              "type": "float",
+              "required": false,
+              "description": "The exponential factor to increase the rate of rollout for a job. Amazon Web Services IoT Core supports up to one digit after the decimal (for example, 1.5, but not 1.55).",
+              "nested_params": []
+            },
+            {
+              "name": "rateIncreaseCriteria",
+              "type": "dict",
+              "required": false,
+              "description": "The criteria to initiate the increase in rate of rollout for a job.",
+              "nested_params": [
+                {
+                  "name": "numberOfNotifiedThings",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The threshold for number of notified things that will initiate the increase in rate of rollout.",
+                  "nested_params": []
+                },
+                {
+                  "name": "numberOfSucceededThings",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The threshold for number of succeeded things that will initiate the increase in rate of rollout.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "abortConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Allows you to create criteria to abort a job. The list of criteria that determine when and how to abort the job. (dict) --- The criteria that determine when and how a job abort takes place. The type of job execution failures that can initiate a job abort. The type of job action to take to initiate the job abort. The minimum percentage of job execution failures that must occur to initiate the job abort. Amazon Web Services IoT Core supports up to two digits after the decimal (for example, 10.9 and 10.99, but not 10.999). The minimum number of things which must receive job execution notifications before the job can be aborted.",
+      "nested_params": [
+        {
+          "name": "criteriaList",
+          "type": "list",
+          "required": false,
+          "description": "The list of criteria that determine when and how to abort the job.",
+          "nested_params": [
+            {
+              "name": "failureType",
+              "type": "string",
+              "required": false,
+              "description": "The type of job execution failures that can initiate a job abort.",
+              "nested_params": []
+            },
+            {
+              "name": "action",
+              "type": "string",
+              "required": false,
+              "description": "The type of job action to take to initiate the job abort.",
+              "nested_params": []
+            },
+            {
+              "name": "thresholdPercentage",
+              "type": "float",
+              "required": false,
+              "description": "The minimum percentage of job execution failures that must occur to initiate the job abort. Amazon Web Services IoT Core supports up to two digits after the decimal (for example, 10.9 and 10.99, but not 10.999).",
+              "nested_params": []
+            },
+            {
+              "name": "minNumberOfExecutedThings",
+              "type": "integer",
+              "required": false,
+              "description": "The minimum number of things which must receive job execution notifications before the job can be aborted.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "timeoutConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies the amount of time each device has to finish its execution of the job. The timer is started when the job execution status is set to IN_PROGRESS. If the job execution status is not set to another terminal state before the time expires, it will be automatically set to TIMED_OUT. inProgressTimeoutInMinutes (integer) --- Specifies the amount of time, in minutes, this device has to finish execution of this job. The timeout interval can be anywhere between 1 minute and 7 days (1 to 10080 minutes). The in progress timer can't be updated and will apply to all job executions for the job. Whenever a job execution remains in the IN_PROGRESS status for longer than this interval, the job execution will fail and switch to the terminal TIMED_OUT status.",
+      "nested_params": [
+        {
+          "name": "inProgressTimeoutInMinutes",
+          "type": "integer",
+          "required": false,
+          "description": "Specifies the amount of time, in minutes, this device has to finish execution of this job. The timeout interval can be anywhere between 1 minute and 7 days (1 to 10080 minutes). The in progress timer can't be updated and will apply to all job executions for the job. Whenever a job execution remains in the IN_PROGRESS status for longer than this interval, the job execution will fail and switch to the terminal TIMED_OUT status.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "namespaceId",
+      "type": "string",
+      "required": false,
+      "description": "The namespace used to indicate that a job is a customer-managed job. When you specify a value for this parameter, Amazon Web Services IoT Core sends jobs notifications to MQTT topics that contain the value in the following format. $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/",
+      "nested_params": []
+    },
+    {
+      "name": "jobExecutionsRetryConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Allows you to create the criteria to retry a job. The list of criteria that determines how many retries are allowed for each failure type for a job. (dict) --- The criteria that determines how many retries are allowed for each failure type for a job. The type of job execution failures that can initiate a job retry. The number of retries allowed for a failure type for the job.",
+      "nested_params": [
+        {
+          "name": "criteriaList",
+          "type": "list",
+          "required": false,
+          "description": "The list of criteria that determines how many retries are allowed for each failure type for a job.",
+          "nested_params": [
+            {
+              "name": "failureType",
+              "type": "string",
+              "required": false,
+              "description": "The type of job execution failures that can initiate a job retry.",
+              "nested_params": []
+            },
+            {
+              "name": "numberOfRetries",
+              "type": "integer",
+              "required": false,
+              "description": "The number of retries allowed for a failure type for the job.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

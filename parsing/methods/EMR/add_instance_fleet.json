@@ -1,0 +1,398 @@
+{
+  "method_name": "add_instance_fleet",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/emr/client/add_instance_fleet.html",
+  "description": "Adds an instance fleet to a running cluster.",
+  "parameters": [
+    {
+      "name": "ClusterId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of the cluster.",
+      "nested_params": []
+    },
+    {
+      "name": "InstanceFleet",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the configuration of the instance fleet. Name (string) --- The friendly name of the instance fleet. The node type that the instance fleet hosts. Valid values are MASTER, CORE, and TASK. TargetOnDemandCapacity (integer) --- The target capacity of On-Demand units for the instance fleet, which determines how many On-Demand Instances to provision. When the instance fleet launches, Amazon EMR tries to provision On-Demand Instances as specified by  InstanceTypeConfig. Each instance configuration has a specified WeightedCapacity. When an On-Demand Instance is provisioned, the WeightedCapacity units count toward the target capacity. Amazon EMR provisions instances until the target capacity is totally fulfilled, even if this results in an overage. For example, if there are 2 units remaining to fulfill capacity, and Amazon EMR can only provision an instance with a WeightedCapacity of 5 units, the instance is provisioned, and the target capacity is exceeded by 3 units. TargetSpotCapacity (integer) --- The target capacity of Spot units for the instance fleet, which determines how many Spot Instances to provision. When the instance fleet launches, Amazon EMR tries to provision Spot Instances as specified by  InstanceTypeConfig. When a Spot Instance is provisioned, the WeightedCapacity units count toward the target capacity. InstanceTypeConfigs (list) --- The instance type configurations that define the Amazon EC2 instances in the instance fleet. (dict) --- An instance type configuration for each instance type in an instance fleet, which determines the Amazon EC2 instances Amazon EMR attempts to provision to fulfill On-Demand and Spot target capacities. When you use an allocation strategy, you can include a maximum of 30 instance type configurations for a fleet. For more information about how to use an allocation strategy, see Configure Instance Fleets. Without an allocation strategy, you may specify a maximum of five instance type configurations for a fleet. An Amazon EC2 instance type, such as m3.xlarge. WeightedCapacity (integer) --- The number of units that a provisioned instance of this type provides toward fulfilling the target capacities defined in  InstanceFleetConfig. This value is 1 for a master instance fleet, and must be 1 or greater for core and task instance fleets. Defaults to 1 if not specified. BidPrice (string) --- The bid price for each Amazon EC2 Spot Instance type as defined by InstanceType. Expressed in USD. If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%. BidPriceAsPercentageOfOnDemandPrice (float) --- The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by InstanceType. Expressed as a number (for example, 20 specifies 20%). EbsConfiguration (dict) --- The configuration of Amazon Elastic Block Store (Amazon EBS) attached to each instance as defined by InstanceType. EbsBlockDeviceConfigs (list) --- An array of Amazon EBS volume specifications attached to a cluster instance. (dict) --- Configuration of requested EBS block device associated with the instance group with count of volumes that are associated to every instance. EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster. The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard. Iops (integer) --- The number of I/O operations per second (IOPS) that the volume supports. The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10. Throughput (integer) --- The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes. VolumesPerInstance (integer) --- Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group EbsOptimized (boolean) --- Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance. Configurations (list) --- A configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software that run on the cluster. (dict) --- An optional configuration specification to be used when provisioning cluster instances, which can include configurations for applications and software bundled with Amazon EMR. A configuration consists of a classification, properties, and optional nested configurations. A classification refers to an application-specific configuration file. Properties are the settings you want to change in that file. For more information, see Configuring Applications. Classification (string) --- The classification within a configuration. Configurations (list) --- A list of additional configurations to apply within a configuration object. Properties (dict) --- A set of properties specified within a configuration classification. (string) --- (string) --- CustomAmiId (string) --- The custom AMI ID to use for the instance type. Priority (float) --- The priority at which Amazon EMR launches the Amazon EC2 instances with this instance type. Priority starts at 0, which is the highest priority. Amazon EMR considers the highest priority first. LaunchSpecifications (dict) --- The launch specification for the instance fleet. SpotSpecification (dict) --- The launch specification for Spot instances in the fleet, which determines the allocation strategy, defined duration, and provisioning timeout behavior. The Spot provisioning timeout period in minutes. If Spot Instances are not provisioned within this time period, the TimeOutAction is taken. Minimum value is 5 and maximum value is 1440. The timeout applies only during initial provisioning, when the cluster is first created. The action to take when TargetSpotCapacity has not been fulfilled when the TimeoutDurationMinutes has expired; that is, when all Spot Instances could not be provisioned within the Spot provisioning timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND. SWITCH_TO_ON_DEMAND specifies that if no Spot Instances are available, On-Demand Instances should be provisioned to fulfill any remaining Spot capacity. BlockDurationMinutes (integer) --- The defined duration for Spot Instances (also known as Spot blocks) in minutes. When specified, the Spot Instance does not terminate before the defined duration expires, and defined duration pricing for Spot Instances applies. Valid values are 60, 120, 180, 240, 300, or 360. The duration period starts as soon as a Spot Instance receives its instance ID. At the end of the duration, Amazon EC2 marks the Spot Instance for termination and provides a Spot Instance termination notice, which gives the instance a two-minute warning before it terminates. AllocationStrategy (string) --- Specifies one of the following strategies to launch Spot Instance fleets: capacity-optimized, price-capacity-optimized, lowest-price, or diversified, and capacity-optimized-prioritized. For more information on the provisioning strategies, see Allocation strategies for Spot Instances in the Amazon EC2 User Guide for Linux Instances. OnDemandSpecification (dict) --- The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy and capacity reservation options. Specifies the strategy to use in launching On-Demand instance fleets. Available options are lowest-price and prioritized. lowest-price specifies to launch the instances with the lowest price first, and prioritized specifies that Amazon EMR should launch the instances with the highest priority first. The default is lowest-price. CapacityReservationOptions (dict) --- The launch specification for On-Demand instances in the instance fleet, which determines the allocation strategy. UsageStrategy (string) --- Indicates whether to use unused Capacity Reservations for fulfilling On-Demand capacity. If you specify use-capacity-reservations-first, the fleet uses unused Capacity Reservations to fulfill On-Demand capacity up to the target On-Demand capacity. If multiple instance pools have unused Capacity Reservations, the On-Demand allocation strategy ( lowest-price) is applied. If the number of unused Capacity Reservations is less than the On-Demand target capacity, the remaining On-Demand target capacity is launched according to the On-Demand allocation strategy ( lowest-price). If you do not specify a value, the fleet fulfills the On-Demand capacity according to the chosen On-Demand allocation strategy. CapacityReservationPreference (string) --- Indicates the instance's Capacity Reservation preferences. Possible preferences include: open - The instance can run in any open Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). none - The instance avoids running in a Capacity Reservation even if one is available. The instance runs as an On-Demand Instance. CapacityReservationResourceGroupArn (string) --- The ARN of the Capacity Reservation resource group in which to run the instance. ResizeSpecifications (dict) --- The resize specification for the instance fleet. SpotResizeSpecification (dict) --- The resize specification for Spot Instances in the instance fleet, which contains the allocation strategy and the resize timeout period. TimeoutDurationMinutes (integer) --- Spot resize timeout in minutes. If Spot Instances are not provisioned within this time, the resize workflow will stop provisioning of Spot instances. Minimum value is 5 minutes and maximum value is 10,080 minutes (7 days). The timeout applies to all resize workflows on the Instance Fleet. The resize could be triggered by Amazon EMR Managed Scaling or by the customer (via Amazon EMR Console, Amazon EMR CLI modify-instance-fleet or Amazon EMR SDK ModifyInstanceFleet API) or by Amazon EMR due to Amazon EC2 Spot Reclamation. AllocationStrategy (string) --- Specifies the allocation strategy to use to launch Spot instances during a resize. If you run Amazon EMR releases 6.9.0 or higher, the default is price-capacity-optimized. If you run Amazon EMR releases 6.8.0 or lower, the default is capacity-optimized. OnDemandResizeSpecification (dict) --- The resize specification for On-Demand Instances in the instance fleet, which contains the allocation strategy, capacity reservation options, and the resize timeout period. TimeoutDurationMinutes (integer) --- On-Demand resize timeout in minutes. If On-Demand Instances are not provisioned within this time, the resize workflow stops. The minimum value is 5 minutes, and the maximum value is 10,080 minutes (7 days). AllocationStrategy (string) --- Specifies the allocation strategy to use to launch On-Demand instances during a resize. CapacityReservationOptions (dict) --- Describes the strategy for using unused Capacity Reservations for fulfilling On-Demand capacity. Context (string) --- Reserved.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The friendly name of the instance fleet.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceFleetType",
+          "type": "string",
+          "required": false,
+          "description": "The node type that the instance fleet hosts. Valid values are MASTER, CORE, and TASK.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetOnDemandCapacity",
+          "type": "integer",
+          "required": false,
+          "description": "The target capacity of On-Demand units for the instance fleet, which determines how many On-Demand Instances to provision. When the instance fleet launches, Amazon EMR tries to provision On-Demand Instances as specified by  InstanceTypeConfig. Each instance configuration has a specified WeightedCapacity. When an On-Demand Instance is provisioned, the WeightedCapacity units count toward the target capacity. Amazon EMR provisions instances until the target capacity is totally fulfilled, even if this results in an overage. For example, if there are 2 units remaining to fulfill capacity, and Amazon EMR can only provision an instance with a WeightedCapacity of 5 units, the instance is provisioned, and the target capacity is exceeded by 3 units.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetSpotCapacity",
+          "type": "integer",
+          "required": false,
+          "description": "The target capacity of Spot units for the instance fleet, which determines how many Spot Instances to provision. When the instance fleet launches, Amazon EMR tries to provision Spot Instances as specified by  InstanceTypeConfig. Each instance configuration has a specified WeightedCapacity. When a Spot Instance is provisioned, the WeightedCapacity units count toward the target capacity. Amazon EMR provisions instances until the target capacity is totally fulfilled, even if this results in an overage. For example, if there are 2 units remaining to fulfill capacity, and Amazon EMR can only provision an instance with a WeightedCapacity of 5 units, the instance is provisioned, and the target capacity is exceeded by 3 units.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceTypeConfigs",
+          "type": "list",
+          "required": false,
+          "description": "The instance type configurations that define the Amazon EC2 instances in the instance fleet.",
+          "nested_params": [
+            {
+              "name": "InstanceType",
+              "type": "string",
+              "required": false,
+              "description": "An Amazon EC2 instance type, such as m3.xlarge.",
+              "nested_params": []
+            },
+            {
+              "name": "WeightedCapacity",
+              "type": "integer",
+              "required": false,
+              "description": "The number of units that a provisioned instance of this type provides toward fulfilling the target capacities defined in  InstanceFleetConfig. This value is 1 for a master instance fleet, and must be 1 or greater for core and task instance fleets. Defaults to 1 if not specified.",
+              "nested_params": []
+            },
+            {
+              "name": "BidPrice",
+              "type": "string",
+              "required": false,
+              "description": "The bid price for each Amazon EC2 Spot Instance type as defined by InstanceType. Expressed in USD. If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%.",
+              "nested_params": []
+            },
+            {
+              "name": "BidPriceAsPercentageOfOnDemandPrice",
+              "type": "float",
+              "required": false,
+              "description": "The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by InstanceType. Expressed as a number (for example, 20 specifies 20%). If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%.",
+              "nested_params": []
+            },
+            {
+              "name": "EbsConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration of Amazon Elastic Block Store (Amazon EBS) attached to each instance as defined by InstanceType.",
+              "nested_params": [
+                {
+                  "name": "EbsBlockDeviceConfigs",
+                  "type": "list",
+                  "required": false,
+                  "description": "An array of Amazon EBS volume specifications attached to a cluster instance.",
+                  "nested_params": [
+                    {
+                      "name": "VolumeSpecification",
+                      "type": "dict",
+                      "required": false,
+                      "description": "EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster.",
+                      "nested_params": [
+                        {
+                          "name": "VolumeType",
+                          "type": "string",
+                          "required": false,
+                          "description": "The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Iops",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The number of I/O operations per second (IOPS) that the volume supports.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "SizeInGB",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Throughput",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "VolumesPerInstance",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "EbsOptimized",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Configurations",
+              "type": "list",
+              "required": false,
+              "description": "A configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software that run on the cluster.",
+              "nested_params": [
+                {
+                  "name": "Classification",
+                  "type": "string",
+                  "required": false,
+                  "description": "The classification within a configuration.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Configurations",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of additional configurations to apply within a configuration object.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Properties",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A set of properties specified within a configuration classification.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "CustomAmiId",
+              "type": "string",
+              "required": false,
+              "description": "The custom AMI ID to use for the instance type.",
+              "nested_params": []
+            },
+            {
+              "name": "Priority",
+              "type": "float",
+              "required": false,
+              "description": "The priority at which Amazon EMR launches the Amazon EC2 instances with this instance type. Priority starts at 0, which is the highest priority. Amazon EMR considers the highest priority first.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "LaunchSpecifications",
+          "type": "dict",
+          "required": false,
+          "description": "The launch specification for the instance fleet.",
+          "nested_params": [
+            {
+              "name": "SpotSpecification",
+              "type": "dict",
+              "required": false,
+              "description": "The launch specification for Spot instances in the fleet, which determines the allocation strategy, defined duration, and provisioning timeout behavior.",
+              "nested_params": [
+                {
+                  "name": "TimeoutDurationMinutes",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The Spot provisioning timeout period in minutes. If Spot Instances are not provisioned within this time period, the TimeOutAction is taken. Minimum value is 5 and maximum value is 1440. The timeout applies only during initial provisioning, when the cluster is first created.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TimeoutAction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The action to take when TargetSpotCapacity has not been fulfilled when the TimeoutDurationMinutes has expired; that is, when all Spot Instances could not be provisioned within the Spot provisioning timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND. SWITCH_TO_ON_DEMAND specifies that if no Spot Instances are available, On-Demand Instances should be provisioned to fulfill any remaining Spot capacity.",
+                  "nested_params": []
+                },
+                {
+                  "name": "BlockDurationMinutes",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The defined duration for Spot Instances (also known as Spot blocks) in minutes. When specified, the Spot Instance does not terminate before the defined duration expires, and defined duration pricing for Spot Instances applies. Valid values are 60, 120, 180, 240, 300, or 360. The duration period starts as soon as a Spot Instance receives its instance ID. At the end of the duration, Amazon EC2 marks the Spot Instance for termination and provides a Spot Instance termination notice, which gives the instance a two-minute warning before it terminates.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AllocationStrategy",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies one of the following strategies to launch Spot Instance fleets: capacity-optimized, price-capacity-optimized, lowest-price, or diversified, and capacity-optimized-prioritized. For more information on the provisioning strategies, see Allocation strategies for Spot Instances in the Amazon EC2 User Guide for Linux Instances.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "OnDemandSpecification",
+              "type": "dict",
+              "required": false,
+              "description": "The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy and capacity reservation options.",
+              "nested_params": [
+                {
+                  "name": "AllocationStrategy",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the strategy to use in launching On-Demand instance fleets. Available options are lowest-price and prioritized. lowest-price specifies to launch the instances with the lowest price first, and prioritized specifies that Amazon EMR should launch the instances with the highest priority first. The default is lowest-price.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CapacityReservationOptions",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The launch specification for On-Demand instances in the instance fleet, which determines the allocation strategy.",
+                  "nested_params": [
+                    {
+                      "name": "UsageStrategy",
+                      "type": "string",
+                      "required": false,
+                      "description": "Indicates whether to use unused Capacity Reservations for fulfilling On-Demand capacity. If you specify use-capacity-reservations-first, the fleet uses unused Capacity Reservations to fulfill On-Demand capacity up to the target On-Demand capacity. If multiple instance pools have unused Capacity Reservations, the On-Demand allocation strategy ( lowest-price) is applied. If the number of unused Capacity Reservations is less than the On-Demand target capacity, the remaining On-Demand target capacity is launched according to the On-Demand allocation strategy ( lowest-price). If you do not specify a value, the fleet fulfills the On-Demand capacity according to the chosen On-Demand allocation strategy.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CapacityReservationPreference",
+                      "type": "string",
+                      "required": false,
+                      "description": "Indicates the instance's Capacity Reservation preferences. Possible preferences include:",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CapacityReservationResourceGroupArn",
+                      "type": "string",
+                      "required": false,
+                      "description": "The ARN of the Capacity Reservation resource group in which to run the instance.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ResizeSpecifications",
+          "type": "dict",
+          "required": false,
+          "description": "The resize specification for the instance fleet.",
+          "nested_params": [
+            {
+              "name": "SpotResizeSpecification",
+              "type": "dict",
+              "required": false,
+              "description": "The resize specification for Spot Instances in the instance fleet, which contains the allocation strategy and the resize timeout period.",
+              "nested_params": [
+                {
+                  "name": "TimeoutDurationMinutes",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Spot resize timeout in minutes. If Spot Instances are not provisioned within this time, the resize workflow will stop provisioning of Spot instances. Minimum value is 5 minutes and maximum value is 10,080 minutes (7 days). The timeout applies to all resize workflows on the Instance Fleet. The resize could be triggered by Amazon EMR Managed Scaling or by the customer (via Amazon EMR Console, Amazon EMR CLI modify-instance-fleet or Amazon EMR SDK ModifyInstanceFleet API) or by Amazon EMR due to Amazon EC2 Spot Reclamation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AllocationStrategy",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the allocation strategy to use to launch Spot instances during a resize. If you run Amazon EMR releases 6.9.0 or higher, the default is price-capacity-optimized. If you run Amazon EMR releases 6.8.0 or lower, the default is capacity-optimized.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "OnDemandResizeSpecification",
+              "type": "dict",
+              "required": false,
+              "description": "The resize specification for On-Demand Instances in the instance fleet, which contains the allocation strategy, capacity reservation options, and the resize timeout period.",
+              "nested_params": [
+                {
+                  "name": "TimeoutDurationMinutes",
+                  "type": "integer",
+                  "required": false,
+                  "description": "On-Demand resize timeout in minutes. If On-Demand Instances are not provisioned within this time, the resize workflow stops. The minimum value is 5 minutes, and the maximum value is 10,080 minutes (7 days). The timeout applies to all resize workflows on the Instance Fleet. The resize could be triggered by Amazon EMR Managed Scaling or by the customer (via Amazon EMR Console, Amazon EMR CLI modify-instance-fleet or Amazon EMR SDK ModifyInstanceFleet API) or by Amazon EMR due to Amazon EC2 Spot Reclamation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AllocationStrategy",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the allocation strategy to use to launch On-Demand instances during a resize. The default is lowest-price.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CapacityReservationOptions",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Describes the strategy for using unused Capacity Reservations for fulfilling On-Demand capacity.",
+                  "nested_params": [
+                    {
+                      "name": "UsageStrategy",
+                      "type": "string",
+                      "required": false,
+                      "description": "Indicates whether to use unused Capacity Reservations for fulfilling On-Demand capacity. If you specify use-capacity-reservations-first, the fleet uses unused Capacity Reservations to fulfill On-Demand capacity up to the target On-Demand capacity. If multiple instance pools have unused Capacity Reservations, the On-Demand allocation strategy ( lowest-price) is applied. If the number of unused Capacity Reservations is less than the On-Demand target capacity, the remaining On-Demand target capacity is launched according to the On-Demand allocation strategy ( lowest-price). If you do not specify a value, the fleet fulfills the On-Demand capacity according to the chosen On-Demand allocation strategy.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CapacityReservationPreference",
+                      "type": "string",
+                      "required": false,
+                      "description": "Indicates the instance's Capacity Reservation preferences. Possible preferences include:",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CapacityReservationResourceGroupArn",
+                      "type": "string",
+                      "required": false,
+                      "description": "The ARN of the Capacity Reservation resource group in which to run the instance.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Context",
+          "type": "string",
+          "required": false,
+          "description": "Reserved.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ClusterId",
+          "type": "string",
+          "description": "The unique identifier of the cluster.",
+          "nested_items": []
+        },
+        {
+          "name": "InstanceFleetId",
+          "type": "string",
+          "description": "The unique identifier of the instance fleet.",
+          "nested_items": []
+        },
+        {
+          "name": "ClusterArn",
+          "type": "string",
+          "description": "The Amazon Resource Name of the cluster.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

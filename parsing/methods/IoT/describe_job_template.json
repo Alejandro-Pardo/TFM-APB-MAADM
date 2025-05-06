@@ -1,0 +1,259 @@
+{
+  "method_name": "describe_job_template",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iot/client/describe_job_template.html",
+  "description": "Returns information about a job template.",
+  "parameters": [
+    {
+      "name": "jobTemplateId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of the job template.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "jobTemplateArn",
+          "type": "string",
+          "description": "The ARN of the job template.",
+          "nested_items": []
+        },
+        {
+          "name": "jobTemplateId",
+          "type": "string",
+          "description": "The unique identifier of the job template.",
+          "nested_items": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "A description of the job template.",
+          "nested_items": []
+        },
+        {
+          "name": "documentSource",
+          "type": "string",
+          "description": "An S3 link to the job document.",
+          "nested_items": []
+        },
+        {
+          "name": "document",
+          "type": "string",
+          "description": "The job document.",
+          "nested_items": []
+        },
+        {
+          "name": "createdAt",
+          "type": "datetime",
+          "description": "The time, in seconds since the epoch, when the job template was created.",
+          "nested_items": []
+        },
+        {
+          "name": "presignedUrlConfig",
+          "type": "dict",
+          "description": "Configuration for pre-signed S3 URLs.",
+          "nested_items": [
+            {
+              "name": "roleArn",
+              "type": "string",
+              "description": "The ARN of an IAM role that grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.",
+              "nested_items": []
+            },
+            {
+              "name": "expiresInSec",
+              "type": "integer",
+              "description": "How long (in seconds) pre-signed URLs are valid. Valid values are 60 - 3600, the default value is 3600 seconds. Pre-signed URLs are generated when Jobs receives an MQTT request for the job document.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "jobExecutionsRolloutConfig",
+          "type": "dict",
+          "description": "Allows you to create a staged rollout of a job.",
+          "nested_items": [
+            {
+              "name": "maximumPerMinute",
+              "type": "integer",
+              "description": "The maximum number of things that will be notified of a pending job, per minute. This parameter allows you to create a staged rollout.",
+              "nested_items": []
+            },
+            {
+              "name": "exponentialRate",
+              "type": "dict",
+              "description": "The rate of increase for a job rollout. This parameter allows you to define an exponential rate for a job rollout.",
+              "nested_items": [
+                {
+                  "name": "baseRatePerMinute",
+                  "type": "integer",
+                  "description": "The minimum number of things that will be notified of a pending job, per minute at the start of job rollout. This parameter allows you to define the initial rate of rollout.",
+                  "nested_items": []
+                },
+                {
+                  "name": "incrementFactor",
+                  "type": "float",
+                  "description": "The exponential factor to increase the rate of rollout for a job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "rateIncreaseCriteria",
+                  "type": "dict",
+                  "description": "The criteria to initiate the increase in rate of rollout for a job.",
+                  "nested_items": [
+                    {
+                      "name": "numberOfNotifiedThings",
+                      "type": "integer",
+                      "description": "The threshold for number of notified things that will initiate the increase in rate of rollout.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "numberOfSucceededThings",
+                      "type": "integer",
+                      "description": "The threshold for number of succeeded things that will initiate the increase in rate of rollout.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "abortConfig",
+          "type": "dict",
+          "description": "The criteria that determine when and how a job abort takes place.",
+          "nested_items": [
+            {
+              "name": "criteriaList",
+              "type": "list",
+              "description": "The list of criteria that determine when and how to abort the job.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "failureType",
+                      "type": "string",
+                      "description": "The type of job execution failures that can initiate a job abort.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "action",
+                      "type": "string",
+                      "description": "The type of job action to take to initiate the job abort.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "thresholdPercentage",
+                      "type": "float",
+                      "description": "The minimum percentage of job execution failures that must occur to initiate the job abort.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "minNumberOfExecutedThings",
+                      "type": "integer",
+                      "description": "The minimum number of things which must receive job execution notifications before the job can be aborted.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "timeoutConfig",
+          "type": "dict",
+          "description": "Specifies the amount of time each device has to finish its execution of the job. A timer is started when the job execution status is set to IN_PROGRESS. If the job execution status is not set to another terminal state before the timer expires, it will be automatically set to TIMED_OUT.",
+          "nested_items": [
+            {
+              "name": "inProgressTimeoutInMinutes",
+              "type": "integer",
+              "description": "Specifies the amount of time, in minutes, this device has to finish execution of this job. The timeout interval can be anywhere between 1 minute and 7 days (1 to 10080 minutes). The in progress timer can't be updated and will apply to all job executions for the job. Whenever a job execution remains in the IN_PROGRESS status for longer than this interval, the job execution will fail and switch to the terminal TIMED_OUT status.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "jobExecutionsRetryConfig",
+          "type": "dict",
+          "description": "The configuration that determines how many retries are allowed for each failure type for a job.",
+          "nested_items": [
+            {
+              "name": "criteriaList",
+              "type": "list",
+              "description": "The list of criteria that determines how many retries are allowed for each failure type for a job.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "failureType",
+                      "type": "string",
+                      "description": "The type of job execution failures that can initiate a job retry.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "numberOfRetries",
+                      "type": "integer",
+                      "description": "The number of retries allowed for a failure type for the job.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "maintenanceWindows",
+          "type": "list",
+          "description": "Allows you to configure an optional maintenance window for the rollout of a job document to all devices in the target group for a job.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "startTime",
+                  "type": "string",
+                  "description": "Displays the start time of the next maintenance window.",
+                  "nested_items": []
+                },
+                {
+                  "name": "durationInMinutes",
+                  "type": "integer",
+                  "description": "Displays the duration of the next maintenance window.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "destinationPackageVersions",
+          "type": "list",
+          "description": "The package version Amazon Resource Names (ARNs) that are installed on the device when the job successfully completes. The package version must be in either the Published or Deprecated state when the job deploys. For more information, see Package version lifecycle.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

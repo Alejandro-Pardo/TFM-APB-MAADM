@@ -1,0 +1,1301 @@
+{
+  "method_name": "create_preset",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elastictranscoder/client/create_preset.html",
+  "description": "The CreatePreset operation creates a preset with settings that you specify. Elastic Transcoder uses the H.264 video-compression format. For more information, see the International Telecommunication Union publication Recommendation ITU-T H.264: Advanced video coding for generic audiovisual services.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the preset. We recommend that the name be unique within the AWS account, but uniqueness is not enforced.",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Container",
+      "type": "string",
+      "required": true,
+      "description": "The container type for the output file. Valid values include flac, flv, fmp4, gif, mp3, mp4, mpg, mxf, oga, ogg, ts, and webm.",
+      "nested_params": []
+    },
+    {
+      "name": "Video",
+      "type": "dict",
+      "required": false,
+      "description": "A section of the request body that specifies the video parameters. Codec (string) --- The video codec for the output file. Valid values include gif, H.264, mpeg2, vp8, and vp9. You can only specify vp8 and vp9 when the container type is webm, gif when the container type is gif, and mpeg2 when the container type is mpg. CodecOptions (dict) --- The H.264 profile that you want to use for the output file. Elastic Transcoder supports the following profiles: baseline: The profile most commonly used for videoconferencing and for mobile applications. main: The profile used for standard-definition digital TV broadcasts. high: The profile used for high-definition digital TV broadcasts and for Blu-ray discs. The H.264 level that you want to use for the output file. Elastic Transcoder supports the following levels: 1, 1b, 1.1, 1.2, 1.3, 2, 2.1, 2.2, 3, 3.1, 3.2, 4, 4.1 Applicable only when the value of Video:Codec is H.264. The maximum number of previously decoded frames to use as a reference for decoding future frames. Valid values are integers 0 through 16, but we recommend that you not use a value greater than the following: Min(Floor(Maximum decoded picture buffer in macroblocks * 256 / (Width in pixels * Height in pixels)), 16) where Width in pixels and Height in pixels represent either MaxWidth and MaxHeight, or Resolution. Maximum decoded picture buffer in macroblocks depends on the value of the Level object. See the list below. (A macroblock is a block of pixels measuring 16x16.) 1 - 396 1b - 396 1.1 - 900 1.2 - 2376 1.3 - 2376 2 - 2376 2.1 - 4752 2.2 - 8100 3 - 8100 3.1 - 18000 3.2 - 20480 4 - 32768 4.1 - 32768 The maximum number of bits per second in a video buffer; the size of the buffer is specified by BufferSize. Specify a value between 16 and 62,500. You can reduce the bandwidth required to stream a video by reducing the maximum bit rate, but this also reduces the quality of the video. The maximum number of bits in any x seconds of the output video. This window is commonly 10 seconds, the standard segment duration when you're using FMP4 or MPEG-TS for the container type of the output video. Specify an integer greater than 0. If you specify MaxBitRate and omit BufferSize, Elastic Transcoder sets BufferSize to 10 times the value of MaxBitRate. The interlace mode for the output video. Interlaced video is used to double the perceived frame rate for a video by interlacing two fields (one field on every other line, the other field on the other lines) so that the human eye registers multiple pictures per frame. Interlacing reduces the bandwidth required for transmitting a video, but can result in blurred images and flickering. Valid values include Progressive (no interlacing, top to bottom), TopFirst (top field first), BottomFirst (bottom field first), and Auto. If InterlaceMode is not specified, Elastic Transcoder uses Progressive for the output. If Auto is specified, Elastic Transcoder interlaces the output. The color space conversion Elastic Transcoder applies to the output video. Color spaces are the algorithms used by the computer to store information about how to render color. Bt.601 is the standard for standard definition video, while Bt.709 is the standard for high definition video. Valid values include None, Bt709toBt601, Bt601toBt709, and Auto. If you chose Auto for ColorSpaceConversionMode and your output is interlaced, your frame rate is one of 23.97, 24, 25, 29.97, 50, or 60, your SegmentDuration is null, and you are using one of the resolution changes from the list below, Elastic Transcoder applies the following color space conversions: Standard to HD, 720x480 to 1920x1080 - Elastic Transcoder applies Bt601ToBt709 Standard to HD, 720x576 to 1920x1080 - Elastic Transcoder applies Bt601ToBt709 HD to Standard, 1920x1080 to 720x480 - Elastic Transcoder applies Bt709ToBt601 HD to Standard, 1920x1080 to 720x576 - Elastic Transcoder applies Bt709ToBt601 If you do not specify a ColorSpaceConversionMode, Elastic Transcoder does not change the color space of a file. If you are unsure what ColorSpaceConversionMode was applied to your output file, you can check the AppliedColorSpaceConversion parameter included in your job response. If your job does not have an AppliedColorSpaceConversion in its response, no ColorSpaceConversionMode was applied. The sampling pattern for the chroma (color) channels of the output video. Valid values include yuv420p and yuv422p. yuv420p samples the chroma information of every other horizontal and every other vertical line, yuv422p samples the color information of every horizontal line and every other vertical line. The number of times you want the output gif to loop. Valid values include Infinite and integers between 0 and 100, inclusive. (string) --- (string) --- KeyframesMaxDist (string) --- Applicable only when the value of Video:Codec is one of H.264, MPEG2, or VP8. The maximum number of frames between key frames. Key frames are fully encoded frames; the frames between key frames are encoded based, in part, on the content of the key frames. The value is an integer formatted as a string; valid values are between 1 (every frame is a key frame) and 100000, inclusive. A higher value results in higher compression but may also discernibly decrease video quality. For Smooth outputs, the FrameRate must have a constant ratio to the KeyframesMaxDist. This allows Smooth playlists to switch between different quality levels while the file is being played. For example, an input file can have a FrameRate of 30 with a KeyframesMaxDist of 90. The output file then needs to have a ratio of 1:3. Valid outputs would have FrameRate of 30, 25, and 10, and KeyframesMaxDist of 90, 75, and 30, respectively. Alternately, this can be achieved by setting FrameRate to auto and having the same values for MaxFrameRate and KeyframesMaxDist. FixedGOP (string) --- Applicable only when the value of Video:Codec is one of H.264, MPEG2, or VP8. Whether to use a fixed value for FixedGOP. Valid values are true and false: true: Elastic Transcoder uses the value of KeyframesMaxDist for the distance between key frames (the number of frames in a group of pictures, or GOP). false: The distance between key frames can vary. BitRate (string) --- The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile: Level - Maximum video bit rate in kilobits/second (baseline and main Profile) : maximum video bit rate in kilobits/second (high Profile) 1 - 64 : 80 1b - 128 : 160 1.1 - 192 : 240 1.2 - 384 : 480 1.3 - 768 : 960 2 - 2000 : 2500 3 - 10000 : 12500 3.1 - 14000 : 17500 3.2 - 20000 : 25000 4 - 20000 : 25000 4.1 - 50000 : 62500 FrameRate (string) --- The frames per second for the video stream in the output file. Valid values include: auto, 10, 15, 23.97, 24, 25, 29.97, 30, 60 If you specify auto, Elastic Transcoder uses the detected frame rate of the input source. If you specify a frame rate, we recommend that you perform the following calculation: Frame rate = maximum recommended decoding speed in luma samples/second / (width in pixels * height in pixels) where: width in pixels and height in pixels represent the Resolution of the output video. maximum recommended decoding speed in Luma samples/second is less than or equal to the maximum value listed in the following table, based on the value that you specified for Level. The maximum recommended decoding speed in Luma samples/second for each level is described in the following list (Level - Decoding speed): 1 - 380160 1b - 380160 1.1 - 76800 1.2 - 1536000 1.3 - 3041280 2 - 3041280 2.1 - 5068800 2.2 - 5184000 3 - 10368000 3.1 - 27648000 3.2 - 55296000 4 - 62914560 4.1 - 62914560 MaxFrameRate (string) --- If you specify auto for FrameRate, Elastic Transcoder uses the frame rate of the input video for the frame rate of the output video. Specify the maximum frame rate that you want Elastic Transcoder to use when the frame rate of the input video is greater than the desired maximum frame rate of the output video. Valid values include: 10, 15, 23.97, 24, 25, 29.97, 30, 60. Resolution (string) --- The width and height of the video in the output file, in pixels. Valid values are auto and width x height: auto: Elastic Transcoder attempts to preserve the width and height of the input file, subject to the following rules. ``width x height ``: The width and height of the output video in pixels. Note the following about specifying the width and height: The width must be an even integer between 128 and 4096, inclusive. The height must be an even integer between 96 and 3072, inclusive. If you specify a resolution that is less than the resolution of the input file, Elastic Transcoder rescales the output file to the lower resolution. If you specify a resolution that is greater than the resolution of the input file, Elastic Transcoder rescales the output to the higher resolution. We recommend that you specify a resolution for which the product of width and height is less than or equal to the applicable value in the following list (List - Max width x height value): 1 - 25344 1b - 25344 1.1 - 101376 1.2 - 101376 1.3 - 101376 2 - 101376 2.1 - 202752 2.2 - 404720 3 - 404720 3.1 - 921600 3.2 - 1310720 4 - 2097152 4.1 - 2097152 AspectRatio (string) --- The display aspect ratio of the video in the output file. Valid values include: auto, 1:1, 4:3, 3:2, 16:9 If you specify auto, Elastic Transcoder tries to preserve the aspect ratio of the input file. If you specify an aspect ratio for the output file that differs from aspect ratio of the input file, Elastic Transcoder adds pillarboxing (black bars on the sides) or letterboxing (black bars on the top and bottom) to maintain the aspect ratio of the active region of the video. MaxWidth (string) --- The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096. MaxHeight (string) --- The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072. DisplayAspectRatio (string) --- The value that Elastic Transcoder adds to the metadata in the output file. SizingPolicy (string) --- Specify one of the following values to control scaling of the output video: Fit: Elastic Transcoder scales the output video so it matches the value that you specified in either MaxWidth or MaxHeight without exceeding the other value. Fill: Elastic Transcoder scales the output video so it matches the value that you specified in either MaxWidth or MaxHeight and matches or exceeds the other value. Elastic Transcoder centers the output video and then crops it in the dimension (if any) that exceeds the maximum value. Stretch: Elastic Transcoder stretches the output video to match the values that you specified for MaxWidth and MaxHeight. If the relative proportions of the input video and the output video are different, the output video will be distorted. Keep: Elastic Transcoder does not scale the output video. If either dimension of the input video exceeds the values that you specified for MaxWidth and MaxHeight, Elastic Transcoder crops the output video. ShrinkToFit: Elastic Transcoder scales the output video down so that its dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without exceeding either value. If you specify this option, Elastic Transcoder does not scale the video up. ShrinkToFill: Elastic Transcoder scales the output video down so that its dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without dropping below either value. PaddingPolicy (string) --- When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight. Watermarks (list) --- Settings for the size, location, and opacity of graphics that you want Elastic Transcoder to overlay over videos that are transcoded using this preset. You can specify settings for up to four watermarks. Watermarks appear in the specified size and location, and with the specified opacity for the duration of the transcoded video. Watermarks can be in .png or .jpg format. If you want to display a watermark that is not rectangular, use the .png format, which supports transparency. When you create a job that uses this preset, you specify the .png or .jpg graphics that you want Elastic Transcoder to include in the transcoded videos. You can specify fewer graphics in the job than you specify watermark settings in the preset, which allows you to use the same preset for up to four watermarks that have different dimensions. (dict) --- Settings for the size, location, and opacity of graphics that you want Elastic Transcoder to overlay over videos that are transcoded using this preset. Id (string) --- A unique identifier for the settings for one watermark. The value of Id can be up to 40 characters long. MaxWidth (string) --- The maximum width of the watermark in one of the following formats: number of pixels (px): The minimum value is 16 pixels, and the maximum value is the value of MaxWidth. integer percentage (%): The range of valid values is 0 to 100. Use the value of Target to specify whether you want Elastic Transcoder to include the black bars that are added by Elastic Transcoder, if any, in the calculation. If you specify the value in pixels, it must be less than or equal to the value of MaxWidth. MaxHeight (string) --- The maximum height of the watermark in one of the following formats: number of pixels (px): The minimum value is 16 pixels, and the maximum value is the value of MaxHeight. If you specify the value in pixels, it must be less than or equal to the value of MaxHeight. SizingPolicy (string) --- A value that controls scaling of the watermark: Fit: Elastic Transcoder scales the watermark so it matches the value that you specified in either MaxWidth or MaxHeight without exceeding the other value. Stretch: Elastic Transcoder stretches the watermark to match the values that you specified for MaxWidth and MaxHeight. If the relative proportions of the watermark and the values of MaxWidth and MaxHeight are different, the watermark will be distorted. ShrinkToFit: Elastic Transcoder scales the watermark down so that its dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without exceeding either value. If you specify this option, Elastic Transcoder does not scale the watermark up. HorizontalAlign (string) --- The horizontal position of the watermark unless you specify a non-zero value for HorizontalOffset: Left: The left edge of the watermark is aligned with the left border of the video. Right: The right edge of the watermark is aligned with the right border of the video. Center: The watermark is centered between the left and right borders. HorizontalOffset (string) --- The amount by which you want the horizontal position of the watermark to be offset from the position specified by HorizontalAlign: number of pixels (px): The minimum value is 0 pixels, and the maximum value is the value of MaxWidth. For example, if you specify Left for HorizontalAlign and 5px for HorizontalOffset, the left side of the watermark appears 5 pixels from the left border of the output video. HorizontalOffset is only valid when the value of HorizontalAlign is Left or Right. If you specify an offset that causes the watermark to extend beyond the left or right border and Elastic Transcoder has not added black bars, the watermark is cropped. If Elastic Transcoder has added black bars, the watermark extends into the black bars. If the watermark extends beyond the black bars, it is cropped. Use the value of Target to specify whether you want to include the black bars that are added by Elastic Transcoder, if any, in the offset calculation. VerticalAlign (string) --- The vertical position of the watermark unless you specify a non-zero value for VerticalOffset: Top: The top edge of the watermark is aligned with the top border of the video. Bottom: The bottom edge of the watermark is aligned with the bottom border of the video. Center: The watermark is centered between the top and bottom borders. VerticalOffset (string) --- VerticalOffset The amount by which you want the vertical position of the watermark to be offset from the position specified by VerticalAlign: number of pixels (px): The minimum value is 0 pixels, and the maximum value is the value of MaxHeight. For example, if you specify Top for VerticalAlign and 5px for VerticalOffset, the top of the watermark appears 5 pixels from the top border of the output video. VerticalOffset is only valid when the value of VerticalAlign is Top or Bottom. If you specify an offset that causes the watermark to extend beyond the top or bottom border and Elastic Transcoder has not added black bars, the watermark is cropped. Use the value of Target to specify whether you want Elastic Transcoder to include the black bars that are added by Elastic Transcoder, if any, in the offset calculation. Opacity (string) --- A percentage that indicates how much you want a watermark to obscure the video in the location where it appears. Valid values are 0 (the watermark is invisible) to 100 (the watermark completely obscures the video in the specified location). The datatype of Opacity is float. Elastic Transcoder supports transparent .png graphics. If you use a transparent .png, the transparent portion of the video appears as if you had specified a value of 0 for Opacity. The .jpg file format doesn't support transparency. Target (string) --- A value that determines how Elastic Transcoder interprets values that you specified for HorizontalOffset, VerticalOffset, MaxWidth, and MaxHeight: Content: HorizontalOffset and VerticalOffset values are calculated based on the borders of the video excluding black bars added by Elastic Transcoder, if any. In addition, MaxWidth and MaxHeight, if specified as a percentage, are calculated based on the borders of the video excluding black bars added by Elastic Transcoder, if any. Frame: HorizontalOffset and VerticalOffset values are calculated based on the borders of the video including black bars added by Elastic Transcoder, if any. In addition, MaxWidth and MaxHeight, if specified as a percentage, are calculated based on the borders of the video including black bars added by Elastic Transcoder, if any.",
+      "nested_params": [
+        {
+          "name": "Codec",
+          "type": "string",
+          "required": false,
+          "description": "The video codec for the output file. Valid values include gif, H.264, mpeg2, vp8, and vp9. You can only specify vp8 and vp9 when the container type is webm, gif when the container type is gif, and mpeg2 when the container type is mpg.",
+          "nested_params": []
+        },
+        {
+          "name": "CodecOptions",
+          "type": "dict",
+          "required": false,
+          "description": "The H.264 profile that you want to use for the output file. Elastic Transcoder supports the following profiles:",
+          "nested_params": []
+        },
+        {
+          "name": "KeyframesMaxDist",
+          "type": "string",
+          "required": false,
+          "description": "Applicable only when the value of Video:Codec is one of H.264, MPEG2, or VP8. The maximum number of frames between key frames. Key frames are fully encoded frames; the frames between key frames are encoded based, in part, on the content of the key frames. The value is an integer formatted as a string; valid values are between 1 (every frame is a key frame) and 100000, inclusive. A higher value results in higher compression but may also discernibly decrease video quality. For Smooth outputs, the FrameRate must have a constant ratio to the KeyframesMaxDist. This allows Smooth playlists to switch between different quality levels while the file is being played. For example, an input file can have a FrameRate of 30 with a KeyframesMaxDist of 90. The output file then needs to have a ratio of 1:3. Valid outputs would have FrameRate of 30, 25, and 10, and KeyframesMaxDist of 90, 75, and 30, respectively. Alternately, this can be achieved by setting FrameRate to auto and having the same values for MaxFrameRate and KeyframesMaxDist.",
+          "nested_params": []
+        },
+        {
+          "name": "FixedGOP",
+          "type": "string",
+          "required": false,
+          "description": "Applicable only when the value of Video:Codec is one of H.264, MPEG2, or VP8. Whether to use a fixed value for FixedGOP. Valid values are true and false:",
+          "nested_params": []
+        },
+        {
+          "name": "BitRate",
+          "type": "string",
+          "required": false,
+          "description": "The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile: Level - Maximum video bit rate in kilobits/second (baseline and main Profile) : maximum video bit rate in kilobits/second (high Profile)",
+          "nested_params": []
+        },
+        {
+          "name": "FrameRate",
+          "type": "string",
+          "required": false,
+          "description": "The frames per second for the video stream in the output file. Valid values include: auto, 10, 15, 23.97, 24, 25, 29.97, 30, 60 If you specify auto, Elastic Transcoder uses the detected frame rate of the input source. If you specify a frame rate, we recommend that you perform the following calculation: Frame rate = maximum recommended decoding speed in luma samples/second / (width in pixels * height in pixels) where:",
+          "nested_params": []
+        },
+        {
+          "name": "MaxFrameRate",
+          "type": "string",
+          "required": false,
+          "description": "If you specify auto for FrameRate, Elastic Transcoder uses the frame rate of the input video for the frame rate of the output video. Specify the maximum frame rate that you want Elastic Transcoder to use when the frame rate of the input video is greater than the desired maximum frame rate of the output video. Valid values include: 10, 15, 23.97, 24, 25, 29.97, 30, 60.",
+          "nested_params": []
+        },
+        {
+          "name": "Resolution",
+          "type": "string",
+          "required": false,
+          "description": "The width and height of the video in the output file, in pixels. Valid values are auto and width x height:",
+          "nested_params": []
+        },
+        {
+          "name": "AspectRatio",
+          "type": "string",
+          "required": false,
+          "description": "The display aspect ratio of the video in the output file. Valid values include: auto, 1:1, 4:3, 3:2, 16:9 If you specify auto, Elastic Transcoder tries to preserve the aspect ratio of the input file. If you specify an aspect ratio for the output file that differs from aspect ratio of the input file, Elastic Transcoder adds pillarboxing (black bars on the sides) or letterboxing (black bars on the top and bottom) to maintain the aspect ratio of the active region of the video.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxWidth",
+          "type": "string",
+          "required": false,
+          "description": "The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxHeight",
+          "type": "string",
+          "required": false,
+          "description": "The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072.",
+          "nested_params": []
+        },
+        {
+          "name": "DisplayAspectRatio",
+          "type": "string",
+          "required": false,
+          "description": "The value that Elastic Transcoder adds to the metadata in the output file.",
+          "nested_params": []
+        },
+        {
+          "name": "SizingPolicy",
+          "type": "string",
+          "required": false,
+          "description": "Specify one of the following values to control scaling of the output video:",
+          "nested_params": []
+        },
+        {
+          "name": "PaddingPolicy",
+          "type": "string",
+          "required": false,
+          "description": "When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight.",
+          "nested_params": []
+        },
+        {
+          "name": "Watermarks",
+          "type": "list",
+          "required": false,
+          "description": "Settings for the size, location, and opacity of graphics that you want Elastic Transcoder to overlay over videos that are transcoded using this preset. You can specify settings for up to four watermarks. Watermarks appear in the specified size and location, and with the specified opacity for the duration of the transcoded video. Watermarks can be in .png or .jpg format. If you want to display a watermark that is not rectangular, use the .png format, which supports transparency. When you create a job that uses this preset, you specify the .png or .jpg graphics that you want Elastic Transcoder to include in the transcoded videos. You can specify fewer graphics in the job than you specify watermark settings in the preset, which allows you to use the same preset for up to four watermarks that have different dimensions.",
+          "nested_params": [
+            {
+              "name": "Id",
+              "type": "string",
+              "required": false,
+              "description": "A unique identifier for the settings for one watermark. The value of Id can be up to 40 characters long.",
+              "nested_params": []
+            },
+            {
+              "name": "MaxWidth",
+              "type": "string",
+              "required": false,
+              "description": "The maximum width of the watermark in one of the following formats:",
+              "nested_params": []
+            },
+            {
+              "name": "MaxHeight",
+              "type": "string",
+              "required": false,
+              "description": "The maximum height of the watermark in one of the following formats:",
+              "nested_params": []
+            },
+            {
+              "name": "SizingPolicy",
+              "type": "string",
+              "required": false,
+              "description": "A value that controls scaling of the watermark:",
+              "nested_params": [
+                {
+                  "name": "Fit",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "Stretch",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "ShrinkToFit",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "HorizontalAlign",
+              "type": "string",
+              "required": false,
+              "description": "The horizontal position of the watermark unless you specify a non-zero value for HorizontalOffset:",
+              "nested_params": [
+                {
+                  "name": "Left",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "Right",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "Center",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "HorizontalOffset",
+              "type": "string",
+              "required": false,
+              "description": "The amount by which you want the horizontal position of the watermark to be offset from the position specified by HorizontalAlign:",
+              "nested_params": []
+            },
+            {
+              "name": "VerticalAlign",
+              "type": "string",
+              "required": false,
+              "description": "The vertical position of the watermark unless you specify a non-zero value for VerticalOffset:",
+              "nested_params": [
+                {
+                  "name": "Top",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "Bottom",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "Center",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "VerticalOffset",
+              "type": "string",
+              "required": false,
+              "description": "VerticalOffset The amount by which you want the vertical position of the watermark to be offset from the position specified by VerticalAlign:",
+              "nested_params": []
+            },
+            {
+              "name": "Opacity",
+              "type": "string",
+              "required": false,
+              "description": "A percentage that indicates how much you want a watermark to obscure the video in the location where it appears. Valid values are 0 (the watermark is invisible) to 100 (the watermark completely obscures the video in the specified location). The datatype of Opacity is float. Elastic Transcoder supports transparent .png graphics. If you use a transparent .png, the transparent portion of the video appears as if you had specified a value of 0 for Opacity. The .jpg file format doesn't support transparency.",
+              "nested_params": []
+            },
+            {
+              "name": "Target",
+              "type": "string",
+              "required": false,
+              "description": "A value that determines how Elastic Transcoder interprets values that you specified for HorizontalOffset, VerticalOffset, MaxWidth, and MaxHeight:",
+              "nested_params": [
+                {
+                  "name": "Content",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "Frame",
+                  "type": "",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Audio",
+      "type": "dict",
+      "required": false,
+      "description": "A section of the request body that specifies the audio parameters. Codec (string) --- The audio codec for the output file. Valid values include aac, flac, mp2, mp3, pcm, and vorbis. SampleRate (string) --- The sample rate of the audio stream in the output file, in Hertz. Valid values include: auto, 22050, 32000, 44100, 48000, 96000 If you specify auto, Elastic Transcoder automatically detects the sample rate. BitRate (string) --- The bit rate of the audio stream in the output file, in kilobits/second. Enter an integer between 64 and 320, inclusive. Channels (string) --- The number of audio channels in the output file. The following values are valid: auto, 0, 1, 2 One channel carries the information played by a single speaker. For example, a stereo track with two channels sends one channel to the left speaker, and the other channel to the right speaker. The output channels are organized into tracks. If you want Elastic Transcoder to automatically detect the number of audio channels in the input file and use that value for the output file, select auto. The output of a specific channel value and inputs are as follows: auto channel specified, with any input: Pass through up to eight input channels. 0 channels specified, with any input: Audio omitted from the output. 1 channel specified, with at least one input channel: Mono sound. 2 channels specified, with any input: Two identical mono channels or stereo. For more information about tracks, see Audio:AudioPackingMode. For more information about how Elastic Transcoder organizes channels and tracks, see Audio:AudioPackingMode. AudioPackingMode (string) --- The method of organizing audio channels and tracks. Use Audio:Channels to specify the number of channels in your output, and Audio:AudioPackingMode to specify the number of tracks and their relation to the channels. If you do not specify an Audio:AudioPackingMode, Elastic Transcoder uses SingleTrack. The following values are valid: SingleTrack, OneChannelPerTrack, and OneChannelPerTrackWithMosTo8Tracks When you specify SingleTrack, Elastic Transcoder creates a single track for your output. The track can have up to eight channels. Use SingleTrack for all non- mxf containers. The outputs of SingleTrack for a specific channel value and inputs are as follows: 0 channels with any input: Audio omitted from the output 1, 2, or auto channels with no audio input: Audio omitted from the output 1 channel with any input with audio: One track with one channel, downmixed if necessary 2 channels with one track with one channel: One track with two identical channels 2 or auto channels with two tracks with one channel each: One track with two channels 2 or auto channels with one track with two channels: One track with two channels 2 channels with one track with multiple channels: One track with two channels auto channels with one track with one channel: One track with one channel auto channels with one track with multiple channels: One track with multiple channels When you specify OneChannelPerTrack, Elastic Transcoder creates a new track for every channel in your output. Your output can have up to eight single-channel tracks. The outputs of OneChannelPerTrack for a specific channel value and inputs are as follows: 0 channels with any input: Audio omitted from the output 1, 2, or auto channels with no audio input: Audio omitted from the output 1 channel with any input with audio: One track with one channel, downmixed if necessary 2 channels with one track with one channel: Two tracks with one identical channel each 2 or auto channels with two tracks with one channel each: Two tracks with one channel each 2 or auto channels with one track with two channels: Two tracks with one channel each 2 channels with one track with multiple channels: Two tracks with one channel each auto channels with one track with one channel: One track with one channel auto channels with one track with multiple channels: Up to eight tracks with one channel each When you specify OneChannelPerTrackWithMosTo8Tracks, Elastic Transcoder creates eight single-channel tracks for your output. All tracks that do not contain audio data from an input channel are MOS, or Mit Out Sound, tracks. The outputs of OneChannelPerTrackWithMosTo8Tracks for a specific channel value and inputs are as follows: 0 channels with any input: Audio omitted from the output 1, 2, or auto channels with no audio input: Audio omitted from the output 1 channel with any input with audio: One track with one channel, downmixed if necessary, plus six MOS tracks 2 channels with one track with one channel: Two tracks with one identical channel each, plus six MOS tracks 2 or auto channels with two tracks with one channel each: Two tracks with one channel each, plus six MOS tracks 2 or auto channels with one track with two channels: Two tracks with one channel each, plus six MOS tracks 2 channels with one track with multiple channels: Two tracks with one channel each, plus six MOS tracks auto channels with one track with one channel: One track with one channel, plus seven MOS tracks auto channels with one track with multiple channels: Up to eight tracks with one channel each, plus MOS tracks until there are eight tracks in all CodecOptions (dict) --- If you specified AAC for Audio:Codec, this is the AAC compression profile to use. Valid values include: auto, AAC-LC, HE-AAC, HE-AACv2 If you specify auto, Elastic Transcoder chooses a profile based on the bit rate of the output file. Profile (string) --- You can only choose an audio profile when you specify AAC for the value of Audio:Codec. Specify the AAC profile for the output file. Elastic Transcoder supports the following profiles: auto: If you specify auto, Elastic Transcoder selects the profile based on the bit rate selected for the output file. AAC-LC: The most common AAC profile. Use for bit rates larger than 64 kbps. HE-AAC: Not supported on some older players and devices. Use for bit rates between 40 and 80 kbps. HE-AACv2: Not supported on some players and devices. Use for bit rates less than 48 kbps. All outputs in a Smooth playlist must have the same value for Profile. BitDepth (string) --- You can only choose an audio bit depth when you specify flac or pcm for the value of Audio:Codec. The bit depth of a sample is how many bits of information are included in the audio samples. The higher the bit depth, the better the audio, but the larger the file. Valid values are 16 and 24. The most common bit depth is 24. BitOrder (string) --- You can only choose an audio bit order when you specify pcm for the value of Audio:Codec. The order the bits of a PCM sample are stored in. The supported value is LittleEndian. Signed (string) --- You can only choose whether an audio sample is signed when you specify pcm for the value of Audio:Codec. Whether audio samples are represented with negative and positive numbers (signed) or only positive numbers (unsigned). The supported value is Signed.",
+      "nested_params": [
+        {
+          "name": "Codec",
+          "type": "string",
+          "required": false,
+          "description": "The audio codec for the output file. Valid values include aac, flac, mp2, mp3, pcm, and vorbis.",
+          "nested_params": []
+        },
+        {
+          "name": "SampleRate",
+          "type": "string",
+          "required": false,
+          "description": "The sample rate of the audio stream in the output file, in Hertz. Valid values include: auto, 22050, 32000, 44100, 48000, 96000 If you specify auto, Elastic Transcoder automatically detects the sample rate.",
+          "nested_params": []
+        },
+        {
+          "name": "BitRate",
+          "type": "string",
+          "required": false,
+          "description": "The bit rate of the audio stream in the output file, in kilobits/second. Enter an integer between 64 and 320, inclusive.",
+          "nested_params": []
+        },
+        {
+          "name": "Channels",
+          "type": "string",
+          "required": false,
+          "description": "The number of audio channels in the output file. The following values are valid: auto, 0, 1, 2 One channel carries the information played by a single speaker. For example, a stereo track with two channels sends one channel to the left speaker, and the other channel to the right speaker. The output channels are organized into tracks. If you want Elastic Transcoder to automatically detect the number of audio channels in the input file and use that value for the output file, select auto. The output of a specific channel value and inputs are as follows:",
+          "nested_params": [
+            {
+              "name": "channel specified, with any input:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels specified, with any input:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channel specified, with at least one input channel:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels specified, with any input:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AudioPackingMode",
+          "type": "string",
+          "required": false,
+          "description": "The method of organizing audio channels and tracks. Use Audio:Channels to specify the number of channels in your output, and Audio:AudioPackingMode to specify the number of tracks and their relation to the channels. If you do not specify an Audio:AudioPackingMode, Elastic Transcoder uses SingleTrack. The following values are valid: SingleTrack, OneChannelPerTrack, and OneChannelPerTrackWithMosTo8Tracks When you specify SingleTrack, Elastic Transcoder creates a single track for your output. The track can have up to eight channels. Use SingleTrack for all non- mxf containers. The outputs of SingleTrack for a specific channel value and inputs are as follows:",
+          "nested_params": [
+            {
+              "name": "channels with any input:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with no audio input:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channel with any input with audio:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with one track with one channel:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with two tracks with one channel each:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with one track with two channels:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with one track with multiple channels:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with one track with one channel:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "channels with one track with multiple channels:",
+              "type": "",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "CodecOptions",
+          "type": "dict",
+          "required": false,
+          "description": "If you specified AAC for Audio:Codec, this is the AAC compression profile to use. Valid values include: auto, AAC-LC, HE-AAC, HE-AACv2 If you specify auto, Elastic Transcoder chooses a profile based on the bit rate of the output file.",
+          "nested_params": [
+            {
+              "name": "Profile",
+              "type": "string",
+              "required": false,
+              "description": "You can only choose an audio profile when you specify AAC for the value of Audio:Codec. Specify the AAC profile for the output file. Elastic Transcoder supports the following profiles:",
+              "nested_params": []
+            },
+            {
+              "name": "BitDepth",
+              "type": "string",
+              "required": false,
+              "description": "You can only choose an audio bit depth when you specify flac or pcm for the value of Audio:Codec. The bit depth of a sample is how many bits of information are included in the audio samples. The higher the bit depth, the better the audio, but the larger the file. Valid values are 16 and 24. The most common bit depth is 24.",
+              "nested_params": []
+            },
+            {
+              "name": "BitOrder",
+              "type": "string",
+              "required": false,
+              "description": "You can only choose an audio bit order when you specify pcm for the value of Audio:Codec. The order the bits of a PCM sample are stored in. The supported value is LittleEndian.",
+              "nested_params": []
+            },
+            {
+              "name": "Signed",
+              "type": "string",
+              "required": false,
+              "description": "You can only choose whether an audio sample is signed when you specify pcm for the value of Audio:Codec. Whether audio samples are represented with negative and positive numbers (signed) or only positive numbers (unsigned). The supported value is Signed.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thumbnails",
+      "type": "dict",
+      "required": false,
+      "description": "A section of the request body that specifies the thumbnail parameters, if any. Format (string) --- The format of thumbnails, if any. Valid values are jpg and png. You specify whether you want Elastic Transcoder to create thumbnails when you create a job. Interval (string) --- The approximate number of seconds between thumbnails. Specify an integer value. Resolution (string) --- The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object. AspectRatio (string) --- The aspect ratio of thumbnails. Valid values include: auto, 1:1, 4:3, 3:2, 16:9 If you specify auto, Elastic Transcoder tries to preserve the aspect ratio of the video in the output file. MaxWidth (string) --- The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096. MaxHeight (string) --- The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072. SizingPolicy (string) --- Specify one of the following values to control scaling of thumbnails: Fit: Elastic Transcoder scales thumbnails so they match the value that you specified in thumbnail MaxWidth or MaxHeight settings without exceeding the other value. Fill: Elastic Transcoder scales thumbnails so they match the value that you specified in thumbnail MaxWidth or MaxHeight settings and matches or exceeds the other value. Elastic Transcoder centers the image in thumbnails and then crops in the dimension (if any) that exceeds the maximum value. Stretch: Elastic Transcoder stretches thumbnails to match the values that you specified for thumbnail MaxWidth and MaxHeight settings. If the relative proportions of the input video and thumbnails are different, the thumbnails will be distorted. Keep: Elastic Transcoder does not scale thumbnails. If either dimension of the input video exceeds the values that you specified for thumbnail MaxWidth and MaxHeight settings, Elastic Transcoder crops the thumbnails. ShrinkToFit: Elastic Transcoder scales thumbnails down so that their dimensions match the values that you specified for at least one of thumbnail MaxWidth and MaxHeight without exceeding either value. If you specify this option, Elastic Transcoder does not scale thumbnails up. ShrinkToFill: Elastic Transcoder scales thumbnails down so that their dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without dropping below either value. PaddingPolicy (string) --- When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.",
+      "nested_params": [
+        {
+          "name": "Format",
+          "type": "string",
+          "required": false,
+          "description": "The format of thumbnails, if any. Valid values are jpg and png. You specify whether you want Elastic Transcoder to create thumbnails when you create a job.",
+          "nested_params": []
+        },
+        {
+          "name": "Interval",
+          "type": "string",
+          "required": false,
+          "description": "The approximate number of seconds between thumbnails. Specify an integer value.",
+          "nested_params": []
+        },
+        {
+          "name": "Resolution",
+          "type": "string",
+          "required": false,
+          "description": "The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object.",
+          "nested_params": []
+        },
+        {
+          "name": "AspectRatio",
+          "type": "string",
+          "required": false,
+          "description": "The aspect ratio of thumbnails. Valid values include: auto, 1:1, 4:3, 3:2, 16:9 If you specify auto, Elastic Transcoder tries to preserve the aspect ratio of the video in the output file.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxWidth",
+          "type": "string",
+          "required": false,
+          "description": "The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxHeight",
+          "type": "string",
+          "required": false,
+          "description": "The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072.",
+          "nested_params": []
+        },
+        {
+          "name": "SizingPolicy",
+          "type": "string",
+          "required": false,
+          "description": "Specify one of the following values to control scaling of thumbnails:",
+          "nested_params": []
+        },
+        {
+          "name": "PaddingPolicy",
+          "type": "string",
+          "required": false,
+          "description": "When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "Id",
+              "type": "string",
+              "description": "Identifier for the new preset. You use this value to get settings for the preset or to delete it.",
+              "nested_items": []
+            },
+            {
+              "name": "Arn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) for the preset.",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "The name of the preset.",
+              "nested_items": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "description": "A description of the preset.",
+              "nested_items": []
+            },
+            {
+              "name": "Container",
+              "type": "string",
+              "description": "The container type for the output file. Valid values include flac, flv, fmp4, gif, mp3, mp4, mpg, mxf, oga, ogg, ts, and webm.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Codec",
+                  "type": "string",
+                  "description": "The audio codec for the output file. Valid values include aac, flac, mp2, mp3, pcm, and vorbis.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SampleRate",
+                  "type": "string",
+                  "description": "The sample rate of the audio stream in the output file, in Hertz. Valid values include:",
+                  "nested_items": []
+                },
+                {
+                  "name": "BitRate",
+                  "type": "string",
+                  "description": "The bit rate of the audio stream in the output file, in kilobits/second. Enter an integer between 64 and 320, inclusive.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Channels",
+                  "type": "string",
+                  "description": "The number of audio channels in the output file. The following values are valid:",
+                  "nested_items": [
+                    {
+                      "name": "channel specified, with any input:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels specified, with any input:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channel specified, with at least one input channel:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels specified, with any input:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AudioPackingMode",
+                  "type": "string",
+                  "description": "The method of organizing audio channels and tracks. Use Audio:Channels to specify the number of channels in your output, and Audio:AudioPackingMode to specify the number of tracks and their relation to the channels. If you do not specify an Audio:AudioPackingMode, Elastic Transcoder uses SingleTrack.",
+                  "nested_items": [
+                    {
+                      "name": "channels with any input:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with no audio input:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channel with any input with audio:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with one track with one channel:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with two tracks with one channel each:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with one track with two channels:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with one track with multiple channels:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with one track with one channel:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "channels with one track with multiple channels:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CodecOptions",
+                  "type": "dict",
+                  "description": "If you specified AAC for Audio:Codec, this is the AAC compression profile to use. Valid values include:",
+                  "nested_items": [
+                    {
+                      "name": "Profile",
+                      "type": "string",
+                      "description": "You can only choose an audio profile when you specify AAC for the value of Audio:Codec.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "auto: If you specify auto, Elastic Transcoder selects the profile based on the bit rate selected for the output file.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "AAC-LC: The most common AAC profile. Use for bit rates larger than 64 kbps.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HE-AAC: Not supported on some older players and devices. Use for bit rates between 40 and 80 kbps.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HE-AACv2: Not supported on some players and devices. Use for bit rates less than 48 kbps.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "BitDepth",
+                      "type": "string",
+                      "description": "You can only choose an audio bit depth when you specify flac or pcm for the value of Audio:Codec.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BitOrder",
+                      "type": "string",
+                      "description": "You can only choose an audio bit order when you specify pcm for the value of Audio:Codec.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Signed",
+                      "type": "string",
+                      "description": "You can only choose whether an audio sample is signed when you specify pcm for the value of Audio:Codec.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Codec",
+                  "type": "string",
+                  "description": "The video codec for the output file. Valid values include gif, H.264, mpeg2, vp8, and vp9. You can only specify vp8 and vp9 when the container type is webm, gif when the container type is gif, and mpeg2 when the container type is mpg.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CodecOptions",
+                  "type": "dict",
+                  "description": "The H.264 profile that you want to use for the output file. Elastic Transcoder supports the following profiles:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "baseline: The profile most commonly used for videoconferencing and for mobile applications.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "main: The profile used for standard-definition digital TV broadcasts.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "high: The profile used for high-definition digital TV broadcasts and for Blu-ray discs.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "KeyframesMaxDist",
+                  "type": "string",
+                  "description": "Applicable only when the value of Video:Codec is one of H.264, MPEG2, or VP8.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FixedGOP",
+                  "type": "string",
+                  "description": "Applicable only when the value of Video:Codec is one of H.264, MPEG2, or VP8.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "the number of frames in a group of pictures, or GOP",
+                      "description": "true: Elastic Transcoder uses the value of KeyframesMaxDist for the distance between key frames (the number of frames in a group of pictures, or GOP).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "false: The distance between key frames can vary.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BitRate",
+                  "type": "string",
+                  "description": "The bit rate of the video stream in the output file, in kilobits/second. Valid values depend on the values of Level and Profile. If you specify auto, Elastic Transcoder uses the detected bit rate of the input source. If you specify a value other than auto, we recommend that you specify a value less than or equal to the maximum H.264-compliant value listed for your level and profile:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "1 - 64 : 80",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "1b - 128 : 160",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "1.1 - 192 : 240",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "1.2 - 384 : 480",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "1.3 - 768 : 960",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "2 - 2000 : 2500",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "3 - 10000 : 12500",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "3.1 - 14000 : 17500",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "3.2 - 20000 : 25000",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "4 - 20000 : 25000",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "4.1 - 50000 : 62500",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "FrameRate",
+                  "type": "string",
+                  "description": "The frames per second for the video stream in the output file. Valid values include:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "width in pixels and height in pixels represent the Resolution of the output video.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "maximum recommended decoding speed in Luma samples/second is less than or equal to the maximum value listed in the following table, based on the value that you specified for Level.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MaxFrameRate",
+                  "type": "string",
+                  "description": "If you specify auto for FrameRate, Elastic Transcoder uses the frame rate of the input video for the frame rate of the output video. Specify the maximum frame rate that you want Elastic Transcoder to use when the frame rate of the input video is greater than the desired maximum frame rate of the output video. Valid values include: 10, 15, 23.97, 24, 25, 29.97, 30, 60.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Resolution",
+                  "type": "string",
+                  "description": "The width and height of the video in the output file, in pixels. Valid values are auto and width x height:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "auto: Elastic Transcoder attempts to preserve the width and height of the input file, subject to the following rules.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "``width x height ``: The width and height of the output video in pixels.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AspectRatio",
+                  "type": "string",
+                  "description": "The display aspect ratio of the video in the output file. Valid values include:",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxWidth",
+                  "type": "string",
+                  "description": "The maximum width of the output video in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 128 and 4096.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxHeight",
+                  "type": "string",
+                  "description": "The maximum height of the output video in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 96 and 3072.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DisplayAspectRatio",
+                  "type": "string",
+                  "description": "The value that Elastic Transcoder adds to the metadata in the output file.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SizingPolicy",
+                  "type": "string",
+                  "description": "Specify one of the following values to control scaling of the output video:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Fit: Elastic Transcoder scales the output video so it matches the value that you specified in either MaxWidth or MaxHeight without exceeding the other value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "if any",
+                      "description": "Fill: Elastic Transcoder scales the output video so it matches the value that you specified in either MaxWidth or MaxHeight and matches or exceeds the other value. Elastic Transcoder centers the output video and then crops it in the dimension (if any) that exceeds the maximum value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Stretch: Elastic Transcoder stretches the output video to match the values that you specified for MaxWidth and MaxHeight. If the relative proportions of the input video and the output video are different, the output video will be distorted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Keep: Elastic Transcoder does not scale the output video. If either dimension of the input video exceeds the values that you specified for MaxWidth and MaxHeight, Elastic Transcoder crops the output video.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ShrinkToFit: Elastic Transcoder scales the output video down so that its dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without exceeding either value. If you specify this option, Elastic Transcoder does not scale the video up.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ShrinkToFill: Elastic Transcoder scales the output video down so that its dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without dropping below either value. If you specify this option, Elastic Transcoder does not scale the video up.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "PaddingPolicy",
+                  "type": "string",
+                  "description": "When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of the output video to make the total size of the output video match the values that you specified for MaxWidth and MaxHeight.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Watermarks",
+                  "type": "list",
+                  "description": "Settings for the size, location, and opacity of graphics that you want Elastic Transcoder to overlay over videos that are transcoded using this preset. You can specify settings for up to four watermarks. Watermarks appear in the specified size and location, and with the specified opacity for the duration of the transcoded video.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Id",
+                          "type": "string",
+                          "description": "A unique identifier for the settings for one watermark. The value of Id can be up to 40 characters long.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaxWidth",
+                          "type": "string",
+                          "description": "The maximum width of the watermark in one of the following formats:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "px",
+                              "description": "number of pixels (px): The minimum value is 16 pixels, and the maximum value is the value of MaxWidth.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "%",
+                              "description": "integer percentage (%): The range of valid values is 0 to 100. Use the value of Target to specify whether you want Elastic Transcoder to include the black bars that are added by Elastic Transcoder, if any, in the calculation. If you specify the value in pixels, it must be less than or equal to the value of MaxWidth.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "MaxHeight",
+                          "type": "string",
+                          "description": "The maximum height of the watermark in one of the following formats:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "px",
+                              "description": "number of pixels (px): The minimum value is 16 pixels, and the maximum value is the value of MaxHeight.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "%",
+                              "description": "integer percentage (%): The range of valid values is 0 to 100. Use the value of Target to specify whether you want Elastic Transcoder to include the black bars that are added by Elastic Transcoder, if any, in the calculation.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "SizingPolicy",
+                          "type": "string",
+                          "description": "A value that controls scaling of the watermark:",
+                          "nested_items": [
+                            {
+                              "name": "Fit",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Stretch",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ShrinkToFit",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HorizontalAlign",
+                          "type": "string",
+                          "description": "The horizontal position of the watermark unless you specify a non-zero value for HorizontalOffset:",
+                          "nested_items": [
+                            {
+                              "name": "Left",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Right",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Center",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HorizontalOffset",
+                          "type": "string",
+                          "description": "The amount by which you want the horizontal position of the watermark to be offset from the position specified by HorizontalAlign:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "px",
+                              "description": "number of pixels (px): The minimum value is 0 pixels, and the maximum value is the value of MaxWidth.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "%",
+                              "description": "integer percentage (%): The range of valid values is 0 to 100.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "VerticalAlign",
+                          "type": "string",
+                          "description": "The vertical position of the watermark unless you specify a non-zero value for VerticalOffset:",
+                          "nested_items": [
+                            {
+                              "name": "Top",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Bottom",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Center",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "VerticalOffset",
+                          "type": "string",
+                          "description": "VerticalOffset.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "px",
+                              "description": "number of pixels (px): The minimum value is 0 pixels, and the maximum value is the value of MaxHeight.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "%",
+                              "description": "integer percentage (%): The range of valid values is 0 to 100.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Opacity",
+                          "type": "string",
+                          "description": "A percentage that indicates how much you want a watermark to obscure the video in the location where it appears. Valid values are 0 (the watermark is invisible) to 100 (the watermark completely obscures the video in the specified location). The datatype of Opacity is float.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Target",
+                          "type": "string",
+                          "description": "A value that determines how Elastic Transcoder interprets values that you specified for HorizontalOffset, VerticalOffset, MaxWidth, and MaxHeight:",
+                          "nested_items": [
+                            {
+                              "name": "Content",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Frame",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Thumbnails",
+              "type": "dict",
+              "description": "A section of the response body that provides information about the thumbnail preset values, if any.",
+              "nested_items": [
+                {
+                  "name": "Format",
+                  "type": "string",
+                  "description": "The format of thumbnails, if any. Valid values are jpg and png.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Interval",
+                  "type": "string",
+                  "description": "The approximate number of seconds between thumbnails. Specify an integer value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Resolution",
+                  "type": "string",
+                  "description": "The width and height of thumbnail files in pixels. Specify a value in the format width x height where both values are even integers. The values cannot exceed the width and height that you specified in the Video:Resolution object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AspectRatio",
+                  "type": "string",
+                  "description": "The aspect ratio of thumbnails. Valid values include:",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxWidth",
+                  "type": "string",
+                  "description": "The maximum width of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1920 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 4096.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxHeight",
+                  "type": "string",
+                  "description": "The maximum height of thumbnails in pixels. If you specify auto, Elastic Transcoder uses 1080 (Full HD) as the default value. If you specify a numeric value, enter an even integer between 32 and 3072.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SizingPolicy",
+                  "type": "string",
+                  "description": "Specify one of the following values to control scaling of thumbnails:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Fit: Elastic Transcoder scales thumbnails so they match the value that you specified in thumbnail MaxWidth or MaxHeight settings without exceeding the other value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "if any",
+                      "description": "Fill: Elastic Transcoder scales thumbnails so they match the value that you specified in thumbnail MaxWidth or MaxHeight settings and matches or exceeds the other value. Elastic Transcoder centers the image in thumbnails and then crops in the dimension (if any) that exceeds the maximum value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Stretch: Elastic Transcoder stretches thumbnails to match the values that you specified for thumbnail MaxWidth and MaxHeight settings. If the relative proportions of the input video and thumbnails are different, the thumbnails will be distorted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Keep: Elastic Transcoder does not scale thumbnails. If either dimension of the input video exceeds the values that you specified for thumbnail MaxWidth and MaxHeight settings, Elastic Transcoder crops the thumbnails.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ShrinkToFit: Elastic Transcoder scales thumbnails down so that their dimensions match the values that you specified for at least one of thumbnail MaxWidth and MaxHeight without exceeding either value. If you specify this option, Elastic Transcoder does not scale thumbnails up.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ShrinkToFill: Elastic Transcoder scales thumbnails down so that their dimensions match the values that you specified for at least one of MaxWidth and MaxHeight without dropping below either value. If you specify this option, Elastic Transcoder does not scale thumbnails up.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "PaddingPolicy",
+                  "type": "string",
+                  "description": "When you set PaddingPolicy to Pad, Elastic Transcoder may add black bars to the top and bottom and/or left and right sides of thumbnails to make the total size of the thumbnails match the values that you specified for thumbnail MaxWidth and MaxHeight settings.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Type",
+              "type": "string",
+              "description": "Whether the preset is a default preset provided by Elastic Transcoder ( System) or a preset that you have defined ( Custom).",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Warning",
+          "type": "string",
+          "description": "If the preset settings don't comply with the standards for the video codec but Elastic Transcoder created the preset, this message explains the reason the preset settings don't meet the standard. Elastic Transcoder created the preset because the settings might produce acceptable output.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

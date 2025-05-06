@@ -1,0 +1,62 @@
+{
+  "method_name": "put_lifecycle_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/efs/client/put_lifecycle_configuration.html",
+  "description": "Use this action to manage storage for your file system. A LifecycleConfiguration consists of one or more LifecyclePolicy objects that define the following: For more information, see Managing file system storage. Each Amazon EFS file system supports one lifecycle configuration, which applies to all files in the file system. If a LifecycleConfiguration object already exists for the specified file system, a PutLifecycleConfiguration call modifies the existing configuration. A PutLifecycleConfiguration call with an empty LifecyclePolicies array in the request body deletes any existing LifecycleConfiguration. In the request, specify the following: This operation requires permissions for the elasticfilesystem:PutLifecycleConfiguration operation. To apply a LifecycleConfiguration object to an encrypted file system, you need the same Key Management Service permissions as when you created the encrypted file system.",
+  "parameters": [
+    {
+      "name": "FileSystemId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the file system for which you are creating the LifecycleConfiguration object (String).",
+      "nested_params": []
+    },
+    {
+      "name": "LifecyclePolicies",
+      "type": "list",
+      "required": true,
+      "description": "An array of LifecyclePolicy objects that define the file system's LifecycleConfiguration object. A LifecycleConfiguration object informs lifecycle management of the following: TransitionToIA --- When to move files in the file system from primary storage (Standard storage class) into the Infrequent Access (IA) storage. TransitionToArchive --- When to move files in the file system from their current storage class (either IA or Standard storage) into the Archive storage. File systems cannot transition into Archive storage before transitioning into IA storage. Therefore, TransitionToArchive must either not be set or must be later than TransitionToIA. TransitionToPrimaryStorageClass --- Whether to move files in the file system back to primary storage (Standard storage class) after they are accessed in IA or Archive storage. (dict) --- Describes a policy used by lifecycle management that specifies when to transition files into and out of storage classes. For more information, see Managing file system storage. TransitionToIA (string) --- The number of days after files were last accessed in primary storage (the Standard storage class) at which to move them to Infrequent Access (IA) storage. Metadata operations such as listing the contents of a directory don't count as file access events. TransitionToPrimaryStorageClass (string) --- Whether to move files back to primary (Standard) storage after they are accessed in IA or Archive storage. TransitionToArchive (string) --- The number of days after files were last accessed in primary storage (the Standard storage class) at which to move them to Archive storage. Metadata operations such as listing the contents of a directory don't count as file access events.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "LifecyclePolicies",
+          "type": "list",
+          "description": "An array of lifecycle management policies. EFS supports a maximum of one policy per file system.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "TransitionToIA",
+                  "type": "string",
+                  "description": "The number of days after files were last accessed in primary storage (the Standard storage class) at which to move them to Infrequent Access (IA) storage. Metadata operations such as listing the contents of a directory don't count as file access events.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TransitionToPrimaryStorageClass",
+                  "type": "string",
+                  "description": "Whether to move files back to primary (Standard) storage after they are accessed in IA or Archive storage. Metadata operations such as listing the contents of a directory don't count as file access events.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TransitionToArchive",
+                  "type": "string",
+                  "description": "The number of days after files were last accessed in primary storage (the Standard storage class) at which to move them to Archive storage. Metadata operations such as listing the contents of a directory don't count as file access events.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

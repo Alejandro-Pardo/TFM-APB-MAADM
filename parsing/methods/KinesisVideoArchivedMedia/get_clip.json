@@ -1,0 +1,79 @@
+{
+  "method_name": "get_clip",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis-video-archived-media/client/get_clip.html",
+  "description": "Downloads an MP4 file (clip) containing the archived, on-demand media from the specified video stream over the specified time range. Both the StreamName and the StreamARN parameters are optional, but you must specify either the StreamName or the StreamARN when invoking this API operation. As a prerequisite to using GetCLip API, you must obtain an endpoint using GetDataEndpoint, specifying GET_CLIP for  the APIName parameter. An Amazon Kinesis video stream has the following requirements for providing data through MP4: You can monitor the amount of outgoing data by monitoring the GetClip.OutgoingBytes Amazon CloudWatch metric. For information about using CloudWatch to monitor Kinesis Video Streams, see Monitoring Kinesis Video Streams. For pricing information, see Amazon Kinesis Video Streams Pricing and Amazon Web Services Pricing. Charges for outgoing Amazon Web Services data apply.",
+  "parameters": [
+    {
+      "name": "StreamName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the stream for which to retrieve the media clip. You must specify either the StreamName or the StreamARN.",
+      "nested_params": []
+    },
+    {
+      "name": "StreamARN",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Resource Name (ARN) of the stream for which to retrieve the media clip. You must specify either the StreamName or the StreamARN.",
+      "nested_params": []
+    },
+    {
+      "name": "ClipFragmentSelector",
+      "type": "dict",
+      "required": true,
+      "description": "The time range of the requested clip and the source of the timestamps. The origin of the timestamps to use (Server or Producer). The range of timestamps to return. The starting timestamp in the range of timestamps for which to return fragments. Only fragments that start exactly at or after StartTimestamp are included in the session. Fragments that start before StartTimestamp and continue past it aren't included in the session. If FragmentSelectorType is SERVER_TIMESTAMP, the StartTimestamp must be later than the stream head. The end of the timestamp range for the requested media. This value must be within 24 hours of the specified StartTimestamp, and it must be later than the StartTimestamp value. If FragmentSelectorType for the request is SERVER_TIMESTAMP, this value must be in the past. This value is inclusive. The EndTimestamp is compared to the (starting) timestamp of the fragment. Fragments that start before the EndTimestamp value and continue past it are included in the session.",
+      "nested_params": [
+        {
+          "name": "FragmentSelectorType",
+          "type": "string",
+          "required": false,
+          "description": "The origin of the timestamps to use (Server or Producer).",
+          "nested_params": []
+        },
+        {
+          "name": "TimestampRange",
+          "type": "dict",
+          "required": false,
+          "description": "The range of timestamps to return.",
+          "nested_params": [
+            {
+              "name": "StartTimestamp",
+              "type": "datetime",
+              "required": false,
+              "description": "The starting timestamp in the range of timestamps for which to return fragments. Only fragments that start exactly at or after StartTimestamp are included in the session. Fragments that start before StartTimestamp and continue past it aren't included in the session. If FragmentSelectorType is SERVER_TIMESTAMP, the StartTimestamp must be later than the stream head.",
+              "nested_params": []
+            },
+            {
+              "name": "EndTimestamp",
+              "type": "datetime",
+              "required": false,
+              "description": "The end of the timestamp range for the requested media. This value must be within 24 hours of the specified StartTimestamp, and it must be later than the StartTimestamp value. If FragmentSelectorType for the request is SERVER_TIMESTAMP, this value must be in the past. This value is inclusive. The EndTimestamp is compared to the (starting) timestamp of the fragment. Fragments that start before the EndTimestamp value and continue past it are included in the session.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ContentType",
+          "type": "string",
+          "description": "The content type of the media in the requested clip.",
+          "nested_items": []
+        },
+        {
+          "name": "Payload",
+          "type": "StreamingBody",
+          "description": "Traditional MP4 file that contains the media clip from the specified video stream. The output will contain the first 100 MB or the first 200 fragments from the specified start timestamp. For more information, see Kinesis Video Streams Limits.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

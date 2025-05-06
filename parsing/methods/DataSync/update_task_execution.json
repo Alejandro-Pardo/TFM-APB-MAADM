@@ -1,0 +1,135 @@
+{
+  "method_name": "update_task_execution",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/datasync/client/update_task_execution.html",
+  "description": "Updates the configuration of a running DataSync task execution.",
+  "parameters": [
+    {
+      "name": "TaskExecutionArn",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the Amazon Resource Name (ARN) of the task execution that you're updating.",
+      "nested_params": []
+    },
+    {
+      "name": "Options",
+      "type": "dict",
+      "required": true,
+      "description": "Indicates how your transfer task is configured. These options include how DataSync handles files, objects, and their associated metadata during your transfer. You also can specify how to verify data integrity, set bandwidth limits for your task, among other options. Each option has a default value. Unless you need to, you don't have to configure any option before calling StartTaskExecution. You also can override your task options for each task execution. For example, you might want to adjust the LogLevel for an individual execution. VerifyMode (string) --- Specifies if and how DataSync checks the integrity of your data at the end of your transfer. ONLY_FILES_TRANSFERRED (recommended) - DataSync calculates the checksum of transferred data (including metadata) at the source location. At the end of the transfer, DataSync then compares this checksum to the checksum calculated on that data at the destination. POINT_IN_TIME_CONSISTENT - At the end of the transfer, DataSync checks the entire source and destination to verify that both locations are fully synchronized. NONE - DataSync performs data integrity checks only during your transfer. Unlike other options, there's no additional verification at the end of your transfer. OverwriteMode (string) --- Specifies whether DataSync should modify or preserve data at the destination location. ALWAYS (default) - DataSync modifies data in the destination location when source data (including metadata) has changed. If DataSync overwrites objects, you might incur additional charges for certain Amazon S3 storage classes (for example, for retrieval or early deletion). For more information, see Storage class considerations with Amazon S3 transfers. NEVER - DataSync doesn't overwrite data in the destination location even if the source data has changed. You can use this option to protect against overwriting changes made to files or objects in the destination. Atime (string) --- Specifies whether to preserve metadata indicating the last time a file was read or written to. BEST_EFFORT (default) - DataSync attempts to preserve the original Atime attribute on all source files (that is, the version before the PREPARING steps of the task execution). This option is recommended. NONE - Ignores Atime. Mtime (string) --- Specifies whether to preserve metadata indicating the last time that a file was written to before the PREPARING step of your task execution. This option is required when you need to run the a task more than once. PRESERVE (default) - Preserves original Mtime, which is recommended. NONE - Ignores Mtime. Uid (string) --- Specifies the POSIX user ID (UID) of the file's owner. INT_VALUE (default) - Preserves the integer value of UID and group ID (GID), which is recommended. NONE - Ignores UID and GID. For more information, see Metadata copied by DataSync. Gid (string) --- Specifies the POSIX group ID (GID) of the file's owners. INT_VALUE (default) - Preserves the integer value of user ID (UID) and GID, which is recommended. For more information, see Understanding how DataSync handles file and object metadata. PreserveDeletedFiles (string) --- Specifies whether files in the destination location that don't exist in the source should be preserved. This option can affect your Amazon S3 storage cost. If your task deletes objects, you might incur minimum storage duration charges for certain storage classes. For detailed information, see Considerations when working with Amazon S3 storage classes in DataSync. PRESERVE (default) - Ignores such destination files, which is recommended. REMOVE - Deletes destination files that aren't present in the source. PreserveDevices (string) --- Specifies whether DataSync should preserve the metadata of block and character devices in the source location and recreate the files with that device name and metadata on the destination. DataSync copies only the name and metadata of such devices. NONE (default) - Ignores special devices (recommended). PRESERVE - Preserves character and block device metadata. This option currently isn't supported for Amazon EFS. PosixPermissions (string) --- Specifies which users or groups can access a file for a specific purpose such as reading, writing, or execution of the file. PRESERVE (default) - Preserves POSIX-style permissions, which is recommended. NONE - Ignores POSIX-style permissions. BytesPerSecond (integer) --- Limits the bandwidth used by a DataSync task. For example, if you want DataSync to use a maximum of 1 MB, set this value to 1048576 ( =1024*1024). TaskQueueing (string) --- Specifies whether your transfer tasks should be put into a queue during certain scenarios when running multiple tasks. This is ENABLED by default. LogLevel (string) --- Specifies the type of logs that DataSync publishes to a Amazon CloudWatch Logs log group. To specify the log group, see CloudWatchLogGroupArn. BASIC - Publishes logs with only basic information (such as transfer errors). TRANSFER - Publishes logs for all files or objects that your DataSync task transfers and performs data-integrity checks on. OFF - No logs are published. TransferMode (string) --- Specifies whether DataSync transfers only the data (including metadata) that differs between locations following an initial copy or transfers all data every time you run the task. If you're planning on recurring transfers, you might only want to transfer what's changed since your previous task execution. CHANGED (default) - After your initial full transfer, DataSync copies only the data and metadata that differs between the source and destination location. ALL - DataSync copies everything in the source to the destination without comparing differences between the locations. SecurityDescriptorCopyFlags (string) --- Specifies which components of the SMB security descriptor are copied from source to destination objects. This value is only used for transfers between SMB and Amazon FSx for Windows File Server locations or between two FSx for Windows File Server locations. OWNER_DACL (default) - For each copied object, DataSync copies the following metadata: The object owner. NTFS discretionary access control lists (DACLs), which determine whether to grant access to an object. DataSync won't copy NTFS system access control lists (SACLs) with this option. OWNER_DACL_SACL - For each copied object, DataSync copies the following metadata: The object owner. SACLs, which are used by administrators to log attempts to access a secured object. Copying SACLs requires granting additional permissions to the Windows user that DataSync uses to access your SMB location. For information about choosing a user with the right permissions, see required permissions for SMB, FSx for Windows File Server, or FSx for ONTAP (depending on the type of location in your transfer). NONE - None of the SMB security descriptor components are copied. Destination objects are owned by the user that was provided for accessing the destination location. DACLs and SACLs are set based on the destination server's configuration. ObjectTags (string) --- Specifies whether you want DataSync to PRESERVE object tags (default behavior) when transferring between object storage systems. If you want your DataSync task to ignore object tags, specify the NONE value.",
+      "nested_params": [
+        {
+          "name": "VerifyMode",
+          "type": "string",
+          "required": false,
+          "description": "Specifies if and how DataSync checks the integrity of your data at the end of your transfer.",
+          "nested_params": []
+        },
+        {
+          "name": "OverwriteMode",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether DataSync should modify or preserve data at the destination location.",
+          "nested_params": []
+        },
+        {
+          "name": "Atime",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether to preserve metadata indicating the last time a file was read or written to.",
+          "nested_params": []
+        },
+        {
+          "name": "Mtime",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether to preserve metadata indicating the last time that a file was written to before the PREPARING step of your task execution. This option is required when you need to run the a task more than once.",
+          "nested_params": []
+        },
+        {
+          "name": "Uid",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the POSIX user ID (UID) of the file's owner.",
+          "nested_params": []
+        },
+        {
+          "name": "Gid",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the POSIX group ID (GID) of the file's owners.",
+          "nested_params": []
+        },
+        {
+          "name": "PreserveDeletedFiles",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether files in the destination location that don't exist in the source should be preserved. This option can affect your Amazon S3 storage cost. If your task deletes objects, you might incur minimum storage duration charges for certain storage classes. For detailed information, see Considerations when working with Amazon S3 storage classes in DataSync.",
+          "nested_params": []
+        },
+        {
+          "name": "PreserveDevices",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether DataSync should preserve the metadata of block and character devices in the source location and recreate the files with that device name and metadata on the destination. DataSync copies only the name and metadata of such devices.",
+          "nested_params": []
+        },
+        {
+          "name": "PosixPermissions",
+          "type": "string",
+          "required": false,
+          "description": "Specifies which users or groups can access a file for a specific purpose such as reading, writing, or execution of the file. For more information, see Understanding how DataSync handles file and object metadata.",
+          "nested_params": []
+        },
+        {
+          "name": "BytesPerSecond",
+          "type": "integer",
+          "required": false,
+          "description": "Limits the bandwidth used by a DataSync task. For example, if you want DataSync to use a maximum of 1 MB, set this value to 1048576 ( =1024*1024).",
+          "nested_params": []
+        },
+        {
+          "name": "TaskQueueing",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether your transfer tasks should be put into a queue during certain scenarios when running multiple tasks. This is ENABLED by default.",
+          "nested_params": []
+        },
+        {
+          "name": "LogLevel",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the type of logs that DataSync publishes to a Amazon CloudWatch Logs log group. To specify the log group, see CloudWatchLogGroupArn.",
+          "nested_params": []
+        },
+        {
+          "name": "TransferMode",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether DataSync transfers only the data (including metadata) that differs between locations following an initial copy or transfers all data every time you run the task. If you're planning on recurring transfers, you might only want to transfer what's changed since your previous task execution.",
+          "nested_params": []
+        },
+        {
+          "name": "SecurityDescriptorCopyFlags",
+          "type": "string",
+          "required": false,
+          "description": "Specifies which components of the SMB security descriptor are copied from source to destination objects. This value is only used for transfers between SMB and Amazon FSx for Windows File Server locations or between two FSx for Windows File Server locations. For more information, see Understanding how DataSync handles file and object metadata.",
+          "nested_params": []
+        },
+        {
+          "name": "ObjectTags",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether you want DataSync to PRESERVE object tags (default behavior) when transferring between object storage systems. If you want your DataSync task to ignore object tags, specify the NONE value.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

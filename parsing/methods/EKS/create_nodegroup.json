@@ -1,0 +1,727 @@
+{
+  "method_name": "create_nodegroup",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/eks/client/create_nodegroup.html",
+  "description": "Creates a managed node group for an Amazon EKS cluster. You can only create a node group for your cluster that is equal to the current Kubernetes version for the cluster. All node groups are created with the latest AMI release version for the respective minor Kubernetes version of the cluster, unless you deploy a custom AMI using a launch template. For later updates, you will only be able to update a node group using a launch template only if it was originally deployed with a launch template. Additionally, the launch template ID or name must match what was used when the node group was created. You can update the launch template version with necessary changes. For more information about using launch templates, see Customizing managed nodes with launch templates. An Amazon EKS managed node group is an Amazon EC2 Auto Scaling group and associated Amazon EC2 instances that are managed by Amazon Web Services for an Amazon EKS cluster. For more information, see Managed node groups in the Amazon EKS User Guide.",
+  "parameters": [
+    {
+      "name": "clusterName",
+      "type": "string",
+      "required": true,
+      "description": "The name of your cluster.",
+      "nested_params": []
+    },
+    {
+      "name": "nodegroupName",
+      "type": "string",
+      "required": true,
+      "description": "The unique name to give your node group.",
+      "nested_params": []
+    },
+    {
+      "name": "scalingConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The scaling configuration details for the Auto Scaling group that is created for your node group. minSize (integer) --- The minimum number of nodes that the managed node group can scale in to. maxSize (integer) --- The maximum number of nodes that the managed node group can scale out to. For information about the maximum number that you can specify, see Amazon EKS service quotas in the Amazon EKS User Guide. desiredSize (integer) --- The current number of nodes that the managed node group should maintain. Whenever this parameter changes, the number of worker nodes in the node group is updated to the specified size. If this parameter is given a value that is smaller than the current number of running worker nodes, the necessary number of worker nodes are terminated to match the given value. When using CloudFormation, no action occurs if you remove this parameter from your CFN template. This parameter can be different from minSize in some cases, such as when starting with extra hosts for testing. This parameter can also be different when you want to start with an estimated number of needed hosts, but let the Cluster Autoscaler reduce the number if there are too many. When the Cluster Autoscaler is used, the desiredSize parameter is altered by the Cluster Autoscaler (but can be out-of-date for short periods of time). the Cluster Autoscaler doesn't scale a managed node group lower than minSize or higher than maxSize.",
+      "nested_params": [
+        {
+          "name": "minSize",
+          "type": "integer",
+          "required": false,
+          "description": "The minimum number of nodes that the managed node group can scale in to.",
+          "nested_params": []
+        },
+        {
+          "name": "maxSize",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of nodes that the managed node group can scale out to. For information about the maximum number that you can specify, see Amazon EKS service quotas in the Amazon EKS User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "desiredSize",
+          "type": "integer",
+          "required": false,
+          "description": "The current number of nodes that the managed node group should maintain. Whenever this parameter changes, the number of worker nodes in the node group is updated to the specified size. If this parameter is given a value that is smaller than the current number of running worker nodes, the necessary number of worker nodes are terminated to match the given value. When using CloudFormation, no action occurs if you remove this parameter from your CFN template. This parameter can be different from minSize in some cases, such as when starting with extra hosts for testing. This parameter can also be different when you want to start with an estimated number of needed hosts, but let the Cluster Autoscaler reduce the number if there are too many. When the Cluster Autoscaler is used, the desiredSize parameter is altered by the Cluster Autoscaler (but can be out-of-date for short periods of time). the Cluster Autoscaler doesn't scale a managed node group lower than minSize or higher than maxSize.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "diskSize",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "subnets",
+      "type": "list",
+      "required": true,
+      "description": "The subnets to use for the Auto Scaling group that is created for your node group. If you specify launchTemplate, then don't specify SubnetId in your launch template, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see Customizing managed nodes with launch templates in the Amazon EKS User Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "instanceTypes",
+      "type": "list",
+      "required": false,
+      "description": "Specify the instance types for a node group. If you specify a GPU instance type, make sure to also specify an applicable GPU AMI type with the amiType parameter. If you specify launchTemplate, then you can specify zero or one instance type in your launch template or you can specify 0-20 instance types for instanceTypes. If however, you specify an instance type in your launch template and specify any instanceTypes, the node group deployment will fail. If you don't specify an instance type in a launch template or for instanceTypes, then t3.medium is used, by default. If you specify Spot for capacityType, then we recommend specifying multiple values for instanceTypes. For more information, see Managed node group capacity types and Customizing managed nodes with launch templates in the Amazon EKS User Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "amiType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "remoteAccess",
+      "type": "dict",
+      "required": false,
+      "description": "The remote access configuration to use with your node group. For Linux, the protocol is SSH. For Windows, the protocol is RDP. If you specify launchTemplate, then don't specify remoteAccess, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see Customizing managed nodes with launch templates in the Amazon EKS User Guide. ec2SshKey (string) --- The Amazon EC2 SSH key name that provides access for SSH communication with the nodes in the managed node group. For more information, see Amazon EC2 key pairs and Linux instances in the Amazon Elastic Compute Cloud User Guide for Linux Instances. For Windows, an Amazon EC2 SSH key is used to obtain the RDP password. For more information, see Amazon EC2 key pairs and Windows instances in the Amazon Elastic Compute Cloud User Guide for Windows Instances. sourceSecurityGroups (list) --- The security group IDs that are allowed SSH access (port 22) to the nodes. For Windows, the port is 3389. If you specify an Amazon EC2 SSH key but don't specify a source security group when you create a managed node group, then the port on the nodes is opened to the internet ( 0.0.0.0/0). For more information, see Security Groups for Your VPC in the Amazon Virtual Private Cloud User Guide. (string) ---",
+      "nested_params": [
+        {
+          "name": "ec2SshKey",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon EC2 SSH key name that provides access for SSH communication with the nodes in the managed node group. For more information, see Amazon EC2 key pairs and Linux instances in the Amazon Elastic Compute Cloud User Guide for Linux Instances. For Windows, an Amazon EC2 SSH key is used to obtain the RDP password. For more information, see Amazon EC2 key pairs and Windows instances in the Amazon Elastic Compute Cloud User Guide for Windows Instances.",
+          "nested_params": []
+        },
+        {
+          "name": "sourceSecurityGroups",
+          "type": "list",
+          "required": false,
+          "description": "The security group IDs that are allowed SSH access (port 22) to the nodes. For Windows, the port is 3389. If you specify an Amazon EC2 SSH key but don't specify a source security group when you create a managed node group, then the port on the nodes is opened to the internet ( 0.0.0.0/0). For more information, see Security Groups for Your VPC in the Amazon Virtual Private Cloud User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "nodeRole",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the IAM role to associate with your node group. The Amazon EKS worker node kubelet daemon makes calls to Amazon Web Services APIs on your behalf. Nodes receive permissions for these API calls through an IAM instance profile and associated policies. Before you can launch nodes and register them into a cluster, you must create an IAM role for those nodes to use when they are launched. For more information, see Amazon EKS node IAM role in the Amazon EKS User Guide . If you specify launchTemplate, then don't specify IamInstanceProfile in your launch template, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see Customizing managed nodes with launch templates in the Amazon EKS User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "labels",
+      "type": "dict",
+      "required": false,
+      "description": "The Kubernetes labels to apply to the nodes in the node group when they are created. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "taints",
+      "type": "list",
+      "required": false,
+      "description": "The Kubernetes taints to be applied to the nodes in the node group. For more information, see Node taints on managed node groups. (dict) --- A property that allows a node to repel a Pod. For more information, see Node taints on managed node groups in the Amazon EKS User Guide. key (string) --- The key of the taint. value (string) --- The value of the taint. effect (string) --- The effect of the taint.",
+      "nested_params": [
+        {
+          "name": "key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the taint.",
+          "nested_params": []
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the taint.",
+          "nested_params": []
+        },
+        {
+          "name": "effect",
+          "type": "string",
+          "required": false,
+          "description": "The effect of the taint.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources. (string) --- One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values. (string) --- The optional part of a key-value pair that make up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": []
+    },
+    {
+      "name": "clientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "launchTemplate",
+      "type": "dict",
+      "required": false,
+      "description": "An object representing a node group's launch template specification. When using this object, don't directly specify instanceTypes, diskSize, or remoteAccess. You cannot later specify a different launch template ID or name than what was used to create the node group. Make sure that the launch template meets the requirements in launchTemplateSpecification. Also refer to Customizing managed nodes with launch templates in the Amazon EKS User Guide. name (string) --- The name of the launch template. You must specify either the launch template name or the launch template ID in the request, but not both. After node group creation, you cannot use a different name. version (string) --- The version number of the launch template to use. If no version is specified, then the template's default version is used. You can use a different version for node group updates. id (string) --- The ID of the launch template. You must specify either the launch template ID or the launch template name in the request, but not both. After node group creation, you cannot use a different ID.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the launch template. You must specify either the launch template name or the launch template ID in the request, but not both. After node group creation, you cannot use a different name.",
+          "nested_params": []
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "required": false,
+          "description": "The version number of the launch template to use. If no version is specified, then the template's default version is used. You can use a different version for node group updates.",
+          "nested_params": []
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The ID of the launch template. You must specify either the launch template ID or the launch template name in the request, but not both. After node group creation, you cannot use a different ID.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "updateConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The node group update configuration. maxUnavailable (integer) --- The maximum number of nodes unavailable at once during a version update. Nodes are updated in parallel. This value or maxUnavailablePercentage is required to have a value.The maximum number is 100. maxUnavailablePercentage (integer) --- The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or maxUnavailable is required to have a value. updateStrategy (string) --- The configuration for the behavior to follow during a node group version update of this managed node group. You choose between two possible strategies for replacing nodes during an UpdateNodegroupVersion action. An Amazon EKS managed node group updates by replacing nodes with new nodes of newer AMI versions in parallel. The update strategy changes the managed node update behavior of the managed node group for each quantity. The default strategy has guardrails to protect you from misconfiguration and launches the new instances first, before terminating the old instances. The minimal strategy removes the guardrails and terminates the old instances before launching the new instances. This minimal strategy is useful in scenarios where you are constrained to resources or costs (for example, with hardware accelerators such as GPUs).",
+      "nested_params": [
+        {
+          "name": "maxUnavailable",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of nodes unavailable at once during a version update. Nodes are updated in parallel. This value or maxUnavailablePercentage is required to have a value.The maximum number is 100.",
+          "nested_params": []
+        },
+        {
+          "name": "maxUnavailablePercentage",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or maxUnavailable is required to have a value.",
+          "nested_params": []
+        },
+        {
+          "name": "updateStrategy",
+          "type": "string",
+          "required": false,
+          "description": "The configuration for the behavior to follow during a node group version update of this managed node group. You choose between two possible strategies for replacing nodes during an UpdateNodegroupVersion action. An Amazon EKS managed node group updates by replacing nodes with new nodes of newer AMI versions in parallel. The update strategy changes the managed node update behavior of the managed node group for each quantity. The default strategy has guardrails to protect you from misconfiguration and launches the new instances first, before terminating the old instances. The minimal strategy removes the guardrails and terminates the old instances before launching the new instances. This minimal strategy is useful in scenarios where you are constrained to resources or costs (for example, with hardware accelerators such as GPUs).",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "nodeRepairConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The node auto repair configuration for the node group. enabled (boolean) --- Specifies whether to enable node auto repair for the node group. Node auto repair is disabled by default.",
+      "nested_params": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether to enable node auto repair for the node group. Node auto repair is disabled by default.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "capacityType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "version",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "releaseVersion",
+      "type": "string",
+      "required": false,
+      "description": "The AMI version of the Amazon EKS optimized AMI to use with your node group. By default, the latest available AMI version for the node group's current Kubernetes version is used. For information about Linux versions, see Amazon EKS optimized Amazon Linux AMI versions in the Amazon EKS User Guide. Amazon EKS managed node groups support the November 2022 and later releases of the Windows AMIs. For information about Windows versions, see Amazon EKS optimized Windows AMI versions in the Amazon EKS User Guide. If you specify launchTemplate, and your launch template uses a custom AMI, then don't specify releaseVersion, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see Customizing managed nodes with launch templates in the Amazon EKS User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "nodegroup",
+          "type": "dict",
+          "description": "The full description of your new node group.",
+          "nested_items": [
+            {
+              "name": "nodegroupName",
+              "type": "string",
+              "description": "The name associated with an Amazon EKS managed node group.",
+              "nested_items": []
+            },
+            {
+              "name": "nodegroupArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) associated with the managed node group.",
+              "nested_items": []
+            },
+            {
+              "name": "clusterName",
+              "type": "string",
+              "description": "The name of your cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "version",
+              "type": "string",
+              "description": "The Kubernetes version of the managed node group.",
+              "nested_items": []
+            },
+            {
+              "name": "releaseVersion",
+              "type": "string",
+              "description": "If the node group was deployed using a launch template with a custom AMI, then this is the AMI ID that was specified in the launch template. For node groups that weren't deployed using a launch template, this is the version of the Amazon EKS optimized AMI that the node group was deployed with.",
+              "nested_items": []
+            },
+            {
+              "name": "createdAt",
+              "type": "datetime",
+              "description": "The Unix epoch timestamp at object creation.",
+              "nested_items": []
+            },
+            {
+              "name": "modifiedAt",
+              "type": "datetime",
+              "description": "The Unix epoch timestamp for the last modification to the object.",
+              "nested_items": []
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The current status of the managed node group.",
+              "nested_items": []
+            },
+            {
+              "name": "capacityType",
+              "type": "string",
+              "description": "The capacity type of your managed node group.",
+              "nested_items": []
+            },
+            {
+              "name": "scalingConfig",
+              "type": "dict",
+              "description": "The scaling configuration details for the Auto Scaling group that is associated with your node group.",
+              "nested_items": [
+                {
+                  "name": "minSize",
+                  "type": "integer",
+                  "description": "The minimum number of nodes that the managed node group can scale in to.",
+                  "nested_items": []
+                },
+                {
+                  "name": "maxSize",
+                  "type": "integer",
+                  "description": "The maximum number of nodes that the managed node group can scale out to. For information about the maximum number that you can specify, see Amazon EKS service quotas in the Amazon EKS User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "desiredSize",
+                  "type": "integer",
+                  "description": "The current number of nodes that the managed node group should maintain.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "instanceTypes",
+              "type": "list",
+              "description": "If the node group wasn't deployed with a launch template, then this is the instance type that is associated with the node group. If the node group was deployed with a launch template, then this is null.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "subnets",
+              "type": "list",
+              "description": "The subnets that were specified for the Auto Scaling group that is associated with your node group.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "remoteAccess",
+              "type": "dict",
+              "description": "If the node group wasn't deployed with a launch template, then this is the remote access configuration that is associated with the node group. If the node group was deployed with a launch template, then this is null.",
+              "nested_items": [
+                {
+                  "name": "ec2SshKey",
+                  "type": "string",
+                  "description": "The Amazon EC2 SSH key name that provides access for SSH communication with the nodes in the managed node group. For more information, see Amazon EC2 key pairs and Linux instances in the Amazon Elastic Compute Cloud User Guide for Linux Instances. For Windows, an Amazon EC2 SSH key is used to obtain the RDP password. For more information, see Amazon EC2 key pairs and Windows instances in the Amazon Elastic Compute Cloud User Guide for Windows Instances.",
+                  "nested_items": []
+                },
+                {
+                  "name": "sourceSecurityGroups",
+                  "type": "list",
+                  "description": "The security group IDs that are allowed SSH access (port 22) to the nodes. For Windows, the port is 3389. If you specify an Amazon EC2 SSH key but don't specify a source security group when you create a managed node group, then the port on the nodes is opened to the internet ( 0.0.0.0/0). For more information, see Security Groups for Your VPC in the Amazon Virtual Private Cloud User Guide.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "amiType",
+              "type": "string",
+              "description": "If the node group was deployed using a launch template with a custom AMI, then this is CUSTOM. For node groups that weren't deployed using a launch template, this is the AMI type that was specified in the node group configuration.",
+              "nested_items": []
+            },
+            {
+              "name": "nodeRole",
+              "type": "string",
+              "description": "The IAM role associated with your node group. The Amazon EKS node kubelet daemon makes calls to Amazon Web Services APIs on your behalf. Nodes receive permissions for these API calls through an IAM instance profile and associated policies.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "taints",
+              "type": "list",
+              "description": "The Kubernetes taints to be applied to the nodes in the node group when they are created. Effect is one of No_Schedule, Prefer_No_Schedule, or No_Execute. Kubernetes taints can be used together with tolerations to control how workloads are scheduled to your nodes. For more information, see Node taints on managed node groups.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "description": "The key of the taint.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "description": "The value of the taint.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "effect",
+                      "type": "string",
+                      "description": "The effect of the taint.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "resources",
+              "type": "dict",
+              "description": "The resources associated with the node group, such as Auto Scaling groups and security groups for remote access.",
+              "nested_items": [
+                {
+                  "name": "autoScalingGroups",
+                  "type": "list",
+                  "description": "The Auto Scaling groups associated with the node group.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the Auto Scaling group associated with an Amazon EKS managed node group.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "remoteAccessSecurityGroup",
+                  "type": "string",
+                  "description": "The remote access security group associated with the node group. This security group controls SSH access to the nodes.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "diskSize",
+              "type": "integer",
+              "description": "If the node group wasn't deployed with a launch template, then this is the disk size in the node group configuration. If the node group was deployed with a launch template, then this is null.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "issues",
+                  "type": "list",
+                  "description": "Any issues that are associated with the node group.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "code",
+                          "type": "string",
+                          "description": "A brief description of the error.",
+                          "nested_items": [
+                            {
+                              "name": "AccessDenied",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AsgInstanceLaunchFailures",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AutoScalingGroupNotFound",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ClusterUnreachable",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Ec2InstanceTypeDoesNotExist",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Ec2LaunchTemplateNotFound",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Ec2LaunchTemplateVersionMismatch",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Ec2SecurityGroupDeletionFailure",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Ec2SecurityGroupNotFound",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Ec2SubnetInvalidConfiguration",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "IamInstanceProfileNotFound",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "IamNodeRoleNotFound",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InstanceLimitExceeded",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InsufficientFreeAddresses",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InternalFailure",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "NodeCreationFailure",
+                              "type": "",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "message",
+                          "type": "string",
+                          "description": "The error message associated with the issue.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "resourceIds",
+                          "type": "list",
+                          "description": "The Amazon Web Services resources that are afflicted by this issue.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "updateConfig",
+              "type": "dict",
+              "description": "The node group update configuration.",
+              "nested_items": [
+                {
+                  "name": "maxUnavailable",
+                  "type": "integer",
+                  "description": "The maximum number of nodes unavailable at once during a version update. Nodes are updated in parallel. This value or maxUnavailablePercentage is required to have a value.The maximum number is 100.",
+                  "nested_items": []
+                },
+                {
+                  "name": "maxUnavailablePercentage",
+                  "type": "integer",
+                  "description": "The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or maxUnavailable is required to have a value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "updateStrategy",
+                  "type": "string",
+                  "description": "The configuration for the behavior to follow during a node group version update of this managed node group. You choose between two possible strategies for replacing nodes during an UpdateNodegroupVersion action.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "nodeRepairConfig",
+              "type": "dict",
+              "description": "The node auto repair configuration for the node group.",
+              "nested_items": [
+                {
+                  "name": "enabled",
+                  "type": "boolean",
+                  "description": "Specifies whether to enable node auto repair for the node group. Node auto repair is disabled by default.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "launchTemplate",
+              "type": "dict",
+              "description": "If a launch template was used to create the node group, then this is the launch template that was used.",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the launch template.",
+                  "nested_items": []
+                },
+                {
+                  "name": "version",
+                  "type": "string",
+                  "description": "The version number of the launch template to use. If no version is specified, then the template's default version is used. You can use a different version for node group updates.",
+                  "nested_items": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The ID of the launch template.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,926 @@
+{
+  "method_name": "create_listener",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elbv2/client/create_listener.html",
+  "description": "Creates a listener for the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer. For more information, see the following: This operation is idempotent, which means that it completes at most one time. If you attempt to create multiple listeners with the same settings, each call succeeds.",
+  "parameters": [
+    {
+      "name": "LoadBalancerArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the load balancer.",
+      "nested_params": []
+    },
+    {
+      "name": "Protocol",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Port",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SslPolicy",
+      "type": "string",
+      "required": false,
+      "description": "[HTTPS and TLS listeners] The security policy that defines which protocols and ciphers are supported. For more information, see Security policies in the Application Load Balancers Guide and Security policies in the Network Load Balancers Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Certificates",
+      "type": "list",
+      "required": false,
+      "description": "[HTTPS and TLS listeners] The default certificate for the listener. You must provide exactly one certificate. Set CertificateArn to the certificate ARN but do not set IsDefault. (dict) --- Information about an SSL server certificate. CertificateArn (string) --- The Amazon Resource Name (ARN) of the certificate. IsDefault (boolean) --- Indicates whether the certificate is the default certificate. Do not set this value when specifying a certificate as an input. This value is not included in the output when describing a listener, but is included when describing listener certificates.",
+      "nested_params": [
+        {
+          "name": "CertificateArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the certificate.",
+          "nested_params": []
+        },
+        {
+          "name": "IsDefault",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether the certificate is the default certificate. Do not set this value when specifying a certificate as an input. This value is not included in the output when describing a listener, but is included when describing listener certificates.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "DefaultActions",
+      "type": "list",
+      "required": true,
+      "description": "The actions for the default rule. (dict) --- Information about an action. Each rule must include exactly one of the following types of actions: forward, fixed-response, or redirect, and it must be the last action to be performed. The type of action. TargetGroupArn (string) --- The Amazon Resource Name (ARN) of the target group. Specify only when Type is forward and you want to route to a single target group. To route to one or more target groups, use ForwardConfig instead. AuthenticateOidcConfig (dict) --- [HTTPS listeners] Information about an identity provider that is compliant with OpenID Connect (OIDC). Specify only when Type is authenticate-oidc. The OIDC issuer identifier of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path. The authorization endpoint of the IdP. The token endpoint of the IdP. The user info endpoint of the IdP. The OAuth 2.0 client identifier. ClientSecret (string) --- The OAuth 2.0 client secret. This parameter is required if you are creating a rule. If you are modifying a rule, you can omit this parameter if you set UseExistingClientSecret to true. SessionCookieName (string) --- The name of the cookie used to maintain session information. The default is AWSELBAuthSessionCookie. Scope (string) --- The set of user claims to be requested from the IdP. The default is openid. To verify which scope values your IdP supports and how to separate multiple values, see the documentation for your IdP. SessionTimeout (integer) --- The maximum duration of the authentication session, in seconds. The default is 604800 seconds (7 days). AuthenticationRequestExtraParams (dict) --- The query parameters (up to 10) to include in the redirect request to the authorization endpoint. (string) --- (string) --- OnUnauthenticatedRequest (string) --- The behavior if the user is not authenticated. The following are possible values: deny  - Return an HTTP 401 Unauthorized error. allow  - Allow the request to be forwarded to the target. authenticate  - Redirect the request to the IdP authorization endpoint. This is the default value. UseExistingClientSecret (boolean) --- Indicates whether to use the existing client secret when modifying a rule. If you are creating a rule, you can omit this parameter or set it to false. AuthenticateCognitoConfig (dict) --- [HTTPS listeners] Information for using Amazon Cognito to authenticate users. Specify only when Type is authenticate-cognito. The Amazon Resource Name (ARN) of the Amazon Cognito user pool. The ID of the Amazon Cognito user pool client. The domain prefix or fully-qualified domain name of the Amazon Cognito user pool. Order (integer) --- The order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first. RedirectConfig (dict) --- [Application Load Balancer] Information for creating a redirect action. Specify only when Type is redirect. Protocol (string) --- The protocol. You can specify HTTP, HTTPS, or #{protocol}. You can redirect HTTP to HTTP, HTTP to HTTPS, and HTTPS to HTTPS. You can't redirect HTTPS to HTTP. Port (string) --- The port. You can specify a value from 1 to 65535 or #{port}. Host (string) --- The hostname. This component is not percent-encoded. The hostname can contain #{host}. Path (string) --- The absolute path, starting with the leading '/'. The path can contain #{host}, #{path}, and #{port}. Query (string) --- The query parameters, URL-encoded when necessary, but not percent-encoded. Do not include the leading '?', as it is automatically added. You can specify any of the reserved keywords. The HTTP redirect code. The redirect is either permanent (HTTP 301) or temporary (HTTP 302). FixedResponseConfig (dict) --- [Application Load Balancer] Information for creating an action that returns a custom HTTP response. Specify only when Type is fixed-response. MessageBody (string) --- The message. The HTTP response code (2XX, 4XX, or 5XX). ContentType (string) --- The content type. Valid Values: text/plain | text/css | text/html | application/javascript | application/json ForwardConfig (dict) --- Information for creating an action that distributes requests among one or more target groups. For Network Load Balancers, you can specify a single target group. Specify only when Type is forward. If you specify both ForwardConfig and TargetGroupArn, you can specify only one target group using ForwardConfig and it must be the same target group specified in TargetGroupArn. TargetGroups (list) --- The target groups. (dict) --- Information about how traffic will be distributed between multiple target groups in a forward rule. Weight (integer) --- The weight. The range is 0 to 999. TargetGroupStickinessConfig (dict) --- The target group stickiness for the rule. Enabled (boolean) --- Indicates whether target group stickiness is enabled. DurationSeconds (integer) --- The time period, in seconds, during which requests from a client should be routed to the same target group. The range is 1-604800 seconds (7 days).",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The type of action.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetGroupArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the target group. Specify only when Type is forward and you want to route to a single target group. To route to one or more target groups, use ForwardConfig instead.",
+          "nested_params": []
+        },
+        {
+          "name": "AuthenticateOidcConfig",
+          "type": "dict",
+          "required": false,
+          "description": "[HTTPS listeners] Information about an identity provider that is compliant with OpenID Connect (OIDC). Specify only when Type is authenticate-oidc.",
+          "nested_params": [
+            {
+              "name": "Issuer",
+              "type": "string",
+              "required": false,
+              "description": "The OIDC issuer identifier of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+              "nested_params": []
+            },
+            {
+              "name": "AuthorizationEndpoint",
+              "type": "string",
+              "required": false,
+              "description": "The authorization endpoint of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+              "nested_params": []
+            },
+            {
+              "name": "TokenEndpoint",
+              "type": "string",
+              "required": false,
+              "description": "The token endpoint of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+              "nested_params": []
+            },
+            {
+              "name": "UserInfoEndpoint",
+              "type": "string",
+              "required": false,
+              "description": "The user info endpoint of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+              "nested_params": []
+            },
+            {
+              "name": "ClientId",
+              "type": "string",
+              "required": false,
+              "description": "The OAuth 2.0 client identifier.",
+              "nested_params": []
+            },
+            {
+              "name": "ClientSecret",
+              "type": "string",
+              "required": false,
+              "description": "The OAuth 2.0 client secret. This parameter is required if you are creating a rule. If you are modifying a rule, you can omit this parameter if you set UseExistingClientSecret to true.",
+              "nested_params": []
+            },
+            {
+              "name": "SessionCookieName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the cookie used to maintain session information. The default is AWSELBAuthSessionCookie.",
+              "nested_params": []
+            },
+            {
+              "name": "Scope",
+              "type": "string",
+              "required": false,
+              "description": "The set of user claims to be requested from the IdP. The default is openid. To verify which scope values your IdP supports and how to separate multiple values, see the documentation for your IdP.",
+              "nested_params": []
+            },
+            {
+              "name": "SessionTimeout",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum duration of the authentication session, in seconds. The default is 604800 seconds (7 days).",
+              "nested_params": []
+            },
+            {
+              "name": "AuthenticationRequestExtraParams",
+              "type": "dict",
+              "required": false,
+              "description": "The query parameters (up to 10) to include in the redirect request to the authorization endpoint.",
+              "nested_params": []
+            },
+            {
+              "name": "OnUnauthenticatedRequest",
+              "type": "string",
+              "required": false,
+              "description": "The behavior if the user is not authenticated. The following are possible values:",
+              "nested_params": []
+            },
+            {
+              "name": "UseExistingClientSecret",
+              "type": "boolean",
+              "required": false,
+              "description": "Indicates whether to use the existing client secret when modifying a rule. If you are creating a rule, you can omit this parameter or set it to false.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AuthenticateCognitoConfig",
+          "type": "dict",
+          "required": false,
+          "description": "[HTTPS listeners] Information for using Amazon Cognito to authenticate users. Specify only when Type is authenticate-cognito.",
+          "nested_params": [
+            {
+              "name": "UserPoolArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Amazon Cognito user pool.",
+              "nested_params": []
+            },
+            {
+              "name": "UserPoolClientId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the Amazon Cognito user pool client.",
+              "nested_params": []
+            },
+            {
+              "name": "UserPoolDomain",
+              "type": "string",
+              "required": false,
+              "description": "The domain prefix or fully-qualified domain name of the Amazon Cognito user pool.",
+              "nested_params": []
+            },
+            {
+              "name": "SessionCookieName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the cookie used to maintain session information. The default is AWSELBAuthSessionCookie.",
+              "nested_params": []
+            },
+            {
+              "name": "Scope",
+              "type": "string",
+              "required": false,
+              "description": "The set of user claims to be requested from the IdP. The default is openid. To verify which scope values your IdP supports and how to separate multiple values, see the documentation for your IdP.",
+              "nested_params": []
+            },
+            {
+              "name": "SessionTimeout",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum duration of the authentication session, in seconds. The default is 604800 seconds (7 days).",
+              "nested_params": []
+            },
+            {
+              "name": "AuthenticationRequestExtraParams",
+              "type": "dict",
+              "required": false,
+              "description": "The query parameters (up to 10) to include in the redirect request to the authorization endpoint.",
+              "nested_params": []
+            },
+            {
+              "name": "OnUnauthenticatedRequest",
+              "type": "string",
+              "required": false,
+              "description": "The behavior if the user is not authenticated. The following are possible values:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Order",
+          "type": "integer",
+          "required": false,
+          "description": "The order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first.",
+          "nested_params": []
+        },
+        {
+          "name": "RedirectConfig",
+          "type": "dict",
+          "required": false,
+          "description": "[Application Load Balancer] Information for creating a redirect action. Specify only when Type is redirect.",
+          "nested_params": [
+            {
+              "name": "Protocol",
+              "type": "string",
+              "required": false,
+              "description": "The protocol. You can specify HTTP, HTTPS, or #{protocol}. You can redirect HTTP to HTTP, HTTP to HTTPS, and HTTPS to HTTPS. You can't redirect HTTPS to HTTP.",
+              "nested_params": []
+            },
+            {
+              "name": "Port",
+              "type": "string",
+              "required": false,
+              "description": "The port. You can specify a value from 1 to 65535 or #{port}.",
+              "nested_params": []
+            },
+            {
+              "name": "Host",
+              "type": "string",
+              "required": false,
+              "description": "The hostname. This component is not percent-encoded. The hostname can contain #{host}.",
+              "nested_params": []
+            },
+            {
+              "name": "Path",
+              "type": "string",
+              "required": false,
+              "description": "The absolute path, starting with the leading '/'. This component is not percent-encoded. The path can contain #{host}, #{path}, and #{port}.",
+              "nested_params": []
+            },
+            {
+              "name": "Query",
+              "type": "string",
+              "required": false,
+              "description": "The query parameters, URL-encoded when necessary, but not percent-encoded. Do not include the leading '?', as it is automatically added. You can specify any of the reserved keywords.",
+              "nested_params": []
+            },
+            {
+              "name": "StatusCode",
+              "type": "string",
+              "required": false,
+              "description": "The HTTP redirect code. The redirect is either permanent (HTTP 301) or temporary (HTTP 302).",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "FixedResponseConfig",
+          "type": "dict",
+          "required": false,
+          "description": "[Application Load Balancer] Information for creating an action that returns a custom HTTP response. Specify only when Type is fixed-response.",
+          "nested_params": [
+            {
+              "name": "MessageBody",
+              "type": "string",
+              "required": false,
+              "description": "The message.",
+              "nested_params": []
+            },
+            {
+              "name": "StatusCode",
+              "type": "string",
+              "required": false,
+              "description": "The HTTP response code (2XX, 4XX, or 5XX).",
+              "nested_params": []
+            },
+            {
+              "name": "ContentType",
+              "type": "string",
+              "required": false,
+              "description": "The content type. Valid Values: text/plain | text/css | text/html | application/javascript | application/json.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ForwardConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Information for creating an action that distributes requests among one or more target groups. For Network Load Balancers, you can specify a single target group. Specify only when Type is forward. If you specify both ForwardConfig and TargetGroupArn, you can specify only one target group using ForwardConfig and it must be the same target group specified in TargetGroupArn.",
+          "nested_params": [
+            {
+              "name": "TargetGroups",
+              "type": "list",
+              "required": false,
+              "description": "The target groups. For Network Load Balancers, you can specify a single target group.",
+              "nested_params": [
+                {
+                  "name": "TargetGroupArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the target group.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Weight",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The weight. The range is 0 to 999.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "TargetGroupStickinessConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The target group stickiness for the rule.",
+              "nested_params": [
+                {
+                  "name": "Enabled",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Indicates whether target group stickiness is enabled.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DurationSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The time period, in seconds, during which requests from a client should be routed to the same target group. The range is 1-604800 seconds (7 days).",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AlpnPolicy",
+      "type": "list",
+      "required": false,
+      "description": "[TLS listeners] The name of the Application-Layer Protocol Negotiation (ALPN) policy. You can specify one policy name. The following are the possible values: HTTP1Only HTTP2Only HTTP2Optional HTTP2Preferred None For more information, see ALPN policies in the Network Load Balancers Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "The tags to assign to the listener. (dict) --- Information about a tag. The key of the tag. Value (string) --- The value of the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the tag.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "MutualAuthentication",
+      "type": "dict",
+      "required": false,
+      "description": "The mutual authentication configuration information. Mode (string) --- The client certificate handling method. Options are off, passthrough or verify. The default value is off. TrustStoreArn (string) --- The Amazon Resource Name (ARN) of the trust store. IgnoreClientCertificateExpiry (boolean) --- Indicates whether expired client certificates are ignored. TrustStoreAssociationStatus (string) --- Indicates a shared trust stores association status. AdvertiseTrustStoreCaNames (string) --- Indicates whether trust store CA certificate names are advertised.",
+      "nested_params": [
+        {
+          "name": "Mode",
+          "type": "string",
+          "required": false,
+          "description": "The client certificate handling method. Options are off, passthrough or verify. The default value is off.",
+          "nested_params": []
+        },
+        {
+          "name": "TrustStoreArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the trust store.",
+          "nested_params": []
+        },
+        {
+          "name": "IgnoreClientCertificateExpiry",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether expired client certificates are ignored.",
+          "nested_params": []
+        },
+        {
+          "name": "TrustStoreAssociationStatus",
+          "type": "string",
+          "required": false,
+          "description": "Indicates a shared trust stores association status.",
+          "nested_params": []
+        },
+        {
+          "name": "AdvertiseTrustStoreCaNames",
+          "type": "string",
+          "required": false,
+          "description": "Indicates whether trust store CA certificate names are advertised.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Listeners",
+          "type": "list",
+          "description": "Information about the listener.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ListenerArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the listener.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LoadBalancerArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the load balancer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Port",
+                  "type": "integer",
+                  "description": "The port on which the load balancer is listening.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Protocol",
+                  "type": "string",
+                  "description": "The protocol for connections from clients to the load balancer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Certificates",
+                  "type": "list",
+                  "description": "[HTTPS or TLS listener] The default certificate for the listener.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "CertificateArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the certificate.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "IsDefault",
+                          "type": "boolean",
+                          "description": "Indicates whether the certificate is the default certificate. Do not set this value when specifying a certificate as an input. This value is not included in the output when describing a listener, but is included when describing listener certificates.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "SslPolicy",
+                  "type": "string",
+                  "description": "[HTTPS or TLS listener] The security policy that defines which protocols and ciphers are supported.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DefaultActions",
+                  "type": "list",
+                  "description": "The default actions for the listener.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Type",
+                          "type": "string",
+                          "description": "The type of action.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TargetGroupArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the target group. Specify only when Type is forward and you want to route to a single target group. To route to one or more target groups, use ForwardConfig instead.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AuthenticateOidcConfig",
+                          "type": "dict",
+                          "description": "[HTTPS listeners] Information about an identity provider that is compliant with OpenID Connect (OIDC). Specify only when Type is authenticate-oidc.",
+                          "nested_items": [
+                            {
+                              "name": "Issuer",
+                              "type": "string",
+                              "description": "The OIDC issuer identifier of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AuthorizationEndpoint",
+                              "type": "string",
+                              "description": "The authorization endpoint of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "TokenEndpoint",
+                              "type": "string",
+                              "description": "The token endpoint of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UserInfoEndpoint",
+                              "type": "string",
+                              "description": "The user info endpoint of the IdP. This must be a full URL, including the HTTPS protocol, the domain, and the path.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ClientId",
+                              "type": "string",
+                              "description": "The OAuth 2.0 client identifier.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ClientSecret",
+                              "type": "string",
+                              "description": "The OAuth 2.0 client secret. This parameter is required if you are creating a rule. If you are modifying a rule, you can omit this parameter if you set UseExistingClientSecret to true.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SessionCookieName",
+                              "type": "string",
+                              "description": "The name of the cookie used to maintain session information. The default is AWSELBAuthSessionCookie.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Scope",
+                              "type": "string",
+                              "description": "The set of user claims to be requested from the IdP. The default is openid.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SessionTimeout",
+                              "type": "integer",
+                              "description": "The maximum duration of the authentication session, in seconds. The default is 604800 seconds (7 days).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AuthenticationRequestExtraParams",
+                              "type": "dict",
+                              "description": "The query parameters (up to 10) to include in the redirect request to the authorization endpoint.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "OnUnauthenticatedRequest",
+                              "type": "string",
+                              "description": "The behavior if the user is not authenticated. The following are possible values:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "deny  - Return an HTTP 401 Unauthorized error.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "allow  - Allow the request to be forwarded to the target.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "authenticate  - Redirect the request to the IdP authorization endpoint. This is the default value.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "UseExistingClientSecret",
+                              "type": "boolean",
+                              "description": "Indicates whether to use the existing client secret when modifying a rule. If you are creating a rule, you can omit this parameter or set it to false.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "AuthenticateCognitoConfig",
+                          "type": "dict",
+                          "description": "[HTTPS listeners] Information for using Amazon Cognito to authenticate users. Specify only when Type is authenticate-cognito.",
+                          "nested_items": [
+                            {
+                              "name": "UserPoolArn",
+                              "type": "string",
+                              "description": "The Amazon Resource Name (ARN) of the Amazon Cognito user pool.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UserPoolClientId",
+                              "type": "string",
+                              "description": "The ID of the Amazon Cognito user pool client.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UserPoolDomain",
+                              "type": "string",
+                              "description": "The domain prefix or fully-qualified domain name of the Amazon Cognito user pool.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SessionCookieName",
+                              "type": "string",
+                              "description": "The name of the cookie used to maintain session information. The default is AWSELBAuthSessionCookie.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Scope",
+                              "type": "string",
+                              "description": "The set of user claims to be requested from the IdP. The default is openid.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SessionTimeout",
+                              "type": "integer",
+                              "description": "The maximum duration of the authentication session, in seconds. The default is 604800 seconds (7 days).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AuthenticationRequestExtraParams",
+                              "type": "dict",
+                              "description": "The query parameters (up to 10) to include in the redirect request to the authorization endpoint.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "OnUnauthenticatedRequest",
+                              "type": "string",
+                              "description": "The behavior if the user is not authenticated. The following are possible values:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "deny  - Return an HTTP 401 Unauthorized error.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "allow  - Allow the request to be forwarded to the target.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "authenticate  - Redirect the request to the IdP authorization endpoint. This is the default value.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Order",
+                          "type": "integer",
+                          "description": "The order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RedirectConfig",
+                          "type": "dict",
+                          "description": "[Application Load Balancer] Information for creating a redirect action. Specify only when Type is redirect.",
+                          "nested_items": [
+                            {
+                              "name": "Protocol",
+                              "type": "string",
+                              "description": "The protocol. You can specify HTTP, HTTPS, or #{protocol}. You can redirect HTTP to HTTP, HTTP to HTTPS, and HTTPS to HTTPS. You can't redirect HTTPS to HTTP.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Port",
+                              "type": "string",
+                              "description": "The port. You can specify a value from 1 to 65535 or #{port}.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Host",
+                              "type": "string",
+                              "description": "The hostname. This component is not percent-encoded. The hostname can contain #{host}.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Path",
+                              "type": "string",
+                              "description": "The absolute path, starting with the leading '/'. This component is not percent-encoded. The path can contain #{host}, #{path}, and #{port}.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Query",
+                              "type": "string",
+                              "description": "The query parameters, URL-encoded when necessary, but not percent-encoded. Do not include the leading '?', as it is automatically added. You can specify any of the reserved keywords.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "StatusCode",
+                              "type": "string",
+                              "description": "The HTTP redirect code. The redirect is either permanent (HTTP 301) or temporary (HTTP 302).",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "FixedResponseConfig",
+                          "type": "dict",
+                          "description": "[Application Load Balancer] Information for creating an action that returns a custom HTTP response. Specify only when Type is fixed-response.",
+                          "nested_items": [
+                            {
+                              "name": "MessageBody",
+                              "type": "string",
+                              "description": "The message.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "StatusCode",
+                              "type": "string",
+                              "description": "The HTTP response code (2XX, 4XX, or 5XX).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ContentType",
+                              "type": "string",
+                              "description": "The content type.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ForwardConfig",
+                          "type": "dict",
+                          "description": "Information for creating an action that distributes requests among one or more target groups. For Network Load Balancers, you can specify a single target group. Specify only when Type is forward. If you specify both ForwardConfig and TargetGroupArn, you can specify only one target group using ForwardConfig and it must be the same target group specified in TargetGroupArn.",
+                          "nested_items": [
+                            {
+                              "name": "TargetGroups",
+                              "type": "list",
+                              "description": "The target groups. For Network Load Balancers, you can specify a single target group.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "TargetGroupArn",
+                                      "type": "string",
+                                      "description": "The Amazon Resource Name (ARN) of the target group.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Weight",
+                                      "type": "integer",
+                                      "description": "The weight. The range is 0 to 999.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "TargetGroupStickinessConfig",
+                              "type": "dict",
+                              "description": "The target group stickiness for the rule.",
+                              "nested_items": [
+                                {
+                                  "name": "Enabled",
+                                  "type": "boolean",
+                                  "description": "Indicates whether target group stickiness is enabled.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DurationSeconds",
+                                  "type": "integer",
+                                  "description": "The time period, in seconds, during which requests from a client should be routed to the same target group. The range is 1-604800 seconds (7 days).",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "AlpnPolicy",
+                  "type": "list",
+                  "description": "[TLS listener] The name of the Application-Layer Protocol Negotiation (ALPN) policy.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MutualAuthentication",
+                  "type": "dict",
+                  "description": "The mutual authentication configuration information.",
+                  "nested_items": [
+                    {
+                      "name": "Mode",
+                      "type": "string",
+                      "description": "The client certificate handling method. Options are off, passthrough or verify. The default value is off.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TrustStoreArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the trust store.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "IgnoreClientCertificateExpiry",
+                      "type": "boolean",
+                      "description": "Indicates whether expired client certificates are ignored.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TrustStoreAssociationStatus",
+                      "type": "string",
+                      "description": "Indicates a shared trust stores association status.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AdvertiseTrustStoreCaNames",
+                      "type": "string",
+                      "description": "Indicates whether trust store CA certificate names are advertised.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

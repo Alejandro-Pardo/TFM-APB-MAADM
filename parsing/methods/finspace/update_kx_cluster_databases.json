@@ -1,0 +1,167 @@
+{
+  "method_name": "update_kx_cluster_databases",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/finspace/client/update_kx_cluster_databases.html",
+  "description": "Updates the databases mounted on a kdb cluster, which includes the changesetId and all the dbPaths to be cached. This API does not allow you to change a database name or add a database if you created a cluster without one. Using this API you can point a cluster to a different changeset and modify a list of partitions being cached.",
+  "parameters": [
+    {
+      "name": "environmentId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of a kdb environment.",
+      "nested_params": []
+    },
+    {
+      "name": "clusterName",
+      "type": "string",
+      "required": true,
+      "description": "A unique name for the cluster that you want to modify.",
+      "nested_params": []
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A token that ensures idempotency. This token expires in 10 minutes. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "databases",
+      "type": "list",
+      "required": true,
+      "description": "The structure of databases mounted on the cluster. (dict) --- The configuration of data that is available for querying from this database. The name of the kdb database. When this parameter is specified in the structure, S3 with the whole database is included by default. cacheConfigurations (list) --- Configuration details for the disk cache used to increase performance reading from a kdb database mounted to the cluster. (dict) --- The structure of database cache configuration that is used for mapping database paths to cache types in clusters. The type of disk cache. This parameter is used to map the database path to cache storage. The valid values are: CACHE_1000 --- This type provides at least 1000 MB/s disk access throughput. Specifies the portions of database that will be loaded into the cache for access. (string) --- dataviewName (string) --- The name of the dataview to be used for caching historical data on disk. changesetId (string) --- A unique identifier of the changeset that is associated with the cluster. dataviewName (string) --- The name of the dataview to be used for caching historical data on disk. dataviewConfiguration (dict) --- The configuration of the dataview to be used with specified cluster. dataviewName (string) --- The unique identifier of the dataview. dataviewVersionId (string) --- The version of the dataview corresponding to a given changeset. changesetId (string) --- A unique identifier for the changeset. segmentConfigurations (list) --- The db path and volume configuration for the segmented database. (dict) --- The configuration that contains the database path of the data that you want to place on each selected volume. Each segment must have a unique database path for each volume. If you do not explicitly specify any database path for a volume, they are accessible from the cluster through the default S3/object store segment. The database path of the data that you want to place on each selected volume for the segment. (string) --- The name of the volume where you want to add data. onDemand (boolean) --- Enables on-demand caching on the selected database path when a particular file or a column of the database is accessed. When on demand caching is True, dataviews perform minimal loading of files on the filesystem as needed. When it is set to False, everything is cached. The default value is False.",
+      "nested_params": [
+        {
+          "name": "databaseName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the kdb database. When this parameter is specified in the structure, S3 with the whole database is included by default.",
+          "nested_params": []
+        },
+        {
+          "name": "cacheConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "Configuration details for the disk cache used to increase performance reading from a kdb database mounted to the cluster.",
+          "nested_params": [
+            {
+              "name": "cacheType",
+              "type": "string",
+              "required": false,
+              "description": "The type of disk cache. This parameter is used to map the database path to cache storage. The valid values are:",
+              "nested_params": []
+            },
+            {
+              "name": "dbPaths",
+              "type": "list",
+              "required": false,
+              "description": "Specifies the portions of database that will be loaded into the cache for access.",
+              "nested_params": []
+            },
+            {
+              "name": "dataviewName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the dataview to be used for caching historical data on disk.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "changesetId",
+          "type": "string",
+          "required": false,
+          "description": "A unique identifier of the changeset that is associated with the cluster.",
+          "nested_params": []
+        },
+        {
+          "name": "dataviewName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the dataview to be used for caching historical data on disk.",
+          "nested_params": []
+        },
+        {
+          "name": "dataviewConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration of the dataview to be used with specified cluster.",
+          "nested_params": [
+            {
+              "name": "dataviewName",
+              "type": "string",
+              "required": false,
+              "description": "The unique identifier of the dataview.",
+              "nested_params": []
+            },
+            {
+              "name": "dataviewVersionId",
+              "type": "string",
+              "required": false,
+              "description": "The version of the dataview corresponding to a given changeset.",
+              "nested_params": []
+            },
+            {
+              "name": "changesetId",
+              "type": "string",
+              "required": false,
+              "description": "A unique identifier for the changeset.",
+              "nested_params": []
+            },
+            {
+              "name": "segmentConfigurations",
+              "type": "list",
+              "required": false,
+              "description": "The db path and volume configuration for the segmented database.",
+              "nested_params": [
+                {
+                  "name": "dbPaths",
+                  "type": "list",
+                  "required": false,
+                  "description": "The database path of the data that you want to place on each selected volume for the segment. Each segment must have a unique database path for each volume.",
+                  "nested_params": []
+                },
+                {
+                  "name": "volumeName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the volume where you want to add data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "onDemand",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "deploymentConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration that allows you to choose how you want to update the databases on a cluster. The type of deployment that you want on a cluster. ROLLING --- This options updates the cluster by stopping the exiting q process and starting a new q process with updated configuration. NO_RESTART --- This option updates the cluster without stopping the running q process. It is only available for HDB type cluster. This option is quicker as it reduces the turn around time to update configuration on a cluster. With this deployment mode, you cannot update the initializationScript and commandLineArguments parameters.",
+      "nested_params": [
+        {
+          "name": "deploymentStrategy",
+          "type": "string",
+          "required": false,
+          "description": "The type of deployment that you want on a cluster.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

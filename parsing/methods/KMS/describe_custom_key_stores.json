@@ -1,0 +1,168 @@
+{
+  "method_name": "describe_custom_key_stores",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kms/client/describe_custom_key_stores.html",
+  "description": "Gets information about custom key stores in the account and Region. This operation is part of the custom key stores feature in KMS, which combines the convenience and extensive integration of KMS with the isolation and control of a key store that you own and manage. By default, this operation returns information about all custom key stores in the account and Region. To get only information about a particular custom key store, use either the CustomKeyStoreName or CustomKeyStoreId parameter (but not both). To determine whether the custom key store is connected to its CloudHSM cluster or external key store proxy, use the ConnectionState element in the response. If an attempt to connect the custom key store failed, the ConnectionState value is FAILED and the ConnectionErrorCode element in the response indicates the cause of the failure. For help interpreting the ConnectionErrorCode, see  CustomKeyStoresListEntry. Custom key stores have a DISCONNECTED connection state if the key store has never been connected or you used the  DisconnectCustomKeyStore operation to disconnect it. Otherwise, the connection state is CONNECTED. If your custom key store connection state is CONNECTED but you are having trouble using it, verify that the backing store is active and available. For an CloudHSM key store, verify that the associated CloudHSM cluster is active and contains the minimum number of HSMs required for the operation, if any. For an external key store, verify that the external key store proxy and its associated external key manager are reachable and enabled. For help repairing your CloudHSM key store, see the Troubleshooting CloudHSM key stores. For help repairing your external key store, see the Troubleshooting external key stores. Both topics are in the Key Management Service Developer Guide. Cross-account use: No. You cannot perform this operation on a custom key store in a different Amazon Web Services account. Required permissions: kms:DescribeCustomKeyStores (IAM policy) Eventual consistency: The KMS API follows an eventual consistency model. For more information, see KMS eventual consistency.",
+  "parameters": [
+    {
+      "name": "CustomKeyStoreId",
+      "type": "string",
+      "required": false,
+      "description": "Gets only information about the specified custom key store. Enter the key store ID. By default, this operation gets information about all custom key stores in the account and Region. To limit the output to a particular custom key store, provide either the CustomKeyStoreId or CustomKeyStoreName parameter, but not both.",
+      "nested_params": []
+    },
+    {
+      "name": "CustomKeyStoreName",
+      "type": "string",
+      "required": false,
+      "description": "Gets only information about the specified custom key store. Enter the friendly name of the custom key store. By default, this operation gets information about all custom key stores in the account and Region. To limit the output to a particular custom key store, provide either the CustomKeyStoreId or CustomKeyStoreName parameter, but not both.",
+      "nested_params": []
+    },
+    {
+      "name": "Limit",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Marker",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CustomKeyStores",
+          "type": "list",
+          "description": "Contains metadata about each custom key store.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "CustomKeyStoreId",
+                  "type": "string",
+                  "description": "A unique identifier for the custom key store.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CustomKeyStoreName",
+                  "type": "string",
+                  "description": "The user-specified friendly name for the custom key store.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CloudHsmClusterId",
+                  "type": "string",
+                  "description": "A unique identifier for the CloudHSM cluster that is associated with an CloudHSM key store. This field appears only when the CustomKeyStoreType is AWS_CLOUDHSM.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TrustAnchorCertificate",
+                  "type": "string",
+                  "description": "The trust anchor certificate of the CloudHSM cluster associated with an CloudHSM key store. When you initialize the cluster, you create this certificate and save it in the customerCA.crt file.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ConnectionState",
+                  "type": "string",
+                  "description": "Indicates whether the custom key store is connected to its backing key store. For an CloudHSM key store, the ConnectionState indicates whether it is connected to its CloudHSM cluster. For an external key store, the ConnectionState indicates whether it is connected to the external key store proxy that communicates with your external key manager.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ConnectionErrorCode",
+                  "type": "string",
+                  "description": "Describes the connection error. This field appears in the response only when the ConnectionState is FAILED.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "INTERNAL_ERROR --\u0094 KMS could not complete the request due to an internal error. Retry the request. For ConnectCustomKeyStore requests, disconnect the custom key store before trying to connect again.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NETWORK_ERRORS --\u0094 Network errors are preventing KMS from connecting the custom key store to its backing key store.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CreationDate",
+                  "type": "datetime",
+                  "description": "The date and time when the custom key store was created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CustomKeyStoreType",
+                  "type": "string",
+                  "description": "Indicates the type of the custom key store. AWS_CLOUDHSM indicates a custom key store backed by an CloudHSM cluster. EXTERNAL_KEY_STORE indicates a custom key store backed by an external key store proxy and external key manager outside of Amazon Web Services.",
+                  "nested_items": []
+                },
+                {
+                  "name": "XksProxyConfiguration",
+                  "type": "dict",
+                  "description": "Configuration settings for the external key store proxy (XKS proxy). The external key store proxy translates KMS requests into a format that your external key manager can understand. The proxy configuration includes connection information that KMS requires.",
+                  "nested_items": [
+                    {
+                      "name": "Connectivity",
+                      "type": "string",
+                      "description": "Indicates whether the external key store proxy uses a public endpoint or an Amazon VPC endpoint service to communicate with KMS.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AccessKeyId",
+                      "type": "string",
+                      "description": "The part of the external key store proxy authentication credential that uniquely identifies the secret access key.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UriEndpoint",
+                      "type": "string",
+                      "description": "The URI endpoint for the external key store proxy.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UriPath",
+                      "type": "string",
+                      "description": "The path to the external key store proxy APIs.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "VpcEndpointServiceName",
+                      "type": "string",
+                      "description": "The Amazon VPC endpoint service used to communicate with the external key store proxy. This field appears only when the external key store proxy uses an Amazon VPC endpoint service to communicate with KMS.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextMarker",
+          "type": "string",
+          "description": "When Truncated is true, this element is present and contains the value to use for the Marker parameter in a subsequent request.",
+          "nested_items": []
+        },
+        {
+          "name": "Truncated",
+          "type": "boolean",
+          "description": "A flag that indicates whether there are more items in the list. When this value is true, the list in this response is truncated. To get more items, pass the value of the NextMarker element in this response to the Marker parameter in a subsequent request.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "method_name": "add_application_reference_data_source",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesisanalyticsv2/client/add_application_reference_data_source.html",
+  "description": "Adds a reference data source to an existing SQL-based Kinesis Data Analytics application. Kinesis Data Analytics reads reference data (that is, an Amazon S3 object) and creates an in-application table within your application. In the request, you provide the source (S3 bucket name and object key name), name of the in-application table to create, and the necessary mapping information that describes how data in an Amazon S3 object maps to columns in the resulting in-application table.",
+  "parameters": [
+    {
+      "name": "ApplicationName",
+      "type": "string",
+      "required": true,
+      "description": "The name of an existing application.",
+      "nested_params": []
+    },
+    {
+      "name": "CurrentApplicationVersionId",
+      "type": "integer",
+      "required": true,
+      "description": "The version of the application for which you are adding the reference data source. You can use the  DescribeApplication operation to get the current application version. If the version specified is not the current version, the ConcurrentModificationException is returned.",
+      "nested_params": []
+    },
+    {
+      "name": "ReferenceDataSource",
+      "type": "dict",
+      "required": true,
+      "description": "The reference data source can be an object in your Amazon S3 bucket. Kinesis Data Analytics reads the object and copies the data into the in-application table that is created. You provide an S3 bucket, object key name, and the resulting in-application table that is created. The name of the in-application table to create. S3ReferenceDataSource (dict) --- Identifies the S3 bucket and object that contains the reference data. A SQL-based Kinesis Data Analytics application loads reference data only once. If the data changes, you call the  UpdateApplication operation to trigger reloading of data into your application. BucketARN (string) --- The Amazon Resource Name (ARN) of the S3 bucket. FileKey (string) --- The object key name containing the reference data. Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream. Specifies the format of the records on the streaming source. The type of record format. MappingParameters (dict) --- When you configure application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source. JSONMappingParameters (dict) --- Provides additional mapping information when JSON is the record format on the streaming source. The path to the top-level parent that contains the records. CSVMappingParameters (dict) --- Provides additional mapping information when the record format uses delimiters (for example, CSV). The row delimiter. For example, in a CSV format, --\u0098n' is the typical row delimiter. The column delimiter. For example, in a CSV format, a comma (',') is the typical column delimiter. RecordEncoding (string) --- Specifies the encoding of the records in the streaming source. For example, UTF-8. A list of RecordColumn objects. (dict) --- For a SQL-based Kinesis Data Analytics application, describes the mapping of each data element in the streaming source to the corresponding column in the in-application stream. Also used to describe the format of the reference data source. The name of the column that is created in the in-application input stream or reference table. Mapping (string) --- A reference to the data element in the streaming input or the reference data source. The type of column created in the in-application input stream or reference table.",
+      "nested_params": [
+        {
+          "name": "TableName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the in-application table to create.",
+          "nested_params": []
+        },
+        {
+          "name": "S3ReferenceDataSource",
+          "type": "dict",
+          "required": false,
+          "description": "Identifies the S3 bucket and object that contains the reference data. A SQL-based Kinesis Data Analytics application loads reference data only once. If the data changes, you call the  UpdateApplication operation to trigger reloading of data into your application.",
+          "nested_params": [
+            {
+              "name": "BucketARN",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "FileKey",
+              "type": "string",
+              "required": false,
+              "description": "The object key name containing the reference data.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ReferenceSchema",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.",
+          "nested_params": [
+            {
+              "name": "RecordFormat",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the format of the records on the streaming source.",
+              "nested_params": [
+                {
+                  "name": "RecordFormatType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of record format.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MappingParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "When you configure application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.",
+                  "nested_params": [
+                    {
+                      "name": "JSONMappingParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Provides additional mapping information when JSON is the record format on the streaming source.",
+                      "nested_params": [
+                        {
+                          "name": "RecordRowPath",
+                          "type": "string",
+                          "required": false,
+                          "description": "The path to the top-level parent that contains the records.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CSVMappingParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Provides additional mapping information when the record format uses delimiters (for example, CSV).",
+                      "nested_params": [
+                        {
+                          "name": "RecordRowDelimiter",
+                          "type": "string",
+                          "required": false,
+                          "description": "The row delimiter. For example, in a CSV format, --\u0098n' is the typical row delimiter.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "RecordColumnDelimiter",
+                          "type": "string",
+                          "required": false,
+                          "description": "The column delimiter. For example, in a CSV format, a comma (',') is the typical column delimiter.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RecordEncoding",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the encoding of the records in the streaming source. For example, UTF-8.",
+              "nested_params": []
+            },
+            {
+              "name": "RecordColumns",
+              "type": "list",
+              "required": false,
+              "description": "A list of RecordColumn objects.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the column that is created in the in-application input stream or reference table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Mapping",
+                  "type": "string",
+                  "required": false,
+                  "description": "A reference to the data element in the streaming input or the reference data source.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SqlType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of column created in the in-application input stream or reference table.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ApplicationARN",
+          "type": "string",
+          "description": "The application Amazon Resource Name (ARN).",
+          "nested_items": []
+        },
+        {
+          "name": "ApplicationVersionId",
+          "type": "integer",
+          "description": "The updated application version ID. Kinesis Data Analytics increments this ID when the application is updated.",
+          "nested_items": []
+        },
+        {
+          "name": "ReferenceDataSourceDescriptions",
+          "type": "list",
+          "description": "Describes reference data sources configured for the application.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ReferenceId",
+                  "type": "string",
+                  "description": "The ID of the reference data source. This is the ID that Kinesis Data Analytics assigns when you add the reference data source to your application using the  CreateApplication or  UpdateApplication operation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TableName",
+                  "type": "string",
+                  "description": "The in-application table name created by the specific reference data source configuration.",
+                  "nested_items": []
+                },
+                {
+                  "name": "S3ReferenceDataSourceDescription",
+                  "type": "dict",
+                  "description": "Provides the Amazon S3 bucket name, the object key name that contains the reference data.",
+                  "nested_items": [
+                    {
+                      "name": "BucketARN",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the S3 bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FileKey",
+                      "type": "string",
+                      "description": "Amazon S3 object key name.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ReferenceRoleARN",
+                      "type": "string",
+                      "description": "The ARN of the IAM role that Kinesis Data Analytics can assume to read the Amazon S3 object on your behalf to populate the in-application reference table.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ReferenceSchema",
+                  "type": "dict",
+                  "description": "Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.",
+                  "nested_items": [
+                    {
+                      "name": "RecordFormat",
+                      "type": "dict",
+                      "description": "Specifies the format of the records on the streaming source.",
+                      "nested_items": [
+                        {
+                          "name": "RecordFormatType",
+                          "type": "string",
+                          "description": "The type of record format.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MappingParameters",
+                          "type": "dict",
+                          "description": "When you configure application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.",
+                          "nested_items": [
+                            {
+                              "name": "JSONMappingParameters",
+                              "type": "dict",
+                              "description": "Provides additional mapping information when JSON is the record format on the streaming source.",
+                              "nested_items": [
+                                {
+                                  "name": "RecordRowPath",
+                                  "type": "string",
+                                  "description": "The path to the top-level parent that contains the records.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "CSVMappingParameters",
+                              "type": "dict",
+                              "description": "Provides additional mapping information when the record format uses delimiters (for example, CSV).",
+                              "nested_items": [
+                                {
+                                  "name": "RecordRowDelimiter",
+                                  "type": "string",
+                                  "description": "The row delimiter. For example, in a CSV format, --\u0098n' is the typical row delimiter.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "RecordColumnDelimiter",
+                                  "type": "string",
+                                  "description": "The column delimiter. For example, in a CSV format, a comma (',') is the typical column delimiter.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "RecordEncoding",
+                      "type": "string",
+                      "description": "Specifies the encoding of the records in the streaming source. For example, UTF-8.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RecordColumns",
+                      "type": "list",
+                      "description": "A list of RecordColumn objects.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the column that is created in the in-application input stream or reference table.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Mapping",
+                              "type": "string",
+                              "description": "A reference to the data element in the streaming input or the reference data source.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SqlType",
+                              "type": "string",
+                              "description": "The type of column created in the in-application input stream or reference table.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

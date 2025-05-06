@@ -1,0 +1,116 @@
+{
+  "method_name": "add_job_flow_steps",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/emr/client/add_job_flow_steps.html",
+  "description": "AddJobFlowSteps adds new steps to a running cluster. A maximum of 256 steps are allowed in each job flow. If your cluster is long-running (such as a Hive data warehouse) or complex, you may require more than 256 steps to process your data. You can bypass the 256-step limitation in various ways, including using SSH to connect to the master node and submitting queries directly to the software running on the master node, such as Hive and Hadoop. A step specifies the location of a JAR file stored either on the master node of the cluster or in Amazon S3. Each step is performed by the main function of the main class of the JAR file. The main class can be specified either in the manifest of the JAR or by using the MainFunction parameter of the step. Amazon EMR executes each step in the order listed. For a step to be considered complete, the main function must exit with a zero exit code and all Hadoop jobs started while the step was running must have completed and run successfully. You can only add steps to a cluster that is in one of the following states: STARTING, BOOTSTRAPPING, RUNNING, or WAITING.",
+  "parameters": [
+    {
+      "name": "JobFlowId",
+      "type": "string",
+      "required": true,
+      "description": "A string that uniquely identifies the job flow. This identifier is returned by  RunJobFlow and can also be obtained from  ListClusters.",
+      "nested_params": []
+    },
+    {
+      "name": "Steps",
+      "type": "list",
+      "required": true,
+      "description": "A list of  StepConfig to be executed by the job flow. (dict) --- Specification for a cluster (job flow) step. The name of the step. ActionOnFailure (string) --- The action to take when the step fails. Use one of the following values: TERMINATE_CLUSTER - Shuts down the cluster. CANCEL_AND_WAIT - Cancels any pending steps and returns the cluster to the WAITING state. CONTINUE - Continues to the next step in the queue. TERMINATE_JOB_FLOW - Shuts down the cluster. TERMINATE_JOB_FLOW is provided for backward compatibility. We recommend using TERMINATE_CLUSTER instead. If a cluster's StepConcurrencyLevel is greater than 1, do not use AddJobFlowSteps to submit a step with this parameter set to CANCEL_AND_WAIT or TERMINATE_CLUSTER. The step is not submitted and the action fails with a message that the ActionOnFailure setting is not valid. If you change a cluster's StepConcurrencyLevel to be greater than 1 while a step is running, the ActionOnFailure parameter may not behave as you expect. In this case, for a step that fails with this parameter set to CANCEL_AND_WAIT, pending steps and the running step are not canceled; for a step that fails with this parameter set to TERMINATE_CLUSTER, the cluster does not terminate. The JAR file used for the step. Properties (list) --- A list of Java properties that are set when the step runs. You can use these properties to pass key-value pairs to your main function. (dict) --- A key-value pair. Key (string) --- The unique identifier of a key-value pair. Value (string) --- The value part of the identified key. A path to a JAR file run during the step. MainClass (string) --- The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file. Args (list) --- A list of command line arguments passed to the JAR file's main function when executed. (string) ---",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the step.",
+          "nested_params": []
+        },
+        {
+          "name": "ActionOnFailure",
+          "type": "string",
+          "required": false,
+          "description": "The action to take when the step fails. Use one of the following values:",
+          "nested_params": []
+        },
+        {
+          "name": "HadoopJarStep",
+          "type": "dict",
+          "required": false,
+          "description": "The JAR file used for the step.",
+          "nested_params": [
+            {
+              "name": "Properties",
+              "type": "list",
+              "required": false,
+              "description": "A list of Java properties that are set when the step runs. You can use these properties to pass key-value pairs to your main function.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier of a key-value pair.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value part of the identified key.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Jar",
+              "type": "string",
+              "required": false,
+              "description": "A path to a JAR file run during the step.",
+              "nested_params": []
+            },
+            {
+              "name": "MainClass",
+              "type": "string",
+              "required": false,
+              "description": "The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.",
+              "nested_params": []
+            },
+            {
+              "name": "Args",
+              "type": "list",
+              "required": false,
+              "description": "A list of command line arguments passed to the JAR file's main function when executed.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ExecutionRoleArn",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Resource Name (ARN) of the runtime role for a step on the cluster. The runtime role can be a cross-account IAM role. The runtime role ARN is a combination of account ID, role name, and role type using the following format: arn:partition:service:region:account:resource. For example, arn:aws:IAM::1234567890:role/ReadOnly is a correctly formatted runtime role ARN.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "StepIds",
+          "type": "list",
+          "description": "The identifiers of the list of steps added to the job flow.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,665 @@
+{
+  "method_name": "get_reservation_purchase_recommendation",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/get_reservation_purchase_recommendation.html",
+  "description": "Gets recommendations for reservation purchases. These recommendations might help you to reduce your costs. Reservations provide a discounted hourly rate (up to 75%) compared to On-Demand pricing. Amazon Web Services generates your recommendations by identifying your On-Demand usage during a specific time period and collecting your usage into categories that are eligible for a reservation. After Amazon Web Services has these categories, it simulates every combination of reservations in each category of usage to identify the best number of each type of Reserved Instance (RI) to purchase to maximize your estimated savings. For example, Amazon Web Services automatically aggregates your Amazon EC2 Linux, shared tenancy, and c4 family usage in the US West (Oregon) Region and recommends that you buy size-flexible regional reservations to apply to the c4 family usage. Amazon Web Services recommends the smallest size instance in an instance family. This makes it easier to purchase a size-flexible Reserved Instance (RI). Amazon Web Services also shows the equal number of normalized units. This way, you can purchase any instance size that you want. For this example, your RI recommendation is for c4.large because that is the smallest size instance in the c4 instance family.",
+  "parameters": [
+    {
+      "name": "AccountId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Service",
+      "type": "string",
+      "required": true,
+      "description": "The specific service that you want recommendations for.",
+      "nested_params": []
+    },
+    {
+      "name": "Filter",
+      "type": "dict",
+      "required": false,
+      "description": "Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "AccountScope",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "LookbackPeriodInDays",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "TermInYears",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "PaymentOption",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ServiceSpecification",
+      "type": "dict",
+      "required": false,
+      "description": "The hardware specifications for the service instances that you want recommendations for, such as standard or convertible Amazon EC2 instances. EC2Specification (dict) --- The Amazon EC2 hardware specifications that you want Amazon Web Services to provide recommendations for. OfferingClass (string) --- Indicates whether you want a recommendation for standard or convertible reservations.",
+      "nested_params": [
+        {
+          "name": "EC2Specification",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon EC2 hardware specifications that you want Amazon Web Services to provide recommendations for.",
+          "nested_params": [
+            {
+              "name": "OfferingClass",
+              "type": "string",
+              "required": false,
+              "description": "Indicates whether you want a recommendation for standard or convertible reservations.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PageSize",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextPageToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "RecommendationId",
+              "type": "string",
+              "description": "The ID for the recommendation.",
+              "nested_items": []
+            },
+            {
+              "name": "GenerationTimestamp",
+              "type": "string",
+              "description": "The timestamp for when Amazon Web Services made the recommendation.",
+              "nested_items": []
+            },
+            {
+              "name": "AdditionalMetadata",
+              "type": "string",
+              "description": "Additional metadata that might be applicable to the recommendation.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Recommendations",
+          "type": "list",
+          "description": "Recommendations for reservations to purchase.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "AccountScope",
+                  "type": "string",
+                  "description": "The account scope that Amazon Web Services recommends that you purchase this instance for. For example, you can purchase this reservation for an entire organization in Amazon Web Services Organizations.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LookbackPeriodInDays",
+                  "type": "string",
+                  "description": "How many days of previous usage that Amazon Web Services considers when making this recommendation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TermInYears",
+                  "type": "string",
+                  "description": "The term of the reservation that you want recommendations for, in years.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PaymentOption",
+                  "type": "string",
+                  "description": "The payment option for the reservation (for example, AllUpfront or NoUpfront).",
+                  "nested_items": []
+                },
+                {
+                  "name": "ServiceSpecification",
+                  "type": "dict",
+                  "description": "Hardware specifications for the service that you want recommendations for.",
+                  "nested_items": [
+                    {
+                      "name": "EC2Specification",
+                      "type": "dict",
+                      "description": "The Amazon EC2 hardware specifications that you want Amazon Web Services to provide recommendations for.",
+                      "nested_items": [
+                        {
+                          "name": "OfferingClass",
+                          "type": "string",
+                          "description": "Indicates whether you want a recommendation for standard or convertible reservations.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "RecommendationDetails",
+                  "type": "list",
+                  "description": "Details about the recommended purchases.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "AccountId",
+                          "type": "string",
+                          "description": "The account that this Reserved Instance (RI) recommendation is for.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "InstanceDetails",
+                          "type": "dict",
+                          "description": "Details about the reservations that Amazon Web Services recommends that you purchase.",
+                          "nested_items": [
+                            {
+                              "name": "EC2InstanceDetails",
+                              "type": "dict",
+                              "description": "The Amazon EC2 reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "Family",
+                                  "type": "string",
+                                  "description": "The instance family of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "InstanceType",
+                                  "type": "string",
+                                  "description": "The type of instance that Amazon Web Services recommends.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "AvailabilityZone",
+                                  "type": "string",
+                                  "description": "The Availability Zone of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Platform",
+                                  "type": "string",
+                                  "description": "The platform of the recommended reservation. The platform is the specific combination of operating system, license model, and software on an instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Tenancy",
+                                  "type": "string",
+                                  "description": "Determines whether the recommended reservation is dedicated or shared.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "CurrentGeneration",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommendation is for a current-generation instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SizeFlexEligible",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommended reservation is size flexible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "RDSInstanceDetails",
+                              "type": "dict",
+                              "description": "The Amazon RDS reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "Family",
+                                  "type": "string",
+                                  "description": "The instance family of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "InstanceType",
+                                  "type": "string",
+                                  "description": "The type of instance that Amazon Web Services recommends.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DatabaseEngine",
+                                  "type": "string",
+                                  "description": "The database engine that the recommended reservation supports.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DatabaseEdition",
+                                  "type": "string",
+                                  "description": "The database edition that the recommended reservation supports.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DeploymentOption",
+                                  "type": "string",
+                                  "description": "Determines whether the recommendation is for a reservation in a single Availability Zone or a reservation with a backup in a second Availability Zone.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "LicenseModel",
+                                  "type": "string",
+                                  "description": "The license model that the recommended reservation supports.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "CurrentGeneration",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommendation is for a current-generation instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SizeFlexEligible",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommended reservation is size flexible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "RedshiftInstanceDetails",
+                              "type": "dict",
+                              "description": "The Amazon Redshift reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "Family",
+                                  "type": "string",
+                                  "description": "The instance family of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "NodeType",
+                                  "type": "string",
+                                  "description": "The type of node that Amazon Web Services recommends.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "CurrentGeneration",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommendation is for a current-generation instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SizeFlexEligible",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommended reservation is size flexible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ElastiCacheInstanceDetails",
+                              "type": "dict",
+                              "description": "The ElastiCache reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "Family",
+                                  "type": "string",
+                                  "description": "The instance family of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "NodeType",
+                                  "type": "string",
+                                  "description": "The type of node that Amazon Web Services recommends.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ProductDescription",
+                                  "type": "string",
+                                  "description": "The description of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "CurrentGeneration",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommendation is for a current generation instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SizeFlexEligible",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommended reservation is size flexible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ESInstanceDetails",
+                              "type": "dict",
+                              "description": "The Amazon OpenSearch Service reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "InstanceClass",
+                                  "type": "string",
+                                  "description": "The class of instance that Amazon Web Services recommends.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "InstanceSize",
+                                  "type": "string",
+                                  "description": "The size of instance that Amazon Web Services recommends.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "CurrentGeneration",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommendation is for a current-generation instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SizeFlexEligible",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommended reservation is size flexible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "MemoryDBInstanceDetails",
+                              "type": "dict",
+                              "description": "The MemoryDB reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "Family",
+                                  "type": "string",
+                                  "description": "The instance family of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "NodeType",
+                                  "type": "string",
+                                  "description": "The node type of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "CurrentGeneration",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommendation is for a current generation instance.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SizeFlexEligible",
+                                  "type": "boolean",
+                                  "description": "Determines whether the recommended reservation is size flexible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "RecommendedNumberOfInstancesToPurchase",
+                          "type": "string",
+                          "description": "The number of instances that Amazon Web Services recommends that you purchase.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RecommendedNormalizedUnitsToPurchase",
+                          "type": "string",
+                          "description": "The number of normalized units that Amazon Web Services recommends that you purchase.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MinimumNumberOfInstancesUsedPerHour",
+                          "type": "string",
+                          "description": "The minimum number of instances that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MinimumNormalizedUnitsUsedPerHour",
+                          "type": "string",
+                          "description": "The minimum number of normalized units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaximumNumberOfInstancesUsedPerHour",
+                          "type": "string",
+                          "description": "The maximum number of instances that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaximumNormalizedUnitsUsedPerHour",
+                          "type": "string",
+                          "description": "The maximum number of normalized units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AverageNumberOfInstancesUsedPerHour",
+                          "type": "string",
+                          "description": "The average number of instances that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AverageNormalizedUnitsUsedPerHour",
+                          "type": "string",
+                          "description": "The average number of normalized units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AverageUtilization",
+                          "type": "string",
+                          "description": "The average utilization of your instances. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EstimatedBreakEvenInMonths",
+                          "type": "string",
+                          "description": "How long Amazon Web Services estimates that it takes for this instance to start saving you money, in months.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "CurrencyCode",
+                          "type": "string",
+                          "description": "The currency code that Amazon Web Services used to calculate the costs for this instance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EstimatedMonthlySavingsAmount",
+                          "type": "string",
+                          "description": "How much Amazon Web Services estimates that this specific recommendation might save you in a month.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EstimatedMonthlySavingsPercentage",
+                          "type": "string",
+                          "description": "How much Amazon Web Services estimates that this specific recommendation might save you in a month, as a percentage of your overall costs.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EstimatedMonthlyOnDemandCost",
+                          "type": "string",
+                          "description": "How much Amazon Web Services estimates that you spend on On-Demand Instances in a month.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EstimatedReservationCostForLookbackPeriod",
+                          "type": "string",
+                          "description": "How much Amazon Web Services estimates that you might spend for all usage during the specified historical period if you had a reservation.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "UpfrontCost",
+                          "type": "string",
+                          "description": "How much purchasing this instance costs you upfront.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RecurringStandardMonthlyCost",
+                          "type": "string",
+                          "description": "How much purchasing this instance costs you on a monthly basis.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ReservedCapacityDetails",
+                          "type": "dict",
+                          "description": "Details about the reservations that Amazon Web Services recommends that you purchase.",
+                          "nested_items": [
+                            {
+                              "name": "DynamoDBCapacityDetails",
+                              "type": "dict",
+                              "description": "The DynamoDB reservations that Amazon Web Services recommends that you purchase.",
+                              "nested_items": [
+                                {
+                                  "name": "CapacityUnits",
+                                  "type": "string",
+                                  "description": "The capacity unit of the recommended reservation.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Region",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services Region of the recommended reservation.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "RecommendedNumberOfCapacityUnitsToPurchase",
+                          "type": "string",
+                          "description": "The number of reserved capacity units that Amazon Web Services recommends that you purchase.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MinimumNumberOfCapacityUnitsUsedPerHour",
+                          "type": "string",
+                          "description": "The minimum number of provisioned capacity units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaximumNumberOfCapacityUnitsUsedPerHour",
+                          "type": "string",
+                          "description": "The maximum number of provisioned capacity units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AverageNumberOfCapacityUnitsUsedPerHour",
+                          "type": "string",
+                          "description": "The average number of provisioned capacity units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "RecommendationSummary",
+                  "type": "dict",
+                  "description": "A summary about the recommended purchase.",
+                  "nested_items": [
+                    {
+                      "name": "TotalEstimatedMonthlySavingsAmount",
+                      "type": "string",
+                      "description": "The total amount that Amazon Web Services estimates that this recommendation could save you in a month.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalEstimatedMonthlySavingsPercentage",
+                      "type": "string",
+                      "description": "The total amount that Amazon Web Services estimates that this recommendation could save you in a month, as a percentage of your costs.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CurrencyCode",
+                      "type": "string",
+                      "description": "The currency code used for this recommendation.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextPageToken",
+          "type": "string",
+          "description": "The pagination token for the next set of retrievable results.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

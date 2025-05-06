@@ -1,0 +1,147 @@
+{
+  "method_name": "create_access_entry",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/eks/client/create_access_entry.html",
+  "description": "Creates an access entry. An access entry allows an IAM principal to access your cluster. Access entries can replace the need to maintain entries in the aws-auth ConfigMap for authentication. You have the following options for authorizing an IAM principal to access Kubernetes objects on your cluster: Kubernetes role-based access control (RBAC), Amazon EKS, or both. Kubernetes RBAC authorization requires you to create and manage Kubernetes Role, ClusterRole, RoleBinding, and ClusterRoleBinding objects, in addition to managing access entries. If you use Amazon EKS authorization exclusively, you don't need to create and manage Kubernetes Role, ClusterRole, RoleBinding, and ClusterRoleBinding objects. For more information about access entries, see Access entries in the Amazon EKS User Guide.",
+  "parameters": [
+    {
+      "name": "clusterName",
+      "type": "string",
+      "required": true,
+      "description": "The name of your cluster.",
+      "nested_params": []
+    },
+    {
+      "name": "principalArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the IAM principal for the AccessEntry. You can specify one ARN for each access entry. You can't specify the same ARN in more than one access entry. This value can't be changed after access entry creation. The valid principals differ depending on the type of the access entry in the type field. For STANDARD access entries, you can use every IAM principal type. For nodes ( EC2 (for EKS Auto Mode), EC2_LINUX, EC2_WINDOWS, FARGATE_LINUX, and HYBRID_LINUX), the only valid ARN is IAM roles. You can't use the STS session principal type with access entries because this is a temporary principal for each session and not a permanent identity that can be assigned permissions. IAM best practices recommend using IAM roles with temporary credentials, rather than IAM users with long-term credentials.",
+      "nested_params": []
+    },
+    {
+      "name": "kubernetesGroups",
+      "type": "list",
+      "required": false,
+      "description": "The value for name that you've specified for kind: Group as a subject in a Kubernetes RoleBinding or ClusterRoleBinding object. Amazon EKS doesn't confirm that the value for name exists in any bindings on your cluster. You can specify one or more names. Kubernetes authorizes the principalArn of the access entry to access any cluster objects that you've specified in a Kubernetes Role or ClusterRole object that is also specified in a binding's roleRef. For more information about creating Kubernetes RoleBinding, ClusterRoleBinding, Role, or ClusterRole objects, see Using RBAC Authorization in the Kubernetes documentation. If you want Amazon EKS to authorize the principalArn (instead of, or in addition to Kubernetes authorizing the principalArn), you can associate one or more access policies to the access entry using AssociateAccessPolicy. If you associate any access policies, the principalARN has all permissions assigned in the associated access policies and all permissions in any Kubernetes Role or ClusterRole objects that the group names are bound to. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "Metadata that assists with categorization and organization. Each tag consists of a key and an optional value. You define both. Tags don't propagate to any other cluster or Amazon Web Services resources. (string) --- One part of a key-value pair that make up a tag. A key is a general label that acts like a category for more specific tag values. (string) --- The optional part of a key-value pair that make up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": []
+    },
+    {
+      "name": "clientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "required": false,
+      "description": "The type of the new access entry. Valid values are STANDARD, FARGATE_LINUX, EC2_LINUX, EC2_WINDOWS, EC2 (for EKS Auto Mode), HYBRID_LINUX, and HYPERPOD_LINUX. If the principalArn is for an IAM role that's used for self-managed Amazon EC2 nodes, specify EC2_LINUX or EC2_WINDOWS. Amazon EKS grants the necessary permissions to the node for you. If the principalArn is for any other purpose, specify STANDARD. If you don't specify a value, Amazon EKS sets the value to STANDARD. If you have the access mode of the cluster set to API_AND_CONFIG_MAP, it's unnecessary to create access entries for IAM roles used with Fargate profiles or managed Amazon EC2 nodes, because Amazon EKS creates entries in the aws-auth ConfigMap for the roles. You can't change this value once you've created the access entry. If you set the value to EC2_LINUX or EC2_WINDOWS, you can't specify values for kubernetesGroups, or associate an AccessPolicy to the access entry.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "accessEntry",
+          "type": "dict",
+          "description": "An access entry allows an IAM principal (user or role) to access your cluster. Access entries can replace the need to maintain the aws-auth ConfigMap for authentication. For more information about access entries, see Access entries in the Amazon EKS User Guide.",
+          "nested_items": [
+            {
+              "name": "clusterName",
+              "type": "string",
+              "description": "The name of your cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "principalArn",
+              "type": "string",
+              "description": "The ARN of the IAM principal for the access entry. If you ever delete the IAM principal with this ARN, the access entry isn't automatically deleted. We recommend that you delete the access entry with an ARN for an IAM principal that you delete. If you don't delete the access entry and ever recreate the IAM principal, even if it has the same ARN, the access entry won't work. This is because even though the ARN is the same for the recreated IAM principal, the roleID or userID (you can see this with the Security Token Service GetCallerIdentity API) is different for the recreated IAM principal than it was for the original IAM principal. Even though you don't see the IAM principal's roleID or userID for an access entry, Amazon EKS stores it with the access entry.",
+              "nested_items": []
+            },
+            {
+              "name": "kubernetesGroups",
+              "type": "list",
+              "description": "A name that you've specified in a Kubernetes RoleBinding or ClusterRoleBinding object so that Kubernetes authorizes the principalARN access to cluster objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "accessEntryArn",
+              "type": "string",
+              "description": "The ARN of the access entry.",
+              "nested_items": []
+            },
+            {
+              "name": "createdAt",
+              "type": "datetime",
+              "description": "The Unix epoch timestamp at object creation.",
+              "nested_items": []
+            },
+            {
+              "name": "modifiedAt",
+              "type": "datetime",
+              "description": "The Unix epoch timestamp for the last modification to the object.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "username",
+              "type": "string",
+              "description": "The name of a user that can authenticate to your cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of the access entry.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

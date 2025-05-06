@@ -1,0 +1,280 @@
+{
+  "method_name": "create_members",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/detective/client/create_members.html",
+  "description": "CreateMembers is used to send invitations to accounts. For the organization behavior graph, the Detective administrator account uses CreateMembers to enable organization accounts as member accounts. For invited accounts, CreateMembers sends a request to invite the specified Amazon Web Services accounts to be member accounts in the behavior graph. This operation can only be called by the administrator account for a behavior graph. CreateMembers verifies the accounts and then invites the verified accounts. The administrator can optionally specify to not send invitation emails to the member accounts. This would be used when the administrator manages their member accounts centrally. For organization accounts in the organization behavior graph, CreateMembers attempts to enable the accounts. The organization accounts do not receive invitations. The request provides the behavior graph ARN and the list of accounts to invite or to enable. The response separates the requested accounts into two lists:",
+  "parameters": [
+    {
+      "name": "GraphArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the behavior graph.",
+      "nested_params": []
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DisableEmailNotification",
+      "type": "boolean",
+      "required": false,
+      "description": "if set to true, then the invited accounts do not receive email notifications. By default, this is set to false, and the invited accounts receive email notifications. Organization accounts in the organization behavior graph do not receive email notifications.",
+      "nested_params": []
+    },
+    {
+      "name": "Accounts",
+      "type": "list",
+      "required": true,
+      "description": "The list of Amazon Web Services accounts to invite or to enable. You can invite or enable up to 50 accounts at a time. For each invited account, the account list contains the account identifier and the Amazon Web Services account root user email address. For organization accounts in the organization behavior graph, the email address is not required. (dict) --- An Amazon Web Services account that is the administrator account of or a member of a behavior graph. The account identifier of the Amazon Web Services account. The Amazon Web Services account root user email address for the Amazon Web Services account.",
+      "nested_params": [
+        {
+          "name": "AccountId",
+          "type": "string",
+          "required": false,
+          "description": "The account identifier of the Amazon Web Services account.",
+          "nested_params": []
+        },
+        {
+          "name": "EmailAddress",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Web Services account root user email address for the Amazon Web Services account.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Members",
+          "type": "list",
+          "description": "The set of member account invitation or enablement requests that Detective was able to process. This includes accounts that are being verified, that failed verification, and that passed verification and are being sent an invitation or are being enabled.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "AccountId",
+                  "type": "string",
+                  "description": "The Amazon Web Services account identifier for the member account.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EmailAddress",
+                  "type": "string",
+                  "description": "The Amazon Web Services account root user email address for the member account.",
+                  "nested_items": []
+                },
+                {
+                  "name": "GraphArn",
+                  "type": "string",
+                  "description": "The ARN of the behavior graph.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MasterId",
+                  "type": "string",
+                  "description": "The Amazon Web Services account identifier of the administrator account for the behavior graph.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AdministratorId",
+                  "type": "string",
+                  "description": "The Amazon Web Services account identifier of the administrator account for the behavior graph.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The current membership status of the member account. The status can have one of the following values:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "INVITED - For invited accounts only. Indicates that the member was sent an invitation but has not yet responded.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "VERIFICATION_IN_PROGRESS - For invited accounts only, indicates that Detective is verifying that the account identifier and email address provided for the member account match. If they do match, then Detective sends the invitation. If the email address and account identifier don't match, then the member cannot be added to the behavior graph. For organization accounts in the organization behavior graph, indicates that Detective is verifying that the account belongs to the organization.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "VERIFICATION_FAILED - For invited accounts only. Indicates that the account and email address provided for the member account do not match, and Detective did not send an invitation to the account.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ENABLED - Indicates that the member account currently contributes data to the behavior graph. For invited accounts, the member account accepted the invitation. For organization accounts in the organization behavior graph, the Detective administrator account enabled the organization account as a member account.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ACCEPTED_BUT_DISABLED - The account accepted the invitation, or was enabled by the Detective administrator account, but is prevented from contributing data to the behavior graph. DisabledReason provides the reason why the member account is not enabled.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DisabledReason",
+                  "type": "string",
+                  "description": "For member accounts with a status of ACCEPTED_BUT_DISABLED, the reason that the member account is not enabled.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "VOLUME_TOO_HIGH - Indicates that adding the member account would cause the data volume for the behavior graph to be too high.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "VOLUME_UNKNOWN - Indicates that Detective is unable to verify the data volume for the member account. This is usually because the member account is not enrolled in Amazon GuardDuty.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "InvitedTime",
+                  "type": "datetime",
+                  "description": "For invited accounts, the date and time that Detective sent the invitation to the account. The value is an ISO8601 formatted string. For example, 2021-08-18T16:35:56.284Z.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UpdatedTime",
+                  "type": "datetime",
+                  "description": "The date and time that the member account was last updated. The value is an ISO8601 formatted string. For example, 2021-08-18T16:35:56.284Z.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VolumeUsageInBytes",
+                  "type": "integer",
+                  "description": "The data volume in bytes per day for the member account.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VolumeUsageUpdatedTime",
+                  "type": "datetime",
+                  "description": "The data and time when the member account data volume was last updated. The value is an ISO8601 formatted string. For example, 2021-08-18T16:35:56.284Z.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PercentOfGraphUtilization",
+                  "type": "float",
+                  "description": "The member account data volume as a percentage of the maximum allowed data volume. 0 indicates 0 percent, and 100 indicates 100 percent.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PercentOfGraphUtilizationUpdatedTime",
+                  "type": "datetime",
+                  "description": "The date and time when the graph utilization percentage was last updated. The value is an ISO8601 formatted string. For example, 2021-08-18T16:35:56.284Z.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InvitationType",
+                  "type": "string",
+                  "description": "The type of behavior graph membership.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VolumeUsageByDatasourcePackage",
+                  "type": "dict",
+                  "description": "Details on the volume of usage for each data source package in a behavior graph.",
+                  "nested_items": [
+                    {
+                      "name": "VolumeUsageInBytes",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "VolumeUsageInBytes",
+                              "type": "integer",
+                              "description": "Total volume of data in bytes per day ingested for a given data source package.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "VolumeUsageUpdateTime",
+                              "type": "datetime",
+                              "description": "The data and time when the member account data volume was last updated. The value is an ISO8601 formatted string. For example, 2021-08-18T16:35:56.284Z.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "DatasourcePackageIngestStates",
+                  "type": "dict",
+                  "description": "The state of a data source package for the behavior graph.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UnprocessedAccounts",
+          "type": "list",
+          "description": "The list of accounts for which Detective was unable to process the invitation or enablement request. For each account, the list provides the reason why the request could not be processed. The list includes accounts that are already member accounts in the behavior graph.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "AccountId",
+                  "type": "string",
+                  "description": "The Amazon Web Services account identifier of the member account that was not processed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Reason",
+                  "type": "string",
+                  "description": "The reason that the member account request could not be processed.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

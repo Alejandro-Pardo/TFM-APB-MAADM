@@ -1,0 +1,756 @@
+{
+  "method_name": "get_rightsizing_recommendation",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/get_rightsizing_recommendation.html",
+  "description": "Creates recommendations that help you save cost by identifying idle and underutilized Amazon EC2 instances. Recommendations are generated to either downsize or terminate instances, along with providing savings detail and metrics. For more information about calculation and function, see Optimizing Your Cost with Rightsizing Recommendations in the Billing and Cost Management User Guide.",
+  "parameters": [
+    {
+      "name": "Filter",
+      "type": "dict",
+      "required": false,
+      "description": "Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Configuration",
+      "type": "dict",
+      "required": true,
+      "description": "You can use Configuration to customize recommendations across two attributes. You can choose to view recommendations for instances within the same instance families or across different instance families. You can also choose to view your estimated savings that are associated with recommendations with consideration of existing Savings Plans or RI benefits, or neither. The option to see recommendations within the same instance family or recommendations for instances across other families. The default value is SAME_INSTANCE_FAMILY. The option to consider RI or Savings Plans discount benefits in your savings calculation. The default value is TRUE.",
+      "nested_params": [
+        {
+          "name": "RecommendationTarget",
+          "type": "string",
+          "required": false,
+          "description": "The option to see recommendations within the same instance family or recommendations for instances across other families. The default value is SAME_INSTANCE_FAMILY.",
+          "nested_params": []
+        },
+        {
+          "name": "BenefitsConsidered",
+          "type": "boolean",
+          "required": false,
+          "description": "The option to consider RI or Savings Plans discount benefits in your savings calculation. The default value is TRUE.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Service",
+      "type": "string",
+      "required": true,
+      "description": "The specific service that you want recommendations for. The only valid value for GetRightsizingRecommendation is ' AmazonEC2'.",
+      "nested_params": []
+    },
+    {
+      "name": "PageSize",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextPageToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "RecommendationId",
+              "type": "string",
+              "description": "The ID for the recommendation.",
+              "nested_items": []
+            },
+            {
+              "name": "GenerationTimestamp",
+              "type": "string",
+              "description": "The timestamp for when Amazon Web Services made the recommendation.",
+              "nested_items": []
+            },
+            {
+              "name": "LookbackPeriodInDays",
+              "type": "string",
+              "description": "The number of days of previous usage that Amazon Web Services considers when making the recommendation.",
+              "nested_items": []
+            },
+            {
+              "name": "AdditionalMetadata",
+              "type": "string",
+              "description": "Additional metadata that might be applicable to the recommendation.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "TotalRecommendationCount",
+              "type": "string",
+              "description": "The total number of instance recommendations.",
+              "nested_items": []
+            },
+            {
+              "name": "EstimatedTotalMonthlySavingsAmount",
+              "type": "string",
+              "description": "The estimated total savings resulting from modifications, on a monthly basis.",
+              "nested_items": []
+            },
+            {
+              "name": "SavingsCurrencyCode",
+              "type": "string",
+              "description": "The currency code that Amazon Web Services used to calculate the savings.",
+              "nested_items": []
+            },
+            {
+              "name": "SavingsPercentage",
+              "type": "string",
+              "description": "The savings percentage based on the recommended modifications. It's relative to the total On-Demand costs that are associated with these instances.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "RightsizingRecommendations",
+          "type": "list",
+          "description": "Recommendations to rightsize resources.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "AccountId",
+                  "type": "string",
+                  "description": "The account that this recommendation is for.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CurrentInstance",
+                  "type": "dict",
+                  "description": "Context regarding the current instance.",
+                  "nested_items": [
+                    {
+                      "name": "ResourceId",
+                      "type": "string",
+                      "description": "Resource ID of the current instance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "InstanceName",
+                      "type": "string",
+                      "description": "The name that you given an instance. This field shows as blank if you haven't given the instance a name.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Tags",
+                      "type": "list",
+                      "description": "Cost allocation resource tags that are applied to the instance.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Key",
+                              "type": "string",
+                              "description": "The key for the tag.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Values",
+                              "type": "list",
+                              "description": "The specific value of the tag.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "MatchOptions",
+                              "type": "list",
+                              "description": "The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category. The default values for MatchOptions are EQUALS and CASE_SENSITIVE.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ResourceDetails",
+                      "type": "dict",
+                      "description": "Details about the resource and utilization.",
+                      "nested_items": [
+                        {
+                          "name": "EC2ResourceDetails",
+                          "type": "dict",
+                          "description": "Details for the Amazon EC2 resource.",
+                          "nested_items": [
+                            {
+                              "name": "HourlyOnDemandRate",
+                              "type": "string",
+                              "description": "The hourly public On-Demand rate for the instance type.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InstanceType",
+                              "type": "string",
+                              "description": "The type of Amazon Web Services instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Platform",
+                              "type": "string",
+                              "description": "The platform of the Amazon Web Services instance. The platform is the specific combination of operating system, license model, and software on an instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Region",
+                              "type": "string",
+                              "description": "The Amazon Web Services Region of the instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Sku",
+                              "type": "string",
+                              "description": "The SKU of the product.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Memory",
+                              "type": "string",
+                              "description": "The memory capacity of the Amazon Web Services instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "NetworkPerformance",
+                              "type": "string",
+                              "description": "The network performance capacity of the Amazon Web Services instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Storage",
+                              "type": "string",
+                              "description": "The disk storage of the Amazon Web Services instance. This doesn't include EBS storage.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Vcpu",
+                              "type": "string",
+                              "description": "The number of VCPU cores in the Amazon Web Services instance type.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ResourceUtilization",
+                      "type": "dict",
+                      "description": "Utilization information of the current instance during the lookback period.",
+                      "nested_items": [
+                        {
+                          "name": "EC2ResourceUtilization",
+                          "type": "dict",
+                          "description": "The utilization of current Amazon EC2 instance.",
+                          "nested_items": [
+                            {
+                              "name": "MaxCpuUtilizationPercentage",
+                              "type": "string",
+                              "description": "The maximum observed or expected CPU utilization of the instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "MaxMemoryUtilizationPercentage",
+                              "type": "string",
+                              "description": "The maximum observed or expected memory utilization of the instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "MaxStorageUtilizationPercentage",
+                              "type": "string",
+                              "description": "The maximum observed or expected storage utilization of the instance. This doesn't include EBS storage.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "EBSResourceUtilization",
+                              "type": "dict",
+                              "description": "The EBS field that contains a list of EBS metrics that are associated with the current instance.",
+                              "nested_items": [
+                                {
+                                  "name": "EbsReadOpsPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum number of read operations per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "EbsWriteOpsPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum number of write operations per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "EbsReadBytesPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum size of read operations per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "EbsWriteBytesPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum size of write operations per second.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "DiskResourceUtilization",
+                              "type": "dict",
+                              "description": "The field that contains a list of disk (local storage) metrics that are associated with the current instance.",
+                              "nested_items": [
+                                {
+                                  "name": "DiskReadOpsPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum number of read operations per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DiskWriteOpsPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum number of write operations per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DiskReadBytesPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum read throughput operations per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "DiskWriteBytesPerSecond",
+                                  "type": "string",
+                                  "description": "The maximum write throughput operations per second.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "NetworkResourceUtilization",
+                              "type": "dict",
+                              "description": "The network field that contains a list of network metrics that are associated with the current instance.",
+                              "nested_items": [
+                                {
+                                  "name": "NetworkInBytesPerSecond",
+                                  "type": "string",
+                                  "description": "The network inbound throughput utilization measured in Bytes per second (Bps).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "NetworkOutBytesPerSecond",
+                                  "type": "string",
+                                  "description": "The network outbound throughput utilization measured in Bytes per second (Bps).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "NetworkPacketsInPerSecond",
+                                  "type": "string",
+                                  "description": "The network inbound packets that are measured in packets per second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "NetworkPacketsOutPerSecond",
+                                  "type": "string",
+                                  "description": "The network outbound packets that are measured in packets per second.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReservationCoveredHoursInLookbackPeriod",
+                      "type": "string",
+                      "description": "The number of hours during the lookback period that's covered by reservations.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SavingsPlansCoveredHoursInLookbackPeriod",
+                      "type": "string",
+                      "description": "The number of hours during the lookback period that's covered by Savings Plans.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OnDemandHoursInLookbackPeriod",
+                      "type": "string",
+                      "description": "The number of hours during the lookback period that's billed at On-Demand rates.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalRunningHoursInLookbackPeriod",
+                      "type": "string",
+                      "description": "The total number of hours that the instance ran during the lookback period.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MonthlyCost",
+                      "type": "string",
+                      "description": "The current On-Demand cost of operating this instance on a monthly basis.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CurrencyCode",
+                      "type": "string",
+                      "description": "The currency code that Amazon Web Services used to calculate the costs for this instance.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "RightsizingType",
+                  "type": "string",
+                  "description": "A recommendation to either terminate or modify the resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ModifyRecommendationDetail",
+                  "type": "dict",
+                  "description": "The details for the modification recommendations.",
+                  "nested_items": [
+                    {
+                      "name": "TargetInstances",
+                      "type": "list",
+                      "description": "Determines whether this instance type is the Amazon Web Services default recommendation.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "EstimatedMonthlyCost",
+                              "type": "string",
+                              "description": "The expected cost to operate this instance type on a monthly basis.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "EstimatedMonthlySavings",
+                              "type": "string",
+                              "description": "The estimated savings that result from modification, on a monthly basis.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "CurrencyCode",
+                              "type": "string",
+                              "description": "The currency code that Amazon Web Services used to calculate the costs for this instance.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "DefaultTargetInstance",
+                              "type": "boolean",
+                              "description": "Determines whether this recommendation is the defaulted Amazon Web Services recommendation.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ResourceDetails",
+                              "type": "dict",
+                              "description": "Details on the target instance type.",
+                              "nested_items": [
+                                {
+                                  "name": "EC2ResourceDetails",
+                                  "type": "dict",
+                                  "description": "Details for the Amazon EC2 resource.",
+                                  "nested_items": [
+                                    {
+                                      "name": "HourlyOnDemandRate",
+                                      "type": "string",
+                                      "description": "The hourly public On-Demand rate for the instance type.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "InstanceType",
+                                      "type": "string",
+                                      "description": "The type of Amazon Web Services instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Platform",
+                                      "type": "string",
+                                      "description": "The platform of the Amazon Web Services instance. The platform is the specific combination of operating system, license model, and software on an instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Region",
+                                      "type": "string",
+                                      "description": "The Amazon Web Services Region of the instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Sku",
+                                      "type": "string",
+                                      "description": "The SKU of the product.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Memory",
+                                      "type": "string",
+                                      "description": "The memory capacity of the Amazon Web Services instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "NetworkPerformance",
+                                      "type": "string",
+                                      "description": "The network performance capacity of the Amazon Web Services instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Storage",
+                                      "type": "string",
+                                      "description": "The disk storage of the Amazon Web Services instance. This doesn't include EBS storage.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Vcpu",
+                                      "type": "string",
+                                      "description": "The number of VCPU cores in the Amazon Web Services instance type.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ExpectedResourceUtilization",
+                              "type": "dict",
+                              "description": "The expected utilization metrics for target instance type.",
+                              "nested_items": [
+                                {
+                                  "name": "EC2ResourceUtilization",
+                                  "type": "dict",
+                                  "description": "The utilization of current Amazon EC2 instance.",
+                                  "nested_items": [
+                                    {
+                                      "name": "MaxCpuUtilizationPercentage",
+                                      "type": "string",
+                                      "description": "The maximum observed or expected CPU utilization of the instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "MaxMemoryUtilizationPercentage",
+                                      "type": "string",
+                                      "description": "The maximum observed or expected memory utilization of the instance.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "MaxStorageUtilizationPercentage",
+                                      "type": "string",
+                                      "description": "The maximum observed or expected storage utilization of the instance. This doesn't include EBS storage.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "EBSResourceUtilization",
+                                      "type": "dict",
+                                      "description": "The EBS field that contains a list of EBS metrics that are associated with the current instance.",
+                                      "nested_items": [
+                                        {
+                                          "name": "EbsReadOpsPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum number of read operations per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "EbsWriteOpsPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum number of write operations per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "EbsReadBytesPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum size of read operations per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "EbsWriteBytesPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum size of write operations per second.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "DiskResourceUtilization",
+                                      "type": "dict",
+                                      "description": "The field that contains a list of disk (local storage) metrics that are associated with the current instance.",
+                                      "nested_items": [
+                                        {
+                                          "name": "DiskReadOpsPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum number of read operations per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "DiskWriteOpsPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum number of write operations per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "DiskReadBytesPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum read throughput operations per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "DiskWriteBytesPerSecond",
+                                          "type": "string",
+                                          "description": "The maximum write throughput operations per second.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "NetworkResourceUtilization",
+                                      "type": "dict",
+                                      "description": "The network field that contains a list of network metrics that are associated with the current instance.",
+                                      "nested_items": [
+                                        {
+                                          "name": "NetworkInBytesPerSecond",
+                                          "type": "string",
+                                          "description": "The network inbound throughput utilization measured in Bytes per second (Bps).",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "NetworkOutBytesPerSecond",
+                                          "type": "string",
+                                          "description": "The network outbound throughput utilization measured in Bytes per second (Bps).",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "NetworkPacketsInPerSecond",
+                                          "type": "string",
+                                          "description": "The network inbound packets that are measured in packets per second.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "NetworkPacketsOutPerSecond",
+                                          "type": "string",
+                                          "description": "The network outbound packets that are measured in packets per second.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "PlatformDifferences",
+                              "type": "list",
+                              "description": "Explains the actions that you might need to take to successfully migrate your workloads from the current instance type to the recommended instance type.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TerminateRecommendationDetail",
+                  "type": "dict",
+                  "description": "The details for termination recommendations.",
+                  "nested_items": [
+                    {
+                      "name": "EstimatedMonthlySavings",
+                      "type": "string",
+                      "description": "The estimated savings that result from modification, on a monthly basis.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CurrencyCode",
+                      "type": "string",
+                      "description": "The currency code that Amazon Web Services used to calculate the costs for this instance.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "FindingReasonCodes",
+                  "type": "list",
+                  "description": "The list of possible reasons why the recommendation is generated, such as under- or over-utilization of specific metrics (for example, CPU, Memory, Network).",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextPageToken",
+          "type": "string",
+          "description": "The token to retrieve the next set of results.",
+          "nested_items": []
+        },
+        {
+          "name": "Configuration",
+          "type": "dict",
+          "description": "You can use Configuration to customize recommendations across two attributes. You can choose to view recommendations for instances within the same instance families or across different instance families. You can also choose to view your estimated savings that are associated with recommendations with consideration of existing Savings Plans or RI benefits, or neither.",
+          "nested_items": [
+            {
+              "name": "RecommendationTarget",
+              "type": "string",
+              "description": "The option to see recommendations within the same instance family or recommendations for instances across other families. The default value is SAME_INSTANCE_FAMILY.",
+              "nested_items": []
+            },
+            {
+              "name": "BenefitsConsidered",
+              "type": "boolean",
+              "description": "The option to consider RI or Savings Plans discount benefits in your savings calculation. The default value is TRUE.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

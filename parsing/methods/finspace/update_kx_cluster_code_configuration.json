@@ -1,0 +1,109 @@
+{
+  "method_name": "update_kx_cluster_code_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/finspace/client/update_kx_cluster_code_configuration.html",
+  "description": "Allows you to update code configuration on a running cluster. By using this API you can update the code, the initialization script path, and the command line arguments for a specific cluster. The configuration that you want to update will override any existing configurations on the cluster.",
+  "parameters": [
+    {
+      "name": "environmentId",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier of the kdb environment.",
+      "nested_params": []
+    },
+    {
+      "name": "clusterName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the cluster.",
+      "nested_params": []
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A token that ensures idempotency. This token expires in 10 minutes. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "code",
+      "type": "dict",
+      "required": true,
+      "description": "The structure of the customer code available within the running cluster. s3Bucket (string) --- A unique name for the S3 bucket. s3Key (string) --- The full S3 path (excluding bucket) to the .zip file. This file contains the code that is loaded onto the cluster when it's started. s3ObjectVersion (string) --- The version of an S3 object.",
+      "nested_params": [
+        {
+          "name": "s3Bucket",
+          "type": "string",
+          "required": false,
+          "description": "A unique name for the S3 bucket.",
+          "nested_params": []
+        },
+        {
+          "name": "s3Key",
+          "type": "string",
+          "required": false,
+          "description": "The full S3 path (excluding bucket) to the .zip file. This file contains the code that is loaded onto the cluster when it's started.",
+          "nested_params": []
+        },
+        {
+          "name": "s3ObjectVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of an S3 object.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "initializationScript",
+      "type": "string",
+      "required": false,
+      "description": "Specifies a Q program that will be run at launch of a cluster. It is a relative path within .zip file that contains the custom code, which will be loaded on the cluster. It must include the file name itself. For example, somedir/init.q. You cannot update this parameter for a NO_RESTART deployment.",
+      "nested_params": []
+    },
+    {
+      "name": "commandLineArguments",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the key-value pairs to make them available inside the cluster. You cannot update this parameter for a NO_RESTART deployment. (dict) --- Defines the key-value pairs to make them available inside the cluster. key (string) --- The name of the key. value (string) --- The value of the key.",
+      "nested_params": [
+        {
+          "name": "key",
+          "type": "string",
+          "required": false,
+          "description": "The name of the key.",
+          "nested_params": []
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the key.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "deploymentConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration that allows you to choose how you want to update the code on a cluster. The type of deployment that you want on a cluster. ROLLING --- This options updates the cluster by stopping the exiting q process and starting a new q process with updated configuration. NO_RESTART --- This option updates the cluster without stopping the running q process. It is only available for GP type cluster. This option is quicker as it reduces the turn around time to update configuration on a cluster. With this deployment mode, you cannot update the initializationScript and commandLineArguments parameters. FORCE --- This option updates the cluster by immediately stopping all the running processes before starting up new ones with the updated configuration.",
+      "nested_params": [
+        {
+          "name": "deploymentStrategy",
+          "type": "string",
+          "required": false,
+          "description": "The type of deployment that you want on a cluster.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "method_name": "describe_event_details_for_organization",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/health/client/describe_event_details_for_organization.html",
+  "description": "Returns detailed information about one or more specified events for one or more Amazon Web Services accounts in your organization. This information includes standard event data (such as the Amazon Web Services Region and service), an event description, and (depending on the event) possible metadata. This operation doesn't return affected entities, such as the resources related to the event. To return affected entities, use the DescribeAffectedEntitiesForOrganization operation. When you call the DescribeEventDetailsForOrganization operation, specify the organizationEventDetailFilters object in the request. Depending on the Health event type, note the following differences: For more information, see Event.",
+  "parameters": [
+    {
+      "name": "organizationEventDetailFilters",
+      "type": "list",
+      "required": true,
+      "description": "A set of JSON elements that includes the awsAccountId and the eventArn. (dict) --- The values used to filter results from the DescribeEventDetailsForOrganization and DescribeAffectedEntitiesForOrganization operations. The unique identifier for the event. The event ARN has the arn:aws:health:event-region::event/SERVICE/EVENT_TYPE_CODE/EVENT_TYPE_PLUS_ID format. For example, an event ARN might look like the following: arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456 awsAccountId (string) --- The 12-digit Amazon Web Services account numbers that contains the affected entities.",
+      "nested_params": [
+        {
+          "name": "eventArn",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier for the event. The event ARN has the arn:aws:health:event-region::event/SERVICE/EVENT_TYPE_CODE/EVENT_TYPE_PLUS_ID format. For example, an event ARN might look like the following: arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456",
+          "nested_params": []
+        },
+        {
+          "name": "awsAccountId",
+          "type": "string",
+          "required": false,
+          "description": "The 12-digit Amazon Web Services account numbers that contains the affected entities.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "successfulSet",
+          "type": "list",
+          "description": "Information about the events that could be retrieved.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "awsAccountId",
+                  "type": "string",
+                  "description": "The 12-digit Amazon Web Services account numbers that contains the affected entities.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Public events might be service events that are not specific to an Amazon Web Services account. For example, if there is an issue with an Amazon Web Services Region, Health provides information about the event, even if you don't use services or resources in that Region.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Account-specific events are specific to either your Amazon Web Services account or an account in your organization. For example, if there's an issue with Amazon Elastic Compute Cloud in a Region that you use, Health provides information about the event and the affected resources in the account.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "eventDescription",
+                  "type": "dict",
+                  "description": "The detailed description of the event. Included in the information returned by the DescribeEventDetails operation.",
+                  "nested_items": [
+                    {
+                      "name": "latestDescription",
+                      "type": "string",
+                      "description": "The most recent description of the event.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "eventMetadata",
+                  "type": "dict",
+                  "description": "Additional metadata about the event.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "failedSet",
+          "type": "list",
+          "description": "Error messages for any events that could not be retrieved.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "awsAccountId",
+                  "type": "string",
+                  "description": "Error information returned when a DescribeEventDetailsForOrganization operation can't find a specified event.",
+                  "nested_items": []
+                },
+                {
+                  "name": "eventArn",
+                  "type": "string",
+                  "description": "The unique identifier for the event. The event ARN has the arn:aws:health:event-region::event/SERVICE/EVENT_TYPE_CODE/EVENT_TYPE_PLUS_ID format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "errorName",
+                  "type": "string",
+                  "description": "The name of the error.",
+                  "nested_items": []
+                },
+                {
+                  "name": "errorMessage",
+                  "type": "string",
+                  "description": "A message that describes the error.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "We couldn't find a public event that matches your request. To find an event that is account specific, you must enter an Amazon Web Services account ID in the request.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "We couldn't find an account specific event for the specified Amazon Web Services account. To find an event that is public, you must enter a null value for the Amazon Web Services account ID in the request.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Your Amazon Web Services account doesn't include the Amazon Web Services Support plan required to use the Health API. You must have either a Business, Enterprise On-Ramp, or Enterprise Support plan.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

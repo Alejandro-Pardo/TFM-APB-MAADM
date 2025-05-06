@@ -1,0 +1,757 @@
+{
+  "method_name": "update_domain",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/customer-profiles/client/update_domain.html",
+  "description": "Updates the properties of a domain, including creating or selecting a dead letter queue or an encryption key. After a domain is created, the name can't be changed. Use this API or CreateDomain to enable identity resolution: set Matching to true. To prevent cross-service impersonation when you call this API, see Cross-service confused deputy prevention for sample policies that you should apply. To add or remove tags on an existing Domain, see TagResource/ UntagResource.",
+  "parameters": [
+    {
+      "name": "DomainName",
+      "type": "string",
+      "required": true,
+      "description": "The unique name of the domain.",
+      "nested_params": []
+    },
+    {
+      "name": "DefaultExpirationDays",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DefaultEncryptionKey",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DeadLetterQueueUrl",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Matching",
+      "type": "dict",
+      "required": true,
+      "description": "The process of matching duplicate profiles. If Matching = true, Amazon Connect Customer Profiles starts a weekly batch process called Identity Resolution Job. If you do not specify a date and time for Identity Resolution Job to run, by default it runs every Saturday at 12AM UTC to detect duplicate profiles in your domains. After the Identity Resolution Job completes, use the GetMatches API to return and review the results. Or, if you have configured ExportingConfig in the MatchingRequest, you can download the results from S3. The flag that enables the matching process of duplicate profiles. JobSchedule (dict) --- The day and time when do you want to start the Identity Resolution Job every week. The day when the Identity Resolution Job should run every week. The time when the Identity Resolution Job should run every week. AutoMerging (dict) --- Configuration information about the auto-merging process. The flag that enables the auto-merging of duplicate profiles. Consolidation (dict) --- A list of matching attributes that represent matching criteria. If two profiles meet at least one of the requirements in the matching attributes list, they will be merged. A list of matching criteria. (list) --- (string) --- ConflictResolution (dict) --- How the auto-merging process should resolve conflicts between different profiles. For example, if Profile A and Profile B have the same FirstName and LastName (and that is the matching criteria), which EmailAddress should be used? How the auto-merging process should resolve conflicts between different profiles. RECENCY: Uses the data that was most recently updated. SOURCE: Uses the data from a specific source. For example, if a company has been aquired or two departments have merged, data from the specified source is used. If two duplicate profiles are from the same source, then RECENCY is used again. SourceName (string) --- The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel. MinAllowedConfidenceScoreForMerging (float) --- A number between 0 and 1 that represents the minimum confidence score required for profiles within a matching group to be merged during the auto-merge process. A higher score means higher similarity required to merge profiles. ExportingConfig (dict) --- Configuration information for exporting Identity Resolution results, for example, to an S3 bucket. S3Exporting (dict) --- The S3 location where Identity Resolution Jobs write result files. The name of the S3 bucket where Identity Resolution Jobs write result files. S3KeyName (string) --- The S3 key name of the location where Identity Resolution Jobs write result files.",
+      "nested_params": [
+        {
+          "name": "Enabled",
+          "type": "boolean",
+          "required": false,
+          "description": "The flag that enables the matching process of duplicate profiles.",
+          "nested_params": []
+        },
+        {
+          "name": "JobSchedule",
+          "type": "dict",
+          "required": false,
+          "description": "The day and time when do you want to start the Identity Resolution Job every week.",
+          "nested_params": [
+            {
+              "name": "DayOfTheWeek",
+              "type": "string",
+              "required": false,
+              "description": "The day when the Identity Resolution Job should run every week.",
+              "nested_params": []
+            },
+            {
+              "name": "Time",
+              "type": "string",
+              "required": false,
+              "description": "The time when the Identity Resolution Job should run every week.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AutoMerging",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information about the auto-merging process.",
+          "nested_params": [
+            {
+              "name": "Enabled",
+              "type": "boolean",
+              "required": false,
+              "description": "The flag that enables the auto-merging of duplicate profiles.",
+              "nested_params": []
+            },
+            {
+              "name": "Consolidation",
+              "type": "dict",
+              "required": false,
+              "description": "A list of matching attributes that represent matching criteria. If two profiles meet at least one of the requirements in the matching attributes list, they will be merged.",
+              "nested_params": [
+                {
+                  "name": "MatchingAttributesList",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of matching criteria.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ConflictResolution",
+              "type": "dict",
+              "required": false,
+              "description": "How the auto-merging process should resolve conflicts between different profiles. For example, if Profile A and Profile B have the same FirstName and LastName (and that is the matching criteria), which EmailAddress should be used?",
+              "nested_params": [
+                {
+                  "name": "ConflictResolvingModel",
+                  "type": "string",
+                  "required": false,
+                  "description": "How the auto-merging process should resolve conflicts between different profiles.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SourceName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "MinAllowedConfidenceScoreForMerging",
+              "type": "float",
+              "required": false,
+              "description": "A number between 0 and 1 that represents the minimum confidence score required for profiles within a matching group to be merged during the auto-merge process. A higher score means higher similarity required to merge profiles.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ExportingConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information for exporting Identity Resolution results, for example, to an S3 bucket.",
+          "nested_params": [
+            {
+              "name": "S3Exporting",
+              "type": "dict",
+              "required": false,
+              "description": "The S3 location where Identity Resolution Jobs write result files.",
+              "nested_params": [
+                {
+                  "name": "S3BucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the S3 bucket where Identity Resolution Jobs write result files.",
+                  "nested_params": []
+                },
+                {
+                  "name": "S3KeyName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The S3 key name of the location where Identity Resolution Jobs write result files.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RuleBasedMatching",
+      "type": "dict",
+      "required": true,
+      "description": "The process of matching duplicate profiles using the rule-Based matching. If RuleBasedMatching = true, Amazon Connect Customer Profiles will start to match and merge your profiles according to your configuration in the RuleBasedMatchingRequest. You can use the ListRuleBasedMatches and GetSimilarProfiles API to return and review the results. Also, if you have configured ExportingConfig in the RuleBasedMatchingRequest, you can download the results from S3. The flag that enables the rule-based matching process of duplicate profiles. MatchingRules (list) --- Configures how the rule-based matching process should match profiles. You can have up to 15 MatchingRule in the MatchingRules. (dict) --- Specifies how does the rule-based matching process should match profiles. You can choose from the following attributes to build the matching Rule: AccountNumber Address.Address Address.City Address.Country Address.County Address.PostalCode Address.State Address.Province BirthDate BusinessName EmailAddress FirstName Gender LastName MiddleName PhoneNumber Any customized profile attributes that start with the Attributes A single rule level of the MatchRules. Configures how the rule-based matching process should match profiles. (string) --- MaxAllowedRuleLevelForMerging (integer) --- MatchingRule MaxAllowedRuleLevelForMatching (integer) --- Indicates the maximum allowed rule level. AttributeTypesSelector (dict) --- Configures information about the AttributeTypesSelector where the rule-based identity resolution uses to match profiles. Configures the AttributeMatchingModel, you can either choose ONE_TO_ONE or MANY_TO_MANY. Address (list) --- The Address type. You can choose from Address, BusinessAddress, MaillingAddress, and ShippingAddress. You only can use the Address type in the MatchingRule. For example, if you want to match profile based on BusinessAddress.City or MaillingAddress.City, you need to choose the BusinessAddress and the MaillingAddress to represent the Address type and specify the Address.City on the matching rule. (string) --- PhoneNumber (list) --- The PhoneNumber type. You can choose from PhoneNumber, HomePhoneNumber, and MobilePhoneNumber. You only can use the PhoneNumber type in the MatchingRule. For example, if you want to match a profile based on Phone or HomePhone, you need to choose the Phone and the HomePhone to represent the PhoneNumber type and only specify the PhoneNumber on the matching rule. (string) --- EmailAddress (list) --- The Email type. You can choose from EmailAddress, BusinessEmailAddress and PersonalEmailAddress. You only can use the EmailAddress type in the MatchingRule. For example, if you want to match profile based on PersonalEmailAddress or BusinessEmailAddress, you need to choose the PersonalEmailAddress and the BusinessEmailAddress to represent the EmailAddress type and only specify the EmailAddress on the matching rule. (string) --- ConflictResolution (dict) --- How the auto-merging process should resolve conflicts between different profiles. How the auto-merging process should resolve conflicts between different profiles. RECENCY: Uses the data that was most recently updated. SOURCE: Uses the data from a specific source. For example, if a company has been aquired or two departments have merged, data from the specified source is used. If two duplicate profiles are from the same source, then RECENCY is used again. SourceName (string) --- The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel. ExportingConfig (dict) --- Configuration information about the S3 bucket where Identity Resolution Jobs writes result files. S3Exporting (dict) --- The S3 location where Identity Resolution Jobs write result files. The name of the S3 bucket where Identity Resolution Jobs write result files. S3KeyName (string) --- The S3 key name of the location where Identity Resolution Jobs write result files.",
+      "nested_params": [
+        {
+          "name": "Enabled",
+          "type": "boolean",
+          "required": false,
+          "description": "The flag that enables the rule-based matching process of duplicate profiles.",
+          "nested_params": []
+        },
+        {
+          "name": "MatchingRules",
+          "type": "list",
+          "required": false,
+          "description": "Configures how the rule-based matching process should match profiles. You can have up to 15 MatchingRule in the MatchingRules.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxAllowedRuleLevelForMerging",
+          "type": "integer",
+          "required": false,
+          "description": "MatchingRule.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxAllowedRuleLevelForMatching",
+          "type": "integer",
+          "required": false,
+          "description": "Indicates the maximum allowed rule level.",
+          "nested_params": []
+        },
+        {
+          "name": "AttributeTypesSelector",
+          "type": "dict",
+          "required": false,
+          "description": "Configures information about the AttributeTypesSelector where the rule-based identity resolution uses to match profiles.",
+          "nested_params": [
+            {
+              "name": "AttributeMatchingModel",
+              "type": "string",
+              "required": false,
+              "description": "Configures the AttributeMatchingModel, you can either choose ONE_TO_ONE or MANY_TO_MANY.",
+              "nested_params": []
+            },
+            {
+              "name": "Address",
+              "type": "list",
+              "required": false,
+              "description": "The Address type. You can choose from Address, BusinessAddress, MaillingAddress, and ShippingAddress. You only can use the Address type in the MatchingRule. For example, if you want to match profile based on BusinessAddress.City or MaillingAddress.City, you need to choose the BusinessAddress and the MaillingAddress to represent the Address type and specify the Address.City on the matching rule.",
+              "nested_params": []
+            },
+            {
+              "name": "PhoneNumber",
+              "type": "list",
+              "required": false,
+              "description": "The PhoneNumber type. You can choose from PhoneNumber, HomePhoneNumber, and MobilePhoneNumber. You only can use the PhoneNumber type in the MatchingRule. For example, if you want to match a profile based on Phone or HomePhone, you need to choose the Phone and the HomePhone to represent the PhoneNumber type and only specify the PhoneNumber on the matching rule.",
+              "nested_params": []
+            },
+            {
+              "name": "EmailAddress",
+              "type": "list",
+              "required": false,
+              "description": "The Email type. You can choose from EmailAddress, BusinessEmailAddress and PersonalEmailAddress. You only can use the EmailAddress type in the MatchingRule. For example, if you want to match profile based on PersonalEmailAddress or BusinessEmailAddress, you need to choose the PersonalEmailAddress and the BusinessEmailAddress to represent the EmailAddress type and only specify the EmailAddress on the matching rule.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ConflictResolution",
+          "type": "dict",
+          "required": false,
+          "description": "How the auto-merging process should resolve conflicts between different profiles.",
+          "nested_params": [
+            {
+              "name": "ConflictResolvingModel",
+              "type": "string",
+              "required": false,
+              "description": "How the auto-merging process should resolve conflicts between different profiles.",
+              "nested_params": []
+            },
+            {
+              "name": "SourceName",
+              "type": "string",
+              "required": false,
+              "description": "The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ExportingConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information about the S3 bucket where Identity Resolution Jobs writes result files.",
+          "nested_params": [
+            {
+              "name": "S3Exporting",
+              "type": "dict",
+              "required": false,
+              "description": "The S3 location where Identity Resolution Jobs write result files.",
+              "nested_params": [
+                {
+                  "name": "S3BucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the S3 bucket where Identity Resolution Jobs write result files.",
+                  "nested_params": []
+                },
+                {
+                  "name": "S3KeyName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The S3 key name of the location where Identity Resolution Jobs write result files.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "The tags used to organize, track, or control access for this resource. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DomainName",
+          "type": "string",
+          "description": "The unique name of the domain.",
+          "nested_items": []
+        },
+        {
+          "name": "DefaultExpirationDays",
+          "type": "integer",
+          "description": "The default number of days until the data within the domain expires.",
+          "nested_items": []
+        },
+        {
+          "name": "DefaultEncryptionKey",
+          "type": "string",
+          "description": "The default encryption key, which is an AWS managed key, is used when no specific type of encryption key is specified. It is used to encrypt all data before it is placed in permanent or semi-permanent storage.",
+          "nested_items": []
+        },
+        {
+          "name": "DeadLetterQueueUrl",
+          "type": "string",
+          "description": "The URL of the SQS dead letter queue, which is used for reporting errors associated with ingesting data from third party applications.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "Enabled",
+              "type": "boolean",
+              "description": "The flag that enables the matching process of duplicate profiles.",
+              "nested_items": []
+            },
+            {
+              "name": "JobSchedule",
+              "type": "dict",
+              "description": "The day and time when do you want to start the Identity Resolution Job every week.",
+              "nested_items": [
+                {
+                  "name": "DayOfTheWeek",
+                  "type": "string",
+                  "description": "The day when the Identity Resolution Job should run every week.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Time",
+                  "type": "string",
+                  "description": "The time when the Identity Resolution Job should run every week.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "AutoMerging",
+              "type": "dict",
+              "description": "Configuration information about the auto-merging process.",
+              "nested_items": [
+                {
+                  "name": "Enabled",
+                  "type": "boolean",
+                  "description": "The flag that enables the auto-merging of duplicate profiles.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Consolidation",
+                  "type": "dict",
+                  "description": "A list of matching attributes that represent matching criteria. If two profiles meet at least one of the requirements in the matching attributes list, they will be merged.",
+                  "nested_items": [
+                    {
+                      "name": "MatchingAttributesList",
+                      "type": "list",
+                      "description": "A list of matching criteria.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "list",
+                          "description": "(list) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ConflictResolution",
+                  "type": "dict",
+                  "description": "How the auto-merging process should resolve conflicts between different profiles. For example, if Profile A and Profile B have the same FirstName and LastName (and that is the matching criteria), which EmailAddress should be used?",
+                  "nested_items": [
+                    {
+                      "name": "ConflictResolvingModel",
+                      "type": "string",
+                      "description": "How the auto-merging process should resolve conflicts between different profiles.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "RECENCY: Uses the data that was most recently updated.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOURCE: Uses the data from a specific source. For example, if a company has been aquired or two departments have merged, data from the specified source is used. If two duplicate profiles are from the same source, then RECENCY is used again.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "SourceName",
+                      "type": "string",
+                      "description": "The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MinAllowedConfidenceScoreForMerging",
+                  "type": "float",
+                  "description": "A number between 0 and 1 that represents the minimum confidence score required for profiles within a matching group to be merged during the auto-merge process. A higher score means higher similarity required to merge profiles.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ExportingConfig",
+              "type": "dict",
+              "description": "Configuration information for exporting Identity Resolution results, for example, to an S3 bucket.",
+              "nested_items": [
+                {
+                  "name": "S3Exporting",
+                  "type": "dict",
+                  "description": "The S3 location where Identity Resolution Jobs write result files.",
+                  "nested_items": [
+                    {
+                      "name": "S3BucketName",
+                      "type": "string",
+                      "description": "The name of the S3 bucket where Identity Resolution Jobs write result files.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "S3KeyName",
+                      "type": "string",
+                      "description": "The S3 key name of the location where Identity Resolution Jobs write result files.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RuleBasedMatching",
+          "type": "dict",
+          "description": "The process of matching duplicate profiles using the rule-Based matching. If RuleBasedMatching = true, Amazon Connect Customer Profiles will start to match and merge your profiles according to your configuration in the RuleBasedMatchingRequest. You can use the ListRuleBasedMatches and GetSimilarProfiles API to return and review the results. Also, if you have configured ExportingConfig in the RuleBasedMatchingRequest, you can download the results from S3.",
+          "nested_items": [
+            {
+              "name": "Enabled",
+              "type": "boolean",
+              "description": "The flag that enables the rule-based matching process of duplicate profiles.",
+              "nested_items": []
+            },
+            {
+              "name": "MatchingRules",
+              "type": "list",
+              "description": "Configures how the rule-based matching process should match profiles. You can have up to 15 MatchingRule in the MatchingRules.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "AccountNumber.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.Address.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.City.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.Country.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.County.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.PostalCode.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.State.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Address.Province.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "BirthDate.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "BusinessName.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "EmailAddress.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "FirstName.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Gender.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "LastName.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "MiddleName.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PhoneNumber.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Any customized profile attributes that start with the Attributes.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "PENDING.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "The first status after configuration a rule-based matching rule. If it is an existing domain, the rule-based Identity Resolution waits one hour before creating the matching rule. If it is a new domain, the system will skip the PENDING stage.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MaxAllowedRuleLevelForMerging",
+              "type": "integer",
+              "description": "MatchingRule.",
+              "nested_items": []
+            },
+            {
+              "name": "MaxAllowedRuleLevelForMatching",
+              "type": "integer",
+              "description": "Indicates the maximum allowed rule level.",
+              "nested_items": []
+            },
+            {
+              "name": "AttributeTypesSelector",
+              "type": "dict",
+              "description": "Configures information about the AttributeTypesSelector where the rule-based identity resolution uses to match profiles.",
+              "nested_items": [
+                {
+                  "name": "AttributeMatchingModel",
+                  "type": "string",
+                  "description": "Configures the AttributeMatchingModel, you can either choose ONE_TO_ONE or MANY_TO_MANY.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Address",
+                  "type": "list",
+                  "description": "The Address type. You can choose from Address, BusinessAddress, MaillingAddress, and ShippingAddress.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "PhoneNumber",
+                  "type": "list",
+                  "description": "The PhoneNumber type. You can choose from PhoneNumber, HomePhoneNumber, and MobilePhoneNumber.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "EmailAddress",
+                  "type": "list",
+                  "description": "The Email type. You can choose from EmailAddress, BusinessEmailAddress and PersonalEmailAddress.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ConflictResolution",
+              "type": "dict",
+              "description": "How the auto-merging process should resolve conflicts between different profiles.",
+              "nested_items": [
+                {
+                  "name": "ConflictResolvingModel",
+                  "type": "string",
+                  "description": "How the auto-merging process should resolve conflicts between different profiles.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RECENCY: Uses the data that was most recently updated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SOURCE: Uses the data from a specific source. For example, if a company has been aquired or two departments have merged, data from the specified source is used. If two duplicate profiles are from the same source, then RECENCY is used again.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SourceName",
+                  "type": "string",
+                  "description": "The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ExportingConfig",
+              "type": "dict",
+              "description": "Configuration information about the S3 bucket where Identity Resolution Jobs writes result files.",
+              "nested_items": [
+                {
+                  "name": "S3Exporting",
+                  "type": "dict",
+                  "description": "The S3 location where Identity Resolution Jobs write result files.",
+                  "nested_items": [
+                    {
+                      "name": "S3BucketName",
+                      "type": "string",
+                      "description": "The name of the S3 bucket where Identity Resolution Jobs write result files.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "S3KeyName",
+                      "type": "string",
+                      "description": "The S3 key name of the location where Identity Resolution Jobs write result files.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CreatedAt",
+          "type": "datetime",
+          "description": "The timestamp of when the domain was created.",
+          "nested_items": []
+        },
+        {
+          "name": "LastUpdatedAt",
+          "type": "datetime",
+          "description": "The timestamp of when the domain was most recently edited.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

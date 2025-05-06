@@ -1,0 +1,398 @@
+{
+  "method_name": "update_data_repository_association",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/fsx/client/update_data_repository_association.html",
+  "description": "Updates the configuration of an existing data repository association on an Amazon FSx for Lustre file system. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding scratch_1 deployment type.",
+  "parameters": [
+    {
+      "name": "AssociationId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the data repository association that you are updating.",
+      "nested_params": []
+    },
+    {
+      "name": "ClientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "(Optional) An idempotency token for resource creation, in a string of up to 63 ASCII characters. This token is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "ImportedFileChunkSize",
+      "type": "integer",
+      "required": false,
+      "description": "For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system. The default chunk size is 1,024 MiB (1 GiB) and can go as high as 512,000 MiB (500 GiB). Amazon S3 objects have a maximum size of 5 TB.",
+      "nested_params": []
+    },
+    {
+      "name": "S3",
+      "type": "dict",
+      "required": false,
+      "description": "The configuration for an Amazon S3 data repository linked to an Amazon FSx Lustre file system with a data repository association. The configuration defines which file events (new, changed, or deleted files or directories) are automatically imported from the linked data repository to the file system or automatically exported from the file system to the data repository. AutoImportPolicy (dict) --- Specifies the type of updated objects (new, changed, deleted) that will be automatically imported from the linked S3 bucket to your file system. Events (list) --- The AutoImportPolicy can have the following event values: NEW - Amazon FSx automatically imports metadata of files added to the linked S3 bucket that do not currently exist in the FSx file system. CHANGED - Amazon FSx automatically updates file metadata and invalidates existing file content on the file system as files change in the data repository. DELETED - Amazon FSx automatically deletes files on the file system as corresponding files are deleted in the data repository. You can define any combination of event types for your AutoImportPolicy. (string) --- AutoExportPolicy (dict) --- Specifies the type of updated objects (new, changed, deleted) that will be automatically exported from your file system to the linked S3 bucket. Events (list) --- The AutoExportPolicy can have the following event values: NEW - New files and directories are automatically exported to the data repository as they are added to the file system. CHANGED - Changes to files and directories on the file system are automatically exported to the data repository. DELETED - Files and directories are automatically deleted on the data repository when they are deleted on the file system. You can define any combination of event types for your AutoExportPolicy. (string) ---",
+      "nested_params": [
+        {
+          "name": "AutoImportPolicy",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the type of updated objects (new, changed, deleted) that will be automatically imported from the linked S3 bucket to your file system.",
+          "nested_params": [
+            {
+              "name": "Events",
+              "type": "list",
+              "required": false,
+              "description": "The AutoImportPolicy can have the following event values:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AutoExportPolicy",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the type of updated objects (new, changed, deleted) that will be automatically exported from your file system to the linked S3 bucket.",
+          "nested_params": [
+            {
+              "name": "Events",
+              "type": "list",
+              "required": false,
+              "description": "The AutoExportPolicy can have the following event values:",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Association",
+          "type": "dict",
+          "description": "The response object returned after the data repository association is updated.",
+          "nested_items": [
+            {
+              "name": "AssociationId",
+              "type": "string",
+              "description": "The system-generated, unique ID of the data repository association.",
+              "nested_items": []
+            },
+            {
+              "name": "ResourceARN",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) for a given resource. ARNs uniquely identify Amazon Web Services resources. We require an ARN when you need to specify a resource unambiguously across all of Amazon Web Services. For more information, see Amazon Resource Names (ARNs) in the Amazon Web Services General Reference.",
+              "nested_items": []
+            },
+            {
+              "name": "FileSystemId",
+              "type": "string",
+              "description": "The globally unique ID of the file system, assigned by Amazon FSx.",
+              "nested_items": []
+            },
+            {
+              "name": "Lifecycle",
+              "type": "string",
+              "description": "Describes the state of a data repository association. The lifecycle can have the following values:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATING - The data repository association between the file system or cache and the data repository is being created. The data repository is unavailable.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AVAILABLE - The data repository association is available for use.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "only for Amazon FSx for Lustre",
+                  "description": "MISCONFIGURED - The data repository association is misconfigured. Until the configuration is corrected, automatic import and automatic export will not work (only for Amazon FSx for Lustre).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UPDATING - The data repository association is undergoing a customer initiated update that might affect its availability.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETING - The data repository association is undergoing a customer initiated deletion.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED - The data repository association is in a terminal state that cannot be recovered.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "FailureDetails",
+              "type": "dict",
+              "description": "Provides detailed information about the data repository if its Lifecycle is set to MISCONFIGURED or FAILED.",
+              "nested_items": [
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "A detailed error message.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "FileSystemPath",
+              "type": "string",
+              "description": "A path on the Amazon FSx for Lustre file system that points to a high-level directory (such as /ns1/) or subdirectory (such as /ns1/subdir/) that will be mapped 1-1 with DataRepositoryPath. The leading forward slash in the name is required. Two data repository associations cannot have overlapping file system paths. For example, if a data repository is associated with file system path /ns1/, then you cannot link another data repository with file system path /ns1/ns2.",
+              "nested_items": []
+            },
+            {
+              "name": "DataRepositoryPath",
+              "type": "string",
+              "description": "The path to the data repository that will be linked to the cache or file system.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "or one of its subdirectories",
+                  "description": "For Amazon File Cache, the path can be an NFS data repository that will be linked to the cache. The path can be in one of two formats:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "or one of its subdirectories",
+                      "description": "If you are not using the DataRepositorySubdirectories parameter, the path is to an NFS Export directory (or one of its subdirectories) in the format nsf://nfs-domain-name/exportpath. You can therefore link a single NFS Export to a single data repository association.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "If you are using the DataRepositorySubdirectories parameter, the path is the domain name of the NFS file system in the format nfs://filer-domain-name, which indicates the root of the subdirectories specified with the DataRepositorySubdirectories parameter.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "where prefix is optional",
+                  "description": "For Amazon File Cache, the path can be an S3 bucket or prefix in the format s3://bucket-name/prefix/ (where prefix is optional).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "where prefix is optional",
+                  "description": "For Amazon FSx for Lustre, the path can be an S3 bucket or prefix in the format s3://bucket-name/prefix/ (where prefix is optional).",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "BatchImportMetaDataOnCreate",
+              "type": "boolean",
+              "description": "A boolean flag indicating whether an import data repository task to import metadata should run after the data repository association is created. The task runs if this flag is set to true.",
+              "nested_items": []
+            },
+            {
+              "name": "ImportedFileChunkSize",
+              "type": "integer",
+              "description": "For files imported from a data repository, this value determines the stripe count and maximum amount of data per file (in MiB) stored on a single physical disk. The maximum number of disks that a single file can be striped across is limited by the total number of disks that make up the file system or cache.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "AutoImportPolicy",
+                  "type": "dict",
+                  "description": "Specifies the type of updated objects (new, changed, deleted) that will be automatically imported from the linked S3 bucket to your file system.",
+                  "nested_items": [
+                    {
+                      "name": "Events",
+                      "type": "list",
+                      "description": "The AutoImportPolicy can have the following event values:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NEW - Amazon FSx automatically imports metadata of files added to the linked S3 bucket that do not currently exist in the FSx file system.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CHANGED - Amazon FSx automatically updates file metadata and invalidates existing file content on the file system as files change in the data repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DELETED - Amazon FSx automatically deletes files on the file system as corresponding files are deleted in the data repository.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "AutoExportPolicy",
+                  "type": "dict",
+                  "description": "Specifies the type of updated objects (new, changed, deleted) that will be automatically exported from your file system to the linked S3 bucket.",
+                  "nested_items": [
+                    {
+                      "name": "Events",
+                      "type": "list",
+                      "description": "The AutoExportPolicy can have the following event values:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NEW - New files and directories are automatically exported to the data repository as they are added to the file system.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CHANGED - Changes to files and directories on the file system are automatically exported to the data repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DELETED - Files and directories are automatically deleted on the data repository when they are deleted on the file system.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "description": "A list of Tag values, with a maximum of 50 elements.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CreationTime",
+              "type": "datetime",
+              "description": "The time that the resource was created, in seconds (since 1970-01-01T00:00:00Z), also known as Unix time.",
+              "nested_items": []
+            },
+            {
+              "name": "FileCacheId",
+              "type": "string",
+              "description": "The globally unique ID of the Amazon File Cache resource.",
+              "nested_items": []
+            },
+            {
+              "name": "FileCachePath",
+              "type": "string",
+              "description": "A path on the Amazon File Cache that points to a high-level directory (such as /ns1/) or subdirectory (such as /ns1/subdir/) that will be mapped 1-1 with DataRepositoryPath. The leading forward slash in the path is required. Two data repository associations cannot have overlapping cache paths. For example, if a data repository is associated with cache path /ns1/, then you cannot link another data repository with cache path /ns1/ns2.",
+              "nested_items": []
+            },
+            {
+              "name": "DataRepositorySubdirectories",
+              "type": "list",
+              "description": "For Amazon File Cache, a list of NFS Exports that will be linked with an NFS data repository association. All the subdirectories must be on a single NFS file system. The Export paths are in the format /exportpath1. To use this parameter, you must configure DataRepositoryPath as the domain name of the NFS file system. The NFS file system domain name in effect is the root of the subdirectories. Note that DataRepositorySubdirectories is not supported for S3 data repositories.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "The version of the NFS (Network File System) protocol of the NFS data repository. Currently, the only supported value is NFS3, which indicates that the data repository must support the NFSv3 protocol.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DnsIps",
+                  "type": "list",
+                  "description": "A list of up to 2 IP addresses of DNS servers used to resolve the NFS file system domain name. The provided IP addresses can either be the IP addresses of a DNS forwarder or resolver that the customer manages and runs inside the customer VPC, or the IP addresses of the on-premises DNS servers.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AutoExportPolicy",
+                  "type": "dict",
+                  "description": "This parameter is not supported for Amazon File Cache.",
+                  "nested_items": [
+                    {
+                      "name": "Events",
+                      "type": "list",
+                      "description": "The AutoExportPolicy can have the following event values:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NEW - New files and directories are automatically exported to the data repository as they are added to the file system.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CHANGED - Changes to files and directories on the file system are automatically exported to the data repository.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DELETED - Files and directories are automatically deleted on the data repository when they are deleted on the file system.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

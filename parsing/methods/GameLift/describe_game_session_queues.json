@@ -1,0 +1,204 @@
+{
+  "method_name": "describe_game_session_queues",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/gamelift/client/describe_game_session_queues.html",
+  "description": "Retrieves the properties for one or more game session queues. When requesting multiple queues, use the pagination parameters to retrieve results as a set of sequential pages. When specifying a list of queues, objects are returned only for queues that currently exist in the Region. View Your Queues.",
+  "parameters": [
+    {
+      "name": "Names",
+      "type": "list",
+      "required": false,
+      "description": "A list of queue names to retrieve information for. You can use either the queue ID or ARN value. To request settings for all queues, leave this parameter empty. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Limit",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "GameSessionQueues",
+          "type": "list",
+          "description": "A collection of objects that describe the requested game session queues.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "A descriptive label that is associated with game session queue. Queue names must be unique within each Region.",
+                  "nested_items": []
+                },
+                {
+                  "name": "GameSessionQueueArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name ( ARN) that is assigned to a Amazon GameLift game session queue resource and uniquely identifies it. ARNs are unique across all Regions. Format is arn:aws:gamelift:<region>::gamesessionqueue/<queue name>. In a Amazon GameLift game session queue ARN, the resource ID matches the Name value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TimeoutInSeconds",
+                  "type": "integer",
+                  "description": "The maximum time, in seconds, that a new game session placement request remains in the queue. When a request exceeds this time, the game session placement changes to a TIMED_OUT status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PlayerLatencyPolicies",
+                  "type": "list",
+                  "description": "A set of policies that enforce a sliding cap on player latency when processing game sessions placement requests. Use multiple policies to gradually relax the cap over time if Amazon GameLift can't make a placement. Policies are evaluated in order starting with the lowest maximum latency value.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "MaximumIndividualPlayerLatencyMilliseconds",
+                          "type": "integer",
+                          "description": "The maximum latency value that is allowed for any player, in milliseconds. All policies must have a value set for this property.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "PolicyDurationSeconds",
+                          "type": "integer",
+                          "description": "The length of time, in seconds, that the policy is enforced while placing a new game session. A null value for this property means that the policy is enforced until the queue times out.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Destinations",
+                  "type": "list",
+                  "description": "A list of fleets and/or fleet aliases that can be used to fulfill game session placement requests in the queue. Destinations are identified by either a fleet ARN or a fleet alias ARN, and are listed in order of placement preference.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "DestinationArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) that is assigned to fleet or fleet alias. ARNs, which include a fleet ID or alias ID and a Region name, provide a unique identifier across all Regions.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "FilterConfiguration",
+                  "type": "dict",
+                  "description": "A list of locations where a queue is allowed to place new game sessions. Locations are specified in the form of Amazon Web Services Region codes, such as us-west-2. If this parameter is not set, game sessions can be placed in any queue location.",
+                  "nested_items": [
+                    {
+                      "name": "AllowedLocations",
+                      "type": "list",
+                      "description": "A list of locations to allow game session placement in, in the form of Amazon Web Services Region codes such as us-west-2.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "PriorityConfiguration",
+                  "type": "dict",
+                  "description": "Custom settings to use when prioritizing destinations and locations for game session placements. This configuration replaces the FleetIQ default prioritization process. Priority types that are not explicitly named will be automatically applied at the end of the prioritization process.",
+                  "nested_items": [
+                    {
+                      "name": "PriorityOrder",
+                      "type": "list",
+                      "description": "A custom sequence to use when prioritizing where to place new game sessions. Each priority type is listed once.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "LATENCY --- Amazon GameLift prioritizes locations where the average player latency is lowest. Player latency data is provided in each game session placement request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "Spot or On-Demand",
+                          "description": "COST --- Amazon GameLift prioritizes queue destinations with the lowest current hosting costs. Cost is evaluated based on the destination's location, instance type, and fleet type (Spot or On-Demand).",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DESTINATION --- Amazon GameLift prioritizes based on the list order of destinations in the queue configuration.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "LOCATION --- Amazon GameLift prioritizes based on the provided order of locations, as defined in LocationOrder.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "LocationOrder",
+                      "type": "list",
+                      "description": "The prioritization order to use for fleet locations, when the PriorityOrder property includes LOCATION. Locations can include Amazon Web Services Region codes (such as us-west-2), local zones, and custom locations (for Anywhere fleets). Each location must be listed only once. For details, see Amazon GameLift service locations.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "CustomEventData",
+                  "type": "string",
+                  "description": "Information that is added to all events that are related to this game session queue.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NotificationTarget",
+                  "type": "string",
+                  "description": "An SNS topic ARN that is set up to receive game session placement notifications. See Setting up notifications for game session placement.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "A token that indicates where to resume retrieving results on the next call to this operation. If no token is returned, these results represent the end of the list.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

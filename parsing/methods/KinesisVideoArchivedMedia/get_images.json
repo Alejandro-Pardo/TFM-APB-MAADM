@@ -1,0 +1,151 @@
+{
+  "method_name": "get_images",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis-video-archived-media/client/get_images.html",
+  "description": "Retrieves a list of images corresponding to each timestamp for a given time range, sampling interval, and image format configuration.",
+  "parameters": [
+    {
+      "name": "StreamName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StreamARN",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ImageSelectorType",
+      "type": "string",
+      "required": true,
+      "description": "The origin of the Server or Producer timestamps to use to generate the images.",
+      "nested_params": []
+    },
+    {
+      "name": "StartTimestamp",
+      "type": "datetime",
+      "required": true,
+      "description": "The starting point from which the images should be generated. This StartTimestamp must be within an inclusive range of timestamps for an image to be returned.",
+      "nested_params": []
+    },
+    {
+      "name": "EndTimestamp",
+      "type": "datetime",
+      "required": true,
+      "description": "The end timestamp for the range of images to be generated. If the time range between StartTimestamp and EndTimestamp is more than 300 seconds above StartTimestamp, you will receive an IllegalArgumentException.",
+      "nested_params": []
+    },
+    {
+      "name": "SamplingInterval",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Format",
+      "type": "string",
+      "required": true,
+      "description": "The format that will be used to encode the image.",
+      "nested_params": []
+    },
+    {
+      "name": "FormatConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The list of a key-value pair structure that contains extra parameters that can be applied when the image is generated. The FormatConfig key is the JPEGQuality, which indicates the JPEG quality key to be used to generate the image. The FormatConfig value accepts ints from 1 to 100. If the value is 1, the image will be generated with less quality and the best compression. If the value is 100, the image will be generated with the best quality and less compression. If no value is provided, the default value of the JPEGQuality key will be set to 80. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "WidthPixels",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "HeightPixels",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "The maximum number of images to be returned by the API.",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Images",
+          "type": "list",
+          "description": "The list of images generated from the video stream. If there is no media available for the given timestamp, the NO_MEDIA error will be listed in the output. If an error occurs while the image is being generated, the MEDIA_ERROR will be listed in the output as the cause of the missing image.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "TimeStamp",
+                  "type": "datetime",
+                  "description": "An attribute of the Image object that is used to extract an image from the video stream. This field is used to manage gaps on images or to better understand the pagination window.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Error",
+                  "type": "string",
+                  "description": "The error message shown when the image for the provided timestamp was not extracted due to a non-tryable error. An error will be returned if:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "There is no media that exists for the specified Timestamp.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "The media for the specified time does not allow an image to be extracted. In this case the media is audio only, or the incorrect media has been ingested.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ImageContent",
+                  "type": "string",
+                  "description": "An attribute of the Image object that is Base64 encoded.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "The encrypted token that was used in the request to get more images.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

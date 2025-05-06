@@ -1,0 +1,101 @@
+{
+  "method_name": "update_task_protection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ecs/client/update_task_protection.html",
+  "description": "Updates the protection status of a task. You can set protectionEnabled to true to protect your task from termination during scale-in events from Service Autoscaling or deployments. Task-protection, by default, expires after 2 hours at which point Amazon ECS clears the protectionEnabled property making the task eligible for termination by a subsequent scale-in event. You can specify a custom expiration period for task protection from 1 minute to up to 2,880 minutes (48 hours). To specify the custom expiration period, set the expiresInMinutes property. The expiresInMinutes property is always reset when you invoke this operation for a task that already has protectionEnabled set to true. You can keep extending the protection expiration period of a task by invoking this operation repeatedly. To learn more about Amazon ECS task protection, see Task scale-in protection in the Amazon Elastic Container Service Developer Guide .",
+  "parameters": [
+    {
+      "name": "cluster",
+      "type": "string",
+      "required": true,
+      "description": "The short name or full Amazon Resource Name (ARN) of the cluster that hosts the service that the task sets exist in.",
+      "nested_params": []
+    },
+    {
+      "name": "tasks",
+      "type": "list",
+      "required": true,
+      "description": "A list of up to 10 task IDs or full ARN entries. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "protectionEnabled",
+      "type": "boolean",
+      "required": true,
+      "description": "Specify true to mark a task for protection and false to unset protection, making it eligible for termination.",
+      "nested_params": []
+    },
+    {
+      "name": "expiresInMinutes",
+      "type": "integer",
+      "required": false,
+      "description": "If you set protectionEnabled to true, you can specify the duration for task protection in minutes. You can specify a value from 1 minute to up to 2,880 minutes (48 hours). During this time, your task will not be terminated by scale-in events from Service Auto Scaling or deployments. After this time period lapses, protectionEnabled will be reset to false. If you don't specify the time, then the task is automatically protected for 120 minutes (2 hours).",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "protectedTasks",
+          "type": "list",
+          "description": "A list of tasks with the following information.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "taskArn: The task ARN.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "protectionEnabled: The protection status of the task. If scale-in protection is turned on for a task, the value is true. Otherwise, it is false.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "expirationDate: The epoch time when protection for the task will expire.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "failures",
+          "type": "list",
+          "description": "Any failures associated with the call.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "arn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the failed resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "reason",
+                  "type": "string",
+                  "description": "The reason for the failure.",
+                  "nested_items": []
+                },
+                {
+                  "name": "detail",
+                  "type": "string",
+                  "description": "The details of the failure.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

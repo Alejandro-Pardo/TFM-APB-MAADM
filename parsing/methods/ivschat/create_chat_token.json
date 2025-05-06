@@ -1,0 +1,69 @@
+{
+  "method_name": "create_chat_token",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ivschat/client/create_chat_token.html",
+  "description": "Creates an encrypted token that is used by a chat participant to establish an individual WebSocket chat connection to a room. When the token is used to connect to chat, the connection is valid for the session duration specified in the request. The token becomes invalid at the token-expiration timestamp included in the response. Use the capabilities field to permit an end user to send messages or moderate a room. The attributes field securely attaches structured data to the chat session; the data is included within each message sent by the end user and received by other participants in the room. Common use cases for attributes include passing end-user profile data like an icon, display name, colors, badges, and other display features. Encryption keys are owned by Amazon IVS Chat and never used directly by your application.",
+  "parameters": [
+    {
+      "name": "roomIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "Identifier of the room that the client is trying to access. Currently this must be an ARN.",
+      "nested_params": []
+    },
+    {
+      "name": "userId",
+      "type": "string",
+      "required": true,
+      "description": "Application-provided ID that uniquely identifies the user associated with this token. This can be any UTF-8 encoded text.",
+      "nested_params": []
+    },
+    {
+      "name": "capabilities",
+      "type": "list",
+      "required": false,
+      "description": "Set of capabilities that the user is allowed to perform in the room. Default: None (the capability to view messages is implicitly included in all requests). (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "sessionDurationInMinutes",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "attributes",
+      "type": "dict",
+      "required": false,
+      "description": "Application-provided attributes to encode into the token and attach to a chat session. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "token",
+          "type": "string",
+          "description": "The issued client token, encrypted.",
+          "nested_items": []
+        },
+        {
+          "name": "tokenExpirationTime",
+          "type": "datetime",
+          "description": "Time after which the token is no longer valid and cannot be used to connect to a room. This is an ISO 8601 timestamp; note that this is returned as a string.",
+          "nested_items": []
+        },
+        {
+          "name": "sessionExpirationTime",
+          "type": "datetime",
+          "description": "Time after which an end user's session is no longer valid. This is an ISO 8601 timestamp; note that this is returned as a string.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

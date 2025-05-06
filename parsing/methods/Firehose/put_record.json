@@ -1,0 +1,50 @@
+{
+  "method_name": "put_record",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/firehose/client/put_record.html",
+  "description": "Writes a single data record into an Firehose stream. To write multiple data records into a Firehose stream, use  PutRecordBatch. Applications using these operations are referred to as producers. By default, each Firehose stream can take in up to 2,000 transactions per second, 5,000 records per second, or 5 MB per second. If you use  PutRecord and  PutRecordBatch, the limits are an aggregate across these two operations for each Firehose stream. For more information about limits and how to request an increase, see Amazon Firehose Limits. Firehose accumulates and publishes a particular metric for a customer account in one minute intervals. It is possible that the bursts of incoming bytes/records ingested to a Firehose stream last only for a few seconds. Due to this, the actual spikes in the traffic might not be fully visible in the customer's 1 minute CloudWatch metrics. You must specify the name of the Firehose stream and the data record when using  PutRecord. The data record consists of a data blob that can be up to 1,000 KiB in size, and any kind of data. For example, it can be a segment from a log file, geographic location data, website clickstream data, and so on. For multi record de-aggregation, you can not put more than 500 records even if the data blob length is less than 1000 KiB. If you include more than 500 records, the request succeeds but the record de-aggregation doesn't work as expected and transformation lambda is invoked with the complete base64 encoded data blob instead of de-aggregated base64 decoded records. Firehose buffers records before delivering them to the destination. To disambiguate the data blobs at the destination, a common solution is to use delimiters in the data, such as a newline ( \\n) or some other character unique within the data. This allows the consumer application to parse individual data items when reading the data from the destination. The PutRecord operation returns a RecordId, which is a unique string assigned to each record. Producer applications can use this ID for purposes such as auditability and investigation. If the PutRecord operation throws a ServiceUnavailableException, the API is automatically reinvoked (retried) 3 times. If the exception persists, it is possible that the throughput limits have been exceeded for the Firehose stream. Re-invoking the Put API operations (for example, PutRecord and PutRecordBatch) can result in data duplicates. For larger data assets, allow for a longer time out before retrying Put API operations. Data records sent to Firehose are stored for 24 hours from the time they are added to a Firehose stream as it tries to send the records to the destination. If the destination is unreachable for more than 24 hours, the data is no longer available.",
+  "parameters": [
+    {
+      "name": "DeliveryStreamName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Firehose stream.",
+      "nested_params": []
+    },
+    {
+      "name": "Record",
+      "type": "dict",
+      "required": true,
+      "description": "The record. The data blob, which is base64-encoded when the blob is serialized. The maximum size of the data blob, before base64-encoding, is 1,000 KiB.",
+      "nested_params": [
+        {
+          "name": "Data",
+          "type": "bytes",
+          "required": false,
+          "description": "The data blob, which is base64-encoded when the blob is serialized. The maximum size of the data blob, before base64-encoding, is 1,000 KiB.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "RecordId",
+          "type": "string",
+          "description": "The ID of the record.",
+          "nested_items": []
+        },
+        {
+          "name": "Encrypted",
+          "type": "boolean",
+          "description": "Indicates whether server-side encryption (SSE) was enabled during this operation.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

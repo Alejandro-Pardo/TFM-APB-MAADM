@@ -1,0 +1,190 @@
+{
+  "method_name": "get_interpolated_asset_property_values",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotsitewise/client/get_interpolated_asset_property_values.html",
+  "description": "Get interpolated values for an asset property for a specified time interval, during a period of time. If your time series is missing data points during the specified time interval, you can use interpolation to estimate the missing data. For example, you can use this operation to return the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days. To identify an asset property, you must specify one of the following:",
+  "parameters": [
+    {
+      "name": "assetId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "propertyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "propertyAlias",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "startTimeInSeconds",
+      "type": "integer",
+      "required": true,
+      "description": "The exclusive start of the range from which to interpolate data, expressed in seconds in Unix epoch time.",
+      "nested_params": []
+    },
+    {
+      "name": "startTimeOffsetInNanos",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "endTimeInSeconds",
+      "type": "integer",
+      "required": true,
+      "description": "The inclusive end of the range from which to interpolate data, expressed in seconds in Unix epoch time.",
+      "nested_params": []
+    },
+    {
+      "name": "endTimeOffsetInNanos",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "quality",
+      "type": "string",
+      "required": true,
+      "description": "The quality of the asset property value. You can use this parameter as a filter to choose only the asset property values that have a specific quality.",
+      "nested_params": []
+    },
+    {
+      "name": "intervalInSeconds",
+      "type": "integer",
+      "required": true,
+      "description": "The time interval in seconds over which to interpolate data. Each interval starts when the previous one ends.",
+      "nested_params": []
+    },
+    {
+      "name": "nextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "maxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "required": true,
+      "description": "The interpolation type. Valid values: LINEAR_INTERPOLATION | LOCF_INTERPOLATION LINEAR_INTERPOLATION --- Estimates missing data using linear interpolation. For example, you can use this operation to return the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days. If the interpolation starts July 1, 2021, at 9 AM, IoT SiteWise returns the first interpolated value on July 2, 2021, at 9 AM, the second interpolated value on July 3, 2021, at 9 AM, and so on. LOCF_INTERPOLATION --- Estimates missing data using last observation carried forward interpolation If no data point is found for an interval, IoT SiteWise returns the last observed data point for the previous interval and carries forward this interpolated value until a new data point is found. For example, you can get the state of an on-off valve every 24 hours over a duration of 7 days. If the interpolation starts July 1, 2021, at 9 AM, IoT SiteWise returns the last observed data point between July 1, 2021, at 9 AM and July 2, 2021, at 9 AM as the first interpolated value. If a data point isn't found after 9 AM on July 2, 2021, IoT SiteWise uses the same interpolated value for the rest of the days.",
+      "nested_params": []
+    },
+    {
+      "name": "intervalWindowInSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "The query interval for the window, in seconds. IoT SiteWise computes each interpolated value by using data points from the timestamp of each interval, minus the window to the timestamp of each interval plus the window. If not specified, the window ranges between the start time minus the interval and the end time plus the interval. For example, you can get the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days. If the interpolation starts on July 1, 2021, at 9 AM with a window of 2 hours, IoT SiteWise uses the data points from 7 AM (9 AM minus 2 hours) to 11 AM (9 AM plus 2 hours) on July 2, 2021 to compute the first interpolated value. Next, IoT SiteWise uses the data points from 7 AM (9 AM minus 2 hours) to 11 AM (9 AM plus 2 hours) on July 3, 2021 to compute the second interpolated value, and so on.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "interpolatedAssetPropertyValues",
+          "type": "list",
+          "description": "The requested interpolated values.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "timestamp",
+                  "type": "dict",
+                  "description": "Contains a timestamp with optional nanosecond granularity.",
+                  "nested_items": [
+                    {
+                      "name": "timeInSeconds",
+                      "type": "integer",
+                      "description": "The timestamp date, in seconds, in the Unix epoch format. Fractional nanosecond data is provided by offsetInNanos.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "offsetInNanos",
+                      "type": "integer",
+                      "description": "The nanosecond offset from timeInSeconds.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "stringValue",
+                      "type": "string",
+                      "description": "Asset property data of type string (sequence of characters). The allowed pattern: '^$|[^u0000-u001Fu007F]+'. The max length is 1024.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "integerValue",
+                      "type": "integer",
+                      "description": "Asset property data of type integer (whole number).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "doubleValue",
+                      "type": "float",
+                      "description": "Asset property data of type double (floating point number). The min value is -10^10. The max value is 10^10. Double.NaN is allowed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "booleanValue",
+                      "type": "boolean",
+                      "description": "Asset property data of type Boolean (true or false).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "nullValue",
+                      "type": "dict",
+                      "description": "The type of null asset property data with BAD and UNCERTAIN qualities.",
+                      "nested_items": [
+                        {
+                          "name": "valueType",
+                          "type": "string",
+                          "description": "The type of null asset property data.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nextToken",
+          "type": "string",
+          "description": "The token for the next set of results, or null if there are no additional results.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

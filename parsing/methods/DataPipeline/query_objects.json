@@ -1,0 +1,114 @@
+{
+  "method_name": "query_objects",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/datapipeline/client/query_objects.html",
+  "description": "Queries the specified pipeline for the names of objects that match the specified set of conditions.",
+  "parameters": [
+    {
+      "name": "pipelineId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the pipeline.",
+      "nested_params": []
+    },
+    {
+      "name": "query",
+      "type": "dict",
+      "required": false,
+      "description": "The query that defines the objects to be returned. The Query object can contain a maximum of ten selectors. The conditions in the query are limited to top-level String fields in the object. These filters can be applied to components, instances, and attempts. selectors (list) --- List of selectors that define the query. An object must satisfy all of the selectors to match the query. (dict) --- A comparision that is used to determine whether a query should return this object. fieldName (string) --- The name of the field that the operator will be applied to. The field name is the 'key' portion of the field definition in the pipeline definition syntax that is used by the AWS Data Pipeline API. If the field is not set on the object, the condition fails. operator (dict) --- Contains a logical operation for comparing the value of a field with a specified value. type (string) --- The logical operation to be performed: equal ( EQ), equal reference ( REF_EQ), less than or equal ( LE), greater than or equal ( GE), or between ( BETWEEN). Equal reference ( REF_EQ) can be used only with reference fields. The other comparison types can be used only with String fields. The comparison types you can use apply only to certain object fields, as detailed below. The comparison operators EQ and REF_EQ act on the following fields: name @sphere parent @componentParent @instanceParent @status @scheduledStartTime @scheduledEndTime @actualStartTime @actualEndTime The comparison operators GE, LE, and BETWEEN act on the following fields: @scheduledStartTime @scheduledEndTime @actualStartTime @actualEndTime Note that fields beginning with the at sign (@) are read-only and set by the web service. When you name fields, you should choose names containing only alpha-numeric values, as symbols may be reserved by AWS Data Pipeline. User-defined fields that you add to a pipeline should prefix their name with the string 'my'. values (list) --- The value that the actual field value will be compared with. (string) ---",
+      "nested_params": [
+        {
+          "name": "selectors",
+          "type": "list",
+          "required": false,
+          "description": "List of selectors that define the query. An object must satisfy all of the selectors to match the query.",
+          "nested_params": [
+            {
+              "name": "fieldName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the field that the operator will be applied to. The field name is the 'key' portion of the field definition in the pipeline definition syntax that is used by the AWS Data Pipeline API. If the field is not set on the object, the condition fails.",
+              "nested_params": []
+            },
+            {
+              "name": "operator",
+              "type": "dict",
+              "required": false,
+              "description": "Contains a logical operation for comparing the value of a field with a specified value.",
+              "nested_params": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The logical operation to be performed: equal ( EQ), equal reference ( REF_EQ), less than or equal ( LE), greater than or equal ( GE), or between ( BETWEEN). Equal reference ( REF_EQ) can be used only with reference fields. The other comparison types can be used only with String fields. The comparison types you can use apply only to certain object fields, as detailed below. The comparison operators EQ and REF_EQ act on the following fields:",
+                  "nested_params": []
+                },
+                {
+                  "name": "values",
+                  "type": "list",
+                  "required": false,
+                  "description": "The value that the actual field value will be compared with.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sphere",
+      "type": "string",
+      "required": true,
+      "description": "Indicates whether the query applies to components or instances. The possible values are: COMPONENT, INSTANCE, and ATTEMPT.",
+      "nested_params": []
+    },
+    {
+      "name": "marker",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "limit",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ids",
+          "type": "list",
+          "description": "The identifiers that match the query selectors.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "marker",
+          "type": "string",
+          "description": "The starting point for the next page of results. To view the next page of results, call QueryObjects again with this marker value. If the value is null, there are no more results.",
+          "nested_items": []
+        },
+        {
+          "name": "hasMoreResults",
+          "type": "boolean",
+          "description": "Indicates whether there are more results that can be obtained by a subsequent call.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

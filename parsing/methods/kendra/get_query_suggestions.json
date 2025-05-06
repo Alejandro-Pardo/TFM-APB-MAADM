@@ -1,0 +1,666 @@
+{
+  "method_name": "get_query_suggestions",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kendra/client/get_query_suggestions.html",
+  "description": "Fetches the queries that are suggested to your users. GetQuerySuggestions is currently not supported in the Amazon Web Services GovCloud (US-West) region.",
+  "parameters": [
+    {
+      "name": "IndexId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the index you want to get query suggestions from.",
+      "nested_params": []
+    },
+    {
+      "name": "QueryText",
+      "type": "string",
+      "required": true,
+      "description": "The text of a user's query to generate query suggestions. A query is suggested if the query prefix matches what a user starts to type as their query. Amazon Kendra does not show any suggestions if a user types fewer than two characters or more than 60 characters. A query must also have at least one search result and contain at least one word of more than four characters.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxSuggestionsCount",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SuggestionTypes",
+      "type": "list",
+      "required": false,
+      "description": "The suggestions type to base query suggestions on. The suggestion types are query history or document fields/attributes. You can set one type or the other. If you set query history as your suggestions type, Amazon Kendra suggests queries relevant to your users based on popular queries in the query history. If you set document fields/attributes as your suggestions type, Amazon Kendra suggests queries relevant to your users based on the contents of document fields. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "AttributeSuggestionsConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Configuration information for the document fields/attributes that you want to base query suggestions on. SuggestionAttributes (list) --- The list of document field/attribute keys or field names to use for query suggestions. If the content within any of the fields match what your user starts typing as their query, then the field content is returned as a query suggestion. (string) --- AdditionalResponseAttributes (list) --- The list of additional document field/attribute keys or field names to include in the response. You can use additional fields to provide extra information in the response. Additional fields are not used to based suggestions on. (string) --- AttributeFilter (dict) --- Filters the search results based on document fields/attributes. AndAllFilters (list) --- Performs a logical AND operation on all filters that you specify. (dict) --- Filters the search results based on document attributes or fields. You can filter results using attributes for your particular documents. The attributes must exist in your index. For example, if your documents include the custom attribute 'Department', you can filter documents that belong to the 'HR' department. You would use the EqualsTo operation to filter results or documents with 'Department' equals to 'HR'. You can use AndAllFilters and OrAllFilters in combination with each other or with other operations such as EqualsTo. For example: AndAllFilters EqualsTo: 'Department', 'HR' OrAllFilters ContainsAny: 'Project Name', ['new hires', 'new hiring'] This example filters results or documents that belong to the HR department AND belong to projects that contain 'new hires' OR 'new hiring' in the project name (must use ContainAny with StringListValue). This example is filtering with a depth of 2. You cannot filter more than a depth of 2, otherwise you receive a ValidationException exception with the message 'AttributeFilter cannot have a depth of more than 2.' Also, if you use more than 10 attribute filters in a given list for AndAllFilters or OrAllFilters, you receive a ValidationException with the message 'AttributeFilter cannot have a length of more than 10'. For examples of using AttributeFilter, see Using document attributes to filter search results. OrAllFilters (list) --- Performs a logical OR operation on all filters that you specify. NotFilter (dict) --- Performs a logical NOT operation on all filters that you specify. EqualsTo (dict) --- Performs an equals operation on document attributes/fields and their values. The identifier for the attribute. The value of the attribute. StringValue (string) --- A string, such as 'department'. StringListValue (list) --- A list of strings. The default maximum length or number of strings is 10. (string) --- LongValue (integer) --- A long integer value. DateValue (datetime) --- A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time. ContainsAll (dict) --- Returns true when a document contains all of the specified document attributes/fields. This filter is only applicable to StringListValue. ContainsAny (dict) --- Returns true when a document contains any of the specified document attributes/fields. GreaterThan (dict) --- Performs a greater than operation on document attributes/fields and their values. Use with the document attribute type Date or Long. GreaterThanOrEquals (dict) --- Performs a greater or equals than operation on document attributes/fields and their values. LessThan (dict) --- Performs a less than operation on document attributes/fields and their values. LessThanOrEquals (dict) --- Performs a less than or equals operation on document attributes/fields and their values. UserContext (dict) --- Applies user context filtering so that only users who are given access to certain documents see these document in their search results. Token (string) --- The user context token for filtering search results for a user. It must be a JWT or a JSON token. UserId (string) --- The identifier of the user you want to filter search results based on their access to documents. Groups (list) --- The list of groups you want to filter search results based on the groups' access to documents. (string) --- DataSourceGroups (list) --- The list of data source groups you want to filter search results based on groups' access to documents in that data source. (dict) --- Data source information for user context filtering. The identifier of the group you want to add to your list of groups. This is for filtering search results based on the groups' access to documents. The identifier of the data source group you want to add to your list of data source groups. This is for filtering search results based on the groups' access to documents in that data source.",
+      "nested_params": [
+        {
+          "name": "SuggestionAttributes",
+          "type": "list",
+          "required": false,
+          "description": "The list of document field/attribute keys or field names to use for query suggestions. If the content within any of the fields match what your user starts typing as their query, then the field content is returned as a query suggestion.",
+          "nested_params": []
+        },
+        {
+          "name": "AdditionalResponseAttributes",
+          "type": "list",
+          "required": false,
+          "description": "The list of additional document field/attribute keys or field names to include in the response. You can use additional fields to provide extra information in the response. Additional fields are not used to based suggestions on.",
+          "nested_params": []
+        },
+        {
+          "name": "AttributeFilter",
+          "type": "dict",
+          "required": false,
+          "description": "Filters the search results based on document fields/attributes.",
+          "nested_params": [
+            {
+              "name": "AndAllFilters",
+              "type": "list",
+              "required": false,
+              "description": "Performs a logical AND operation on all filters that you specify.",
+              "nested_params": []
+            },
+            {
+              "name": "OrAllFilters",
+              "type": "list",
+              "required": false,
+              "description": "Performs a logical OR operation on all filters that you specify.",
+              "nested_params": []
+            },
+            {
+              "name": "NotFilter",
+              "type": "dict",
+              "required": false,
+              "description": "Performs a logical NOT operation on all filters that you specify.",
+              "nested_params": []
+            },
+            {
+              "name": "EqualsTo",
+              "type": "dict",
+              "required": false,
+              "description": "Performs an equals operation on document attributes/fields and their values.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ContainsAll",
+              "type": "dict",
+              "required": false,
+              "description": "Returns true when a document contains all of the specified document attributes/fields. This filter is only applicable to StringListValue.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ContainsAny",
+              "type": "dict",
+              "required": false,
+              "description": "Returns true when a document contains any of the specified document attributes/fields. This filter is only applicable to StringListValue.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "GreaterThan",
+              "type": "dict",
+              "required": false,
+              "description": "Performs a greater than operation on document attributes/fields and their values. Use with the document attribute type Date or Long.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "GreaterThanOrEquals",
+              "type": "dict",
+              "required": false,
+              "description": "Performs a greater or equals than operation on document attributes/fields and their values. Use with the document attribute type Date or Long.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LessThan",
+              "type": "dict",
+              "required": false,
+              "description": "Performs a less than operation on document attributes/fields and their values. Use with the document attribute type Date or Long.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LessThanOrEquals",
+              "type": "dict",
+              "required": false,
+              "description": "Performs a less than or equals operation on document attributes/fields and their values. Use with the document attribute type Date or Long.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier for the attribute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value of the attribute.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UserContext",
+          "type": "dict",
+          "required": false,
+          "description": "Applies user context filtering so that only users who are given access to certain documents see these document in their search results.",
+          "nested_params": [
+            {
+              "name": "Token",
+              "type": "string",
+              "required": false,
+              "description": "The user context token for filtering search results for a user. It must be a JWT or a JSON token.",
+              "nested_params": []
+            },
+            {
+              "name": "UserId",
+              "type": "string",
+              "required": false,
+              "description": "The identifier of the user you want to filter search results based on their access to documents.",
+              "nested_params": []
+            },
+            {
+              "name": "Groups",
+              "type": "list",
+              "required": false,
+              "description": "The list of groups you want to filter search results based on the groups' access to documents.",
+              "nested_params": []
+            },
+            {
+              "name": "DataSourceGroups",
+              "type": "list",
+              "required": false,
+              "description": "The list of data source groups you want to filter search results based on groups' access to documents in that data source.",
+              "nested_params": [
+                {
+                  "name": "GroupId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of the group you want to add to your list of groups. This is for filtering search results based on the groups' access to documents.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DataSourceId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of the data source group you want to add to your list of data source groups. This is for filtering search results based on the groups' access to documents in that data source.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "QuerySuggestionsId",
+          "type": "string",
+          "description": "The identifier for a list of query suggestions for an index.",
+          "nested_items": []
+        },
+        {
+          "name": "Suggestions",
+          "type": "list",
+          "description": "A list of query suggestions for an index.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Id",
+                  "type": "string",
+                  "description": "The UUID (universally unique identifier) of a single query suggestion.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Text",
+                          "type": "string",
+                          "description": "The query suggestion text to display to the user.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Highlights",
+                          "type": "list",
+                          "description": "The beginning and end of the query suggestion text that should be highlighted.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "BeginOffset",
+                                  "type": "integer",
+                                  "description": "The zero-based location in the response string where the highlight starts.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "EndOffset",
+                                  "type": "integer",
+                                  "description": "The zero-based location in the response string where the highlight ends.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "SourceDocuments",
+                  "type": "list",
+                  "description": "The list of document IDs and their fields/attributes that are used for a single query suggestion, if document fields set to use for query suggestions.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "DocumentId",
+                          "type": "string",
+                          "description": "The identifier of the document used for a query suggestion.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "SuggestionAttributes",
+                          "type": "list",
+                          "description": "The document fields/attributes used for a query suggestion.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "AdditionalAttributes",
+                          "type": "list",
+                          "description": "The additional fields/attributes to include in the response. You can use additional fields to provide extra information in the response. Additional fields are not used to based suggestions on.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Key",
+                                  "type": "string",
+                                  "description": "The identifier for the attribute.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "StringValue",
+                                      "type": "string",
+                                      "description": "A string, such as 'department'.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "StringListValue",
+                                      "type": "list",
+                                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "string",
+                                          "description": "(string) ---",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "LongValue",
+                                      "type": "integer",
+                                      "description": "A long integer value.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "DateValue",
+                                      "type": "datetime",
+                                      "description": "A date expressed as an ISO 8601 string.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "method_name": "start_job_run",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/glue/client/start_job_run.html",
+  "description": "Starts a job run using a job definition.",
+  "parameters": [
+    {
+      "name": "JobName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the job definition to use.",
+      "nested_params": []
+    },
+    {
+      "name": "JobRunQueuingEnabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether job run queuing is enabled for the job run. A value of true means job run queuing is enabled for the job run. If false or not populated, the job run will not be considered for queueing.",
+      "nested_params": []
+    },
+    {
+      "name": "JobRunId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Arguments",
+      "type": "dict",
+      "required": false,
+      "description": "The job arguments associated with this run. For this job run, they replace the default arguments set in the job definition itself. You can specify arguments here that your own job-execution script consumes, as well as arguments that Glue itself consumes. Job arguments may be logged. Do not pass plaintext secrets as arguments. Retrieve secrets from a Glue Connection, Secrets Manager or other secret management mechanism if you intend to keep them within the Job. For information about how to specify and consume your own Job arguments, see the Calling Glue APIs in Python topic in the developer guide. For information about the arguments you can provide to this field when configuring Spark jobs, see the Special Parameters Used by Glue topic in the developer guide. For information about the arguments you can provide to this field when configuring Ray jobs, see Using job parameters in Ray jobs in the developer guide. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "AllocatedCapacity",
+      "type": "integer",
+      "required": false,
+      "description": "This field is deprecated. Use MaxCapacity instead. The number of Glue data processing units (DPUs) to allocate to this JobRun. You can allocate a minimum of 2 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the Glue pricing page.",
+      "nested_params": []
+    },
+    {
+      "name": "Timeout",
+      "type": "integer",
+      "required": false,
+      "description": "The JobRun timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters TIMEOUT status. This value overrides the timeout value set in the parent job. Jobs must have timeout values less than 7 days or 10080 minutes. Otherwise, the jobs will throw an exception. When the value is left blank, the timeout is defaulted to 2880 minutes. Any existing Glue jobs that had a timeout value greater than 7 days will be defaulted to 7 days. For instance if you have specified a timeout of 20 days for a batch job, it will be stopped on the 7th day. For streaming jobs, if you have set up a maintenance window, it will be restarted during the maintenance window after 7 days.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxCapacity",
+      "type": "float",
+      "required": false,
+      "description": "For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the Glue pricing page. For Glue version 2.0+ jobs, you cannot specify a Maximum capacity. Instead, you should specify a Worker type and the Number of workers. Do not set MaxCapacity if using WorkerType and NumberOfWorkers. The value that can be allocated for MaxCapacity depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job: When you specify a Python shell job ( ``JobCommand.Name``='pythonshell'), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU. When you specify an Apache Spark ETL job ( ``JobCommand.Name``='glueetl') or Apache Spark streaming ETL job ( ``JobCommand.Name``='gluestreaming'), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.",
+      "nested_params": []
+    },
+    {
+      "name": "SecurityConfiguration",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NotificationProperty",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies configuration properties of a job run notification. NotifyDelayAfter (integer) --- After a job run starts, the number of minutes to wait before sending a job run delay notification.",
+      "nested_params": [
+        {
+          "name": "NotifyDelayAfter",
+          "type": "integer",
+          "required": false,
+          "description": "After a job run starts, the number of minutes to wait before sending a job run delay notification.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "WorkerType",
+      "type": "string",
+      "required": false,
+      "description": "The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs. For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB of memory) with 94GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs. For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB of memory) with 138GB disk, and provides 1 executor per worker. For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB of memory) with 256GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs in the following Amazon Web Services Regions: US East (Ohio), US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt), Europe (Ireland), and Europe (Stockholm). For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB of memory) with 512GB disk, and provides 1 executor per worker. This worker type is available only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon Web Services Regions as supported for the G.4X worker type. For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPUs, 4 GB of memory) with 84GB disk, and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 or later streaming jobs. For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB of memory) with 128 GB disk, and provides up to 8 Ray workers based on the autoscaler.",
+      "nested_params": []
+    },
+    {
+      "name": "NumberOfWorkers",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExecutionClass",
+      "type": "string",
+      "required": false,
+      "description": "Indicates whether the job is run with a standard or flexible execution class. The standard execution-class is ideal for time-sensitive workloads that require fast job startup and dedicated resources. The flexible execution class is appropriate for time-insensitive jobs whose start and completion times may vary. Only jobs with Glue version 3.0 and above and command type glueetl will be allowed to set ExecutionClass to FLEX. The flexible execution class is available for Spark jobs.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobRunId",
+          "type": "string",
+          "description": "The ID assigned to this job run.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

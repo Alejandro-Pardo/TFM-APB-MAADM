@@ -1,0 +1,75 @@
+{
+  "method_name": "create_participant_connection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/connectparticipant/client/create_participant_connection.html",
+  "description": "Creates the participant's connection. For security recommendations, see Amazon Connect Chat security best practices. The participant token is valid for the lifetime of the participant --- until they are part of a contact. The response URL for WEBSOCKET Type has a connect expiry timeout of 100s. Clients must manually connect to the returned websocket URL and subscribe to the desired topic. For chat, you need to publish the following on the established websocket connection: {\"topic\":\"aws/subscribe\",\"content\":{\"topics\":[\"aws/chat\"]}} Upon websocket URL expiry, as specified in the response ConnectionExpiry parameter, clients need to call this API again to obtain a new websocket URL and perform the same steps as before. Message streaming support: This API can also be used together with the StartContactStreaming API to create a participant connection for chat contacts that are not using a websocket. For more information about message streaming, Enable real-time chat message streaming in the Amazon Connect Administrator Guide. Feature specifications: For information about feature specifications, such as the allowed number of open websocket connections per participant, see Feature specifications in the Amazon Connect Administrator Guide.",
+  "parameters": [
+    {
+      "name": "Type",
+      "type": "list",
+      "required": false,
+      "description": "Type of connection information required. If you need CONNECTION_CREDENTIALS along with marking participant as connected, pass CONNECTION_CREDENTIALS in Type. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ParticipantToken",
+      "type": "string",
+      "required": true,
+      "description": "This is a header parameter. The ParticipantToken as obtained from StartChatContact API response.",
+      "nested_params": []
+    },
+    {
+      "name": "ConnectParticipant",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Websocket",
+          "type": "dict",
+          "description": "Creates the participant's websocket connection.",
+          "nested_items": [
+            {
+              "name": "Url",
+              "type": "string",
+              "description": "The URL of the websocket.",
+              "nested_items": []
+            },
+            {
+              "name": "ConnectionExpiry",
+              "type": "string",
+              "description": "The URL expiration timestamp in ISO date format.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ConnectionCredentials",
+          "type": "dict",
+          "description": "Creates the participant's connection credentials. The authentication token associated with the participant's connection.",
+          "nested_items": [
+            {
+              "name": "ConnectionToken",
+              "type": "string",
+              "description": "The connection token.",
+              "nested_items": []
+            },
+            {
+              "name": "Expiry",
+              "type": "string",
+              "description": "The expiration of the token.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

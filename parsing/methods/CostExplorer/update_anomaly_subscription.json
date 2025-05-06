@@ -1,0 +1,93 @@
+{
+  "method_name": "update_anomaly_subscription",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/update_anomaly_subscription.html",
+  "description": "Updates an existing cost anomaly subscription. Specify the fields that you want to update. Omitted fields are unchanged.",
+  "parameters": [
+    {
+      "name": "SubscriptionArn",
+      "type": "string",
+      "required": true,
+      "description": "A cost anomaly subscription Amazon Resource Name (ARN).",
+      "nested_params": []
+    },
+    {
+      "name": "Threshold",
+      "type": "float",
+      "required": false,
+      "description": "(deprecated) The update to the threshold value for receiving notifications. This field has been deprecated. To update a threshold, use ThresholdExpression. Continued use of Threshold will be treated as shorthand syntax for a ThresholdExpression. You can specify either Threshold or ThresholdExpression, but not both.",
+      "nested_params": []
+    },
+    {
+      "name": "Frequency",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MonitorArnList",
+      "type": "list",
+      "required": false,
+      "description": "A list of cost anomaly monitor ARNs. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Subscribers",
+      "type": "list",
+      "required": false,
+      "description": "The update to the subscriber list. (dict) --- The recipient of AnomalySubscription notifications. Address (string) --- The email address or SNS Amazon Resource Name (ARN). This depends on the Type. Type (string) --- The notification delivery channel. Status (string) --- Indicates if the subscriber accepts the notifications.",
+      "nested_params": [
+        {
+          "name": "Address",
+          "type": "string",
+          "required": false,
+          "description": "The email address or SNS Amazon Resource Name (ARN). This depends on the Type.",
+          "nested_params": []
+        },
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The notification delivery channel.",
+          "nested_params": []
+        },
+        {
+          "name": "Status",
+          "type": "string",
+          "required": false,
+          "description": "Indicates if the subscriber accepts the notifications.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "SubscriptionName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ThresholdExpression",
+      "type": "dict",
+      "required": false,
+      "description": "The update to the Expression object used to specify the anomalies that you want to generate alerts for. This supports dimensions and nested expressions. The supported dimensions are ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE, corresponding to an anomaly's TotalImpact and TotalImpactPercentage, respectively (see Impact for more details). The supported nested expression types are AND and OR. The match option GREATER_THAN_OR_EQUAL is required. Values must be numbers between 0 and 10,000,000,000 in string format. You can specify either Threshold or ThresholdExpression, but not both. The following are examples of valid ThresholdExpressions: Absolute threshold: { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } Percentage threshold: { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } AND two thresholds together: { \"And\": [ { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }, { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } ] } OR two thresholds together: { \"Or\": [ { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }, { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } ] } Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SubscriptionArn",
+          "type": "string",
+          "description": "A cost anomaly subscription ARN.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

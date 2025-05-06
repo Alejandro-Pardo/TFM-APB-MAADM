@@ -1,0 +1,109 @@
+{
+  "method_name": "create_dataset",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/forecast/client/create_dataset.html",
+  "description": "Creates an Amazon Forecast dataset. The information about the dataset that you provide helps Forecast understand how to consume the data for model training. This includes the following: After creating a dataset, you import your training data into it and add the dataset to a dataset group. You use the dataset group to create a predictor. For more information, see Importing datasets. To get a list of all your datasets, use the ListDatasets operation. For example Forecast datasets, see the Amazon Forecast Sample GitHub repository.",
+  "parameters": [
+    {
+      "name": "DatasetName",
+      "type": "string",
+      "required": true,
+      "description": "A name for the dataset.",
+      "nested_params": []
+    },
+    {
+      "name": "Domain",
+      "type": "string",
+      "required": true,
+      "description": "The domain associated with the dataset. When you add a dataset to a dataset group, this value and the value specified for the Domain parameter of the CreateDatasetGroup operation must match. The Domain and DatasetType that you choose determine the fields that must be present in the training data that you import to the dataset. For example, if you choose the RETAIL domain and TARGET_TIME_SERIES as the DatasetType, Amazon Forecast requires item_id, timestamp, and demand fields to be present in your data. For more information, see Importing datasets.",
+      "nested_params": []
+    },
+    {
+      "name": "DatasetType",
+      "type": "string",
+      "required": true,
+      "description": "The dataset type. Valid values depend on the chosen Domain.",
+      "nested_params": []
+    },
+    {
+      "name": "DataFrequency",
+      "type": "string",
+      "required": false,
+      "description": "The frequency of data collection. This parameter is required for RELATED_TIME_SERIES datasets. Valid intervals are an integer followed by Y (Year), M (Month), W (Week), D (Day), H (Hour), and min (Minute). For example, '1D' indicates every day and '15min' indicates every 15 minutes. You cannot specify a value that would overlap with the next larger frequency. That means, for example, you cannot specify a frequency of 60 minutes, because that is equivalent to 1 hour. The valid values for each frequency are the following: Minute - 1-59 Hour - 1-23 Day - 1-6 Week - 1-4 Month - 1-11 Year - 1 Thus, if you want every other week forecasts, specify '2W'. Or, if you want quarterly forecasts, you specify '3M'.",
+      "nested_params": []
+    },
+    {
+      "name": "Schema",
+      "type": "dict",
+      "required": true,
+      "description": "The schema for the dataset. The schema attributes and their order must match the fields in your data. The dataset Domain and DatasetType that you choose determine the minimum required fields in your training data. For information about the required fields for a specific dataset domain and type, see Dataset Domains and Dataset Types. Attributes (list) --- An array of attributes specifying the name and type of each field in a dataset. (dict) --- An attribute of a schema, which defines a dataset field. A schema attribute is required for every field in a dataset. The Schema object contains an array of SchemaAttribute objects. AttributeName (string) --- The name of the dataset field. AttributeType (string) --- The data type of the field. For a related time series dataset, other than date, item_id, and forecast dimensions attributes, all attributes should be of numerical type (integer/float).",
+      "nested_params": [
+        {
+          "name": "Attributes",
+          "type": "list",
+          "required": false,
+          "description": "An array of attributes specifying the name and type of each field in a dataset.",
+          "nested_params": [
+            {
+              "name": "AttributeName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the dataset field.",
+              "nested_params": []
+            },
+            {
+              "name": "AttributeType",
+              "type": "string",
+              "required": false,
+              "description": "The data type of the field. For a related time series dataset, other than date, item_id, and forecast dimensions attributes, all attributes should be of numerical type (integer/float).",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EncryptionConfig",
+      "type": "dict",
+      "required": true,
+      "description": "An Key Management Service (KMS) key and the Identity and Access Management (IAM) role that Amazon Forecast can assume to access the key. The ARN of the IAM role that Amazon Forecast can assume to access the KMS key. Passing a role across Amazon Web Services accounts is not allowed. If you pass a role that isn't in your account, you get an InvalidInputException error. The Amazon Resource Name (ARN) of the KMS key.",
+      "nested_params": [
+        {
+          "name": "RoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The ARN of the IAM role that Amazon Forecast can assume to access the KMS key. Passing a role across Amazon Web Services accounts is not allowed. If you pass a role that isn't in your account, you get an InvalidInputException error.",
+          "nested_params": []
+        },
+        {
+          "name": "KMSKeyArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the KMS key.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "The optional metadata that you apply to the dataset to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define. The following basic restrictions apply to tags: Maximum number of tags per resource - 50. For each resource, each tag key must be unique, and each tag key can have only one value. Maximum key length - 128 Unicode characters in UTF-8. Maximum value length - 256 Unicode characters in UTF-8. If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @. Tag keys and values are case sensitive. Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for Amazon Web Services use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Forecast considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit. (dict) --- The optional metadata that you apply to a resource to help you categorize and organize them. One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values. The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DatasetArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the dataset.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

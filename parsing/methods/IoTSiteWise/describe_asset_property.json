@@ -1,0 +1,925 @@
+{
+  "method_name": "describe_asset_property",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotsitewise/client/describe_asset_property.html",
+  "description": "Retrieves information about an asset property. This operation doesn't return the value of the asset property. To get the value of an asset property, use GetAssetPropertyValue.",
+  "parameters": [
+    {
+      "name": "assetId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the asset. This can be either the actual ID in UUID format, or else externalId: followed by the external ID, if it has one. For more information, see Referencing objects with external IDs in the IoT SiteWise User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "propertyId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the asset property. This can be either the actual ID in UUID format, or else externalId: followed by the external ID, if it has one. For more information, see Referencing objects with external IDs in the IoT SiteWise User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "assetId",
+          "type": "string",
+          "description": "The ID of the asset, in UUID format.",
+          "nested_items": []
+        },
+        {
+          "name": "assetName",
+          "type": "string",
+          "description": "The name of the asset.",
+          "nested_items": []
+        },
+        {
+          "name": "assetModelId",
+          "type": "string",
+          "description": "The ID of the asset model, in UUID format.",
+          "nested_items": []
+        },
+        {
+          "name": "assetProperty",
+          "type": "dict",
+          "description": "The asset property's definition, alias, and notification state.",
+          "nested_items": [
+            {
+              "name": "id",
+              "type": "string",
+              "description": "The ID of the asset property.",
+              "nested_items": []
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the property.",
+              "nested_items": []
+            },
+            {
+              "name": "alias",
+              "type": "string",
+              "description": "The alias that identifies the property, such as an OPC-UA server data stream path (for example, /company/windfarm/3/turbine/7/temperature). For more information, see Mapping industrial data streams to asset properties in the IoT SiteWise User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "notification",
+              "type": "dict",
+              "description": "The asset property's notification topic and state. For more information, see UpdateAssetProperty.",
+              "nested_items": [
+                {
+                  "name": "topic",
+                  "type": "string",
+                  "description": "The MQTT topic to which IoT SiteWise publishes property value update notifications.",
+                  "nested_items": []
+                },
+                {
+                  "name": "state",
+                  "type": "string",
+                  "description": "The current notification state.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "dataType",
+              "type": "string",
+              "description": "The property data type.",
+              "nested_items": []
+            },
+            {
+              "name": "unit",
+              "type": "string",
+              "description": "The unit (such as Newtons or RPM) of the asset property.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "attribute",
+                  "type": "dict",
+                  "description": "Specifies an asset attribute property. An attribute generally contains static information, such as the serial number of an IIoT wind turbine.",
+                  "nested_items": [
+                    {
+                      "name": "defaultValue",
+                      "type": "string",
+                      "description": "The default value of the asset model property attribute. All assets that you create from the asset model contain this attribute value. You can update an attribute's value after you create an asset. For more information, see Updating attribute values in the IoT SiteWise User Guide.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "measurement",
+                  "type": "dict",
+                  "description": "Specifies an asset measurement property. A measurement represents a device's raw sensor data stream, such as timestamped temperature values or timestamped power values.",
+                  "nested_items": [
+                    {
+                      "name": "processingConfig",
+                      "type": "dict",
+                      "description": "The processing configuration for the given measurement property. You can configure measurements to be kept at the edge or forwarded to the Amazon Web Services Cloud. By default, measurements are forwarded to the cloud.",
+                      "nested_items": [
+                        {
+                          "name": "forwardingConfig",
+                          "type": "dict",
+                          "description": "The forwarding configuration for the given measurement property.",
+                          "nested_items": [
+                            {
+                              "name": "state",
+                              "type": "string",
+                              "description": "The forwarding state for the given property.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "transform",
+                  "type": "dict",
+                  "description": "Specifies an asset transform property. A transform contains a mathematical expression that maps a property's data points from one form to another, such as a unit conversion from Celsius to Fahrenheit.",
+                  "nested_items": [
+                    {
+                      "name": "expression",
+                      "type": "string",
+                      "description": "The mathematical expression that defines the transformation function. You can specify up to 10 variables per expression. You can specify up to 10 functions per expression.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "variables",
+                      "type": "list",
+                      "description": "The list of variables used in the expression.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "name",
+                              "type": "string",
+                              "description": "The friendly name of the variable to be used in the expression.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "propertyId",
+                                  "type": "string",
+                                  "description": "The ID of the property to use as the variable. You can use the property name if it's from the same asset model. If the property has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "hierarchyId",
+                                  "type": "string",
+                                  "description": "The ID of the hierarchy to query for the property ID. You can use the hierarchy's name instead of the hierarchy's ID. If the hierarchy has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "propertyPath",
+                                  "type": "list",
+                                  "description": "The path of the property.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "id",
+                                          "type": "string",
+                                          "description": "The ID of the path segment.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "name",
+                                          "type": "string",
+                                          "description": "The name of the path segment.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "processingConfig",
+                      "type": "dict",
+                      "description": "The processing configuration for the given transform property. You can configure transforms to be kept at the edge or forwarded to the Amazon Web Services Cloud. You can also configure transforms to be computed at the edge or in the cloud.",
+                      "nested_items": [
+                        {
+                          "name": "computeLocation",
+                          "type": "string",
+                          "description": "The compute location for the given transform property.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "forwardingConfig",
+                          "type": "dict",
+                          "description": "The forwarding configuration for a given property.",
+                          "nested_items": [
+                            {
+                              "name": "state",
+                              "type": "string",
+                              "description": "The forwarding state for the given property.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "expression",
+                      "type": "string",
+                      "description": "The mathematical expression that defines the metric aggregation function. You can specify up to 10 variables per expression. You can specify up to 10 functions per expression.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "variables",
+                      "type": "list",
+                      "description": "The list of variables used in the expression.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "name",
+                              "type": "string",
+                              "description": "The friendly name of the variable to be used in the expression.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "propertyId",
+                                  "type": "string",
+                                  "description": "The ID of the property to use as the variable. You can use the property name if it's from the same asset model. If the property has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "hierarchyId",
+                                  "type": "string",
+                                  "description": "The ID of the hierarchy to query for the property ID. You can use the hierarchy's name instead of the hierarchy's ID. If the hierarchy has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "propertyPath",
+                                  "type": "list",
+                                  "description": "The path of the property.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "id",
+                                          "type": "string",
+                                          "description": "The ID of the path segment.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "name",
+                                          "type": "string",
+                                          "description": "The name of the path segment.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "interval",
+                              "type": "string",
+                              "description": "The time interval for the tumbling window. The interval time must be between 1 minute and 1 week.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "offset",
+                              "type": "string",
+                              "description": "The offset for the tumbling window. The offset parameter accepts the following:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "UTC",
+                                  "description": "The offset time. For example, if you specify 18h for offset and 1d for interval, IoT SiteWise aggregates data in one of the following ways:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "If you create the metric before or at 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) on the day when you create the metric.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "If you create the metric after 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) the next day.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "UTC",
+                                  "description": "The ISO 8601 format. For example, if you specify PT18H for offset and 1d for interval, IoT SiteWise aggregates data in one of the following ways:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "If you create the metric before or at 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) on the day when you create the metric.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "If you create the metric after 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) the next day.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "UTC",
+                                  "description": "The 24-hour clock. For example, if you specify 00:03:00 for offset, 5m for interval, and you create the metric at 2 PM (UTC), you get the first aggregation result at 2:03 PM (UTC). You get the second aggregation result at 2:08 PM (UTC).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "PST",
+                                  "description": "The offset time zone. For example, if you specify 2021-07-23T18:00-08 for offset and 1d for interval, IoT SiteWise aggregates data in one of the following ways:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "PST",
+                                      "description": "If you create the metric before or at 6 PM (PST), you get the first aggregation result at 6 PM (PST) on the day when you create the metric.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "PST",
+                                      "description": "If you create the metric after 6 PM (PST), you get the first aggregation result at 6 PM (PST) the next day.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "processingConfig",
+                      "type": "dict",
+                      "description": "The processing configuration for the given metric property. You can configure metrics to be computed at the edge or in the Amazon Web Services Cloud. By default, metrics are forwarded to the cloud.",
+                      "nested_items": [
+                        {
+                          "name": "computeLocation",
+                          "type": "string",
+                          "description": "The compute location for the given metric property.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "path",
+              "type": "list",
+              "description": "The structured path to the property from the root of the asset.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "description": "The ID of the path segment.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "description": "The name of the path segment.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "externalId",
+              "type": "string",
+              "description": "The external ID of the asset property. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "compositeModel",
+          "type": "dict",
+          "description": "The composite model that declares this asset property, if this asset property exists in a composite model.",
+          "nested_items": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the property.",
+              "nested_items": []
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of the composite model that defines this property.",
+              "nested_items": []
+            },
+            {
+              "name": "assetProperty",
+              "type": "dict",
+              "description": "Contains asset property information.",
+              "nested_items": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The ID of the asset property.",
+                  "nested_items": []
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the property.",
+                  "nested_items": []
+                },
+                {
+                  "name": "alias",
+                  "type": "string",
+                  "description": "The alias that identifies the property, such as an OPC-UA server data stream path (for example, /company/windfarm/3/turbine/7/temperature). For more information, see Mapping industrial data streams to asset properties in the IoT SiteWise User Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "notification",
+                  "type": "dict",
+                  "description": "The asset property's notification topic and state. For more information, see UpdateAssetProperty.",
+                  "nested_items": [
+                    {
+                      "name": "topic",
+                      "type": "string",
+                      "description": "The MQTT topic to which IoT SiteWise publishes property value update notifications.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "state",
+                      "type": "string",
+                      "description": "The current notification state.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "dataType",
+                  "type": "string",
+                  "description": "The property data type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "unit",
+                  "type": "string",
+                  "description": "The unit (such as Newtons or RPM) of the asset property.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "attribute",
+                      "type": "dict",
+                      "description": "Specifies an asset attribute property. An attribute generally contains static information, such as the serial number of an IIoT wind turbine.",
+                      "nested_items": [
+                        {
+                          "name": "defaultValue",
+                          "type": "string",
+                          "description": "The default value of the asset model property attribute. All assets that you create from the asset model contain this attribute value. You can update an attribute's value after you create an asset. For more information, see Updating attribute values in the IoT SiteWise User Guide.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "measurement",
+                      "type": "dict",
+                      "description": "Specifies an asset measurement property. A measurement represents a device's raw sensor data stream, such as timestamped temperature values or timestamped power values.",
+                      "nested_items": [
+                        {
+                          "name": "processingConfig",
+                          "type": "dict",
+                          "description": "The processing configuration for the given measurement property. You can configure measurements to be kept at the edge or forwarded to the Amazon Web Services Cloud. By default, measurements are forwarded to the cloud.",
+                          "nested_items": [
+                            {
+                              "name": "forwardingConfig",
+                              "type": "dict",
+                              "description": "The forwarding configuration for the given measurement property.",
+                              "nested_items": [
+                                {
+                                  "name": "state",
+                                  "type": "string",
+                                  "description": "The forwarding state for the given property.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "transform",
+                      "type": "dict",
+                      "description": "Specifies an asset transform property. A transform contains a mathematical expression that maps a property's data points from one form to another, such as a unit conversion from Celsius to Fahrenheit.",
+                      "nested_items": [
+                        {
+                          "name": "expression",
+                          "type": "string",
+                          "description": "The mathematical expression that defines the transformation function. You can specify up to 10 variables per expression. You can specify up to 10 functions per expression.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "variables",
+                          "type": "list",
+                          "description": "The list of variables used in the expression.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The friendly name of the variable to be used in the expression.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "propertyId",
+                                      "type": "string",
+                                      "description": "The ID of the property to use as the variable. You can use the property name if it's from the same asset model. If the property has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "hierarchyId",
+                                      "type": "string",
+                                      "description": "The ID of the hierarchy to query for the property ID. You can use the hierarchy's name instead of the hierarchy's ID. If the hierarchy has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "propertyPath",
+                                      "type": "list",
+                                      "description": "The path of the property.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "id",
+                                              "type": "string",
+                                              "description": "The ID of the path segment.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "name",
+                                              "type": "string",
+                                              "description": "The name of the path segment.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "processingConfig",
+                          "type": "dict",
+                          "description": "The processing configuration for the given transform property. You can configure transforms to be kept at the edge or forwarded to the Amazon Web Services Cloud. You can also configure transforms to be computed at the edge or in the cloud.",
+                          "nested_items": [
+                            {
+                              "name": "computeLocation",
+                              "type": "string",
+                              "description": "The compute location for the given transform property.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "forwardingConfig",
+                              "type": "dict",
+                              "description": "The forwarding configuration for a given property.",
+                              "nested_items": [
+                                {
+                                  "name": "state",
+                                  "type": "string",
+                                  "description": "The forwarding state for the given property.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "expression",
+                          "type": "string",
+                          "description": "The mathematical expression that defines the metric aggregation function. You can specify up to 10 variables per expression. You can specify up to 10 functions per expression.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "variables",
+                          "type": "list",
+                          "description": "The list of variables used in the expression.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The friendly name of the variable to be used in the expression.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "propertyId",
+                                      "type": "string",
+                                      "description": "The ID of the property to use as the variable. You can use the property name if it's from the same asset model. If the property has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "hierarchyId",
+                                      "type": "string",
+                                      "description": "The ID of the hierarchy to query for the property ID. You can use the hierarchy's name instead of the hierarchy's ID. If the hierarchy has an external ID, you can specify externalId: followed by the external ID. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "propertyPath",
+                                      "type": "list",
+                                      "description": "The path of the property.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "id",
+                                              "type": "string",
+                                              "description": "The ID of the path segment.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "name",
+                                              "type": "string",
+                                              "description": "The name of the path segment.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "interval",
+                                  "type": "string",
+                                  "description": "The time interval for the tumbling window. The interval time must be between 1 minute and 1 week.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "offset",
+                                  "type": "string",
+                                  "description": "The offset for the tumbling window. The offset parameter accepts the following:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "The offset time. For example, if you specify 18h for offset and 1d for interval, IoT SiteWise aggregates data in one of the following ways:",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "UTC",
+                                          "description": "If you create the metric before or at 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) on the day when you create the metric.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "",
+                                          "type": "UTC",
+                                          "description": "If you create the metric after 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) the next day.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "The ISO 8601 format. For example, if you specify PT18H for offset and 1d for interval, IoT SiteWise aggregates data in one of the following ways:",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "UTC",
+                                          "description": "If you create the metric before or at 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) on the day when you create the metric.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "",
+                                          "type": "UTC",
+                                          "description": "If you create the metric after 6 PM (UTC), you get the first aggregation result at 6 PM (UTC) the next day.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "UTC",
+                                      "description": "The 24-hour clock. For example, if you specify 00:03:00 for offset, 5m for interval, and you create the metric at 2 PM (UTC), you get the first aggregation result at 2:03 PM (UTC). You get the second aggregation result at 2:08 PM (UTC).",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "PST",
+                                      "description": "The offset time zone. For example, if you specify 2021-07-23T18:00-08 for offset and 1d for interval, IoT SiteWise aggregates data in one of the following ways:",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "PST",
+                                          "description": "If you create the metric before or at 6 PM (PST), you get the first aggregation result at 6 PM (PST) on the day when you create the metric.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "",
+                                          "type": "PST",
+                                          "description": "If you create the metric after 6 PM (PST), you get the first aggregation result at 6 PM (PST) the next day.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "processingConfig",
+                          "type": "dict",
+                          "description": "The processing configuration for the given metric property. You can configure metrics to be computed at the edge or in the Amazon Web Services Cloud. By default, metrics are forwarded to the cloud.",
+                          "nested_items": [
+                            {
+                              "name": "computeLocation",
+                              "type": "string",
+                              "description": "The compute location for the given metric property.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "path",
+                  "type": "list",
+                  "description": "The structured path to the property from the root of the asset.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "description": "The ID of the path segment.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the path segment.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "externalId",
+                  "type": "string",
+                  "description": "The external ID of the asset property. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "id",
+              "type": "string",
+              "description": "The ID of the composite model that contains the property.",
+              "nested_items": []
+            },
+            {
+              "name": "externalId",
+              "type": "string",
+              "description": "The external ID of the composite model that contains the property. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "assetExternalId",
+          "type": "string",
+          "description": "The external ID of the asset. For more information, see Using external IDs in the IoT SiteWise User Guide.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

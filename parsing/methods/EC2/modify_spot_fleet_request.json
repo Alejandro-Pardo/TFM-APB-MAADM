@@ -1,0 +1,486 @@
+{
+  "method_name": "modify_spot_fleet_request",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/modify_spot_fleet_request.html",
+  "description": "Modifies the specified Spot Fleet request. You can only modify a Spot Fleet request of type maintain. While the Spot Fleet request is being modified, it is in the modifying state. To scale up your Spot Fleet, increase its target capacity. The Spot Fleet launches the additional Spot Instances according to the allocation strategy for the Spot Fleet request. If the allocation strategy is lowestPrice, the Spot Fleet launches instances using the Spot Instance pool with the lowest price. If the allocation strategy is diversified, the Spot Fleet distributes the instances across the Spot Instance pools. If the allocation strategy is capacityOptimized, Spot Fleet launches instances from Spot Instance pools with optimal capacity for the number of instances that are launching. To scale down your Spot Fleet, decrease its target capacity. First, the Spot Fleet cancels any open requests that exceed the new target capacity. You can request that the Spot Fleet terminate Spot Instances until the size of the fleet no longer exceeds the new target capacity. If the allocation strategy is lowestPrice, the Spot Fleet terminates the instances with the highest price per unit. If the allocation strategy is capacityOptimized, the Spot Fleet terminates the instances in the Spot Instance pools that have the least available Spot Instance capacity. If the allocation strategy is diversified, the Spot Fleet terminates instances across the Spot Instance pools. Alternatively, you can request that the Spot Fleet keep the fleet at its current size, but not replace any Spot Instances that are interrupted or that you terminate manually. If you are finished with your Spot Fleet for now, but will use it again later, you can set the target capacity to 0.",
+  "parameters": [
+    {
+      "name": "LaunchTemplateConfigs",
+      "type": "list",
+      "required": false,
+      "description": "The launch template and overrides. You can only use this parameter if you specified a launch template ( LaunchTemplateConfigs) in your Spot Fleet request. If you specified LaunchSpecifications in your Spot Fleet request, then omit this parameter. (dict) --- Describes a launch template and overrides. LaunchTemplateSpecification (dict) --- The launch template to use. Make sure that the launch template does not contain the NetworkInterfaceId parameter because you can't specify a network interface ID in a Spot Fleet. LaunchTemplateId (string) --- The ID of the launch template. You must specify the LaunchTemplateId or the LaunchTemplateName, but not both. LaunchTemplateName (string) --- The name of the launch template. You must specify the LaunchTemplateName or the LaunchTemplateId, but not both. Version (string) --- The launch template version number, $Latest, or $Default. You must specify a value, otherwise the request fails. If the value is $Latest, Amazon EC2 uses the latest version of the launch template. If the value is $Default, Amazon EC2 uses the default version of the launch template. Overrides (list) --- Any parameters that you specify override the same parameters in the launch template. (dict) --- Describes overrides for a launch template. InstanceType (string) --- The instance type. SpotPrice (string) --- The maximum price per unit hour that you are willing to pay for a Spot Instance. We do not recommend using this parameter because it can lead to increased interruptions. If you do not specify this parameter, you will pay the current Spot price. SubnetId (string) --- The ID of the subnet in which to launch the instances. AvailabilityZone (string) --- The Availability Zone in which to launch the instances. WeightedCapacity (float) --- The number of units provided by the specified instance type. These are the same units that you chose to set the target capacity in terms of instances, or a performance characteristic such as vCPUs, memory, or I/O. If the target capacity divided by this value is not a whole number, Amazon EC2 rounds the number of instances to the next whole number. If this value is not specified, the default is 1. Priority (float) --- The priority for the launch template override. The highest priority is launched first. If OnDemandAllocationStrategy is set to prioritized, Spot Fleet uses priority to determine which launch template override to use first in fulfilling On-Demand capacity. If the Spot AllocationStrategy is set to capacityOptimizedPrioritized, Spot Fleet uses priority on a best-effort basis to determine which launch template override to use in fulfilling Spot capacity, but optimizes for capacity first. Valid values are whole numbers starting at 0. The lower the number, the higher the priority. If no number is set, the launch template override has the lowest priority. You can set the same priority for different launch template overrides. InstanceRequirements (dict) --- The instance requirements. When you specify instance requirements, Amazon EC2 will identify instance types with the provided requirements, and then use your On-Demand and Spot allocation strategies to launch instances from these instance types, in the same way as when you specify a list of instance types. VCpuCount (dict) --- The minimum and maximum number of vCPUs. Min (integer) --- The minimum number of vCPUs. If the value is 0, there is no minimum limit. Max (integer) --- The maximum number of vCPUs. If this parameter is not specified, there is no maximum limit. MemoryMiB (dict) --- The minimum and maximum amount of memory, in MiB. Min (integer) --- The minimum amount of memory, in MiB. If this parameter is not specified, there is no minimum limit. Max (integer) --- The maximum amount of memory, in MiB. CpuManufacturers (list) --- The CPU manufacturers to include. For instance types with Intel CPUs, specify intel. For instance types with AMD CPUs, specify amd. For instance types with Amazon Web Services CPUs, specify amazon-web-services. For instance types with Apple CPUs, specify apple. Default: Any manufacturer (string) --- MemoryGiBPerVCpu (dict) --- The minimum and maximum amount of memory per vCPU, in GiB. Default: No minimum or maximum limits Min (float) --- The minimum amount of memory per vCPU, in GiB. Max (float) --- The maximum amount of memory per vCPU, in GiB. ExcludedInstanceTypes (list) --- The instance types to exclude. You can use strings with one or more wild cards, represented by an asterisk ( *), to exclude an instance type, size, or generation. The following are examples: m5.8xlarge, c5*.*, m5a.*, r*, *3*. For example, if you specify c5*,Amazon EC2 will exclude the entire C5 instance family, which includes all C5a and C5n instance types. If you specify m5a.*, Amazon EC2 will exclude all the M5a instance types, but not the M5n instance types. Default: No excluded instance types (string) --- InstanceGenerations (list) --- Indicates whether current or previous generation instance types are included. The current generation instance types are recommended for use. Current generation instance types are typically the latest two to three generations in each instance family. For more information, see Instance types in the Amazon EC2 User Guide. For current generation instance types, specify current. For previous generation instance types, specify previous. Default: Current and previous generation instance types (string) --- SpotMaxPricePercentageOverLowestPrice (integer) --- [Price protection] The price protection threshold for Spot Instances, as a percentage higher than an identified Spot price. The identified Spot price is the Spot price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified Spot price is from the lowest priced current generation instance types, and failing that, from the lowest priced previous generation instance types that match your attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose Spot price exceeds your specified threshold. The parameter accepts an integer, which Amazon EC2 interprets as a percentage. If you set TargetCapacityUnitType to vcpu or memory-mib, the price protection threshold is applied based on the per-vCPU or per-memory price instead of the per-instance price. This parameter is not supported for GetSpotPlacementScores and GetInstanceTypesFromInstanceRequirements. Default: 100 OnDemandMaxPricePercentageOverLowestPrice (integer) --- [Price protection] The price protection threshold for On-Demand Instances, as a percentage higher than an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose price exceeds your specified threshold. To turn off price protection, specify a high value, such as 999999. Default: 20 BareMetal (string) --- Indicates whether bare metal instance types must be included, excluded, or required. To include bare metal instance types, specify included. To require only bare metal instance types, specify required. To exclude bare metal instance types, specify excluded. Default: excluded BurstablePerformance (string) --- Indicates whether burstable performance T instance types are included, excluded, or required. For more information, see Burstable performance instances. To include burstable performance instance types, specify included. To require only burstable performance instance types, specify required. To exclude burstable performance instance types, specify excluded. Default: excluded RequireHibernateSupport (boolean) --- Indicates whether instance types must support hibernation for On-Demand Instances. This parameter is not supported for GetSpotPlacementScores. Default: false NetworkInterfaceCount (dict) --- The minimum and maximum number of network interfaces. Default: No minimum or maximum limits Min (integer) --- The minimum number of network interfaces. Max (integer) --- The maximum number of network interfaces. LocalStorage (string) --- Indicates whether instance types with instance store volumes are included, excluded, or required. For more information, Amazon EC2 instance store in the Amazon EC2 User Guide. To include instance types with instance store volumes, specify included. To require only instance types with instance store volumes, specify required. To exclude instance types with instance store volumes, specify excluded. Default: included LocalStorageTypes (list) --- The type of local storage that is required. For instance types with hard disk drive (HDD) storage, specify hdd. For instance types with solid state drive (SSD) storage, specify ssd. Default: hdd and ssd (string) --- TotalLocalStorageGB (dict) --- The minimum and maximum amount of total local storage, in GB. Default: No minimum or maximum limits Min (float) --- The minimum amount of total local storage, in GB. Max (float) --- The maximum amount of total local storage, in GB. BaselineEbsBandwidthMbps (dict) --- The minimum and maximum baseline bandwidth to Amazon EBS, in Mbps. For more information, see Amazon EBS---optimized instances in the Amazon EC2 User Guide. Default: No minimum or maximum limits Min (integer) --- The minimum baseline bandwidth, in Mbps. Max (integer) --- The maximum baseline bandwidth, in Mbps. AcceleratorTypes (list) --- The accelerator types that must be on the instance type. For instance types with FPGA accelerators, specify fpga. For instance types with GPU accelerators, specify gpu. For instance types with Inference accelerators, specify inference. Default: Any accelerator type (string) --- AcceleratorCount (dict) --- The minimum and maximum number of accelerators (GPUs, FPGAs, or Amazon Web Services Inferentia chips) on an instance. To exclude accelerator-enabled instance types, set Max to 0. Default: No minimum or maximum limits Min (integer) --- The minimum number of accelerators. Max (integer) --- The maximum number of accelerators. AcceleratorManufacturers (list) --- Indicates whether instance types must have accelerators by specific manufacturers. For instance types with Amazon Web Services devices, specify amazon-web-services. For instance types with AMD devices, specify amd. For instance types with Habana devices, specify habana. For instance types with NVIDIA devices, specify nvidia. For instance types with Xilinx devices, specify xilinx. Default: Any manufacturer (string) --- AcceleratorNames (list) --- The accelerators that must be on the instance type. For instance types with NVIDIA A10G GPUs, specify a10g. For instance types with NVIDIA A100 GPUs, specify a100. For instance types with NVIDIA H100 GPUs, specify h100. For instance types with Amazon Web Services Inferentia chips, specify inferentia. For instance types with NVIDIA GRID K520 GPUs, specify k520. For instance types with NVIDIA K80 GPUs, specify k80. For instance types with NVIDIA M60 GPUs, specify m60. For instance types with AMD Radeon Pro V520 GPUs, specify radeon-pro-v520. For instance types with NVIDIA T4 GPUs, specify t4. For instance types with NVIDIA T4G GPUs, specify t4g. For instance types with Xilinx VU9P FPGAs, specify vu9p. For instance types with NVIDIA V100 GPUs, specify v100. Default: Any accelerator (string) --- AcceleratorTotalMemoryMiB (dict) --- The minimum and maximum amount of total accelerator memory, in MiB. Default: No minimum or maximum limits Min (integer) --- The minimum amount of accelerator memory, in MiB. Max (integer) --- The maximum amount of accelerator memory, in MiB. NetworkBandwidthGbps (dict) --- The minimum and maximum amount of network bandwidth, in gigabits per second (Gbps). Default: No minimum or maximum limits Min (float) --- The minimum amount of network bandwidth, in Gbps. Max (float) --- The maximum amount of network bandwidth, in Gbps. AllowedInstanceTypes (list) --- The instance types to apply your specified attributes against. All other instance types are ignored, even if they match your specified attributes. You can use strings with one or more wild cards, represented by an asterisk ( *), to allow an instance type, size, or generation. For example, if you specify c5*,Amazon EC2 will allow the entire C5 instance family, which includes all C5a and C5n instance types. If you specify m5a.*, Amazon EC2 will allow all the M5a instance types, but not the M5n instance types. Default: All instance types (string) --- MaxSpotPriceAsPercentageOfOptimalOnDemandPrice (integer) --- [Price protection] The price protection threshold for Spot Instances, as a percentage of an identified On-Demand price. If no current generation C, M, or R instance type matches your attributes, then the identified price is from the lowest priced current generation instance types, and failing that, from the lowest priced previous generation instance types that match your attributes. If you set TargetCapacityUnitType to vcpu or memory-mib, the price protection threshold is based on the per vCPU or per memory price instead of the per instance price. BaselinePerformanceFactors (dict) --- The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Amazon EC2 uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application. Currently, this parameter only supports CPU performance as a baseline performance factor. For more information, see Performance protection in the Amazon EC2 User Guide. Cpu (dict) --- The CPU performance to consider, using an instance family as the baseline reference. References (list) --- Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences. (dict) --- Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture. InstanceFamily (string) --- The instance family to use as a baseline reference. The following instance families are not supported for performance protection: c1 g3 | g3s hpc7g m1 | m2 mac1 | mac2 | mac2-m1ultra | mac2-m2 | mac2-m2pro p3dn | p4d | p5 t1 u-12tb1 | u-18tb1 | u-24tb1 | u-3tb1 | u-6tb1 | u-9tb1 | u7i-12tb | u7in-16tb | u7in-24tb | u7in-32tb If you enable performance protection by specifying a supported instance family, the returned instance types will exclude the above unsupported instance families. If you specify an unsupported instance family as a value for baseline performance, the API returns an empty response for GetInstanceTypesFromInstanceRequirements and an exception for CreateFleet, RequestSpotFleet, ModifyFleet, and ModifySpotFleetRequest.",
+      "nested_params": [
+        {
+          "name": "LaunchTemplateSpecification",
+          "type": "dict",
+          "required": false,
+          "description": "The launch template to use. Make sure that the launch template does not contain the NetworkInterfaceId parameter because you can't specify a network interface ID in a Spot Fleet.",
+          "nested_params": [
+            {
+              "name": "LaunchTemplateId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the launch template. You must specify the LaunchTemplateId or the LaunchTemplateName, but not both.",
+              "nested_params": []
+            },
+            {
+              "name": "LaunchTemplateName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the launch template. You must specify the LaunchTemplateName or the LaunchTemplateId, but not both.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "The launch template version number, $Latest, or $Default. You must specify a value, otherwise the request fails. If the value is $Latest, Amazon EC2 uses the latest version of the launch template. If the value is $Default, Amazon EC2 uses the default version of the launch template.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Overrides",
+          "type": "list",
+          "required": false,
+          "description": "Any parameters that you specify override the same parameters in the launch template.",
+          "nested_params": [
+            {
+              "name": "InstanceType",
+              "type": "string",
+              "required": false,
+              "description": "The instance type.",
+              "nested_params": []
+            },
+            {
+              "name": "SpotPrice",
+              "type": "string",
+              "required": false,
+              "description": "The maximum price per unit hour that you are willing to pay for a Spot Instance. We do not recommend using this parameter because it can lead to increased interruptions. If you do not specify this parameter, you will pay the current Spot price.",
+              "nested_params": []
+            },
+            {
+              "name": "SubnetId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the subnet in which to launch the instances.",
+              "nested_params": []
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string",
+              "required": false,
+              "description": "The Availability Zone in which to launch the instances.",
+              "nested_params": []
+            },
+            {
+              "name": "WeightedCapacity",
+              "type": "float",
+              "required": false,
+              "description": "The number of units provided by the specified instance type. These are the same units that you chose to set the target capacity in terms of instances, or a performance characteristic such as vCPUs, memory, or I/O. If the target capacity divided by this value is not a whole number, Amazon EC2 rounds the number of instances to the next whole number. If this value is not specified, the default is 1.",
+              "nested_params": []
+            },
+            {
+              "name": "Priority",
+              "type": "float",
+              "required": false,
+              "description": "The priority for the launch template override. The highest priority is launched first. If OnDemandAllocationStrategy is set to prioritized, Spot Fleet uses priority to determine which launch template override to use first in fulfilling On-Demand capacity. If the Spot AllocationStrategy is set to capacityOptimizedPrioritized, Spot Fleet uses priority on a best-effort basis to determine which launch template override to use in fulfilling Spot capacity, but optimizes for capacity first. Valid values are whole numbers starting at 0. The lower the number, the higher the priority. If no number is set, the launch template override has the lowest priority. You can set the same priority for different launch template overrides.",
+              "nested_params": []
+            },
+            {
+              "name": "InstanceRequirements",
+              "type": "dict",
+              "required": false,
+              "description": "The instance requirements. When you specify instance requirements, Amazon EC2 will identify instance types with the provided requirements, and then use your On-Demand and Spot allocation strategies to launch instances from these instance types, in the same way as when you specify a list of instance types.",
+              "nested_params": [
+                {
+                  "name": "VCpuCount",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum number of vCPUs.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum number of vCPUs. If the value is 0, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum number of vCPUs. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MemoryMiB",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum amount of memory, in MiB.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum amount of memory, in MiB. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum amount of memory, in MiB. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CpuManufacturers",
+                  "type": "list",
+                  "required": false,
+                  "description": "The CPU manufacturers to include.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MemoryGiBPerVCpu",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum amount of memory per vCPU, in GiB. Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "float",
+                      "required": false,
+                      "description": "The minimum amount of memory per vCPU, in GiB. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "float",
+                      "required": false,
+                      "description": "The maximum amount of memory per vCPU, in GiB. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ExcludedInstanceTypes",
+                  "type": "list",
+                  "required": false,
+                  "description": "The instance types to exclude. You can use strings with one or more wild cards, represented by an asterisk ( *), to exclude an instance type, size, or generation. The following are examples: m5.8xlarge, c5*.*, m5a.*, r*, *3*. For example, if you specify c5*,Amazon EC2 will exclude the entire C5 instance family, which includes all C5a and C5n instance types. If you specify m5a.*, Amazon EC2 will exclude all the M5a instance types, but not the M5n instance types. Default: No excluded instance types.",
+                  "nested_params": []
+                },
+                {
+                  "name": "InstanceGenerations",
+                  "type": "list",
+                  "required": false,
+                  "description": "Indicates whether current or previous generation instance types are included. The current generation instance types are recommended for use. Current generation instance types are typically the latest two to three generations in each instance family. For more information, see Instance types in the Amazon EC2 User Guide. For current generation instance types, specify current. For previous generation instance types, specify previous. Default: Current and previous generation instance types.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SpotMaxPricePercentageOverLowestPrice",
+                  "type": "integer",
+                  "required": false,
+                  "description": "[Price protection] The price protection threshold for Spot Instances, as a percentage higher than an identified Spot price. The identified Spot price is the Spot price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified Spot price is from the lowest priced current generation instance types, and failing that, from the lowest priced previous generation instance types that match your attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose Spot price exceeds your specified threshold. The parameter accepts an integer, which Amazon EC2 interprets as a percentage. If you set TargetCapacityUnitType to vcpu or memory-mib, the price protection threshold is applied based on the per-vCPU or per-memory price instead of the per-instance price. This parameter is not supported for GetSpotPlacementScores and GetInstanceTypesFromInstanceRequirements. Default: 100",
+                  "nested_params": []
+                },
+                {
+                  "name": "OnDemandMaxPricePercentageOverLowestPrice",
+                  "type": "integer",
+                  "required": false,
+                  "description": "[Price protection] The price protection threshold for On-Demand Instances, as a percentage higher than an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose price exceeds your specified threshold. The parameter accepts an integer, which Amazon EC2 interprets as a percentage. To turn off price protection, specify a high value, such as 999999. This parameter is not supported for GetSpotPlacementScores and GetInstanceTypesFromInstanceRequirements. Default: 20",
+                  "nested_params": []
+                },
+                {
+                  "name": "BareMetal",
+                  "type": "string",
+                  "required": false,
+                  "description": "Indicates whether bare metal instance types must be included, excluded, or required.",
+                  "nested_params": []
+                },
+                {
+                  "name": "BurstablePerformance",
+                  "type": "string",
+                  "required": false,
+                  "description": "Indicates whether burstable performance T instance types are included, excluded, or required. For more information, see Burstable performance instances.",
+                  "nested_params": []
+                },
+                {
+                  "name": "RequireHibernateSupport",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Indicates whether instance types must support hibernation for On-Demand Instances. This parameter is not supported for GetSpotPlacementScores. Default: false.",
+                  "nested_params": []
+                },
+                {
+                  "name": "NetworkInterfaceCount",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum number of network interfaces. Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum number of network interfaces. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum number of network interfaces. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "LocalStorage",
+                  "type": "string",
+                  "required": false,
+                  "description": "Indicates whether instance types with instance store volumes are included, excluded, or required. For more information, Amazon EC2 instance store in the Amazon EC2 User Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "LocalStorageTypes",
+                  "type": "list",
+                  "required": false,
+                  "description": "The type of local storage that is required.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TotalLocalStorageGB",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum amount of total local storage, in GB. Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "float",
+                      "required": false,
+                      "description": "The minimum amount of total local storage, in GB. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "float",
+                      "required": false,
+                      "description": "The maximum amount of total local storage, in GB. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BaselineEbsBandwidthMbps",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum baseline bandwidth to Amazon EBS, in Mbps. For more information, see Amazon EBS---optimized instances in the Amazon EC2 User Guide. Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum baseline bandwidth, in Mbps. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum baseline bandwidth, in Mbps. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AcceleratorTypes",
+                  "type": "list",
+                  "required": false,
+                  "description": "The accelerator types that must be on the instance type.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AcceleratorCount",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum number of accelerators (GPUs, FPGAs, or Amazon Web Services Inferentia chips) on an instance. To exclude accelerator-enabled instance types, set Max to 0. Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum number of accelerators. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum number of accelerators. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AcceleratorManufacturers",
+                  "type": "list",
+                  "required": false,
+                  "description": "Indicates whether instance types must have accelerators by specific manufacturers.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AcceleratorNames",
+                  "type": "list",
+                  "required": false,
+                  "description": "The accelerators that must be on the instance type.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AcceleratorTotalMemoryMiB",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum amount of total accelerator memory, in MiB. Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum amount of accelerator memory, in MiB. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum amount of accelerator memory, in MiB. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "NetworkBandwidthGbps",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The minimum and maximum amount of network bandwidth, in gigabits per second (Gbps). Default: No minimum or maximum limits.",
+                  "nested_params": [
+                    {
+                      "name": "Min",
+                      "type": "float",
+                      "required": false,
+                      "description": "The minimum amount of network bandwidth, in Gbps. If this parameter is not specified, there is no minimum limit.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Max",
+                      "type": "float",
+                      "required": false,
+                      "description": "The maximum amount of network bandwidth, in Gbps. If this parameter is not specified, there is no maximum limit.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AllowedInstanceTypes",
+                  "type": "list",
+                  "required": false,
+                  "description": "The instance types to apply your specified attributes against. All other instance types are ignored, even if they match your specified attributes. You can use strings with one or more wild cards, represented by an asterisk ( *), to allow an instance type, size, or generation. The following are examples: m5.8xlarge, c5*.*, m5a.*, r*, *3*. For example, if you specify c5*,Amazon EC2 will allow the entire C5 instance family, which includes all C5a and C5n instance types. If you specify m5a.*, Amazon EC2 will allow all the M5a instance types, but not the M5n instance types. Default: All instance types.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice",
+                  "type": "integer",
+                  "required": false,
+                  "description": "[Price protection] The price protection threshold for Spot Instances, as a percentage of an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified price is from the lowest priced current generation instance types, and failing that, from the lowest priced previous generation instance types that match your attributes. When Amazon EC2 selects instance types with your attributes, it will exclude instance types whose price exceeds your specified threshold. The parameter accepts an integer, which Amazon EC2 interprets as a percentage. If you set TargetCapacityUnitType to vcpu or memory-mib, the price protection threshold is based on the per vCPU or per memory price instead of the per instance price.",
+                  "nested_params": []
+                },
+                {
+                  "name": "BaselinePerformanceFactors",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Amazon EC2 uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application. Currently, this parameter only supports CPU performance as a baseline performance factor. For more information, see Performance protection in the Amazon EC2 User Guide.",
+                  "nested_params": [
+                    {
+                      "name": "Cpu",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The CPU performance to consider, using an instance family as the baseline reference.",
+                      "nested_params": [
+                        {
+                          "name": "References",
+                          "type": "list",
+                          "required": false,
+                          "description": "Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences.",
+                          "nested_params": [
+                            {
+                              "name": "InstanceFamily",
+                              "type": "string",
+                              "required": false,
+                              "description": "The instance family to use as a baseline reference. The following instance families are not supported for performance protection:",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OnDemandTargetCapacity",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Context",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SpotFleetRequestId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the Spot Fleet request.",
+      "nested_params": []
+    },
+    {
+      "name": "TargetCapacity",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExcessCapacityTerminationPolicy",
+      "type": "string",
+      "required": false,
+      "description": "Indicates whether running instances should be terminated if the target capacity of the Spot Fleet request is decreased below the current size of the Spot Fleet. Supported only for fleets of type maintain.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Return",
+          "type": "boolean",
+          "description": "If the request succeeds, the response returns true. If the request fails, no response is returned, and instead an error message is returned.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "method_name": "delete_file_system",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/fsx/client/delete_file_system.html",
+  "description": "Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted. To delete an Amazon FSx for NetApp ONTAP file system, first delete all the volumes and storage virtual machines (SVMs) on the file system. Then provide a FileSystemId value to the DeleteFileSystem operation. By default, when you delete an Amazon FSx for Windows File Server file system, a final backup is created upon deletion. This final backup isn't subject to the file system's retention policy, and must be manually deleted. To delete an Amazon FSx for Lustre file system, first unmount it from every connected Amazon EC2 instance, then provide a FileSystemId value to the DeleteFileSystem operation. By default, Amazon FSx will not take a final backup when the DeleteFileSystem operation is invoked. On file systems not linked to an Amazon S3 bucket, set SkipFinalBackup to false to take a final backup of the file system you are deleting. Backups cannot be enabled on S3-linked file systems. To ensure all of your data is written back to S3 before deleting your file system, you can either monitor for the AgeOfOldestQueuedMessage metric to be zero (if using automatic export) or you can run an export data repository task. If you have automatic export enabled and want to use an export data repository task, you have to disable automatic export before executing the export data repository task. The DeleteFileSystem operation returns while the file system has the DELETING status. You can check the file system deletion status by calling the DescribeFileSystems operation, which returns a list of file systems in your account. If you pass the file system ID for a deleted file system, the DescribeFileSystems operation returns a FileSystemNotFound error.",
+  "parameters": [
+    {
+      "name": "FileSystemId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the file system that you want to delete.",
+      "nested_params": []
+    },
+    {
+      "name": "ClientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent deletion. This token is automatically filled on your behalf when using the Command Line Interface (CLI) or an Amazon Web Services SDK. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "WindowsConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration object for the Microsoft Windows file system used in the DeleteFileSystem operation. SkipFinalBackup (boolean) --- By default, Amazon FSx for Windows takes a final backup on your behalf when the DeleteFileSystem operation is invoked. Doing this helps protect you from data loss, and we highly recommend taking the final backup. If you want to skip this backup, use this flag to do so. FinalBackupTags (list) --- A set of tags for your final backup. (dict) --- Specifies a key-value pair for a resource tag. A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached. A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+      "nested_params": [
+        {
+          "name": "SkipFinalBackup",
+          "type": "boolean",
+          "required": false,
+          "description": "By default, Amazon FSx for Windows takes a final backup on your behalf when the DeleteFileSystem operation is invoked. Doing this helps protect you from data loss, and we highly recommend taking the final backup. If you want to skip this backup, use this flag to do so.",
+          "nested_params": []
+        },
+        {
+          "name": "FinalBackupTags",
+          "type": "list",
+          "required": false,
+          "description": "A set of tags for your final backup.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LustreConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration object for the Amazon FSx for Lustre file system being deleted in the DeleteFileSystem operation. SkipFinalBackup (boolean) --- Set SkipFinalBackup to false if you want to take a final backup of the file system you are deleting. By default, Amazon FSx will not take a final backup on your behalf when the DeleteFileSystem operation is invoked. (Default = true) FinalBackupTags (list) --- Use if SkipFinalBackup is set to false, and you want to apply an array of tags to the final backup. If you have set the file system property CopyTagsToBackups to true, and you specify one or more FinalBackupTags when deleting a file system, Amazon FSx will not copy any existing file system tags to the backup. (dict) --- Specifies a key-value pair for a resource tag. A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached. A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+      "nested_params": [
+        {
+          "name": "SkipFinalBackup",
+          "type": "boolean",
+          "required": false,
+          "description": "Set SkipFinalBackup to false if you want to take a final backup of the file system you are deleting. By default, Amazon FSx will not take a final backup on your behalf when the DeleteFileSystem operation is invoked. (Default = true)",
+          "nested_params": []
+        },
+        {
+          "name": "FinalBackupTags",
+          "type": "list",
+          "required": false,
+          "description": "Use if SkipFinalBackup is set to false, and you want to apply an array of tags to the final backup. If you have set the file system property CopyTagsToBackups to true, and you specify one or more FinalBackupTags when deleting a file system, Amazon FSx will not copy any existing file system tags to the backup.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OpenZFSConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration object for the OpenZFS file system used in the DeleteFileSystem operation. SkipFinalBackup (boolean) --- By default, Amazon FSx for OpenZFS takes a final backup on your behalf when the DeleteFileSystem operation is invoked. Doing this helps protect you from data loss, and we highly recommend taking the final backup. If you want to skip taking a final backup, set this value to true. FinalBackupTags (list) --- A list of tags to apply to the file system's final backup. (dict) --- Specifies a key-value pair for a resource tag. A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached. A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April. Options (list) --- To delete a file system if there are child volumes present below the root volume, use the string DELETE_CHILD_VOLUMES_AND_SNAPSHOTS. If your file system has child volumes and you don't use this option, the delete request will fail. (string) ---",
+      "nested_params": [
+        {
+          "name": "SkipFinalBackup",
+          "type": "boolean",
+          "required": false,
+          "description": "By default, Amazon FSx for OpenZFS takes a final backup on your behalf when the DeleteFileSystem operation is invoked. Doing this helps protect you from data loss, and we highly recommend taking the final backup. If you want to skip taking a final backup, set this value to true.",
+          "nested_params": []
+        },
+        {
+          "name": "FinalBackupTags",
+          "type": "list",
+          "required": false,
+          "description": "A list of tags to apply to the file system's final backup.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Options",
+          "type": "list",
+          "required": false,
+          "description": "To delete a file system if there are child volumes present below the root volume, use the string DELETE_CHILD_VOLUMES_AND_SNAPSHOTS. If your file system has child volumes and you don't use this option, the delete request will fail.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "FileSystemId",
+          "type": "string",
+          "description": "The ID of the file system that's being deleted.",
+          "nested_items": []
+        },
+        {
+          "name": "Lifecycle",
+          "type": "string",
+          "description": "The file system lifecycle for the deletion request. If the DeleteFileSystem operation is successful, this status is DELETING.",
+          "nested_items": []
+        },
+        {
+          "name": "WindowsResponse",
+          "type": "dict",
+          "description": "The response object for the Microsoft Windows file system used in the DeleteFileSystem operation.",
+          "nested_items": [
+            {
+              "name": "FinalBackupId",
+              "type": "string",
+              "description": "The ID of the final backup for this file system.",
+              "nested_items": []
+            },
+            {
+              "name": "FinalBackupTags",
+              "type": "list",
+              "description": "The set of tags applied to the final backup.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "LustreResponse",
+          "type": "dict",
+          "description": "The response object for the Amazon FSx for Lustre file system being deleted in the DeleteFileSystem operation.",
+          "nested_items": [
+            {
+              "name": "FinalBackupId",
+              "type": "string",
+              "description": "The ID of the final backup for this file system.",
+              "nested_items": []
+            },
+            {
+              "name": "FinalBackupTags",
+              "type": "list",
+              "description": "The set of tags applied to the final backup.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "OpenZFSResponse",
+          "type": "dict",
+          "description": "The response object for the OpenZFS file system that's being deleted in the DeleteFileSystem operation.",
+          "nested_items": [
+            {
+              "name": "FinalBackupId",
+              "type": "string",
+              "description": "The ID of the source backup. Specifies the backup that you are copying.",
+              "nested_items": []
+            },
+            {
+              "name": "FinalBackupTags",
+              "type": "list",
+              "description": "A list of Tag values, with a maximum of 50 elements.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "A value that specifies the TagKey, the name of the tag. Tag keys must be unique for the resource to which they are attached.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "A value that specifies the TagValue, the value assigned to the corresponding tag key. Tag values can be null and don't have to be unique in a tag set. For example, you can have a key-value pair in a tag set of finances : April and also of payroll : April.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

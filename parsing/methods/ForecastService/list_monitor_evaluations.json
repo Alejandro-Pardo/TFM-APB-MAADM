@@ -1,0 +1,182 @@
+{
+  "method_name": "list_monitor_evaluations",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/forecast/client/list_monitor_evaluations.html",
+  "description": "Returns a list of the monitoring evaluation results and predictor events collected by the monitor resource during different windows of time. For information about monitoring see  predictor-monitoring. For more information about retrieving monitoring results see Viewing Monitoring Results.",
+  "parameters": [
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MonitorArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the monitor resource to get results from.",
+      "nested_params": []
+    },
+    {
+      "name": "Filters",
+      "type": "list",
+      "required": true,
+      "description": "An array of filters. For each filter, provide a condition and a match statement. The condition is either IS or IS_NOT, which specifies whether to include or exclude the resources that match the statement from the list. The match statement consists of a key and a value. Condition - The condition to apply. Valid values are IS and IS_NOT. Key - The name of the parameter to filter on. The only valid value is EvaluationState. Value - The value to match. Valid values are only SUCCESS or FAILURE. For example, to list only successful monitor evaluations, you would specify: \"Filters\": [ { \"Condition\": \"IS\", \"Key\": \"EvaluationState\", \"Value\": \"SUCCESS\" } ] (dict) --- Describes a filter for choosing a subset of objects. Each filter consists of a condition and a match statement. The condition is either IS or IS_NOT, which specifies whether to include or exclude the objects that match the statement, respectively. The name of the parameter to filter on. The value to match. The condition to apply. To include the objects that match the statement, specify IS. To exclude matching objects, specify IS_NOT.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the response is truncated, Amazon Forecast returns this token. To retrieve the next set of results, use the token in the next request. Tokens expire after 24 hours.",
+          "nested_items": []
+        },
+        {
+          "name": "PredictorMonitorEvaluations",
+          "type": "list",
+          "description": "The monitoring results and predictor events collected by the monitor resource during different windows of time.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ResourceArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the resource to monitor.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MonitorArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the monitor resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EvaluationTime",
+                  "type": "datetime",
+                  "description": "The timestamp that indicates when the monitor evaluation was started.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EvaluationState",
+                  "type": "string",
+                  "description": "The status of the monitor evaluation. The state can be SUCCESS or FAILURE.",
+                  "nested_items": []
+                },
+                {
+                  "name": "WindowStartDatetime",
+                  "type": "datetime",
+                  "description": "The timestamp that indicates the start of the window that is used for monitor evaluation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "WindowEndDatetime",
+                  "type": "datetime",
+                  "description": "The timestamp that indicates the end of the window that is used for monitor evaluation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PredictorEvent",
+                  "type": "dict",
+                  "description": "Provides details about a predictor event, such as a retraining.",
+                  "nested_items": [
+                    {
+                      "name": "Detail",
+                      "type": "string",
+                      "description": "The type of event. For example, Retrain. A retraining event denotes the timepoint when a predictor was retrained. Any monitor results from before the Datetime are from the previous predictor. Any new metrics are for the newly retrained predictor.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Datetime",
+                      "type": "datetime",
+                      "description": "The timestamp for when the event occurred.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MonitorDataSource",
+                  "type": "dict",
+                  "description": "The source of the data the monitor resource used during the evaluation.",
+                  "nested_items": [
+                    {
+                      "name": "DatasetImportJobArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the dataset import job used to import the data that initiated the monitor evaluation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ForecastArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the forecast the monitor used during the evaluation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PredictorArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the predictor resource you are monitoring.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MetricResults",
+                  "type": "list",
+                  "description": "A list of metrics Forecast calculated when monitoring a predictor. You can compare the value for each metric in the list to the metric's value in the  Baseline to see how your predictor's performance is changing.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "MetricName",
+                          "type": "string",
+                          "description": "The name of the metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MetricValue",
+                          "type": "float",
+                          "description": "The value for the metric.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "NumItemsEvaluated",
+                  "type": "integer",
+                  "description": "The number of items considered during the evaluation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "Information about any errors that may have occurred during the monitor evaluation.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
