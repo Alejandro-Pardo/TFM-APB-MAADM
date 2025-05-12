@@ -1,0 +1,1086 @@
+{
+  "method_name": "put_intent",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lex-models/client/put_intent.html",
+  "description": "Creates an intent or replaces an existing intent. To define the interaction between the user and your bot, you use one or more intents. For a pizza ordering bot, for example, you would create an OrderPizza intent. To create an intent or replace an existing intent, you must provide the following: You can specify other optional information in the request, such as: If you specify an existing intent name to update the intent, Amazon Lex replaces the values in the $LATEST version of the intent with the values in the request. Amazon Lex removes fields that you don't provide in the request. If you don't specify the required fields, Amazon Lex throws an exception. When you update the $LATEST version of an intent, the status field of any bot that uses the $LATEST version of the intent is set to NOT_BUILT. For more information, see  how-it-works. This operation requires permissions for the lex:PutIntent action.",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the intent. The name is not case sensitive. The name can't match a built-in intent name, or a built-in intent name with 'AMAZON.' removed. For example, because there is a built-in intent called AMAZON.HelpIntent, you can't create a custom intent called HelpIntent. For a list of built-in intents, see Standard Built-in Intents in the Alexa Skills Kit.",
+      "nested_params": []
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "slots",
+      "type": "list",
+      "required": true,
+      "description": "An array of intent slots. At runtime, Amazon Lex elicits required slot values from the user using prompts defined in the slots. For more information, see  how-it-works. (dict) --- Identifies the version of a specific slot. The name of the slot. description (string) --- A description of the slot. Specifies whether the slot is required or optional. slotType (string) --- The type of the slot, either a custom slot type that you defined or one of the built-in slot types. slotTypeVersion (string) --- The version of the slot type. valueElicitationPrompt (dict) --- The prompt that Amazon Lex uses to elicit the slot value from the user. An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML). (dict) --- The message object that provides the message text and its type. The content type of the message string. The text of the message. groupNumber (integer) --- Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response. The number of times to prompt the user for information. responseCard (string) --- A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card. priority (integer) --- Directs Amazon Lex the order in which to elicit this slot value from the user. For example, if the intent has two slots with priorities 1 and 2, AWS Amazon Lex first elicits a value for the slot with priority 1. If multiple slots share the same priority, the order in which Amazon Lex elicits values is arbitrary. sampleUtterances (list) --- If you know a specific pattern with which users might respond to an Amazon Lex request for a slot value, you can provide those utterances to improve accuracy. This is optional. In most cases, Amazon Lex is capable of understanding user utterances. (string) --- responseCard (string) --- A set of possible responses for the slot type used by text-based clients. A user chooses an option from the response card, instead of using text to reply. obfuscationSetting (string) --- Determines whether a slot is obfuscated in conversation logs and stored utterances. When you obfuscate a slot, the value is replaced by the slot name in curly braces ({}). For example, if the slot name is 'full_name', obfuscated values are replaced with '{full_name}'. For more information, see Slot Obfuscation. defaultValueSpec (dict) --- A list of default values for the slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values. The default values for a slot. You can specify more than one default. For example, you can specify a default value to use from a matching context variable, a session attribute, or a fixed value. The default value chosen is selected based on the order that you specify them in the list. For example, if you specify a context variable and a fixed value in that order, Amazon Lex uses the context variable if it is available, else it uses the fixed value. (dict) --- A default value for a slot. The default value for the slot. You can specify one of the following: #context-name.slot-name - The slot value 'slot-name' in the context 'context-name.' {attribute} - The slot value of the session attribute 'attribute.' 'value' - The discrete value 'value.'",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the slot.",
+          "nested_params": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "A description of the slot.",
+          "nested_params": []
+        },
+        {
+          "name": "slotConstraint",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether the slot is required or optional.",
+          "nested_params": []
+        },
+        {
+          "name": "slotType",
+          "type": "string",
+          "required": false,
+          "description": "The type of the slot, either a custom slot type that you defined or one of the built-in slot types.",
+          "nested_params": []
+        },
+        {
+          "name": "slotTypeVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of the slot type.",
+          "nested_params": []
+        },
+        {
+          "name": "valueElicitationPrompt",
+          "type": "dict",
+          "required": false,
+          "description": "The prompt that Amazon Lex uses to elicit the slot value from the user.",
+          "nested_params": [
+            {
+              "name": "messages",
+              "type": "list",
+              "required": false,
+              "description": "An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML).",
+              "nested_params": [
+                {
+                  "name": "contentType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The content type of the message string.",
+                  "nested_params": []
+                },
+                {
+                  "name": "content",
+                  "type": "string",
+                  "required": false,
+                  "description": "The text of the message.",
+                  "nested_params": []
+                },
+                {
+                  "name": "groupNumber",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "maxAttempts",
+              "type": "integer",
+              "required": false,
+              "description": "The number of times to prompt the user for information.",
+              "nested_params": []
+            },
+            {
+              "name": "responseCard",
+              "type": "string",
+              "required": false,
+              "description": "A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "required": false,
+          "description": "Directs Amazon Lex the order in which to elicit this slot value from the user. For example, if the intent has two slots with priorities 1 and 2, AWS Amazon Lex first elicits a value for the slot with priority 1. If multiple slots share the same priority, the order in which Amazon Lex elicits values is arbitrary.",
+          "nested_params": []
+        },
+        {
+          "name": "sampleUtterances",
+          "type": "list",
+          "required": false,
+          "description": "If you know a specific pattern with which users might respond to an Amazon Lex request for a slot value, you can provide those utterances to improve accuracy. This is optional. In most cases, Amazon Lex is capable of understanding user utterances.",
+          "nested_params": []
+        },
+        {
+          "name": "responseCard",
+          "type": "string",
+          "required": false,
+          "description": "A set of possible responses for the slot type used by text-based clients. A user chooses an option from the response card, instead of using text to reply.",
+          "nested_params": []
+        },
+        {
+          "name": "obfuscationSetting",
+          "type": "string",
+          "required": false,
+          "description": "Determines whether a slot is obfuscated in conversation logs and stored utterances. When you obfuscate a slot, the value is replaced by the slot name in curly braces ({}). For example, if the slot name is 'full_name', obfuscated values are replaced with '{full_name}'. For more information, see Slot Obfuscation.",
+          "nested_params": []
+        },
+        {
+          "name": "defaultValueSpec",
+          "type": "dict",
+          "required": false,
+          "description": "A list of default values for the slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values.",
+          "nested_params": [
+            {
+              "name": "defaultValueList",
+              "type": "list",
+              "required": false,
+              "description": "The default values for a slot. You can specify more than one default. For example, you can specify a default value to use from a matching context variable, a session attribute, or a fixed value. The default value chosen is selected based on the order that you specify them in the list. For example, if you specify a context variable and a fixed value in that order, Amazon Lex uses the context variable if it is available, else it uses the fixed value.",
+              "nested_params": [
+                {
+                  "name": "defaultValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The default value for the slot. You can specify one of the following:",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sampleUtterances",
+      "type": "list",
+      "required": false,
+      "description": "An array of utterances (strings) that a user might say to signal the intent. For example, 'I want {PizzaSize} pizza', 'Order {Quantity} {PizzaSize} pizzas'. In each utterance, a slot name is enclosed in curly braces. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "confirmationPrompt",
+      "type": "dict",
+      "required": true,
+      "description": "Prompts the user to confirm the intent. This question should have a yes or no answer. Amazon Lex uses this prompt to ensure that the user acknowledges that the intent is ready for fulfillment. For example, with the OrderPizza intent, you might want to confirm that the order is correct before placing it. For other intents, such as intents that simply respond to user questions, you might not need to ask the user for confirmation before providing the information. An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML). (dict) --- The message object that provides the message text and its type. The content type of the message string. The text of the message. groupNumber (integer) --- Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response. The number of times to prompt the user for information. responseCard (string) --- A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card.",
+      "nested_params": [
+        {
+          "name": "messages",
+          "type": "list",
+          "required": false,
+          "description": "An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML).",
+          "nested_params": [
+            {
+              "name": "contentType",
+              "type": "string",
+              "required": false,
+              "description": "The content type of the message string.",
+              "nested_params": []
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "description": "The text of the message.",
+              "nested_params": []
+            },
+            {
+              "name": "groupNumber",
+              "type": "integer",
+              "required": false,
+              "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "maxAttempts",
+          "type": "integer",
+          "required": false,
+          "description": "The number of times to prompt the user for information.",
+          "nested_params": []
+        },
+        {
+          "name": "responseCard",
+          "type": "string",
+          "required": false,
+          "description": "A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "rejectionStatement",
+      "type": "dict",
+      "required": true,
+      "description": "When the user answers 'no' to the question defined in confirmationPrompt, Amazon Lex responds with this statement to acknowledge that the intent was canceled. A collection of message objects. (dict) --- The message object that provides the message text and its type. The content type of the message string. The text of the message. groupNumber (integer) --- Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response. responseCard (string) --- At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+      "nested_params": [
+        {
+          "name": "messages",
+          "type": "list",
+          "required": false,
+          "description": "A collection of message objects.",
+          "nested_params": [
+            {
+              "name": "contentType",
+              "type": "string",
+              "required": false,
+              "description": "The content type of the message string.",
+              "nested_params": []
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "description": "The text of the message.",
+              "nested_params": []
+            },
+            {
+              "name": "groupNumber",
+              "type": "integer",
+              "required": false,
+              "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "responseCard",
+          "type": "string",
+          "required": false,
+          "description": "At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "followUpPrompt",
+      "type": "dict",
+      "required": true,
+      "description": "Amazon Lex uses this prompt to solicit additional activity after fulfilling an intent. For example, after the OrderPizza intent is fulfilled, you might prompt the user to order a drink. The action that Amazon Lex takes depends on the user's response, as follows: If the user says 'Yes' it responds with the clarification prompt that is configured for the bot. if the user says 'Yes' and continues with an utterance that triggers an intent it starts a conversation for the intent. If the user says 'No' it responds with the rejection statement configured for the the follow-up prompt. If it doesn't recognize the utterance it repeats the follow-up prompt again. The followUpPrompt field and the conclusionStatement field are mutually exclusive. You can specify only one. Prompts for information from the user. An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML). (dict) --- The message object that provides the message text and its type. The content type of the message string. The text of the message. groupNumber (integer) --- Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response. The number of times to prompt the user for information. responseCard (string) --- A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card. If the user answers 'no' to the question defined in the prompt field, Amazon Lex responds with this statement to acknowledge that the intent was canceled. A collection of message objects. responseCard (string) --- At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+      "nested_params": []
+    },
+    {
+      "name": "conclusionStatement",
+      "type": "dict",
+      "required": true,
+      "description": "The statement that you want Amazon Lex to convey to the user after the intent is successfully fulfilled by the Lambda function. This element is relevant only if you provide a Lambda function in the fulfillmentActivity. If you return the intent to the client application, you can't specify this element. A collection of message objects. (dict) --- The message object that provides the message text and its type. The content type of the message string. The text of the message. groupNumber (integer) --- Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response. responseCard (string) --- At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+      "nested_params": [
+        {
+          "name": "messages",
+          "type": "list",
+          "required": false,
+          "description": "A collection of message objects.",
+          "nested_params": [
+            {
+              "name": "contentType",
+              "type": "string",
+              "required": false,
+              "description": "The content type of the message string.",
+              "nested_params": []
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "description": "The text of the message.",
+              "nested_params": []
+            },
+            {
+              "name": "groupNumber",
+              "type": "integer",
+              "required": false,
+              "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "responseCard",
+          "type": "string",
+          "required": false,
+          "description": "At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "dialogCodeHook",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies a Lambda function to invoke for each user input. You can invoke this Lambda function to personalize user interaction. For example, suppose your bot determines that the user is John. Your Lambda function might retrieve John's information from a backend database and prepopulate some of the values. For example, if you find that John is gluten intolerant, you might set the corresponding intent slot, GlutenIntolerant, to true. You might find John's phone number and set the corresponding session attribute. The Amazon Resource Name (ARN) of the Lambda function. The version of the request-response that you want Amazon Lex to use to invoke your Lambda function. For more information, see  using-lambda.",
+      "nested_params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the Lambda function.",
+          "nested_params": []
+        },
+        {
+          "name": "messageVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of the request-response that you want Amazon Lex to use to invoke your Lambda function. For more information, see  using-lambda.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "fulfillmentActivity",
+      "type": "dict",
+      "required": true,
+      "description": "Required. Describes how the intent is fulfilled. For example, after a user provides all of the information for a pizza order, fulfillmentActivity defines how the bot places an order with a local pizza store. You might configure Amazon Lex to return all of the intent information to the client application, or direct it to invoke a Lambda function that can process the intent (for example, place an order with a pizzeria). How the intent should be fulfilled, either by running a Lambda function or by returning the slot data to the client application. codeHook (dict) --- A description of the Lambda function that is run to fulfill the intent. The Amazon Resource Name (ARN) of the Lambda function. The version of the request-response that you want Amazon Lex to use to invoke your Lambda function. For more information, see  using-lambda.",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "How the intent should be fulfilled, either by running a Lambda function or by returning the slot data to the client application.",
+          "nested_params": []
+        },
+        {
+          "name": "codeHook",
+          "type": "dict",
+          "required": false,
+          "description": "A description of the Lambda function that is run to fulfill the intent.",
+          "nested_params": [
+            {
+              "name": "uri",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Lambda function.",
+              "nested_params": []
+            },
+            {
+              "name": "messageVersion",
+              "type": "string",
+              "required": false,
+              "description": "The version of the request-response that you want Amazon Lex to use to invoke your Lambda function. For more information, see  using-lambda.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "parentIntentSignature",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "checksum",
+      "type": "string",
+      "required": false,
+      "description": "Identifies a specific revision of the $LATEST version. When you create a new intent, leave the checksum field blank. If you specify a checksum you get a BadRequestException exception. When you want to update a intent, set the checksum field to the checksum of the most recent revision of the $LATEST version. If you don't specify the checksum field, or if the checksum does not match the $LATEST version, you get a PreconditionFailedException exception.",
+      "nested_params": []
+    },
+    {
+      "name": "createVersion",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "kendraConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Configuration information required to use the AMAZON.KendraSearchIntent intent to connect to an Amazon Kendra index. For more information, see AMAZON.KendraSearchIntent. The Amazon Resource Name (ARN) of the Amazon Kendra index that you want the AMAZON.KendraSearchIntent intent to search. The index must be in the same account and Region as the Amazon Lex bot. If the Amazon Kendra index does not exist, you get an exception when you call the PutIntent operation. queryFilterString (string) --- A query filter that Amazon Lex sends to Amazon Kendra to filter the response from the query. The filter is in the format defined by Amazon Kendra. For more information, see Filtering queries. You can override this filter string with a new filter string at runtime. The Amazon Resource Name (ARN) of an IAM role that has permission to search the Amazon Kendra index. The role must be in the same account and Region as the Amazon Lex bot. If the role does not exist, you get an exception when you call the PutIntent operation.",
+      "nested_params": [
+        {
+          "name": "kendraIndex",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the Amazon Kendra index that you want the AMAZON.KendraSearchIntent intent to search. The index must be in the same account and Region as the Amazon Lex bot. If the Amazon Kendra index does not exist, you get an exception when you call the PutIntent operation.",
+          "nested_params": []
+        },
+        {
+          "name": "queryFilterString",
+          "type": "string",
+          "required": false,
+          "description": "A query filter that Amazon Lex sends to Amazon Kendra to filter the response from the query. The filter is in the format defined by Amazon Kendra. For more information, see Filtering queries. You can override this filter string with a new filter string at runtime.",
+          "nested_params": []
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of an IAM role that has permission to search the Amazon Kendra index. The role must be in the same account and Region as the Amazon Lex bot. If the role does not exist, you get an exception when you call the PutIntent operation.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "inputContexts",
+      "type": "list",
+      "required": true,
+      "description": "An array of InputContext objects that lists the contexts that must be active for Amazon Lex to choose the intent in a conversation with the user. (dict) --- The name of a context that must be active for an intent to be selected by Amazon Lex. The name of the context.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the context.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "outputContexts",
+      "type": "list",
+      "required": true,
+      "description": "An array of OutputContext objects that lists the contexts that the intent activates when the intent is fulfilled. (dict) --- The specification of an output context that is set when an intent is fulfilled. The name of the context. The number of seconds that the context should be active after it is first sent in a PostContent or PostText response. You can set the value between 5 and 86,400 seconds (24 hours). The number of conversation turns that the context should be active. A conversation turn is one PostContent or PostText request and the corresponding response from Amazon Lex.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the context.",
+          "nested_params": []
+        },
+        {
+          "name": "timeToLiveInSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The number of seconds that the context should be active after it is first sent in a PostContent or PostText response. You can set the value between 5 and 86,400 seconds (24 hours).",
+          "nested_params": []
+        },
+        {
+          "name": "turnsToLive",
+          "type": "integer",
+          "required": false,
+          "description": "The number of conversation turns that the context should be active. A conversation turn is one PostContent or PostText request and the corresponding response from Amazon Lex.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the intent.",
+          "nested_items": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "A description of the intent.",
+          "nested_items": []
+        },
+        {
+          "name": "slots",
+          "type": "list",
+          "description": "An array of intent slots that are configured for the intent.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the slot.",
+                  "nested_items": []
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "description": "A description of the slot.",
+                  "nested_items": []
+                },
+                {
+                  "name": "slotConstraint",
+                  "type": "string",
+                  "description": "Specifies whether the slot is required or optional.",
+                  "nested_items": []
+                },
+                {
+                  "name": "slotType",
+                  "type": "string",
+                  "description": "The type of the slot, either a custom slot type that you defined or one of the built-in slot types.",
+                  "nested_items": []
+                },
+                {
+                  "name": "slotTypeVersion",
+                  "type": "string",
+                  "description": "The version of the slot type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "valueElicitationPrompt",
+                  "type": "dict",
+                  "description": "The prompt that Amazon Lex uses to elicit the slot value from the user.",
+                  "nested_items": [
+                    {
+                      "name": "messages",
+                      "type": "list",
+                      "description": "An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML).",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "contentType",
+                              "type": "string",
+                              "description": "The content type of the message string.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "content",
+                              "type": "string",
+                              "description": "The text of the message.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "groupNumber",
+                              "type": "integer",
+                              "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "maxAttempts",
+                      "type": "integer",
+                      "description": "The number of times to prompt the user for information.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "responseCard",
+                      "type": "string",
+                      "description": "A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "priority",
+                  "type": "integer",
+                  "description": "Directs Amazon Lex the order in which to elicit this slot value from the user. For example, if the intent has two slots with priorities 1 and 2, AWS Amazon Lex first elicits a value for the slot with priority 1.",
+                  "nested_items": []
+                },
+                {
+                  "name": "sampleUtterances",
+                  "type": "list",
+                  "description": "If you know a specific pattern with which users might respond to an Amazon Lex request for a slot value, you can provide those utterances to improve accuracy. This is optional. In most cases, Amazon Lex is capable of understanding user utterances.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "responseCard",
+                  "type": "string",
+                  "description": "A set of possible responses for the slot type used by text-based clients. A user chooses an option from the response card, instead of using text to reply.",
+                  "nested_items": []
+                },
+                {
+                  "name": "obfuscationSetting",
+                  "type": "string",
+                  "description": "Determines whether a slot is obfuscated in conversation logs and stored utterances. When you obfuscate a slot, the value is replaced by the slot name in curly braces ({}). For example, if the slot name is 'full_name', obfuscated values are replaced with '{full_name}'. For more information, see Slot Obfuscation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "defaultValueSpec",
+                  "type": "dict",
+                  "description": "A list of default values for the slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values.",
+                  "nested_items": [
+                    {
+                      "name": "defaultValueList",
+                      "type": "list",
+                      "description": "The default values for a slot. You can specify more than one default. For example, you can specify a default value to use from a matching context variable, a session attribute, or a fixed value.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "defaultValue",
+                              "type": "string",
+                              "description": "The default value for the slot. You can specify one of the following:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "#context-name.slot-name - The slot value 'slot-name' in the context 'context-name.'",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "{attribute} - The slot value of the session attribute 'attribute.'",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "'value' - The discrete value 'value.'",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sampleUtterances",
+          "type": "list",
+          "description": "An array of sample utterances that are configured for the intent.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "confirmationPrompt",
+          "type": "dict",
+          "description": "If defined in the intent, Amazon Lex prompts the user to confirm the intent before fulfilling it.",
+          "nested_items": [
+            {
+              "name": "messages",
+              "type": "list",
+              "description": "An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML).",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "contentType",
+                      "type": "string",
+                      "description": "The content type of the message string.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "content",
+                      "type": "string",
+                      "description": "The text of the message.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "groupNumber",
+                      "type": "integer",
+                      "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "maxAttempts",
+              "type": "integer",
+              "description": "The number of times to prompt the user for information.",
+              "nested_items": []
+            },
+            {
+              "name": "responseCard",
+              "type": "string",
+              "description": "A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "rejectionStatement",
+          "type": "dict",
+          "description": "If the user answers 'no' to the question defined in confirmationPrompt Amazon Lex responds with this statement to acknowledge that the intent was canceled.",
+          "nested_items": [
+            {
+              "name": "messages",
+              "type": "list",
+              "description": "A collection of message objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "contentType",
+                      "type": "string",
+                      "description": "The content type of the message string.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "content",
+                      "type": "string",
+                      "description": "The text of the message.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "groupNumber",
+                      "type": "integer",
+                      "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "responseCard",
+              "type": "string",
+              "description": "At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "followUpPrompt",
+          "type": "dict",
+          "description": "If defined in the intent, Amazon Lex uses this prompt to solicit additional user activity after the intent is fulfilled.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "messages",
+                  "type": "list",
+                  "description": "An array of objects, each of which provides a message string and its type. You can specify the message string in plain text or in Speech Synthesis Markup Language (SSML).",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "contentType",
+                          "type": "string",
+                          "description": "The content type of the message string.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "content",
+                          "type": "string",
+                          "description": "The text of the message.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "groupNumber",
+                          "type": "integer",
+                          "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "maxAttempts",
+                  "type": "integer",
+                  "description": "The number of times to prompt the user for information.",
+                  "nested_items": []
+                },
+                {
+                  "name": "responseCard",
+                  "type": "string",
+                  "description": "A response card. Amazon Lex uses this prompt at runtime, in the PostText API response. It substitutes session attributes and slot values for placeholders in the response card. For more information, see  ex-resp-card.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "rejectionStatement",
+              "type": "dict",
+              "description": "If the user answers 'no' to the question defined in the prompt field, Amazon Lex responds with this statement to acknowledge that the intent was canceled.",
+              "nested_items": [
+                {
+                  "name": "messages",
+                  "type": "list",
+                  "description": "A collection of message objects.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "contentType",
+                          "type": "string",
+                          "description": "The content type of the message string.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "content",
+                          "type": "string",
+                          "description": "The text of the message.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "groupNumber",
+                          "type": "integer",
+                          "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "responseCard",
+                  "type": "string",
+                  "description": "At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "conclusionStatement",
+          "type": "dict",
+          "description": "After the Lambda function specified in the ``fulfillmentActivity``intent fulfills the intent, Amazon Lex conveys this statement to the user.",
+          "nested_items": [
+            {
+              "name": "messages",
+              "type": "list",
+              "description": "A collection of message objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "contentType",
+                      "type": "string",
+                      "description": "The content type of the message string.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "content",
+                      "type": "string",
+                      "description": "The text of the message.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "groupNumber",
+                      "type": "integer",
+                      "description": "Identifies the message group that the message belongs to. When a group is assigned to a message, Amazon Lex returns one message from each group in the response.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "responseCard",
+              "type": "string",
+              "description": "At runtime, if the client is using the PostText API, Amazon Lex includes the response card in the response. It substitutes all of the session attributes and slot values for placeholders in the response card.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "dialogCodeHook",
+          "type": "dict",
+          "description": "If defined in the intent, Amazon Lex invokes this Lambda function for each user input.",
+          "nested_items": [
+            {
+              "name": "uri",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the Lambda function.",
+              "nested_items": []
+            },
+            {
+              "name": "messageVersion",
+              "type": "string",
+              "description": "The version of the request-response that you want Amazon Lex to use to invoke your Lambda function. For more information, see  using-lambda.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "fulfillmentActivity",
+          "type": "dict",
+          "description": "If defined in the intent, Amazon Lex invokes this Lambda function to fulfill the intent after the user provides all of the information required by the intent.",
+          "nested_items": [
+            {
+              "name": "type",
+              "type": "string",
+              "description": "How the intent should be fulfilled, either by running a Lambda function or by returning the slot data to the client application.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "uri",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the Lambda function.",
+                  "nested_items": []
+                },
+                {
+                  "name": "messageVersion",
+                  "type": "string",
+                  "description": "The version of the request-response that you want Amazon Lex to use to invoke your Lambda function. For more information, see  using-lambda.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "parentIntentSignature",
+          "type": "string",
+          "description": "A unique identifier for the built-in intent that this intent is based on.",
+          "nested_items": []
+        },
+        {
+          "name": "lastUpdatedDate",
+          "type": "datetime",
+          "description": "The date that the intent was updated. When you create a resource, the creation date and last update dates are the same.",
+          "nested_items": []
+        },
+        {
+          "name": "createdDate",
+          "type": "datetime",
+          "description": "The date that the intent was created.",
+          "nested_items": []
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "description": "The version of the intent. For a new intent, the version is always $LATEST.",
+          "nested_items": []
+        },
+        {
+          "name": "checksum",
+          "type": "string",
+          "description": "Checksum of the ``$LATEST``version of the intent created or updated.",
+          "nested_items": []
+        },
+        {
+          "name": "createVersion",
+          "type": "boolean",
+          "description": "True if a new version of the intent was created. If the createVersion field was not specified in the request, the createVersion field is set to false in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "kendraConfiguration",
+          "type": "dict",
+          "description": "Configuration information, if any, required to connect to an Amazon Kendra index and use the AMAZON.KendraSearchIntent intent.",
+          "nested_items": [
+            {
+              "name": "kendraIndex",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the Amazon Kendra index that you want the AMAZON.KendraSearchIntent intent to search. The index must be in the same account and Region as the Amazon Lex bot. If the Amazon Kendra index does not exist, you get an exception when you call the PutIntent operation.",
+              "nested_items": []
+            },
+            {
+              "name": "queryFilterString",
+              "type": "string",
+              "description": "A query filter that Amazon Lex sends to Amazon Kendra to filter the response from the query. The filter is in the format defined by Amazon Kendra. For more information, see Filtering queries.",
+              "nested_items": []
+            },
+            {
+              "name": "role",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of an IAM role that has permission to search the Amazon Kendra index. The role must be in the same account and Region as the Amazon Lex bot. If the role does not exist, you get an exception when you call the PutIntent operation.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "inputContexts",
+          "type": "list",
+          "description": "An array of InputContext objects that lists the contexts that must be active for Amazon Lex to choose the intent in a conversation with the user.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the context.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "outputContexts",
+          "type": "list",
+          "description": "An array of OutputContext objects that lists the contexts that the intent activates when the intent is fulfilled.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the context.",
+                  "nested_items": []
+                },
+                {
+                  "name": "timeToLiveInSeconds",
+                  "type": "integer",
+                  "description": "The number of seconds that the context should be active after it is first sent in a PostContent or PostText response. You can set the value between 5 and 86,400 seconds (24 hours).",
+                  "nested_items": []
+                },
+                {
+                  "name": "turnsToLive",
+                  "type": "integer",
+                  "description": "The number of conversation turns that the context should be active. A conversation turn is one PostContent or PostText request and the corresponding response from Amazon Lex.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "method_name": "get_utterances_view",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lex-models/client/get_utterances_view.html",
+  "description": "Use the GetUtterancesView operation to get information about the utterances that your users have made to your bot. You can use this list to tune the utterances that your bot responds to. For example, say that you have created a bot to order flowers. After your users have used your bot for a while, use the GetUtterancesView operation to see the requests that they have made and whether they have been successful. You might find that the utterance 'I want flowers' is not being recognized. You could add this utterance to the OrderFlowers intent so that your bot recognizes that utterance. After you publish a new version of a bot, you can get information about the old version and the new so that you can compare the performance across the two versions. Utterance statistics are generated once a day. Data is available for the last 15 days. You can request information for up to 5 versions of your bot in each request. Amazon Lex returns the most frequent utterances received by the bot in the last 15 days. The response contains information about a maximum of 100 utterances for each version. If you set childDirected field to true when you created your bot, if you are using slot obfuscation with one or more slots, or if you opted out of participating in improving Amazon Lex, utterances are not available. This operation requires permissions for the lex:GetUtterancesView action.",
+  "parameters": [
+    {
+      "name": "botName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the bot for which utterance information should be returned.",
+      "nested_params": []
+    },
+    {
+      "name": "botVersions",
+      "type": "list",
+      "required": true,
+      "description": "An array of bot versions for which utterance information should be returned. The limit is 5 versions per request. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "statusType",
+      "type": "string",
+      "required": true,
+      "description": "To return utterances that were recognized and handled, use Detected. To return utterances that were not recognized, use Missed.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "botName",
+          "type": "string",
+          "description": "The name of the bot for which utterance information was returned.",
+          "nested_items": []
+        },
+        {
+          "name": "utterances",
+          "type": "list",
+          "description": "An array of  UtteranceList objects, each containing a list of  UtteranceData objects describing the utterances that were processed by your bot. The response contains a maximum of 100 UtteranceData objects for each version. Amazon Lex returns the most frequent utterances received by the bot in the last 15 days.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "botVersion",
+                  "type": "string",
+                  "description": "The version of the bot that processed the list.",
+                  "nested_items": []
+                },
+                {
+                  "name": "utterances",
+                  "type": "list",
+                  "description": "One or more  UtteranceData objects that contain information about the utterances that have been made to a bot. The maximum number of object is 100.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "utteranceString",
+                          "type": "string",
+                          "description": "The text that was entered by the user or the text representation of an audio clip.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "count",
+                          "type": "integer",
+                          "description": "The number of times that the utterance was processed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "distinctUsers",
+                          "type": "integer",
+                          "description": "The total number of individuals that used the utterance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "firstUtteredDate",
+                          "type": "datetime",
+                          "description": "The date that the utterance was first recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "lastUtteredDate",
+                          "type": "datetime",
+                          "description": "The date that the utterance was last recorded.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "method_name": "recognize_utterance",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lexv2-runtime/client/recognize_utterance.html",
+  "description": "Sends user input to Amazon Lex V2. You can send text or speech. Clients use this API to send text and audio requests to Amazon Lex V2 at runtime. Amazon Lex V2 interprets the user input using the machine learning model built for the bot. The following request fields must be compressed with gzip and then base64 encoded before you send them to Amazon Lex V2. The following response fields are compressed using gzip and then base64 encoded by Amazon Lex V2. Before you can use these fields, you must decode and decompress them. The example contains a Java application that compresses and encodes a Java object to send to Amazon Lex V2, and a second that decodes and decompresses a response from Amazon Lex V2. If the optional post-fulfillment response is specified, the messages are returned as follows. For more information, see PostFulfillmentStatusSpecification. For more information, see Completion message.",
+  "parameters": [
+    {
+      "name": "botId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the bot that should receive the request.",
+      "nested_params": []
+    },
+    {
+      "name": "botAliasId",
+      "type": "string",
+      "required": true,
+      "description": "The alias identifier in use for the bot that should receive the request.",
+      "nested_params": []
+    },
+    {
+      "name": "localeId",
+      "type": "string",
+      "required": true,
+      "description": "The locale where the session is in use.",
+      "nested_params": []
+    },
+    {
+      "name": "sessionId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the session in use.",
+      "nested_params": []
+    },
+    {
+      "name": "sessionState",
+      "type": "string",
+      "required": false,
+      "description": "Sets the state of the session with the user. You can use this to set the current intent, attributes, context, and dialog action. Use the dialog action to determine the next step that Amazon Lex V2 should use in the conversation with the user. The sessionState field must be compressed using gzip and then base64 encoded before sending to Amazon Lex V2.",
+      "nested_params": []
+    },
+    {
+      "name": "requestAttributes",
+      "type": "string",
+      "required": false,
+      "description": "Request-specific information passed between the client application and Amazon Lex V2 The namespace x-amz-lex: is reserved for special attributes. Don't create any request attributes for prefix x-amz-lex:. The requestAttributes field must be compressed using gzip and then base64 encoded before sending to Amazon Lex V2.",
+      "nested_params": []
+    },
+    {
+      "name": "requestContentType",
+      "type": "string",
+      "required": true,
+      "description": "Indicates the format for audio input or that the content is text. The header must start with one of the following prefixes: PCM format, audio data must be in little-endian byte order. audio/l16; rate=16000; channels=1 audio/x-l16; sample-rate=16000; channel-count=1 audio/lpcm; sample-rate=8000; sample-size-bits=16; channel-count=1; is-big-endian=false Opus format audio/x-cbr-opus-with-preamble;preamble-size=0;bit-rate=256000;frame-size-milliseconds=4 Text format text/plain; charset=utf-8",
+      "nested_params": []
+    },
+    {
+      "name": "responseContentType",
+      "type": "string",
+      "required": false,
+      "description": "The message that Amazon Lex V2 returns in the response can be either text or speech based on the responseContentType value. If the value is text/plain;charset=utf-8, Amazon Lex V2 returns text in the response. If the value begins with audio/, Amazon Lex V2 returns speech in the response. Amazon Lex V2 uses Amazon Polly to generate the speech using the configuration that you specified in the responseContentType parameter. For example, if you specify audio/mpeg as the value, Amazon Lex V2 returns speech in the MPEG format. If the value is audio/pcm, the speech returned is audio/pcm at 16 KHz in 16-bit, little-endian format. The following are the accepted values: audio/mpeg audio/ogg audio/pcm (16 KHz) audio/* (defaults to mpeg) text/plain; charset=utf-8",
+      "nested_params": []
+    },
+    {
+      "name": "inputStream",
+      "type": "bytes or seekable file-like object",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "inputMode",
+          "type": "string",
+          "description": "Indicates whether the input mode to the operation was text, speech, or from a touch-tone keypad.",
+          "nested_items": []
+        },
+        {
+          "name": "contentType",
+          "type": "string",
+          "description": "Content type as specified in the responseContentType in the request.",
+          "nested_items": []
+        },
+        {
+          "name": "messages",
+          "type": "string",
+          "description": "A list of messages that were last sent to the user. The messages are ordered based on the order that you returned the messages from your Lambda function or the order that the messages are defined in the bot.",
+          "nested_items": []
+        },
+        {
+          "name": "interpretations",
+          "type": "string",
+          "description": "A list of intents that Amazon Lex V2 determined might satisfy the user's utterance.",
+          "nested_items": []
+        },
+        {
+          "name": "sessionState",
+          "type": "string",
+          "description": "Represents the current state of the dialog between the user and the bot.",
+          "nested_items": []
+        },
+        {
+          "name": "requestAttributes",
+          "type": "string",
+          "description": "The attributes sent in the request.",
+          "nested_items": []
+        },
+        {
+          "name": "sessionId",
+          "type": "string",
+          "description": "The identifier of the session in use.",
+          "nested_items": []
+        },
+        {
+          "name": "inputTranscript",
+          "type": "string",
+          "description": "The text used to process the request.",
+          "nested_items": []
+        },
+        {
+          "name": "audioStream",
+          "type": "StreamingBody",
+          "description": "The prompt or statement to send to the user. This is based on the bot configuration and context. For example, if Amazon Lex V2 did not understand the user intent, it sends the clarificationPrompt configured for the bot. If the intent requires confirmation before taking the fulfillment action, it sends the confirmationPrompt. Another example: Suppose that the Lambda function successfully fulfilled the intent, and sent a message to convey to the user. Then Amazon Lex V2 sends that message in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "recognizedBotMember",
+          "type": "string",
+          "description": "The bot member that recognized the utterance.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}
