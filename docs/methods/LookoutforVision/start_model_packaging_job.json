@@ -1,0 +1,181 @@
+{
+  "method_name": "start_model_packaging_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lookoutvision/client/start_model_packaging_job.html",
+  "description": "Starts an Amazon Lookout for Vision model packaging job. A model packaging job creates an AWS IoT Greengrass component for a Lookout for Vision model. You can use the component to deploy your model to an edge device managed by Greengrass. Use the  DescribeModelPackagingJob API to determine the current status of the job. The model packaging job is complete if the value of Status is SUCCEEDED. To deploy the component to the target device, use the component name and component version with the AWS IoT Greengrass CreateDeployment API. This operation requires the following permissions: For more information, see Using your Amazon Lookout for Vision model on an edge device in the Amazon Lookout for Vision Developer Guide.",
+  "parameters": [
+    {
+      "name": "ProjectName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the project which contains the version of the model that you want to package.",
+      "nested_params": []
+    },
+    {
+      "name": "ModelVersion",
+      "type": "string",
+      "required": true,
+      "description": "The version of the model within the project that you want to package.",
+      "nested_params": []
+    },
+    {
+      "name": "JobName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Configuration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration for the model packaging job. Configuration information for the AWS IoT Greengrass component in a model packaging job. CompilerOptions (string) --- Additional compiler options for the Greengrass component. Currently, only NVIDIA Graphics Processing Units (GPU) and CPU accelerators are supported. If you specify TargetDevice, don't specify CompilerOptions. For more information, see Compiler options in the Amazon Lookout for Vision Developer Guide. TargetDevice (string) --- The target device for the model. Currently the only supported value is jetson_xavier. If you specify TargetDevice, you can't specify TargetPlatform. TargetPlatform (dict) --- The target platform for the model. If you specify TargetPlatform, you can't specify TargetDevice. The target operating system for the model. Linux is the only operating system that is currently supported. The target architecture for the model. The currently supported architectures are X86_64 (64-bit version of the x86 instruction set) and ARM_64 (ARMv8 64-bit CPU). Accelerator (string) --- The target accelerator for the model. Currently, Amazon Lookout for Vision only supports NVIDIA (Nvidia graphics processing unit) and CPU accelerators. If you specify NVIDIA as an accelerator, you must also specify the gpu-code, trt-ver, and cuda-ver compiler options. If you don't specify an accelerator, Lookout for Vision uses the CPU for compilation and we highly recommend that you use the  GreengrassConfiguration$CompilerOptions field. For example, you can use the following compiler options for CPU: mcpu: CPU micro-architecture. For example, {'mcpu': 'skylake-avx512'} mattr: CPU flags. For example, {'mattr': ['+neon', '+vfpv4']} An S3 location in which Lookout for Vision stores the component artifacts. The S3 bucket that contains the training or model packaging job output. If you are training a model, the bucket must in your AWS account. If you use an S3 bucket for a model packaging job, the S3 bucket must be in the same AWS Region and AWS account in which you use AWS IoT Greengrass. Prefix (string) --- The path of the folder, within the S3 bucket, that contains the output. A name for the AWS IoT Greengrass component. ComponentVersion (string) --- A Version for the AWS IoT Greengrass component. If you don't provide a value, a default value of Model Version.0.0 is used. ComponentDescription (string) --- A description for the AWS IoT Greengrass component. Tags (list) --- A set of tags (key-value pairs) that you want to attach to the AWS IoT Greengrass component. (dict) --- A key and value pair that is attached to the specified Amazon Lookout for Vision model. The key of the tag that is attached to the specified model. The value of the tag that is attached to the specified model.",
+      "nested_params": [
+        {
+          "name": "Greengrass",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information for the AWS IoT Greengrass component in a model packaging job.",
+          "nested_params": [
+            {
+              "name": "CompilerOptions",
+              "type": "string",
+              "required": false,
+              "description": "Additional compiler options for the Greengrass component. Currently, only NVIDIA Graphics Processing Units (GPU) and CPU accelerators are supported. If you specify TargetDevice, don't specify CompilerOptions. For more information, see Compiler options in the Amazon Lookout for Vision Developer Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "TargetDevice",
+              "type": "string",
+              "required": false,
+              "description": "The target device for the model. Currently the only supported value is jetson_xavier. If you specify TargetDevice, you can't specify TargetPlatform.",
+              "nested_params": []
+            },
+            {
+              "name": "TargetPlatform",
+              "type": "dict",
+              "required": false,
+              "description": "The target platform for the model. If you specify TargetPlatform, you can't specify TargetDevice.",
+              "nested_params": [
+                {
+                  "name": "Os",
+                  "type": "string",
+                  "required": false,
+                  "description": "The target operating system for the model. Linux is the only operating system that is currently supported.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Arch",
+                  "type": "string",
+                  "required": false,
+                  "description": "The target architecture for the model. The currently supported architectures are X86_64 (64-bit version of the x86 instruction set) and ARM_64 (ARMv8 64-bit CPU).",
+                  "nested_params": []
+                },
+                {
+                  "name": "Accelerator",
+                  "type": "string",
+                  "required": false,
+                  "description": "The target accelerator for the model. Currently, Amazon Lookout for Vision only supports NVIDIA (Nvidia graphics processing unit) and CPU accelerators. If you specify NVIDIA as an accelerator, you must also specify the gpu-code, trt-ver, and cuda-ver compiler options. If you don't specify an accelerator, Lookout for Vision uses the CPU for compilation and we highly recommend that you use the  GreengrassConfiguration$CompilerOptions field. For example, you can use the following compiler options for CPU:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "S3OutputLocation",
+              "type": "dict",
+              "required": false,
+              "description": "An S3 location in which Lookout for Vision stores the component artifacts.",
+              "nested_params": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "required": false,
+                  "description": "The S3 bucket that contains the training or model packaging job output. If you are training a model, the bucket must in your AWS account. If you use an S3 bucket for a model packaging job, the S3 bucket must be in the same AWS Region and AWS account in which you use AWS IoT Greengrass.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Prefix",
+                  "type": "string",
+                  "required": false,
+                  "description": "The path of the folder, within the S3 bucket, that contains the output.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ComponentName",
+              "type": "string",
+              "required": false,
+              "description": "A name for the AWS IoT Greengrass component.",
+              "nested_params": []
+            },
+            {
+              "name": "ComponentVersion",
+              "type": "string",
+              "required": false,
+              "description": "A Version for the AWS IoT Greengrass component. If you don't provide a value, a default value of Model Version.0.0 is used.",
+              "nested_params": []
+            },
+            {
+              "name": "ComponentDescription",
+              "type": "string",
+              "required": false,
+              "description": "A description for the AWS IoT Greengrass component.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A set of tags (key-value pairs) that you want to attach to the AWS IoT Greengrass component.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key of the tag that is attached to the specified model.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value of the tag that is attached to the specified model.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "ClientToken is an idempotency token that ensures a call to StartModelPackagingJob completes only once. You choose the value to pass. For example, An issue might prevent you from getting a response from StartModelPackagingJob. In this case, safely retry your call to StartModelPackagingJob by using the same ClientToken parameter value. If you don't supply a value for ClientToken, the AWS SDK you are using inserts a value for you. This prevents retries after a network error from making multiple dataset creation requests. You'll need to provide your own value for other use cases. An error occurs if the other input parameters are not the same as in the first request. Using a different value for ClientToken is considered a new call to StartModelPackagingJob. An idempotency token is active for 8 hours. This field is autopopulated if not provided.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobName",
+          "type": "string",
+          "description": "The job name for the model packaging job. If you don't supply a job name in the JobName input parameter, the service creates a job name for you.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

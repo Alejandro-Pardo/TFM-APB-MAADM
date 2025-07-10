@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 from utils.config import logger, DEFAULT_CONFIG
 from utils.timeout import timeout, TimeoutException
-from method_parser import MethodParser
+from parsers.method_parser import MethodParser
 
 
 class ServiceProcessor:

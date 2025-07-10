@@ -34,11 +34,15 @@ TFM-APB-MAADM/
 │   │   ├── checkpoint_manager.py # Progress tracking and resumption
 │   │   ├── text_cleaner.py       # Text cleaning utilities
 │   │   └── utils.py              # Common utility functions
+│   ├── parsers/                  # Parser modules
+│   │   ├── method_parser.py      # Individual method parsing logic
+│   │   ├── service_parser.py     # Service documentation parsing (formerly parse_each_service.py)
+│   │   └── service_url_parser.py # Service URL extraction (formerly parse_available_services.py)
 │   ├── main.py                   # Main entry point for parsing
 │   ├── service_processor.py      # Service processing coordination
-│   ├── method_parser.py          # Individual method parsing logic
 │   └── README.md                 # Parsing module documentation
 ├── 📂 docs/                      # Documentation and parsed data
+│   ├── aws_api_urls.txt          # AWS API URLs (formerly aws_api_links.txt)
 │   ├── methods/                  # Extracted method information
 │   └── services/                 # Service-specific data
 ├── 📊 statistics.ipynb           # Statistical analysis notebook

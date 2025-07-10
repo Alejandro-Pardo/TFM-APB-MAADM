@@ -12,6 +12,10 @@ from bs4 import BeautifulSoup, Tag
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from utils.config import logger
 from utils.timeout import timeout, TimeoutException
 from utils.text_cleaner import DescriptionCleaner

@@ -21,7 +21,9 @@ The application is structured into several focused modules:
 - **`utils.py`** - Utility functions including timeout decorators and HTML preprocessing
 - **`checkpoint_manager.py`** - Progress tracking and resumable processing
 - **`description_cleaner.py`** - Text cleaning and formatting utilities
-- **`method_parser.py`** - Individual method documentation parsing
+- **`parsers/method_parser.py`** - Individual method documentation parsing
+- **`parsers/service_parser.py`** - Service documentation parsing (formerly parse_each_service.py)
+- **`parsers/service_url_parser.py`** - Service URL extraction (formerly parse_available_services.py)
 - **`service_processor.py`** - Service-level processing coordination
 
 ### Module Dependencies
@@ -31,10 +33,12 @@ main.py
 ├── config.py
 ├── checkpoint_manager.py
 └── service_processor.py
-    ├── method_parser.py
-    │   ├── description_cleaner.py
-    │   └── utils.py
-    └── utils.py
+    └── parsers/
+        ├── method_parser.py
+        │   ├── description_cleaner.py
+        │   └── utils.py
+        ├── service_parser.py
+        └── service_url_parser.py
 ```
 
 ## Features
@@ -83,11 +87,17 @@ pip install -r requirements.txt
    parsing/
    ├── main.py
    ├── config.py
-   ├── utils.py
-   ├── checkpoint_manager.py
-   ├── description_cleaner.py
-   ├── method_parser.py
+   ├── utils/
+   │   ├── checkpoint_manager.py
+   │   ├── config.py
+   │   ├── text_cleaner.py
+   │   └── utils.py
+   ├── parsers/
+   │   ├── method_parser.py
+   │   ├── service_parser.py
+   │   └── service_url_parser.py
    ├── service_processor.py
+   ├── main.py
    └── requirements.txt
    ```
 
@@ -234,7 +244,7 @@ Test individual components:
 
 ```python
 # Test single method parsing
-from method_parser import MethodParser
+from parsers.method_parser import MethodParser
 parser = MethodParser()
 result = parser.scrape_method_details(url, method_name)
 

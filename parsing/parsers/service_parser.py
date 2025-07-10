@@ -168,6 +168,6 @@ def scrape_all_apis(input_file, output_folder):
     print(f"Scraped all API details and saved to individual files in {output_folder}")
 
 if __name__ == "__main__":
-    input_file = "aws_api_links.txt"
-    output_folder = "../docs/services"
+    input_file = "../../docs/aws_api_urls.txt"
+    output_folder = "../../docs/services"
     scrape_all_apis(input_file, output_folder)
