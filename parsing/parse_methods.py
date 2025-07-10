@@ -891,9 +891,9 @@ class ServiceProcessor:
 
 def main():
     # Define folder paths
-    services_folder = "TFM-APB-MAADM/parsing/services"
-    output_folder = "TFM-APB-MAADM/parsing/methods"
-    checkpoint_file = "TFM-APB-MAADM/parsing/checkpoint.json"
+    services_folder = "../docs/services"
+    output_folder = "../docs/methods"
+    checkpoint_file = "checkpoint.json"
     
     # Create checkpoint manager
     checkpoint_manager = CheckpointManager(checkpoint_file)

@@ -64,5 +64,5 @@ def extract_aws_api_links(url, output_file):
 
 if __name__ == "__main__":
     url = "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/index.html"
-    output_file = "TFM-APB-MAADM/aws_api_links.txt"
+    output_file = "aws_api_links.txt"
     extract_aws_api_links(url, output_file)
