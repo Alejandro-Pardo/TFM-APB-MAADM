@@ -1,0 +1,912 @@
+{
+  "method_name": "describe_classification_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/macie2/client/describe_classification_job.html",
+  "description": "Retrieves the status and settings for a classification job.",
+  "parameters": [
+    {
+      "name": "jobId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier for the classification job.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "allowListIds",
+          "type": "list",
+          "description": "An array of unique identifiers, one for each allow list that the job is configured to use when it analyzes data.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "clientToken",
+          "type": "string",
+          "description": "The token that was provided to ensure the idempotency of the request to create the job.",
+          "nested_items": []
+        },
+        {
+          "name": "createdAt",
+          "type": "datetime",
+          "description": "The date and time, in UTC and extended ISO 8601 format, when the job was created.",
+          "nested_items": []
+        },
+        {
+          "name": "customDataIdentifierIds",
+          "type": "list",
+          "description": "An array of unique identifiers, one for each custom data identifier that the job is configured to use when it analyzes data. This value is null if the job is configured to use only managed data identifiers to analyze data.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "The custom description of the job.",
+          "nested_items": []
+        },
+        {
+          "name": "initialRun",
+          "type": "boolean",
+          "description": "For a recurring job, specifies whether you configured the job to analyze all existing, eligible objects immediately after the job was created (true). If you configured the job to analyze only those objects that were created or changed after the job was created and before the job's first scheduled run, this value is false. This value is also false for a one-time job.",
+          "nested_items": []
+        },
+        {
+          "name": "jobArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the job.",
+          "nested_items": []
+        },
+        {
+          "name": "jobId",
+          "type": "string",
+          "description": "The unique identifier for the job.",
+          "nested_items": []
+        },
+        {
+          "name": "jobStatus",
+          "type": "string",
+          "description": "The current status of the job. Possible values are:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "CANCELLED - You cancelled the job or, if it's a one-time job, you paused the job and didn't resume it within 30 days.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "COMPLETE - For a one-time job, Amazon Macie finished processing the data specified for the job. This value doesn't apply to recurring jobs.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "IDLE - For a recurring job, the previous scheduled run is complete and the next scheduled run is pending. This value doesn't apply to one-time jobs.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "PAUSED - Macie started running the job but additional processing would exceed the monthly sensitive data discovery quota for your account or one or more member accounts that the job analyzes data for.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "RUNNING - For a one-time job, the job is in progress. For a recurring job, a scheduled run is in progress.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "USER_PAUSED - You paused the job. If you paused the job while it had a status of RUNNING and you don't resume it within 30 days of pausing it, the job or job run will expire and be cancelled, depending on the job's type. To check the expiration date, refer to the UserPausedDetails.jobExpiresAt property.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "jobType",
+          "type": "string",
+          "description": "The schedule for running the job. Possible values are:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "ONE_TIME - The job runs only once.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "SCHEDULED - The job runs on a daily, weekly, or monthly basis. The scheduleFrequency property indicates the recurrence pattern for the job.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "lastRunErrorStatus",
+          "type": "dict",
+          "description": "Specifies whether any account- or bucket-level access errors occurred when the job ran. For a recurring job, this value indicates the error status of the job's most recent run.",
+          "nested_items": [
+            {
+              "name": "code",
+              "type": "string",
+              "description": "Specifies whether any account- or bucket-level access errors occurred when the job ran. For a recurring job, this value indicates the error status of the job's most recent run. Possible values are:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ERROR - One or more errors occurred. Amazon Macie didn't process all the data specified for the job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "NONE - No errors occurred. Macie processed all the data specified for the job.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "lastRunTime",
+          "type": "datetime",
+          "description": "The date and time, in UTC and extended ISO 8601 format, when the job started. If the job is a recurring job, this value indicates when the most recent run started or, if the job hasn't run yet, when the job was created.",
+          "nested_items": []
+        },
+        {
+          "name": "managedDataIdentifierIds",
+          "type": "list",
+          "description": "An array of unique identifiers, one for each managed data identifier that the job is explicitly configured to include (use) or exclude (not use) when it analyzes data. Inclusion or exclusion depends on the managed data identifier selection type specified for the job (managedDataIdentifierSelector).",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "managedDataIdentifierSelector",
+          "type": "string",
+          "description": "The selection type that determines which managed data identifiers the job uses when it analyzes data. Possible values are:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "ALL - Use all managed data identifiers.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "EXCLUDE - Use all managed data identifiers except the ones specified by the managedDataIdentifierIds property.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "INCLUDE - Use only the managed data identifiers specified by the managedDataIdentifierIds property.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "customDataIdentifierIds",
+              "description": "NONE - Don't use any managed data identifiers. Use only custom data identifiers (customDataIdentifierIds).",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "default",
+              "description": "Use the recommended set of managed data identifiers.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The custom name of the job.",
+          "nested_items": []
+        },
+        {
+          "name": "s3JobDefinition",
+          "type": "dict",
+          "description": "The S3 buckets that contain the objects to analyze, and the scope of that analysis.",
+          "nested_items": [
+            {
+              "name": "bucketCriteria",
+              "type": "dict",
+              "description": "The property- and tag-based conditions that determine which S3 buckets to include or exclude from the analysis. Each time the job runs, the job uses these criteria to determine which buckets contain objects to analyze. A job's definition can contain a bucketCriteria object or a bucketDefinitions array, not both.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "and",
+                      "type": "list",
+                      "description": "An array of conditions, one for each condition that determines which buckets to include or exclude from the job. If you specify more than one condition, Amazon Macie uses AND logic to join the conditions.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "simpleCriterion",
+                              "type": "dict",
+                              "description": "A property-based condition that defines a property, operator, and one or more values for including or excluding buckets from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values are EQ (equals) and NE (not equals).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The property to use in the condition.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "values",
+                                  "type": "list",
+                                  "description": "An array that lists one or more values to use in the condition. If you specify multiple values, Amazon Macie uses OR logic to join the values. Valid values for each supported property (key) are:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "ACCOUNT_ID - A string that represents the unique identifier for the Amazon Web Services account that owns the bucket.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "S3_BUCKET_EFFECTIVE_PERMISSION - A string that represents an enumerated value that Macie defines for the BucketPublicAccess.effectivePermission property of a bucket.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "S3_BUCKET_NAME - A string that represents the name of a bucket.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "S3_BUCKET_SHARED_ACCESS - A string that represents an enumerated value that Macie defines for the BucketMetadata.sharedAccess property of a bucket.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "tagCriterion",
+                              "type": "dict",
+                              "description": "A tag-based condition that defines an operator and tag keys, tag values, or tag key and value pairs for including or excluding buckets from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values are EQ (equals) and NE (not equals).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "tagValues",
+                                  "type": "list",
+                                  "description": "The tag keys, tag values, or tag key and value pairs to use in the condition.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "description": "The value for the tag key to use in the condition.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "string",
+                                          "description": "The tag value to use in the condition.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "and",
+                      "type": "list",
+                      "description": "An array of conditions, one for each condition that determines which buckets to include or exclude from the job. If you specify more than one condition, Amazon Macie uses AND logic to join the conditions.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "simpleCriterion",
+                              "type": "dict",
+                              "description": "A property-based condition that defines a property, operator, and one or more values for including or excluding buckets from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values are EQ (equals) and NE (not equals).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The property to use in the condition.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "values",
+                                  "type": "list",
+                                  "description": "An array that lists one or more values to use in the condition. If you specify multiple values, Amazon Macie uses OR logic to join the values. Valid values for each supported property (key) are:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "ACCOUNT_ID - A string that represents the unique identifier for the Amazon Web Services account that owns the bucket.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "S3_BUCKET_EFFECTIVE_PERMISSION - A string that represents an enumerated value that Macie defines for the BucketPublicAccess.effectivePermission property of a bucket.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "S3_BUCKET_NAME - A string that represents the name of a bucket.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "S3_BUCKET_SHARED_ACCESS - A string that represents an enumerated value that Macie defines for the BucketMetadata.sharedAccess property of a bucket.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "tagCriterion",
+                              "type": "dict",
+                              "description": "A tag-based condition that defines an operator and tag keys, tag values, or tag key and value pairs for including or excluding buckets from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values are EQ (equals) and NE (not equals).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "tagValues",
+                                  "type": "list",
+                                  "description": "The tag keys, tag values, or tag key and value pairs to use in the condition.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "description": "The value for the tag key to use in the condition.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "string",
+                                          "description": "The tag value to use in the condition.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "bucketDefinitions",
+              "type": "list",
+              "description": "An array of objects, one for each Amazon Web Services account that owns specific S3 buckets to analyze. Each object specifies the account ID for an account and one or more buckets to analyze for that account. A job's definition can contain a bucketDefinitions array or a bucketCriteria object, not both.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "accountId",
+                      "type": "string",
+                      "description": "The unique identifier for the Amazon Web Services account that owns the buckets.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "buckets",
+                      "type": "list",
+                      "description": "An array that lists the names of the buckets.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "and",
+                      "type": "list",
+                      "description": "An array of conditions, one for each property- or tag-based condition that determines which objects to include or exclude from the job. If you specify more than one condition, Amazon Macie uses AND logic to join the conditions.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "simpleScopeTerm",
+                              "type": "dict",
+                              "description": "A property-based condition that defines a property, operator, and one or more values for including or excluding objects from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values for each supported property (key) are:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "equals",
+                                      "description": "OBJECT_EXTENSION - EQ (equals) or NE (not equals)",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "OBJECT_KEY - STARTS_WITH.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "equals",
+                                      "description": "OBJECT_LAST_MODIFIED_DATE - EQ (equals), GT (greater than), GTE (greater than or equals), LT (less than), LTE (less than or equals), or NE (not equals)",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "equals",
+                                      "description": "OBJECT_SIZE - EQ (equals), GT (greater than), GTE (greater than or equals), LT (less than), LTE (less than or equals), or NE (not equals)",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The object property to use in the condition.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "values",
+                                  "type": "list",
+                                  "description": "An array that lists the values to use in the condition. If the value for the key property is OBJECT_EXTENSION or OBJECT_KEY, this array can specify multiple values and Amazon Macie uses OR logic to join the values. Otherwise, this array can specify only one value.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "OBJECT_EXTENSION - A string that represents the file name extension of an object. For example: docx or pdf.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "folder name or path",
+                                      "description": "OBJECT_KEY - A string that represents the key prefix (folder name or path) of an object. For example: logs or awslogs/eventlogs. This value applies a condition to objects whose keys (names) begin with the specified value.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "in UTC and extended ISO 8601 format",
+                                      "description": "OBJECT_LAST_MODIFIED_DATE - The date and time (in UTC and extended ISO 8601 format) when an object was created or last changed, whichever is latest. For example: 2023-09-24T14:31:13Z.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "in bytes",
+                                      "description": "OBJECT_SIZE - An integer that represents the storage size (in bytes) of an object.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "tagScopeTerm",
+                              "type": "dict",
+                              "description": "A tag-based condition that defines the operator and tag keys or tag key and value pairs for including or excluding objects from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values are EQ (equals) or NE (not equals).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The object property to use in the condition. The only valid value is TAG.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "tagValues",
+                                  "type": "list",
+                                  "description": "The tag keys or tag key and value pairs to use in the condition. To specify only tag keys in a condition, specify the keys in this array and set the value for each associated tag value to an empty string.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "description": "The value for the tag key to use in the condition.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "string",
+                                          "description": "The tag value, associated with the specified tag key (key), to use in the condition. To specify only a tag key for a condition, specify the tag key for the key property and set this value to an empty string.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "target",
+                                  "type": "string",
+                                  "description": "The type of object to apply the condition to.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "and",
+                      "type": "list",
+                      "description": "An array of conditions, one for each property- or tag-based condition that determines which objects to include or exclude from the job. If you specify more than one condition, Amazon Macie uses AND logic to join the conditions.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "simpleScopeTerm",
+                              "type": "dict",
+                              "description": "A property-based condition that defines a property, operator, and one or more values for including or excluding objects from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values for each supported property (key) are:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "equals",
+                                      "description": "OBJECT_EXTENSION - EQ (equals) or NE (not equals)",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "OBJECT_KEY - STARTS_WITH.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "equals",
+                                      "description": "OBJECT_LAST_MODIFIED_DATE - EQ (equals), GT (greater than), GTE (greater than or equals), LT (less than), LTE (less than or equals), or NE (not equals)",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "equals",
+                                      "description": "OBJECT_SIZE - EQ (equals), GT (greater than), GTE (greater than or equals), LT (less than), LTE (less than or equals), or NE (not equals)",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The object property to use in the condition.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "values",
+                                  "type": "list",
+                                  "description": "An array that lists the values to use in the condition. If the value for the key property is OBJECT_EXTENSION or OBJECT_KEY, this array can specify multiple values and Amazon Macie uses OR logic to join the values. Otherwise, this array can specify only one value.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "OBJECT_EXTENSION - A string that represents the file name extension of an object. For example: docx or pdf.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "folder name or path",
+                                      "description": "OBJECT_KEY - A string that represents the key prefix (folder name or path) of an object. For example: logs or awslogs/eventlogs. This value applies a condition to objects whose keys (names) begin with the specified value.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "in UTC and extended ISO 8601 format",
+                                      "description": "OBJECT_LAST_MODIFIED_DATE - The date and time (in UTC and extended ISO 8601 format) when an object was created or last changed, whichever is latest. For example: 2023-09-24T14:31:13Z.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "in bytes",
+                                      "description": "OBJECT_SIZE - An integer that represents the storage size (in bytes) of an object.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "tagScopeTerm",
+                              "type": "dict",
+                              "description": "A tag-based condition that defines the operator and tag keys or tag key and value pairs for including or excluding objects from the job.",
+                              "nested_items": [
+                                {
+                                  "name": "comparator",
+                                  "type": "string",
+                                  "description": "The operator to use in the condition. Valid values are EQ (equals) or NE (not equals).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "The object property to use in the condition. The only valid value is TAG.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "tagValues",
+                                  "type": "list",
+                                  "description": "The tag keys or tag key and value pairs to use in the condition. To specify only tag keys in a condition, specify the keys in this array and set the value for each associated tag value to an empty string.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "description": "The value for the tag key to use in the condition.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "string",
+                                          "description": "The tag value, associated with the specified tag key (key), to use in the condition. To specify only a tag key for a condition, specify the tag key for the key property and set this value to an empty string.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "target",
+                                  "type": "string",
+                                  "description": "The type of object to apply the condition to.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "samplingPercentage",
+          "type": "integer",
+          "description": "The sampling depth, as a percentage, that determines the percentage of eligible objects that the job analyzes.",
+          "nested_items": []
+        },
+        {
+          "name": "scheduleFrequency",
+          "type": "dict",
+          "description": "The recurrence pattern for running the job. This value is null if the job is configured to run only once.",
+          "nested_items": [
+            {
+              "name": "dailySchedule",
+              "type": "dict",
+              "description": "Specifies a daily recurrence pattern for running the job.",
+              "nested_items": []
+            },
+            {
+              "name": "monthlySchedule",
+              "type": "dict",
+              "description": "Specifies a monthly recurrence pattern for running the job.",
+              "nested_items": [
+                {
+                  "name": "dayOfMonth",
+                  "type": "integer",
+                  "description": "The numeric day of the month when Amazon Macie runs the job. This value can be an integer from 1 through 31.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "weeklySchedule",
+              "type": "dict",
+              "description": "Specifies a weekly recurrence pattern for running the job.",
+              "nested_items": [
+                {
+                  "name": "dayOfWeek",
+                  "type": "string",
+                  "description": "The day of the week when Amazon Macie runs the job.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "statistics",
+          "type": "dict",
+          "description": "The number of times that the job has run and processing statistics for the job's current run.",
+          "nested_items": [
+            {
+              "name": "approximateNumberOfObjectsToProcess",
+              "type": "float",
+              "description": "The approximate number of objects that the job has yet to process during its current run.",
+              "nested_items": []
+            },
+            {
+              "name": "numberOfRuns",
+              "type": "float",
+              "description": "The number of times that the job has run.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "userPausedDetails",
+          "type": "dict",
+          "description": "If the current status of the job is USER_PAUSED, specifies when the job was paused and when the job or job run will expire and be cancelled if it isn't resumed. This value is present only if the value for jobStatus is USER_PAUSED.",
+          "nested_items": [
+            {
+              "name": "jobExpiresAt",
+              "type": "datetime",
+              "description": "The date and time, in UTC and extended ISO 8601 format, when the job or job run will expire and be cancelled if you don't resume it first.",
+              "nested_items": []
+            },
+            {
+              "name": "jobImminentExpirationHealthEventArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the Health event that Amazon Macie sent to notify you of the job or job run's pending expiration and cancellation. This value is null if a job has been paused for less than 23 days.",
+              "nested_items": []
+            },
+            {
+              "name": "jobPausedAt",
+              "type": "datetime",
+              "description": "The date and time, in UTC and extended ISO 8601 format, when you paused the job.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

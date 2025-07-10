@@ -10,7 +10,7 @@ import json
 import os
 import time
 import traceback
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 from utils.config import logger, DEFAULT_CONFIG
 from utils.timeout import timeout, TimeoutException
@@ -93,10 +93,17 @@ class ServiceProcessor:
         if self.checkpoint_manager:
             processed_methods = self.checkpoint_manager.get_processed_methods(service_name)
         
-        # Use tqdm to show progress
-        for method_name, method_url in tqdm(list(zip(methods, method_links)), 
-                                         desc=f"Methods for {service_name}",
-                                         leave=False):
+        # Calculate initial progress for the progress bar
+        initial_progress = len(processed_methods)
+        total_methods = len(methods)
+        
+        # Use tqdm to show progress with correct initial position
+        progress_bar = tqdm(total=total_methods, 
+                          desc=f"Methods for {service_name}",
+                          leave=False,
+                          initial=initial_progress)
+        
+        for method_name, method_url in zip(methods, method_links):
             
             # Skip already processed methods
             if method_name in processed_methods:
@@ -120,11 +127,13 @@ class ServiceProcessor:
                 logger.error(f"Timeout processing method {method_name}")
                 # Continue to next method after recording failure
                 self._record_failure("failed_methods.txt", f"{service_name} - {method_name}: Timed out")
+                progress_bar.update(1)
                 time.sleep(DEFAULT_CONFIG['sleep_between_requests'])
                 continue
             except Exception as e:
                 logger.error(f"Error processing method {method_name}: {str(e)}")
                 self._record_failure("failed_methods.txt", f"{service_name} - {method_name}: {str(e)}")
+                progress_bar.update(1)
                 time.sleep(DEFAULT_CONFIG['sleep_between_requests'])
                 continue
             
@@ -147,8 +156,13 @@ class ServiceProcessor:
                 if self.checkpoint_manager:
                     self.checkpoint_manager.mark_method_as_processed(service_name, method_name)
             
+            # Update progress bar for processed method
+            progress_bar.update(1)
             # Be nice to the server and avoid rate limiting
             time.sleep(DEFAULT_CONFIG['sleep_between_requests'])
+        
+        # Close the progress bar
+        progress_bar.close()
         
         # Create and save service summary
         service_summary = self._create_service_summary(service_name, service_data['url'], service_methods)
@@ -244,12 +258,29 @@ class ServiceProcessor:
         
         # Check if we need to resume from a specific service
         resume_service = None
+        resume_index = 0
         if self.checkpoint_manager:
             resume_service = self.checkpoint_manager.get_resume_position()
             
         resume_processing = False if resume_service else True
         
-        for service_file in tqdm(service_files, desc="Processing services"):
+        # If resuming, find the index of the service to resume from
+        if resume_service:
+            for i, service_file in enumerate(service_files):
+                service_file_path = os.path.join(self.services_folder, service_file)
+                try:
+                    with open(service_file_path, 'r') as f:
+                        service_data = json.load(f)
+                    if service_data['service_name'] == resume_service:
+                        resume_index = i
+                        break
+                except Exception:
+                    continue
+        
+        # Initialize progress bar with correct starting position
+        progress_bar = tqdm(total=len(service_files), desc="Processing services", initial=resume_index)
+        
+        for i, service_file in enumerate(service_files):
             service_file_path = os.path.join(self.services_folder, service_file)
             
             # If we're resuming and haven't reached the resume point yet, skip
@@ -262,8 +293,14 @@ class ServiceProcessor:
                     if service_data['service_name'] == resume_service:
                         resume_processing = True
                     else:
+                        # Update progress bar for skipped files
+                        if i < resume_index:
+                            progress_bar.update(1)
                         continue
                 except Exception:
+                    # Update progress bar for skipped files
+                    if i < resume_index:
+                        progress_bar.update(1)
                     continue
             
             try:
@@ -271,19 +308,28 @@ class ServiceProcessor:
                 service_summary = self.process_service_file(service_file_path)
                 if service_summary:
                     service_summaries.append(service_summary)
-                    # Sleep between services only when actually processing (not skipping)
-                    time.sleep(DEFAULT_CONFIG['sleep_between_services'])
+                # Update progress bar for processed files
+                progress_bar.update(1)
+                # Sleep between services only when actually processing (not skipping)
+                time.sleep(DEFAULT_CONFIG['sleep_between_services'])
             except TimeoutException:
                 logger.error(f"Processing {service_file} timed out after 5 minutes, skipping")
                 self._record_failure("failed_services.txt", f"{service_file}: Timed out")
+                # Update progress bar for failed files
+                progress_bar.update(1)
                 # Sleep after timeout
                 time.sleep(DEFAULT_CONFIG['sleep_between_services'])
             except Exception as e:
                 logger.error(f"Error processing {service_file}: {str(e)}")
                 traceback.print_exc()
                 self._record_failure("failed_services.txt", f"{service_file}: {str(e)}")
+                # Update progress bar for failed files
+                progress_bar.update(1)
                 # Sleep after error
                 time.sleep(DEFAULT_CONFIG['sleep_between_services'])
+        
+        # Close the progress bar
+        progress_bar.close()
         
         # Create and save overall summary
         self._save_overall_summary(service_summaries)

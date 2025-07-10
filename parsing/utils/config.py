@@ -45,5 +45,5 @@ DEFAULT_CONFIG = {
     'request_timeout': 50,
     'processing_timeout': 300,
     'sleep_between_requests': 1.0,
-    'sleep_between_services': 0.5  # Reduced from 2.0 to 0.5 seconds
+    'sleep_between_services': 0.5 
 }

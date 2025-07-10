@@ -1,0 +1,364 @@
+{
+  "method_name": "get_bucket_statistics",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/macie2/client/get_bucket_statistics.html",
+  "description": "aggregated statistical data about all the S3 buckets that Amazon Macie monitors and analyzes for an account.",
+  "parameters": [
+    {
+      "name": "accountId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "bucketCount",
+          "type": "integer",
+          "description": "The total number of buckets.",
+          "nested_items": []
+        },
+        {
+          "name": "bucketCountByEffectivePermission",
+          "type": "dict",
+          "description": "The total number of buckets that are publicly accessible due to a combination of permissions settings for each bucket.",
+          "nested_items": [
+            {
+              "name": "publiclyAccessible",
+              "type": "integer",
+              "description": "The total number of buckets that allow the general public to have read or write access to the bucket.",
+              "nested_items": []
+            },
+            {
+              "name": "publiclyReadable",
+              "type": "integer",
+              "description": "The total number of buckets that allow the general public to have read access to the bucket.",
+              "nested_items": []
+            },
+            {
+              "name": "publiclyWritable",
+              "type": "integer",
+              "description": "The total number of buckets that allow the general public to have write access to the bucket.",
+              "nested_items": []
+            },
+            {
+              "name": "unknown",
+              "type": "integer",
+              "description": "The total number of buckets that Amazon Macie wasn't able to evaluate permissions settings for. For example, the buckets' policies or a quota prevented Macie from retrieving the requisite data. Macie can't determine whether the buckets are publicly accessible.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "bucketCountByEncryptionType",
+          "type": "dict",
+          "description": "The total number of buckets whose settings do or don't specify default server-side encryption behavior for objects that are added to the buckets.",
+          "nested_items": [
+            {
+              "name": "kmsManaged",
+              "type": "integer",
+              "description": "The total number of buckets whose default encryption settings are configured to encrypt new objects with an KMS key, either an Amazon Web Services managed key or a customer managed key. By default, these buckets encrypt new objects automatically using DSSE-KMS or SSE-KMS encryption.",
+              "nested_items": []
+            },
+            {
+              "name": "s3Managed",
+              "type": "integer",
+              "description": "The total number of buckets whose default encryption settings are configured to encrypt new objects with an Amazon S3 managed key. By default, these buckets encrypt new objects automatically using SSE-S3 encryption.",
+              "nested_items": []
+            },
+            {
+              "name": "unencrypted",
+              "type": "integer",
+              "description": "The total number of buckets that don't specify default server-side encryption behavior for new objects. Default encryption settings aren't configured for these buckets.",
+              "nested_items": []
+            },
+            {
+              "name": "unknown",
+              "type": "integer",
+              "description": "The total number of buckets that Amazon Macie doesn't have current encryption metadata for. For example, the buckets' permissions settings or a quota prevented Macie from retrieving the default encryption settings for the buckets.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "bucketCountByObjectEncryptionRequirement",
+          "type": "dict",
+          "description": "The total number of buckets whose bucket policies do or don't require server-side encryption of objects when objects are added to the buckets.",
+          "nested_items": [
+            {
+              "name": "allowsUnencryptedObjectUploads",
+              "type": "integer",
+              "description": "The total number of buckets that don't have a bucket policy or have a bucket policy that doesn't require server-side encryption of new objects. If a bucket policy exists, the policy doesn't require PutObject requests to include a valid server-side encryption header: the x-amz-server-side-encryption header with a value of AES256 or aws:kms, or the x-amz-server-side-encryption-customer-algorithm header with a value of AES256.",
+              "nested_items": []
+            },
+            {
+              "name": "deniesUnencryptedObjectUploads",
+              "type": "integer",
+              "description": "The total number of buckets whose bucket policies require server-side encryption of new objects. PutObject requests for these buckets must include a valid server-side encryption header: the x-amz-server-side-encryption header with a value of AES256 or aws:kms, or the x-amz-server-side-encryption-customer-algorithm header with a value of AES256.",
+              "nested_items": []
+            },
+            {
+              "name": "unknown",
+              "type": "integer",
+              "description": "The total number of buckets that Amazon Macie wasn't able to evaluate server-side encryption requirements for. For example, the buckets' permissions settings or a quota prevented Macie from retrieving the requisite data. Macie can't determine whether bucket policies for the buckets require server-side encryption of new objects.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "bucketCountBySharedAccessType",
+          "type": "dict",
+          "description": "The total number of buckets that are or aren't shared with other Amazon Web Services accounts, Amazon CloudFront origin access identities (OAIs), or CloudFront origin access controls (OACs).",
+          "nested_items": [
+            {
+              "name": "external",
+              "type": "integer",
+              "description": "The total number of buckets that are shared with one or more of the following or any combination of the following: an Amazon CloudFront OAI, a CloudFront OAC, or an Amazon Web Services account that isn't in the same Amazon Macie organization.",
+              "nested_items": []
+            },
+            {
+              "name": "internal",
+              "type": "integer",
+              "description": "The total number of buckets that are shared with one or more Amazon Web Services accounts in the same Amazon Macie organization. These buckets aren't shared with Amazon CloudFront OAIs or OACs.",
+              "nested_items": []
+            },
+            {
+              "name": "notShared",
+              "type": "integer",
+              "description": "The total number of buckets that aren't shared with other Amazon Web Services accounts, Amazon CloudFront OAIs, or CloudFront OACs.",
+              "nested_items": []
+            },
+            {
+              "name": "unknown",
+              "type": "integer",
+              "description": "The total number of buckets that Amazon Macie wasn't able to evaluate shared access settings for. For example, the buckets' permissions settings or a quota prevented Macie from retrieving the requisite data. Macie can't determine whether the buckets are shared with other Amazon Web Services accounts, Amazon CloudFront OAIs, or CloudFront OACs.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "bucketStatisticsBySensitivity",
+          "type": "dict",
+          "description": "The aggregated sensitive data discovery statistics for the buckets. If automated sensitive data discovery is currently disabled for your account, the value for most statistics is 0.",
+          "nested_items": [
+            {
+              "name": "classificationError",
+              "type": "dict",
+              "description": "The aggregated statistical data for all buckets that have a sensitivity score of -1.",
+              "nested_items": [
+                {
+                  "name": "classifiableSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of all the objects that Amazon Macie can analyze in the buckets. These objects use a supported storage class and have a file name extension for a supported file or storage format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "publiclyAccessibleCount",
+                  "type": "integer",
+                  "description": "The total number of buckets that are publicly accessible due to a combination of permissions settings for each bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalCount",
+                  "type": "integer",
+                  "description": "The total number of buckets.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of the buckets.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "notClassified",
+              "type": "dict",
+              "description": "The aggregated statistical data for all buckets that have a sensitivity score of 50.",
+              "nested_items": [
+                {
+                  "name": "classifiableSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of all the objects that Amazon Macie can analyze in the buckets. These objects use a supported storage class and have a file name extension for a supported file or storage format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "publiclyAccessibleCount",
+                  "type": "integer",
+                  "description": "The total number of buckets that are publicly accessible due to a combination of permissions settings for each bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalCount",
+                  "type": "integer",
+                  "description": "The total number of buckets.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of the buckets.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "notSensitive",
+              "type": "dict",
+              "description": "The aggregated statistical data for all buckets that have a sensitivity score of 1-49.",
+              "nested_items": [
+                {
+                  "name": "classifiableSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of all the objects that Amazon Macie can analyze in the buckets. These objects use a supported storage class and have a file name extension for a supported file or storage format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "publiclyAccessibleCount",
+                  "type": "integer",
+                  "description": "The total number of buckets that are publicly accessible due to a combination of permissions settings for each bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalCount",
+                  "type": "integer",
+                  "description": "The total number of buckets.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of the buckets.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "sensitive",
+              "type": "dict",
+              "description": "The aggregated statistical data for all buckets that have a sensitivity score of 51-100.",
+              "nested_items": [
+                {
+                  "name": "classifiableSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of all the objects that Amazon Macie can analyze in the buckets. These objects use a supported storage class and have a file name extension for a supported file or storage format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "publiclyAccessibleCount",
+                  "type": "integer",
+                  "description": "The total number of buckets that are publicly accessible due to a combination of permissions settings for each bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalCount",
+                  "type": "integer",
+                  "description": "The total number of buckets.",
+                  "nested_items": []
+                },
+                {
+                  "name": "totalSizeInBytes",
+                  "type": "integer",
+                  "description": "The total storage size, in bytes, of the buckets.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "classifiableObjectCount",
+          "type": "integer",
+          "description": "The total number of objects that Amazon Macie can analyze in the buckets. These objects use a supported storage class and have a file name extension for a supported file or storage format.",
+          "nested_items": []
+        },
+        {
+          "name": "classifiableSizeInBytes",
+          "type": "integer",
+          "description": "The total storage size, in bytes, of all the objects that Amazon Macie can analyze in the buckets. These objects use a supported storage class and have a file name extension for a supported file or storage format.",
+          "nested_items": []
+        },
+        {
+          "name": "lastUpdated",
+          "type": "datetime",
+          "description": "The date and time, in UTC and extended ISO 8601 format, when Amazon Macie most recently retrieved bucket or object metadata from Amazon S3 for the buckets.",
+          "nested_items": []
+        },
+        {
+          "name": "objectCount",
+          "type": "integer",
+          "description": "The total number of objects in the buckets.",
+          "nested_items": []
+        },
+        {
+          "name": "sizeInBytes",
+          "type": "integer",
+          "description": "The total storage size, in bytes, of the buckets.",
+          "nested_items": []
+        },
+        {
+          "name": "sizeInBytesCompressed",
+          "type": "integer",
+          "description": "The total storage size, in bytes, of the objects that are compressed (.gz, .gzip, .zip) files in the buckets.",
+          "nested_items": []
+        },
+        {
+          "name": "unclassifiableObjectCount",
+          "type": "dict",
+          "description": "The total number of objects that Amazon Macie can't analyze in the buckets. These objects don't use a supported storage class or don't have a file name extension for a supported file or storage format.",
+          "nested_items": [
+            {
+              "name": "fileType",
+              "type": "integer",
+              "description": "The total storage size (in bytes) or number of objects that Amazon Macie can't analyze because the objects don't have a file name extension for a supported file or storage format.",
+              "nested_items": []
+            },
+            {
+              "name": "storageClass",
+              "type": "integer",
+              "description": "The total storage size (in bytes) or number of objects that Amazon Macie can't analyze because the objects use an unsupported storage class.",
+              "nested_items": []
+            },
+            {
+              "name": "total",
+              "type": "integer",
+              "description": "The total storage size (in bytes) or number of objects that Amazon Macie can't analyze because the objects use an unsupported storage class or don't have a file name extension for a supported file or storage format.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "unclassifiableObjectSizeInBytes",
+          "type": "dict",
+          "description": "The total storage size, in bytes, of the objects that Amazon Macie can't analyze in the buckets. These objects don't use a supported storage class or don't have a file name extension for a supported file or storage format.",
+          "nested_items": [
+            {
+              "name": "fileType",
+              "type": "integer",
+              "description": "The total storage size (in bytes) or number of objects that Amazon Macie can't analyze because the objects don't have a file name extension for a supported file or storage format.",
+              "nested_items": []
+            },
+            {
+              "name": "storageClass",
+              "type": "integer",
+              "description": "The total storage size (in bytes) or number of objects that Amazon Macie can't analyze because the objects use an unsupported storage class.",
+              "nested_items": []
+            },
+            {
+              "name": "total",
+              "type": "integer",
+              "description": "The total storage size (in bytes) or number of objects that Amazon Macie can't analyze because the objects use an unsupported storage class or don't have a file name extension for a supported file or storage format.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
