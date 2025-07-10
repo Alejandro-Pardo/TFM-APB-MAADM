@@ -271,16 +271,19 @@ class ServiceProcessor:
                 service_summary = self.process_service_file(service_file_path)
                 if service_summary:
                     service_summaries.append(service_summary)
+                    # Sleep between services only when actually processing (not skipping)
+                    time.sleep(DEFAULT_CONFIG['sleep_between_services'])
             except TimeoutException:
                 logger.error(f"Processing {service_file} timed out after 5 minutes, skipping")
                 self._record_failure("failed_services.txt", f"{service_file}: Timed out")
+                # Sleep after timeout
+                time.sleep(DEFAULT_CONFIG['sleep_between_services'])
             except Exception as e:
                 logger.error(f"Error processing {service_file}: {str(e)}")
                 traceback.print_exc()
                 self._record_failure("failed_services.txt", f"{service_file}: {str(e)}")
-            
-            # Sleep between services to avoid rate limiting and allow system resources to free up
-            time.sleep(DEFAULT_CONFIG['sleep_between_services'])
+                # Sleep after error
+                time.sleep(DEFAULT_CONFIG['sleep_between_services'])
         
         # Create and save overall summary
         self._save_overall_summary(service_summaries)

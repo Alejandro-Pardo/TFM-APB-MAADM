@@ -1,0 +1,840 @@
+{
+  "method_name": "optimize_waypoints",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/geo-routes/client/optimize_waypoints.html",
+  "description": "OptimizeWaypoints calculates the optimal order to travel between a set of waypoints to minimize either the travel time or the distance travelled during the journey, based on road network restrictions and the traffic pattern data.",
+  "parameters": [
+    {
+      "name": "Avoid",
+      "type": "dict",
+      "required": true,
+      "description": "Features that are avoided. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, this setting is ignored. Areas (list) --- Areas to be avoided. (dict) --- The area to be avoided. Geometry of the area to be avoided. BoundingBox (list) --- Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner. (float) --- CarShuttleTrains (boolean) --- Avoidance options for cars-shuttles-trains. ControlledAccessHighways (boolean) --- Avoid controlled access highways while calculating the route. DirtRoads (boolean) --- Avoid dirt roads while calculating the route. Ferries (boolean) --- Avoidance options for ferries. TollRoads (boolean) --- Avoids roads where the specified toll transponders are the only mode of payment. Tunnels (boolean) --- Avoid tunnels while calculating the route. UTurns (boolean) --- Avoid U-turns for calculation on highways and motorways.",
+      "nested_params": [
+        {
+          "name": "Areas",
+          "type": "list",
+          "required": false,
+          "description": "Areas to be avoided.",
+          "nested_params": [
+            {
+              "name": "Geometry",
+              "type": "dict",
+              "required": false,
+              "description": "Geometry of the area to be avoided.",
+              "nested_params": [
+                {
+                  "name": "BoundingBox",
+                  "type": "list",
+                  "required": false,
+                  "description": "Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CarShuttleTrains",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoidance options for cars-shuttles-trains.",
+          "nested_params": []
+        },
+        {
+          "name": "ControlledAccessHighways",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoid controlled access highways while calculating the route.",
+          "nested_params": []
+        },
+        {
+          "name": "DirtRoads",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoid dirt roads while calculating the route.",
+          "nested_params": []
+        },
+        {
+          "name": "Ferries",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoidance options for ferries.",
+          "nested_params": []
+        },
+        {
+          "name": "TollRoads",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoids roads where the specified toll transponders are the only mode of payment.",
+          "nested_params": []
+        },
+        {
+          "name": "Tunnels",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoid tunnels while calculating the route.",
+          "nested_params": []
+        },
+        {
+          "name": "UTurns",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoid U-turns for calculation on highways and motorways.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Clustering",
+      "type": "dict",
+      "required": true,
+      "description": "Clustering allows you to specify how nearby waypoints can be clustered to improve the optimized sequence. The algorithm to be used. DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster. TopologySegment assigns all the waypoints that are within the same topology segment into a single cluster. A Topology segment is a linear stretch of road between two junctions. DrivingDistanceOptions (dict) --- Driving distance options to be used when the clustering algorithm is DrivingDistance. DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster.",
+      "nested_params": [
+        {
+          "name": "Algorithm",
+          "type": "string",
+          "required": false,
+          "description": "The algorithm to be used. DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster. TopologySegment assigns all the waypoints that are within the same topology segment into a single cluster. A Topology segment is a linear stretch of road between two junctions.",
+          "nested_params": []
+        },
+        {
+          "name": "DrivingDistanceOptions",
+          "type": "dict",
+          "required": false,
+          "description": "Driving distance options to be used when the clustering algorithm is DrivingDistance.",
+          "nested_params": [
+            {
+              "name": "DrivingDistance",
+              "type": "integer",
+              "required": false,
+              "description": "DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DepartureTime",
+      "type": "string",
+      "required": false,
+      "description": "Departure time from the waypoint. Time format: YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm Examples: 2020-04-22T17:57:24Z 2020-04-22T17:57:24+02:00",
+      "nested_params": []
+    },
+    {
+      "name": "Destination",
+      "type": "list",
+      "required": false,
+      "description": "The final position for the route in the World Geodetic System (WGS 84) format: [longitude, latitude]. (float) ---",
+      "nested_params": []
+    },
+    {
+      "name": "DestinationOptions",
+      "type": "dict",
+      "required": true,
+      "description": "Destination related options. AccessHours (dict) --- Access hours corresponding to when a waypoint can be visited. Contains the ID of the starting waypoint in this connection. Day of the week. Time of the day. Contains the ID of the ending waypoint in this connection. AppointmentTime (string) --- Appointment time at the destination. Heading (float) --- GPS Heading at the position. Id (string) --- The waypoint Id. ServiceDuration (integer) --- Service time spent at the destination. At an appointment, the service time should be the appointment duration. Unit: seconds SideOfStreet (dict) --- Options to configure matching the provided position to a side of the street. Position defined as [longitude, latitude]. (float) --- UseWith (string) --- Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position. Default Value: DividedStreetOnly.",
+      "nested_params": [
+        {
+          "name": "AccessHours",
+          "type": "dict",
+          "required": false,
+          "description": "Access hours corresponding to when a waypoint can be visited.",
+          "nested_params": [
+            {
+              "name": "From",
+              "type": "dict",
+              "required": false,
+              "description": "Contains the ID of the starting waypoint in this connection.",
+              "nested_params": [
+                {
+                  "name": "DayOfWeek",
+                  "type": "string",
+                  "required": false,
+                  "description": "Day of the week.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TimeOfDay",
+                  "type": "string",
+                  "required": false,
+                  "description": "Time of the day.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "To",
+              "type": "dict",
+              "required": false,
+              "description": "Contains the ID of the ending waypoint in this connection.",
+              "nested_params": [
+                {
+                  "name": "DayOfWeek",
+                  "type": "string",
+                  "required": false,
+                  "description": "Day of the week.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TimeOfDay",
+                  "type": "string",
+                  "required": false,
+                  "description": "Time of the day.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AppointmentTime",
+          "type": "string",
+          "required": false,
+          "description": "Appointment time at the destination.",
+          "nested_params": []
+        },
+        {
+          "name": "Heading",
+          "type": "float",
+          "required": false,
+          "description": "GPS Heading at the position.",
+          "nested_params": []
+        },
+        {
+          "name": "Id",
+          "type": "string",
+          "required": false,
+          "description": "The waypoint Id.",
+          "nested_params": []
+        },
+        {
+          "name": "ServiceDuration",
+          "type": "integer",
+          "required": false,
+          "description": "Service time spent at the destination. At an appointment, the service time should be the appointment duration.",
+          "nested_params": []
+        },
+        {
+          "name": "SideOfStreet",
+          "type": "dict",
+          "required": false,
+          "description": "Options to configure matching the provided position to a side of the street.",
+          "nested_params": [
+            {
+              "name": "Position",
+              "type": "list",
+              "required": false,
+              "description": "Position defined as [longitude, latitude].",
+              "nested_params": []
+            },
+            {
+              "name": "UseWith",
+              "type": "string",
+              "required": false,
+              "description": "Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position. Default Value: DividedStreetOnly.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Driver",
+      "type": "dict",
+      "required": true,
+      "description": "Driver related options. RestCycles (dict) --- Driver work-rest schedules defined by a short and long cycle. A rest needs to be taken after the short work duration. The short cycle can be repeated until you hit the long work duration, at which point the long rest duration should be taken before restarting. Long cycle for a driver work-rest schedule. Resting phase of the cycle. Unit: seconds Working phase of the cycle. Unit: seconds Short cycle for a driver work-rest schedule Resting phase of the cycle. Unit: seconds RestProfile (dict) --- Pre defined rest profiles for a driver schedule. The only currently supported profile is EU. Pre defined rest profiles for a driver schedule. TreatServiceTimeAs (string) --- If the service time provided at a waypoint/destination should be considered as rest or work. This contributes to the total time breakdown returned within the response.",
+      "nested_params": [
+        {
+          "name": "RestCycles",
+          "type": "dict",
+          "required": false,
+          "description": "Driver work-rest schedules defined by a short and long cycle. A rest needs to be taken after the short work duration. The short cycle can be repeated until you hit the long work duration, at which point the long rest duration should be taken before restarting.",
+          "nested_params": [
+            {
+              "name": "LongCycle",
+              "type": "dict",
+              "required": false,
+              "description": "Long cycle for a driver work-rest schedule.",
+              "nested_params": [
+                {
+                  "name": "RestDuration",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Resting phase of the cycle.",
+                  "nested_params": []
+                },
+                {
+                  "name": "WorkDuration",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Working phase of the cycle.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ShortCycle",
+              "type": "dict",
+              "required": false,
+              "description": "Short cycle for a driver work-rest schedule.",
+              "nested_params": [
+                {
+                  "name": "RestDuration",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Resting phase of the cycle.",
+                  "nested_params": []
+                },
+                {
+                  "name": "WorkDuration",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Working phase of the cycle.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RestProfile",
+          "type": "dict",
+          "required": false,
+          "description": "Pre defined rest profiles for a driver schedule. The only currently supported profile is EU.",
+          "nested_params": [
+            {
+              "name": "Profile",
+              "type": "string",
+              "required": false,
+              "description": "Pre defined rest profiles for a driver schedule. The only currently supported profile is EU.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "TreatServiceTimeAs",
+          "type": "string",
+          "required": false,
+          "description": "If the service time provided at a waypoint/destination should be considered as rest or work. This contributes to the total time breakdown returned within the response.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Exclude",
+      "type": "dict",
+      "required": true,
+      "description": "Features to be strictly excluded while calculating the route. List of countries to be avoided defined by two-letter or three-letter country codes. (string) ---",
+      "nested_params": [
+        {
+          "name": "Countries",
+          "type": "list",
+          "required": false,
+          "description": "List of countries to be avoided defined by two-letter or three-letter country codes.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OptimizeSequencingFor",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the optimization criteria for the calculated sequence. Default Value: FastestRoute.",
+      "nested_params": []
+    },
+    {
+      "name": "Origin",
+      "type": "list",
+      "required": true,
+      "description": "The start position for the route. (float) ---",
+      "nested_params": []
+    },
+    {
+      "name": "OriginOptions",
+      "type": "dict",
+      "required": false,
+      "description": "Origin related options. Id (string) --- The Origin Id.",
+      "nested_params": [
+        {
+          "name": "Id",
+          "type": "string",
+          "required": false,
+          "description": "The Origin Id.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Traffic",
+      "type": "dict",
+      "required": false,
+      "description": "Traffic-related options. Usage (string) --- Determines if traffic should be used or ignored while calculating the route. Default Value: UseTrafficData.",
+      "nested_params": [
+        {
+          "name": "Usage",
+          "type": "string",
+          "required": false,
+          "description": "Determines if traffic should be used or ignored while calculating the route. Default Value: UseTrafficData.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TravelMode",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility. Default Value: Car.",
+      "nested_params": []
+    },
+    {
+      "name": "TravelModeOptions",
+      "type": "dict",
+      "required": false,
+      "description": "Travel mode related options for the provided travel mode. Pedestrian (dict) --- Travel mode options when the provided travel mode is 'Pedestrian' Speed (float) --- Walking speed. Unit: KilometersPerHour Truck (dict) --- Travel mode options when the provided travel mode is 'Truck' GrossWeight (integer) --- Gross weight of the vehicle including trailers, and goods at capacity. Unit: Kilograms HazardousCargos (list) --- List of Hazardous cargo contained in the vehicle. (string) --- Height (integer) --- Height of the vehicle. Unit: centimeters Length (integer) --- Length of the vehicle. Unit: centimeters Trailer (dict) --- Trailer options corresponding to the vehicle. TrailerCount (integer) --- Number of trailers attached to the vehicle. Default Value: 0 TruckType (string) --- Type of the truck. TunnelRestrictionCode (string) --- The tunnel restriction code. Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them. Tunnel Category B Risk Level: Limited risk Restrictions: Few restrictions Tunnel Category C Risk Level: Medium risk Restrictions: Some restrictions Tunnel Category D Risk Level: High risk Restrictions: Many restrictions occur Tunnel Category E Risk Level: Very high risk Restrictions: Restricted tunnel WeightPerAxle (integer) --- Heaviest weight per axle irrespective of the axle type or the axle group. Meant for usage in countries where the differences in axle types or axle groups are not distinguished. Unit: Kilograms Width (integer) --- Width of the vehicle. Unit: centimeters.",
+      "nested_params": [
+        {
+          "name": "Pedestrian",
+          "type": "dict",
+          "required": false,
+          "description": "Travel mode options when the provided travel mode is 'Pedestrian'",
+          "nested_params": [
+            {
+              "name": "Speed",
+              "type": "float",
+              "required": false,
+              "description": "Walking speed.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Truck",
+          "type": "dict",
+          "required": false,
+          "description": "Travel mode options when the provided travel mode is 'Truck'",
+          "nested_params": [
+            {
+              "name": "GrossWeight",
+              "type": "integer",
+              "required": false,
+              "description": "Gross weight of the vehicle including trailers, and goods at capacity.",
+              "nested_params": []
+            },
+            {
+              "name": "HazardousCargos",
+              "type": "list",
+              "required": false,
+              "description": "List of Hazardous cargo contained in the vehicle.",
+              "nested_params": []
+            },
+            {
+              "name": "Height",
+              "type": "integer",
+              "required": false,
+              "description": "Height of the vehicle.",
+              "nested_params": []
+            },
+            {
+              "name": "Length",
+              "type": "integer",
+              "required": false,
+              "description": "Length of the vehicle.",
+              "nested_params": []
+            },
+            {
+              "name": "Trailer",
+              "type": "dict",
+              "required": false,
+              "description": "Trailer options corresponding to the vehicle.",
+              "nested_params": [
+                {
+                  "name": "TrailerCount",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Number of trailers attached to the vehicle. Default Value: 0",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "TruckType",
+              "type": "string",
+              "required": false,
+              "description": "Type of the truck.",
+              "nested_params": []
+            },
+            {
+              "name": "TunnelRestrictionCode",
+              "type": "string",
+              "required": false,
+              "description": "The tunnel restriction code. Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.",
+              "nested_params": []
+            },
+            {
+              "name": "WeightPerAxle",
+              "type": "integer",
+              "required": false,
+              "description": "Heaviest weight per axle irrespective of the axle type or the axle group. Meant for usage in countries where the differences in axle types or axle groups are not distinguished.",
+              "nested_params": []
+            },
+            {
+              "name": "Width",
+              "type": "integer",
+              "required": false,
+              "description": "Width of the vehicle.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Waypoints",
+      "type": "list",
+      "required": true,
+      "description": "List of waypoints between the Origin and Destination. (dict) --- Waypoint between the Origin and Destination. AccessHours (dict) --- Access hours corresponding to when a waypoint can be visited. Contains the ID of the starting waypoint in this connection. Day of the week. Time of the day. Contains the ID of the ending waypoint in this connection. AppointmentTime (string) --- Appointment time at the waypoint. Before (list) --- Constraint defining what waypoints are to be visited after this waypoint. (integer) --- Heading (float) --- GPS Heading at the position. Id (string) --- The waypoint Id. Position defined as [longitude, latitude]. (float) --- ServiceDuration (integer) --- Service time spent at the waypoint. At an appointment, the service time should be the appointment duration. Unit: seconds SideOfStreet (dict) --- Options to configure matching the provided position to a side of the street. (float) --- UseWith (string) --- Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position. Default Value: DividedStreetOnly.",
+      "nested_params": [
+        {
+          "name": "AccessHours",
+          "type": "dict",
+          "required": false,
+          "description": "Access hours corresponding to when a waypoint can be visited.",
+          "nested_params": [
+            {
+              "name": "From",
+              "type": "dict",
+              "required": false,
+              "description": "Contains the ID of the starting waypoint in this connection.",
+              "nested_params": [
+                {
+                  "name": "DayOfWeek",
+                  "type": "string",
+                  "required": false,
+                  "description": "Day of the week.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TimeOfDay",
+                  "type": "string",
+                  "required": false,
+                  "description": "Time of the day.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "To",
+              "type": "dict",
+              "required": false,
+              "description": "Contains the ID of the ending waypoint in this connection.",
+              "nested_params": [
+                {
+                  "name": "DayOfWeek",
+                  "type": "string",
+                  "required": false,
+                  "description": "Day of the week.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TimeOfDay",
+                  "type": "string",
+                  "required": false,
+                  "description": "Time of the day.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AppointmentTime",
+          "type": "string",
+          "required": false,
+          "description": "Appointment time at the waypoint.",
+          "nested_params": []
+        },
+        {
+          "name": "Before",
+          "type": "list",
+          "required": false,
+          "description": "Constraint defining what waypoints are to be visited after this waypoint.",
+          "nested_params": []
+        },
+        {
+          "name": "Heading",
+          "type": "float",
+          "required": false,
+          "description": "GPS Heading at the position.",
+          "nested_params": []
+        },
+        {
+          "name": "Id",
+          "type": "string",
+          "required": false,
+          "description": "The waypoint Id.",
+          "nested_params": []
+        },
+        {
+          "name": "Position",
+          "type": "list",
+          "required": false,
+          "description": "Position defined as [longitude, latitude].",
+          "nested_params": []
+        },
+        {
+          "name": "ServiceDuration",
+          "type": "integer",
+          "required": false,
+          "description": "Service time spent at the waypoint. At an appointment, the service time should be the appointment duration.",
+          "nested_params": []
+        },
+        {
+          "name": "SideOfStreet",
+          "type": "dict",
+          "required": false,
+          "description": "Options to configure matching the provided position to a side of the street.",
+          "nested_params": [
+            {
+              "name": "Position",
+              "type": "list",
+              "required": false,
+              "description": "Position defined as [longitude, latitude].",
+              "nested_params": []
+            },
+            {
+              "name": "UseWith",
+              "type": "string",
+              "required": false,
+              "description": "Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position. Default Value: DividedStreetOnly.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Connections",
+          "type": "list",
+          "description": "Details about the connection from one waypoint to the next, within the optimized sequence.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Distance",
+                  "type": "integer",
+                  "description": "Distance of the step.",
+                  "nested_items": []
+                },
+                {
+                  "name": "From",
+                  "type": "string",
+                  "description": "contains the ID of the starting waypoint in this connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RestDuration",
+                  "type": "integer",
+                  "description": "Resting time before the driver can continue driving.",
+                  "nested_items": []
+                },
+                {
+                  "name": "To",
+                  "type": "string",
+                  "description": "Contains the ID of the ending waypoint in this connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TravelDuration",
+                  "type": "integer",
+                  "description": "Total duration.",
+                  "nested_items": []
+                },
+                {
+                  "name": "WaitDuration",
+                  "type": "integer",
+                  "description": "Duration of a wait step.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Distance",
+          "type": "integer",
+          "description": "Overall distance to travel the whole sequence.",
+          "nested_items": []
+        },
+        {
+          "name": "Duration",
+          "type": "integer",
+          "description": "Overall duration to travel the whole sequence.",
+          "nested_items": []
+        },
+        {
+          "name": "ImpedingWaypoints",
+          "type": "list",
+          "description": "Returns waypoints that caused the optimization problem to fail, and the constraints that were unsatisfied leading to the failure.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "FailedConstraints",
+                  "type": "list",
+                  "description": "Failed constraints for an impeding waypoint.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Constraint",
+                          "type": "string",
+                          "description": "The failed constraint.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Reason",
+                          "type": "string",
+                          "description": "Reason for the failed constraint.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Id",
+                  "type": "string",
+                  "description": "The waypoint Id.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Position",
+                  "type": "list",
+                  "description": "Position defined as [longitude, latitude].",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "float",
+                      "description": "(float) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "OptimizedWaypoints",
+          "type": "list",
+          "description": "Waypoints in the order of the optimized sequence.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ArrivalTime",
+                  "type": "string",
+                  "description": "Estimated time of arrival at the destination.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ClusterIndex",
+                  "type": "integer",
+                  "description": "Index of the cluster the waypoint is associated with. The index is included in the response only if clustering was performed while processing the request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DepartureTime",
+                  "type": "string",
+                  "description": "Estimated time of departure from thr origin.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Id",
+                  "type": "string",
+                  "description": "The waypoint Id.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Position",
+                  "type": "list",
+                  "description": "Position defined as [longitude, latitude].",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "float",
+                      "description": "(float) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PricingBucket",
+          "type": "string",
+          "description": "The pricing bucket for which the query is charged at.",
+          "nested_items": []
+        },
+        {
+          "name": "TimeBreakdown",
+          "type": "dict",
+          "description": "Time breakdown for the sequence.",
+          "nested_items": [
+            {
+              "name": "RestDuration",
+              "type": "integer",
+              "description": "Resting phase of the cycle.",
+              "nested_items": []
+            },
+            {
+              "name": "ServiceDuration",
+              "type": "integer",
+              "description": "Service time spent at the destination. At an appointment, the service time should be the appointment duration.",
+              "nested_items": []
+            },
+            {
+              "name": "TravelDuration",
+              "type": "integer",
+              "description": "Traveling phase of the cycle.",
+              "nested_items": []
+            },
+            {
+              "name": "WaitDuration",
+              "type": "integer",
+              "description": "Waiting phase of the cycle.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
