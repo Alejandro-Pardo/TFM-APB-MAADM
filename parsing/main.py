@@ -16,9 +16,18 @@ The script will:
 """
 
 import os
+import signal
+import sys
 from utils.config import logger, DEFAULT_CONFIG
 from utils.checkpoint_manager import CheckpointManager
 from service_processor import ServiceProcessor
+
+
+def signal_handler(signum, frame):
+    """Handle Ctrl+C gracefully"""
+    logger.info("Processing interrupted by user. Progress has been saved to checkpoint file.")
+    print("\nProcessing interrupted. You can resume from the last checkpoint later.")
+    sys.exit(0)
 
 
 def main():
@@ -66,6 +75,7 @@ def main():
     except KeyboardInterrupt:
         logger.info("Processing interrupted by user. Progress has been saved to checkpoint file.")
         print("\nProcessing interrupted. You can resume from the last checkpoint later.")
+        return  # Exit gracefully instead of raising
     except Exception as e:
         logger.error(f"Unexpected error during processing: {str(e)}")
         import traceback

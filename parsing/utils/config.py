@@ -8,6 +8,28 @@ used throughout the parsing application.
 import logging
 import os
 
+
+class CleanFormatter(logging.Formatter):
+    """Custom formatter that provides clean, simple log formatting without timestamps."""
+    
+    LEVEL_PREFIXES = {
+        'DEBUG': '🐛 [DEBUG]',
+        'INFO': '📄 [INFO]',
+        'WARNING': '⚠️ [WARN]',
+        'ERROR': '❌ [ERROR]',
+        'CRITICAL': '🚨 [CRIT]'
+    }
+    
+    def format(self, record):
+        # Get clean prefix for the log level
+        prefix = self.LEVEL_PREFIXES.get(record.levelname, '[INFO]')
+        
+        # Format the message without timestamp for cleaner look
+        formatted_message = f"{prefix} {record.getMessage()}"
+        
+        return formatted_message
+
+
 def setup_logging(log_file='parser.log', level=logging.INFO):
     """
     Set up logging configuration for the application.
@@ -19,15 +41,29 @@ def setup_logging(log_file='parser.log', level=logging.INFO):
     Returns:
         logging.Logger: Configured logger instance
     """
-    logging.basicConfig(
-        level=level,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger(__name__)
+    # Get logger instance
+    logger = logging.getLogger(__name__)
+    
+    # Only set up handlers if they haven't been added yet
+    if not logger.handlers:
+        # Create formatter for file (with timestamp) and console (without timestamp)
+        file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        console_formatter = CleanFormatter()
+        
+        # Create handlers
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setFormatter(file_formatter)
+        
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(console_formatter)
+        
+        # Configure logger
+        logger.setLevel(level)
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
+    
+    return logger
+
 
 # Global logger instance
 logger = setup_logging()

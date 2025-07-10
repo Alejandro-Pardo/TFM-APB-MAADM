@@ -39,7 +39,26 @@ def timeout(seconds):
             t = threading.Thread(target=target)
             t.daemon = True
             t.start()
-            t.join(seconds)
+            
+            # Check for KeyboardInterrupt while waiting
+            import time
+            elapsed = 0
+            check_interval = 0.1  # Check every 100ms
+            
+            while t.is_alive() and elapsed < seconds:
+                try:
+                    time.sleep(check_interval)
+                    elapsed += check_interval
+                except KeyboardInterrupt:
+                    # If Ctrl+C is pressed, let it propagate
+                    raise KeyboardInterrupt
+            
+            # Final join with remaining time
+            if t.is_alive():
+                t.join(0)  # Don't wait, just check if it finished
+                if t.is_alive():
+                    # Still running after timeout
+                    result[0] = TimeoutException("Function call timed out")
             
             if isinstance(result[0], Exception):
                 raise result[0]

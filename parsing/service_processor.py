@@ -97,6 +97,10 @@ class ServiceProcessor:
         initial_progress = len(processed_methods)
         total_methods = len(methods)
         
+        # Log summary of skipped methods instead of individual entries
+        if initial_progress > 0:
+            logger.info(f"Skipping {initial_progress} already processed methods")
+        
         # Use tqdm to show progress with correct initial position
         progress_bar = tqdm(total=total_methods, 
                           desc=f"Methods for {service_name}",
@@ -107,7 +111,7 @@ class ServiceProcessor:
             
             # Skip already processed methods
             if method_name in processed_methods:
-                logger.info(f"Skipping already processed method: {method_name}")
+                # Don't log individual skipped methods to reduce verbosity
                 method_filename = method_name.replace(' ', '_')
                 method_output_path = os.path.join(service_output_folder, f"{method_filename}.json")
                 
@@ -264,8 +268,9 @@ class ServiceProcessor:
             
         resume_processing = False if resume_service else True
         
-        # If resuming, find the index of the service to resume from
+        # Calculate starting position based on already processed services
         if resume_service:
+            # If resuming, find the index of the service to resume from
             for i, service_file in enumerate(service_files):
                 service_file_path = os.path.join(self.services_folder, service_file)
                 try:
@@ -276,12 +281,31 @@ class ServiceProcessor:
                         break
                 except Exception:
                     continue
+        else:
+            # If starting fresh, count already processed services
+            if self.checkpoint_manager:
+                for i, service_file in enumerate(service_files):
+                    service_file_path = os.path.join(self.services_folder, service_file)
+                    try:
+                        with open(service_file_path, 'r') as f:
+                            service_data = json.load(f)
+                        if self.checkpoint_manager.is_service_processed(service_data['service_name']):
+                            resume_index = i + 1  # Start from the next service
+                        else:
+                            break  # Found first unprocessed service
+                    except Exception:
+                        continue
         
         # Initialize progress bar with correct starting position
         progress_bar = tqdm(total=len(service_files), desc="Processing services", initial=resume_index)
         
         for i, service_file in enumerate(service_files):
             service_file_path = os.path.join(self.services_folder, service_file)
+            
+            # Skip files before our starting point
+            if i < resume_index:
+                progress_bar.update(1)
+                continue
             
             # If we're resuming and haven't reached the resume point yet, skip
             if not resume_processing:
@@ -293,14 +317,10 @@ class ServiceProcessor:
                     if service_data['service_name'] == resume_service:
                         resume_processing = True
                     else:
-                        # Update progress bar for skipped files
-                        if i < resume_index:
-                            progress_bar.update(1)
+                        progress_bar.update(1)
                         continue
                 except Exception:
-                    # Update progress bar for skipped files
-                    if i < resume_index:
-                        progress_bar.update(1)
+                    progress_bar.update(1)
                     continue
             
             try:
