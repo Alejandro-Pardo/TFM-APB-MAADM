@@ -13,11 +13,11 @@ class CleanFormatter(logging.Formatter):
     """Custom formatter that provides clean, simple log formatting without timestamps."""
     
     LEVEL_PREFIXES = {
-        'DEBUG': '🐛 [DEBUG]',
-        'INFO': '📄 [INFO]',
-        'WARNING': '⚠️ [WARN]',
-        'ERROR': '❌ [ERROR]',
-        'CRITICAL': '🚨 [CRIT]'
+        'DEBUG': '[DEBUG] 🐛',
+        'INFO': '[INFO] 📄',
+        'WARNING': '[WARN] ⚠️ ',
+        'ERROR': '[ERROR] ❌',
+        'CRITICAL': '[CRIT] 🚨'
     }
     
     def format(self, record):
