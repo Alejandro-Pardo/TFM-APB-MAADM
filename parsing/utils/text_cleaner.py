@@ -7,6 +7,7 @@ from AWS API documentation, handling encoding issues and removing duplicates.
 
 import html
 import re
+from bs4 import BeautifulSoup
 
 
 class DescriptionCleaner:
@@ -18,7 +19,28 @@ class DescriptionCleaner:
     - Unicode character cleanup
     - Duplicate text removal
     - Parameter marker cleanup
+    - HTML admonition note removal
     """
+    
+    @staticmethod
+    def delete_admonition_notes(html_content):
+        """
+        Remove admonition notes from HTML content before parsing.
+        
+        Args:
+            html_content (str): Raw HTML content
+        
+        Returns:
+            str: HTML content with admonition notes removed
+        """
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Find and remove all admonition notes
+        admonition_notes = soup.find_all('div', class_='admonition')
+        for note in admonition_notes:
+            note.extract()
+        
+        return str(soup)
     
     @staticmethod
     def clean(text):

@@ -1,13 +1,11 @@
 """
-Utility functions and classes for the AWS API parser.
+Timeout utilities for the AWS API parser.
 
-This module contains common utilities like timeout decorators,
-custom exceptions, and HTML preprocessing functions.
+This module contains timeout-related utilities like timeout decorators
+and custom exceptions for handling function execution timeouts.
 """
 
 import threading
-import time
-from bs4 import BeautifulSoup
 
 
 class TimeoutException(Exception):
@@ -48,23 +46,3 @@ def timeout(seconds):
             return result[0]
         return wrapper
     return decorator
-
-
-def preprocess_html(html_content):
-    """
-    Pre-process HTML content to remove admonition notes before parsing.
-    
-    Args:
-        html_content (str): Raw HTML content
-    
-    Returns:
-        str: Preprocessed HTML content with admonition notes removed
-    """
-    soup = BeautifulSoup(html_content, 'html.parser')
-    
-    # Find and remove all admonition notes
-    admonition_notes = soup.find_all('div', class_='admonition')
-    for note in admonition_notes:
-        note.extract()
-    
-    return str(soup)

@@ -13,7 +13,7 @@ import traceback
 from tqdm import tqdm
 
 from utils.config import logger, DEFAULT_CONFIG
-from utils.utils import timeout, TimeoutException
+from utils.timeout import timeout, TimeoutException
 from method_parser import MethodParser
 
 

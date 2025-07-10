@@ -1,0 +1,113 @@
+{
+  "method_name": "create_dataset",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lookoutvision/client/create_dataset.html",
+  "description": "Creates a new dataset in an Amazon Lookout for Vision project. CreateDataset can create a training or a test dataset from a valid dataset source ( DatasetSource). If you want a single dataset project, specify train for the value of DatasetType. To have a project with separate training and test datasets, call CreateDataset twice. On the first call, specify train for the value of DatasetType. On the second call, specify test for the value of DatasetType. This operation requires permissions to perform the lookoutvision:CreateDataset operation.",
+  "parameters": [
+    {
+      "name": "ProjectName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the project in which you want to create a dataset.",
+      "nested_params": []
+    },
+    {
+      "name": "DatasetType",
+      "type": "string",
+      "required": true,
+      "description": "The type of the dataset. Specify train for a training dataset. Specify test for a test dataset.",
+      "nested_params": []
+    },
+    {
+      "name": "DatasetSource",
+      "type": "dict",
+      "required": true,
+      "description": "The location of the manifest file that Amazon Lookout for Vision uses to create the dataset. If you don't specify DatasetSource, an empty dataset is created and the operation synchronously returns. Later, you can add JSON Lines by calling  UpdateDatasetEntries. If you specify a value for DataSource, the manifest at the S3 location is validated and used to create the dataset. The call to CreateDataset is asynchronous and might take a while to complete. To find out the current status, Check the value of Status returned in a call to  DescribeDataset. GroundTruthManifest (dict) --- Location information for the manifest file. S3Object (dict) --- The S3 bucket location for the manifest file. The Amazon S3 bucket that contains the manifest. The name and location of the manifest file withiin the bucket. VersionId (string) --- The version ID of the bucket.",
+      "nested_params": [
+        {
+          "name": "GroundTruthManifest",
+          "type": "dict",
+          "required": false,
+          "description": "Location information for the manifest file.",
+          "nested_params": [
+            {
+              "name": "S3Object",
+              "type": "dict",
+              "required": false,
+              "description": "The S3 bucket location for the manifest file.",
+              "nested_params": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon S3 bucket that contains the manifest.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name and location of the manifest file withiin the bucket.",
+                  "nested_params": []
+                },
+                {
+                  "name": "VersionId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The version ID of the bucket.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "ClientToken is an idempotency token that ensures a call to CreateDataset completes only once. You choose the value to pass. For example, An issue might prevent you from getting a response from CreateDataset. In this case, safely retry your call to CreateDataset by using the same ClientToken parameter value. If you don't supply a value for ClientToken, the AWS SDK you are using inserts a value for you. This prevents retries after a network error from making multiple dataset creation requests. You'll need to provide your own value for other use cases. An error occurs if the other input parameters are not the same as in the first request. Using a different value for ClientToken is considered a new call to CreateDataset. An idempotency token is active for 8 hours. This field is autopopulated if not provided.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DatasetMetadata",
+          "type": "dict",
+          "description": "Information about the dataset.",
+          "nested_items": [
+            {
+              "name": "DatasetType",
+              "type": "string",
+              "description": "The type of the dataset.",
+              "nested_items": []
+            },
+            {
+              "name": "CreationTimestamp",
+              "type": "datetime",
+              "description": "The Unix timestamp for the date and time that the dataset was created.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The status for the dataset.",
+              "nested_items": []
+            },
+            {
+              "name": "StatusMessage",
+              "type": "string",
+              "description": "The status message for the dataset.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

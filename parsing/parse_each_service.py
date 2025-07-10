@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
-from tqdm import tqdm  # For progress bar
+from tqdm.auto import tqdm  # For progress bar
 
 def read_api_links(input_file):
     """

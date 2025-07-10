@@ -13,7 +13,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
 from utils.config import logger
-from utils.utils import timeout, preprocess_html, TimeoutException
+from utils.timeout import timeout, TimeoutException
 from utils.text_cleaner import DescriptionCleaner
 
 
@@ -105,7 +105,7 @@ class MethodParser:
                 return None
                 
             # Preprocess HTML to remove admonition notes
-            preprocessed_html = preprocess_html(response.text)
+            preprocessed_html = DescriptionCleaner.delete_admonition_notes(response.text)
             
             # Parse the preprocessed HTML content
             soup = BeautifulSoup(preprocessed_html, 'html.parser')
