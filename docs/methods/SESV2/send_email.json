@@ -1,0 +1,457 @@
+{
+  "method_name": "send_email",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sesv2/client/send_email.html",
+  "description": "Sends an email message. You can use the Amazon SES API v2 to send the following types of messages:",
+  "parameters": [
+    {
+      "name": "FromEmailAddress",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "FromEmailAddressIdentityArn",
+      "type": "string",
+      "required": false,
+      "description": "This parameter is used only for sending authorization. It is the ARN of the identity that is associated with the sending authorization policy that permits you to use the email address specified in the FromEmailAddress parameter. For example, if the owner of example.com (which has ARN arn:aws:ses:us-east-1:123456789012:identity/example.com) attaches a policy to it that authorizes you to use sender@example.com, then you would specify the FromEmailAddressIdentityArn to be arn:aws:ses:us-east-1:123456789012:identity/example.com, and the FromEmailAddress to be sender@example.com. For more information about sending authorization, see the Amazon SES Developer Guide. For Raw emails, the FromEmailAddressIdentityArn value overrides the X-SES-SOURCE-ARN and X-SES-FROM-ARN headers specified in raw email message content.",
+      "nested_params": []
+    },
+    {
+      "name": "Destination",
+      "type": "dict",
+      "required": false,
+      "description": "An object that contains the recipients of the email message. ToAddresses (list) --- An array that contains the email addresses of the 'To' recipients for the email. (string) --- CcAddresses (list) --- An array that contains the email addresses of the 'CC' (carbon copy) recipients for the email. (string) --- BccAddresses (list) --- An array that contains the email addresses of the 'BCC' (blind carbon copy) recipients for the email. (string) ---",
+      "nested_params": [
+        {
+          "name": "ToAddresses",
+          "type": "list",
+          "required": false,
+          "description": "An array that contains the email addresses of the 'To' recipients for the email.",
+          "nested_params": []
+        },
+        {
+          "name": "CcAddresses",
+          "type": "list",
+          "required": false,
+          "description": "An array that contains the email addresses of the 'CC' (carbon copy) recipients for the email.",
+          "nested_params": []
+        },
+        {
+          "name": "BccAddresses",
+          "type": "list",
+          "required": false,
+          "description": "An array that contains the email addresses of the 'BCC' (blind carbon copy) recipients for the email.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ReplyToAddresses",
+      "type": "list",
+      "required": false,
+      "description": "The 'Reply-to' email addresses for the message. When the recipient replies to the message, each Reply-to address receives the reply. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "FeedbackForwardingEmailAddress",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "FeedbackForwardingEmailAddressIdentityArn",
+      "type": "string",
+      "required": false,
+      "description": "This parameter is used only for sending authorization. It is the ARN of the identity that is associated with the sending authorization policy that permits you to use the email address specified in the FeedbackForwardingEmailAddress parameter. For example, if the owner of example.com (which has ARN arn:aws:ses:us-east-1:123456789012:identity/example.com) attaches a policy to it that authorizes you to use feedback@example.com, then you would specify the FeedbackForwardingEmailAddressIdentityArn to be arn:aws:ses:us-east-1:123456789012:identity/example.com, and the FeedbackForwardingEmailAddress to be feedback@example.com. For more information about sending authorization, see the Amazon SES Developer Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Content",
+      "type": "dict",
+      "required": true,
+      "description": "An object that contains the body of the message. You can send either a Simple message, Raw message, or a Templated message. Simple (dict) --- The simple email message. The message consists of a subject, message body and attachments list. The subject line of the email. The subject line can only contain 7-bit ASCII characters. However, you can specify non-ASCII characters in the subject line by using encoded-word syntax, as described in RFC 2047. The content of the message itself. Charset (string) --- The character set for the content. Because of the constraints of the SMTP protocol, Amazon SES uses 7-bit ASCII by default. If the text includes characters outside of the ASCII range, you have to specify a character set. For example, you could specify UTF-8, ISO-8859-1, or Shift_JIS. The body of the message. You can specify an HTML version of the message, a text-only version of the message, or both. Text (dict) --- An object that represents the version of the message that is displayed in email clients that don't support HTML, or clients where the recipient has disabled HTML rendering. Html (dict) --- An object that represents the version of the message that is displayed in email clients that support HTML. HTML messages can include formatted text, hyperlinks, images, and more. Headers (list) --- The list of message headers that will be added to the email message. (dict) --- Contains the name and value of a message header that you add to an email. The name of the message header. The message header name has to meet the following criteria: Can contain any printable ASCII character (33 - 126) except for colon (:). Can contain no more than 126 characters. The value of the message header. The message header value has to meet the following criteria: Can contain any printable ASCII character. Can contain no more than 870 characters. Attachments (list) --- The List of attachments to include in your email. All recipients will receive the same attachments. (dict) --- Contains metadata and attachment raw content. The raw data of the attachment. It needs to be base64-encoded if you are accessing Amazon SES directly through the HTTPS interface. If you are accessing Amazon SES using an Amazon Web Services SDK, the SDK takes care of the base 64-encoding for you. ContentDisposition (string) --- A standard descriptor indicating how the attachment should be rendered in the email. Supported values: ATTACHMENT or INLINE. The file name for the attachment as it will appear in the email. Amazon SES restricts certain file extensions. To ensure attachments are accepted, check the Unsupported attachment types in the Amazon SES Developer Guide. ContentDescription (string) --- A brief description of the attachment content. ContentId (string) --- Unique identifier for the attachment, used for referencing attachments with INLINE disposition in HTML content. ContentTransferEncoding (string) --- Specifies how the attachment is encoded. Supported values: BASE64, QUOTED_PRINTABLE, SEVEN_BIT. ContentType (string) --- The MIME type of the attachment. Raw (dict) --- The raw email message. The message has to meet the following criteria: The message has to contain a header and a body, separated by one blank line. All of the required header fields must be present in the message. Each part of a multipart MIME message must be formatted properly. If you include attachments, they must be in a file format that the Amazon SES API v2 supports. The raw data of the message needs to base64-encoded if you are accessing Amazon SES directly through the HTTPS interface. If any of the MIME parts in your message contain content that is outside of the 7-bit ASCII character range, you should encode that content to ensure that recipients' email clients render the message properly. The length of any single line of text in the message can't exceed 1,000 characters. This restriction is defined in RFC 5321. The raw email message. Attachments must be in a file format that the Amazon SES supports. Template (dict) --- The template to use for the email message. TemplateName (string) --- The name of the template. You will refer to this name when you send email using the SendEmail or SendBulkEmail operations. TemplateArn (string) --- The Amazon Resource Name (ARN) of the template. TemplateContent (dict) --- The content of the template. Subject (string) --- The subject line of the email. Text (string) --- The email body that will be visible to recipients whose email clients do not display HTML. Html (string) --- The HTML body of the email. TemplateData (string) --- An object that defines the values to use for message variables in the template. This object is a set of key-value pairs. Each key defines a message variable in the template. The corresponding value defines the value to use for that variable. ContentType (string) --- The MIME type of the attachment.",
+      "nested_params": [
+        {
+          "name": "Simple",
+          "type": "dict",
+          "required": false,
+          "description": "The simple email message. The message consists of a subject, message body and attachments list.",
+          "nested_params": [
+            {
+              "name": "Subject",
+              "type": "dict",
+              "required": false,
+              "description": "The subject line of the email. The subject line can only contain 7-bit ASCII characters. However, you can specify non-ASCII characters in the subject line by using encoded-word syntax, as described in RFC 2047.",
+              "nested_params": [
+                {
+                  "name": "Data",
+                  "type": "string",
+                  "required": false,
+                  "description": "The content of the message itself.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Charset",
+                  "type": "string",
+                  "required": false,
+                  "description": "The character set for the content. Because of the constraints of the SMTP protocol, Amazon SES uses 7-bit ASCII by default. If the text includes characters outside of the ASCII range, you have to specify a character set. For example, you could specify UTF-8, ISO-8859-1, or Shift_JIS.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Body",
+              "type": "dict",
+              "required": false,
+              "description": "The body of the message. You can specify an HTML version of the message, a text-only version of the message, or both.",
+              "nested_params": [
+                {
+                  "name": "Text",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents the version of the message that is displayed in email clients that don't support HTML, or clients where the recipient has disabled HTML rendering.",
+                  "nested_params": [
+                    {
+                      "name": "Data",
+                      "type": "string",
+                      "required": false,
+                      "description": "The content of the message itself.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Charset",
+                      "type": "string",
+                      "required": false,
+                      "description": "The character set for the content. Because of the constraints of the SMTP protocol, Amazon SES uses 7-bit ASCII by default. If the text includes characters outside of the ASCII range, you have to specify a character set. For example, you could specify UTF-8, ISO-8859-1, or Shift_JIS.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Html",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An object that represents the version of the message that is displayed in email clients that support HTML. HTML messages can include formatted text, hyperlinks, images, and more.",
+                  "nested_params": [
+                    {
+                      "name": "Data",
+                      "type": "string",
+                      "required": false,
+                      "description": "The content of the message itself.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Charset",
+                      "type": "string",
+                      "required": false,
+                      "description": "The character set for the content. Because of the constraints of the SMTP protocol, Amazon SES uses 7-bit ASCII by default. If the text includes characters outside of the ASCII range, you have to specify a character set. For example, you could specify UTF-8, ISO-8859-1, or Shift_JIS.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Headers",
+              "type": "list",
+              "required": false,
+              "description": "The list of message headers that will be added to the email message.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the message header. The message header name has to meet the following criteria:",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value of the message header. The message header value has to meet the following criteria:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Attachments",
+              "type": "list",
+              "required": false,
+              "description": "The List of attachments to include in your email. All recipients will receive the same attachments.",
+              "nested_params": [
+                {
+                  "name": "RawContent",
+                  "type": "bytes",
+                  "required": false,
+                  "description": "The raw data of the attachment. It needs to be base64-encoded if you are accessing Amazon SES directly through the HTTPS interface. If you are accessing Amazon SES using an Amazon Web Services SDK, the SDK takes care of the base 64-encoding for you.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentDisposition",
+                  "type": "string",
+                  "required": false,
+                  "description": "A standard descriptor indicating how the attachment should be rendered in the email. Supported values: ATTACHMENT or INLINE.",
+                  "nested_params": []
+                },
+                {
+                  "name": "FileName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The file name for the attachment as it will appear in the email. Amazon SES restricts certain file extensions. To ensure attachments are accepted, check the Unsupported attachment types in the Amazon SES Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentDescription",
+                  "type": "string",
+                  "required": false,
+                  "description": "A brief description of the attachment content.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentId",
+                  "type": "string",
+                  "required": false,
+                  "description": "Unique identifier for the attachment, used for referencing attachments with INLINE disposition in HTML content.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentTransferEncoding",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies how the attachment is encoded. Supported values: BASE64, QUOTED_PRINTABLE, SEVEN_BIT.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The MIME type of the attachment.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Raw",
+          "type": "dict",
+          "required": false,
+          "description": "The raw email message. The message has to meet the following criteria:",
+          "nested_params": []
+        },
+        {
+          "name": "Template",
+          "type": "dict",
+          "required": false,
+          "description": "The template to use for the email message.",
+          "nested_params": [
+            {
+              "name": "TemplateName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the template. You will refer to this name when you send email using the SendEmail or SendBulkEmail operations.",
+              "nested_params": []
+            },
+            {
+              "name": "TemplateArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the template.",
+              "nested_params": []
+            },
+            {
+              "name": "TemplateContent",
+              "type": "dict",
+              "required": false,
+              "description": "The content of the template.",
+              "nested_params": [
+                {
+                  "name": "Subject",
+                  "type": "string",
+                  "required": false,
+                  "description": "The subject line of the email.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Text",
+                  "type": "string",
+                  "required": false,
+                  "description": "The email body that will be visible to recipients whose email clients do not display HTML.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Html",
+                  "type": "string",
+                  "required": false,
+                  "description": "The HTML body of the email.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "TemplateData",
+              "type": "string",
+              "required": false,
+              "description": "An object that defines the values to use for message variables in the template. This object is a set of key-value pairs. Each key defines a message variable in the template. The corresponding value defines the value to use for that variable.",
+              "nested_params": []
+            },
+            {
+              "name": "Headers",
+              "type": "list",
+              "required": false,
+              "description": "The list of message headers that will be added to the email message.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the message header. The message header name has to meet the following criteria:",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value of the message header. The message header value has to meet the following criteria:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Attachments",
+              "type": "list",
+              "required": false,
+              "description": "The List of attachments to include in your email. All recipients will receive the same attachments.",
+              "nested_params": [
+                {
+                  "name": "RawContent",
+                  "type": "bytes",
+                  "required": false,
+                  "description": "The raw data of the attachment. It needs to be base64-encoded if you are accessing Amazon SES directly through the HTTPS interface. If you are accessing Amazon SES using an Amazon Web Services SDK, the SDK takes care of the base 64-encoding for you.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentDisposition",
+                  "type": "string",
+                  "required": false,
+                  "description": "A standard descriptor indicating how the attachment should be rendered in the email. Supported values: ATTACHMENT or INLINE.",
+                  "nested_params": []
+                },
+                {
+                  "name": "FileName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The file name for the attachment as it will appear in the email. Amazon SES restricts certain file extensions. To ensure attachments are accepted, check the Unsupported attachment types in the Amazon SES Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentDescription",
+                  "type": "string",
+                  "required": false,
+                  "description": "A brief description of the attachment content.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentId",
+                  "type": "string",
+                  "required": false,
+                  "description": "Unique identifier for the attachment, used for referencing attachments with INLINE disposition in HTML content.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentTransferEncoding",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies how the attachment is encoded. Supported values: BASE64, QUOTED_PRINTABLE, SEVEN_BIT.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ContentType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The MIME type of the attachment.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EmailTags",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags, in the form of name/value pairs, to apply to an email that you send using the SendEmail operation. Tags correspond to characteristics of the email that you define, so that you can publish email sending events. (dict) --- Contains the name and value of a tag that you apply to an email. You can use message tags when you publish email sending events. The name of the message tag. The message tag name has to meet the following criteria: It can only contain ASCII letters (a---z, A---Z), numbers (0---9), underscores (_), or dashes (-). It can contain no more than 256 characters. The value of the message tag. The message tag value has to meet the following criteria: It can only contain ASCII letters (a---z, A---Z), numbers (0---9), underscores (_), or dashes (-). It can contain no more than 256 characters.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the message tag. The message tag name has to meet the following criteria:",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the message tag. The message tag value has to meet the following criteria:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ConfigurationSetName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "EndpointId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ListManagementOptions",
+      "type": "dict",
+      "required": true,
+      "description": "An object used to specify a list or topic to which an email belongs, which will be used when a contact chooses to unsubscribe. The name of the contact list. TopicName (string) --- The name of the topic.",
+      "nested_params": [
+        {
+          "name": "ContactListName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the contact list.",
+          "nested_params": []
+        },
+        {
+          "name": "TopicName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the topic.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "MessageId",
+          "type": "string",
+          "description": "A unique identifier for the message that is generated when the message is accepted.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

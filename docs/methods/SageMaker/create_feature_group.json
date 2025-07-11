@@ -1,0 +1,218 @@
+{
+  "method_name": "create_feature_group",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker/client/create_feature_group.html",
+  "description": "Create a new FeatureGroup. A FeatureGroup is a group of Features defined in the FeatureStore to describe a Record. The FeatureGroup defines the schema and features contained in the FeatureGroup. A FeatureGroup definition is composed of a list of Features, a RecordIdentifierFeatureName, an EventTimeFeatureName and configurations for its OnlineStore and OfflineStore. Check Amazon Web Services service quotas to see the ``FeatureGroup``s quota for your Amazon Web Services account. Note that it can take approximately 10-15 minutes to provision an OnlineStore FeatureGroup with the InMemory StorageType.",
+  "parameters": [
+    {
+      "name": "FeatureGroupName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the FeatureGroup. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account. The name: Must start with an alphanumeric character. Can only include alphanumeric characters, underscores, and hyphens. Spaces are not allowed.",
+      "nested_params": []
+    },
+    {
+      "name": "RecordIdentifierFeatureName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Feature whose value uniquely identifies a Record defined in the FeatureStore. Only the latest record per identifier value will be stored in the OnlineStore. RecordIdentifierFeatureName must be one of feature definitions' names. You use the RecordIdentifierFeatureName to access data in a FeatureStore. This name: Must start with an alphanumeric character. Can only contains alphanumeric characters, hyphens, underscores. Spaces are not allowed.",
+      "nested_params": []
+    },
+    {
+      "name": "EventTimeFeatureName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the feature that stores the EventTime of a Record in a FeatureGroup. An EventTime is a point in time when a new event occurs that corresponds to the creation or update of a Record in a FeatureGroup. All Records in the FeatureGroup must have a corresponding EventTime. An EventTime can be a String or Fractional. Fractional: EventTime feature values must be a Unix timestamp in seconds. String: EventTime feature values must be an ISO-8601 string in the format. The following formats are supported yyyy-MM-dd'T'HH:mm:ssZ and yyyy-MM-dd'T'HH:mm:ss.SSSZ where yyyy, MM, and dd represent the year, month, and day respectively and HH, mm, ss, and if applicable, SSS represent the hour, month, second and milliseconds respsectively. 'T' and Z are constants.",
+      "nested_params": []
+    },
+    {
+      "name": "FeatureDefinitions",
+      "type": "list",
+      "required": true,
+      "description": "A list of Feature names and types. Name and Type is compulsory per Feature. Valid feature FeatureType``s are ``Integral, Fractional and String. FeatureName``s cannot be any of the following: ``is_deleted, write_time, api_invocation_time You can create up to 2,500 FeatureDefinition``s per ``FeatureGroup. (dict) --- A list of features. You must include FeatureName and FeatureType. The name of a feature. The type must be a string. FeatureName cannot be any of the following: is_deleted, write_time, api_invocation_time. The name: Must start with an alphanumeric character. Can only include alphanumeric characters, underscores, and hyphens. Spaces are not allowed. The value type of a feature. Valid values are Integral, Fractional, or String. CollectionType (string) --- A grouping of elements where each element within the collection must have the same feature type ( String, Integral, or Fractional). List: An ordered collection of elements. Set: An unordered collection of unique elements. Vector: A specialized list that represents a fixed-size array of elements. The vector dimension is determined by you. Must have elements with fractional feature types. CollectionConfig (dict) --- Configuration for your collection. VectorConfig (dict) --- Configuration for your vector collection type. Dimension: The number of elements in your vector. The number of elements in your vector.",
+      "nested_params": [
+        {
+          "name": "FeatureName",
+          "type": "string",
+          "required": false,
+          "description": "The name of a feature. The type must be a string. FeatureName cannot be any of the following: is_deleted, write_time, api_invocation_time. The name:",
+          "nested_params": []
+        },
+        {
+          "name": "FeatureType",
+          "type": "string",
+          "required": false,
+          "description": "The value type of a feature. Valid values are Integral, Fractional, or String.",
+          "nested_params": []
+        },
+        {
+          "name": "CollectionType",
+          "type": "string",
+          "required": false,
+          "description": "A grouping of elements where each element within the collection must have the same feature type ( String, Integral, or Fractional).",
+          "nested_params": []
+        },
+        {
+          "name": "CollectionConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration for your collection.",
+          "nested_params": [
+            {
+              "name": "VectorConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration for your vector collection type.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OnlineStoreConfig",
+      "type": "dict",
+      "required": false,
+      "description": "You can turn the OnlineStore on or off by specifying True for the EnableOnlineStore flag in OnlineStoreConfig. You can also include an Amazon Web Services KMS key ID ( KMSKeyId) for at-rest encryption of the OnlineStore. The default value is False. SecurityConfig (dict) --- Use to specify KMS Key ID ( KMSKeyId) for at-rest encryption of your OnlineStore. KmsKeyId (string) --- The Amazon Web Services Key Management Service (KMS) key ARN that SageMaker Feature Store uses to encrypt the Amazon S3 objects at rest using Amazon S3 server-side encryption. The caller (either user or IAM role) of CreateFeatureGroup must have below permissions to the OnlineStore KmsKeyId: \"kms:Encrypt\" \"kms:Decrypt\" \"kms:DescribeKey\" \"kms:CreateGrant\" \"kms:RetireGrant\" \"kms:ReEncryptFrom\" \"kms:ReEncryptTo\" \"kms:GenerateDataKey\" \"kms:ListAliases\" \"kms:ListGrants\" \"kms:RevokeGrant\" The caller (either user or IAM role) to all DataPlane operations ( PutRecord, GetRecord, DeleteRecord) must have the following permissions to the KmsKeyId: \"kms:Decrypt\" EnableOnlineStore (boolean) --- Turn OnlineStore off by specifying False for the EnableOnlineStore flag. Turn OnlineStore on by specifying True for the EnableOnlineStore flag. TtlDuration (dict) --- Time to live duration, where the record is hard deleted after the expiration time is reached; ExpiresAt = EventTime + TtlDuration. For information on HardDelete, see the DeleteRecord API in the Amazon SageMaker API Reference guide. Unit (string) --- TtlDuration time unit. Value (integer) --- TtlDuration time value. StorageType (string) --- Option for different tiers of low latency storage for real-time data retrieval. Standard: A managed low latency data store for feature groups. InMemory: A managed data store for feature groups that supports very low latency retrieval.",
+      "nested_params": [
+        {
+          "name": "SecurityConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Use to specify KMS Key ID ( KMSKeyId) for at-rest encryption of your OnlineStore.",
+          "nested_params": [
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Web Services Key Management Service (KMS) key ARN that SageMaker Feature Store uses to encrypt the Amazon S3 objects at rest using Amazon S3 server-side encryption. The caller (either user or IAM role) of CreateFeatureGroup must have below permissions to the OnlineStore KmsKeyId:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EnableOnlineStore",
+          "type": "boolean",
+          "required": false,
+          "description": "Turn OnlineStore off by specifying False for the EnableOnlineStore flag. Turn OnlineStore on by specifying True for the EnableOnlineStore flag. The default value is False.",
+          "nested_params": []
+        },
+        {
+          "name": "TtlDuration",
+          "type": "dict",
+          "required": false,
+          "description": "Time to live duration, where the record is hard deleted after the expiration time is reached; ExpiresAt = EventTime + TtlDuration. For information on HardDelete, see the DeleteRecord API in the Amazon SageMaker API Reference guide.",
+          "nested_params": [
+            {
+              "name": "Unit",
+              "type": "string",
+              "required": false,
+              "description": "TtlDuration time unit.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "integer",
+              "required": false,
+              "description": "TtlDuration time value.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "StorageType",
+          "type": "string",
+          "required": false,
+          "description": "Option for different tiers of low latency storage for real-time data retrieval.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OfflineStoreConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Use this to configure an OfflineFeatureStore. This parameter allows you to specify: The Amazon Simple Storage Service (Amazon S3) location of an OfflineStore. A configuration for an Amazon Web Services Glue or Amazon Web Services Hive data catalog. An KMS encryption key to encrypt the Amazon S3 location used for OfflineStore. If KMS encryption key is not specified, by default we encrypt all data at rest using Amazon Web Services KMS key. By defining your bucket-level key for SSE, you can reduce Amazon Web Services KMS requests costs by up to 99 percent. Format for the offline store table. Supported formats are Glue (Default) and Apache Iceberg. To learn more about this parameter, see OfflineStoreConfig. The Amazon Simple Storage (Amazon S3) location of OfflineStore. The S3 URI, or location in Amazon S3, of OfflineStore. S3 URIs have a format similar to the following: s3://example-bucket/prefix/. KmsKeyId (string) --- The Amazon Web Services Key Management Service (KMS) key ARN of the key used to encrypt any objects written into the OfflineStore S3 location. The IAM roleARN that is passed as a parameter to CreateFeatureGroup must have below permissions to the KmsKeyId: \"kms:GenerateDataKey\" ResolvedOutputS3Uri (string) --- The S3 path where offline records are written. DisableGlueTableCreation (boolean) --- Set to True to disable the automatic creation of an Amazon Web Services Glue table when configuring an OfflineStore. If set to False, Feature Store will name the OfflineStore Glue table following Athena's naming recommendations. The default value is False. DataCatalogConfig (dict) --- The meta data of the Glue table that is autogenerated when an OfflineStore is created. The name of the Glue table. The name of the Glue table catalog. The name of the Glue table database. TableFormat (string) --- Format for the offline store table. Supported formats are Glue (Default) and Apache Iceberg.",
+      "nested_params": []
+    },
+    {
+      "name": "ThroughputConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Used to set feature group throughput configuration. There are two modes: ON_DEMAND and PROVISIONED. With on-demand mode, you are charged for data reads and writes that your application performs on your feature group. You do not need to specify read and write throughput because Feature Store accommodates your workloads as they ramp up and down. You can switch a feature group to on-demand only once in a 24 hour period. With provisioned throughput mode, you specify the read and write capacity per second that you expect your application to require, and you are billed based on those limits. Exceeding provisioned throughput will result in your requests being throttled. Note: PROVISIONED throughput mode is supported only for feature groups that are offline-only, or use the Standard tier online store. The mode used for your feature group throughput: ON_DEMAND or PROVISIONED. ProvisionedReadCapacityUnits (integer) --- For provisioned feature groups with online store enabled, this indicates the read throughput you are billed for and can consume without throttling. This field is not applicable for on-demand feature groups. ProvisionedWriteCapacityUnits (integer) --- For provisioned feature groups, this indicates the write throughput you are billed for and can consume without throttling. This field is not applicable for on-demand feature groups.",
+      "nested_params": [
+        {
+          "name": "ThroughputMode",
+          "type": "string",
+          "required": false,
+          "description": "The mode used for your feature group throughput: ON_DEMAND or PROVISIONED.",
+          "nested_params": []
+        },
+        {
+          "name": "ProvisionedReadCapacityUnits",
+          "type": "integer",
+          "required": false,
+          "description": "For provisioned feature groups with online store enabled, this indicates the read throughput you are billed for and can consume without throttling. This field is not applicable for on-demand feature groups.",
+          "nested_params": []
+        },
+        {
+          "name": "ProvisionedWriteCapacityUnits",
+          "type": "integer",
+          "required": false,
+          "description": "For provisioned feature groups, this indicates the write throughput you are billed for and can consume without throttling. This field is not applicable for on-demand feature groups.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Tags used to identify Features in each FeatureGroup. (dict) --- A tag object that consists of a key and an optional value, used to manage metadata for SageMaker Amazon Web Services resources. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints. For more information on adding tags to SageMaker resources, see AddTags. For more information on adding metadata to your Amazon Web Services resources with tagging, see Tagging Amazon Web Services resources. For advice on best practices for managing Amazon Web Services resources with tagging, see Tagging Best Practices: Implement an Effective Amazon Web Services Resource Tagging Strategy. The tag key. Tag keys must be unique per resource. The tag value.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The tag key. Tag keys must be unique per resource.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The tag value.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "FeatureGroupArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the FeatureGroup. This is a unique identifier for the feature group.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

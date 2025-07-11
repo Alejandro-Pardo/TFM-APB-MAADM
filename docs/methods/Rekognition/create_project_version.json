@@ -1,0 +1,215 @@
+{
+  "method_name": "create_project_version",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/create_project_version.html",
+  "description": "Creates a new version of Amazon Rekognition project (like a Custom Labels model or a custom adapter) and begins training. Models and adapters are managed as part of a Rekognition project. The response from CreateProjectVersion is an Amazon Resource Name (ARN) for the project version. The FeatureConfig operation argument allows you to configure specific model or adapter settings. You can provide a description to the project version by using the VersionDescription argment. Training can take a while to complete. You can get the current status by calling  DescribeProjectVersions. Training completed successfully if the value of the Status field is TRAINING_COMPLETED. Once training has successfully completed, call  DescribeProjectVersions to get the training results and evaluate the model. This operation requires permissions to perform the rekognition:CreateProjectVersion action.",
+  "parameters": [
+    {
+      "name": "ProjectArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the Amazon Rekognition project that will manage the project version you want to train.",
+      "nested_params": []
+    },
+    {
+      "name": "VersionName",
+      "type": "string",
+      "required": true,
+      "description": "A name for the version of the project version. This value must be unique.",
+      "nested_params": []
+    },
+    {
+      "name": "OutputConfig",
+      "type": "dict",
+      "required": true,
+      "description": "The Amazon S3 bucket location to store the results of training. The bucket can be any S3 bucket in your AWS account. You need s3:PutObject permission on the bucket. S3Bucket (string) --- The S3 bucket where training output is placed. S3KeyPrefix (string) --- The prefix applied to the training output files.",
+      "nested_params": [
+        {
+          "name": "S3Bucket",
+          "type": "string",
+          "required": false,
+          "description": "The S3 bucket where training output is placed.",
+          "nested_params": []
+        },
+        {
+          "name": "S3KeyPrefix",
+          "type": "string",
+          "required": false,
+          "description": "The prefix applied to the training output files.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TrainingData",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies an external manifest that the services uses to train the project version. If you specify TrainingData you must also specify TestingData. The project must not have any associated datasets. Assets (list) --- A manifest file that contains references to the training images and ground-truth annotations. (dict) --- Assets are the images that you use to train and evaluate a model version. Assets can also contain validation information that you use to debug a failed model training. GroundTruthManifest (dict) --- The S3 bucket that contains an Amazon Sagemaker Ground Truth format manifest file. S3Object (dict) --- Provides the S3 bucket name and object name. The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations. For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see How Amazon Rekognition works with IAM in the Amazon Rekognition Developer Guide. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "Assets",
+          "type": "list",
+          "required": false,
+          "description": "A manifest file that contains references to the training images and ground-truth annotations.",
+          "nested_params": [
+            {
+              "name": "GroundTruthManifest",
+              "type": "dict",
+              "required": false,
+              "description": "The S3 bucket that contains an Amazon Sagemaker Ground Truth format manifest file.",
+              "nested_params": [
+                {
+                  "name": "S3Object",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Provides the S3 bucket name and object name. The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations. For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see How Amazon Rekognition works with IAM in the Amazon Rekognition Developer Guide.",
+                  "nested_params": [
+                    {
+                      "name": "Bucket",
+                      "type": "string",
+                      "required": false,
+                      "description": "Name of the S3 bucket.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "required": false,
+                      "description": "S3 object key name.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Version",
+                      "type": "string",
+                      "required": false,
+                      "description": "If the bucket is versioning enabled, you can specify the object version.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TestingData",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies an external manifest that the service uses to test the project version. If you specify TestingData you must also specify TrainingData. The project must not have any associated datasets. Assets (list) --- The assets used for testing. (dict) --- Assets are the images that you use to train and evaluate a model version. Assets can also contain validation information that you use to debug a failed model training. GroundTruthManifest (dict) --- The S3 bucket that contains an Amazon Sagemaker Ground Truth format manifest file. S3Object (dict) --- Provides the S3 bucket name and object name. The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations. For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see How Amazon Rekognition works with IAM in the Amazon Rekognition Developer Guide. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version. AutoCreate (boolean) --- If specified, Rekognition splits training dataset to create a test dataset for the training job.",
+      "nested_params": [
+        {
+          "name": "Assets",
+          "type": "list",
+          "required": false,
+          "description": "The assets used for testing.",
+          "nested_params": [
+            {
+              "name": "GroundTruthManifest",
+              "type": "dict",
+              "required": false,
+              "description": "The S3 bucket that contains an Amazon Sagemaker Ground Truth format manifest file.",
+              "nested_params": [
+                {
+                  "name": "S3Object",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Provides the S3 bucket name and object name. The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations. For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see How Amazon Rekognition works with IAM in the Amazon Rekognition Developer Guide.",
+                  "nested_params": [
+                    {
+                      "name": "Bucket",
+                      "type": "string",
+                      "required": false,
+                      "description": "Name of the S3 bucket.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "required": false,
+                      "description": "S3 object key name.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Version",
+                      "type": "string",
+                      "required": false,
+                      "description": "If the bucket is versioning enabled, you can specify the object version.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AutoCreate",
+          "type": "boolean",
+          "required": false,
+          "description": "If specified, Rekognition splits training dataset to create a test dataset for the training job.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "A set of tags (key-value pairs) that you want to attach to the project version. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "KmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "The identifier for your AWS Key Management Service key (AWS KMS key). You can supply the Amazon Resource Name (ARN) of your KMS key, the ID of your KMS key, an alias for your KMS key, or an alias ARN. The key is used to encrypt training images, test images, and manifest files copied into the service for the project version. Your source images are unaffected. The key is also used to encrypt training results and manifest files written to the output Amazon S3 bucket ( OutputConfig). If you choose to use your own KMS key, you need the following permissions on the KMS key. kms:CreateGrant kms:DescribeKey kms:GenerateDataKey kms:Decrypt If you don't specify a value for KmsKeyId, images copied into the service are encrypted using a key that AWS owns and manages.",
+      "nested_params": []
+    },
+    {
+      "name": "VersionDescription",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "FeatureConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Feature-specific configuration of the training job. If the job configuration does not match the feature type associated with the project, an InvalidParameterException is returned. ContentModeration (dict) --- Configuration options for Custom Moderation training. ConfidenceThreshold (float) --- The confidence level you plan to use to identify if unsafe content is present during inference.",
+      "nested_params": [
+        {
+          "name": "ContentModeration",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration options for Custom Moderation training.",
+          "nested_params": [
+            {
+              "name": "ConfidenceThreshold",
+              "type": "float",
+              "required": false,
+              "description": "The confidence level you plan to use to identify if unsafe content is present during inference.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ProjectVersionArn",
+          "type": "string",
+          "description": "The ARN of the model or the project version that was created. Use DescribeProjectVersion to get the current status of the training operation.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

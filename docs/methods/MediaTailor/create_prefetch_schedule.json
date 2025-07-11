@@ -1,0 +1,485 @@
+{
+  "method_name": "create_prefetch_schedule",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/mediatailor/client/create_prefetch_schedule.html",
+  "description": "Creates a prefetch schedule for a playback configuration. A prefetch schedule allows you to tell MediaTailor to fetch and prepare certain ads before an ad break happens. For more information about ad prefetching, see Using ad prefetching in the MediaTailor User Guide.",
+  "parameters": [
+    {
+      "name": "Consumption",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration settings for how and when MediaTailor consumes prefetched ads from the ad decision server for single prefetch schedules. Each consumption configuration contains an end time and an optional start time that define the consumption window. Prefetch schedules automatically expire no earlier than seven days after the end time. AvailMatchingCriteria (list) --- If you only want MediaTailor to insert prefetched ads into avails (ad breaks) that match specific dynamic variables, such as scte.event_id, set the avail matching criteria. (dict) --- MediaTailor only places (consumes) prefetched ads if the ad break meets the criteria defined by the dynamic variables. This gives you granular control over which ad break to place the prefetched ads into. As an example, let's say that you set DynamicVariable to scte.event_id and Operator to EQUALS, and your playback configuration has an ADS URL of https://my.ads.server.com/path?&podId=[scte.avail_num]&event=[scte.event_id]&duration=[session.avail_duration_secs]. And the prefetch request to the ADS contains these values https://my.ads.server.com/path?&podId=3&event=my-awesome-event&duration=30. MediaTailor will only insert the prefetched ads into the ad break if has a SCTE marker with an event id of my-awesome-event, since it must match the event id that MediaTailor uses to query the ADS. You can specify up to five AvailMatchingCriteria. If you specify multiple AvailMatchingCriteria, MediaTailor combines them to match using a logical AND. You can model logical OR combinations by creating multiple prefetch schedules. The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see Using dynamic ad variables in the MediaTailor User Guide. You can include up to 100 dynamic variables. For the DynamicVariable specified in AvailMatchingCriteria, the Operator that is used for the comparison. The time when MediaTailor no longer considers the prefetched ads for use in an ad break. MediaTailor automatically deletes prefetch schedules no less than seven days after the end time. If you'd like to manually delete the prefetch schedule, you can call DeletePrefetchSchedule. StartTime (datetime) --- The time when prefetched ads are considered for use in an ad break. If you don't specify StartTime, the prefetched ads are available after MediaTailor retrieves them from the ad decision server.",
+      "nested_params": [
+        {
+          "name": "AvailMatchingCriteria",
+          "type": "list",
+          "required": false,
+          "description": "If you only want MediaTailor to insert prefetched ads into avails (ad breaks) that match specific dynamic variables, such as scte.event_id, set the avail matching criteria.",
+          "nested_params": [
+            {
+              "name": "DynamicVariable",
+              "type": "string",
+              "required": false,
+              "description": "The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see Using dynamic ad variables in the MediaTailor User Guide. You can include up to 100 dynamic variables.",
+              "nested_params": []
+            },
+            {
+              "name": "Operator",
+              "type": "string",
+              "required": false,
+              "description": "For the DynamicVariable specified in AvailMatchingCriteria, the Operator that is used for the comparison.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EndTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The time when MediaTailor no longer considers the prefetched ads for use in an ad break. MediaTailor automatically deletes prefetch schedules no less than seven days after the end time. If you'd like to manually delete the prefetch schedule, you can call DeletePrefetchSchedule.",
+          "nested_params": []
+        },
+        {
+          "name": "StartTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The time when prefetched ads are considered for use in an ad break. If you don't specify StartTime, the prefetched ads are available after MediaTailor retrieves them from the ad decision server.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name to assign to the schedule request.",
+      "nested_params": []
+    },
+    {
+      "name": "PlaybackConfigurationName",
+      "type": "string",
+      "required": true,
+      "description": "The name to assign to the playback configuration.",
+      "nested_params": []
+    },
+    {
+      "name": "Retrieval",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration settings for retrieval of prefetched ads from the ad decision server. Only one set of prefetched ads will be retrieved and subsequently consumed for each ad break. DynamicVariables (dict) --- The dynamic variables to use for substitution during prefetch requests to the ad decision server (ADS). You initially configure dynamic variables for the ADS URL when you set up your playback configuration. When you specify DynamicVariables for prefetch retrieval, MediaTailor includes the dynamic variables in the request to the ADS. (string) --- (string) --- The time when prefetch retrieval ends for the ad break. Prefetching will be attempted for manifest requests that occur at or before this time. StartTime (datetime) --- The time when prefetch retrievals can start for this break. Ad prefetching will be attempted for manifest requests that occur at or after this time. Defaults to the current time. If not specified, the prefetch retrieval starts as soon as possible. TrafficShapingType (string) --- Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time. TrafficShapingRetrievalWindow (dict) --- Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time. RetrievalWindowDurationSeconds (integer) --- The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS.",
+      "nested_params": [
+        {
+          "name": "DynamicVariables",
+          "type": "dict",
+          "required": false,
+          "description": "The dynamic variables to use for substitution during prefetch requests to the ad decision server (ADS). You initially configure dynamic variables for the ADS URL when you set up your playback configuration. When you specify DynamicVariables for prefetch retrieval, MediaTailor includes the dynamic variables in the request to the ADS.",
+          "nested_params": []
+        },
+        {
+          "name": "EndTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The time when prefetch retrieval ends for the ad break. Prefetching will be attempted for manifest requests that occur at or before this time.",
+          "nested_params": []
+        },
+        {
+          "name": "StartTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The time when prefetch retrievals can start for this break. Ad prefetching will be attempted for manifest requests that occur at or after this time. Defaults to the current time. If not specified, the prefetch retrieval starts as soon as possible.",
+          "nested_params": []
+        },
+        {
+          "name": "TrafficShapingType",
+          "type": "string",
+          "required": false,
+          "description": "Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time.",
+          "nested_params": []
+        },
+        {
+          "name": "TrafficShapingRetrievalWindow",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time.",
+          "nested_params": [
+            {
+              "name": "RetrievalWindowDurationSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RecurringPrefetchConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration that defines how and when MediaTailor performs ad prefetching in a live event. StartTime (datetime) --- The start time for the window that MediaTailor prefetches and inserts ads in a live event. The end time for the window that MediaTailor prefetches and inserts ads in a live event. The settings that determine how and when MediaTailor places prefetched ads into upcoming ad breaks for recurring prefetch scedules. RetrievedAdExpirationSeconds (integer) --- The number of seconds that an ad is available for insertion after it was prefetched. AvailMatchingCriteria (list) --- The configuration for the dynamic variables that determine which ad breaks that MediaTailor inserts prefetched ads in. (dict) --- MediaTailor only places (consumes) prefetched ads if the ad break meets the criteria defined by the dynamic variables. This gives you granular control over which ad break to place the prefetched ads into. As an example, let's say that you set DynamicVariable to scte.event_id and Operator to EQUALS, and your playback configuration has an ADS URL of https://my.ads.server.com/path?&podId=[scte.avail_num]&event=[scte.event_id]&duration=[session.avail_duration_secs]. And the prefetch request to the ADS contains these values https://my.ads.server.com/path?&podId=3&event=my-awesome-event&duration=30. MediaTailor will only insert the prefetched ads into the ad break if has a SCTE marker with an event id of my-awesome-event, since it must match the event id that MediaTailor uses to query the ADS. You can specify up to five AvailMatchingCriteria. If you specify multiple AvailMatchingCriteria, MediaTailor combines them to match using a logical AND. You can model logical OR combinations by creating multiple prefetch schedules. The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see Using dynamic ad variables in the MediaTailor User Guide. You can include up to 100 dynamic variables. For the DynamicVariable specified in AvailMatchingCriteria, the Operator that is used for the comparison. The configuration for prefetch ad retrieval from the ADS. DynamicVariables (dict) --- The dynamic variables to use for substitution during prefetch requests to the ADS. (string) --- (string) --- DelayAfterAvailEndSeconds (integer) --- The number of seconds that MediaTailor waits after an ad avail before prefetching ads for the next avail. If not set, the default is 0 (no delay). TrafficShapingType (string) --- Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time. TrafficShapingRetrievalWindow (dict) --- Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time. RetrievalWindowDurationSeconds (integer) --- The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS.",
+      "nested_params": [
+        {
+          "name": "StartTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The start time for the window that MediaTailor prefetches and inserts ads in a live event.",
+          "nested_params": []
+        },
+        {
+          "name": "EndTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The end time for the window that MediaTailor prefetches and inserts ads in a live event.",
+          "nested_params": []
+        },
+        {
+          "name": "RecurringConsumption",
+          "type": "dict",
+          "required": false,
+          "description": "The settings that determine how and when MediaTailor places prefetched ads into upcoming ad breaks for recurring prefetch scedules.",
+          "nested_params": [
+            {
+              "name": "RetrievedAdExpirationSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The number of seconds that an ad is available for insertion after it was prefetched.",
+              "nested_params": []
+            },
+            {
+              "name": "AvailMatchingCriteria",
+              "type": "list",
+              "required": false,
+              "description": "The configuration for the dynamic variables that determine which ad breaks that MediaTailor inserts prefetched ads in.",
+              "nested_params": [
+                {
+                  "name": "DynamicVariable",
+                  "type": "string",
+                  "required": false,
+                  "description": "The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see Using dynamic ad variables in the MediaTailor User Guide. You can include up to 100 dynamic variables.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Operator",
+                  "type": "string",
+                  "required": false,
+                  "description": "For the DynamicVariable specified in AvailMatchingCriteria, the Operator that is used for the comparison.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RecurringRetrieval",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration for prefetch ad retrieval from the ADS.",
+          "nested_params": [
+            {
+              "name": "DynamicVariables",
+              "type": "dict",
+              "required": false,
+              "description": "The dynamic variables to use for substitution during prefetch requests to the ADS.",
+              "nested_params": []
+            },
+            {
+              "name": "DelayAfterAvailEndSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The number of seconds that MediaTailor waits after an ad avail before prefetching ads for the next avail. If not set, the default is 0 (no delay).",
+              "nested_params": []
+            },
+            {
+              "name": "TrafficShapingType",
+              "type": "string",
+              "required": false,
+              "description": "Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time.",
+              "nested_params": []
+            },
+            {
+              "name": "TrafficShapingRetrievalWindow",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time.",
+              "nested_params": [
+                {
+                  "name": "RetrievalWindowDurationSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ScheduleType",
+      "type": "string",
+      "required": false,
+      "description": "The frequency that MediaTailor creates prefetch schedules. SINGLE indicates that this schedule applies to one ad break. RECURRING indicates that MediaTailor automatically creates a schedule for each ad avail in a live event. For more information about the prefetch types and when you might use each, see Prefetching ads in Elemental MediaTailor.",
+      "nested_params": []
+    },
+    {
+      "name": "StreamId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Arn",
+          "type": "string",
+          "description": "The ARN to assign to the prefetch schedule.",
+          "nested_items": []
+        },
+        {
+          "name": "Consumption",
+          "type": "dict",
+          "description": "The configuration settings for how and when MediaTailor consumes prefetched ads from the ad decision server for single prefetch schedules. Each consumption configuration contains an end time and an optional start time that define the consumption window. Prefetch schedules automatically expire no earlier than seven days after the end time.",
+          "nested_items": [
+            {
+              "name": "AvailMatchingCriteria",
+              "type": "list",
+              "description": "If you only want MediaTailor to insert prefetched ads into avails (ad breaks) that match specific dynamic variables, such as scte.event_id, set the avail matching criteria.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "DynamicVariable",
+                      "type": "string",
+                      "description": "The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see Using dynamic ad variables in the MediaTailor User Guide.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Operator",
+                      "type": "string",
+                      "description": "For the DynamicVariable specified in AvailMatchingCriteria, the Operator that is used for the comparison.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime",
+              "description": "The time when MediaTailor no longer considers the prefetched ads for use in an ad break. MediaTailor automatically deletes prefetch schedules no less than seven days after the end time. If you'd like to manually delete the prefetch schedule, you can call DeletePrefetchSchedule.",
+              "nested_items": []
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime",
+              "description": "The time when prefetched ads are considered for use in an ad break. If you don't specify StartTime, the prefetched ads are available after MediaTailor retrieves them from the ad decision server.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "description": "The name to assign to the prefetch schedule.",
+          "nested_items": []
+        },
+        {
+          "name": "PlaybackConfigurationName",
+          "type": "string",
+          "description": "The name to assign to the playback configuration.",
+          "nested_items": []
+        },
+        {
+          "name": "Retrieval",
+          "type": "dict",
+          "description": "The configuration settings for retrieval of prefetched ads from the ad decision server. Only one set of prefetched ads will be retrieved and subsequently consumed for each ad break.",
+          "nested_items": [
+            {
+              "name": "DynamicVariables",
+              "type": "dict",
+              "description": "The dynamic variables to use for substitution during prefetch requests to the ad decision server (ADS).",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime",
+              "description": "The time when prefetch retrieval ends for the ad break. Prefetching will be attempted for manifest requests that occur at or before this time.",
+              "nested_items": []
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime",
+              "description": "The time when prefetch retrievals can start for this break. Ad prefetching will be attempted for manifest requests that occur at or after this time. Defaults to the current time. If not specified, the prefetch retrieval starts as soon as possible.",
+              "nested_items": []
+            },
+            {
+              "name": "TrafficShapingType",
+              "type": "string",
+              "description": "Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time.",
+              "nested_items": []
+            },
+            {
+              "name": "TrafficShapingRetrievalWindow",
+              "type": "dict",
+              "description": "Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time.",
+              "nested_items": [
+                {
+                  "name": "RetrievalWindowDurationSeconds",
+                  "type": "integer",
+                  "description": "The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RecurringPrefetchConfiguration",
+          "type": "dict",
+          "description": "The configuration that defines how MediaTailor performs recurring prefetch.",
+          "nested_items": [
+            {
+              "name": "StartTime",
+              "type": "datetime",
+              "description": "The start time for the window that MediaTailor prefetches and inserts ads in a live event.",
+              "nested_items": []
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime",
+              "description": "The end time for the window that MediaTailor prefetches and inserts ads in a live event.",
+              "nested_items": []
+            },
+            {
+              "name": "RecurringConsumption",
+              "type": "dict",
+              "description": "The settings that determine how and when MediaTailor places prefetched ads into upcoming ad breaks for recurring prefetch scedules.",
+              "nested_items": [
+                {
+                  "name": "RetrievedAdExpirationSeconds",
+                  "type": "integer",
+                  "description": "The number of seconds that an ad is available for insertion after it was prefetched.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AvailMatchingCriteria",
+                  "type": "list",
+                  "description": "The configuration for the dynamic variables that determine which ad breaks that MediaTailor inserts prefetched ads in.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "DynamicVariable",
+                          "type": "string",
+                          "description": "The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see Using dynamic ad variables in the MediaTailor User Guide.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Operator",
+                          "type": "string",
+                          "description": "For the DynamicVariable specified in AvailMatchingCriteria, the Operator that is used for the comparison.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RecurringRetrieval",
+              "type": "dict",
+              "description": "The configuration for prefetch ad retrieval from the ADS.",
+              "nested_items": [
+                {
+                  "name": "DynamicVariables",
+                  "type": "dict",
+                  "description": "The dynamic variables to use for substitution during prefetch requests to the ADS.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "DelayAfterAvailEndSeconds",
+                  "type": "integer",
+                  "description": "The number of seconds that MediaTailor waits after an ad avail before prefetching ads for the next avail. If not set, the default is 0 (no delay).",
+                  "nested_items": []
+                },
+                {
+                  "name": "TrafficShapingType",
+                  "type": "string",
+                  "description": "Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TrafficShapingRetrievalWindow",
+                  "type": "dict",
+                  "description": "Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time.",
+                  "nested_items": [
+                    {
+                      "name": "RetrievalWindowDurationSeconds",
+                      "type": "integer",
+                      "description": "The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ScheduleType",
+          "type": "string",
+          "description": "The frequency that MediaTailor creates prefetch schedules. SINGLE indicates that this schedule applies to one ad break. RECURRING indicates that MediaTailor automatically creates a schedule for each ad avail in a live event.",
+          "nested_items": []
+        },
+        {
+          "name": "StreamId",
+          "type": "string",
+          "description": "An optional stream identifier that MediaTailor uses to prefetch ads for multiple streams that use the same playback configuration. If StreamId is specified, MediaTailor returns all of the prefetch schedules with an exact match on StreamId. If not specified, MediaTailor returns all of the prefetch schedules for the playback configuration, regardless of StreamId.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

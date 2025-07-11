@@ -1,0 +1,217 @@
+{
+  "method_name": "test_state",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/stepfunctions/client/test_state.html",
+  "description": "Accepts the definition of a single state and executes it. You can test a state without creating a state machine or updating an existing state machine. Using this API, you can test the following: You can call this API on only one state at a time. The states that you can test include the following: The TestState API assumes an IAM role which must contain the required IAM permissions for the resources your state is accessing. For information about the permissions a state might need, see IAM permissions to test a state. The TestState API can run for up to five minutes. If the execution of a state exceeds this duration, it fails with the States.Timeout error. TestState doesn't support Activity tasks, .sync or .waitForTaskToken service integration patterns, Parallel, or Map states.",
+  "parameters": [
+    {
+      "name": "definition",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon States Language (ASL) definition of the state.",
+      "nested_params": []
+    },
+    {
+      "name": "roleArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "input",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "inspectionLevel",
+      "type": "string",
+      "required": false,
+      "description": "Determines the values to return when a state is tested. You can specify one of the following types: INFO: Shows the final state output. By default, Step Functions sets inspectionLevel to INFO if you don't specify a level. DEBUG: Shows the final state output along with the input and output data processing result. TRACE: Shows the HTTP request and response for an HTTP Task. This level also shows the final state output along with the input and output data processing result. Each of these levels also provide information about the status of the state execution and the next state to transition to.",
+      "nested_params": []
+    },
+    {
+      "name": "revealSecrets",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether or not to include secret information in the test result. For HTTP Tasks, a secret includes the data that an EventBridge connection adds to modify the HTTP request headers, query parameters, and body. Step Functions doesn't omit any information included in the state definition or the HTTP response. If you set revealSecrets to true, you must make sure that the IAM user that calls the TestState API has permission for the states:RevealSecrets action. For an example of IAM policy that sets the states:RevealSecrets permission, see IAM permissions to test a state. Without this permission, Step Functions throws an access denied error. By default, revealSecrets is set to false.",
+      "nested_params": []
+    },
+    {
+      "name": "variables",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "output",
+          "type": "string",
+          "description": "The JSON output data of the state. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.",
+          "nested_items": []
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "description": "The error returned when the execution of a state fails.",
+          "nested_items": []
+        },
+        {
+          "name": "cause",
+          "type": "string",
+          "description": "A detailed explanation of the cause for the error when the execution of a state fails.",
+          "nested_items": []
+        },
+        {
+          "name": "inspectionData",
+          "type": "dict",
+          "description": "Returns additional details about the state's execution, including its input and output data processing flow, and HTTP request and response information. The inspectionLevel request parameter specifies which details are returned.",
+          "nested_items": [
+            {
+              "name": "input",
+              "type": "string",
+              "description": "The raw state input.",
+              "nested_items": []
+            },
+            {
+              "name": "afterArguments",
+              "type": "string",
+              "description": "The input after Step Functions applies an Arguments filter. This event will only be present when QueryLanguage for the state machine or individual states is set to JSONata. For more info, see Transforming data with Step Functions.",
+              "nested_items": []
+            },
+            {
+              "name": "afterInputPath",
+              "type": "string",
+              "description": "The input after Step Functions applies the InputPath filter. Not populated when QueryLanguage is JSONata.",
+              "nested_items": []
+            },
+            {
+              "name": "afterParameters",
+              "type": "string",
+              "description": "The effective input after Step Functions applies the Parameters filter. Not populated when QueryLanguage is JSONata.",
+              "nested_items": []
+            },
+            {
+              "name": "result",
+              "type": "string",
+              "description": "The state's raw result.",
+              "nested_items": []
+            },
+            {
+              "name": "afterResultSelector",
+              "type": "string",
+              "description": "The effective result after Step Functions applies the ResultSelector filter. Not populated when QueryLanguage is JSONata.",
+              "nested_items": []
+            },
+            {
+              "name": "afterResultPath",
+              "type": "string",
+              "description": "The effective result combined with the raw state input after Step Functions applies the ResultPath filter. Not populated when QueryLanguage is JSONata.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "protocol",
+                  "type": "string",
+                  "description": "The protocol used to make the HTTP request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "method",
+                  "type": "string",
+                  "description": "The HTTP method used for the HTTP request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "url",
+                  "type": "string",
+                  "description": "The API endpoint used for the HTTP request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "headers",
+                  "type": "string",
+                  "description": "The request headers associated with the HTTP request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "body",
+                  "type": "string",
+                  "description": "The request body for the HTTP request.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "protocol",
+                  "type": "string",
+                  "description": "The protocol used to return the HTTP response.",
+                  "nested_items": []
+                },
+                {
+                  "name": "statusCode",
+                  "type": "string",
+                  "description": "The HTTP response status code for the HTTP response.",
+                  "nested_items": []
+                },
+                {
+                  "name": "statusMessage",
+                  "type": "string",
+                  "description": "The message associated with the HTTP status code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "headers",
+                  "type": "string",
+                  "description": "The response headers associated with the HTTP response.",
+                  "nested_items": []
+                },
+                {
+                  "name": "body",
+                  "type": "string",
+                  "description": "The HTTP response returned.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "variables",
+              "type": "string",
+              "description": "JSON string that contains the set of workflow variables after execution of the state. The set will include variables assigned in the state and variables set up as test state input.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "nextState",
+          "type": "string",
+          "description": "The name of the next state to transition to. If you haven't defined a next state in your definition or if the execution of the state fails, this \u00ef\u00ac\u0081eld doesn't contain a value.",
+          "nested_items": []
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "The execution status of the state.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

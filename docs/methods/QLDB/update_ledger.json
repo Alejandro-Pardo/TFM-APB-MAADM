@@ -1,0 +1,119 @@
+{
+  "method_name": "update_ledger",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/qldb/client/update_ledger.html",
+  "description": "Updates properties on a ledger.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the ledger.",
+      "nested_params": []
+    },
+    {
+      "name": "DeletionProtection",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether the ledger is protected from being deleted by any user. If not defined during ledger creation, this feature is enabled ( true) by default. If deletion protection is enabled, you must first disable it before you can delete the ledger. You can disable it by calling the UpdateLedger operation to set this parameter to false.",
+      "nested_params": []
+    },
+    {
+      "name": "KmsKey",
+      "type": "string",
+      "required": false,
+      "description": "The key in Key Management Service (KMS) to use for encryption of data at rest in the ledger. For more information, see Encryption at rest in the Amazon QLDB Developer Guide. Use one of the following options to specify this parameter: AWS_OWNED_KMS_KEY: Use an KMS key that is owned and managed by Amazon Web Services on your behalf. Undefined: Make no changes to the KMS key of the ledger. A valid symmetric customer managed KMS key: Use the specified symmetric encryption KMS key in your account that you create, own, and manage. Amazon QLDB does not support asymmetric keys. For more information, see Using symmetric and asymmetric keys in the Key Management Service Developer Guide. To specify a customer managed KMS key, you can use its key ID, Amazon Resource Name (ARN), alias name, or alias ARN. When using an alias name, prefix it with \"alias/\". To specify a key in a different Amazon Web Services account, you must use the key ARN or alias ARN. For example: Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab Key ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab Alias name: alias/ExampleAlias Alias ARN: arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias For more information, see Key identifiers (KeyId) in the Key Management Service Developer Guide.",
+      "nested_params": [
+        {
+          "name": "Undefined",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Name",
+          "type": "string",
+          "description": "The name of the ledger.",
+          "nested_items": []
+        },
+        {
+          "name": "Arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) for the ledger.",
+          "nested_items": []
+        },
+        {
+          "name": "State",
+          "type": "string",
+          "description": "The current status of the ledger.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationDateTime",
+          "type": "datetime",
+          "description": "The date and time, in epoch time format, when the ledger was created. (Epoch time format is the number of seconds elapsed since 12:00:00 AM January 1, 1970 UTC.)",
+          "nested_items": []
+        },
+        {
+          "name": "DeletionProtection",
+          "type": "boolean",
+          "description": "Specifies whether the ledger is protected from being deleted by any user. If not defined during ledger creation, this feature is enabled ( true) by default.",
+          "nested_items": []
+        },
+        {
+          "name": "EncryptionDescription",
+          "type": "dict",
+          "description": "Information about the encryption of data at rest in the ledger. This includes the current status, the KMS key, and when the key became inaccessible (in the case of an error).",
+          "nested_items": [
+            {
+              "name": "KmsKeyArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the customer managed KMS key that the ledger uses for encryption at rest. If this parameter is undefined, the ledger uses an Amazon Web Services owned KMS key for encryption. It will display AWS_OWNED_KMS_KEY when updating the ledger's encryption configuration to the Amazon Web Services owned KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "EncryptionStatus",
+              "type": "string",
+              "description": "The current state of encryption at rest for the ledger. This can be one of the following values:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ENABLED: Encryption is fully enabled using the specified key.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UPDATING: The ledger is actively processing the specified key change. Key changes in QLDB are asynchronous. The ledger is fully accessible without any performance impact while the key change is being processed. The amount of time it takes to update a key varies depending on the ledger size.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "KMS_KEY_INACCESSIBLE: The specified customer managed KMS key is not accessible, and the ledger is impaired. Either the key was disabled or deleted, or the grants on the key were revoked. When a ledger is impaired, it is not accessible and does not accept any read or write requests. An impaired ledger automatically returns to an active state after you restore the grants on the key, or re-enable the key that was disabled. However, deleting a customer managed KMS key is irreversible. After a key is deleted, you can no longer access the ledgers that are protected with that key, and the data becomes unrecoverable permanently.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "InaccessibleKmsKeyDateTime",
+              "type": "datetime",
+              "description": "The date and time, in epoch time format, when the KMS key first became inaccessible, in the case of an error. (Epoch time format is the number of seconds that have elapsed since 12:00:00 AM January 1, 1970 UTC.)",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

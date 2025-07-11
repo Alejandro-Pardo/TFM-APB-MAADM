@@ -1,0 +1,162 @@
+{
+  "method_name": "start_segment_detection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/start_segment_detection.html",
+  "description": "Starts asynchronous detection of segment detection in a stored video. Amazon Rekognition Video can detect segments in a video stored in an Amazon S3 bucket. Use  Video to specify the bucket name and the filename of the video. StartSegmentDetection returns a job identifier ( JobId) which you use to get the results of the operation. When segment detection is finished, Amazon Rekognition Video publishes a completion status to the Amazon Simple Notification Service topic that you specify in NotificationChannel. You can use the Filters (  StartSegmentDetectionFilters) input parameter to specify the minimum detection confidence returned in the response. Within Filters, use ShotFilter (  StartShotDetectionFilter) to filter detected shots. Use TechnicalCueFilter (  StartTechnicalCueDetectionFilter) to filter technical cues. To get the results of the segment detection operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. if so, call  GetSegmentDetection and pass the job identifier ( JobId) from the initial call to StartSegmentDetection. For more information, see Detecting video segments in stored video in the Amazon Rekognition Developer Guide.",
+  "parameters": [
+    {
+      "name": "Video",
+      "type": "dict",
+      "required": true,
+      "description": "Video file stored in an Amazon S3 bucket. Amazon Rekognition video start operations such as  StartLabelDetection use Video to specify a video for analysis. The supported file formats are .mp4, .mov and .avi. S3Object (dict) --- The Amazon S3 bucket name and file name for the video. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon S3 bucket name and file name for the video.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "S3 object key name.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket is versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ClientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NotificationChannel",
+      "type": "dict",
+      "required": true,
+      "description": "The ARN of the Amazon SNS topic to which you want Amazon Rekognition Video to publish the completion status of the segment detection operation. Note that the Amazon SNS topic must have a topic name that begins with AmazonRekognition if you are using the AmazonRekognitionServiceRole permissions policy to access the topic. The Amazon SNS topic to which Amazon Rekognition posts the completion status. The ARN of an IAM role that gives Amazon Rekognition publishing permissions to the Amazon SNS topic.",
+      "nested_params": [
+        {
+          "name": "SNSTopicArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon SNS topic to which Amazon Rekognition posts the completion status.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The ARN of an IAM role that gives Amazon Rekognition publishing permissions to the Amazon SNS topic.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "JobTag",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Filters",
+      "type": "dict",
+      "required": false,
+      "description": "Filters for technical cue or shot detection. TechnicalCueFilter (dict) --- Filters that are specific to technical cues. MinSegmentConfidence (float) --- Specifies the minimum confidence that Amazon Rekognition Video must have in order to return a detected segment. Confidence represents how certain Amazon Rekognition is that a segment is correctly identified. 0 is the lowest confidence. 100 is the highest confidence. Amazon Rekognition Video doesn't return any segments with a confidence level lower than this specified value. If you don't specify MinSegmentConfidence, GetSegmentDetection returns segments with confidence values greater than or equal to 50 percent. BlackFrame (dict) --- A filter that allows you to control the black frame detection by specifying the black levels and pixel coverage of black pixels in a frame. Videos can come from multiple sources, formats, and time periods, with different standards and varying noise levels for black frames that need to be accounted for. MaxPixelThreshold (float) --- A threshold used to determine the maximum luminance value for a pixel to be considered black. In a full color range video, luminance values range from 0-255. A pixel value of 0 is pure black, and the most strict filter. The maximum black pixel value is computed as follows: max_black_pixel_value = minimum_luminance + MaxPixelThreshold *luminance_range. For example, for a full range video with BlackPixelThreshold = 0.1, max_black_pixel_value is 0 + 0.1 * (255-0) = 25.5. The default value of MaxPixelThreshold is 0.2, which maps to a max_black_pixel_value of 51 for a full range video. You can lower this threshold to be more strict on black levels. MinCoveragePercentage (float) --- The minimum percentage of pixels in a frame that need to have a luminance below the max_black_pixel_value for a frame to be considered a black frame. Luminance is calculated using the BT.709 matrix. The default value is 99, which means at least 99% of all pixels in the frame are black pixels as per the MaxPixelThreshold set. You can reduce this value to allow more noise on the black frame. ShotFilter (dict) --- Filters that are specific to shot detections. If you don't specify MinSegmentConfidence, the GetSegmentDetection returns segments with confidence values greater than or equal to 50 percent.",
+      "nested_params": [
+        {
+          "name": "TechnicalCueFilter",
+          "type": "dict",
+          "required": false,
+          "description": "Filters that are specific to technical cues.",
+          "nested_params": [
+            {
+              "name": "MinSegmentConfidence",
+              "type": "float",
+              "required": false,
+              "description": "Specifies the minimum confidence that Amazon Rekognition Video must have in order to return a detected segment. Confidence represents how certain Amazon Rekognition is that a segment is correctly identified. 0 is the lowest confidence. 100 is the highest confidence. Amazon Rekognition Video doesn't return any segments with a confidence level lower than this specified value. If you don't specify MinSegmentConfidence, GetSegmentDetection returns segments with confidence values greater than or equal to 50 percent.",
+              "nested_params": []
+            },
+            {
+              "name": "BlackFrame",
+              "type": "dict",
+              "required": false,
+              "description": "A filter that allows you to control the black frame detection by specifying the black levels and pixel coverage of black pixels in a frame. Videos can come from multiple sources, formats, and time periods, with different standards and varying noise levels for black frames that need to be accounted for.",
+              "nested_params": [
+                {
+                  "name": "MaxPixelThreshold",
+                  "type": "float",
+                  "required": false,
+                  "description": "A threshold used to determine the maximum luminance value for a pixel to be considered black. In a full color range video, luminance values range from 0-255. A pixel value of 0 is pure black, and the most strict filter. The maximum black pixel value is computed as follows: max_black_pixel_value = minimum_luminance + MaxPixelThreshold *luminance_range. For example, for a full range video with BlackPixelThreshold = 0.1, max_black_pixel_value is 0 + 0.1 * (255-0) = 25.5. The default value of MaxPixelThreshold is 0.2, which maps to a max_black_pixel_value of 51 for a full range video. You can lower this threshold to be more strict on black levels.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MinCoveragePercentage",
+                  "type": "float",
+                  "required": false,
+                  "description": "The minimum percentage of pixels in a frame that need to have a luminance below the max_black_pixel_value for a frame to be considered a black frame. Luminance is calculated using the BT.709 matrix. The default value is 99, which means at least 99% of all pixels in the frame are black pixels as per the MaxPixelThreshold set. You can reduce this value to allow more noise on the black frame.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ShotFilter",
+          "type": "dict",
+          "required": false,
+          "description": "Filters that are specific to shot detections.",
+          "nested_params": [
+            {
+              "name": "MinSegmentConfidence",
+              "type": "float",
+              "required": false,
+              "description": "Specifies the minimum confidence that Amazon Rekognition Video must have in order to return a detected segment. Confidence represents how certain Amazon Rekognition is that a segment is correctly identified. 0 is the lowest confidence. 100 is the highest confidence. Amazon Rekognition Video doesn't return any segments with a confidence level lower than this specified value. If you don't specify MinSegmentConfidence, the GetSegmentDetection returns segments with confidence values greater than or equal to 50 percent.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SegmentTypes",
+      "type": "list",
+      "required": true,
+      "description": "An array of segment types to detect in the video. Valid values are TECHNICAL_CUE and SHOT. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "Unique identifier for the segment detection job. The JobId is returned from StartSegmentDetection.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

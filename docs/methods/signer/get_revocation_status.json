@@ -1,0 +1,64 @@
+{
+  "method_name": "get_revocation_status",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/signer/client/get_revocation_status.html",
+  "description": "Retrieves the revocation status of one or more of the signing profile, signing job, and signing certificate.",
+  "parameters": [
+    {
+      "name": "signatureTimestamp",
+      "type": "datetime",
+      "required": true,
+      "description": "The timestamp of the signature that validates the profile or job.",
+      "nested_params": []
+    },
+    {
+      "name": "platformId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of a signing platform.",
+      "nested_params": []
+    },
+    {
+      "name": "profileVersionArn",
+      "type": "string",
+      "required": true,
+      "description": "The version of a signing profile.",
+      "nested_params": []
+    },
+    {
+      "name": "jobArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of a signing job.",
+      "nested_params": []
+    },
+    {
+      "name": "certificateHashes",
+      "type": "list",
+      "required": true,
+      "description": "A list of composite signed hashes that identify certificates. A certificate identifier consists of a subject certificate TBS hash (signed by the parent CA) combined with a parent CA TBS hash (signed by the parent CA's CA). Root certificates are defined as their own CA. The following example shows how to calculate a hash for this parameter using OpenSSL commands: openssl asn1parse -in childCert.pem -strparse 4 -out childCert.tbs openssl sha384 < childCert.tbs -binary > childCertTbsHash openssl asn1parse -in parentCert.pem -strparse 4 -out parentCert.tbs openssl sha384 < parentCert.tbs -binary > parentCertTbsHash xxd -p childCertTbsHash > certificateHash.hex xxd -p parentCertTbsHash >> certificateHash.hex cat certificateHash.hex | tr -d '\\n' (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "revokedEntities",
+          "type": "list",
+          "description": "A list of revoked entities (including zero or more of the signing profile ARN, signing job ARN, and certificate hashes) supplied as input to the API.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

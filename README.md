@@ -1,6 +1,6 @@
 # 🔬 Automatic API Analysis and Classification through Deep Learning
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -33,21 +33,27 @@ TFM-APB-MAADM/
 │   │   ├── config.py             # Configuration and logging setup
 │   │   ├── checkpoint_manager.py # Progress tracking and resumption
 │   │   ├── text_cleaner.py       # Text cleaning utilities
-│   │   └── utils.py              # Common utility functions
-│   ├── parsers/                  # Parser modules
+│   │   └── timeout.py            # Timeout utilities
+│   ├── 📂 parsers/               # Parser modules
+│   │   ├── __init__.py           # Package initialization
 │   │   ├── method_parser.py      # Individual method parsing logic
-│   │   ├── service_parser.py     # Service documentation parsing (formerly parse_each_service.py)
-│   │   └── service_url_parser.py # Service URL extraction (formerly parse_available_services.py)
+│   │   ├── service_parser.py     # Service documentation parsing
+│   │   └── service_url_parser.py # Service URL extraction
 │   ├── main.py                   # Main entry point for parsing
 │   ├── service_processor.py      # Service processing coordination
+│   ├── checkpoint.json           # Progress checkpoint data
 │   └── README.md                 # Parsing module documentation
 ├── 📂 docs/                      # Documentation and parsed data
-│   ├── aws_api_urls.txt          # AWS API URLs (formerly aws_api_links.txt)
-│   ├── methods/                  # Extracted method information
-│   └── services/                 # Service-specific data
-├── 📊 statistics.ipynb           # Statistical analysis notebook
-├── 🧮 embeddings.ipynb           # Embedding generation and analysis
+│   ├── aws_api_urls.txt          # AWS API URLs
+│   ├── 📂 methods/               # Extracted method information by service
+│   └── 📂 services/              # Service-specific data
+├── 📊 statistics/                # Statistical analysis
+│   ├── statistics.ipynb          # Statistical analysis notebook
+│   └── unique_action_verbs.txt   # Unique action verbs found in APIs
+├── 📂 embeddings/                # Embedding generation and analysis
+│   └── embeddings.ipynb          # Embedding generation notebook
 ├── 📋 requirements.txt           # Python dependencies
+├── 📄 LICENSE                    # GPL v3 License
 └── 📄 README.md                  # This file
 ```
 
@@ -93,10 +99,10 @@ Open the Jupyter notebooks for analysis:
 
 ```bash
 # Statistical analysis
-jupyter notebook statistics.ipynb
+jupyter notebook statistics/statistics.ipynb
 
 # Embedding generation and analysis
-jupyter notebook embeddings.ipynb
+jupyter notebook embeddings/embeddings.ipynb
 ```
 
 ## 📊 Data Processing Pipeline
@@ -133,7 +139,7 @@ As this is an academic research project, contributions are welcome for:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ## 🎓 Academic Context
 

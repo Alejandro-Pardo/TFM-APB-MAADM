@@ -1,0 +1,109 @@
+{
+  "method_name": "create_recommender",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/personalize/client/create_recommender.html",
+  "description": "Creates a recommender with the recipe (a Domain dataset group use case) you specify. You create recommenders for a Domain dataset group and specify the recommender's Amazon Resource Name (ARN) when you make a GetRecommendations request. When you create a recommender, you can configure the recommender's minimum recommendation requests per second. The minimum recommendation requests per second ( minRecommendationRequestsPerSecond) specifies the baseline recommendation request throughput provisioned by Amazon Personalize. The default minRecommendationRequestsPerSecond is 1. A recommendation request is a single GetRecommendations operation. Request throughput is measured in requests per second and Amazon Personalize uses your requests per second to derive your requests per hour and the price of your recommender usage. If your requests per second increases beyond minRecommendationRequestsPerSecond, Amazon Personalize auto-scales the provisioned capacity up and down, but never below minRecommendationRequestsPerSecond. There's a short time delay while the capacity is increased that might cause loss of requests. Your bill is the greater of either the minimum requests per hour (based on minRecommendationRequestsPerSecond) or the actual number of requests. The actual request throughput used is calculated as the average requests/second within a one-hour window. We recommend starting with the default minRecommendationRequestsPerSecond, track your usage using Amazon CloudWatch metrics, and then increase the minRecommendationRequestsPerSecond as necessary. A recommender can be in one of the following states: To get the recommender status, call DescribeRecommender.",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the recommender.",
+      "nested_params": []
+    },
+    {
+      "name": "datasetGroupArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the destination domain dataset group for the recommender.",
+      "nested_params": []
+    },
+    {
+      "name": "recipeArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the recipe that the recommender will use. For a recommender, a recipe is a Domain dataset group use case. Only Domain dataset group use cases can be used to create a recommender. For information about use cases see Choosing recommender use cases.",
+      "nested_params": []
+    },
+    {
+      "name": "recommenderConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The configuration details of the recommender. itemExplorationConfig (dict) --- Specifies the exploration configuration hyperparameters, including explorationWeight and explorationItemAgeCutOff, you want to use to configure the amount of item exploration Amazon Personalize uses when recommending items. Provide itemExplorationConfig data only if your recommenders generate personalized recommendations for a user (not popular items or similar items). (string) --- (string) --- minRecommendationRequestsPerSecond (integer) --- Specifies the requested minimum provisioned recommendation requests per second that Amazon Personalize will support. A high minRecommendationRequestsPerSecond will increase your bill. We recommend starting with 1 for minRecommendationRequestsPerSecond (the default). Track your usage using Amazon CloudWatch metrics, and increase the minRecommendationRequestsPerSecond as necessary. trainingDataConfig (dict) --- Specifies the training data configuration to use when creating a domain recommender. excludedDatasetColumns (dict) --- Specifies the columns to exclude from training. Each key is a dataset type, and each value is a list of columns. Exclude columns to control what data Amazon Personalize uses to generate recommendations. For example, you might have a column that you want to use only to filter recommendations. You can exclude this column from training and Amazon Personalize considers it only when filtering. (string) --- (list) --- (string) --- enableMetadataWithRecommendations (boolean) --- Whether metadata with recommendations is enabled for the recommender. If enabled, you can specify the columns from your Items dataset in your request for recommendations. Amazon Personalize returns this data for each item in the recommendation response. For information about enabling metadata for a recommender, see Enabling metadata in recommendations for a recommender. If you enable metadata in recommendations, you will incur additional costs. For more information, see Amazon Personalize pricing.",
+      "nested_params": [
+        {
+          "name": "itemExplorationConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the exploration configuration hyperparameters, including explorationWeight and explorationItemAgeCutOff, you want to use to configure the amount of item exploration Amazon Personalize uses when recommending items. Provide itemExplorationConfig data only if your recommenders generate personalized recommendations for a user (not popular items or similar items).",
+          "nested_params": []
+        },
+        {
+          "name": "minRecommendationRequestsPerSecond",
+          "type": "integer",
+          "required": false,
+          "description": "Specifies the requested minimum provisioned recommendation requests per second that Amazon Personalize will support. A high minRecommendationRequestsPerSecond will increase your bill. We recommend starting with 1 for minRecommendationRequestsPerSecond (the default). Track your usage using Amazon CloudWatch metrics, and increase the minRecommendationRequestsPerSecond as necessary.",
+          "nested_params": []
+        },
+        {
+          "name": "trainingDataConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the training data configuration to use when creating a domain recommender.",
+          "nested_params": [
+            {
+              "name": "excludedDatasetColumns",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the columns to exclude from training. Each key is a dataset type, and each value is a list of columns. Exclude columns to control what data Amazon Personalize uses to generate recommendations. For example, you might have a column that you want to use only to filter recommendations. You can exclude this column from training and Amazon Personalize considers it only when filtering.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "enableMetadataWithRecommendations",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether metadata with recommendations is enabled for the recommender. If enabled, you can specify the columns from your Items dataset in your request for recommendations. Amazon Personalize returns this data for each item in the recommendation response. For information about enabling metadata for a recommender, see Enabling metadata in recommendations for a recommender. If you enable metadata in recommendations, you will incur additional costs. For more information, see Amazon Personalize pricing.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags to apply to the recommender. (dict) --- The optional metadata that you apply to resources to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define. For more information see Tagging Amazon Personalize resources. One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values. The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": [
+        {
+          "name": "tagKey",
+          "type": "string",
+          "required": false,
+          "description": "One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values.",
+          "nested_params": []
+        },
+        {
+          "name": "tagValue",
+          "type": "string",
+          "required": false,
+          "description": "The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "recommenderArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the recommender.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

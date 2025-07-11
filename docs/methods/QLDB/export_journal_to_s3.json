@@ -1,0 +1,101 @@
+{
+  "method_name": "export_journal_to_s3",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/qldb/client/export_journal_to_s3.html",
+  "description": "Exports journal contents within a date and time range from a ledger into a specified Amazon Simple Storage Service (Amazon S3) bucket. A journal export job can write the data objects in either the text or binary representation of Amazon Ion format, or in JSON Lines text format. If the ledger with the given Name doesn't exist, then throws ResourceNotFoundException. If the ledger with the given Name is in CREATING status, then throws ResourcePreconditionNotMetException. You can initiate up to two concurrent journal export requests for each ledger. Beyond this limit, journal export requests throw LimitExceededException.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the ledger.",
+      "nested_params": []
+    },
+    {
+      "name": "InclusiveStartTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The inclusive start date and time for the range of journal contents to export. The InclusiveStartTime must be in ISO 8601 date and time format and in Universal Coordinated Time (UTC). For example: 2019-06-13T21:36:34Z. The InclusiveStartTime must be before ExclusiveEndTime. If you provide an InclusiveStartTime that is before the ledger's CreationDateTime, Amazon QLDB defaults it to the ledger's CreationDateTime.",
+      "nested_params": []
+    },
+    {
+      "name": "ExclusiveEndTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The exclusive end date and time for the range of journal contents to export. The ExclusiveEndTime must be in ISO 8601 date and time format and in Universal Coordinated Time (UTC). For example: 2019-06-13T21:36:34Z. The ExclusiveEndTime must be less than or equal to the current UTC date and time.",
+      "nested_params": []
+    },
+    {
+      "name": "S3ExportConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration settings of the Amazon S3 bucket destination for your export request. The Amazon S3 bucket name in which a journal export job writes the journal contents. The bucket name must comply with the Amazon S3 bucket naming conventions. For more information, see Bucket Restrictions and Limitations in the Amazon S3 Developer Guide. The prefix for the Amazon S3 bucket in which a journal export job writes the journal contents. The prefix must comply with Amazon S3 key naming rules and restrictions. For more information, see Object Key and Metadata in the Amazon S3 Developer Guide. The following are examples of valid Prefix values: JournalExports-ForMyLedger/Testing/ JournalExports My:Tests/ The encryption settings that are used by a journal export job to write data in an Amazon S3 bucket. The Amazon S3 object encryption type. To learn more about server-side encryption options in Amazon S3, see Protecting Data Using Server-Side Encryption in the Amazon S3 Developer Guide. KmsKeyArn (string) --- The Amazon Resource Name (ARN) of a symmetric encryption key in Key Management Service (KMS). Amazon S3 does not support asymmetric KMS keys. You must provide a KmsKeyArn if you specify SSE_KMS as the ObjectEncryptionType. KmsKeyArn is not required if you specify SSE_S3 as the ObjectEncryptionType.",
+      "nested_params": [
+        {
+          "name": "Bucket",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon S3 bucket name in which a journal export job writes the journal contents. The bucket name must comply with the Amazon S3 bucket naming conventions. For more information, see Bucket Restrictions and Limitations in the Amazon S3 Developer Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "Prefix",
+          "type": "string",
+          "required": false,
+          "description": "The prefix for the Amazon S3 bucket in which a journal export job writes the journal contents. The prefix must comply with Amazon S3 key naming rules and restrictions. For more information, see Object Key and Metadata in the Amazon S3 Developer Guide. The following are examples of valid Prefix values:",
+          "nested_params": []
+        },
+        {
+          "name": "EncryptionConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The encryption settings that are used by a journal export job to write data in an Amazon S3 bucket.",
+          "nested_params": [
+            {
+              "name": "ObjectEncryptionType",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon S3 object encryption type. To learn more about server-side encryption options in Amazon S3, see Protecting Data Using Server-Side Encryption in the Amazon S3 Developer Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "KmsKeyArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of a symmetric encryption key in Key Management Service (KMS). Amazon S3 does not support asymmetric KMS keys. You must provide a KmsKeyArn if you specify SSE_KMS as the ObjectEncryptionType. KmsKeyArn is not required if you specify SSE_S3 as the ObjectEncryptionType.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the IAM role that grants QLDB permissions for a journal export job to do the following: Write objects into your Amazon S3 bucket. (Optional) Use your customer managed key in Key Management Service (KMS) for server-side encryption of your exported data. To pass a role to QLDB when requesting a journal export, you must have permissions to perform the iam:PassRole action on the IAM role resource. This is required for all journal export requests.",
+      "nested_params": []
+    },
+    {
+      "name": "OutputFormat",
+      "type": "string",
+      "required": false,
+      "description": "The output format of your exported journal data. A journal export job can write the data objects in either the text or binary representation of Amazon Ion format, or in JSON Lines text format. Default: ION_TEXT In JSON Lines format, each journal block in an exported data object is a valid JSON object that is delimited by a newline. You can use this format to directly integrate JSON exports with analytics tools such as Amazon Athena and Glue because these services can parse newline-delimited JSON automatically.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ExportId",
+          "type": "string",
+          "description": "The UUID (represented in Base62-encoded text) that QLDB assigns to each journal export job.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

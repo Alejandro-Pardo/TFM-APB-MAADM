@@ -1,0 +1,96 @@
+{
+  "method_name": "update_solution",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/personalize/client/update_solution.html",
+  "description": "Updates an Amazon Personalize solution to use a different automatic training configuration. When you update a solution, you can change whether the solution uses automatic training, and you can change the training frequency. For more information about updating a solution, see Updating a solution. A solution update can be in one of the following states: CREATE PENDING > CREATE IN_PROGRESS > ACTIVE -or- CREATE FAILED. To get the status of a solution update, call the DescribeSolution API operation and find the status in the latestSolutionUpdate.",
+  "parameters": [
+    {
+      "name": "solutionArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the solution to update.",
+      "nested_params": []
+    },
+    {
+      "name": "performAutoTraining",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether the solution uses automatic training to create new solution versions (trained models). You can change the training frequency by specifying a schedulingExpression in the AutoTrainingConfig as part of solution configuration. If you turn on automatic training, the first automatic training starts within one hour after the solution update completes. If you manually create a solution version within the hour, the solution skips the first automatic training. For more information about automatic training, see Configuring automatic training. After training starts, you can get the solution version's Amazon Resource Name (ARN) with the ListSolutionVersions API operation. To get its status, use the DescribeSolutionVersion.",
+      "nested_params": []
+    },
+    {
+      "name": "solutionUpdateConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The new configuration details of the solution. autoTrainingConfig (dict) --- The automatic training configuration to use when performAutoTraining is true. schedulingExpression (string) --- Specifies how often to automatically train new solution versions. Specify a rate expression in rate(value unit) format. For value, specify a number between 1 and 30. For unit, specify day or days. For example, to automatically create a new solution version every 5 days, specify rate(5 days). The default is every 7 days. For more information about auto training, see Creating and configuring a solution. eventsConfig (dict) --- Describes the configuration of an event, which includes a list of event parameters. You can specify up to 10 event parameters. Events are used in solution creation. eventParametersList (list) --- A list of event parameters, which includes event types and their event value thresholds and weights. (dict) --- Describes the parameters of events, which are used in solution creation. eventType (string) --- The name of the event type to be considered for solution creation. eventValueThreshold (float) --- The threshold of the event type. Only events with a value greater or equal to this threshold will be considered for solution creation. weight (float) --- The weight of the event type. A higher weight means higher importance of the event type for the created solution.",
+      "nested_params": [
+        {
+          "name": "autoTrainingConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The automatic training configuration to use when performAutoTraining is true.",
+          "nested_params": [
+            {
+              "name": "schedulingExpression",
+              "type": "string",
+              "required": false,
+              "description": "Specifies how often to automatically train new solution versions. Specify a rate expression in rate(value unit) format. For value, specify a number between 1 and 30. For unit, specify day or days. For example, to automatically create a new solution version every 5 days, specify rate(5 days). The default is every 7 days. For more information about auto training, see Creating and configuring a solution.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "eventsConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the configuration of an event, which includes a list of event parameters. You can specify up to 10 event parameters. Events are used in solution creation.",
+          "nested_params": [
+            {
+              "name": "eventParametersList",
+              "type": "list",
+              "required": false,
+              "description": "A list of event parameters, which includes event types and their event value thresholds and weights.",
+              "nested_params": [
+                {
+                  "name": "eventType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the event type to be considered for solution creation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "eventValueThreshold",
+                  "type": "float",
+                  "required": false,
+                  "description": "The threshold of the event type. Only events with a value greater or equal to this threshold will be considered for solution creation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "weight",
+                  "type": "float",
+                  "required": false,
+                  "description": "The weight of the event type. A higher weight means higher importance of the event type for the created solution.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "solutionArn",
+          "type": "string",
+          "description": "The same solution Amazon Resource Name (ARN) as given in the request.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

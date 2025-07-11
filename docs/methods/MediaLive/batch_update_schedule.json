@@ -1,0 +1,2388 @@
+{
+  "method_name": "batch_update_schedule",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/medialive/client/batch_update_schedule.html",
+  "description": "Update a channel schedule.",
+  "parameters": [
+    {
+      "name": "ChannelId",
+      "type": "string",
+      "required": true,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Creates",
+      "type": "dict",
+      "required": true,
+      "description": "Schedule actions to create in the schedule. (dict) --- Contains information on a single schedule action. HlsId3SegmentTaggingSettings (dict) --- Action to insert ID3 metadata in every segment, in HLS output groups Tag (string) --- Complete this parameter if you want to specify only the metadata, not the entire frame. MediaLive will insert the metadata in a TXXX frame. Enter the value as plain text. You can include standard MediaLive variable data such as the current segment number. Id3 (string) --- Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure HlsTimedMetadataSettings (dict) --- Action to insert ID3 metadata once, in HLS output groups InputPrepareSettings (dict) --- Action to prepare an input for a future immediate input switch InputAttachmentNameReference (string) --- The name of the input attachment that should be prepared by this action. If no name is provided, the action will stop the most recent prepare (if any) when activated. InputClippingSettings (dict) --- Settings to let you create a clip of the file input, in order to set up the input to ingest only a portion of the file. StartTimecode (dict) --- Settings to identify the start of the clip. Timecode (string) --- The timecode for the frame where you want to start the clip. Optional; if not specified, the clip starts at first frame in the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF. StopTimecode (dict) --- Settings to identify the end of the clip. LastFrameClippingBehavior (string) --- If you specify a StopTimecode in an input (in order to clip the file), you can specify if you want the clip to exclude (the default) or include the frame specified by the timecode. Timecode (string) --- The timecode for the frame where you want to stop the clip. Optional; if not specified, the clip continues to the end of the file. UrlPath (list) --- The value for the variable portion of the URL for the dynamic input, for this instance of the input. Each time you use the same dynamic input in an input switch action, you can provide a different value, in order to connect the input to a different content source. (string) --- Placeholder documentation for __string InputSwitchSettings (dict) --- Action to switch the input InputClippingSettings (dict) --- Settings to let you create a clip of the file input, in order to set up the input to ingest only a portion of the file. (string) --- Placeholder documentation for __string MotionGraphicsImageActivateSettings (dict) --- Action to activate a motion graphics image overlay Duration (integer) --- Duration (in milliseconds) that motion graphics should render on to the video stream. Leaving out this property or setting to 0 will result in rendering continuing until a deactivate action is processed. PasswordParam (string) --- Key used to extract the password from EC2 Parameter store Url (string) --- URI of the HTML5 content to be rendered into the live stream. Username (string) --- Documentation update needed MotionGraphicsImageDeactivateSettings (dict) --- Action to deactivate a motion graphics image overlay PauseStateSettings (dict) --- Action to pause or unpause one or both channel pipelines Pipelines (list) --- Placeholder documentation for __listOfPipelinePauseStateSettings (dict) --- Settings for pausing a pipeline. Scte35InputSettings (dict) --- Action to specify scte35 input InputAttachmentNameReference (string) --- In fixed mode, enter the name of the input attachment that you want to use as a SCTE-35 input. (Don't enter the ID of the input.)' Scte35ReturnToNetworkSettings (dict) --- Action to insert SCTE-35 return_to_network message Scte35SpliceInsertSettings (dict) --- Action to insert SCTE-35 splice_insert message Duration (integer) --- Optional, the duration for the splice_insert, in 90 KHz ticks. To convert seconds to ticks, multiple the seconds by 90,000. If you enter a duration, there is an expectation that the downstream system can read the duration and cue in at that time. If you do not enter a duration, the splice_insert will continue indefinitely and there is an expectation that you will enter a return_to_network to end the splice_insert at the appropriate time. Scte35TimeSignalSettings (dict) --- Action to insert SCTE-35 time_signal message (dict) --- Holds one set of SCTE-35 Descriptor Settings. DeliveryRestrictions (dict) --- Holds the four SCTE-35 delivery restriction parameters. SegmentNum (integer) --- Corresponds to SCTE-35 segment_num. A value that is valid for the specified segmentation_type_id. SegmentationDuration (integer) --- Corresponds to SCTE-35 segmentation_duration. Optional. The duration for the time_signal, in 90 KHz ticks. Enter time in 90 KHz clock ticks. If you do not enter a duration, the time_signal will continue until you insert a cancellation message. SegmentationTypeId (integer) --- Corresponds to SCTE-35 segmentation_type_id. One of the segmentation_type_id values listed in the SCTE-35 specification. On the console, enter the ID in decimal (for example, '52'). In the CLI, API, or an SDK, enter the ID in hex (for example, '0x34') or decimal (for example, '52'). SegmentationUpid (string) --- Corresponds to SCTE-35 segmentation_upid. Enter a string containing the hexadecimal representation of the characters that make up the SCTE-35 segmentation_upid value. Must contain an even number of hex characters. Do not include spaces between each hex pair. For example, the ASCII 'ADS Information' becomes hex '41445320496e666f726d6174696f6e. SegmentationUpidType (integer) --- Corresponds to SCTE-35 segmentation_upid_type. On the console, enter one of the types listed in the SCTE-35 specification, converted to a decimal. For example, '0x0C' hex from the specification is '12' in decimal. In the CLI, API, or an SDK, enter one of the types listed in the SCTE-35 specification, in either hex (for example, '0x0C' ) or in decimal (for example, '12'). SegmentsExpected (integer) --- Corresponds to SCTE-35 segments_expected. SubSegmentNum (integer) --- Corresponds to SCTE-35 sub_segment_num. SubSegmentsExpected (integer) --- Corresponds to SCTE-35 sub_segments_expected. StaticImageActivateSettings (dict) --- Action to activate a static image overlay Duration (integer) --- The duration in milliseconds for the image to remain on the video. If omitted or set to 0 the duration is unlimited and the image will remain until it is explicitly deactivated. FadeIn (integer) --- The time in milliseconds for the image to fade in. The fade-in starts at the start time of the overlay. Default is 0 (no fade-in). FadeOut (integer) --- Applies only if a duration is specified. The time in milliseconds for the image to fade out. The fade-out starts when the duration time is hit, so it effectively extends the duration. Default is 0 (no fade-out). Height (integer) --- The height of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified height. Leave blank to use the native height of the overlay. PasswordParam (string) --- key used to extract the password from EC2 Parameter store Username (string) --- Documentation update needed ImageX (integer) --- Placement of the left edge of the overlay relative to the left edge of the video frame, in pixels. 0 (the default) is the left edge of the frame. If the placement causes the overlay to extend beyond the right edge of the underlying video, then the overlay is cropped on the right. ImageY (integer) --- Placement of the top edge of the overlay relative to the top edge of the video frame, in pixels. 0 (the default) is the top edge of the frame. If the placement causes the overlay to extend beyond the bottom edge of the underlying video, then the overlay is cropped on the bottom. Layer (integer) --- The number of the layer, 0 to 7. There are 8 layers that can be overlaid on the video, each layer with a different image. The layers are in Z order, which means that overlays with higher values of layer are inserted on top of overlays with lower values of layer. Default is 0. Opacity (integer) --- Opacity of image where 0 is transparent and 100 is fully opaque. Default is 100. Width (integer) --- The width of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified width. Leave blank to use the native width of the overlay. StaticImageDeactivateSettings (dict) --- Action to deactivate a static image overlay FadeOut (integer) --- The time in milliseconds for the image to fade out. Layer (integer) --- The image overlay layer to deactivate, 0 to 7. StaticImageOutputActivateSettings (dict) --- Action to activate a static image overlay in one or more specified outputs Duration (integer) --- The duration in milliseconds for the image to remain on the video. (string) --- Placeholder documentation for __string Width (integer) --- The width of the image when inserted into the video, in pixels. StaticImageOutputDeactivateSettings (dict) --- Action to deactivate a static image overlay in one or more specified outputs FadeOut (integer) --- The time in milliseconds for the image to fade out. (string) --- Placeholder documentation for __string Id3SegmentTaggingSettings (dict) --- Action to insert ID3 metadata in every segment, in applicable output groups Id3 (string) --- Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure Tag (string) --- Complete this parameter if you want to specify only the metadata, not the entire frame. TimedMetadataSettings (dict) --- Action to insert ID3 metadata once, in applicable output groups FixedModeScheduleActionStartSettings (dict) --- Option for specifying the start time for an action. FollowModeScheduleActionStartSettings (dict) --- Option for specifying an action as relative to another action. ImmediateModeScheduleActionStartSettings (dict) --- Option for specifying an action that should be applied immediately.",
+      "nested_params": [
+        {
+          "name": "ScheduleActions",
+          "type": "list",
+          "required": false,
+          "description": "",
+          "nested_params": [
+            {
+              "name": "ActionName",
+              "type": "string",
+              "required": false,
+              "description": "",
+              "nested_params": []
+            },
+            {
+              "name": "ScheduleActionSettings",
+              "type": "dict",
+              "required": false,
+              "description": "",
+              "nested_params": [
+                {
+                  "name": "HlsId3SegmentTaggingSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Tag",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Id3",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "HlsTimedMetadataSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Id3",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "InputPrepareSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "InputAttachmentNameReference",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "InputClippingSettings",
+                      "type": "dict",
+                      "required": false,
+                      "description": "",
+                      "nested_params": [
+                        {
+                          "name": "InputTimecodeSource",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "StartTimecode",
+                          "type": "dict",
+                          "required": false,
+                          "description": "",
+                          "nested_params": [
+                            {
+                              "name": "Timecode",
+                              "type": "string",
+                              "required": false,
+                              "description": "",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StopTimecode",
+                          "type": "dict",
+                          "required": false,
+                          "description": "",
+                          "nested_params": [
+                            {
+                              "name": "LastFrameClippingBehavior",
+                              "type": "string",
+                              "required": false,
+                              "description": "",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Timecode",
+                              "type": "string",
+                              "required": false,
+                              "description": "",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UrlPath",
+                      "type": "list",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "InputSwitchSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "InputAttachmentNameReference",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "InputClippingSettings",
+                      "type": "dict",
+                      "required": false,
+                      "description": "",
+                      "nested_params": [
+                        {
+                          "name": "InputTimecodeSource",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "StartTimecode",
+                          "type": "dict",
+                          "required": false,
+                          "description": "",
+                          "nested_params": [
+                            {
+                              "name": "Timecode",
+                              "type": "string",
+                              "required": false,
+                              "description": "",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StopTimecode",
+                          "type": "dict",
+                          "required": false,
+                          "description": "",
+                          "nested_params": [
+                            {
+                              "name": "LastFrameClippingBehavior",
+                              "type": "string",
+                              "required": false,
+                              "description": "",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Timecode",
+                              "type": "string",
+                              "required": false,
+                              "description": "",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UrlPath",
+                      "type": "list",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MotionGraphicsImageActivateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Duration",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "PasswordParam",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Url",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Username",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MotionGraphicsImageDeactivateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                },
+                {
+                  "name": "PauseStateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Pipelines",
+                      "type": "list",
+                      "required": false,
+                      "description": "",
+                      "nested_params": [
+                        {
+                          "name": "PipelineId",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Scte35InputSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "InputAttachmentNameReference",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Mode",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Scte35ReturnToNetworkSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "SpliceEventId",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Scte35SpliceInsertSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Duration",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "SpliceEventId",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Scte35TimeSignalSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Scte35Descriptors",
+                      "type": "list",
+                      "required": false,
+                      "description": "",
+                      "nested_params": [
+                        {
+                          "name": "Scte35DescriptorSettings",
+                          "type": "dict",
+                          "required": false,
+                          "description": "",
+                          "nested_params": [
+                            {
+                              "name": "SegmentationDescriptorScte35DescriptorSettings",
+                              "type": "dict",
+                              "required": false,
+                              "description": "",
+                              "nested_params": [
+                                {
+                                  "name": "DeliveryRestrictions",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": [
+                                    {
+                                      "name": "ArchiveAllowedFlag",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "DeviceRestrictions",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "NoRegionalBlackoutFlag",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "WebDeliveryAllowedFlag",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "SegmentNum",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentationCancelIndicator",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentationDuration",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentationEventId",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentationTypeId",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentationUpid",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentationUpidType",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SegmentsExpected",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SubSegmentNum",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "SubSegmentsExpected",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "StaticImageActivateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Duration",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "FadeIn",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "FadeOut",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Height",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Image",
+                      "type": "dict",
+                      "required": false,
+                      "description": "",
+                      "nested_params": [
+                        {
+                          "name": "PasswordParam",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Uri",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Username",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ImageX",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ImageY",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Layer",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Opacity",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Width",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StaticImageDeactivateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "FadeOut",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Layer",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StaticImageOutputActivateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Duration",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "FadeIn",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "FadeOut",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Height",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Image",
+                      "type": "dict",
+                      "required": false,
+                      "description": "",
+                      "nested_params": [
+                        {
+                          "name": "PasswordParam",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Uri",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Username",
+                          "type": "string",
+                          "required": false,
+                          "description": "",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ImageX",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ImageY",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Layer",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Opacity",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "OutputNames",
+                      "type": "list",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Width",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StaticImageOutputDeactivateSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "FadeOut",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Layer",
+                      "type": "integer",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "OutputNames",
+                      "type": "list",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Id3SegmentTaggingSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Id3",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Tag",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "TimedMetadataSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Id3",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ScheduleActionStartSettings",
+              "type": "dict",
+              "required": false,
+              "description": "",
+              "nested_params": [
+                {
+                  "name": "FixedModeScheduleActionStartSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "Time",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "FollowModeScheduleActionStartSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": [
+                    {
+                      "name": "FollowPoint",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ReferenceActionName",
+                      "type": "string",
+                      "required": false,
+                      "description": "",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ImmediateModeScheduleActionStartSettings",
+                  "type": "dict",
+                  "required": false,
+                  "description": "",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deletes",
+      "type": "dict",
+      "required": true,
+      "description": "Schedule actions to delete from the schedule. (string) --- Placeholder documentation for __string.",
+      "nested_params": [
+        {
+          "name": "ActionNames",
+          "type": "list",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "Creates",
+      "type": "dict",
+      "description": "(dict) --- Successful update of the schedule.",
+      "nested_items": [
+        {
+          "name": "Creates",
+          "type": "dict",
+          "description": "List of actions that have been created in the schedule.",
+          "nested_items": [
+            {
+              "name": "ScheduleActions",
+              "type": "list",
+              "description": "(dict) --- Contains information on a single schedule action.",
+              "nested_items": [
+                {
+                  "name": "ActionName",
+                  "type": "dict",
+                  "description": "(dict) --- Contains information on a single schedule action.",
+                  "nested_items": [
+                    {
+                      "name": "ActionName",
+                      "type": "string",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ScheduleActionSettings",
+                      "type": "dict",
+                      "description": "Action to insert ID3 metadata in every segment, in HLS output groups.",
+                      "nested_items": [
+                        {
+                          "name": "HlsId3SegmentTaggingSettings",
+                          "type": "dict",
+                          "description": "Complete this parameter if you want to specify only the metadata, not the entire frame. MediaLive will insert the metadata in a TXXX frame. Enter the value as plain text. You can include standard MediaLive variable data such as the current segment number.",
+                          "nested_items": [
+                            {
+                              "name": "Tag",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HlsTimedMetadataSettings",
+                          "type": "dict",
+                          "description": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure.",
+                          "nested_items": [
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "InputPrepareSettings",
+                          "type": "dict",
+                          "description": "The name of the input attachment that should be prepared by this action. If no name is provided, the action will stop the most recent prepare (if any) when activated.",
+                          "nested_items": [
+                            {
+                              "name": "InputAttachmentNameReference",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InputClippingSettings",
+                              "type": "dict",
+                              "description": "The source of the timecodes in the source being clipped.",
+                              "nested_items": [
+                                {
+                                  "name": "InputTimecodeSource",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "StartTimecode",
+                                  "type": "dict",
+                                  "description": "The timecode for the frame where you want to start the clip. Optional; if not specified, the clip starts at first frame in the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "StopTimecode",
+                                  "type": "dict",
+                                  "description": "If you specify a StopTimecode in an input (in order to clip the file), you can specify if you want the clip to exclude (the default) or include the frame specified by the timecode.",
+                                  "nested_items": [
+                                    {
+                                      "name": "LastFrameClippingBehavior",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "UrlPath",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "InputSwitchSettings",
+                          "type": "dict",
+                          "description": "The name of the input attachment (not the name of the input!) to switch to. The name is specified in the channel configuration.",
+                          "nested_items": [
+                            {
+                              "name": "InputAttachmentNameReference",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InputClippingSettings",
+                              "type": "dict",
+                              "description": "The source of the timecodes in the source being clipped.",
+                              "nested_items": [
+                                {
+                                  "name": "InputTimecodeSource",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "StartTimecode",
+                                  "type": "dict",
+                                  "description": "The timecode for the frame where you want to start the clip. Optional; if not specified, the clip starts at first frame in the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "StopTimecode",
+                                  "type": "dict",
+                                  "description": "If you specify a StopTimecode in an input (in order to clip the file), you can specify if you want the clip to exclude (the default) or include the frame specified by the timecode.",
+                                  "nested_items": [
+                                    {
+                                      "name": "LastFrameClippingBehavior",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "UrlPath",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "MotionGraphicsImageActivateSettings",
+                          "type": "dict",
+                          "description": "Duration (in milliseconds) that motion graphics should render on to the video stream. Leaving out this property or setting to 0 will result in rendering continuing until a deactivate action is processed.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "PasswordParam",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Url",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Username",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "MotionGraphicsImageDeactivateSettings",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "PauseStateSettings",
+                          "type": "dict",
+                          "description": "Placeholder documentation for __listOfPipelinePauseStateSettings.",
+                          "nested_items": [
+                            {
+                              "name": "Pipelines",
+                              "type": "list",
+                              "description": "(dict) --- Settings for pausing a pipeline.",
+                              "nested_items": [
+                                {
+                                  "name": "PipelineId",
+                                  "type": "dict",
+                                  "description": "(dict) --- Settings for pausing a pipeline.",
+                                  "nested_items": [
+                                    {
+                                      "name": "PipelineId",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35InputSettings",
+                          "type": "dict",
+                          "description": "In fixed mode, enter the name of the input attachment that you want to use as a SCTE-35 input. (Don't enter the ID of the input.)'",
+                          "nested_items": [
+                            {
+                              "name": "InputAttachmentNameReference",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Mode",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35ReturnToNetworkSettings",
+                          "type": "dict",
+                          "description": "The splice_event_id for the SCTE-35 splice_insert, as defined in SCTE-35.",
+                          "nested_items": [
+                            {
+                              "name": "SpliceEventId",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35SpliceInsertSettings",
+                          "type": "dict",
+                          "description": "Optional, the duration for the splice_insert, in 90 KHz ticks. To convert seconds to ticks, multiple the seconds by 90,000. If you enter a duration, there is an expectation that the downstream system can read the duration and cue in at that time. If you do not enter a duration, the splice_insert will continue indefinitely and there is an expectation that you will enter a return_to_network to end the splice_insert at the appropriate time.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SpliceEventId",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35TimeSignalSettings",
+                          "type": "dict",
+                          "description": "The list of SCTE-35 descriptors accompanying the SCTE-35 time_signal.",
+                          "nested_items": [
+                            {
+                              "name": "Scte35Descriptors",
+                              "type": "list",
+                              "description": "(dict) --- Holds one set of SCTE-35 Descriptor Settings.",
+                              "nested_items": [
+                                {
+                                  "name": "Scte35DescriptorSettings",
+                                  "type": "dict",
+                                  "description": "(dict) --- Holds one set of SCTE-35 Descriptor Settings.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Scte35DescriptorSettings",
+                                      "type": "dict",
+                                      "description": "SCTE-35 Segmentation Descriptor.",
+                                      "nested_items": [
+                                        {
+                                          "name": "SegmentationDescriptorScte35DescriptorSettings",
+                                          "type": "dict",
+                                          "description": "Holds the four SCTE-35 delivery restriction parameters.",
+                                          "nested_items": [
+                                            {
+                                              "name": "DeliveryRestrictions",
+                                              "type": "dict",
+                                              "description": "Corresponds to SCTE-35 archive_allowed_flag.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "ArchiveAllowedFlag",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "DeviceRestrictions",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "NoRegionalBlackoutFlag",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "WebDeliveryAllowedFlag",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "SegmentNum",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationCancelIndicator",
+                                              "type": "string",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationDuration",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationEventId",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationTypeId",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationUpid",
+                                              "type": "string",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationUpidType",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentsExpected",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SubSegmentNum",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SubSegmentsExpected",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageActivateSettings",
+                          "type": "dict",
+                          "description": "The duration in milliseconds for the image to remain on the video. If omitted or set to 0 the duration is unlimited and the image will remain until it is explicitly deactivated.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeIn",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Height",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Image",
+                              "type": "dict",
+                              "description": "key used to extract the password from EC2 Parameter store.",
+                              "nested_items": [
+                                {
+                                  "name": "PasswordParam",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Uri",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Username",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ImageX",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ImageY",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Opacity",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Width",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageDeactivateSettings",
+                          "type": "dict",
+                          "description": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
+                          "nested_items": [
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageOutputActivateSettings",
+                          "type": "dict",
+                          "description": "The duration in milliseconds for the image to remain on the video. If omitted or set to 0 the duration is unlimited and the image will remain until it is explicitly deactivated.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeIn",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Height",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Image",
+                              "type": "dict",
+                              "description": "key used to extract the password from EC2 Parameter store.",
+                              "nested_items": [
+                                {
+                                  "name": "PasswordParam",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Uri",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Username",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ImageX",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ImageY",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Opacity",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "OutputNames",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Width",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageOutputDeactivateSettings",
+                          "type": "dict",
+                          "description": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
+                          "nested_items": [
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "OutputNames",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Id3SegmentTaggingSettings",
+                          "type": "dict",
+                          "description": "Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure.",
+                          "nested_items": [
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Tag",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "TimedMetadataSettings",
+                          "type": "dict",
+                          "description": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure.",
+                          "nested_items": [
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ScheduleActionStartSettings",
+                      "type": "dict",
+                      "description": "Option for specifying the start time for an action.",
+                      "nested_items": [
+                        {
+                          "name": "FixedModeScheduleActionStartSettings",
+                          "type": "dict",
+                          "description": "Start time for the action to start in the channel. (Not the time for the action to be added to the schedule: actions are always added to the schedule immediately.) UTC format: yyyy-mm-ddThh:mm:ss.nnnZ. All the letters are digits (for example, mm might be 01) except for the two constants 'T' for time and 'Z' for 'UTC format'.",
+                          "nested_items": [
+                            {
+                              "name": "Time",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "FollowModeScheduleActionStartSettings",
+                          "type": "dict",
+                          "description": "Identifies whether this action starts relative to the start or relative to the end of the reference action.",
+                          "nested_items": [
+                            {
+                              "name": "FollowPoint",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ReferenceActionName",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ImmediateModeScheduleActionStartSettings",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Deletes",
+          "type": "dict",
+          "description": "List of actions that have been deleted from the schedule.",
+          "nested_items": [
+            {
+              "name": "ScheduleActions",
+              "type": "list",
+              "description": "(dict) --- Contains information on a single schedule action.",
+              "nested_items": [
+                {
+                  "name": "ActionName",
+                  "type": "dict",
+                  "description": "(dict) --- Contains information on a single schedule action.",
+                  "nested_items": [
+                    {
+                      "name": "ActionName",
+                      "type": "string",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ScheduleActionSettings",
+                      "type": "dict",
+                      "description": "Action to insert ID3 metadata in every segment, in HLS output groups.",
+                      "nested_items": [
+                        {
+                          "name": "HlsId3SegmentTaggingSettings",
+                          "type": "dict",
+                          "description": "Complete this parameter if you want to specify only the metadata, not the entire frame. MediaLive will insert the metadata in a TXXX frame. Enter the value as plain text. You can include standard MediaLive variable data such as the current segment number.",
+                          "nested_items": [
+                            {
+                              "name": "Tag",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HlsTimedMetadataSettings",
+                          "type": "dict",
+                          "description": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure.",
+                          "nested_items": [
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "InputPrepareSettings",
+                          "type": "dict",
+                          "description": "The name of the input attachment that should be prepared by this action. If no name is provided, the action will stop the most recent prepare (if any) when activated.",
+                          "nested_items": [
+                            {
+                              "name": "InputAttachmentNameReference",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InputClippingSettings",
+                              "type": "dict",
+                              "description": "The source of the timecodes in the source being clipped.",
+                              "nested_items": [
+                                {
+                                  "name": "InputTimecodeSource",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "StartTimecode",
+                                  "type": "dict",
+                                  "description": "The timecode for the frame where you want to start the clip. Optional; if not specified, the clip starts at first frame in the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "StopTimecode",
+                                  "type": "dict",
+                                  "description": "If you specify a StopTimecode in an input (in order to clip the file), you can specify if you want the clip to exclude (the default) or include the frame specified by the timecode.",
+                                  "nested_items": [
+                                    {
+                                      "name": "LastFrameClippingBehavior",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "UrlPath",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "InputSwitchSettings",
+                          "type": "dict",
+                          "description": "The name of the input attachment (not the name of the input!) to switch to. The name is specified in the channel configuration.",
+                          "nested_items": [
+                            {
+                              "name": "InputAttachmentNameReference",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "InputClippingSettings",
+                              "type": "dict",
+                              "description": "The source of the timecodes in the source being clipped.",
+                              "nested_items": [
+                                {
+                                  "name": "InputTimecodeSource",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "StartTimecode",
+                                  "type": "dict",
+                                  "description": "The timecode for the frame where you want to start the clip. Optional; if not specified, the clip starts at first frame in the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "StopTimecode",
+                                  "type": "dict",
+                                  "description": "If you specify a StopTimecode in an input (in order to clip the file), you can specify if you want the clip to exclude (the default) or include the frame specified by the timecode.",
+                                  "nested_items": [
+                                    {
+                                      "name": "LastFrameClippingBehavior",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Timecode",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "UrlPath",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "MotionGraphicsImageActivateSettings",
+                          "type": "dict",
+                          "description": "Duration (in milliseconds) that motion graphics should render on to the video stream. Leaving out this property or setting to 0 will result in rendering continuing until a deactivate action is processed.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "PasswordParam",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Url",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Username",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "MotionGraphicsImageDeactivateSettings",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "PauseStateSettings",
+                          "type": "dict",
+                          "description": "Placeholder documentation for __listOfPipelinePauseStateSettings.",
+                          "nested_items": [
+                            {
+                              "name": "Pipelines",
+                              "type": "list",
+                              "description": "(dict) --- Settings for pausing a pipeline.",
+                              "nested_items": [
+                                {
+                                  "name": "PipelineId",
+                                  "type": "dict",
+                                  "description": "(dict) --- Settings for pausing a pipeline.",
+                                  "nested_items": [
+                                    {
+                                      "name": "PipelineId",
+                                      "type": "string",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35InputSettings",
+                          "type": "dict",
+                          "description": "In fixed mode, enter the name of the input attachment that you want to use as a SCTE-35 input. (Don't enter the ID of the input.)'",
+                          "nested_items": [
+                            {
+                              "name": "InputAttachmentNameReference",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Mode",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35ReturnToNetworkSettings",
+                          "type": "dict",
+                          "description": "The splice_event_id for the SCTE-35 splice_insert, as defined in SCTE-35.",
+                          "nested_items": [
+                            {
+                              "name": "SpliceEventId",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35SpliceInsertSettings",
+                          "type": "dict",
+                          "description": "Optional, the duration for the splice_insert, in 90 KHz ticks. To convert seconds to ticks, multiple the seconds by 90,000. If you enter a duration, there is an expectation that the downstream system can read the duration and cue in at that time. If you do not enter a duration, the splice_insert will continue indefinitely and there is an expectation that you will enter a return_to_network to end the splice_insert at the appropriate time.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SpliceEventId",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Scte35TimeSignalSettings",
+                          "type": "dict",
+                          "description": "The list of SCTE-35 descriptors accompanying the SCTE-35 time_signal.",
+                          "nested_items": [
+                            {
+                              "name": "Scte35Descriptors",
+                              "type": "list",
+                              "description": "(dict) --- Holds one set of SCTE-35 Descriptor Settings.",
+                              "nested_items": [
+                                {
+                                  "name": "Scte35DescriptorSettings",
+                                  "type": "dict",
+                                  "description": "(dict) --- Holds one set of SCTE-35 Descriptor Settings.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Scte35DescriptorSettings",
+                                      "type": "dict",
+                                      "description": "SCTE-35 Segmentation Descriptor.",
+                                      "nested_items": [
+                                        {
+                                          "name": "SegmentationDescriptorScte35DescriptorSettings",
+                                          "type": "dict",
+                                          "description": "Holds the four SCTE-35 delivery restriction parameters.",
+                                          "nested_items": [
+                                            {
+                                              "name": "DeliveryRestrictions",
+                                              "type": "dict",
+                                              "description": "Corresponds to SCTE-35 archive_allowed_flag.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "ArchiveAllowedFlag",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "DeviceRestrictions",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "NoRegionalBlackoutFlag",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "WebDeliveryAllowedFlag",
+                                                  "type": "string",
+                                                  "description": "",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "SegmentNum",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationCancelIndicator",
+                                              "type": "string",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationDuration",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationEventId",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationTypeId",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationUpid",
+                                              "type": "string",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentationUpidType",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SegmentsExpected",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SubSegmentNum",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "SubSegmentsExpected",
+                                              "type": "integer",
+                                              "description": "",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageActivateSettings",
+                          "type": "dict",
+                          "description": "The duration in milliseconds for the image to remain on the video. If omitted or set to 0 the duration is unlimited and the image will remain until it is explicitly deactivated.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeIn",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Height",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Image",
+                              "type": "dict",
+                              "description": "key used to extract the password from EC2 Parameter store.",
+                              "nested_items": [
+                                {
+                                  "name": "PasswordParam",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Uri",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Username",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ImageX",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ImageY",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Opacity",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Width",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageDeactivateSettings",
+                          "type": "dict",
+                          "description": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
+                          "nested_items": [
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageOutputActivateSettings",
+                          "type": "dict",
+                          "description": "The duration in milliseconds for the image to remain on the video. If omitted or set to 0 the duration is unlimited and the image will remain until it is explicitly deactivated.",
+                          "nested_items": [
+                            {
+                              "name": "Duration",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeIn",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Height",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Image",
+                              "type": "dict",
+                              "description": "key used to extract the password from EC2 Parameter store.",
+                              "nested_items": [
+                                {
+                                  "name": "PasswordParam",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Uri",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Username",
+                                  "type": "string",
+                                  "description": "",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ImageX",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ImageY",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Opacity",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "OutputNames",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Width",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StaticImageOutputDeactivateSettings",
+                          "type": "dict",
+                          "description": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
+                          "nested_items": [
+                            {
+                              "name": "FadeOut",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Layer",
+                              "type": "integer",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "OutputNames",
+                              "type": "list",
+                              "description": "(string) --- Placeholder documentation for __string.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) --- Placeholder documentation for __string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Id3SegmentTaggingSettings",
+                          "type": "dict",
+                          "description": "Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure.",
+                          "nested_items": [
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Tag",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "TimedMetadataSettings",
+                          "type": "dict",
+                          "description": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure.",
+                          "nested_items": [
+                            {
+                              "name": "Id3",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ScheduleActionStartSettings",
+                      "type": "dict",
+                      "description": "Option for specifying the start time for an action.",
+                      "nested_items": [
+                        {
+                          "name": "FixedModeScheduleActionStartSettings",
+                          "type": "dict",
+                          "description": "Start time for the action to start in the channel. (Not the time for the action to be added to the schedule: actions are always added to the schedule immediately.) UTC format: yyyy-mm-ddThh:mm:ss.nnnZ. All the letters are digits (for example, mm might be 01) except for the two constants 'T' for time and 'Z' for 'UTC format'.",
+                          "nested_items": [
+                            {
+                              "name": "Time",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "FollowModeScheduleActionStartSettings",
+                          "type": "dict",
+                          "description": "Identifies whether this action starts relative to the start or relative to the end of the reference action.",
+                          "nested_items": [
+                            {
+                              "name": "FollowPoint",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ReferenceActionName",
+                              "type": "string",
+                              "description": "",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ImmediateModeScheduleActionStartSettings",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

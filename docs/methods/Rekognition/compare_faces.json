@@ -1,0 +1,531 @@
+{
+  "method_name": "compare_faces",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/compare_faces.html",
+  "description": "Compares a face in the source input image with each of the 100 largest faces detected in the target input image. If the source image contains multiple faces, the service detects the largest face and compares it with each face detected in the target image. You pass the input and target images either as base64-encoded image bytes or as references to images in an Amazon S3 bucket. If you use the AWS CLI to call Amazon Rekognition operations, passing image bytes isn't supported. The image must be formatted as a PNG or JPEG file. In response, the operation returns an array of face matches ordered by similarity score in descending order. For each face match, the response provides a bounding box of the face, facial landmarks, pose details (pitch, roll, and yaw), quality (brightness and sharpness), and confidence value (indicating the level of confidence that the bounding box contains a face). The response also provides a similarity score, which indicates how closely the faces match. CompareFaces also returns an array of faces that don't match the source image. For each face, it returns a bounding box, confidence value, landmarks, pose details, and quality. The response also returns information about the face in the source image, including the bounding box of the face and confidence value. The QualityFilter input parameter allows you to filter out detected faces that don't meet a required quality bar. The quality bar is based on a variety of common use cases. Use QualityFilter to set the quality bar by specifying LOW, MEDIUM, or HIGH. If you do not want to filter detected faces, specify NONE. The default value is NONE. If the image doesn't contain Exif metadata, CompareFaces returns orientation information for the source and target images. Use these values to display the images with the correct image orientation. If no faces are detected in the source or target images, CompareFaces returns an InvalidParameterException error. For an example, see Comparing Faces in Images in the Amazon Rekognition Developer Guide. This operation requires permissions to perform the rekognition:CompareFaces action.",
+  "parameters": [
+    {
+      "name": "SourceImage",
+      "type": "dict",
+      "required": true,
+      "description": "The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported. If you are using an AWS SDK to call Amazon Rekognition, you might not need to base64-encode image bytes passed using the Bytes field. For more information, see Images in the Amazon Rekognition developer guide. Bytes (bytes) --- Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB. S3Object (dict) --- Identifies an S3 object as the image source. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "Bytes",
+          "type": "bytes",
+          "required": false,
+          "description": "Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "Identifies an S3 object as the image source.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "S3 object key name.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket is versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TargetImage",
+      "type": "dict",
+      "required": true,
+      "description": "The target image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported. If you are using an AWS SDK to call Amazon Rekognition, you might not need to base64-encode image bytes passed using the Bytes field. For more information, see Images in the Amazon Rekognition developer guide. Bytes (bytes) --- Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB. S3Object (dict) --- Identifies an S3 object as the image source. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "Bytes",
+          "type": "bytes",
+          "required": false,
+          "description": "Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "Identifies an S3 object as the image source.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "S3 object key name.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket is versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SimilarityThreshold",
+      "type": "float",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "QualityFilter",
+      "type": "string",
+      "required": false,
+      "description": "A filter that specifies a quality bar for how much filtering is done to identify faces. Filtered faces aren't compared. If you specify AUTO, Amazon Rekognition chooses the quality bar. If you specify LOW, MEDIUM, or HIGH, filtering removes all faces that don't meet the chosen quality bar. The quality bar is based on a variety of common use cases. Low-quality detections can occur for a number of reasons. Some examples are an object that's misidentified as a face, a face that's too blurry, or a face with a pose that's too extreme to use. If you specify NONE, no filtering is performed. The default value is NONE. To use quality filtering, the collection you are using must be associated with version 3 of the face model or higher.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SourceImageFace",
+          "type": "dict",
+          "description": "The face in the source image that was used for comparison.",
+          "nested_items": [
+            {
+              "name": "BoundingBox",
+              "type": "dict",
+              "description": "Bounding box of the face.",
+              "nested_items": [
+                {
+                  "name": "Width",
+                  "type": "float",
+                  "description": "Width of the bounding box as a ratio of the overall image width.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Height",
+                  "type": "float",
+                  "description": "Height of the bounding box as a ratio of the overall image height.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Left",
+                  "type": "float",
+                  "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Top",
+                  "type": "float",
+                  "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Confidence",
+              "type": "float",
+              "description": "Confidence level that the selected bounding box contains a face.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "FaceMatches",
+          "type": "list",
+          "description": "An array of faces in the target image that match the source image face. Each CompareFacesMatch object provides the bounding box, the confidence level that the bounding box contains a face, and the similarity score for the face in the bounding box and the face in the source image.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Similarity",
+                  "type": "float",
+                  "description": "Level of confidence that the faces match.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "BoundingBox",
+                      "type": "dict",
+                      "description": "Bounding box of the face.",
+                      "nested_items": [
+                        {
+                          "name": "Width",
+                          "type": "float",
+                          "description": "Width of the bounding box as a ratio of the overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Height",
+                          "type": "float",
+                          "description": "Height of the bounding box as a ratio of the overall image height.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Left",
+                          "type": "float",
+                          "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Top",
+                          "type": "float",
+                          "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "Level of confidence that what the bounding box contains is a face.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Landmarks",
+                      "type": "list",
+                      "description": "An array of facial landmarks.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Type",
+                              "type": "string",
+                              "description": "Type of landmark.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "X",
+                              "type": "float",
+                              "description": "The x-coordinate of the landmark expressed as a ratio of the width of the image. The x-coordinate is measured from the left-side of the image. For example, if the image is 700 pixels wide and the x-coordinate of the landmark is at 350 pixels, this value is 0.5.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Y",
+                              "type": "float",
+                              "description": "The y-coordinate of the landmark expressed as a ratio of the height of the image. The y-coordinate is measured from the top of the image. For example, if the image height is 200 pixels and the y-coordinate of the landmark is at 50 pixels, this value is 0.25.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Roll",
+                          "type": "float",
+                          "description": "Value representing the face rotation on the roll axis.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Yaw",
+                          "type": "float",
+                          "description": "Value representing the face rotation on the yaw axis.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Pitch",
+                          "type": "float",
+                          "description": "Value representing the face rotation on the pitch axis.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Brightness",
+                          "type": "float",
+                          "description": "Value representing brightness of the face. The service returns a value between 0 and 100 (inclusive). A higher value indicates a brighter face image.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Sharpness",
+                          "type": "float",
+                          "description": "Value representing sharpness of the face. The service returns a value between 0 and 100 (inclusive). A higher value indicates a sharper face image.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Emotions",
+                      "type": "list",
+                      "description": "The emotions that appear to be expressed on the face, and the confidence level in the determination. Valid values include 'Happy', 'Sad', 'Angry', 'Confused', 'Disgusted', 'Surprised', 'Calm', 'Unknown', and 'Fear'.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Type",
+                              "type": "string",
+                              "description": "Type of emotion detected.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Value",
+                          "type": "boolean",
+                          "description": "Boolean value that indicates whether the face is smiling or not.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Confidence",
+                          "type": "float",
+                          "description": "Level of confidence in the determination.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UnmatchedFaces",
+          "type": "list",
+          "description": "An array of faces in the target image that did not match the source image face.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "BoundingBox",
+                  "type": "dict",
+                  "description": "Bounding box of the face.",
+                  "nested_items": [
+                    {
+                      "name": "Width",
+                      "type": "float",
+                      "description": "Width of the bounding box as a ratio of the overall image width.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Height",
+                      "type": "float",
+                      "description": "Height of the bounding box as a ratio of the overall image height.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Left",
+                      "type": "float",
+                      "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Top",
+                      "type": "float",
+                      "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Confidence",
+                  "type": "float",
+                  "description": "Level of confidence that what the bounding box contains is a face.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Landmarks",
+                  "type": "list",
+                  "description": "An array of facial landmarks.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Type",
+                          "type": "string",
+                          "description": "Type of landmark.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "X",
+                          "type": "float",
+                          "description": "The x-coordinate of the landmark expressed as a ratio of the width of the image. The x-coordinate is measured from the left-side of the image. For example, if the image is 700 pixels wide and the x-coordinate of the landmark is at 350 pixels, this value is 0.5.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Y",
+                          "type": "float",
+                          "description": "The y-coordinate of the landmark expressed as a ratio of the height of the image. The y-coordinate is measured from the top of the image. For example, if the image height is 200 pixels and the y-coordinate of the landmark is at 50 pixels, this value is 0.25.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Roll",
+                      "type": "float",
+                      "description": "Value representing the face rotation on the roll axis.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Yaw",
+                      "type": "float",
+                      "description": "Value representing the face rotation on the yaw axis.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Pitch",
+                      "type": "float",
+                      "description": "Value representing the face rotation on the pitch axis.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Brightness",
+                      "type": "float",
+                      "description": "Value representing brightness of the face. The service returns a value between 0 and 100 (inclusive). A higher value indicates a brighter face image.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Sharpness",
+                      "type": "float",
+                      "description": "Value representing sharpness of the face. The service returns a value between 0 and 100 (inclusive). A higher value indicates a sharper face image.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Emotions",
+                  "type": "list",
+                  "description": "The emotions that appear to be expressed on the face, and the confidence level in the determination. Valid values include 'Happy', 'Sad', 'Angry', 'Confused', 'Disgusted', 'Surprised', 'Calm', 'Unknown', and 'Fear'.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Type",
+                          "type": "string",
+                          "description": "Type of emotion detected.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Confidence",
+                          "type": "float",
+                          "description": "Level of confidence in the determination.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Value",
+                      "type": "boolean",
+                      "description": "Boolean value that indicates whether the face is smiling or not.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "Level of confidence in the determination.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SourceImageOrientationCorrection",
+          "type": "string",
+          "description": "The value of SourceImageOrientationCorrection is always null.",
+          "nested_items": []
+        },
+        {
+          "name": "TargetImageOrientationCorrection",
+          "type": "string",
+          "description": "The value of TargetImageOrientationCorrection is always null.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

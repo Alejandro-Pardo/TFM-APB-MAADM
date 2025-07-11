@@ -1,0 +1,282 @@
+{
+  "method_name": "get_content_moderation",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/get_content_moderation.html",
+  "description": "Gets the inappropriate, unwanted, or offensive content analysis results for a Amazon Rekognition Video analysis started by  StartContentModeration. For a list of moderation labels in Amazon Rekognition, see Using the image and video moderation APIs. Amazon Rekognition Video inappropriate or offensive content detection in a stored video is an asynchronous operation. You start analysis by calling  StartContentModeration which returns a job identifier ( JobId). When analysis finishes, Amazon Rekognition Video publishes a completion status to the Amazon Simple Notification Service topic registered in the initial call to StartContentModeration. To get the results of the content analysis, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If so, call GetContentModeration and pass the job identifier ( JobId) from the initial call to StartContentModeration. For more information, see Working with Stored Videos in the Amazon Rekognition Devlopers Guide. GetContentModeration returns detected inappropriate, unwanted, or offensive content moderation labels, and the time they are detected, in an array, ModerationLabels, of  ContentModerationDetection objects. By default, the moderated labels are returned sorted by time, in milliseconds from the start of the video. You can also sort them by moderated label by specifying NAME for the SortBy input parameter. Since video analysis can return a large number of results, use the MaxResults parameter to limit the number of labels returned in a single call to GetContentModeration. If there are more results than specified in MaxResults, the value of NextToken in the operation response contains a pagination token for getting the next set of results. To get the next page of results, call GetContentModeration and populate the NextToken request parameter with the value of NextToken returned from the previous call to GetContentModeration. For more information, see moderating content in the Amazon Rekognition Developer Guide.",
+  "parameters": [
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier for the inappropriate, unwanted, or offensive content moderation job. Use JobId to identify the job in a subsequent call to GetContentModeration.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SortBy",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AggregateBy",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobStatus",
+          "type": "string",
+          "description": "The current status of the content moderation analysis job.",
+          "nested_items": []
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "If the job fails, StatusMessage provides a descriptive error message.",
+          "nested_items": []
+        },
+        {
+          "name": "VideoMetadata",
+          "type": "dict",
+          "description": "Information about a video that Amazon Rekognition analyzed. Videometadata is returned in every page of paginated responses from GetContentModeration.",
+          "nested_items": [
+            {
+              "name": "Codec",
+              "type": "string",
+              "description": "Type of compression used in the analyzed video.",
+              "nested_items": []
+            },
+            {
+              "name": "DurationMillis",
+              "type": "integer",
+              "description": "Length of the video in milliseconds.",
+              "nested_items": []
+            },
+            {
+              "name": "Format",
+              "type": "string",
+              "description": "Format of the analyzed video. Possible values are MP4, MOV and AVI.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameRate",
+              "type": "float",
+              "description": "Number of frames per second in the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameHeight",
+              "type": "integer",
+              "description": "Vertical pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameWidth",
+              "type": "integer",
+              "description": "Horizontal pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "ColorRange",
+              "type": "string",
+              "description": "A description of the range of luminance values in a video, either LIMITED (16 to 235) or FULL (0 to 255).",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ModerationLabels",
+          "type": "list",
+          "description": "The detected inappropriate, unwanted, or offensive content moderation labels and the time(s) they were detected.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Timestamp",
+                  "type": "integer",
+                  "description": "Time, in milliseconds from the beginning of the video, that the content moderation label was detected. Note that Timestamp is not guaranteed to be accurate to the individual frame where the moderated content first appears.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ModerationLabel",
+                  "type": "dict",
+                  "description": "The content moderation label detected by in the stored video.",
+                  "nested_items": [
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "Specifies the confidence that Amazon Rekognition has that the label has been correctly identified.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "description": "The label name for the type of unsafe content detected in the image.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ParentName",
+                      "type": "string",
+                      "description": "The name for the parent label. Labels at the top level of the hierarchy have the parent label \"\".",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TaxonomyLevel",
+                      "type": "integer",
+                      "description": "The level of the moderation label with regard to its taxonomy, from 1 to 3.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StartTimestampMillis",
+                  "type": "integer",
+                  "description": "The time in milliseconds defining the start of the timeline segment containing a continuously detected moderation label.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EndTimestampMillis",
+                  "type": "integer",
+                  "description": "The time in milliseconds defining the end of the timeline segment containing a continuously detected moderation label.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationMillis",
+                  "type": "integer",
+                  "description": "The time duration of a segment in milliseconds, I.e. time elapsed from StartTimestampMillis to EndTimestampMillis.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ContentTypes",
+                  "type": "list",
+                  "description": "A list of predicted results for the type of content an image contains. For example, the image content might be from animation, sports, or a video game.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Confidence",
+                          "type": "float",
+                          "description": "The confidence level of the label given.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of the label.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the response is truncated, Amazon Rekognition Video returns this token that you can use in the subsequent request to retrieve the next set of content moderation labels.",
+          "nested_items": []
+        },
+        {
+          "name": "ModerationModelVersion",
+          "type": "string",
+          "description": "Version number of the moderation detection model that was used to detect inappropriate, unwanted, or offensive content.",
+          "nested_items": []
+        },
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "Job identifier for the content moderation operation for which you want to obtain results. The job identifer is returned by an initial call to StartContentModeration.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "description": "Name of the S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "S3 object key name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "If the bucket is versioning enabled, you can specify the object version.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobTag",
+          "type": "string",
+          "description": "A job identifier specified in the call to StartContentModeration and returned in the job completion notification sent to your Amazon Simple Notification Service topic.",
+          "nested_items": []
+        },
+        {
+          "name": "GetRequestMetadata",
+          "type": "dict",
+          "description": "Information about the paramters used when getting a response. Includes information on aggregation and sorting methods.",
+          "nested_items": [
+            {
+              "name": "SortBy",
+              "type": "string",
+              "description": "The sorting method chosen for a GetContentModeration request.",
+              "nested_items": []
+            },
+            {
+              "name": "AggregateBy",
+              "type": "string",
+              "description": "The aggregation method chosen for a GetContentModeration request.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

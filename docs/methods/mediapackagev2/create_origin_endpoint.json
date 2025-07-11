@@ -1,0 +1,1960 @@
+{
+  "method_name": "create_origin_endpoint",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/mediapackagev2/client/create_origin_endpoint.html",
+  "description": "The endpoint is attached to a channel, and represents the output of the live content. You can associate multiple endpoints to a single channel. Each endpoint gives players and downstream CDNs (such as Amazon CloudFront) access to the content for playback. Content can't be served from a channel until it has an endpoint. You can create only one endpoint with each request.",
+  "parameters": [
+    {
+      "name": "ChannelGroupName",
+      "type": "string",
+      "required": true,
+      "description": "The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.",
+      "nested_params": []
+    },
+    {
+      "name": "ChannelName",
+      "type": "string",
+      "required": true,
+      "description": "The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.",
+      "nested_params": []
+    },
+    {
+      "name": "OriginEndpointName",
+      "type": "string",
+      "required": true,
+      "description": "The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and must be unique for your account in the AWS Region and channel. You can't use spaces in the name. You can't change the name after you create the endpoint.",
+      "nested_params": []
+    },
+    {
+      "name": "ContainerType",
+      "type": "string",
+      "required": true,
+      "description": "The type of container to attach to this origin endpoint. A container type is a file format that encapsulates one or more media streams, such as audio and video, into a single file. You can't change the container type after you create the endpoint.",
+      "nested_params": []
+    },
+    {
+      "name": "Segment",
+      "type": "dict",
+      "required": true,
+      "description": "The segment configuration, including the segment name, duration, and other configuration values. SegmentDurationSeconds (integer) --- The duration (in seconds) of each segment. Enter a value equal to, or a multiple of, the input segment duration. If the value that you enter is different from the input segment duration, MediaPackage rounds segments to the nearest multiple of the input segment duration. SegmentName (string) --- The name that describes the segment. The name is the base name of the segment used in all content manifests inside of the endpoint. You can't use spaces in the name. TsUseAudioRenditionGroup (boolean) --- When selected, MediaPackage bundles all audio tracks in a rendition group. All other tracks in the stream can be used with any audio rendition from the group. IncludeIframeOnlyStreams (boolean) --- When selected, the stream set includes an additional I-frame only stream, along with the other tracks. If false, this extra stream is not included. MediaPackage generates an I-frame only stream from the first rendition in the manifest. The service inserts EXT-I-FRAMES-ONLY tags in the output manifest, and then generates and includes an I-frames only playlist in the stream. This playlist permits player functionality like fast forward and rewind. TsIncludeDvbSubtitles (boolean) --- By default, MediaPackage excludes all digital video broadcasting (DVB) subtitles from the output. When selected, MediaPackage passes through DVB subtitles into the output. Scte (dict) --- The SCTE configuration options in the segment settings. ScteFilter (list) --- The SCTE-35 message types that you want to be treated as ad markers in the output. (string) --- Encryption (dict) --- The parameters for encrypting content. ConstantInitializationVector (string) --- A 128-bit, 16-byte hex value represented by a 32-character string, used in conjunction with the key for encrypting content. If you don't specify a value, then MediaPackage creates the constant initialization vector (IV). The encryption method to use. TsEncryptionMethod (string) --- The encryption method to use. CmafEncryptionMethod (string) --- The encryption method to use. IsmEncryptionMethod (string) --- The encryption method used for Microsoft Smooth Streaming (MSS) content. This specifies how the MSS segments are encrypted to protect the content during delivery to client players. KeyRotationIntervalSeconds (integer) --- The frequency (in seconds) of key changes for live workflows, in which content is streamed real time. The service retrieves content keys before the live content begins streaming, and then retrieves them as needed over the lifetime of the workflow. By default, key rotation is set to 300 seconds (5 minutes), the minimum rotation interval, which is equivalent to setting it to 300. If you don't enter an interval, content keys aren't rotated. The following example setting causes the service to rotate keys every thirty minutes: 1800 CmafExcludeSegmentDrmMetadata (boolean) --- Excludes SEIG and SGPD boxes from segment metadata in CMAF containers. When set to true, MediaPackage omits these DRM metadata boxes from CMAF segments, which can improve compatibility with certain devices and players that don't support these boxes. Important considerations: This setting only affects CMAF container formats Key rotation can still be handled through media playlist signaling PSSH and TENC boxes remain unaffected Default behavior is preserved when this setting is disabled Valid values: true | false Default: false The parameters for the SPEKE key provider. Configure one or more content encryption keys for your endpoints that use SPEKE Version 2.0. The encryption contract defines which content keys are used to encrypt the audio and video tracks in your stream. To configure the encryption contract, specify which audio and video encryption presets to use. A collection of audio encryption presets. Value description: PRESET-AUDIO-1 - Use one content key to encrypt all of the audio tracks in your stream. PRESET-AUDIO-2 - Use one content key to encrypt all of the stereo audio tracks and one content key to encrypt all of the multichannel audio tracks. PRESET-AUDIO-3 - Use one content key to encrypt all of the stereo audio tracks, one content key to encrypt all of the multichannel audio tracks with 3 to 6 channels, and one content key to encrypt all of the multichannel audio tracks with more than 6 channels. SHARED - Use the same content key for all of the audio and video tracks in your stream. UNENCRYPTED - Don't encrypt any of the audio tracks in your stream. A collection of video encryption presets. Value description: PRESET-VIDEO-1 - Use one content key to encrypt all of the video tracks in your stream. PRESET-VIDEO-2 - Use one content key to encrypt all of the SD video tracks and one content key for all HD and higher resolutions video tracks. PRESET-VIDEO-3 - Use one content key to encrypt all of the SD video tracks, one content key for HD video tracks and one content key for all UHD video tracks. PRESET-VIDEO-4 - Use one content key to encrypt all of the SD video tracks, one content key for HD video tracks, one content key for all UHD1 video tracks and one content key for all UHD2 video tracks. PRESET-VIDEO-5 - Use one content key to encrypt all of the SD video tracks, one content key for HD1 video tracks, one content key for HD2 video tracks, one content key for all UHD1 video tracks and one content key for all UHD2 video tracks. PRESET-VIDEO-6 - Use one content key to encrypt all of the SD video tracks, one content key for HD1 video tracks, one content key for HD2 video tracks and one content key for all UHD video tracks. PRESET-VIDEO-7 - Use one content key to encrypt all of the SD+HD1 video tracks, one content key for HD2 video tracks and one content key for all UHD video tracks. PRESET-VIDEO-8 - Use one content key to encrypt all of the SD+HD1 video tracks, one content key for HD2 video tracks, one content key for all UHD1 video tracks and one content key for all UHD2 video tracks. SHARED - Use the same content key for all of the video and audio tracks in your stream. UNENCRYPTED - Don't encrypt any of the video tracks in your stream. The unique identifier for the content. The service sends this to the key server to identify the current endpoint. How unique you make this depends on how fine-grained you want access controls to be. The service does not permit you to use the same ID for two simultaneous encryption processes. The resource ID is also known as the content ID. The following example shows a resource ID: MovieNight20171126093045 The DRM solution provider you're using to protect your content during distribution. (string) --- The ARN for the IAM role granted by the key provider that provides access to the key provider API. This role must have a trust policy that allows MediaPackage to assume the role, and it must have a sufficient permissions policy to allow access to the specific key retrieval URL. Get this from your DRM solution provider. Valid format: arn:aws:iam::{accountID}:role/{name}. The following example shows a role ARN: arn:aws:iam::444455556666:role/SpekeAccess The URL of the API Gateway proxy that you set up to talk to your key server. The API Gateway proxy must reside in the same AWS Region as MediaPackage and must start with https://. The following example shows a URL: https://1wm2dx1f33.execute-api.us-west-2.amazonaws.com/SpekeSample/copyProtection.",
+      "nested_params": [
+        {
+          "name": "SegmentDurationSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The duration (in seconds) of each segment. Enter a value equal to, or a multiple of, the input segment duration. If the value that you enter is different from the input segment duration, MediaPackage rounds segments to the nearest multiple of the input segment duration.",
+          "nested_params": []
+        },
+        {
+          "name": "SegmentName",
+          "type": "string",
+          "required": false,
+          "description": "The name that describes the segment. The name is the base name of the segment used in all content manifests inside of the endpoint. You can't use spaces in the name.",
+          "nested_params": []
+        },
+        {
+          "name": "TsUseAudioRenditionGroup",
+          "type": "boolean",
+          "required": false,
+          "description": "When selected, MediaPackage bundles all audio tracks in a rendition group. All other tracks in the stream can be used with any audio rendition from the group.",
+          "nested_params": []
+        },
+        {
+          "name": "IncludeIframeOnlyStreams",
+          "type": "boolean",
+          "required": false,
+          "description": "When selected, the stream set includes an additional I-frame only stream, along with the other tracks. If false, this extra stream is not included. MediaPackage generates an I-frame only stream from the first rendition in the manifest. The service inserts EXT-I-FRAMES-ONLY tags in the output manifest, and then generates and includes an I-frames only playlist in the stream. This playlist permits player functionality like fast forward and rewind.",
+          "nested_params": []
+        },
+        {
+          "name": "TsIncludeDvbSubtitles",
+          "type": "boolean",
+          "required": false,
+          "description": "By default, MediaPackage excludes all digital video broadcasting (DVB) subtitles from the output. When selected, MediaPackage passes through DVB subtitles into the output.",
+          "nested_params": []
+        },
+        {
+          "name": "Scte",
+          "type": "dict",
+          "required": false,
+          "description": "The SCTE configuration options in the segment settings.",
+          "nested_params": [
+            {
+              "name": "ScteFilter",
+              "type": "list",
+              "required": false,
+              "description": "The SCTE-35 message types that you want to be treated as ad markers in the output.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Encryption",
+          "type": "dict",
+          "required": false,
+          "description": "The parameters for encrypting content.",
+          "nested_params": [
+            {
+              "name": "ConstantInitializationVector",
+              "type": "string",
+              "required": false,
+              "description": "A 128-bit, 16-byte hex value represented by a 32-character string, used in conjunction with the key for encrypting content. If you don't specify a value, then MediaPackage creates the constant initialization vector (IV).",
+              "nested_params": []
+            },
+            {
+              "name": "EncryptionMethod",
+              "type": "dict",
+              "required": false,
+              "description": "The encryption method to use.",
+              "nested_params": [
+                {
+                  "name": "TsEncryptionMethod",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encryption method to use.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CmafEncryptionMethod",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encryption method to use.",
+                  "nested_params": []
+                },
+                {
+                  "name": "IsmEncryptionMethod",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encryption method used for Microsoft Smooth Streaming (MSS) content. This specifies how the MSS segments are encrypted to protect the content during delivery to client players.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "KeyRotationIntervalSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The frequency (in seconds) of key changes for live workflows, in which content is streamed real time. The service retrieves content keys before the live content begins streaming, and then retrieves them as needed over the lifetime of the workflow. By default, key rotation is set to 300 seconds (5 minutes), the minimum rotation interval, which is equivalent to setting it to 300. If you don't enter an interval, content keys aren't rotated. The following example setting causes the service to rotate keys every thirty minutes: 1800",
+              "nested_params": []
+            },
+            {
+              "name": "CmafExcludeSegmentDrmMetadata",
+              "type": "boolean",
+              "required": false,
+              "description": "Excludes SEIG and SGPD boxes from segment metadata in CMAF containers. When set to true, MediaPackage omits these DRM metadata boxes from CMAF segments, which can improve compatibility with certain devices and players that don't support these boxes. Important considerations:",
+              "nested_params": []
+            },
+            {
+              "name": "SpekeKeyProvider",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters for the SPEKE key provider.",
+              "nested_params": [
+                {
+                  "name": "EncryptionContractConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Configure one or more content encryption keys for your endpoints that use SPEKE Version 2.0. The encryption contract defines which content keys are used to encrypt the audio and video tracks in your stream. To configure the encryption contract, specify which audio and video encryption presets to use.",
+                  "nested_params": [
+                    {
+                      "name": "PresetSpeke20Audio",
+                      "type": "string",
+                      "required": false,
+                      "description": "A collection of audio encryption presets. Value description:",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "PresetSpeke20Video",
+                      "type": "string",
+                      "required": false,
+                      "description": "A collection of video encryption presets. Value description:",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ResourceId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier for the content. The service sends this to the key server to identify the current endpoint. How unique you make this depends on how fine-grained you want access controls to be. The service does not permit you to use the same ID for two simultaneous encryption processes. The resource ID is also known as the content ID. The following example shows a resource ID: MovieNight20171126093045",
+                  "nested_params": []
+                },
+                {
+                  "name": "DrmSystems",
+                  "type": "list",
+                  "required": false,
+                  "description": "The DRM solution provider you're using to protect your content during distribution.",
+                  "nested_params": []
+                },
+                {
+                  "name": "RoleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN for the IAM role granted by the key provider that provides access to the key provider API. This role must have a trust policy that allows MediaPackage to assume the role, and it must have a sufficient permissions policy to allow access to the specific key retrieval URL. Get this from your DRM solution provider. Valid format: arn:aws:iam::{accountID}:role/{name}. The following example shows a role ARN: arn:aws:iam::444455556666:role/SpekeAccess.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Url",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL of the API Gateway proxy that you set up to talk to your key server. The API Gateway proxy must reside in the same AWS Region as MediaPackage and must start with https://. The following example shows a URL: https://1wm2dx1f33.execute-api.us-west-2.amazonaws.com/SpekeSample/copyProtection.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive token that you provide to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StartoverWindowSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "HlsManifests",
+      "type": "list",
+      "required": true,
+      "description": "An HTTP live streaming (HLS) manifest configuration. (dict) --- Create an HTTP live streaming (HLS) manifest configuration. A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object. ChildManifestName (string) --- A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index, with an added suffix to distinguish it from the manifest name. ScteHls (dict) --- The SCTE configuration. AdMarkerHls (string) --- Ad markers indicate when ads should be inserted during playback. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Choose what you want MediaPackage to do with the ad markers. Value description: DATERANGE - Insert EXT-X-DATERANGE tags to signal ad and program transition events in TS and CMAF manifests. If you use DATERANGE, you must set a programDateTimeIntervalSeconds value of 1 or higher. To learn more about DATERANGE, see SCTE-35 Ad Marker EXT-X-DATERANGE. StartTag (dict) --- To insert an EXT-X-START tag in your HLS playlist, specify a StartTag configuration object with a valid TimeOffset. When you do, you can also optionally specify whether to include a PRECISE value in the EXT-X-START tag. Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration. Precise (boolean) --- Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES. ManifestWindowSeconds (integer) --- The total duration (in seconds) of the manifest's content. ProgramDateTimeIntervalSeconds (integer) --- Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output. FilterConfiguration (dict) --- Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. ManifestFilter (string) --- Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL. Start (datetime) --- Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL. End (datetime) --- Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL. TimeDelaySeconds (integer) --- Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL. ClipStartTime (datetime) --- Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL. UrlEncodeChildManifest (boolean) --- When enabled, MediaPackage URL-encodes the query string for API requests for HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol. For more information, see Amazon Web Services Signature Version 4 for API requests in Identity and Access Management User Guide.",
+      "nested_params": [
+        {
+          "name": "ManifestName",
+          "type": "string",
+          "required": false,
+          "description": "A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+          "nested_params": []
+        },
+        {
+          "name": "ChildManifestName",
+          "type": "string",
+          "required": false,
+          "description": "A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index, with an added suffix to distinguish it from the manifest name. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+          "nested_params": []
+        },
+        {
+          "name": "ScteHls",
+          "type": "dict",
+          "required": false,
+          "description": "The SCTE configuration.",
+          "nested_params": [
+            {
+              "name": "AdMarkerHls",
+              "type": "string",
+              "required": false,
+              "description": "Ad markers indicate when ads should be inserted during playback. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Choose what you want MediaPackage to do with the ad markers. Value description:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "StartTag",
+          "type": "dict",
+          "required": false,
+          "description": "To insert an EXT-X-START tag in your HLS playlist, specify a StartTag configuration object with a valid TimeOffset. When you do, you can also optionally specify whether to include a PRECISE value in the EXT-X-START tag.",
+          "nested_params": [
+            {
+              "name": "TimeOffset",
+              "type": "float",
+              "required": false,
+              "description": "Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration.",
+              "nested_params": []
+            },
+            {
+              "name": "Precise",
+              "type": "boolean",
+              "required": false,
+              "description": "Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ManifestWindowSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The total duration (in seconds) of the manifest's content.",
+          "nested_params": []
+        },
+        {
+          "name": "ProgramDateTimeIntervalSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.",
+          "nested_params": []
+        },
+        {
+          "name": "FilterConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+          "nested_params": [
+            {
+              "name": "ManifestFilter",
+              "type": "string",
+              "required": false,
+              "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "Start",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "End",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeDelaySeconds",
+              "type": "integer",
+              "required": false,
+              "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "ClipStartTime",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "UrlEncodeChildManifest",
+          "type": "boolean",
+          "required": false,
+          "description": "When enabled, MediaPackage URL-encodes the query string for API requests for HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol. For more information, see Amazon Web Services Signature Version 4 for API requests in Identity and Access Management User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "LowLatencyHlsManifests",
+      "type": "list",
+      "required": true,
+      "description": "A low-latency HLS manifest configuration. (dict) --- Create a low-latency HTTP live streaming (HLS) manifest configuration. A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object. ChildManifestName (string) --- A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index, with an added suffix to distinguish it from the manifest name. ScteHls (dict) --- The SCTE configuration. AdMarkerHls (string) --- Ad markers indicate when ads should be inserted during playback. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Choose what you want MediaPackage to do with the ad markers. Value description: DATERANGE - Insert EXT-X-DATERANGE tags to signal ad and program transition events in TS and CMAF manifests. If you use DATERANGE, you must set a programDateTimeIntervalSeconds value of 1 or higher. To learn more about DATERANGE, see SCTE-35 Ad Marker EXT-X-DATERANGE. StartTag (dict) --- To insert an EXT-X-START tag in your HLS playlist, specify a StartTag configuration object with a valid TimeOffset. When you do, you can also optionally specify whether to include a PRECISE value in the EXT-X-START tag. Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration. Precise (boolean) --- Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES. ManifestWindowSeconds (integer) --- The total duration (in seconds) of the manifest's content. ProgramDateTimeIntervalSeconds (integer) --- Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output. FilterConfiguration (dict) --- Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. ManifestFilter (string) --- Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL. Start (datetime) --- Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL. End (datetime) --- Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL. TimeDelaySeconds (integer) --- Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL. ClipStartTime (datetime) --- Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL. UrlEncodeChildManifest (boolean) --- When enabled, MediaPackage URL-encodes the query string for API requests for LL-HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol. For more information, see Amazon Web Services Signature Version 4 for API requests in Identity and Access Management User Guide.",
+      "nested_params": [
+        {
+          "name": "ManifestName",
+          "type": "string",
+          "required": false,
+          "description": "A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+          "nested_params": []
+        },
+        {
+          "name": "ChildManifestName",
+          "type": "string",
+          "required": false,
+          "description": "A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index, with an added suffix to distinguish it from the manifest name. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+          "nested_params": []
+        },
+        {
+          "name": "ScteHls",
+          "type": "dict",
+          "required": false,
+          "description": "The SCTE configuration.",
+          "nested_params": [
+            {
+              "name": "AdMarkerHls",
+              "type": "string",
+              "required": false,
+              "description": "Ad markers indicate when ads should be inserted during playback. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Choose what you want MediaPackage to do with the ad markers. Value description:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "StartTag",
+          "type": "dict",
+          "required": false,
+          "description": "To insert an EXT-X-START tag in your HLS playlist, specify a StartTag configuration object with a valid TimeOffset. When you do, you can also optionally specify whether to include a PRECISE value in the EXT-X-START tag.",
+          "nested_params": [
+            {
+              "name": "TimeOffset",
+              "type": "float",
+              "required": false,
+              "description": "Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration.",
+              "nested_params": []
+            },
+            {
+              "name": "Precise",
+              "type": "boolean",
+              "required": false,
+              "description": "Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ManifestWindowSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The total duration (in seconds) of the manifest's content.",
+          "nested_params": []
+        },
+        {
+          "name": "ProgramDateTimeIntervalSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player. Irrespective of this parameter, if any ID3Timed metadata is in the HLS input, it is passed through to the HLS output.",
+          "nested_params": []
+        },
+        {
+          "name": "FilterConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+          "nested_params": [
+            {
+              "name": "ManifestFilter",
+              "type": "string",
+              "required": false,
+              "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "Start",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "End",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeDelaySeconds",
+              "type": "integer",
+              "required": false,
+              "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "ClipStartTime",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "UrlEncodeChildManifest",
+          "type": "boolean",
+          "required": false,
+          "description": "When enabled, MediaPackage URL-encodes the query string for API requests for LL-HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol. For more information, see Amazon Web Services Signature Version 4 for API requests in Identity and Access Management User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "DashManifests",
+      "type": "list",
+      "required": true,
+      "description": "A DASH manifest configuration. (dict) --- Create a DASH manifest configuration. A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. ManifestWindowSeconds (integer) --- The total duration (in seconds) of the manifest's content. FilterConfiguration (dict) --- Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. ManifestFilter (string) --- Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL. Start (datetime) --- Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL. End (datetime) --- Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL. TimeDelaySeconds (integer) --- Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL. ClipStartTime (datetime) --- Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL. MinUpdatePeriodSeconds (integer) --- Minimum amount of time (in seconds) that the player should wait before requesting updates to the manifest. MinBufferTimeSeconds (integer) --- Minimum amount of content (in seconds) that a player must keep available in the buffer. SuggestedPresentationDelaySeconds (integer) --- The amount of time (in seconds) that the player should be from the end of the manifest. SegmentTemplateFormat (string) --- Determines the type of variable used in the media URL of the SegmentTemplate tag in the manifest. Also specifies if segment timeline information is included in SegmentTimeline or SegmentTemplate. Value description: NUMBER_WITH_TIMELINE - The $Number$ variable is used in the media URL. The value of this variable is the sequential number of the segment. A full SegmentTimeline object is presented in each SegmentTemplate. PeriodTriggers (list) --- A list of triggers that controls when AWS Elemental MediaPackage separates the MPEG-DASH manifest into multiple periods. Type ADS to indicate that AWS Elemental MediaPackage must create periods in the output manifest that correspond to SCTE-35 ad markers in the input source. Leave this value empty to indicate that the manifest is contained all in one period. For more information about periods in the DASH manifest, see Multi-period DASH in AWS Elemental MediaPackage. (string) --- ScteDash (dict) --- The SCTE configuration. AdMarkerDash (string) --- Choose how ad markers are included in the packaged content. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Value description: Binary - The SCTE-35 marker is expressed as a hex-string (Base64 string) rather than full XML. XML - The SCTE marker is expressed fully in XML. DrmSignaling (string) --- Determines how the DASH manifest signals the DRM content. UtcTiming (dict) --- Determines the type of UTC timing included in the DASH Media Presentation Description (MPD). TimingMode (string) --- The UTC timing mode. TimingSource (string) --- The the method that the player uses to synchronize to coordinated universal time (UTC) wall clock time. Profiles (list) --- The profile that the output is compliant with. (string) --- BaseUrls (list) --- The base URLs to use for retrieving segments. (dict) --- The base URLs to use for retrieving segments. You can specify multiple locations and indicate the priority and weight for when each should be used, for use in mutli-CDN workflows. A source location for segments. ServiceLocation (string) --- The name of the source location. DvbPriority (integer) --- For use with DVB-DASH profiles only. The priority of this location for servings segments. The lower the number, the higher the priority. DvbWeight (integer) --- For use with DVB-DASH profiles only. The weighting for source locations that have the same priority. ProgramInformation (dict) --- Details about the content that you want MediaPackage to pass through in the manifest to the playback device. Title (string) --- The title for the manifest. Source (string) --- Information about the content provider. Copyright (string) --- A copyright statement about the content. LanguageCode (string) --- The language code for this manifest. MoreInformationUrl (string) --- An absolute URL that contains more information about this content. DvbSettings (dict) --- For endpoints that use the DVB-DASH profile only. The font download and error reporting information that you want MediaPackage to pass through to the manifest. FontDownload (dict) --- Subtitle font settings. Url (string) --- The URL for downloading fonts for subtitles. MimeType (string) --- The mimeType of the resource that's at the font download URL. For information about font MIME types, see the MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks document. FontFamily (string) --- The fontFamily name for subtitles, as described in EBU-TT-D Subtitling Distribution Format. ErrorMetrics (list) --- Playback device error reporting settings. (dict) --- For use with DVB-DASH profiles only. The settings for error reporting from the playback device that you want Elemental MediaPackage to pass through to the manifest. The URL where playback devices send error reports. Probability (integer) --- The number of playback devices per 1000 that will send error reports to the reporting URL. This represents the probability that a playback device will be a reporting player for this session. Compactness (string) --- The layout of the DASH manifest that MediaPackage produces. STANDARD indicates a default manifest, which is compacted. NONE indicates a full manifest. For information about compactness, see DASH manifest compactness in the Elemental MediaPackage v2 User Guide. SubtitleConfiguration (dict) --- The configuration for DASH subtitles. TtmlConfiguration (dict) --- Settings for TTML subtitles. The profile that MediaPackage uses when signaling subtitles in the manifest. IMSC is the default profile. EBU-TT-D produces subtitles that are compliant with the EBU-TT-D TTML profile. MediaPackage passes through subtitle styles to the manifest. For more information about EBU-TT-D subtitles, see EBU-TT-D Subtitling Distribution Format.",
+      "nested_params": [
+        {
+          "name": "ManifestName",
+          "type": "string",
+          "required": false,
+          "description": "A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint.",
+          "nested_params": []
+        },
+        {
+          "name": "ManifestWindowSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The total duration (in seconds) of the manifest's content.",
+          "nested_params": []
+        },
+        {
+          "name": "FilterConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+          "nested_params": [
+            {
+              "name": "ManifestFilter",
+              "type": "string",
+              "required": false,
+              "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "Start",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "End",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeDelaySeconds",
+              "type": "integer",
+              "required": false,
+              "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "ClipStartTime",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "MinUpdatePeriodSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "Minimum amount of time (in seconds) that the player should wait before requesting updates to the manifest.",
+          "nested_params": []
+        },
+        {
+          "name": "MinBufferTimeSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "Minimum amount of content (in seconds) that a player must keep available in the buffer.",
+          "nested_params": []
+        },
+        {
+          "name": "SuggestedPresentationDelaySeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The amount of time (in seconds) that the player should be from the end of the manifest.",
+          "nested_params": []
+        },
+        {
+          "name": "SegmentTemplateFormat",
+          "type": "string",
+          "required": false,
+          "description": "Determines the type of variable used in the media URL of the SegmentTemplate tag in the manifest. Also specifies if segment timeline information is included in SegmentTimeline or SegmentTemplate. Value description:",
+          "nested_params": []
+        },
+        {
+          "name": "PeriodTriggers",
+          "type": "list",
+          "required": false,
+          "description": "A list of triggers that controls when AWS Elemental MediaPackage separates the MPEG-DASH manifest into multiple periods. Type ADS to indicate that AWS Elemental MediaPackage must create periods in the output manifest that correspond to SCTE-35 ad markers in the input source. Leave this value empty to indicate that the manifest is contained all in one period. For more information about periods in the DASH manifest, see Multi-period DASH in AWS Elemental MediaPackage.",
+          "nested_params": []
+        },
+        {
+          "name": "ScteDash",
+          "type": "dict",
+          "required": false,
+          "description": "The SCTE configuration.",
+          "nested_params": [
+            {
+              "name": "AdMarkerDash",
+              "type": "string",
+              "required": false,
+              "description": "Choose how ad markers are included in the packaged content. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Value description:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "DrmSignaling",
+          "type": "string",
+          "required": false,
+          "description": "Determines how the DASH manifest signals the DRM content.",
+          "nested_params": []
+        },
+        {
+          "name": "UtcTiming",
+          "type": "dict",
+          "required": false,
+          "description": "Determines the type of UTC timing included in the DASH Media Presentation Description (MPD).",
+          "nested_params": [
+            {
+              "name": "TimingMode",
+              "type": "string",
+              "required": false,
+              "description": "The UTC timing mode.",
+              "nested_params": []
+            },
+            {
+              "name": "TimingSource",
+              "type": "string",
+              "required": false,
+              "description": "The the method that the player uses to synchronize to coordinated universal time (UTC) wall clock time.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Profiles",
+          "type": "list",
+          "required": false,
+          "description": "The profile that the output is compliant with.",
+          "nested_params": []
+        },
+        {
+          "name": "BaseUrls",
+          "type": "list",
+          "required": false,
+          "description": "The base URLs to use for retrieving segments.",
+          "nested_params": [
+            {
+              "name": "Url",
+              "type": "string",
+              "required": false,
+              "description": "A source location for segments.",
+              "nested_params": []
+            },
+            {
+              "name": "ServiceLocation",
+              "type": "string",
+              "required": false,
+              "description": "The name of the source location.",
+              "nested_params": []
+            },
+            {
+              "name": "DvbPriority",
+              "type": "integer",
+              "required": false,
+              "description": "For use with DVB-DASH profiles only. The priority of this location for servings segments. The lower the number, the higher the priority.",
+              "nested_params": []
+            },
+            {
+              "name": "DvbWeight",
+              "type": "integer",
+              "required": false,
+              "description": "For use with DVB-DASH profiles only. The weighting for source locations that have the same priority.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ProgramInformation",
+          "type": "dict",
+          "required": false,
+          "description": "Details about the content that you want MediaPackage to pass through in the manifest to the playback device.",
+          "nested_params": [
+            {
+              "name": "Title",
+              "type": "string",
+              "required": false,
+              "description": "The title for the manifest.",
+              "nested_params": []
+            },
+            {
+              "name": "Source",
+              "type": "string",
+              "required": false,
+              "description": "Information about the content provider.",
+              "nested_params": []
+            },
+            {
+              "name": "Copyright",
+              "type": "string",
+              "required": false,
+              "description": "A copyright statement about the content.",
+              "nested_params": []
+            },
+            {
+              "name": "LanguageCode",
+              "type": "string",
+              "required": false,
+              "description": "The language code for this manifest.",
+              "nested_params": []
+            },
+            {
+              "name": "MoreInformationUrl",
+              "type": "string",
+              "required": false,
+              "description": "An absolute URL that contains more information about this content.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "DvbSettings",
+          "type": "dict",
+          "required": false,
+          "description": "For endpoints that use the DVB-DASH profile only. The font download and error reporting information that you want MediaPackage to pass through to the manifest.",
+          "nested_params": [
+            {
+              "name": "FontDownload",
+              "type": "dict",
+              "required": false,
+              "description": "Subtitle font settings.",
+              "nested_params": [
+                {
+                  "name": "Url",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL for downloading fonts for subtitles.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MimeType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The mimeType of the resource that's at the font download URL. For information about font MIME types, see the MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks document.",
+                  "nested_params": []
+                },
+                {
+                  "name": "FontFamily",
+                  "type": "string",
+                  "required": false,
+                  "description": "The fontFamily name for subtitles, as described in EBU-TT-D Subtitling Distribution Format.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ErrorMetrics",
+              "type": "list",
+              "required": false,
+              "description": "Playback device error reporting settings.",
+              "nested_params": [
+                {
+                  "name": "ReportingUrl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL where playback devices send error reports.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Probability",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of playback devices per 1000 that will send error reports to the reporting URL. This represents the probability that a playback device will be a reporting player for this session.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Compactness",
+          "type": "string",
+          "required": false,
+          "description": "The layout of the DASH manifest that MediaPackage produces. STANDARD indicates a default manifest, which is compacted. NONE indicates a full manifest. For information about compactness, see DASH manifest compactness in the Elemental MediaPackage v2 User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "SubtitleConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration for DASH subtitles.",
+          "nested_params": [
+            {
+              "name": "TtmlConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Settings for TTML subtitles.",
+              "nested_params": [
+                {
+                  "name": "TtmlProfile",
+                  "type": "string",
+                  "required": false,
+                  "description": "The profile that MediaPackage uses when signaling subtitles in the manifest. IMSC is the default profile. EBU-TT-D produces subtitles that are compliant with the EBU-TT-D TTML profile. MediaPackage passes through subtitle styles to the manifest. For more information about EBU-TT-D subtitles, see EBU-TT-D Subtitling Distribution Format.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MssManifests",
+      "type": "list",
+      "required": true,
+      "description": "A list of Microsoft Smooth Streaming (MSS) manifest configurations for the origin endpoint. You can configure multiple MSS manifests to provide different streaming experiences or to support different client requirements. (dict) --- Configuration parameters for creating a Microsoft Smooth Streaming (MSS) manifest. MSS is a streaming media format developed by Microsoft that delivers adaptive bitrate streaming content to compatible players and devices. A short string that's appended to the endpoint URL to create a unique path to this MSS manifest. The manifest name must be unique within the origin endpoint and can contain letters, numbers, hyphens, and underscores. ManifestWindowSeconds (integer) --- The total duration (in seconds) of the manifest window. This determines how much content is available in the manifest at any given time. The manifest window slides forward as new segments become available, maintaining a consistent duration of content. The minimum value is 30 seconds. FilterConfiguration (dict) --- Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest. ManifestFilter (string) --- Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL. Start (datetime) --- Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL. End (datetime) --- Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL. TimeDelaySeconds (integer) --- Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL. ClipStartTime (datetime) --- Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL. ManifestLayout (string) --- Determines the layout format of the MSS manifest. This controls how the manifest is structured and presented to client players, affecting compatibility with different MSS-compatible devices and applications.",
+      "nested_params": [
+        {
+          "name": "ManifestName",
+          "type": "string",
+          "required": false,
+          "description": "A short string that's appended to the endpoint URL to create a unique path to this MSS manifest. The manifest name must be unique within the origin endpoint and can contain letters, numbers, hyphens, and underscores.",
+          "nested_params": []
+        },
+        {
+          "name": "ManifestWindowSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The total duration (in seconds) of the manifest window. This determines how much content is available in the manifest at any given time. The manifest window slides forward as new segments become available, maintaining a consistent duration of content. The minimum value is 30 seconds.",
+          "nested_params": []
+        },
+        {
+          "name": "FilterConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+          "nested_params": [
+            {
+              "name": "ManifestFilter",
+              "type": "string",
+              "required": false,
+              "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "Start",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "End",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeDelaySeconds",
+              "type": "integer",
+              "required": false,
+              "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            },
+            {
+              "name": "ClipStartTime",
+              "type": "datetime",
+              "required": false,
+              "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ManifestLayout",
+          "type": "string",
+          "required": false,
+          "description": "Determines the layout format of the MSS manifest. This controls how the manifest is structured and presented to client players, affecting compatibility with different MSS-compatible devices and applications.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ForceEndpointErrorConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "The failover settings for the endpoint. EndpointErrorConditions (list) --- The failover conditions for the endpoint. The options are: STALE_MANIFEST - The manifest stalled and there are no new segments or parts. INCOMPLETE_MANIFEST - There is a gap in the manifest. MISSING_DRM_KEY - Key rotation is enabled but we're unable to fetch the key for the current key period. SLATE_INPUT - The segments which contain slate content are considered to be missing content. (string) ---",
+      "nested_params": [
+        {
+          "name": "EndpointErrorConditions",
+          "type": "list",
+          "required": false,
+          "description": "The failover conditions for the endpoint. The options are:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "A comma-separated list of tag key:value pairs that you define. For example: \"Key1\": \"Value1\", \"Key2\": \"Value2\" (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) associated with the resource.",
+          "nested_items": []
+        },
+        {
+          "name": "ChannelGroupName",
+          "type": "string",
+          "description": "The name that describes the channel group. The name is the primary identifier for the channel group, and must be unique for your account in the AWS Region.",
+          "nested_items": []
+        },
+        {
+          "name": "ChannelName",
+          "type": "string",
+          "description": "The name that describes the channel. The name is the primary identifier for the channel, and must be unique for your account in the AWS Region and channel group.",
+          "nested_items": []
+        },
+        {
+          "name": "OriginEndpointName",
+          "type": "string",
+          "description": "The name that describes the origin endpoint. The name is the primary identifier for the origin endpoint, and and must be unique for your account in the AWS Region and channel.",
+          "nested_items": []
+        },
+        {
+          "name": "ContainerType",
+          "type": "string",
+          "description": "The type of container attached to this origin endpoint.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "SegmentDurationSeconds",
+              "type": "integer",
+              "description": "The duration (in seconds) of each segment. Enter a value equal to, or a multiple of, the input segment duration. If the value that you enter is different from the input segment duration, MediaPackage rounds segments to the nearest multiple of the input segment duration.",
+              "nested_items": []
+            },
+            {
+              "name": "SegmentName",
+              "type": "string",
+              "description": "The name that describes the segment. The name is the base name of the segment used in all content manifests inside of the endpoint. You can't use spaces in the name.",
+              "nested_items": []
+            },
+            {
+              "name": "TsUseAudioRenditionGroup",
+              "type": "boolean",
+              "description": "When selected, MediaPackage bundles all audio tracks in a rendition group. All other tracks in the stream can be used with any audio rendition from the group.",
+              "nested_items": []
+            },
+            {
+              "name": "IncludeIframeOnlyStreams",
+              "type": "boolean",
+              "description": "When selected, the stream set includes an additional I-frame only stream, along with the other tracks. If false, this extra stream is not included. MediaPackage generates an I-frame only stream from the first rendition in the manifest. The service inserts EXT-I-FRAMES-ONLY tags in the output manifest, and then generates and includes an I-frames only playlist in the stream. This playlist permits player functionality like fast forward and rewind.",
+              "nested_items": []
+            },
+            {
+              "name": "TsIncludeDvbSubtitles",
+              "type": "boolean",
+              "description": "By default, MediaPackage excludes all digital video broadcasting (DVB) subtitles from the output. When selected, MediaPackage passes through DVB subtitles into the output.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ScteFilter",
+                  "type": "list",
+                  "description": "The SCTE-35 message types that you want to be treated as ad markers in the output.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Encryption",
+              "type": "dict",
+              "description": "The parameters for encrypting content.",
+              "nested_items": [
+                {
+                  "name": "ConstantInitializationVector",
+                  "type": "string",
+                  "description": "A 128-bit, 16-byte hex value represented by a 32-character string, used in conjunction with the key for encrypting content. If you don't specify a value, then MediaPackage creates the constant initialization vector (IV).",
+                  "nested_items": []
+                },
+                {
+                  "name": "EncryptionMethod",
+                  "type": "dict",
+                  "description": "The encryption method to use.",
+                  "nested_items": [
+                    {
+                      "name": "TsEncryptionMethod",
+                      "type": "string",
+                      "description": "The encryption method to use.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CmafEncryptionMethod",
+                      "type": "string",
+                      "description": "The encryption method to use.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "IsmEncryptionMethod",
+                      "type": "string",
+                      "description": "The encryption method used for Microsoft Smooth Streaming (MSS) content. This specifies how the MSS segments are encrypted to protect the content during delivery to client players.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "KeyRotationIntervalSeconds",
+                  "type": "integer",
+                  "description": "The frequency (in seconds) of key changes for live workflows, in which content is streamed real time. The service retrieves content keys before the live content begins streaming, and then retrieves them as needed over the lifetime of the workflow. By default, key rotation is set to 300 seconds (5 minutes), the minimum rotation interval, which is equivalent to setting it to 300. If you don't enter an interval, content keys aren't rotated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CmafExcludeSegmentDrmMetadata",
+                  "type": "boolean",
+                  "description": "Excludes SEIG and SGPD boxes from segment metadata in CMAF containers.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "This setting only affects CMAF container formats.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Key rotation can still be handled through media playlist signaling.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PSSH and TENC boxes remain unaffected.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Default behavior is preserved when this setting is disabled.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SpekeKeyProvider",
+                  "type": "dict",
+                  "description": "The parameters for the SPEKE key provider.",
+                  "nested_items": [
+                    {
+                      "name": "EncryptionContractConfiguration",
+                      "type": "dict",
+                      "description": "Configure one or more content encryption keys for your endpoints that use SPEKE Version 2.0. The encryption contract defines which content keys are used to encrypt the audio and video tracks in your stream. To configure the encryption contract, specify which audio and video encryption presets to use.",
+                      "nested_items": [
+                        {
+                          "name": "PresetSpeke20Audio",
+                          "type": "string",
+                          "description": "A collection of audio encryption presets.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-AUDIO-1 - Use one content key to encrypt all of the audio tracks in your stream.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-AUDIO-2 - Use one content key to encrypt all of the stereo audio tracks and one content key to encrypt all of the multichannel audio tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-AUDIO-3 - Use one content key to encrypt all of the stereo audio tracks, one content key to encrypt all of the multichannel audio tracks with 3 to 6 channels, and one content key to encrypt all of the multichannel audio tracks with more than 6 channels.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "SHARED - Use the same content key for all of the audio and video tracks in your stream.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "UNENCRYPTED - Don't encrypt any of the audio tracks in your stream.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "PresetSpeke20Video",
+                          "type": "string",
+                          "description": "A collection of video encryption presets.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-1 - Use one content key to encrypt all of the video tracks in your stream.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-2 - Use one content key to encrypt all of the SD video tracks and one content key for all HD and higher resolutions video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-3 - Use one content key to encrypt all of the SD video tracks, one content key for HD video tracks and one content key for all UHD video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-4 - Use one content key to encrypt all of the SD video tracks, one content key for HD video tracks, one content key for all UHD1 video tracks and one content key for all UHD2 video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-5 - Use one content key to encrypt all of the SD video tracks, one content key for HD1 video tracks, one content key for HD2 video tracks, one content key for all UHD1 video tracks and one content key for all UHD2 video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-6 - Use one content key to encrypt all of the SD video tracks, one content key for HD1 video tracks, one content key for HD2 video tracks and one content key for all UHD video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-7 - Use one content key to encrypt all of the SD+HD1 video tracks, one content key for HD2 video tracks and one content key for all UHD video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PRESET-VIDEO-8 - Use one content key to encrypt all of the SD+HD1 video tracks, one content key for HD2 video tracks, one content key for all UHD1 video tracks and one content key for all UHD2 video tracks.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "SHARED - Use the same content key for all of the video and audio tracks in your stream.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "UNENCRYPTED - Don't encrypt any of the video tracks in your stream.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ResourceId",
+                      "type": "string",
+                      "description": "The unique identifier for the content. The service sends this to the key server to identify the current endpoint. How unique you make this depends on how fine-grained you want access controls to be. The service does not permit you to use the same ID for two simultaneous encryption processes. The resource ID is also known as the content ID.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DrmSystems",
+                      "type": "list",
+                      "description": "The DRM solution provider you're using to protect your content during distribution.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "RoleArn",
+                      "type": "string",
+                      "description": "The ARN for the IAM role granted by the key provider that provides access to the key provider API. This role must have a trust policy that allows MediaPackage to assume the role, and it must have a sufficient permissions policy to allow access to the specific key retrieval URL. Get this from your DRM solution provider.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Url",
+                      "type": "string",
+                      "description": "The URL of the API Gateway proxy that you set up to talk to your key server. The API Gateway proxy must reside in the same AWS Region as MediaPackage and must start with https://.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CreatedAt",
+          "type": "datetime",
+          "description": "The date and time the origin endpoint was created.",
+          "nested_items": []
+        },
+        {
+          "name": "ModifiedAt",
+          "type": "datetime",
+          "description": "The date and time the origin endpoint was modified.",
+          "nested_items": []
+        },
+        {
+          "name": "Description",
+          "type": "string",
+          "description": "The description for your origin endpoint.",
+          "nested_items": []
+        },
+        {
+          "name": "StartoverWindowSeconds",
+          "type": "integer",
+          "description": "The size of the window (in seconds) to create a window of the live stream that's available for on-demand viewing. Viewers can start-over or catch-up on content that falls within the window.",
+          "nested_items": []
+        },
+        {
+          "name": "HlsManifests",
+          "type": "list",
+          "description": "An HTTP live streaming (HLS) manifest configuration.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ManifestName",
+                  "type": "string",
+                  "description": "A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Url",
+                  "type": "string",
+                  "description": "The egress domain URL for stream delivery from MediaPackage.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ChildManifestName",
+                  "type": "string",
+                  "description": "A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default child manifest name, index_1. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ManifestWindowSeconds",
+                  "type": "integer",
+                  "description": "The total duration (in seconds) of the manifest's content.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ProgramDateTimeIntervalSeconds",
+                  "type": "integer",
+                  "description": "Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "AdMarkerHls",
+                      "type": "string",
+                      "description": "Ad markers indicate when ads should be inserted during playback. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Choose what you want MediaPackage to do with the ad markers.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DATERANGE - Insert EXT-X-DATERANGE tags to signal ad and program transition events in TS and CMAF manifests. If you use DATERANGE, you must set a programDateTimeIntervalSeconds value of 1 or higher. To learn more about DATERANGE, see SCTE-35 Ad Marker EXT-X-DATERANGE.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "FilterConfiguration",
+                  "type": "dict",
+                  "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+                  "nested_items": [
+                    {
+                      "name": "ManifestFilter",
+                      "type": "string",
+                      "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Start",
+                      "type": "datetime",
+                      "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "datetime",
+                      "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimeDelaySeconds",
+                      "type": "integer",
+                      "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ClipStartTime",
+                      "type": "datetime",
+                      "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "TimeOffset",
+                      "type": "float",
+                      "description": "Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Precise",
+                      "type": "boolean",
+                      "description": "Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "UrlEncodeChildManifest",
+                  "type": "boolean",
+                  "description": "When enabled, MediaPackage URL-encodes the query string for API requests for HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol. For more information, see Amazon Web Services Signature Version 4 for API requests in Identity and Access Management User Guide.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "LowLatencyHlsManifests",
+          "type": "list",
+          "description": "A low-latency HLS manifest configuration.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ManifestName",
+                  "type": "string",
+                  "description": "A short short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index. MediaPackage automatically inserts the format extension, such as .m3u8. You can't use the same manifest name if you use HLS manifest and low-latency HLS manifest. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Url",
+                  "type": "string",
+                  "description": "The egress domain URL for stream delivery from MediaPackage.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ChildManifestName",
+                  "type": "string",
+                  "description": "A short string that's appended to the endpoint URL. The child manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default child manifest name, index_1. The manifestName on the HLSManifest object overrides the manifestName you provided on the originEndpoint object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ManifestWindowSeconds",
+                  "type": "integer",
+                  "description": "The total duration (in seconds) of the manifest's content.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ProgramDateTimeIntervalSeconds",
+                  "type": "integer",
+                  "description": "Inserts EXT-X-PROGRAM-DATE-TIME tags in the output manifest at the interval that you specify. If you don't enter an interval, EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The tags sync the stream to the wall clock so that viewers can seek to a specific time in the playback timeline on the player.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "AdMarkerHls",
+                      "type": "string",
+                      "description": "Ad markers indicate when ads should be inserted during playback. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output. Choose what you want MediaPackage to do with the ad markers.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DATERANGE - Insert EXT-X-DATERANGE tags to signal ad and program transition events in TS and CMAF manifests. If you use DATERANGE, you must set a programDateTimeIntervalSeconds value of 1 or higher. To learn more about DATERANGE, see SCTE-35 Ad Marker EXT-X-DATERANGE.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "FilterConfiguration",
+                  "type": "dict",
+                  "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+                  "nested_items": [
+                    {
+                      "name": "ManifestFilter",
+                      "type": "string",
+                      "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Start",
+                      "type": "datetime",
+                      "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "datetime",
+                      "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimeDelaySeconds",
+                      "type": "integer",
+                      "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ClipStartTime",
+                      "type": "datetime",
+                      "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "TimeOffset",
+                      "type": "float",
+                      "description": "Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Precise",
+                      "type": "boolean",
+                      "description": "Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "UrlEncodeChildManifest",
+                  "type": "boolean",
+                  "description": "When enabled, MediaPackage URL-encodes the query string for API requests for LL-HLS child manifests to comply with Amazon Web Services Signature Version 4 (SigV4) signature signing protocol. For more information, see Amazon Web Services Signature Version 4 for API requests in Identity and Access Management User Guide.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DashManifests",
+          "type": "list",
+          "description": "A DASH manifest configuration.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ManifestName",
+                  "type": "string",
+                  "description": "A short string that's appended to the endpoint URL. The manifest name creates a unique path to this endpoint. If you don't enter a value, MediaPackage uses the default manifest name, index.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Url",
+                  "type": "string",
+                  "description": "The egress domain URL for stream delivery from MediaPackage.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ManifestWindowSeconds",
+                  "type": "integer",
+                  "description": "The total duration (in seconds) of the manifest's content.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FilterConfiguration",
+                  "type": "dict",
+                  "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+                  "nested_items": [
+                    {
+                      "name": "ManifestFilter",
+                      "type": "string",
+                      "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Start",
+                      "type": "datetime",
+                      "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "datetime",
+                      "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimeDelaySeconds",
+                      "type": "integer",
+                      "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ClipStartTime",
+                      "type": "datetime",
+                      "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MinUpdatePeriodSeconds",
+                  "type": "integer",
+                  "description": "Minimum amount of time (in seconds) that the player should wait before requesting updates to the manifest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MinBufferTimeSeconds",
+                  "type": "integer",
+                  "description": "Minimum amount of content (in seconds) that a player must keep available in the buffer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SuggestedPresentationDelaySeconds",
+                  "type": "integer",
+                  "description": "The amount of time (in seconds) that the player should be from the end of the manifest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SegmentTemplateFormat",
+                  "type": "string",
+                  "description": "Determines the type of variable used in the media URL of the SegmentTemplate tag in the manifest. Also specifies if segment timeline information is included in SegmentTimeline or SegmentTemplate.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NUMBER_WITH_TIMELINE - The $Number$ variable is used in the media URL. The value of this variable is the sequential number of the segment. A full SegmentTimeline object is presented in each SegmentTemplate.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "PeriodTriggers",
+                  "type": "list",
+                  "description": "A list of triggers that controls when AWS Elemental MediaPackage separates the MPEG-DASH manifest into multiple periods. Leave this value empty to indicate that the manifest is contained all in one period. For more information about periods in the DASH manifest, see Multi-period DASH in AWS Elemental MediaPackage.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "AdMarkerDash",
+                      "type": "string",
+                      "description": "Choose how ad markers are included in the packaged content. If you include ad markers in the content stream in your upstream encoders, then you need to inform MediaPackage what to do with the ad markers in the output.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "Base64 string",
+                          "description": "Binary - The SCTE-35 marker is expressed as a hex-string (Base64 string) rather than full XML.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "XML - The SCTE marker is expressed fully in XML.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "DrmSignaling",
+                  "type": "string",
+                  "description": "Determines how the DASH manifest signals the DRM content.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UtcTiming",
+                  "type": "dict",
+                  "description": "Determines the type of UTC timing included in the DASH Media Presentation Description (MPD).",
+                  "nested_items": [
+                    {
+                      "name": "TimingMode",
+                      "type": "string",
+                      "description": "The UTC timing mode.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimingSource",
+                      "type": "string",
+                      "description": "The the method that the player uses to synchronize to coordinated universal time (UTC) wall clock time.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Profiles",
+                  "type": "list",
+                  "description": "The profile that the output is compliant with.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BaseUrls",
+                  "type": "list",
+                  "description": "The base URL to use for retrieving segments.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Url",
+                          "type": "string",
+                          "description": "A source location for segments.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ServiceLocation",
+                          "type": "string",
+                          "description": "The name of the source location.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DvbPriority",
+                          "type": "integer",
+                          "description": "For use with DVB-DASH profiles only. The priority of this location for servings segments. The lower the number, the higher the priority.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DvbWeight",
+                          "type": "integer",
+                          "description": "For use with DVB-DASH profiles only. The weighting for source locations that have the same priority.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ProgramInformation",
+                  "type": "dict",
+                  "description": "Details about the content that you want MediaPackage to pass through in the manifest to the playback device.",
+                  "nested_items": [
+                    {
+                      "name": "Title",
+                      "type": "string",
+                      "description": "The title for the manifest.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Source",
+                      "type": "string",
+                      "description": "Information about the content provider.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Copyright",
+                      "type": "string",
+                      "description": "A copyright statement about the content.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "LanguageCode",
+                      "type": "string",
+                      "description": "The language code for this manifest.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MoreInformationUrl",
+                      "type": "string",
+                      "description": "An absolute URL that contains more information about this content.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DvbSettings",
+                  "type": "dict",
+                  "description": "For endpoints that use the DVB-DASH profile only. The font download and error reporting information that you want MediaPackage to pass through to the manifest.",
+                  "nested_items": [
+                    {
+                      "name": "FontDownload",
+                      "type": "dict",
+                      "description": "Subtitle font settings.",
+                      "nested_items": [
+                        {
+                          "name": "Url",
+                          "type": "string",
+                          "description": "The URL for downloading fonts for subtitles.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MimeType",
+                          "type": "string",
+                          "description": "The mimeType of the resource that's at the font download URL.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "FontFamily",
+                          "type": "string",
+                          "description": "The fontFamily name for subtitles, as described in EBU-TT-D Subtitling Distribution Format.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ErrorMetrics",
+                      "type": "list",
+                      "description": "Playback device error reporting settings.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "ReportingUrl",
+                              "type": "string",
+                              "description": "The URL where playback devices send error reports.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Probability",
+                              "type": "integer",
+                              "description": "The number of playback devices per 1000 that will send error reports to the reporting URL. This represents the probability that a playback device will be a reporting player for this session.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Compactness",
+                  "type": "string",
+                  "description": "The layout of the DASH manifest that MediaPackage produces. STANDARD indicates a default manifest, which is compacted. NONE indicates a full manifest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SubtitleConfiguration",
+                  "type": "dict",
+                  "description": "The configuration for DASH subtitles.",
+                  "nested_items": [
+                    {
+                      "name": "TtmlConfiguration",
+                      "type": "dict",
+                      "description": "Settings for TTML subtitles.",
+                      "nested_items": [
+                        {
+                          "name": "TtmlProfile",
+                          "type": "string",
+                          "description": "The profile that MediaPackage uses when signaling subtitles in the manifest. IMSC is the default profile. EBU-TT-D produces subtitles that are compliant with the EBU-TT-D TTML profile. MediaPackage passes through subtitle styles to the manifest. For more information about EBU-TT-D subtitles, see EBU-TT-D Subtitling Distribution Format.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "MssManifests",
+          "type": "list",
+          "description": "The Microsoft Smooth Streaming (MSS) manifest configurations that were created for this origin endpoint.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ManifestName",
+                  "type": "string",
+                  "description": "The name of the MSS manifest. This name is appended to the origin endpoint URL to create the unique path for accessing this specific MSS manifest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Url",
+                  "type": "string",
+                  "description": "The complete URL for accessing the MSS manifest. Client players use this URL to retrieve the manifest and begin streaming the Microsoft Smooth Streaming content.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FilterConfiguration",
+                  "type": "dict",
+                  "description": "Filter configuration includes settings for manifest filtering, start and end times, and time delay that apply to all of your egress requests for this manifest.",
+                  "nested_items": [
+                    {
+                      "name": "ManifestFilter",
+                      "type": "string",
+                      "description": "Optionally specify one or more manifest filters for all of your manifest egress requests. When you include a manifest filter, note that you cannot use an identical manifest filter query parameter for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Start",
+                      "type": "datetime",
+                      "description": "Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "datetime",
+                      "description": "Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimeDelaySeconds",
+                      "type": "integer",
+                      "description": "Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ClipStartTime",
+                      "type": "datetime",
+                      "description": "Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ManifestWindowSeconds",
+                  "type": "integer",
+                  "description": "The duration (in seconds) of the manifest window. This represents the total amount of content available in the manifest at any given time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ManifestLayout",
+                  "type": "string",
+                  "description": "The layout format of the MSS manifest, which determines how the manifest is structured for client compatibility.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ForceEndpointErrorConfiguration",
+          "type": "dict",
+          "description": "The failover settings for the endpoint.",
+          "nested_items": [
+            {
+              "name": "EndpointErrorConditions",
+              "type": "list",
+              "description": "The failover conditions for the endpoint. The options are:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "STALE_MANIFEST - The manifest stalled and there are no new segments or parts.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INCOMPLETE_MANIFEST - There is a gap in the manifest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "MISSING_DRM_KEY - Key rotation is enabled but we're unable to fetch the key for the current key period.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SLATE_INPUT - The segments which contain slate content are considered to be missing content.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ETag",
+          "type": "string",
+          "description": "The current Entity Tag (ETag) associated with this resource. The entity tag can be used to safely make concurrent updates to the resource.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

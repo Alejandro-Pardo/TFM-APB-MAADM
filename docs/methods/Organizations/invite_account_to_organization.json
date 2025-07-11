@@ -1,0 +1,246 @@
+{
+  "method_name": "invite_account_to_organization",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/organizations/client/invite_account_to_organization.html",
+  "description": "Sends an invitation to another account to join your organization as a member account. Organizations sends email on your behalf to the email address that is associated with the other account's owner. The invitation is implemented as a  Handshake whose details are in the response. If the request includes tags, then the requester must have the organizations:TagResource permission. This operation can be called only from the organization's management account.",
+  "parameters": [
+    {
+      "name": "Target",
+      "type": "dict",
+      "required": true,
+      "description": "The identifier (ID) of the Amazon Web Services account that you want to invite to join your organization. This is a JSON object that contains the following elements: { \"Type\": \"ACCOUNT\", \"Id\": \"< **account id number** >\" } If you use the CLI, you can submit this as a single string, similar to the following example: --target Id=123456789012,Type=ACCOUNT If you specify \"Type\": \"ACCOUNT\", you must provide the Amazon Web Services account ID number as the Id. If you specify \"Type\": \"EMAIL\", you must specify the email address that is associated with the account. --target Id=diego@example.com,Type=EMAIL The unique identifier (ID) for the party. The regex pattern for handshake ID string requires 'h-' followed by from 8 to 32 lowercase letters or digits. The type of party.",
+      "nested_params": [
+        {
+          "name": "Id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier (ID) for the party. The regex pattern for handshake ID string requires 'h-' followed by from 8 to 32 lowercase letters or digits.",
+          "nested_params": []
+        },
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The type of party.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Notes",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags that you want to attach to the account when it becomes a member of the organization. For each tag in the list, you must specify both a tag key and a value. You can set the value to an empty string, but you can't set it to null. For more information about tagging, see Tagging Organizations resources in the Organizations User Guide. (dict) --- A custom key-value pair associated with a resource within your organization. You can attach tags to any of the following organization resources. Amazon Web Services account Organizational unit (OU) Organization root Policy The key identifier, or name, of the tag. The string value that's associated with the key of the tag. You can set the value of a tag to an empty string, but you can't set the value of a tag to null.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Handshake",
+          "type": "dict",
+          "description": "A structure that contains details about the handshake that is created to support this invitation request.",
+          "nested_items": [
+            {
+              "name": "Id",
+              "type": "string",
+              "description": "The unique identifier (ID) of a handshake. The originating account creates the ID when it initiates the handshake.",
+              "nested_items": []
+            },
+            {
+              "name": "Arn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of a handshake.",
+              "nested_items": []
+            },
+            {
+              "name": "Parties",
+              "type": "list",
+              "description": "Information about the two accounts that are participating in the handshake.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Id",
+                      "type": "string",
+                      "description": "The unique identifier (ID) for the party.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "The type of party.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "State",
+              "type": "string",
+              "description": "The current state of the handshake. Use the state to trace the flow of the handshake through the process from its creation to its acceptance. The meaning of each of the valid values is as follows:",
+              "nested_items": [
+                {
+                  "name": "REQUESTED",
+                  "type": "applicable to only some handshake types",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "OPEN",
+                  "type": "applicable to only some policy types",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "CANCELED",
+                  "type": "",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "ACCEPTED",
+                  "type": "",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "DECLINED",
+                  "type": "",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "EXPIRED",
+                  "type": "15 days",
+                  "description": "",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "RequestedTimestamp",
+              "type": "datetime",
+              "description": "The date and time that the handshake request was made.",
+              "nested_items": []
+            },
+            {
+              "name": "ExpirationTimestamp",
+              "type": "datetime",
+              "description": "The date and time that the handshake expires. If the recipient of the handshake request fails to respond before the specified date and time, the handshake becomes inactive and is no longer valid.",
+              "nested_items": []
+            },
+            {
+              "name": "Action",
+              "type": "string",
+              "description": "The type of handshake, indicating what action occurs when the recipient accepts the handshake. The following handshake types are supported:",
+              "nested_items": [
+                {
+                  "name": "INVITE",
+                  "type": "",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "ENABLE_ALL_FEATURES",
+                  "type": "",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "APPROVE_ALL_FEATURES",
+                  "type": "",
+                  "description": "",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Resources",
+              "type": "list",
+              "description": "Additional information that is needed to process the handshake.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "The information that is passed to the other party in the handshake. The format of the value string must match the requirements of the specified type.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "The type of information being passed, specifying how the value is to be interpreted by the other party:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ACCOUNT - Specifies an Amazon Web Services account ID number.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ORGANIZATION - Specifies an organization ID number.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "EMAIL - Specifies the email address that is associated with the account that receives the handshake.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "OWNER_EMAIL - Specifies the email address associated with the management account. Included as information about an organization.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "OWNER_NAME - Specifies the name associated with the management account. Included as information about an organization.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NOTES - Additional text provided by the handshake initiator and intended for the recipient to read.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Resources",
+                      "type": "list",
+                      "description": "When needed, contains an additional array of HandshakeResource objects.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

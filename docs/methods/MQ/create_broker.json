@@ -1,0 +1,356 @@
+{
+  "method_name": "create_broker",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/mq/client/create_broker.html",
+  "description": "Creates a broker. Note: This API is asynchronous. To create a broker, you must either use the AmazonMQFullAccess IAM policy or include the following EC2 permissions in your IAM policy. For more information, see Create an IAM User and Get Your Amazon Web Services Credentials and Never Modify or Delete the Amazon MQ Elastic Network Interface in the Amazon MQ Developer Guide.",
+  "parameters": [
+    {
+      "name": "AuthenticationStrategy",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AutoMinorVersionUpgrade",
+      "type": "boolean",
+      "required": false,
+      "description": "Enables automatic upgrades to new patch versions for brokers as new versions are released and supported by Amazon MQ. Automatic upgrades occur during the scheduled maintenance window or after a manual broker reboot. Set to true by default, if no value is specified.",
+      "nested_params": []
+    },
+    {
+      "name": "BrokerName",
+      "type": "string",
+      "required": true,
+      "description": "Required. The broker's name. This value must be unique in your Amazon Web Services account, 1-50 characters long, must contain only letters, numbers, dashes, and underscores, and must not contain white spaces, brackets, wildcard characters, or special characters.",
+      "nested_params": []
+    },
+    {
+      "name": "Configuration",
+      "type": "dict",
+      "required": true,
+      "description": "A list of information about the configuration. Required. The unique ID that Amazon MQ generates for the configuration. Revision (integer) --- The revision number of the configuration.",
+      "nested_params": [
+        {
+          "name": "Id",
+          "type": "string",
+          "required": false,
+          "description": "Required. The unique ID that Amazon MQ generates for the configuration.",
+          "nested_params": []
+        },
+        {
+          "name": "Revision",
+          "type": "integer",
+          "required": false,
+          "description": "The revision number of the configuration.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "CreatorRequestId",
+      "type": "string",
+      "required": false,
+      "description": "The unique ID that the requester receives for the created broker. Amazon MQ passes your ID with the API action. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "DeploymentMode",
+      "type": "string",
+      "required": true,
+      "description": "Required. The broker's deployment mode.",
+      "nested_params": []
+    },
+    {
+      "name": "EncryptionOptions",
+      "type": "dict",
+      "required": true,
+      "description": "Encryption options for the broker. KmsKeyId (string) --- The customer master key (CMK) to use for the A KMS (KMS). This key is used to encrypt your data at rest. If not provided, Amazon MQ will use a default CMK to encrypt your data. Enables the use of an Amazon Web Services owned CMK using KMS (KMS). Set to true by default, if no value is provided, for example, for RabbitMQ brokers.",
+      "nested_params": [
+        {
+          "name": "KmsKeyId",
+          "type": "string",
+          "required": false,
+          "description": "The customer master key (CMK) to use for the A KMS (KMS). This key is used to encrypt your data at rest. If not provided, Amazon MQ will use a default CMK to encrypt your data.",
+          "nested_params": []
+        },
+        {
+          "name": "UseAwsOwnedKey",
+          "type": "boolean",
+          "required": false,
+          "description": "Enables the use of an Amazon Web Services owned CMK using KMS (KMS). Set to true by default, if no value is provided, for example, for RabbitMQ brokers.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "EngineType",
+      "type": "string",
+      "required": true,
+      "description": "Required. The type of broker engine. Currently, Amazon MQ supports ACTIVEMQ and RABBITMQ.",
+      "nested_params": []
+    },
+    {
+      "name": "EngineVersion",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "HostInstanceType",
+      "type": "string",
+      "required": true,
+      "description": "Required. The broker's instance type.",
+      "nested_params": []
+    },
+    {
+      "name": "LdapServerMetadata",
+      "type": "dict",
+      "required": true,
+      "description": "Optional. The metadata of the LDAP server used to authenticate and authorize connections to the broker. Does not apply to RabbitMQ brokers. Specifies the location of the LDAP server such as Directory Service for Microsoft Active Directory. Optional failover server. (string) --- The distinguished name of the node in the directory information tree (DIT) to search for roles or groups. For example, ou=group, ou=corp, dc=corp, dc=example, dc=com. RoleName (string) --- Specifies the LDAP attribute that identifies the group name attribute in the object returned from the group membership query. The LDAP search filter used to find roles within the roleBase. The distinguished name of the user matched by userSearchMatching is substituted into the {0} placeholder in the search filter. The client's username is substituted into the {1} placeholder. For example, if you set this option to (member=uid={1})for the user janedoe, the search filter becomes (member=uid=janedoe) after string substitution. It matches all role entries that have a member attribute equal to uid=janedoe under the subtree selected by the roleBase. RoleSearchSubtree (boolean) --- The directory search scope for the role. If set to true, scope is to search the entire subtree. Service account password. A service account is an account in your LDAP server that has access to initiate a connection. For example, cn=admin,dc=corp, dc=example, dc=com. Service account username. Select a particular subtree of the directory information tree (DIT) to search for user entries. The subtree is specified by a DN, which specifies the base node of the subtree. For example, by setting this option to ou=Users,ou=corp, dc=corp, dc=example, dc=com, the search for user entries is restricted to the subtree beneath ou=Users, ou=corp, dc=corp, dc=example, dc=com. UserRoleName (string) --- Specifies the name of the LDAP attribute for the user group membership. The LDAP search filter used to find users within the userBase. The client's username is substituted into the {0} placeholder in the search filter. For example, if this option is set to (uid={0}) and the received username is janedoe, the search filter becomes (uid=janedoe) after string substitution. It will result in matching an entry like uid=janedoe, ou=Users,ou=corp, dc=corp, dc=example, dc=com. UserSearchSubtree (boolean) --- The directory search scope for the user. If set to true, scope is to search the entire subtree.",
+      "nested_params": [
+        {
+          "name": "Hosts",
+          "type": "list",
+          "required": false,
+          "description": "Specifies the location of the LDAP server such as Directory Service for Microsoft Active Directory. Optional failover server.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleBase",
+          "type": "string",
+          "required": false,
+          "description": "The distinguished name of the node in the directory information tree (DIT) to search for roles or groups. For example, ou=group, ou=corp, dc=corp, dc=example, dc=com.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleName",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the LDAP attribute that identifies the group name attribute in the object returned from the group membership query.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleSearchMatching",
+          "type": "string",
+          "required": false,
+          "description": "The LDAP search filter used to find roles within the roleBase. The distinguished name of the user matched by userSearchMatching is substituted into the {0} placeholder in the search filter. The client's username is substituted into the {1} placeholder. For example, if you set this option to (member=uid={1})for the user janedoe, the search filter becomes (member=uid=janedoe) after string substitution. It matches all role entries that have a member attribute equal to uid=janedoe under the subtree selected by the roleBase.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleSearchSubtree",
+          "type": "boolean",
+          "required": false,
+          "description": "The directory search scope for the role. If set to true, scope is to search the entire subtree.",
+          "nested_params": []
+        },
+        {
+          "name": "ServiceAccountPassword",
+          "type": "string",
+          "required": false,
+          "description": "Service account password. A service account is an account in your LDAP server that has access to initiate a connection. For example, cn=admin,dc=corp, dc=example, dc=com.",
+          "nested_params": []
+        },
+        {
+          "name": "ServiceAccountUsername",
+          "type": "string",
+          "required": false,
+          "description": "Service account username. A service account is an account in your LDAP server that has access to initiate a connection. For example, cn=admin,dc=corp, dc=example, dc=com.",
+          "nested_params": []
+        },
+        {
+          "name": "UserBase",
+          "type": "string",
+          "required": false,
+          "description": "Select a particular subtree of the directory information tree (DIT) to search for user entries. The subtree is specified by a DN, which specifies the base node of the subtree. For example, by setting this option to ou=Users,ou=corp, dc=corp, dc=example, dc=com, the search for user entries is restricted to the subtree beneath ou=Users, ou=corp, dc=corp, dc=example, dc=com.",
+          "nested_params": []
+        },
+        {
+          "name": "UserRoleName",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the name of the LDAP attribute for the user group membership.",
+          "nested_params": []
+        },
+        {
+          "name": "UserSearchMatching",
+          "type": "string",
+          "required": false,
+          "description": "The LDAP search filter used to find users within the userBase. The client's username is substituted into the {0} placeholder in the search filter. For example, if this option is set to (uid={0}) and the received username is janedoe, the search filter becomes (uid=janedoe) after string substitution. It will result in matching an entry like uid=janedoe, ou=Users,ou=corp, dc=corp, dc=example, dc=com.",
+          "nested_params": []
+        },
+        {
+          "name": "UserSearchSubtree",
+          "type": "boolean",
+          "required": false,
+          "description": "The directory search scope for the user. If set to true, scope is to search the entire subtree.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Logs",
+      "type": "dict",
+      "required": false,
+      "description": "Enables Amazon CloudWatch logging for brokers. Audit (boolean) --- Enables audit logging. Every user management action made using JMX or the ActiveMQ Web Console is logged. Does not apply to RabbitMQ brokers. General (boolean) --- Enables general logging.",
+      "nested_params": [
+        {
+          "name": "Audit",
+          "type": "boolean",
+          "required": false,
+          "description": "Enables audit logging. Every user management action made using JMX or the ActiveMQ Web Console is logged. Does not apply to RabbitMQ brokers.",
+          "nested_params": []
+        },
+        {
+          "name": "General",
+          "type": "boolean",
+          "required": false,
+          "description": "Enables general logging.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "MaintenanceWindowStartTime",
+      "type": "dict",
+      "required": true,
+      "description": "The parameters that determine the WeeklyStartTime. Required. The day of the week. The time, in 24-hour format. TimeZone (string) --- The time zone, UTC by default, in either the Country/City format, or the UTC offset format.",
+      "nested_params": [
+        {
+          "name": "DayOfWeek",
+          "type": "string",
+          "required": false,
+          "description": "Required. The day of the week.",
+          "nested_params": []
+        },
+        {
+          "name": "TimeOfDay",
+          "type": "string",
+          "required": false,
+          "description": "Required. The time, in 24-hour format.",
+          "nested_params": []
+        },
+        {
+          "name": "TimeZone",
+          "type": "string",
+          "required": false,
+          "description": "The time zone, UTC by default, in either the Country/City format, or the UTC offset format.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "PubliclyAccessible",
+      "type": "boolean",
+      "required": true,
+      "description": "Enables connections from applications outside of the VPC that hosts the broker's subnets. Set to false by default, if no value is provided.",
+      "nested_params": []
+    },
+    {
+      "name": "SecurityGroups",
+      "type": "list",
+      "required": false,
+      "description": "The list of rules (1 minimum, 125 maximum) that authorize connections to brokers. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "StorageType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SubnetIds",
+      "type": "list",
+      "required": false,
+      "description": "The list of groups that define which subnets and IP ranges the broker can use from different Availability Zones. If you specify more than one subnet, the subnets must be in different Availability Zones. Amazon MQ will not be able to create VPC endpoints for your broker with multiple subnets in the same Availability Zone. A SINGLE_INSTANCE deployment requires one subnet (for example, the default subnet). An ACTIVE_STANDBY_MULTI_AZ Amazon MQ for ActiveMQ deployment requires two subnets. A CLUSTER_MULTI_AZ Amazon MQ for RabbitMQ deployment has no subnet requirements when deployed with public accessibility. Deployment without public accessibility requires at least one subnet. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "Create tags when creating the broker. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Users",
+      "type": "list",
+      "required": true,
+      "description": "The list of broker users (persons or applications) who can access queues and topics. For Amazon MQ for RabbitMQ brokers, one and only one administrative user is accepted and created when a broker is first provisioned. All subsequent broker users are created by making RabbitMQ API calls directly to brokers or via the RabbitMQ web console. (dict) --- A user associated with the broker. ConsoleAccess (boolean) --- Enables access to the ActiveMQ Web Console for the ActiveMQ user. Does not apply to RabbitMQ brokers. Groups (list) --- The list of groups (20 maximum) to which the ActiveMQ user belongs. This value can contain only alphanumeric characters, dashes, periods, underscores, and tildes (- . _ ~). This value must be 2-100 characters long. (string) --- Required. The password of the user. This value must be at least 12 characters long, must contain at least 4 unique characters, and must not contain commas, colons, or equal signs (,:=). The username of the broker user. The following restrictions apply to broker usernames: For Amazon MQ for ActiveMQ brokers, this value can contain only alphanumeric characters, dashes, periods, underscores, and tildes (- . para>For Amazon MQ for RabbitMQ brokers, this value can contain only alphanumeric characters, dashes, periods, underscores (- . _). This value must not contain a tilde (~) character. Amazon MQ prohibts using guest as a valid usename. ReplicationUser (boolean) --- Defines if this user is intended for CRDR replication purposes.",
+      "nested_params": [
+        {
+          "name": "ConsoleAccess",
+          "type": "boolean",
+          "required": false,
+          "description": "Enables access to the ActiveMQ Web Console for the ActiveMQ user. Does not apply to RabbitMQ brokers.",
+          "nested_params": []
+        },
+        {
+          "name": "Groups",
+          "type": "list",
+          "required": false,
+          "description": "The list of groups (20 maximum) to which the ActiveMQ user belongs. This value can contain only alphanumeric characters, dashes, periods, underscores, and tildes (- . _ ~). This value must be 2-100 characters long. Does not apply to RabbitMQ brokers.",
+          "nested_params": []
+        },
+        {
+          "name": "Password",
+          "type": "string",
+          "required": false,
+          "description": "Required. The password of the user. This value must be at least 12 characters long, must contain at least 4 unique characters, and must not contain commas, colons, or equal signs (,:=).",
+          "nested_params": []
+        },
+        {
+          "name": "Username",
+          "type": "string",
+          "required": false,
+          "description": "The username of the broker user. The following restrictions apply to broker usernames:",
+          "nested_params": []
+        },
+        {
+          "name": "ReplicationUser",
+          "type": "boolean",
+          "required": false,
+          "description": "Defines if this user is intended for CRDR replication purposes.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "DataReplicationMode",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DataReplicationPrimaryBrokerArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "BrokerArn",
+          "type": "string",
+          "description": "The broker's Amazon Resource Name (ARN).",
+          "nested_items": []
+        },
+        {
+          "name": "BrokerId",
+          "type": "string",
+          "description": "The unique ID that Amazon MQ generates for the broker.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

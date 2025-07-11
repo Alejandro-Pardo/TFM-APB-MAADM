@@ -1,0 +1,350 @@
+{
+  "method_name": "select_object_content",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/select_object_content.html",
+  "description": "This action filters the contents of an Amazon S3 object based on a simple structured query language (SQL) statement. In the request, along with the SQL expression, you must also specify a data serialization format (JSON, CSV, or Apache Parquet) of the object. Amazon S3 uses this format to parse object data into records, and returns only records that match the specified SQL expression. You must also specify the data serialization format for the response. This functionality is not supported for Amazon S3 on Outposts. For more information about Amazon S3 Select, see Selecting Content from Objects and SELECT Command in the Amazon S3 User Guide. You must have the s3:GetObject permission for this operation. Amazon S3 Select does not support anonymous access. For more information about permissions, see Specifying Permissions in a Policy in the Amazon S3 User Guide. You can use Amazon S3 Select to query objects that have the following format properties: Given the response size is unknown, Amazon S3 Select streams the response as a series of messages and includes a Transfer-Encoding header with chunked as its value in the response. For more information, see Appendix: SelectObjectContent Response. The SelectObjectContent action does not support the following GetObject functionality. For more information, see GetObject. For a list of special errors for this operation, see List of SELECT Object Content Error Codes. The following operations are related to SelectObjectContent:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The S3 bucket.",
+      "nested_params": []
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": true,
+      "description": "The object key.",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerKey",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerKeyMD5",
+      "type": "string",
+      "required": false,
+      "description": "The MD5 server-side encryption (SSE) customer managed key. This parameter is needed only when the object was created using a checksum algorithm. For more information, see Protecting data using SSE-C keys in the Amazon S3 User Guide. Please note that this parameter is automatically populated if it is not provided. Including this parameter is not required.",
+      "nested_params": []
+    },
+    {
+      "name": "Expression",
+      "type": "string",
+      "required": true,
+      "description": "The expression that is used to query the object.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpressionType",
+      "type": "string",
+      "required": true,
+      "description": "The type of the provided expression (for example, SQL).",
+      "nested_params": []
+    },
+    {
+      "name": "RequestProgress",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies if periodic request progress information should be enabled. Enabled (boolean) --- Specifies whether periodic QueryProgress frames should be sent. Valid values: TRUE, FALSE. Default value: FALSE.",
+      "nested_params": [
+        {
+          "name": "Enabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether periodic QueryProgress frames should be sent. Valid values: TRUE, FALSE. Default value: FALSE.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "InputSerialization",
+      "type": "dict",
+      "required": true,
+      "description": "Describes the format of the data in the object that is being queried. CSV (dict) --- Describes the serialization of a CSV-encoded object. FileHeaderInfo (string) --- Describes the first line of input. Valid values are: NONE: First line is not a header. IGNORE: First line is a header, but you can't use the header values to indicate the column in an expression. You can use column position (such as _1, _2, --\u00a6) to indicate the column ( SELECT s._1 FROM OBJECT s). Use: First line is a header, and you can use the header value to identify a column in an expression ( SELECT \"name\" FROM OBJECT). Comments (string) --- A single character used to indicate that a row should be ignored when the character is present at the start of that row. You can specify any character to indicate a comment line. The default character is #. Default: # QuoteEscapeCharacter (string) --- A single character used for escaping the quotation mark character inside an already escaped value. For example, the value \"\"\" a , b \"\"\" is parsed as \" a , b \". RecordDelimiter (string) --- A single character used to separate individual records in the input. Instead of the default value, you can specify an arbitrary delimiter. FieldDelimiter (string) --- A single character used to separate individual fields in a record. You can specify an arbitrary delimiter. QuoteCharacter (string) --- A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \". Type: String Default: \" Ancestors: CSV AllowQuotedRecordDelimiter (boolean) --- Specifies that CSV field values may contain quoted record delimiters and such records should be allowed. Default value is FALSE. Setting this value to TRUE may lower performance. CompressionType (string) --- Specifies object's compression format. Valid values: NONE, GZIP, BZIP2. Default Value: NONE. JSON (dict) --- Specifies JSON as object's input serialization format. Type (string) --- The type of JSON. Valid values: Document, Lines. Parquet (dict) --- Specifies Parquet as object's input serialization format.",
+      "nested_params": [
+        {
+          "name": "CSV",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the serialization of a CSV-encoded object.",
+          "nested_params": [
+            {
+              "name": "FileHeaderInfo",
+              "type": "string",
+              "required": false,
+              "description": "Describes the first line of input. Valid values are:",
+              "nested_params": []
+            },
+            {
+              "name": "Comments",
+              "type": "string",
+              "required": false,
+              "description": "A single character used to indicate that a row should be ignored when the character is present at the start of that row. You can specify any character to indicate a comment line. The default character is #. Default: #",
+              "nested_params": []
+            },
+            {
+              "name": "QuoteEscapeCharacter",
+              "type": "string",
+              "required": false,
+              "description": "A single character used for escaping the quotation mark character inside an already escaped value. For example, the value \"\"\" a , b \"\"\" is parsed as \" a , b \".",
+              "nested_params": []
+            },
+            {
+              "name": "RecordDelimiter",
+              "type": "string",
+              "required": false,
+              "description": "A single character used to separate individual records in the input. Instead of the default value, you can specify an arbitrary delimiter.",
+              "nested_params": []
+            },
+            {
+              "name": "FieldDelimiter",
+              "type": "string",
+              "required": false,
+              "description": "A single character used to separate individual fields in a record. You can specify an arbitrary delimiter.",
+              "nested_params": []
+            },
+            {
+              "name": "QuoteCharacter",
+              "type": "string",
+              "required": false,
+              "description": "A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \". Type: String Default: \" Ancestors: CSV.",
+              "nested_params": []
+            },
+            {
+              "name": "AllowQuotedRecordDelimiter",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies that CSV field values may contain quoted record delimiters and such records should be allowed. Default value is FALSE. Setting this value to TRUE may lower performance.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "CompressionType",
+          "type": "string",
+          "required": false,
+          "description": "Specifies object's compression format. Valid values: NONE, GZIP, BZIP2. Default Value: NONE.",
+          "nested_params": []
+        },
+        {
+          "name": "JSON",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies JSON as object's input serialization format.",
+          "nested_params": [
+            {
+              "name": "Type",
+              "type": "string",
+              "required": false,
+              "description": "The type of JSON. Valid values: Document, Lines.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Parquet",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies Parquet as object's input serialization format.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OutputSerialization",
+      "type": "dict",
+      "required": true,
+      "description": "Describes the format of the data that you want Amazon S3 to return in response. CSV (dict) --- Describes the serialization of CSV-encoded Select results. QuoteFields (string) --- Indicates whether to use quotation marks around output fields. ALWAYS: Always use quotation marks for output fields. ASNEEDED: Use quotation marks for output fields when needed. QuoteEscapeCharacter (string) --- The single character used for escaping the quote character inside an already escaped value. RecordDelimiter (string) --- A single character used to separate individual records in the output. Instead of the default value, you can specify an arbitrary delimiter. FieldDelimiter (string) --- The value used to separate individual fields in a record. You can specify an arbitrary delimiter. QuoteCharacter (string) --- A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \". JSON (dict) --- Specifies JSON as request's output serialization format. RecordDelimiter (string) --- The value used to separate individual records in the output. If no value is specified, Amazon S3 uses a newline character ('n').",
+      "nested_params": [
+        {
+          "name": "CSV",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the serialization of CSV-encoded Select results.",
+          "nested_params": [
+            {
+              "name": "QuoteFields",
+              "type": "string",
+              "required": false,
+              "description": "Indicates whether to use quotation marks around output fields.",
+              "nested_params": []
+            },
+            {
+              "name": "QuoteEscapeCharacter",
+              "type": "string",
+              "required": false,
+              "description": "The single character used for escaping the quote character inside an already escaped value.",
+              "nested_params": []
+            },
+            {
+              "name": "RecordDelimiter",
+              "type": "string",
+              "required": false,
+              "description": "A single character used to separate individual records in the output. Instead of the default value, you can specify an arbitrary delimiter.",
+              "nested_params": []
+            },
+            {
+              "name": "FieldDelimiter",
+              "type": "string",
+              "required": false,
+              "description": "The value used to separate individual fields in a record. You can specify an arbitrary delimiter.",
+              "nested_params": []
+            },
+            {
+              "name": "QuoteCharacter",
+              "type": "string",
+              "required": false,
+              "description": "A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \".",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "JSON",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies JSON as request's output serialization format.",
+          "nested_params": [
+            {
+              "name": "RecordDelimiter",
+              "type": "string",
+              "required": false,
+              "description": "The value used to separate individual records in the output. If no value is specified, Amazon S3 uses a newline character ('n').",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ScanRange",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies the byte range of the object to get the records from. A record is processed when its first byte is contained by the range. This parameter is optional, but when specified, it must not be empty. See RFC 2616, Section 14.35.1 about how to specify the start and end of the range. ``ScanRange``may be used in the following ways: <scanrange><start>50</start><end>100</end></scanrange> - process only the records starting between the bytes 50 and 100 (inclusive, counting from zero) <scanrange><start>50</start></scanrange> - process only the records starting after the byte 50 <scanrange><end>50</end></scanrange> - process only the records within the last 50 bytes of the file. Start (integer) --- Specifies the start of the byte range. This parameter is optional. Valid values: non-negative integers. The default value is 0. If only start is supplied, it means scan from that point to the end of the file. For example, <scanrange><start>50</start></scanrange> means scan from byte 50 until the end of the file. End (integer) --- Specifies the end of the byte range. The default value is one less than the size of the object being queried. If only the End parameter is supplied, it is interpreted to mean scan the last N bytes of the file. For example, <scanrange><end>50</end></scanrange> means scan the last 50 bytes.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Payload",
+          "type": "EventStream",
+          "description": "The array of results.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Payload",
+                  "type": "bytes",
+                  "description": "The byte array of partial, one or more result records. S3 Select doesn't guarantee that a record will be self-contained in one record frame. To ensure continuous streaming of data, S3 Select might split the same record across multiple record frames instead of aggregating the results in memory. Some S3 clients (for example, the SDKforJava) handle this behavior by creating a ByteStream out of the response by default. Other clients might not handle this behavior by default. In those cases, you must aggregate the results on the client side and parse the response.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "BytesScanned",
+                      "type": "integer",
+                      "description": "The total number of object bytes scanned.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BytesProcessed",
+                      "type": "integer",
+                      "description": "The total number of uncompressed object bytes processed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BytesReturned",
+                      "type": "integer",
+                      "description": "The total number of bytes of records payload data returned.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "BytesScanned",
+                      "type": "integer",
+                      "description": "The current number of object bytes scanned.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BytesProcessed",
+                      "type": "integer",
+                      "description": "The current number of uncompressed object bytes processed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BytesReturned",
+                      "type": "integer",
+                      "description": "The current number of bytes of records payload data returned.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

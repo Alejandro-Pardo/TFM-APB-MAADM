@@ -1,0 +1,219 @@
+{
+  "method_name": "detect_moderation_labels",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/detect_moderation_labels.html",
+  "description": "Detects unsafe content in a specified JPEG or PNG format image. Use DetectModerationLabels to moderate images depending on your requirements. For example, you might want to filter images that contain nudity, but not images containing suggestive content. To filter images, use the labels returned by DetectModerationLabels to determine which types of content are appropriate. For information about moderation labels, see Detecting Unsafe Content in the Amazon Rekognition Developer Guide. You pass the input image either as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. If you use the AWS CLI to call Amazon Rekognition operations, passing image bytes is not supported. The image must be either a PNG or JPEG formatted file. You can specify an adapter to use when retrieving label predictions by providing a ProjectVersionArn to the ProjectVersion argument.",
+  "parameters": [
+    {
+      "name": "Image",
+      "type": "dict",
+      "required": true,
+      "description": "The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported. If you are using an AWS SDK to call Amazon Rekognition, you might not need to base64-encode image bytes passed using the Bytes field. For more information, see Images in the Amazon Rekognition developer guide. Bytes (bytes) --- Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB. S3Object (dict) --- Identifies an S3 object as the image source. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "Bytes",
+          "type": "bytes",
+          "required": false,
+          "description": "Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "Identifies an S3 object as the image source.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "S3 object key name.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket is versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MinConfidence",
+      "type": "float",
+      "required": false,
+      "description": "Specifies the minimum confidence level for the labels to return. Amazon Rekognition doesn't return any labels with a confidence level lower than this specified value. If you don't specify MinConfidence, the operation returns labels with confidence values greater than or equal to 50 percent.",
+      "nested_params": []
+    },
+    {
+      "name": "HumanLoopConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Sets up the configuration for human evaluation, including the FlowDefinition the image will be sent to. The name of the human review used for this image. This should be kept unique within a region. The Amazon Resource Name (ARN) of the flow definition. You can create a flow definition by using the Amazon Sagemaker CreateFlowDefinition Operation. DataAttributes (dict) --- Sets attributes of the input data. ContentClassifiers (list) --- Sets whether the input image is free of personally identifiable information. (string) ---",
+      "nested_params": [
+        {
+          "name": "HumanLoopName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the human review used for this image. This should be kept unique within a region.",
+          "nested_params": []
+        },
+        {
+          "name": "FlowDefinitionArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the flow definition. You can create a flow definition by using the Amazon Sagemaker CreateFlowDefinition Operation.",
+          "nested_params": []
+        },
+        {
+          "name": "DataAttributes",
+          "type": "dict",
+          "required": false,
+          "description": "Sets attributes of the input data.",
+          "nested_params": [
+            {
+              "name": "ContentClassifiers",
+              "type": "list",
+              "required": false,
+              "description": "Sets whether the input image is free of personally identifiable information.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ProjectVersion",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ModerationLabels",
+          "type": "list",
+          "description": "Array of detected Moderation labels. For video operations, this includes the time, in milliseconds from the start of the video, they were detected.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Confidence",
+                  "type": "float",
+                  "description": "Specifies the confidence that Amazon Rekognition has that the label has been correctly identified.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "The label name for the type of unsafe content detected in the image.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ParentName",
+                  "type": "string",
+                  "description": "The name for the parent label. Labels at the top level of the hierarchy have the parent label \"\".",
+                  "nested_items": []
+                },
+                {
+                  "name": "TaxonomyLevel",
+                  "type": "integer",
+                  "description": "The level of the moderation label with regard to its taxonomy, from 1 to 3.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ModerationModelVersion",
+          "type": "string",
+          "description": "Version number of the base moderation detection model that was used to detect unsafe content.",
+          "nested_items": []
+        },
+        {
+          "name": "HumanLoopActivationOutput",
+          "type": "dict",
+          "description": "Shows the results of the human in the loop evaluation.",
+          "nested_items": [
+            {
+              "name": "HumanLoopArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the HumanLoop created.",
+              "nested_items": []
+            },
+            {
+              "name": "HumanLoopActivationReasons",
+              "type": "list",
+              "description": "Shows if and why human review was needed.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "HumanLoopActivationConditionsEvaluationResults",
+              "type": "string",
+              "description": "Shows the result of condition evaluations, including those conditions which activated a human review.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ProjectVersion",
+          "type": "string",
+          "description": "Identifier of the custom adapter that was used during inference. If during inference the adapter was EXPIRED, then the parameter will not be returned, indicating that a base moderation detection project version was used.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentTypes",
+          "type": "list",
+          "description": "A list of predicted results for the type of content an image contains. For example, the image content might be from animation, sports, or a video game.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Confidence",
+                  "type": "float",
+                  "description": "The confidence level of the label given.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "The name of the label.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

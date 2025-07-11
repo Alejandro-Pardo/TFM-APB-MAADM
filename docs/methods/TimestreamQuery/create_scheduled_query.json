@@ -1,0 +1,329 @@
+{
+  "method_name": "create_scheduled_query",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/timestream-query/client/create_scheduled_query.html",
+  "description": "Create a scheduled query that will be run on your behalf at the configured schedule. Timestream assumes the execution role provided as part of the ScheduledQueryExecutionRoleArn parameter to run the query. You can use the NotificationConfiguration parameter to configure notification for your scheduled query operations.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "Name of the scheduled query.",
+      "nested_params": []
+    },
+    {
+      "name": "QueryString",
+      "type": "string",
+      "required": true,
+      "description": "The query string to run. Parameter names can be specified in the query string @ character followed by an identifier. The named Parameter @scheduled_runtime is reserved and can be used in the query to get the time at which the query is scheduled to run. The timestamp calculated according to the ScheduleConfiguration parameter, will be the value of @scheduled_runtime paramater for each query run. For example, consider an instance of a scheduled query executing on 2021-12-01 00:00:00. For this instance, the @scheduled_runtime parameter is initialized to the timestamp 2021-12-01 00:00:00 when invoking the query.",
+      "nested_params": []
+    },
+    {
+      "name": "ScheduleConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The schedule configuration for the query. An expression that denotes when to trigger the scheduled query run. This can be a cron expression or a rate expression.",
+      "nested_params": [
+        {
+          "name": "ScheduleExpression",
+          "type": "string",
+          "required": false,
+          "description": "An expression that denotes when to trigger the scheduled query run. This can be a cron expression or a rate expression.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "NotificationConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Notification configuration for the scheduled query. A notification is sent by Timestream when a query run finishes, when the state is updated or when you delete it. Details about the Amazon Simple Notification Service (SNS) configuration. This field is visible only when SNS Topic is provided when updating the account settings. SNS topic ARN that the scheduled query status notifications will be sent to.",
+      "nested_params": [
+        {
+          "name": "SnsConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Details about the Amazon Simple Notification Service (SNS) configuration. This field is visible only when SNS Topic is provided when updating the account settings.",
+          "nested_params": [
+            {
+              "name": "TopicArn",
+              "type": "string",
+              "required": false,
+              "description": "SNS topic ARN that the scheduled query status notifications will be sent to.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TargetConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Configuration used for writing the result of a query. Configuration needed to write data into the Timestream database and table. Name of Timestream database to which the query result will be written. Name of Timestream table that the query result will be written to. The table should be within the same database that is provided in Timestream configuration. Column from query result that should be used as the time column in destination table. Column type for this should be TIMESTAMP. This is to allow mapping column(s) from the query result to the dimension in the destination table. (dict) --- This type is used to map column(s) from the query result to a dimension in the destination table. Column name from query result. Type for the dimension. MultiMeasureMappings (dict) --- Multi-measure mappings. TargetMultiMeasureName (string) --- The name of the target multi-measure name in the derived table. This input is required when measureNameColumn is not provided. If MeasureNameColumn is provided, then value from that column will be used as multi-measure name. Required. Attribute mappings to be used for mapping query results to ingest data for multi-measure attributes. (dict) --- Attribute mapping for MULTI value measures. Source column from where the attribute value is to be read. TargetMultiMeasureAttributeName (string) --- Custom name to be used for attribute name in derived table. If not provided, source column name would be used. Type of the attribute to be read from the source column. MixedMeasureMappings (list) --- Specifies how to map measures to multi-measure records. (dict) --- MixedMeasureMappings are mappings that can be used to ingest data into a mixture of narrow and multi measures in the derived table. MeasureName (string) --- Refers to the value of measure_name in a result row. This field is required if MeasureNameColumn is provided. SourceColumn (string) --- This field refers to the source column from which measure-value is to be read for result materialization. TargetMeasureName (string) --- Target measure name to be used. If not provided, the target measure name by default would be measure-name if provided, or sourceColumn otherwise. Type of the value that is to be read from sourceColumn. If the mapping is for MULTI, use MeasureValueType.MULTI. MultiMeasureAttributeMappings (list) --- Required when measureValueType is MULTI. Attribute mappings for MULTI value measures. MeasureNameColumn (string) --- Name of the measure column.",
+      "nested_params": [
+        {
+          "name": "TimestreamConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration needed to write data into the Timestream database and table.",
+          "nested_params": [
+            {
+              "name": "DatabaseName",
+              "type": "string",
+              "required": false,
+              "description": "Name of Timestream database to which the query result will be written.",
+              "nested_params": []
+            },
+            {
+              "name": "TableName",
+              "type": "string",
+              "required": false,
+              "description": "Name of Timestream table that the query result will be written to. The table should be within the same database that is provided in Timestream configuration.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeColumn",
+              "type": "string",
+              "required": false,
+              "description": "Column from query result that should be used as the time column in destination table. Column type for this should be TIMESTAMP.",
+              "nested_params": []
+            },
+            {
+              "name": "DimensionMappings",
+              "type": "list",
+              "required": false,
+              "description": "This is to allow mapping column(s) from the query result to the dimension in the destination table.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "Column name from query result.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DimensionValueType",
+                  "type": "string",
+                  "required": false,
+                  "description": "Type for the dimension.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "MultiMeasureMappings",
+              "type": "dict",
+              "required": false,
+              "description": "Multi-measure mappings.",
+              "nested_params": [
+                {
+                  "name": "TargetMultiMeasureName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the target multi-measure name in the derived table. This input is required when measureNameColumn is not provided. If MeasureNameColumn is provided, then value from that column will be used as multi-measure name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MultiMeasureAttributeMappings",
+                  "type": "list",
+                  "required": false,
+                  "description": "Required. Attribute mappings to be used for mapping query results to ingest data for multi-measure attributes.",
+                  "nested_params": [
+                    {
+                      "name": "SourceColumn",
+                      "type": "string",
+                      "required": false,
+                      "description": "Source column from where the attribute value is to be read.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "TargetMultiMeasureAttributeName",
+                      "type": "string",
+                      "required": false,
+                      "description": "Custom name to be used for attribute name in derived table. If not provided, source column name would be used.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "MeasureValueType",
+                      "type": "string",
+                      "required": false,
+                      "description": "Type of the attribute to be read from the source column.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "MixedMeasureMappings",
+              "type": "list",
+              "required": false,
+              "description": "Specifies how to map measures to multi-measure records.",
+              "nested_params": [
+                {
+                  "name": "MeasureName",
+                  "type": "string",
+                  "required": false,
+                  "description": "Refers to the value of measure_name in a result row. This field is required if MeasureNameColumn is provided.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SourceColumn",
+                  "type": "string",
+                  "required": false,
+                  "description": "This field refers to the source column from which measure-value is to be read for result materialization.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TargetMeasureName",
+                  "type": "string",
+                  "required": false,
+                  "description": "Target measure name to be used. If not provided, the target measure name by default would be measure-name if provided, or sourceColumn otherwise.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MeasureValueType",
+                  "type": "string",
+                  "required": false,
+                  "description": "Type of the value that is to be read from sourceColumn. If the mapping is for MULTI, use MeasureValueType.MULTI.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MultiMeasureAttributeMappings",
+                  "type": "list",
+                  "required": false,
+                  "description": "Required when measureValueType is MULTI. Attribute mappings for MULTI value measures.",
+                  "nested_params": [
+                    {
+                      "name": "SourceColumn",
+                      "type": "string",
+                      "required": false,
+                      "description": "Source column from where the attribute value is to be read.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "TargetMultiMeasureAttributeName",
+                      "type": "string",
+                      "required": false,
+                      "description": "Custom name to be used for attribute name in derived table. If not provided, source column name would be used.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "MeasureValueType",
+                      "type": "string",
+                      "required": false,
+                      "description": "Type of the attribute to be read from the source column.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "MeasureNameColumn",
+              "type": "string",
+              "required": false,
+              "description": "Name of the measure column.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "Using a ClientToken makes the call to CreateScheduledQuery idempotent, in other words, making the same request repeatedly will produce the same result. Making multiple identical CreateScheduledQuery requests has the same effect as making a single request. If CreateScheduledQuery is called without a ClientToken, the Query SDK generates a ClientToken on your behalf. After 8 hours, any request with the same ClientToken is treated as a new request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "ScheduledQueryExecutionRoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN for the IAM role that Timestream will assume when running the scheduled query.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "A list of key-value pairs to label the scheduled query. (dict) --- A tag is a label that you assign to a Timestream database and/or table. Each tag consists of a key and an optional value, both of which you define. Tags enable you to categorize databases and/or tables, for example, by purpose, owner, or environment. The key of the tag. Tag keys are case sensitive. The value of the tag. Tag values are case sensitive and can be null.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the tag. Tag keys are case sensitive.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the tag. Tag values are case sensitive and can be null.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "KmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon KMS key used to encrypt the scheduled query resource, at-rest. If the Amazon KMS key is not specified, the scheduled query resource will be encrypted with a Timestream owned Amazon KMS key. To specify a KMS key, use the key ID, key ARN, alias name, or alias ARN. When using an alias name, prefix the name with alias/ If ErrorReportConfiguration uses SSE_KMS as encryption type, the same KmsKeyId is used to encrypt the error report at rest.",
+      "nested_params": []
+    },
+    {
+      "name": "ErrorReportConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Configuration for error reporting. Error reports will be generated when a problem is encountered when writing the query results. The S3 configuration for the error reports. Name of the S3 bucket under which error reports will be created. ObjectKeyPrefix (string) --- Prefix for the error report key. Timestream by default adds the following prefix to the error report path. EncryptionOption (string) --- Encryption at rest options for the error reports. If no encryption option is specified, Timestream will choose SSE_S3 as default.",
+      "nested_params": [
+        {
+          "name": "S3Configuration",
+          "type": "dict",
+          "required": false,
+          "description": "The S3 configuration for the error reports.",
+          "nested_params": [
+            {
+              "name": "BucketName",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket under which error reports will be created.",
+              "nested_params": []
+            },
+            {
+              "name": "ObjectKeyPrefix",
+              "type": "string",
+              "required": false,
+              "description": "Prefix for the error report key. Timestream by default adds the following prefix to the error report path.",
+              "nested_params": []
+            },
+            {
+              "name": "EncryptionOption",
+              "type": "string",
+              "required": false,
+              "description": "Encryption at rest options for the error reports. If no encryption option is specified, Timestream will choose SSE_S3 as default.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Arn",
+          "type": "string",
+          "description": "ARN for the created scheduled query.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

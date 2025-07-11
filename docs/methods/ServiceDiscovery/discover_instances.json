@@ -1,0 +1,122 @@
+{
+  "method_name": "discover_instances",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/servicediscovery/client/discover_instances.html",
+  "description": "Discovers registered instances for a specified namespace and service. You can use DiscoverInstances to discover instances for any type of namespace. DiscoverInstances returns a randomized list of instances allowing customers to distribute traffic evenly across instances. For public and private DNS namespaces, you can also use DNS queries to discover instances.",
+  "parameters": [
+    {
+      "name": "NamespaceName",
+      "type": "string",
+      "required": true,
+      "description": "The HttpName name of the namespace. It's found in the HttpProperties member of the Properties member of the namespace. In most cases, Name and HttpName match. However, if you reuse Name for namespace creation, a generated hash is added to HttpName to distinguish the two.",
+      "nested_params": []
+    },
+    {
+      "name": "ServiceName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the service that you specified when you registered the instance.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "QueryParameters",
+      "type": "dict",
+      "required": false,
+      "description": "Filters to scope the results based on custom attributes for the instance (for example, {version=v1, az=1a}). Only instances that match all the specified key-value pairs are returned. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "OptionalParameters",
+      "type": "dict",
+      "required": false,
+      "description": "Opportunistic filters to scope the results based on custom attributes. If there are instances that match both the filters specified in both the QueryParameters parameter and this parameter, all of these instances are returned. Otherwise, the filters are ignored, and only instances that match the filters that are specified in the QueryParameters parameter are returned. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "HealthStatus",
+      "type": "string",
+      "required": false,
+      "description": "The health status of the instances that you want to discover. This parameter is ignored for services that don't have a health check configured, and all instances are returned. HEALTHY Returns healthy instances. UNHEALTHY Returns unhealthy instances. ALL Returns all instances. HEALTHY_OR_ELSE_ALL Returns healthy instances, unless none are reporting a healthy state. In that case, return all instances. This is also called failing open.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Instances",
+          "type": "list",
+          "description": "A complex type that contains one HttpInstanceSummary for each registered instance.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "InstanceId",
+                  "type": "string",
+                  "description": "The ID of an instance that matches the values that you specified in the request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NamespaceName",
+                  "type": "string",
+                  "description": "The HttpName name of the namespace. It's found in the HttpProperties member of the Properties member of the namespace.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ServiceName",
+                  "type": "string",
+                  "description": "The name of the service that you specified when you registered the instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HealthStatus",
+                  "type": "string",
+                  "description": "If you configured health checking in the service, the current health status of the service instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Attributes",
+                  "type": "dict",
+                  "description": "If you included any attributes when you registered the instance, the values of those attributes.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "InstancesRevision",
+          "type": "integer",
+          "description": "The increasing revision associated to the response Instances list. If a new instance is registered or deregistered, the InstancesRevision updates. The health status updates don't update InstancesRevision.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

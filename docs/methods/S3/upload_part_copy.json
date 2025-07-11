@@ -1,0 +1,240 @@
+{
+  "method_name": "upload_part_copy",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_part_copy.html",
+  "description": "Uploads a part by copying data from an existing object as data source. To specify the data source, you add the request header x-amz-copy-source in your request. To specify a byte range, you add the request header x-amz-copy-source-range in your request. For information about maximum and minimum part sizes and other multipart upload specifications, see Multipart upload limits in the Amazon S3 User Guide. You must initiate a multipart upload before you can upload any part. In response to your initiate request, Amazon S3 returns the upload ID, a unique identifier that you must include in your upload part request. For conceptual information about multipart uploads, see Uploading Objects Using Multipart Upload in the Amazon S3 User Guide. For information about copying objects using a single atomic action vs. a multipart upload, see Operations on Objects in the Amazon S3 User Guide. All UploadPartCopy requests must be authenticated and signed by using IAM credentials (access key ID and secret access key for the IAM identities). All headers with the x-amz- prefix, including x-amz-copy-source, must be signed. For more information, see REST Authentication. Directory buckets - You must use IAM credentials to authenticate and authorize your access to the UploadPartCopy API operation, instead of using the temporary security credentials through the CreateSession API operation. Amazon Web Services CLI or SDKs handles authentication and authorization on your behalf. You must have READ access to the source object and WRITE access to the destination bucket. If the object is encrypted with SSE-KMS, you must also have the kms:GenerateDataKey and kms:Decrypt permissions in IAM identity-based policies and KMS key policies for the KMS key. For example policies, see Example bucket policies for S3 Express One Zone and Amazon Web Services Identity and Access Management (IAM) identity-based policies for S3 Express One Zone in the Amazon S3 User Guide. Directory buckets - The HTTP Host header syntax is Bucket-name.s3express-zone-id.region-code.amazonaws.com. The following operations are related to UploadPartCopy:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The bucket name. Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format bucket-base-name--zone-id--x-s3 (for example, amzn-s3-demo-bucket--usw2-az1--x-s3). For information about bucket naming restrictions, see Directory bucket naming rules in the Amazon S3 User Guide. Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide. S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySource",
+      "type": "str or dict",
+      "required": true,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceIfMatch",
+      "type": "string",
+      "required": false,
+      "description": "Copies the object if its entity tag (ETag) matches the specified tag. If both of the x-amz-copy-source-if-match and x-amz-copy-source-if-unmodified-since headers are present in the request as follows: x-amz-copy-source-if-match condition evaluates to true, and; x-amz-copy-source-if-unmodified-since condition evaluates to false; Amazon S3 returns 200 OK and copies the data.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceIfModifiedSince",
+      "type": "datetime",
+      "required": false,
+      "description": "Copies the object if it has been modified since the specified time. If both of the x-amz-copy-source-if-none-match and x-amz-copy-source-if-modified-since headers are present in the request as follows: x-amz-copy-source-if-none-match condition evaluates to false, and; x-amz-copy-source-if-modified-since condition evaluates to true; Amazon S3 returns 412 Precondition Failed response code.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceIfNoneMatch",
+      "type": "string",
+      "required": false,
+      "description": "Copies the object if its entity tag (ETag) is different than the specified ETag. If both of the x-amz-copy-source-if-none-match and x-amz-copy-source-if-modified-since headers are present in the request as follows: x-amz-copy-source-if-none-match condition evaluates to false, and; x-amz-copy-source-if-modified-since condition evaluates to true; Amazon S3 returns 412 Precondition Failed response code.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceIfUnmodifiedSince",
+      "type": "datetime",
+      "required": false,
+      "description": "Copies the object if it hasn't been modified since the specified time. If both of the x-amz-copy-source-if-match and x-amz-copy-source-if-unmodified-since headers are present in the request as follows: x-amz-copy-source-if-match condition evaluates to true, and; x-amz-copy-source-if-unmodified-since condition evaluates to false; Amazon S3 returns 200 OK and copies the data.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceRange",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": true,
+      "description": "Object key for which the multipart upload was initiated.",
+      "nested_params": []
+    },
+    {
+      "name": "PartNumber",
+      "type": "integer",
+      "required": true,
+      "description": "Part number of part being copied. This is a positive integer between 1 and 10,000.",
+      "nested_params": []
+    },
+    {
+      "name": "UploadId",
+      "type": "string",
+      "required": true,
+      "description": "Upload ID identifying the multipart upload whose part is being copied.",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the algorithm to use when encrypting the object (for example, AES256).",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerKey",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data. This value is used to store the object and then it is discarded; Amazon S3 does not store the encryption key. The key must be appropriate for use with the algorithm specified in the x-amz-server-side-encryption-customer-algorithm header. This must be the same encryption key specified in the initiate multipart upload request.",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerKeyMD5",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceSSECustomerAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the algorithm to use when decrypting the source object (for example, AES256).",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceSSECustomerKey",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the customer-provided encryption key for Amazon S3 to use to decrypt the source object. The encryption key provided in this header must be one that was used when the source object was created.",
+      "nested_params": []
+    },
+    {
+      "name": "CopySourceSSECustomerKeyMD5",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.",
+      "nested_params": []
+    },
+    {
+      "name": "RequestPayer",
+      "type": "string",
+      "required": false,
+      "description": "Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for corresponding charges to copy the object. For information about downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays Buckets in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedSourceBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CopySourceVersionId",
+          "type": "string",
+          "description": "The version of the source object that was copied, if you have enabled versioning on the source bucket.",
+          "nested_items": []
+        },
+        {
+          "name": "CopyPartResult",
+          "type": "dict",
+          "description": "Container for all response elements.",
+          "nested_items": [
+            {
+              "name": "ETag",
+              "type": "string",
+              "description": "Entity tag of the object.",
+              "nested_items": []
+            },
+            {
+              "name": "LastModified",
+              "type": "datetime",
+              "description": "Date and time at which the object was uploaded.",
+              "nested_items": []
+            },
+            {
+              "name": "ChecksumCRC32",
+              "type": "string",
+              "description": "This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 32-bit CRC32 checksum of the part. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "ChecksumCRC32C",
+              "type": "string",
+              "description": "This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 32-bit CRC32C checksum of the part. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "ChecksumCRC64NVME",
+              "type": "string",
+              "description": "The Base64 encoded, 64-bit CRC64NVME checksum of the part. This checksum is present if the multipart upload request was created with the CRC64NVME checksum algorithm to the uploaded object). For more information, see Checking object integrity in the Amazon S3 User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "ChecksumSHA1",
+              "type": "string",
+              "description": "This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 160-bit SHA1 checksum of the part. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "ChecksumSHA256",
+              "type": "string",
+              "description": "This header can be used as a data integrity check to verify that the data received is the same data that was originally sent. This header specifies the Base64 encoded, 256-bit SHA256 checksum of the part. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ServerSideEncryption",
+          "type": "string",
+          "description": "The server-side encryption algorithm used when you store this object in Amazon S3 or Amazon FSx.",
+          "nested_items": []
+        },
+        {
+          "name": "SSECustomerAlgorithm",
+          "type": "string",
+          "description": "If server-side encryption with a customer-provided encryption key was requested, the response will include this header to confirm the encryption algorithm that's used.",
+          "nested_items": []
+        },
+        {
+          "name": "SSECustomerKeyMD5",
+          "type": "string",
+          "description": "If server-side encryption with a customer-provided encryption key was requested, the response will include this header to provide the round-trip message integrity verification of the customer-provided encryption key.",
+          "nested_items": []
+        },
+        {
+          "name": "SSEKMSKeyId",
+          "type": "string",
+          "description": "If present, indicates the ID of the KMS key that was used for object encryption.",
+          "nested_items": []
+        },
+        {
+          "name": "BucketKeyEnabled",
+          "type": "boolean",
+          "description": "Indicates whether the multipart upload uses an S3 Bucket Key for server-side encryption with Key Management Service (KMS) keys (SSE-KMS).",
+          "nested_items": []
+        },
+        {
+          "name": "RequestCharged",
+          "type": "string",
+          "description": "If present, indicates that the requester was successfully charged for the request. For more information, see Using Requester Pays buckets for storage transfers and usage in the Amazon Simple Storage Service user guide.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

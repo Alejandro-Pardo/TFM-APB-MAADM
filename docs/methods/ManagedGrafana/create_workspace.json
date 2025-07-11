@@ -1,0 +1,431 @@
+{
+  "method_name": "create_workspace",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/grafana/client/create_workspace.html",
+  "description": "Creates a workspace. In a workspace, you can create Grafana dashboards and visualizations to analyze your metrics, logs, and traces. You don't have to build, package, or deploy any hardware to run the Grafana server. Don't use CreateWorkspace to modify an existing workspace. Instead, use UpdateWorkspace.",
+  "parameters": [
+    {
+      "name": "accountAccessType",
+      "type": "string",
+      "required": true,
+      "description": "Specifies whether the workspace can access Amazon Web Services resources in this Amazon Web Services account only, or whether it can also access Amazon Web Services resources in other accounts in the same organization. If you specify ORGANIZATION, you must specify which organizational units the workspace can access in the workspaceOrganizationalUnits parameter.",
+      "nested_params": []
+    },
+    {
+      "name": "authenticationProviders",
+      "type": "list",
+      "required": true,
+      "description": "Specifies whether this workspace uses SAML 2.0, IAM Identity Center, or both to authenticate users for using the Grafana console within a workspace. For more information, see User authentication in Amazon Managed Grafana. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive, user-provided identifier to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "configuration",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "grafanaVersion",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the version of Grafana to support in the new workspace. If not specified, defaults to the latest version (for example, 10.4). To get a list of supported versions, use the ListVersions operation.",
+      "nested_params": []
+    },
+    {
+      "name": "networkAccessControl",
+      "type": "dict",
+      "required": true,
+      "description": "Configuration for network access to your workspace. When this is configured, only listed IP addresses and VPC endpoints will be able to access your workspace. Standard Grafana authentication and authorization will still be required. If this is not configured, or is removed, then all IP addresses and VPC endpoints will be allowed. An array of prefix list IDs. A prefix list is a list of CIDR ranges of IP addresses. The IP addresses specified are allowed to access your workspace. If the list is not included in the configuration (passed an empty array) then no IP addresses are allowed to access the workspace. You create a prefix list using the Amazon VPC console. Prefix list IDs have the format ``pl-1a2b3c4d ``. For more information about prefix lists, see `Group CIDR blocks using managed prefix lists <https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html>`__in the Amazon Virtual Private Cloud User Guide. (string) --- An array of Amazon VPC endpoint IDs for the workspace. You can create VPC endpoints to your Amazon Managed Grafana workspace for access from within a VPC. If a NetworkAccessConfiguration is specified then only VPC endpoints specified here are allowed to access the workspace. If you pass in an empty array of strings, then no VPCs are allowed to access the workspace. VPC endpoint IDs have the format ``vpce-1a2b3c4d ``. For more information about creating an interface VPC endpoint, see Interface VPC endpoints in the Amazon Managed Grafana User Guide. (string) ---",
+      "nested_params": [
+        {
+          "name": "prefixListIds",
+          "type": "list",
+          "required": false,
+          "description": "An array of prefix list IDs. A prefix list is a list of CIDR ranges of IP addresses. The IP addresses specified are allowed to access your workspace. If the list is not included in the configuration (passed an empty array) then no IP addresses are allowed to access the workspace. You create a prefix list using the Amazon VPC console. Prefix list IDs have the format ``pl-1a2b3c4d ``. For more information about prefix lists, see `Group CIDR blocks using managed prefix lists <https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html>`__in the Amazon Virtual Private Cloud User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "vpceIds",
+          "type": "list",
+          "required": false,
+          "description": "An array of Amazon VPC endpoint IDs for the workspace. You can create VPC endpoints to your Amazon Managed Grafana workspace for access from within a VPC. If a NetworkAccessConfiguration is specified then only VPC endpoints specified here are allowed to access the workspace. If you pass in an empty array of strings, then no VPCs are allowed to access the workspace. VPC endpoint IDs have the format ``vpce-1a2b3c4d ``. For more information about creating an interface VPC endpoint, see Interface VPC endpoints in the Amazon Managed Grafana User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "organizationRoleName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "permissionType",
+      "type": "string",
+      "required": true,
+      "description": "When creating a workspace through the Amazon Web Services API, CLI or Amazon Web Services CloudFormation, you must manage IAM roles and provision the permissions that the workspace needs to use Amazon Web Services data sources and notification channels. You must also specify a workspaceRoleArn for a role that you will manage for the workspace to use when accessing those datasources and notification channels. The ability for Amazon Managed Grafana to create and update IAM roles on behalf of the user is supported only in the Amazon Managed Grafana console, where this value may be set to SERVICE_MANAGED. For more information, see Amazon Managed Grafana permissions and policies for Amazon Web Services data sources and notification channels.",
+      "nested_params": []
+    },
+    {
+      "name": "stackSetName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "The list of tags associated with the workspace. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "vpcConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration settings for an Amazon VPC that contains data sources for your Grafana workspace to connect to. The list of Amazon EC2 security group IDs attached to the Amazon VPC for your Grafana workspace to connect. Duplicates not allowed. (string) --- The list of Amazon EC2 subnet IDs created in the Amazon VPC for your Grafana workspace to connect. (string) ---",
+      "nested_params": [
+        {
+          "name": "securityGroupIds",
+          "type": "list",
+          "required": false,
+          "description": "The list of Amazon EC2 security group IDs attached to the Amazon VPC for your Grafana workspace to connect. Duplicates not allowed.",
+          "nested_params": []
+        },
+        {
+          "name": "subnetIds",
+          "type": "list",
+          "required": false,
+          "description": "The list of Amazon EC2 subnet IDs created in the Amazon VPC for your Grafana workspace to connect. Duplicates not allowed.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "workspaceDataSources",
+      "type": "list",
+      "required": false,
+      "description": "This parameter is for internal use only, and should not be used. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "workspaceDescription",
+      "type": "string",
+      "required": false,
+      "description": "A description for the workspace. This is used only to help you identify this workspace. Pattern: ^[\\\\p{L}\\\\p{Z}\\\\p{N}\\\\p{P}]{0,2048}$",
+      "nested_params": []
+    },
+    {
+      "name": "workspaceName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "workspaceNotificationDestinations",
+      "type": "list",
+      "required": false,
+      "description": "Specify the Amazon Web Services notification channels that you plan to use in this workspace. Specifying these data sources here enables Amazon Managed Grafana to create IAM roles and permissions that allow Amazon Managed Grafana to use these channels. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "workspaceOrganizationalUnits",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the organizational units that this workspace is allowed to use data sources from, if this workspace is in an account that is part of an organization. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "workspaceRoleArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "workspace",
+          "type": "dict",
+          "description": "A structure containing data about the workspace that was created.",
+          "nested_items": [
+            {
+              "name": "accountAccessType",
+              "type": "string",
+              "description": "Specifies whether the workspace can access Amazon Web Services resources in this Amazon Web Services account only, or whether it can also access Amazon Web Services resources in other accounts in the same organization. If this is ORGANIZATION, the workspaceOrganizationalUnits parameter specifies which organizational units the workspace can access.",
+              "nested_items": []
+            },
+            {
+              "name": "authentication",
+              "type": "dict",
+              "description": "A structure that describes whether the workspace uses SAML, IAM Identity Center, or both methods for user authentication.",
+              "nested_items": [
+                {
+                  "name": "providers",
+                  "type": "list",
+                  "description": "Specifies whether the workspace uses SAML, IAM Identity Center, or both methods for user authentication.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "samlConfigurationStatus",
+                  "type": "string",
+                  "description": "Specifies whether the workplace's user authentication method is fully configured.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "created",
+              "type": "datetime",
+              "description": "The date that the workspace was created.",
+              "nested_items": []
+            },
+            {
+              "name": "dataSources",
+              "type": "list",
+              "description": "Specifies the Amazon Web Services data sources that have been configured to have IAM roles and permissions created to allow Amazon Managed Grafana to read data from these sources.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "description": "The user-defined description of the workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "endpoint",
+              "type": "string",
+              "description": "The URL that users can use to access the Grafana console in the workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "freeTrialConsumed",
+              "type": "boolean",
+              "description": "Specifies whether this workspace has already fully used its free trial for Grafana Enterprise.",
+              "nested_items": []
+            },
+            {
+              "name": "freeTrialExpiration",
+              "type": "datetime",
+              "description": "If this workspace is currently in the free trial period for Grafana Enterprise, this value specifies when that free trial ends.",
+              "nested_items": []
+            },
+            {
+              "name": "grafanaToken",
+              "type": "string",
+              "description": "The token that ties this workspace to a Grafana Labs account. For more information, see Link your account with Grafana Labs.",
+              "nested_items": []
+            },
+            {
+              "name": "grafanaVersion",
+              "type": "string",
+              "description": "The version of Grafana supported in this workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "id",
+              "type": "string",
+              "description": "The unique ID of this workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "licenseExpiration",
+              "type": "datetime",
+              "description": "If this workspace has a full Grafana Enterprise license purchased through Amazon Web Services Marketplace, this specifies when the license ends and will need to be renewed. Purchasing the Enterprise plugins option through Amazon Managed Grafana does not have an expiration. It is valid until the license is removed.",
+              "nested_items": []
+            },
+            {
+              "name": "licenseType",
+              "type": "string",
+              "description": "Specifies whether this workspace has a full Grafana Enterprise license.",
+              "nested_items": []
+            },
+            {
+              "name": "modified",
+              "type": "datetime",
+              "description": "The most recent date that the workspace was modified.",
+              "nested_items": []
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "networkAccessControl",
+              "type": "dict",
+              "description": "The configuration settings for network access to your workspace.",
+              "nested_items": [
+                {
+                  "name": "prefixListIds",
+                  "type": "list",
+                  "description": "An array of prefix list IDs. A prefix list is a list of CIDR ranges of IP addresses. The IP addresses specified are allowed to access your workspace. If the list is not included in the configuration (passed an empty array) then no IP addresses are allowed to access the workspace. You create a prefix list using the Amazon VPC console.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "vpceIds",
+                  "type": "list",
+                  "description": "An array of Amazon VPC endpoint IDs for the workspace. You can create VPC endpoints to your Amazon Managed Grafana workspace for access from within a VPC. If a NetworkAccessConfiguration is specified then only VPC endpoints specified here are allowed to access the workspace. If you pass in an empty array of strings, then no VPCs are allowed to access the workspace.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "notificationDestinations",
+              "type": "list",
+              "description": "The Amazon Web Services notification channels that Amazon Managed Grafana can automatically create IAM roles and permissions for, to allow Amazon Managed Grafana to use these channels.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "organizationRoleName",
+              "type": "string",
+              "description": "The name of the IAM role that is used to access resources through Organizations.",
+              "nested_items": []
+            },
+            {
+              "name": "organizationalUnits",
+              "type": "list",
+              "description": "Specifies the organizational units that this workspace is allowed to use data sources from, if this workspace is in an account that is part of an organization.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "permissionType",
+              "type": "string",
+              "description": "If this is SERVICE_MANAGED, and the workplace was created through the Amazon Managed Grafana console, then Amazon Managed Grafana automatically creates the IAM roles and provisions the permissions that the workspace needs to use Amazon Web Services data sources and notification channels.",
+              "nested_items": []
+            },
+            {
+              "name": "stackSetName",
+              "type": "string",
+              "description": "The name of the CloudFormation stack set that is used to generate IAM roles to be used for this workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The current status of the workspace.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "vpcConfiguration",
+              "type": "dict",
+              "description": "The configuration for connecting to data sources in a private VPC (Amazon Virtual Private Cloud).",
+              "nested_items": [
+                {
+                  "name": "securityGroupIds",
+                  "type": "list",
+                  "description": "The list of Amazon EC2 security group IDs attached to the Amazon VPC for your Grafana workspace to connect. Duplicates not allowed.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "subnetIds",
+                  "type": "list",
+                  "description": "The list of Amazon EC2 subnet IDs created in the Amazon VPC for your Grafana workspace to connect. Duplicates not allowed.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "workspaceRoleArn",
+              "type": "string",
+              "description": "The IAM role that grants permissions to the Amazon Web Services resources that the workspace will view data from. This role must already exist.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

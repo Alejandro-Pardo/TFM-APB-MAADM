@@ -1,0 +1,65 @@
+{
+  "method_name": "create_topic",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sns/client/create_topic.html",
+  "description": "Creates a topic to which notifications can be published. Users can create at most 100,000 standard topics (at most 1,000 FIFO topics). For more information, see Creating an Amazon SNS topic in the Amazon SNS Developer Guide. This action is idempotent, so if the requester already owns a topic with the specified name, that topic's ARN is returned without creating a new topic.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the topic you want to create. Constraints: Topic names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, and hyphens, and must be between 1 and 256 characters long. For a FIFO (first-in-first-out) topic, the name must end with the .fifo suffix.",
+      "nested_params": []
+    },
+    {
+      "name": "Attributes",
+      "type": "dict",
+      "required": false,
+      "description": "A map of attributes with their corresponding values. The following lists names, descriptions, and values of the special request parameters that the CreateTopic action uses: DeliveryPolicy --- The policy that defines how Amazon SNS retries failed deliveries to HTTP/S endpoints. DisplayName --- The display name to use for a topic with SMS subscriptions. FifoTopic --- Set to true to create a FIFO topic. Policy --- The policy that defines who can access your topic. By default, only the topic owner can publish or subscribe to the topic. SignatureVersion --- The signature version corresponds to the hashing algorithm used while creating the signature of the notifications, subscription confirmations, or unsubscribe confirmation messages sent by Amazon SNS. By default, SignatureVersion is set to 1. TracingConfig --- Tracing mode of an Amazon SNS topic. By default TracingConfig is set to PassThrough, and the topic passes through the tracing header it receives from an Amazon SNS publisher to its subscriptions. If set to Active, Amazon SNS will vend X-Ray segment data to topic owner account if the sampled flag in the tracing header is true. This is only supported on standard topics. The following attribute applies only to server-side encryption: KmsMasterKeyId --- The ID of an Amazon Web Services managed customer master key (CMK) for Amazon SNS or a custom CMK. For more information, see Key Terms. For more examples, see KeyId in the Key Management Service API Reference. The following attributes apply only to FIFO topics: ArchivePolicy --- The policy that sets the retention period for messages stored in the message archive of an Amazon SNS FIFO topic. ContentBasedDeduplication --- Enables content-based deduplication for FIFO topics. By default, ContentBasedDeduplication is set to false. If you create a FIFO topic and this attribute is false, you must specify a value for the MessageDeduplicationId parameter for the Publish action. When you set ContentBasedDeduplication to true, Amazon SNS uses a SHA-256 hash to generate the MessageDeduplicationId using the body of the message (but not the attributes of the message). (Optional) To override the generated value, you can specify a value for the MessageDeduplicationId parameter for the Publish action. FifoThroughputScope --- Enables higher throughput for your FIFO topic by adjusting the scope of deduplication. This attribute has two possible values: Topic --- The scope of message deduplication is across the entire topic. This is the default value and maintains existing behavior, with a maximum throughput of 3000 messages per second or 20MB per second, whichever comes first. MessageGroup --- The scope of deduplication is within each individual message group, which enables higher throughput per topic subject to regional quotas. For more information on quotas or to request an increase, see Amazon SNS service quotas in the Amazon Web Services General Reference. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "The list of tags to add to a new topic. (dict) --- The list of tags to be added to the specified topic. The required key portion of the tag. The optional value portion of the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The required key portion of the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The optional value portion of the tag.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "DataProtectionPolicy",
+      "type": "string",
+      "required": false,
+      "description": "The body of the policy document you want to use for this topic. You can only add one policy per topic. The policy must be in JSON string format. Length Constraints: Maximum length of 30,720.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "TopicArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) assigned to the created topic.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

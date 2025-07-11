@@ -1,0 +1,245 @@
+{
+  "method_name": "get_resource_metrics",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/pi/client/get_resource_metrics.html",
+  "description": "Retrieve Performance Insights metrics for a set of data sources over a time period. You can provide specific dimension groups and dimensions, and provide filtering criteria for each group. You must specify an aggregate function for each metric.",
+  "parameters": [
+    {
+      "name": "ServiceType",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Web Services service for which Performance Insights returns metrics. Valid values are as follows: RDS DOCDB.",
+      "nested_params": []
+    },
+    {
+      "name": "Identifier",
+      "type": "string",
+      "required": true,
+      "description": "An immutable identifier for a data source that is unique for an Amazon Web Services Region. Performance Insights gathers metrics from this data source. In the console, the identifier is shown as ResourceID. When you call DescribeDBInstances, the identifier is returned as DbiResourceId. To use a DB instance as a data source, specify its DbiResourceId value. For example, specify db-ABCDEFGHIJKLMNOPQRSTU1VW2X.",
+      "nested_params": []
+    },
+    {
+      "name": "MetricQueries",
+      "type": "list",
+      "required": true,
+      "description": "An array of one or more queries to perform. Each query must specify a Performance Insights metric and specify an aggregate function, and you can provide filtering criteria. You must append the aggregate function to the metric. For example, to find the average for the metric db.load you must use db.load.avg. Valid values for aggregate functions include .avg, .min, .max, and .sum. (dict) --- A single query to be processed. You must provide the metric to query and append an aggregate function to the metric. If no other parameters are specified, Performance Insights returns all data points for the specified metric. Optionally, you can request that the data points be aggregated by dimension group ( GroupBy), and return only those data points that match your criteria ( Filter). The name of a Performance Insights metric to be measured. Valid values for Metric are: db.load.avg - A scaled representation of the number of active sessions for the database engine. db.sampledload.avg - The raw number of active sessions for the database engine. The counter metrics listed in Performance Insights operating system counters in the Amazon Aurora User Guide. The counter metrics listed in Performance Insights operating system counters in the Amazon RDS User Guide. If the number of active sessions is less than an internal Performance Insights threshold, db.load.avg and db.sampledload.avg are the same value. If the number of active sessions is greater than the internal threshold, Performance Insights samples the active sessions, with db.load.avg showing the scaled values, db.sampledload.avg showing the raw values, and db.sampledload.avg less than db.load.avg. For most use cases, you can query db.load.avg only. GroupBy (dict) --- A specification for how to aggregate the data points from a query result. You must specify a valid dimension group. Performance Insights will return all of the dimensions within that group, unless you provide the names of specific dimensions within that group. You can also request that Performance Insights return a limited number of values for a dimension. The name of the dimension group. Valid values are as follows: db - The name of the database to which the client is connected. The following values are permitted: Aurora PostgreSQL Amazon RDS PostgreSQL Aurora MySQL Amazon RDS MySQL Amazon RDS MariaDB Amazon DocumentDB db.application - The name of the application that is connected to the database. The following values are permitted: Aurora PostgreSQL Amazon RDS PostgreSQL Amazon DocumentDB db.blocking_sql - The SQL queries blocking the most DB load. db.blocking_session - The sessions blocking the most DB load. db.blocking_object - The object resources acquired by other sessions that are blocking the most DB load. db.host - The host name of the connected client (all engines). db.plans - The execution plans for the query (only Aurora PostgreSQL). db.query - The query that is currently running (only Amazon DocumentDB). db.query_tokenized - The digest query (only Amazon DocumentDB). db.session_type - The type of the current session (only Aurora PostgreSQL and RDS PostgreSQL). db.sql - The text of the SQL statement that is currently running (all engines except Amazon DocumentDB). db.sql_tokenized - The SQL digest (all engines except Amazon DocumentDB). db.user - The user logged in to the database (all engines except Amazon DocumentDB). db.wait_event - The event for which the database backend is waiting (all engines except Amazon DocumentDB). db.wait_event_type - The type of event for which the database backend is waiting (all engines except Amazon DocumentDB). db.wait_state - The event for which the database backend is waiting (only Amazon DocumentDB). Dimensions (list) --- A list of specific dimensions from a dimension group. If this parameter is not present, then it signifies that all of the dimensions in the group were requested, or are present in the response. Valid values for elements in the Dimensions array are: db.application.name - The name of the application that is connected to the database. Valid values are as follows: Aurora PostgreSQL Amazon RDS PostgreSQL Amazon DocumentDB db.blocking_sql.id - The ID for each of the SQL queries blocking the most DB load. db.blocking_sql.sql - The SQL text for each of the SQL queries blocking the most DB load. db.blocking_session.id - The ID for each of the sessions blocking the most DB load. db.blocking_object.id - The ID for each of the object resources acquired by other sessions that are blocking the most DB load. db.blocking_object.type - The object type for each of the object resources acquired by other sessions that are blocking the most DB load. db.blocking_object.value - The value for each of the object resources acquired by other sessions that are blocking the most DB load. db.host.id - The host ID of the connected client (all engines). db.host.name - The host name of the connected client (all engines). db.name - The name of the database to which the client is connected. Valid values are as follows: Aurora PostgreSQL Amazon RDS PostgreSQL Aurora MySQL Amazon RDS MySQL Amazon RDS MariaDB Amazon DocumentDB db.query.id - The query ID generated by Performance Insights (only Amazon DocumentDB). db.query.db_id - The query ID generated by the database (only Amazon DocumentDB). db.query.statement - The text of the query that is being run (only Amazon DocumentDB). db.query.tokenized_id db.query.tokenized.id - The query digest ID generated by Performance Insights (only Amazon DocumentDB). db.query.tokenized.db_id - The query digest ID generated by Performance Insights (only Amazon DocumentDB). db.query.tokenized.statement - The text of the query digest (only Amazon DocumentDB). db.session_type.name - The type of the current session (only Amazon DocumentDB). db.sql.id - The hash of the full, non-tokenized SQL statement generated by Performance Insights (all engines except Amazon DocumentDB). db.sql.db_id - Either the SQL ID generated by the database engine, or a value generated by Performance Insights that begins with pi- (all engines except Amazon DocumentDB). db.sql.statement - The full text of the SQL statement that is running, as in SELECT * FROM employees (all engines except Amazon DocumentDB) db.sql.tokenized_id - The hash of the SQL digest generated by Performance Insights (all engines except Amazon DocumentDB). The db.sql.tokenized_id dimension fetches the value of the db.sql_tokenized.id dimension. Amazon RDS returns db.sql.tokenized_id from the db.sql dimension group. db.sql_tokenized.id - The hash of the SQL digest generated by Performance Insights (all engines except Amazon DocumentDB). In the console, db.sql_tokenized.id is called the Support ID because Amazon Web Services Support can look at this data to help you troubleshoot database issues. db.sql_tokenized.db_id - Either the native database ID used to refer to the SQL statement, or a synthetic ID such as pi-2372568224 that Performance Insights generates if the native database ID isn't available (all engines except Amazon DocumentDB). db.sql_tokenized.statement - The text of the SQL digest, as in SELECT * FROM employees WHERE employee_id = ? (all engines except Amazon DocumentDB) db.user.id - The ID of the user logged in to the database (all engines except Amazon DocumentDB). db.user.name - The name of the user logged in to the database (all engines except Amazon DocumentDB). db.wait_event.name - The event for which the backend is waiting (all engines except Amazon DocumentDB). db.wait_event.type - The type of event for which the backend is waiting (all engines except Amazon DocumentDB). db.wait_event_type.name - The name of the event type for which the backend is waiting (all engines except Amazon DocumentDB). db.wait_state.name - The event for which the backend is waiting (only Amazon DocumentDB). (string) --- A generic string type that forbids characters that could expose our service (or services downstream) to security risks around injections. Limit (integer) --- The maximum number of items to fetch for this dimension group. Filter (dict) --- One or more filters to apply in the request. Restrictions: Any number of filters by the same dimension, as specified in the GroupBy parameter. A single filter for any other dimension in this dimension group. (string) ---",
+      "nested_params": [
+        {
+          "name": "Metric",
+          "type": "string",
+          "required": false,
+          "description": "The name of a Performance Insights metric to be measured. Valid values for Metric are:",
+          "nested_params": []
+        },
+        {
+          "name": "GroupBy",
+          "type": "dict",
+          "required": false,
+          "description": "A specification for how to aggregate the data points from a query result. You must specify a valid dimension group. Performance Insights will return all of the dimensions within that group, unless you provide the names of specific dimensions within that group. You can also request that Performance Insights return a limited number of values for a dimension.",
+          "nested_params": [
+            {
+              "name": "Group",
+              "type": "string",
+              "required": false,
+              "description": "The name of the dimension group. Valid values are as follows:",
+              "nested_params": []
+            },
+            {
+              "name": "Dimensions",
+              "type": "list",
+              "required": false,
+              "description": "A list of specific dimensions from a dimension group. If this parameter is not present, then it signifies that all of the dimensions in the group were requested, or are present in the response. Valid values for elements in the Dimensions array are:",
+              "nested_params": []
+            },
+            {
+              "name": "Limit",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum number of items to fetch for this dimension group.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Filter",
+          "type": "dict",
+          "required": false,
+          "description": "One or more filters to apply in the request. Restrictions:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "StartTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The date and time specifying the beginning of the requested time series query range. You can't specify a StartTime that is earlier than 7 days ago. By default, Performance Insights has 7 days of retention, but you can extend this range up to 2 years. The value specified is inclusive. Thus, the command returns data points equal to or greater than StartTime. The value for StartTime must be earlier than the value for EndTime.",
+      "nested_params": []
+    },
+    {
+      "name": "EndTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The date and time specifying the end of the requested time series query range. The value specified is exclusive. Thus, the command returns data points less than (but not equal to) EndTime. The value for EndTime must be later than the value for StartTime.",
+      "nested_params": []
+    },
+    {
+      "name": "PeriodInSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "The granularity, in seconds, of the data points returned from Performance Insights. A period can be as short as one second, or as long as one day (86400 seconds). Valid values are: 1 (one second) 60 (one minute) 300 (five minutes) 3600 (one hour) 86400 (twenty-four hours) If you don't specify PeriodInSeconds, then Performance Insights will choose a value for you, with a goal of returning roughly 100-200 data points in the response.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "PeriodAlignment",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AlignedStartTime",
+          "type": "datetime",
+          "description": "The start time for the returned metrics, after alignment to a granular boundary (as specified by PeriodInSeconds). AlignedStartTime will be less than or equal to the value of the user-specified StartTime.",
+          "nested_items": []
+        },
+        {
+          "name": "AlignedEndTime",
+          "type": "datetime",
+          "description": "The end time for the returned metrics, after alignment to a granular boundary (as specified by PeriodInSeconds). AlignedEndTime will be greater than or equal to the value of the user-specified Endtime.",
+          "nested_items": []
+        },
+        {
+          "name": "Identifier",
+          "type": "string",
+          "description": "An immutable identifier for a data source that is unique for an Amazon Web Services Region. Performance Insights gathers metrics from this data source. In the console, the identifier is shown as ResourceID. When you call DescribeDBInstances, the identifier is returned as DbiResourceId.",
+          "nested_items": []
+        },
+        {
+          "name": "MetricList",
+          "type": "list",
+          "description": "An array of metric results, where each array element contains all of the data points for a particular dimension.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Metric",
+                      "type": "string",
+                      "description": "The name of a Performance Insights metric to be measured.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "db.load.avg - A scaled representation of the number of active sessions for the database engine.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "db.sampledload.avg - The raw number of active sessions for the database engine.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The counter metrics listed in Performance Insights operating system counters in the Amazon Aurora User Guide.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The counter metrics listed in Performance Insights operating system counters in the Amazon RDS User Guide.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Dimensions",
+                      "type": "dict",
+                      "description": "The valid dimensions for the metric.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "DataPoints",
+                  "type": "list",
+                  "description": "An array of timestamp-value pairs, representing measurements over a period of time.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Timestamp",
+                          "type": "datetime",
+                          "description": "The time, in epoch format, associated with a particular Value.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "float",
+                          "description": "The actual value associated with a particular Timestamp.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the token, up to the value specified by MaxRecords.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

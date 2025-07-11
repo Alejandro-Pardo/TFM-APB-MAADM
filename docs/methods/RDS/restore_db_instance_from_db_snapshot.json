@@ -1,0 +1,1644 @@
+{
+  "method_name": "restore_db_instance_from_db_snapshot",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rds/client/restore_db_instance_from_db_snapshot.html",
+  "description": "Creates a new DB instance from a DB snapshot. The target database is created from the source database restore point with most of the source's original configuration, including the default security group and DB parameter group. By default, the new DB instance is created as a Single-AZ deployment, except when the instance is a SQL Server instance that has an option group associated with mirroring. In this case, the instance becomes a Multi-AZ deployment, not a Single-AZ deployment. If you want to replace your original DB instance with the new, restored DB instance, then rename your original DB instance before you call the RestoreDBInstanceFromDBSnapshot operation. RDS doesn't allow two DB instances with the same name. After you have renamed your original DB instance with a different identifier, then you can pass the original name of the DB instance as the DBInstanceIdentifier in the call to the RestoreDBInstanceFromDBSnapshot operation. The result is that you replace the original DB instance with the DB instance created from the snapshot. If you are restoring from a shared manual DB snapshot, the DBSnapshotIdentifier must be the ARN of the shared DB snapshot. To restore from a DB snapshot with an unsupported engine version, you must first upgrade the engine version of the snapshot. For more information about upgrading a RDS for MySQL DB snapshot engine version, see Upgrading a MySQL DB snapshot engine version. For more information about upgrading a RDS for PostgreSQL DB snapshot engine version, Upgrading a PostgreSQL DB snapshot engine version.",
+  "parameters": [
+    {
+      "name": "DBInstanceIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The name of the DB instance to create from the DB snapshot. This parameter isn't case-sensitive. Constraints: Must contain from 1 to 63 numbers, letters, or hyphens. First character must be a letter. Can't end with a hyphen or contain two consecutive hyphens. Example: my-snapshot-id.",
+      "nested_params": []
+    },
+    {
+      "name": "DBSnapshotIdentifier",
+      "type": "string",
+      "required": false,
+      "description": "The identifier for the DB snapshot to restore from. Constraints: Must match the identifier of an existing DB snapshot. Can't be specified when DBClusterSnapshotIdentifier is specified. Must be specified when DBClusterSnapshotIdentifier isn't specified. If you are restoring from a shared manual DB snapshot, the DBSnapshotIdentifier must be the ARN of the shared DB snapshot.",
+      "nested_params": []
+    },
+    {
+      "name": "DBInstanceClass",
+      "type": "string",
+      "required": false,
+      "description": "The compute and memory capacity of the Amazon RDS DB instance, for example db.m4.large. Not all DB instance classes are available in all Amazon Web Services Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see DB Instance Class in the Amazon RDS User Guide. Default: The same DBInstanceClass as the original DB instance.",
+      "nested_params": []
+    },
+    {
+      "name": "Port",
+      "type": "integer",
+      "required": false,
+      "description": "The port number on which the database accepts connections. Default: The same port as the original DB instance Constraints: Value must be 1150-65535",
+      "nested_params": []
+    },
+    {
+      "name": "AvailabilityZone",
+      "type": "string",
+      "required": false,
+      "description": "The Availability Zone (AZ) where the DB instance will be created. Default: A random, system-chosen Availability Zone. Constraint: You can't specify the AvailabilityZone parameter if the DB instance is a Multi-AZ deployment. Example: us-east-1a.",
+      "nested_params": []
+    },
+    {
+      "name": "DBSubnetGroupName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the DB subnet group to use for the new instance. Constraints: If supplied, must match the name of an existing DB subnet group. Example: mydbsubnetgroup.",
+      "nested_params": []
+    },
+    {
+      "name": "MultiAZ",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether the DB instance is a Multi-AZ deployment. This setting doesn't apply to RDS Custom. Constraint: You can't specify the AvailabilityZone parameter if the DB instance is a Multi-AZ deployment.",
+      "nested_params": []
+    },
+    {
+      "name": "PubliclyAccessible",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether the DB instance is publicly accessible. When the DB instance is publicly accessible, its Domain Name System (DNS) endpoint resolves to the private IP address from within the DB instance's virtual private cloud (VPC). It resolves to the public IP address from outside of the DB instance's VPC. Access to the DB instance is ultimately controlled by the security group it uses. That public access is not permitted if the security group assigned to the DB instance doesn't permit it. When the DB instance isn't publicly accessible, it is an internal DB instance with a DNS name that resolves to a private IP address. For more information, see  CreateDBInstance.",
+      "nested_params": []
+    },
+    {
+      "name": "AutoMinorVersionUpgrade",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether to automatically apply minor version upgrades to the DB instance during the maintenance window. If you restore an RDS Custom DB instance, you must disable this parameter. For more information about automatic minor version upgrades, see Automatically upgrading the minor engine version.",
+      "nested_params": []
+    },
+    {
+      "name": "LicenseModel",
+      "type": "string",
+      "required": false,
+      "description": "License model information for the restored DB instance. This setting doesn't apply to Amazon Aurora or RDS Custom DB instances. Valid Values: RDS for Db2 - bring-your-own-license | marketplace-license RDS for MariaDB - general-public-license RDS for Microsoft SQL Server - license-included RDS for MySQL - general-public-license RDS for Oracle - bring-your-own-license | license-included RDS for PostgreSQL - postgresql-license Default: Same as the source.",
+      "nested_params": []
+    },
+    {
+      "name": "DBName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the database for the restored DB instance. This parameter only applies to RDS for Oracle and RDS for SQL Server DB instances. It doesn't apply to the other engines or to RDS Custom DB instances.",
+      "nested_params": []
+    },
+    {
+      "name": "Engine",
+      "type": "string",
+      "required": false,
+      "description": "The database engine to use for the new instance. This setting doesn't apply to RDS Custom. Default: The same as source Constraint: Must be compatible with the engine of the source. For example, you can restore a MariaDB 10.1 DB instance from a MySQL 5.6 snapshot. Valid Values: db2-ae db2-se mariadb mysql oracle-ee oracle-ee-cdb oracle-se2 oracle-se2-cdb postgres sqlserver-ee sqlserver-se sqlserver-ex sqlserver-web.",
+      "nested_params": []
+    },
+    {
+      "name": "Iops",
+      "type": "integer",
+      "required": false,
+      "description": "Specifies the amount of provisioned IOPS for the DB instance, expressed in I/O operations per second. If this parameter isn't specified, the IOPS value is taken from the backup. If this parameter is set to 0, the new instance is converted to a non-PIOPS instance. The conversion takes additional time, though your DB instance is available for connections before the conversion starts. The provisioned IOPS value must follow the requirements for your database engine. For more information, see Amazon RDS Provisioned IOPS storage in the Amazon RDS User Guide. Constraints: Must be an integer greater than 1000.",
+      "nested_params": []
+    },
+    {
+      "name": "OptionGroupName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance after it is associated with a DB instance. This setting doesn't apply to RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": false,
+      "description": "A list of tags. For more information, see Tagging Amazon RDS resources in the Amazon RDS User Guide or Tagging Amazon Aurora and Amazon RDS resources in the Amazon Aurora User Guide. (dict) --- Metadata assigned to an Amazon RDS resource consisting of a key-value pair. Key (string) --- A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with aws: or rds:. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098:', --\u0098/', --\u0098=', --\u0098+', --\u0098-', --\u0098@' (Java regex: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$'). Value (string) --- A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with aws: or rds:. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098:', --\u0098/', --\u0098=', --\u0098+', --\u0098-', --\u0098@' (Java regex: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$').",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with aws: or rds:. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098:', --\u0098/', --\u0098=', --\u0098+', --\u0098-', --\u0098@' (Java regex: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$').",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with aws: or rds:. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098:', --\u0098/', --\u0098=', --\u0098+', --\u0098-', --\u0098@' (Java regex: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$').",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "StorageType",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the storage type to be associated with the DB instance. Valid Values: gp2 | gp3 | io1 | io2 | standard If you specify io1, io2, or gp3, you must also include a value for the Iops parameter. Default: io1 if the Iops parameter is specified, otherwise gp3",
+      "nested_params": []
+    },
+    {
+      "name": "TdeCredentialArn",
+      "type": "string",
+      "required": false,
+      "description": "The ARN from the key store with which to associate the instance for TDE encryption. This setting doesn't apply to RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "TdeCredentialPassword",
+      "type": "string",
+      "required": false,
+      "description": "The password for the given ARN from the key store in order to access the device. This setting doesn't apply to RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "VpcSecurityGroupIds",
+      "type": "list",
+      "required": false,
+      "description": "A list of EC2 VPC security groups to associate with this DB instance. Default: The default EC2 VPC security group for the DB subnet group's VPC. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Domain",
+      "type": "string",
+      "required": false,
+      "description": "The Active Directory directory ID to restore the DB instance in. The domain/ must be created prior to this operation. Currently, you can create only Db2, MySQL, Microsoft SQL Server, Oracle, and PostgreSQL DB instances in an Active Directory Domain. For more information, see Kerberos Authentication in the Amazon RDS User Guide. This setting doesn't apply to RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "DomainFqdn",
+      "type": "string",
+      "required": false,
+      "description": "The fully qualified domain name (FQDN) of an Active Directory domain. Constraints: Can't be longer than 64 characters. Example: mymanagedADtest.mymanagedAD.mydomain.",
+      "nested_params": []
+    },
+    {
+      "name": "DomainOu",
+      "type": "string",
+      "required": false,
+      "description": "The Active Directory organizational unit for your DB instance to join. Constraints: Must be in the distinguished name format. Can't be longer than 64 characters. Example: OU=mymanagedADtestOU,DC=mymanagedADtest,DC=mymanagedAD,DC=mydomain.",
+      "nested_params": []
+    },
+    {
+      "name": "DomainAuthSecretArn",
+      "type": "string",
+      "required": false,
+      "description": "The ARN for the Secrets Manager secret with the credentials for the user joining the domain. Constraints: Can't be longer than 64 characters. Example: arn:aws:secretsmanager:region:account-number:secret:myselfmanagedADtestsecret-123456",
+      "nested_params": []
+    },
+    {
+      "name": "DomainDnsIps",
+      "type": "list",
+      "required": false,
+      "description": "The IPv4 DNS IP addresses of your primary and secondary Active Directory domain controllers. Constraints: Two IP addresses must be provided. If there isn't a secondary domain controller, use the IP address of the primary domain controller for both entries in the list. Example: 123.124.125.126,234.235.236.237 (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "CopyTagsToSnapshot",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether to copy all tags from the restored DB instance to snapshots of the DB instance. In most cases, tags aren't copied by default. However, when you restore a DB instance from a DB snapshot, RDS checks whether you specify new tags. If yes, the new tags are added to the restored DB instance. If there are no new tags, RDS looks for the tags from the source DB instance for the DB snapshot, and then adds those tags to the restored DB instance. For more information, see Copying tags to DB instance snapshots in the Amazon RDS User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "DomainIAMRoleName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the IAM role to use when making API calls to the Directory Service. This setting doesn't apply to RDS Custom DB instances.",
+      "nested_params": []
+    },
+    {
+      "name": "EnableIAMDatabaseAuthentication",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether to enable mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts. By default, mapping is disabled. For more information about IAM database authentication, see IAM Database Authentication for MySQL and PostgreSQL in the Amazon RDS User Guide. This setting doesn't apply to RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "EnableCloudwatchLogsExports",
+      "type": "list",
+      "required": false,
+      "description": "The list of logs for the restored DB instance to export to CloudWatch Logs. The values in the list depend on the DB engine. For more information, see Publishing Database Logs to Amazon CloudWatch Logs in the Amazon RDS User Guide. This setting doesn't apply to RDS Custom. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ProcessorFeatures",
+      "type": "list",
+      "required": false,
+      "description": "The number of CPU cores and the number of threads per core for the DB instance class of the DB instance. This setting doesn't apply to RDS Custom. (dict) --- Contains the processor features of a DB instance class. To specify the number of CPU cores, use the coreCount feature name for the Name parameter. To specify the number of threads per core, use the threadsPerCore feature name for the Name parameter. You can set the processor features of the DB instance class for a DB instance when you call one of the following actions: CreateDBInstance ModifyDBInstance RestoreDBInstanceFromDBSnapshot RestoreDBInstanceFromS3 RestoreDBInstanceToPointInTime You can view the valid processor values for a particular instance class by calling the DescribeOrderableDBInstanceOptions action and specifying the instance class for the DBInstanceClass parameter. In addition, you can use the following actions for DB instance class processor information: DescribeDBInstances DescribeDBSnapshots DescribeValidDBInstanceModifications If you call DescribeDBInstances, ProcessorFeature returns non-null values only if the following conditions are met: You are accessing an Oracle DB instance. Your Oracle DB instance class supports configuring the number of CPU cores and threads per core. The current number CPU cores and threads is set to a non-default value. For more information, see Configuring the processor for a DB instance class in RDS for Oracle in the Amazon RDS User Guide. Name (string) --- The name of the processor feature. Valid names are coreCount and threadsPerCore. Value (string) --- The value of a processor feature.",
+      "nested_params": []
+    },
+    {
+      "name": "UseDefaultProcessorFeatures",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether the DB instance class of the DB instance uses its default processor features. This setting doesn't apply to RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "DBParameterGroupName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the DB parameter group to associate with this DB instance. If you don't specify a value for DBParameterGroupName, then RDS uses the default DBParameterGroup for the specified DB engine. This setting doesn't apply to RDS Custom. Constraints: If supplied, must match the name of an existing DB parameter group. Must be 1 to 255 letters, numbers, or hyphens. First character must be a letter. Can't end with a hyphen or contain two consecutive hyphens.",
+      "nested_params": []
+    },
+    {
+      "name": "DeletionProtection",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "EnableCustomerOwnedIp",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether to enable a customer-owned IP address (CoIP) for an RDS on Outposts DB instance. A CoIP provides local or external connectivity to resources in your Outpost subnets through your on-premises network. For some use cases, a CoIP can provide lower latency for connections to the DB instance from outside of its virtual private cloud (VPC) on your local network. This setting doesn't apply to RDS Custom. For more information about RDS on Outposts, see Working with Amazon RDS on Amazon Web Services Outposts in the Amazon RDS User Guide. For more information about CoIPs, see Customer-owned IP addresses in the Amazon Web Services Outposts User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "CustomIamInstanceProfile",
+      "type": "string",
+      "required": false,
+      "description": "The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance. The instance profile must meet the following requirements: The profile must exist in your account. The profile must have an IAM role that Amazon EC2 has permissions to assume. The instance profile name and the associated IAM role name must start with the prefix AWSRDSCustom. For the list of permissions required for the IAM role, see Configure IAM and your VPC in the Amazon RDS User Guide. This setting is required for RDS Custom.",
+      "nested_params": []
+    },
+    {
+      "name": "BackupTarget",
+      "type": "string",
+      "required": false,
+      "description": "Specifies where automated backups and manual snapshots are stored for the restored DB instance. Possible values are local (Dedicated Local Zone), outposts (Amazon Web Services Outposts), and region (Amazon Web Services Region). The default is region. For more information, see Working with Amazon RDS on Amazon Web Services Outposts in the Amazon RDS User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "NetworkType",
+      "type": "string",
+      "required": false,
+      "description": "The network type of the DB instance. Valid Values: IPV4 DUAL The network type is determined by the DBSubnetGroup specified for the DB instance. A DBSubnetGroup can support only the IPv4 protocol or the IPv4 and the IPv6 protocols ( DUAL). For more information, see Working with a DB instance in a VPC in the Amazon RDS User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "StorageThroughput",
+      "type": "integer",
+      "required": false,
+      "description": "Specifies the storage throughput value for the DB instance. This setting doesn't apply to RDS Custom or Amazon Aurora.",
+      "nested_params": []
+    },
+    {
+      "name": "DBClusterSnapshotIdentifier",
+      "type": "string",
+      "required": false,
+      "description": "The identifier for the Multi-AZ DB cluster snapshot to restore from. For more information on Multi-AZ DB clusters, see Multi-AZ DB cluster deployments in the Amazon RDS User Guide. Constraints: Must match the identifier of an existing Multi-AZ DB cluster snapshot. Can't be specified when DBSnapshotIdentifier is specified. Must be specified when DBSnapshotIdentifier isn't specified. If you are restoring from a shared manual Multi-AZ DB cluster snapshot, the DBClusterSnapshotIdentifier must be the ARN of the shared snapshot. Can't be the identifier of an Aurora DB cluster snapshot.",
+      "nested_params": []
+    },
+    {
+      "name": "AllocatedStorage",
+      "type": "integer",
+      "required": false,
+      "description": "The amount of storage (in gibibytes) to allocate initially for the DB instance. Follow the allocation rules specified in CreateDBInstance. This setting isn't valid for RDS for SQL Server.",
+      "nested_params": []
+    },
+    {
+      "name": "DedicatedLogVolume",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CACertificateIdentifier",
+      "type": "string",
+      "required": false,
+      "description": "The CA certificate identifier to use for the DB instance's server certificate. This setting doesn't apply to RDS Custom DB instances. For more information, see Using SSL/TLS to encrypt a connection to a DB instance in the Amazon RDS User Guide and Using SSL/TLS to encrypt a connection to a DB cluster in the Amazon Aurora User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "EngineLifecycleSupport",
+      "type": "string",
+      "required": false,
+      "description": "The life cycle type for this DB instance. You can use this setting to enroll your DB instance into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB instance past the end of standard support for that engine version. For more information, see Amazon RDS Extended Support with Amazon RDS in the Amazon RDS User Guide. This setting applies only to RDS for MySQL and RDS for PostgreSQL. For Amazon Aurora DB instances, the life cycle type is managed by the DB cluster. Valid Values: open-source-rds-extended-support | open-source-rds-extended-support-disabled Default: open-source-rds-extended-support.",
+      "nested_params": []
+    },
+    {
+      "name": "ManageMasterUserPassword",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether to manage the master user password with Amazon Web Services Secrets Manager in the restored DB instance. For more information, see Password management with Amazon Web Services Secrets Manager in the Amazon RDS User Guide. Constraints: Applies to RDS for Oracle only.",
+      "nested_params": []
+    },
+    {
+      "name": "MasterUserSecretKmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Web Services KMS key identifier to encrypt a secret that is automatically generated and managed in Amazon Web Services Secrets Manager. This setting is valid only if the master user password is managed by RDS in Amazon Web Services Secrets Manager for the DB instance. The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. To use a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN. If you don't specify MasterUserSecretKmsKeyId, then the aws/secretsmanager KMS key is used to encrypt the secret. If the secret is in a different Amazon Web Services account, then you can't use the aws/secretsmanager KMS key to encrypt the secret, and you must use a customer managed KMS key. There is a default KMS key for your Amazon Web Services account. Your Amazon Web Services account has a different default KMS key for each Amazon Web Services Region.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DBInstance",
+          "type": "dict",
+          "description": "Contains the details of an Amazon RDS DB instance.",
+          "nested_items": [
+            {
+              "name": "DBInstanceIdentifier",
+              "type": "string",
+              "description": "The user-supplied database identifier. This identifier is the unique key that identifies a DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DBInstanceClass",
+              "type": "string",
+              "description": "The name of the compute and memory capacity class of the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "Engine",
+              "type": "string",
+              "description": "The database engine used for this DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DBInstanceStatus",
+              "type": "string",
+              "description": "The current state of this database.",
+              "nested_items": []
+            },
+            {
+              "name": "AutomaticRestartTime",
+              "type": "datetime",
+              "description": "The time when a stopped DB instance is restarted automatically.",
+              "nested_items": []
+            },
+            {
+              "name": "MasterUsername",
+              "type": "string",
+              "description": "The master username for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DBName",
+              "type": "string",
+              "description": "The initial database name that you provided (if required) when you created the DB instance. This name is returned for the life of your DB instance. For an RDS for Oracle CDB instance, the name identifies the PDB rather than the CDB.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Address",
+                  "type": "string",
+                  "description": "Specifies the DNS address of the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Port",
+                  "type": "integer",
+                  "description": "Specifies the port that the database engine is listening on.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HostedZoneId",
+                  "type": "string",
+                  "description": "Specifies the ID that Amazon Route 53 assigns when you create a hosted zone.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "AllocatedStorage",
+              "type": "integer",
+              "description": "The amount of storage in gibibytes (GiB) allocated for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "InstanceCreateTime",
+              "type": "datetime",
+              "description": "The date and time when the DB instance was created.",
+              "nested_items": []
+            },
+            {
+              "name": "PreferredBackupWindow",
+              "type": "string",
+              "description": "The daily time range during which automated backups are created if automated backups are enabled, as determined by the BackupRetentionPeriod.",
+              "nested_items": []
+            },
+            {
+              "name": "BackupRetentionPeriod",
+              "type": "integer",
+              "description": "The number of days for which automatic DB snapshots are retained.",
+              "nested_items": []
+            },
+            {
+              "name": "DBSecurityGroups",
+              "type": "list",
+              "description": "A list of DB security group elements containing DBSecurityGroup.Name and DBSecurityGroup.Status subelements.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ModifyDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RebootDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RestoreDBInstanceFromDBSnapshot.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RestoreDBInstanceToPointInTime.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VpcSecurityGroups",
+              "type": "list",
+              "description": "The list of Amazon EC2 VPC security groups that the DB instance belongs to.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "VpcSecurityGroupId",
+                      "type": "string",
+                      "description": "The name of the VPC security group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The membership status of the VPC security group.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DBParameterGroups",
+              "type": "list",
+              "description": "The list of DB parameter groups applied to this DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CreateDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CreateDBInstanceReadReplica.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DeleteDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ModifyDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RebootDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RestoreDBInstanceFromDBSnapshot.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string",
+              "description": "The name of the Availability Zone where the DB instance is located.",
+              "nested_items": []
+            },
+            {
+              "name": "DBSubnetGroup",
+              "type": "dict",
+              "description": "Information about the subnet group associated with the DB instance, including the name, description, and subnets in the subnet group.",
+              "nested_items": [
+                {
+                  "name": "DBSubnetGroupName",
+                  "type": "string",
+                  "description": "The name of the DB subnet group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DBSubnetGroupDescription",
+                  "type": "string",
+                  "description": "Provides the description of the DB subnet group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VpcId",
+                  "type": "string",
+                  "description": "Provides the VpcId of the DB subnet group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SubnetGroupStatus",
+                  "type": "string",
+                  "description": "Provides the status of the DB subnet group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Subnets",
+                  "type": "list",
+                  "description": "Contains a list of Subnet elements. The list of subnets shown here might not reflect the current state of your VPC. For the most up-to-date information, we recommend checking your VPC configuration directly.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "SubnetIdentifier",
+                          "type": "string",
+                          "description": "The identifier of the subnet.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "SubnetAvailabilityZone",
+                          "type": "dict",
+                          "description": "Contains Availability Zone information.",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the Availability Zone.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "SubnetOutpost",
+                          "type": "dict",
+                          "description": "If the subnet is associated with an Outpost, this value specifies the Outpost.",
+                          "nested_items": [
+                            {
+                              "name": "Arn",
+                              "type": "string",
+                              "description": "The Amazon Resource Name (ARN) of the Outpost.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "SubnetStatus",
+                          "type": "string",
+                          "description": "The status of the subnet.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "DBSubnetGroupArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) for the DB subnet group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SupportedNetworkTypes",
+                  "type": "list",
+                  "description": "The network type of the DB subnet group.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "IPV4",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DUAL.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "PreferredMaintenanceWindow",
+              "type": "string",
+              "description": "The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC).",
+              "nested_items": []
+            },
+            {
+              "name": "PendingModifiedValues",
+              "type": "dict",
+              "description": "Information about pending changes to the DB instance. This information is returned only when there are pending changes. Specific changes are identified by subelements.",
+              "nested_items": [
+                {
+                  "name": "DBInstanceClass",
+                  "type": "string",
+                  "description": "The name of the compute and memory capacity class for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AllocatedStorage",
+                  "type": "integer",
+                  "description": "The allocated storage size for the DB instance specified in gibibytes (GiB).",
+                  "nested_items": []
+                },
+                {
+                  "name": "MasterUserPassword",
+                  "type": "string",
+                  "description": "The master credentials for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Port",
+                  "type": "integer",
+                  "description": "The port for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupRetentionPeriod",
+                  "type": "integer",
+                  "description": "The number of days for which automated backups are retained.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MultiAZ",
+                  "type": "boolean",
+                  "description": "Indicates whether the Single-AZ DB instance will change to a Multi-AZ deployment.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EngineVersion",
+                  "type": "string",
+                  "description": "The database engine version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LicenseModel",
+                  "type": "string",
+                  "description": "The license model for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Iops",
+                  "type": "integer",
+                  "description": "The Provisioned IOPS value for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DBInstanceIdentifier",
+                  "type": "string",
+                  "description": "The database identifier for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StorageType",
+                  "type": "string",
+                  "description": "The storage type of the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CACertificateIdentifier",
+                  "type": "string",
+                  "description": "The identifier of the CA certificate for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DBSubnetGroupName",
+                  "type": "string",
+                  "description": "The DB subnet group for the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PendingCloudwatchLogsExports",
+                  "type": "dict",
+                  "description": "A list of the log types whose configuration is still pending. In other words, these log types are in the process of being activated or deactivated.",
+                  "nested_items": [
+                    {
+                      "name": "LogTypesToEnable",
+                      "type": "list",
+                      "description": "Log types that are in the process of being deactivated. After they are deactivated, these log types aren't exported to CloudWatch Logs.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "LogTypesToDisable",
+                      "type": "list",
+                      "description": "Log types that are in the process of being enabled. After they are enabled, these log types are exported to CloudWatch Logs.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ProcessorFeatures",
+                  "type": "list",
+                  "description": "The number of CPU cores and the number of threads per core for the DB instance class of the DB instance.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CreateDBInstance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ModifyDBInstance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "RestoreDBInstanceFromDBSnapshot.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "RestoreDBInstanceFromS3",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "RestoreDBInstanceToPointInTime.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "IAMDatabaseAuthenticationEnabled",
+                  "type": "boolean",
+                  "description": "Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AutomationMode",
+                  "type": "string",
+                  "description": "The automation mode of the RDS Custom DB instance: full or all-paused. If full, the DB instance automates monitoring and instance recovery. If all-paused, the instance pauses automation for the duration set by --resume-full-automation-mode-minutes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ResumeFullAutomationModeTime",
+                  "type": "datetime",
+                  "description": "The number of minutes to pause the automation. When the time period ends, RDS Custom resumes full automation. The minimum value is 60 (default). The maximum value is 1,440.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StorageThroughput",
+                  "type": "integer",
+                  "description": "The storage throughput of the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Engine",
+                  "type": "string",
+                  "description": "The database engine of the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DedicatedLogVolume",
+                  "type": "boolean",
+                  "description": "Indicates whether the DB instance has a dedicated log volume (DLV) enabled.>",
+                  "nested_items": []
+                },
+                {
+                  "name": "MultiTenant",
+                  "type": "boolean",
+                  "description": "Indicates whether the DB instance will change to the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE).",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "LatestRestorableTime",
+              "type": "datetime",
+              "description": "The latest time to which a database in this DB instance can be restored with point-in-time restore.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiAZ",
+              "type": "boolean",
+              "description": "Indicates whether the DB instance is a Multi-AZ deployment. This setting doesn't apply to RDS Custom DB instances.",
+              "nested_items": []
+            },
+            {
+              "name": "EngineVersion",
+              "type": "string",
+              "description": "The version of the database engine.",
+              "nested_items": []
+            },
+            {
+              "name": "AutoMinorVersionUpgrade",
+              "type": "boolean",
+              "description": "Indicates whether minor version patches are applied automatically.",
+              "nested_items": []
+            },
+            {
+              "name": "ReadReplicaSourceDBInstanceIdentifier",
+              "type": "string",
+              "description": "The identifier of the source DB instance if this DB instance is a read replica.",
+              "nested_items": []
+            },
+            {
+              "name": "ReadReplicaDBInstanceIdentifiers",
+              "type": "list",
+              "description": "The identifiers of the read replicas associated with this DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ReadReplicaDBClusterIdentifiers",
+              "type": "list",
+              "description": "The identifiers of Aurora DB clusters to which the RDS DB instance is replicated as a read replica. For example, when you create an Aurora read replica of an RDS for MySQL DB instance, the Aurora MySQL DB cluster for the Aurora read replica is shown. This output doesn't contain information about cross-Region Aurora read replicas.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ReplicaMode",
+              "type": "string",
+              "description": "The open mode of a Db2 or an Oracle read replica. The default is open-read-only. For more information, see Working with read replicas for Amazon RDS for Db2 and Working with read replicas for Amazon RDS for Oracle in the Amazon RDS User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "LicenseModel",
+              "type": "string",
+              "description": "The license model information for this DB instance. This setting doesn't apply to Amazon Aurora or RDS Custom DB instances.",
+              "nested_items": []
+            },
+            {
+              "name": "Iops",
+              "type": "integer",
+              "description": "The Provisioned IOPS (I/O operations per second) value for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "OptionGroupMemberships",
+              "type": "list",
+              "description": "The list of option group memberships for this DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "OptionGroupName",
+                      "type": "string",
+                      "description": "The name of the option group that the instance belongs to.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the DB instance's option group membership. Valid values are: in-sync, pending-apply, pending-removal, pending-maintenance-apply, pending-maintenance-removal, applying, removing, and failed.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CharacterSetName",
+              "type": "string",
+              "description": "If present, specifies the name of the character set that this instance is associated with.",
+              "nested_items": []
+            },
+            {
+              "name": "NcharCharacterSetName",
+              "type": "string",
+              "description": "The name of the NCHAR character set for the Oracle DB instance. This character set specifies the Unicode encoding for data stored in table columns of type NCHAR, NCLOB, or NVARCHAR2.",
+              "nested_items": []
+            },
+            {
+              "name": "SecondaryAvailabilityZone",
+              "type": "string",
+              "description": "If present, specifies the name of the secondary Availability Zone for a DB instance with multi-AZ support.",
+              "nested_items": []
+            },
+            {
+              "name": "PubliclyAccessible",
+              "type": "boolean",
+              "description": "Indicates whether the DB instance is publicly accessible.",
+              "nested_items": []
+            },
+            {
+              "name": "StatusInfos",
+              "type": "list",
+              "description": "The status of a read replica. If the DB instance isn't a read replica, the value is blank.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "StatusType",
+                      "type": "string",
+                      "description": "This value is currently 'read replication.'",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Normal",
+                      "type": "boolean",
+                      "description": "Indicates whether the instance is operating normally (TRUE) or is in an error state (FALSE).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the DB instance. For a StatusType of read replica, the values can be replicating, replication stop point set, replication stop point reached, error, stopped, or terminated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Message",
+                      "type": "string",
+                      "description": "Details of the error if there is an error for the instance. If the instance isn't in an error state, this value is blank.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "StorageType",
+              "type": "string",
+              "description": "The storage type associated with the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "TdeCredentialArn",
+              "type": "string",
+              "description": "The ARN from the key store with which the instance is associated for TDE encryption.",
+              "nested_items": []
+            },
+            {
+              "name": "DbInstancePort",
+              "type": "integer",
+              "description": "The port that the DB instance listens on. If the DB instance is part of a DB cluster, this can be a different port than the DB cluster port.",
+              "nested_items": []
+            },
+            {
+              "name": "DBClusterIdentifier",
+              "type": "string",
+              "description": "If the DB instance is a member of a DB cluster, indicates the name of the DB cluster that the DB instance is a member of.",
+              "nested_items": []
+            },
+            {
+              "name": "StorageEncrypted",
+              "type": "boolean",
+              "description": "Indicates whether the DB instance is encrypted.",
+              "nested_items": []
+            },
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "If StorageEncrypted is enabled, the Amazon Web Services KMS key identifier for the encrypted DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DbiResourceId",
+              "type": "string",
+              "description": "The Amazon Web Services Region-unique, immutable identifier for the DB instance. This identifier is found in Amazon Web Services CloudTrail log entries whenever the Amazon Web Services KMS key for the DB instance is accessed.",
+              "nested_items": []
+            },
+            {
+              "name": "CACertificateIdentifier",
+              "type": "string",
+              "description": "The identifier of the CA certificate for this DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DomainMemberships",
+              "type": "list",
+              "description": "The Active Directory Domain membership records associated with the DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Domain",
+                      "type": "string",
+                      "description": "The identifier of the Active Directory Domain.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the Active Directory Domain membership for the DB instance or cluster. Values include joined, pending-join, failed, and so on.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FQDN",
+                      "type": "string",
+                      "description": "The fully qualified domain name (FQDN) of the Active Directory Domain.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "IAMRoleName",
+                      "type": "string",
+                      "description": "The name of the IAM role used when making API calls to the Directory Service.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OU",
+                      "type": "string",
+                      "description": "The Active Directory organizational unit for the DB instance or cluster.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AuthSecretArn",
+                      "type": "string",
+                      "description": "The ARN for the Secrets Manager secret with the credentials for the user that's a member of the domain.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DnsIps",
+                      "type": "list",
+                      "description": "The IPv4 DNS IP addresses of the primary and secondary Active Directory domain controllers.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CopyTagsToSnapshot",
+              "type": "boolean",
+              "description": "Indicates whether tags are copied from the DB instance to snapshots of the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "MonitoringInterval",
+              "type": "integer",
+              "description": "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "EnhancedMonitoringResourceArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the Amazon CloudWatch Logs log stream that receives the Enhanced Monitoring metrics data for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "MonitoringRoleArn",
+              "type": "string",
+              "description": "The ARN for the IAM role that permits RDS to send Enhanced Monitoring metrics to Amazon CloudWatch Logs.",
+              "nested_items": []
+            },
+            {
+              "name": "PromotionTier",
+              "type": "integer",
+              "description": "The order of priority in which an Aurora Replica is promoted to the primary instance after a failure of the existing primary instance. For more information, see Fault Tolerance for an Aurora DB Cluster in the Amazon Aurora User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "DBInstanceArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "Timezone",
+              "type": "string",
+              "description": "The time zone of the DB instance. In most cases, the Timezone element is empty. Timezone content appears only for RDS for Db2 and RDS for SQL Server DB instances that were created with a time zone specified.",
+              "nested_items": []
+            },
+            {
+              "name": "IAMDatabaseAuthenticationEnabled",
+              "type": "boolean",
+              "description": "Indicates whether mapping of Amazon Web Services Identity and Access Management (IAM) accounts to database accounts is enabled for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DatabaseInsightsMode",
+              "type": "string",
+              "description": "The mode of Database Insights that is enabled for the instance.",
+              "nested_items": []
+            },
+            {
+              "name": "PerformanceInsightsEnabled",
+              "type": "boolean",
+              "description": "Indicates whether Performance Insights is enabled for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "PerformanceInsightsKMSKeyId",
+              "type": "string",
+              "description": "The Amazon Web Services KMS key identifier for encryption of Performance Insights data.",
+              "nested_items": []
+            },
+            {
+              "name": "PerformanceInsightsRetentionPeriod",
+              "type": "integer",
+              "description": "The number of days to retain Performance Insights data.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "7",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "3 months * 31",
+                  "description": "month * 31, where month is a number of months from 1-23. Examples: 93 (3 months * 31), 341 (11 months * 31), 589 (19 months * 31)",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "731",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "EnabledCloudwatchLogsExports",
+              "type": "list",
+              "description": "A list of log types that this DB instance is configured to export to CloudWatch Logs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ProcessorFeatures",
+              "type": "list",
+              "description": "The number of CPU cores and the number of threads per core for the DB instance class of the DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CreateDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ModifyDBInstance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RestoreDBInstanceFromDBSnapshot.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RestoreDBInstanceFromS3",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RestoreDBInstanceToPointInTime.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DeletionProtection",
+              "type": "boolean",
+              "description": "Indicates whether the DB instance has deletion protection enabled. The database can't be deleted when deletion protection is enabled. For more information, see Deleting a DB Instance.",
+              "nested_items": []
+            },
+            {
+              "name": "AssociatedRoles",
+              "type": "list",
+              "description": "The Amazon Web Services Identity and Access Management (IAM) roles associated with the DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "RoleArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the IAM role that is associated with the DB instance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FeatureName",
+                      "type": "string",
+                      "description": "The name of the feature associated with the Amazon Web Services Identity and Access Management (IAM) role. For information about supported feature names, see DBEngineVersion.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "Information about the state of association between the IAM role and the DB instance. The Status property returns one of the following values:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ACTIVE - the IAM role ARN is associated with the DB instance and can be used to access other Amazon Web Services services on your behalf.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "PENDING - the IAM role ARN is being associated with the DB instance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "INVALID - the IAM role ARN is associated with the DB instance, but the DB instance is unable to assume the IAM role in order to access other Amazon Web Services services on your behalf.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ListenerEndpoint",
+              "type": "dict",
+              "description": "The listener connection endpoint for SQL Server Always On.",
+              "nested_items": [
+                {
+                  "name": "Address",
+                  "type": "string",
+                  "description": "Specifies the DNS address of the DB instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Port",
+                  "type": "integer",
+                  "description": "Specifies the port that the database engine is listening on.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HostedZoneId",
+                  "type": "string",
+                  "description": "Specifies the ID that Amazon Route 53 assigns when you create a hosted zone.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MaxAllocatedStorage",
+              "type": "integer",
+              "description": "The upper limit in gibibytes (GiB) to which Amazon RDS can automatically scale the storage of the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "TagList",
+              "type": "list",
+              "description": "A list of tags.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with aws: or rds:. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098:', --\u0098/', --\u0098=', --\u0098+', --\u0098-', --\u0098@' (Java regex: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$').",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with aws: or rds:. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098:', --\u0098/', --\u0098=', --\u0098+', --\u0098-', --\u0098@' (Java regex: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$').",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DBInstanceAutomatedBackupsReplications",
+              "type": "list",
+              "description": "The list of replicated automated backups associated with the DB instance.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "DBInstanceAutomatedBackupsArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the replicated automated backups.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CustomerOwnedIpEnabled",
+              "type": "boolean",
+              "description": "Indicates whether a customer-owned IP address (CoIP) is enabled for an RDS on Outposts DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "AwsBackupRecoveryPointArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the recovery point in Amazon Web Services Backup.",
+              "nested_items": []
+            },
+            {
+              "name": "ActivityStreamStatus",
+              "type": "string",
+              "description": "The status of the database activity stream.",
+              "nested_items": []
+            },
+            {
+              "name": "ActivityStreamKmsKeyId",
+              "type": "string",
+              "description": "The Amazon Web Services KMS key identifier used for encrypting messages in the database activity stream. The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "ActivityStreamKinesisStreamName",
+              "type": "string",
+              "description": "The name of the Amazon Kinesis data stream used for the database activity stream.",
+              "nested_items": []
+            },
+            {
+              "name": "ActivityStreamMode",
+              "type": "string",
+              "description": "The mode of the database activity stream. Database events such as a change or access generate an activity stream event. RDS for Oracle always handles these events asynchronously.",
+              "nested_items": []
+            },
+            {
+              "name": "ActivityStreamEngineNativeAuditFieldsIncluded",
+              "type": "boolean",
+              "description": "Indicates whether engine-native audit fields are included in the database activity stream.",
+              "nested_items": []
+            },
+            {
+              "name": "AutomationMode",
+              "type": "string",
+              "description": "The automation mode of the RDS Custom DB instance: full or all paused. If full, the DB instance automates monitoring and instance recovery. If all paused, the instance pauses automation for the duration set by --resume-full-automation-mode-minutes.",
+              "nested_items": []
+            },
+            {
+              "name": "ResumeFullAutomationModeTime",
+              "type": "datetime",
+              "description": "The number of minutes to pause the automation. When the time period ends, RDS Custom resumes full automation. The minimum value is 60 (default). The maximum value is 1,440.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomIamInstanceProfile",
+              "type": "string",
+              "description": "The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance. The instance profile must meet the following requirements:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "The profile must exist in your account.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "The profile must have an IAM role that Amazon EC2 has permissions to assume.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "The instance profile name and the associated IAM role name must start with the prefix AWSRDSCustom.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "BackupTarget",
+              "type": "string",
+              "description": "The location where automated backups and manual snapshots are stored: Dedicated Local Zones, Amazon Web Services Outposts or the Amazon Web Services Region.",
+              "nested_items": []
+            },
+            {
+              "name": "NetworkType",
+              "type": "string",
+              "description": "The network type of the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "ActivityStreamPolicyStatus",
+              "type": "string",
+              "description": "The status of the policy state of the activity stream.",
+              "nested_items": []
+            },
+            {
+              "name": "StorageThroughput",
+              "type": "integer",
+              "description": "The storage throughput for the DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "DBSystemId",
+              "type": "string",
+              "description": "The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle SID is also the name of the CDB. This setting is only valid for RDS Custom DB instances.",
+              "nested_items": []
+            },
+            {
+              "name": "MasterUserSecret",
+              "type": "dict",
+              "description": "The secret managed by RDS in Amazon Web Services Secrets Manager for the master user password.",
+              "nested_items": [
+                {
+                  "name": "SecretArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the secret.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SecretStatus",
+                  "type": "string",
+                  "description": "The status of the secret.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "creating - The secret is being created.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "active - The secret is available for normal use and rotation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "rotating - The secret is being rotated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "impaired - The secret can be used to access database credentials, but it can't be rotated. A secret might have this status if, for example, permissions are changed so that RDS can no longer access either the secret or the KMS key for the secret. When a secret has this status, you can correct the condition that caused the status. Alternatively, modify the DB instance to turn off automatic management of database credentials, and then modify the DB instance again to turn on automatic management of database credentials.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "KmsKeyId",
+                  "type": "string",
+                  "description": "The Amazon Web Services KMS key identifier that is used to encrypt the secret.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "CertificateDetails",
+              "type": "dict",
+              "description": "The details of the DB instance's server certificate.",
+              "nested_items": [
+                {
+                  "name": "CAIdentifier",
+                  "type": "string",
+                  "description": "The CA identifier of the CA certificate used for the DB instance's server certificate.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ValidTill",
+                  "type": "datetime",
+                  "description": "The expiration date of the DB instance's server certificate.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ReadReplicaSourceDBClusterIdentifier",
+              "type": "string",
+              "description": "The identifier of the source DB cluster if this DB instance is a read replica.",
+              "nested_items": []
+            },
+            {
+              "name": "PercentProgress",
+              "type": "string",
+              "description": "The progress of the storage optimization operation as a percentage.",
+              "nested_items": []
+            },
+            {
+              "name": "DedicatedLogVolume",
+              "type": "boolean",
+              "description": "Indicates whether the DB instance has a dedicated log volume (DLV) enabled.",
+              "nested_items": []
+            },
+            {
+              "name": "IsStorageConfigUpgradeAvailable",
+              "type": "boolean",
+              "description": "Indicates whether an upgrade is recommended for the storage file system configuration on the DB instance. To migrate to the preferred configuration, you can either create a blue/green deployment, or create a read replica from the DB instance. For more information, see Upgrading the storage file system for a DB instance.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiTenant",
+              "type": "boolean",
+              "description": "Specifies whether the DB instance is in the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE).",
+              "nested_items": []
+            },
+            {
+              "name": "EngineLifecycleSupport",
+              "type": "string",
+              "description": "The lifecycle type for the DB instance.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "method_name": "list_protection_groups",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/shield/client/list_protection_groups.html",
+  "description": "Retrieves  ProtectionGroup objects for the account. You can retrieve all protection groups or you can provide filtering criteria and retrieve just the subset of protection groups that match the criteria.",
+  "parameters": [
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "When you request a list of objects from Shield Advanced, if the response does not include all of the remaining available objects, Shield Advanced includes a NextToken value in the response. You can retrieve the next batch of objects by requesting the list again and providing the token that was returned by the prior call in your request. You can indicate the maximum number of objects that you want Shield Advanced to return for a single call with the MaxResults setting. Shield Advanced will not return more than MaxResults objects, but may return fewer, even if more objects are still available. Whenever more objects remain that Shield Advanced has not yet returned to you, the response will include a NextToken value. On your first call to a list operation, leave this setting empty.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "The greatest number of objects that you want Shield Advanced to return to the list request. Shield Advanced might return fewer objects than you indicate in this setting, even if more objects are available. If there are more objects remaining, Shield Advanced will always also return a NextToken value in the response. The default setting is 20.",
+      "nested_params": []
+    },
+    {
+      "name": "InclusionFilters",
+      "type": "dict",
+      "required": false,
+      "description": "Narrows the set of protection groups that the call retrieves. You can retrieve a single protection group by its name and you can retrieve all protection groups that are configured with specific pattern or aggregation settings. You can provide up to one criteria per filter type. Shield Advanced returns the protection groups that exactly match all of the search criteria that you provide. ProtectionGroupIds (list) --- The ID of the protection group that you want to retrieve. (string) --- Patterns (list) --- The pattern specification of the protection groups that you want to retrieve. (string) --- ResourceTypes (list) --- The resource type configuration of the protection groups that you want to retrieve. In the protection group configuration, you specify the resource type when you set the group's Pattern to BY_RESOURCE_TYPE. (string) --- Aggregations (list) --- The aggregation setting of the protection groups that you want to retrieve. (string) ---",
+      "nested_params": [
+        {
+          "name": "ProtectionGroupIds",
+          "type": "list",
+          "required": false,
+          "description": "The ID of the protection group that you want to retrieve.",
+          "nested_params": []
+        },
+        {
+          "name": "Patterns",
+          "type": "list",
+          "required": false,
+          "description": "The pattern specification of the protection groups that you want to retrieve.",
+          "nested_params": []
+        },
+        {
+          "name": "ResourceTypes",
+          "type": "list",
+          "required": false,
+          "description": "The resource type configuration of the protection groups that you want to retrieve. In the protection group configuration, you specify the resource type when you set the group's Pattern to BY_RESOURCE_TYPE.",
+          "nested_params": []
+        },
+        {
+          "name": "Aggregations",
+          "type": "list",
+          "required": false,
+          "description": "The aggregation setting of the protection groups that you want to retrieve.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ProtectionGroups",
+          "type": "list",
+          "description": "(dict) ---",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ProtectionGroupId",
+                  "type": "string",
+                  "description": "The name of the protection group. You use this to identify the protection group in lists and to manage the protection group, for example to update, delete, or describe it.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Aggregation",
+                  "type": "string",
+                  "description": "Defines how Shield combines resource data for the group in order to detect, mitigate, and report events.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Sum - Use the total traffic across the group. This is a good choice for most cases. Examples include Elastic IP addresses for EC2 instances that scale manually or automatically.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Mean - Use the average of the traffic across the group. This is a good choice for resources that share traffic uniformly. Examples include accelerators and load balancers.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Max - Use the highest traffic from each resource. This is useful for resources that don't share traffic and for resources that share that traffic in a non-uniform way. Examples include Amazon CloudFront distributions and origin resources for CloudFront distributions.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Pattern",
+                  "type": "string",
+                  "description": "The criteria to use to choose the protected resources for inclusion in the group. You can include all resources that have protections, provide a list of resource ARNs (Amazon Resource Names), or include all resources of a specified resource type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ResourceType",
+                  "type": "string",
+                  "description": "The resource type to include in the protection group. All protected resources of this type are included in the protection group. You must set this when you set Pattern to BY_RESOURCE_TYPE and you must not set it for any other Pattern setting.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Members",
+                  "type": "list",
+                  "description": "The ARNs (Amazon Resource Names) of the resources to include in the protection group. You must set this when you set Pattern to ARBITRARY and you must not set it for any other Pattern setting.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ProtectionGroupArn",
+                  "type": "string",
+                  "description": "The ARN (Amazon Resource Name) of the protection group.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "When you request a list of objects from Shield Advanced, if the response does not include all of the remaining available objects, Shield Advanced includes a NextToken value in the response. You can retrieve the next batch of objects by requesting the list again and providing the token that was returned by the prior call in your request.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

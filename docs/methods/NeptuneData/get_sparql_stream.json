@@ -1,0 +1,154 @@
+{
+  "method_name": "get_sparql_stream",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/neptunedata/client/get_sparql_stream.html",
+  "description": "Gets a stream for an RDF graph. With the Neptune Streams feature, you can generate a complete sequence of change-log entries that record every change made to your graph data as it happens. GetSparqlStream lets you collect these change-log entries for an RDF graph. The Neptune streams feature needs to be enabled on your Neptune DBcluster. To enable streams, set the neptune_streams DB cluster parameter to 1. See Capturing graph changes in real time using Neptune streams. When invoking this operation in a Neptune cluster that has IAM authentication enabled, the IAM user or role making the request must have a policy attached that allows the neptune-db:GetStreamRecords IAM action in that cluster. Note that the neptune-db:QueryLanguage:Sparql IAM condition key can be used in the policy document to restrict the use of SPARQL queries (see Condition keys available in Neptune IAM data-access policy statements).",
+  "parameters": [
+    {
+      "name": "limit",
+      "type": "integer",
+      "required": false,
+      "description": "Specifies the maximum number of records to return. There is also a size limit of 10 MB on the response that can't be modified and that takes precedence over the number of records specified in the limit parameter. The response does include a threshold-breaching record if the 10 MB limit was reached. The range for limit is 1 to 100,000, with a default of 10.",
+      "nested_params": []
+    },
+    {
+      "name": "iteratorType",
+      "type": "string",
+      "required": false,
+      "description": "Can be one of: AT_SEQUENCE_NUMBER \u00c2\u00a0 --- Indicates that reading should start from the event sequence number specified jointly by the commitNum and opNum parameters. AFTER_SEQUENCE_NUMBER \u00c2\u00a0 --- Indicates that reading should start right after the event sequence number specified jointly by the commitNum and opNum parameters. TRIM_HORIZON \u00c2\u00a0 --- Indicates that reading should start at the last untrimmed record in the system, which is the oldest unexpired (not yet deleted) record in the change-log stream. LATEST \u00c2\u00a0 --- Indicates that reading should start at the most recent record in the system, which is the latest unexpired (not yet deleted) record in the change-log stream.",
+      "nested_params": []
+    },
+    {
+      "name": "commitNum",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "opNum",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "encoding",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "lastEventId",
+          "type": "dict",
+          "description": "Sequence identifier of the last change in the stream response.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "lastTrxTimestampInMillis",
+          "type": "integer",
+          "description": "The time at which the commit for the transaction was requested, in milliseconds from the Unix epoch.",
+          "nested_items": []
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "description": "Serialization format for the change records being returned. Currently, the only supported value is NQUADS.",
+          "nested_items": []
+        },
+        {
+          "name": "records",
+          "type": "list",
+          "description": "An array of serialized change-log stream records included in the response.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "commitTimestampInMillis",
+                  "type": "integer",
+                  "description": "The time at which the commit for the transaction was requested, in milliseconds from the Unix epoch.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "stmt",
+                      "type": "string",
+                      "description": "Holds an N-QUADS statement expressing the changed quad.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "op",
+                  "type": "string",
+                  "description": "The operation that created the change.",
+                  "nested_items": []
+                },
+                {
+                  "name": "isLastOp",
+                  "type": "boolean",
+                  "description": "Only present if this operation is the last one in its transaction. If present, it is set to true. It is useful for ensuring that an entire transaction is consumed.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "totalRecords",
+          "type": "integer",
+          "description": "The total number of records in the response.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

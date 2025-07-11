@@ -1,0 +1,198 @@
+{
+  "method_name": "describe_safety_rule",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53-recovery-control-config/client/describe_safety_rule.html",
+  "description": "Returns information about a safety rule.",
+  "parameters": [
+    {
+      "name": "SafetyRuleArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the safety rule.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AssertionRule",
+          "type": "dict",
+          "description": "The assertion rule in the response.",
+          "nested_items": [
+            {
+              "name": "AssertedControls",
+              "type": "list",
+              "description": "The routing controls that are part of transactions that are evaluated to determine if a request to change a routing control state is allowed. For example, you might include three routing controls, one for each of three Amazon Web Services Regions.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ControlPanelArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the control panel.",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "Name of the assertion rule. You can use any non-white space character in the name.",
+              "nested_items": []
+            },
+            {
+              "name": "RuleConfig",
+              "type": "dict",
+              "description": "The criteria that you set for specific assertion routing controls (AssertedControls) that designate how many routing control states must be ON as the result of a transaction. For example, if you have three assertion routing controls, you might specify ATLEAST 2 for your rule configuration. This means that at least two assertion routing control states must be ON, so that at least two Amazon Web Services Regions have traffic flowing to them.",
+              "nested_items": [
+                {
+                  "name": "Inverted",
+                  "type": "boolean",
+                  "description": "Logical negation of the rule. If the rule would usually evaluate true, it's evaluated as false, and vice versa.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Threshold",
+                  "type": "integer",
+                  "description": "The value of N, when you specify an ATLEAST rule type. That is, Threshold is the number of controls that must be set when you specify an ATLEAST type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "A rule can be one of the following: ATLEAST, AND, or OR.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SafetyRuleArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the assertion rule.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The deployment status of an assertion rule. Status can be one of the following: PENDING, DEPLOYED, PENDING_DELETION.",
+              "nested_items": []
+            },
+            {
+              "name": "WaitPeriodMs",
+              "type": "integer",
+              "description": "An evaluation period, in milliseconds (ms), during which any request against the target routing controls will fail. This helps prevent 'flapping' of state. The wait period is 5000 ms by default, but you can choose a custom value.",
+              "nested_items": []
+            },
+            {
+              "name": "Owner",
+              "type": "string",
+              "description": "The Amazon Web Services account ID of the assertion rule owner.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "GatingRule",
+          "type": "dict",
+          "description": "The gating rule in the response.",
+          "nested_items": [
+            {
+              "name": "ControlPanelArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the control panel.",
+              "nested_items": []
+            },
+            {
+              "name": "GatingControls",
+              "type": "list",
+              "description": "An array of gating routing control Amazon Resource Names (ARNs). For a simple 'on/off' switch, specify the ARN for one routing control. The gating routing controls are evaluated by the rule configuration that you specify to determine if the target routing control states can be changed.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "The name for the gating rule. You can use any non-white space character in the name.",
+              "nested_items": []
+            },
+            {
+              "name": "RuleConfig",
+              "type": "dict",
+              "description": "The criteria that you set for gating routing controls that designate how many of the routing control states must be ON to allow you to update target routing control states.",
+              "nested_items": [
+                {
+                  "name": "Inverted",
+                  "type": "boolean",
+                  "description": "Logical negation of the rule. If the rule would usually evaluate true, it's evaluated as false, and vice versa.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Threshold",
+                  "type": "integer",
+                  "description": "The value of N, when you specify an ATLEAST rule type. That is, Threshold is the number of controls that must be set when you specify an ATLEAST type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "A rule can be one of the following: ATLEAST, AND, or OR.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SafetyRuleArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the gating rule.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The deployment status of a gating rule. Status can be one of the following: PENDING, DEPLOYED, PENDING_DELETION.",
+              "nested_items": []
+            },
+            {
+              "name": "TargetControls",
+              "type": "list",
+              "description": "An array of target routing control Amazon Resource Names (ARNs) for which the states can only be updated if the rule configuration that you specify evaluates to true for the gating routing control. As a simple example, if you have a single gating control, it acts as an overall 'on/off' switch for a set of target routing controls. You can use this to manually override automated failover, for example.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "WaitPeriodMs",
+              "type": "integer",
+              "description": "An evaluation period, in milliseconds (ms), during which any request against the target routing controls will fail. This helps prevent 'flapping' of state. The wait period is 5000 ms by default, but you can choose a custom value.",
+              "nested_items": []
+            },
+            {
+              "name": "Owner",
+              "type": "string",
+              "description": "The Amazon Web Services account ID of the gating rule owner.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

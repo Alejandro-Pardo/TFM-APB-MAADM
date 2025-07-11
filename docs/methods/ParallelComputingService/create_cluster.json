@@ -1,0 +1,537 @@
+{
+  "method_name": "create_cluster",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/pcs/client/create_cluster.html",
+  "description": "Creates a cluster in your account. Amazon Web Services PCS creates the cluster controller in a service-owned account. The cluster controller communicates with the cluster resources in your account. The subnets and security groups for the cluster must already exist before you use this API action.",
+  "parameters": [
+    {
+      "name": "clusterName",
+      "type": "string",
+      "required": true,
+      "description": "A name to identify the cluster. Example: MyCluster.",
+      "nested_params": []
+    },
+    {
+      "name": "scheduler",
+      "type": "dict",
+      "required": true,
+      "description": "The cluster management and job scheduling software associated with the cluster. The software Amazon Web Services PCS uses to manage cluster scaling and job scheduling. The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see Slurm versions in Amazon Web Services PCS in the Amazon Web Services PCS User Guide. Valid Values: 23.11 | 24.05 | 24.11",
+      "nested_params": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "The software Amazon Web Services PCS uses to manage cluster scaling and job scheduling.",
+          "nested_params": []
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "required": false,
+          "description": "The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see Slurm versions in Amazon Web Services PCS in the Amazon Web Services PCS User Guide. Valid Values: 23.11 | 24.05 | 24.11",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "required": true,
+      "description": "A value that determines the maximum number of compute nodes in the cluster and the maximum number of jobs (active and queued). SMALL: 32 compute nodes and 256 jobs MEDIUM: 512 compute nodes and 8192 jobs LARGE: 2048 compute nodes and 16,384 jobs.",
+      "nested_params": []
+    },
+    {
+      "name": "networking",
+      "type": "dict",
+      "required": true,
+      "description": "The networking configuration used to set up the cluster's control plane. subnetIds (list) --- The list of subnet IDs where Amazon Web Services PCS creates an Elastic Network Interface (ENI) to enable communication between managed controllers and Amazon Web Services PCS resources. Subnet IDs have the form subnet-0123456789abcdef0. Subnets can't be in Outposts, Wavelength or an Amazon Web Services Local Zone. (string) --- securityGroupIds (list) --- A list of security group IDs associated with the Elastic Network Interface (ENI) created in subnets. (string) ---",
+      "nested_params": [
+        {
+          "name": "subnetIds",
+          "type": "list",
+          "required": false,
+          "description": "The list of subnet IDs where Amazon Web Services PCS creates an Elastic Network Interface (ENI) to enable communication between managed controllers and Amazon Web Services PCS resources. Subnet IDs have the form subnet-0123456789abcdef0. Subnets can't be in Outposts, Wavelength or an Amazon Web Services Local Zone.",
+          "nested_params": []
+        },
+        {
+          "name": "securityGroupIds",
+          "type": "list",
+          "required": false,
+          "description": "A list of security group IDs associated with the Elastic Network Interface (ENI) created in subnets.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "slurmConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Additional options related to the Slurm scheduler. scaleDownIdleTimeInSeconds (integer) --- The time (in seconds) before an idle node is scaled down. Default: 600 slurmCustomSettings (list) --- Additional Slurm-specific configuration that directly maps to Slurm settings. (dict) --- Additional settings that directly map to Slurm settings. Amazon Web Services PCS supports configuration of the following Slurm parameters: For clusters Prolog Epilog SelectTypeParameters For compute node groups Weight RealMemory The values for the configured Slurm settings. accounting (dict) --- The accounting configuration includes configurable settings for Slurm accounting. The default value for mode is STANDARD. A value of STANDARD means Slurm accounting is enabled. defaultPurgeTimeInDays (integer) --- The default value for all purge settings for slurmdbd.conf. For more information, see the slurmdbd.conf documentation at SchedMD. The default value for defaultPurgeTimeInDays is -1. A value of -1 means there is no purge time and records persist as long as the cluster exists.",
+      "nested_params": [
+        {
+          "name": "scaleDownIdleTimeInSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The time (in seconds) before an idle node is scaled down. Default: 600",
+          "nested_params": []
+        },
+        {
+          "name": "slurmCustomSettings",
+          "type": "list",
+          "required": false,
+          "description": "Additional Slurm-specific configuration that directly maps to Slurm settings.",
+          "nested_params": [
+            {
+              "name": "parameterName",
+              "type": "string",
+              "required": false,
+              "description": "Amazon Web Services PCS supports configuration of the following Slurm parameters:",
+              "nested_params": [
+                {
+                  "name": "clusters",
+                  "type": "",
+                  "required": false,
+                  "description": "Prolog Epilog SelectTypeParameters.",
+                  "nested_params": []
+                },
+                {
+                  "name": "compute node groups",
+                  "type": "",
+                  "required": false,
+                  "description": "Weight RealMemory.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "parameterValue",
+              "type": "string",
+              "required": false,
+              "description": "The values for the configured Slurm settings.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "accounting",
+          "type": "dict",
+          "required": false,
+          "description": "The accounting configuration includes configurable settings for Slurm accounting.",
+          "nested_params": [
+            {
+              "name": "mode",
+              "type": "string",
+              "required": false,
+              "description": "The default value for mode is STANDARD. A value of STANDARD means Slurm accounting is enabled.",
+              "nested_params": []
+            },
+            {
+              "name": "defaultPurgeTimeInDays",
+              "type": "integer",
+              "required": false,
+              "description": "The default value for all purge settings for slurmdbd.conf. For more information, see the slurmdbd.conf documentation at SchedMD. The default value for defaultPurgeTimeInDays is -1. A value of -1 means there is no purge time and records persist as long as the cluster exists.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "1 or more tags added to the resource. Each tag consists of a tag key and tag value. The tag value is optional and can be an empty string. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name that identifies the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "id",
+              "type": "string",
+              "description": "The generated unique ID of the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "arn",
+              "type": "string",
+              "description": "The unique Amazon Resource Name (ARN) of the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The provisioning status of the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "createdAt",
+              "type": "datetime",
+              "description": "The date and time the resource was created.",
+              "nested_items": []
+            },
+            {
+              "name": "modifiedAt",
+              "type": "datetime",
+              "description": "The date and time the resource was modified.",
+              "nested_items": []
+            },
+            {
+              "name": "scheduler",
+              "type": "dict",
+              "description": "The cluster management and job scheduling software associated with the cluster.",
+              "nested_items": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The software Amazon Web Services PCS uses to manage cluster scaling and job scheduling.",
+                  "nested_items": []
+                },
+                {
+                  "name": "version",
+                  "type": "string",
+                  "description": "The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see Slurm versions in Amazon Web Services PCS in the Amazon Web Services PCS User Guide.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "size",
+              "type": "string",
+              "description": "The size of the cluster.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SMALL: 32 compute nodes and 256 jobs.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "MEDIUM: 512 compute nodes and 8192 jobs.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "LARGE: 2048 compute nodes and 16,384 jobs.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "slurmConfiguration",
+              "type": "dict",
+              "description": "Additional options related to the Slurm scheduler.",
+              "nested_items": [
+                {
+                  "name": "scaleDownIdleTimeInSeconds",
+                  "type": "integer",
+                  "description": "The time (in seconds) before an idle node is scaled down.",
+                  "nested_items": []
+                },
+                {
+                  "name": "slurmCustomSettings",
+                  "type": "list",
+                  "description": "Additional Slurm-specific configuration that directly maps to Slurm settings.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "parameterName",
+                          "type": "string",
+                          "description": "Amazon Web Services PCS supports configuration of the following Slurm parameters:",
+                          "nested_items": [
+                            {
+                              "name": "clusters",
+                              "type": "",
+                              "description": "Prolog.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Prolog.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Epilog.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "SelectTypeParameters.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "compute node groups",
+                              "type": "",
+                              "description": "Weight.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Weight.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "RealMemory.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "parameterValue",
+                          "type": "string",
+                          "description": "The values for the configured Slurm settings.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "secretArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the the shared Slurm key.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "secretVersion",
+                      "type": "string",
+                      "description": "The version of the shared Slurm key.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "accounting",
+                  "type": "dict",
+                  "description": "The accounting configuration includes configurable settings for Slurm accounting.",
+                  "nested_items": [
+                    {
+                      "name": "mode",
+                      "type": "string",
+                      "description": "The default value for mode is STANDARD. A value of STANDARD means Slurm accounting is enabled.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "defaultPurgeTimeInDays",
+                      "type": "integer",
+                      "description": "The default value for all purge settings for slurmdbd.conf. For more information, see the slurmdbd.conf documentation at SchedMD.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "networking",
+              "type": "dict",
+              "description": "The networking configuration for the cluster's control plane.",
+              "nested_items": [
+                {
+                  "name": "subnetIds",
+                  "type": "list",
+                  "description": "The ID of the subnet where Amazon Web Services PCS creates an Elastic Network Interface (ENI) to enable communication between managed controllers and Amazon Web Services PCS resources. The subnet must have an available IP address, cannot reside in AWS Outposts, AWS Wavelength, or an AWS Local Zone.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "securityGroupIds",
+                  "type": "list",
+                  "description": "The list of security group IDs associated with the Elastic Network Interface (ENI) created in subnets.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Inbound rule 1",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Protocol: All.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Ports: All.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Source: Self.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "IPv4",
+                      "description": "Outbound rule 1",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Protocol: All.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Ports: All.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "IPv4",
+                          "description": "Destination: 0.0.0.0/0 (IPv4)",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Outbound rule 2",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Protocol: All.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Ports: All.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Destination: Self.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "endpoints",
+              "type": "list",
+              "description": "The list of endpoints available for interaction with the scheduler.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "Indicates the type of endpoint running at the specific IP address.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "privateIpAddress",
+                      "type": "string",
+                      "description": "The endpoint's private IP address.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "publicIpAddress",
+                      "type": "string",
+                      "description": "The endpoint's public IP address.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "port",
+                      "type": "string",
+                      "description": "The endpoint's connection port number.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "errorInfo",
+              "type": "list",
+              "description": "The list of errors that occurred during cluster provisioning.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "code",
+                      "type": "string",
+                      "description": "The short-form error code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "message",
+                      "type": "string",
+                      "description": "The detailed error information.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

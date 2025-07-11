@@ -1,0 +1,248 @@
+{
+  "method_name": "create_inference_experiment",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker/client/create_inference_experiment.html",
+  "description": "Creates an inference experiment using the configurations specified in the request. Use this API to setup and schedule an experiment to compare model variants on a Amazon SageMaker inference endpoint. For more information about inference experiments, see Shadow tests. Amazon SageMaker begins your experiment at the scheduled time and routes traffic to your endpoint's model variants based on your specified configuration. While the experiment is in progress or after it has concluded, you can view metrics that compare your model variants. For more information, see View, monitor, and edit shadow tests.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name for the inference experiment.",
+      "nested_params": []
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "required": true,
+      "description": "The type of the inference experiment that you want to run. The following types of experiments are possible: ShadowMode: You can use this type to validate a shadow variant. For more information, see Shadow tests.",
+      "nested_params": []
+    },
+    {
+      "name": "Schedule",
+      "type": "dict",
+      "required": false,
+      "description": "The duration for which you want the inference experiment to run. If you don't specify this field, the experiment automatically starts immediately upon creation and concludes after 7 days. StartTime (datetime) --- The timestamp at which the inference experiment started or will start. EndTime (datetime) --- The timestamp at which the inference experiment ended or will end.",
+      "nested_params": [
+        {
+          "name": "StartTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The timestamp at which the inference experiment started or will start.",
+          "nested_params": []
+        },
+        {
+          "name": "EndTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The timestamp at which the inference experiment ended or will end.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the IAM role that Amazon SageMaker can assume to access model artifacts and container images, and manage Amazon SageMaker Inference endpoints for model deployment.",
+      "nested_params": []
+    },
+    {
+      "name": "EndpointName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Amazon SageMaker endpoint on which you want to run the inference experiment.",
+      "nested_params": []
+    },
+    {
+      "name": "ModelVariants",
+      "type": "list",
+      "required": true,
+      "description": "An array of ModelVariantConfig objects. There is one for each variant in the inference experiment. Each ModelVariantConfig object in the array describes the infrastructure configuration for the corresponding variant. (dict) --- Contains information about the deployment options of a model. The name of the Amazon SageMaker Model entity. The name of the variant. The configuration for the infrastructure that the model will be deployed to. The inference option to which to deploy your model. Possible values are the following: RealTime: Deploy to real-time inference. The infrastructure configuration for deploying the model to real-time inference. The instance type the model is deployed to. The number of instances of the type specified by InstanceType.",
+      "nested_params": [
+        {
+          "name": "ModelName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the Amazon SageMaker Model entity.",
+          "nested_params": []
+        },
+        {
+          "name": "VariantName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the variant.",
+          "nested_params": []
+        },
+        {
+          "name": "InfrastructureConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration for the infrastructure that the model will be deployed to.",
+          "nested_params": [
+            {
+              "name": "InfrastructureType",
+              "type": "string",
+              "required": false,
+              "description": "The inference option to which to deploy your model. Possible values are the following:",
+              "nested_params": []
+            },
+            {
+              "name": "RealTimeInferenceConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The infrastructure configuration for deploying the model to real-time inference.",
+              "nested_params": [
+                {
+                  "name": "InstanceType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The instance type the model is deployed to.",
+                  "nested_params": []
+                },
+                {
+                  "name": "InstanceCount",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of instances of the type specified by InstanceType.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DataStorageConfig",
+      "type": "dict",
+      "required": true,
+      "description": "The Amazon S3 location and configuration for storing inference request and response data. This is an optional parameter that you can use for data capture. For more information, see Capture data. The Amazon S3 bucket where the inference request and response data is stored. KmsKey (string) --- The Amazon Web Services Key Management Service key that Amazon SageMaker uses to encrypt captured data at rest using Amazon S3 server-side encryption. ContentType (dict) --- Configuration specifying how to treat different headers. If no headers are specified Amazon SageMaker AI will by default base64 encode when capturing the data. CsvContentTypes (list) --- The list of all content type headers that Amazon SageMaker AI will treat as CSV and capture accordingly. (string) --- JsonContentTypes (list) --- The list of all content type headers that SageMaker AI will treat as JSON and capture accordingly. (string) ---",
+      "nested_params": [
+        {
+          "name": "Destination",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon S3 bucket where the inference request and response data is stored.",
+          "nested_params": []
+        },
+        {
+          "name": "KmsKey",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Web Services Key Management Service key that Amazon SageMaker uses to encrypt captured data at rest using Amazon S3 server-side encryption.",
+          "nested_params": []
+        },
+        {
+          "name": "ContentType",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration specifying how to treat different headers. If no headers are specified Amazon SageMaker AI will by default base64 encode when capturing the data.",
+          "nested_params": [
+            {
+              "name": "CsvContentTypes",
+              "type": "list",
+              "required": false,
+              "description": "The list of all content type headers that Amazon SageMaker AI will treat as CSV and capture accordingly.",
+              "nested_params": []
+            },
+            {
+              "name": "JsonContentTypes",
+              "type": "list",
+              "required": false,
+              "description": "The list of all content type headers that SageMaker AI will treat as JSON and capture accordingly.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ShadowModeConfig",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration of ShadowMode inference experiment type. Use this field to specify a production variant which takes all the inference requests, and a shadow variant to which Amazon SageMaker replicates a percentage of the inference requests. For the shadow variant also specify the percentage of requests that Amazon SageMaker replicates. The name of the production variant, which takes all the inference requests. List of shadow variant configurations. (dict) --- The name and sampling percentage of a shadow variant. The name of the shadow variant. The percentage of inference requests that Amazon SageMaker replicates from the production variant to the shadow variant.",
+      "nested_params": [
+        {
+          "name": "SourceModelVariantName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the production variant, which takes all the inference requests.",
+          "nested_params": []
+        },
+        {
+          "name": "ShadowModelVariants",
+          "type": "list",
+          "required": false,
+          "description": "List of shadow variant configurations.",
+          "nested_params": [
+            {
+              "name": "ShadowModelVariantName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the shadow variant.",
+              "nested_params": []
+            },
+            {
+              "name": "SamplingPercentage",
+              "type": "integer",
+              "required": false,
+              "description": "The percentage of inference requests that Amazon SageMaker replicates from the production variant to the shadow variant.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KmsKey",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt data on the storage volume attached to the ML compute instance that hosts the endpoint. The KmsKey can be any of the following formats: KMS key ID \"1234abcd-12ab-34cd-56ef-1234567890ab\" Amazon Resource Name (ARN) of a KMS key \"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab\" KMS key Alias \"alias/ExampleAlias\" Amazon Resource Name (ARN) of a KMS key Alias \"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias\" If you use a KMS key ID or an alias of your KMS key, the Amazon SageMaker execution role must include permissions to call kms:Encrypt. If you don't provide a KMS key ID, Amazon SageMaker uses the default KMS key for Amazon S3 for your role's account. Amazon SageMaker uses server-side encryption with KMS managed keys for OutputDataConfig. If you use a bucket policy with an s3:PutObject permission that only allows objects with server-side encryption, set the condition key of s3:x-amz-server-side-encryption to \"aws:kms\". For more information, see KMS managed Encryption Keys in the Amazon Simple Storage Service Developer Guide. The KMS key policy must grant permission to the IAM role that you specify in your CreateEndpoint and UpdateEndpoint requests. For more information, see Using Key Policies in Amazon Web Services KMS in the Amazon Web Services Key Management Service Developer Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see Tagging your Amazon Web Services Resources. (dict) --- A tag object that consists of a key and an optional value, used to manage metadata for SageMaker Amazon Web Services resources. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints. For more information on adding tags to SageMaker resources, see AddTags. For more information on adding metadata to your Amazon Web Services resources with tagging, see Tagging Amazon Web Services resources. For advice on best practices for managing Amazon Web Services resources with tagging, see Tagging Best Practices: Implement an Effective Amazon Web Services Resource Tagging Strategy. The tag key. Tag keys must be unique per resource. The tag value.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The tag key. Tag keys must be unique per resource.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The tag value.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "InferenceExperimentArn",
+          "type": "string",
+          "description": "The ARN for your inference experiment.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

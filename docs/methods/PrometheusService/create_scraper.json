@@ -1,0 +1,179 @@
+{
+  "method_name": "create_scraper",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/amp/client/create_scraper.html",
+  "description": "The CreateScraper operation creates a scraper to collect metrics. A scraper pulls metrics from Prometheus-compatible sources within an Amazon EKS cluster, and sends them to your Amazon Managed Service for Prometheus workspace. Scrapers are flexible, and can be configured to control what metrics are collected, the frequency of collection, what transformations are applied to the metrics, and more. An IAM role will be created for you that Amazon Managed Service for Prometheus uses to access the metrics in your cluster. You must configure this role with a policy that allows it to scrape metrics from your cluster. For more information, see Configuring your Amazon EKS cluster in the Amazon Managed Service for Prometheus User Guide. The scrapeConfiguration parameter contains the base-64 encoded YAML configuration for the scraper. When creating a scraper, the service creates a Network Interface in each Availability Zone that are passed into CreateScraper through subnets. These network interfaces are used to connect to the Amazon EKS cluster within the VPC for scraping metrics.",
+  "parameters": [
+    {
+      "name": "alias",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "destination",
+      "type": "dict",
+      "required": true,
+      "description": "The Amazon Managed Service for Prometheus workspace to send metrics to. ampConfiguration (dict) --- The Amazon Managed Service for Prometheus workspace to send metrics to. ARN of the Amazon Managed Service for Prometheus workspace.",
+      "nested_params": [
+        {
+          "name": "ampConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon Managed Service for Prometheus workspace to send metrics to.",
+          "nested_params": [
+            {
+              "name": "workspaceArn",
+              "type": "string",
+              "required": false,
+              "description": "ARN of the Amazon Managed Service for Prometheus workspace.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roleConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "Use this structure to enable cross-account access, so that you can use a target account to access Prometheus metrics from source accounts. sourceRoleArn (string) --- The Amazon Resource Name (ARN) of the role used in the source account to enable cross-account scraping. For information about the contents of this policy, see Cross-account setup. targetRoleArn (string) --- The Amazon Resource Name (ARN) of the role used in the target account to enable cross-account scraping. For information about the contents of this policy, see Cross-account setup.",
+      "nested_params": [
+        {
+          "name": "sourceRoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the role used in the source account to enable cross-account scraping. For information about the contents of this policy, see Cross-account setup.",
+          "nested_params": []
+        },
+        {
+          "name": "targetRoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the role used in the target account to enable cross-account scraping. For information about the contents of this policy, see Cross-account setup.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "scrapeConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration file to use in the new scraper. For more information, see Scraper configuration in the Amazon Managed Service for Prometheus User Guide. configurationBlob (bytes) --- The base 64 encoded scrape configuration file.",
+      "nested_params": [
+        {
+          "name": "configurationBlob",
+          "type": "bytes",
+          "required": false,
+          "description": "The base 64 encoded scrape configuration file.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "source",
+      "type": "dict",
+      "required": true,
+      "description": "The Amazon EKS cluster from which the scraper will collect metrics. eksConfiguration (dict) --- The Amazon EKS cluster from which a scraper collects metrics. ARN of the Amazon EKS cluster. securityGroupIds (list) --- A list of the security group IDs for the Amazon EKS cluster VPC configuration. (string) --- ID of a VPC security group. A list of subnet IDs for the Amazon EKS cluster VPC configuration. (string) --- ID of a VPC subnet.",
+      "nested_params": [
+        {
+          "name": "eksConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon EKS cluster from which a scraper collects metrics.",
+          "nested_params": [
+            {
+              "name": "clusterArn",
+              "type": "string",
+              "required": false,
+              "description": "ARN of the Amazon EKS cluster.",
+              "nested_params": []
+            },
+            {
+              "name": "securityGroupIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of the security group IDs for the Amazon EKS cluster VPC configuration.",
+              "nested_params": []
+            },
+            {
+              "name": "subnetIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of subnet IDs for the Amazon EKS cluster VPC configuration.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "(Optional) The list of tag keys and values to associate with the scraper. (string) --- The key of the tag. Must not begin with aws:. (string) --- The value of the tag.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the new scraper.",
+          "nested_items": []
+        },
+        {
+          "name": "scraperId",
+          "type": "string",
+          "description": "The ID of the new scraper.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "statusCode",
+              "type": "string",
+              "description": "The current status of the scraper.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

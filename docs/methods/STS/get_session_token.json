@@ -1,0 +1,68 @@
+{
+  "method_name": "get_session_token",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/get_session_token.html",
+  "description": "Returns a set of temporary credentials for an Amazon Web Services account or IAM user. The credentials consist of an access key ID, a secret access key, and a security token. Typically, you use GetSessionToken if you want to use MFA to protect programmatic calls to specific Amazon Web Services API operations like Amazon EC2 StopInstances. MFA-enabled IAM users must call GetSessionToken and submit an MFA code that is associated with their MFA device. Using the temporary security credentials that the call returns, IAM users can then make programmatic calls to API operations that require MFA authentication. An incorrect MFA code causes the API to return an access denied error. For a comparison of GetSessionToken with the other API operations that produce temporary credentials, see Requesting Temporary Security Credentials and Compare STS credentials in the IAM User Guide. The GetSessionToken operation must be called by using the long-term Amazon Web Services security credentials of an IAM user. Credentials that are created by IAM users are valid for the duration that you specify. This duration can range from 900 seconds (15 minutes) up to a maximum of 129,600 seconds (36 hours), with a default of 43,200 seconds (12 hours). Credentials based on account credentials can range from 900 seconds (15 minutes) up to 3,600 seconds (1 hour), with a default of 1 hour. The temporary security credentials created by GetSessionToken can be used to make API calls to any Amazon Web Services service with the following exceptions: The credentials that GetSessionToken returns are based on permissions associated with the IAM user whose credentials were used to call the operation. The temporary credentials have the same permissions as the IAM user. For more information about using GetSessionToken to create temporary credentials, see Temporary Credentials for Users in Untrusted Environments in the IAM User Guide.",
+  "parameters": [
+    {
+      "name": "DurationSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SerialNumber",
+      "type": "string",
+      "required": false,
+      "description": "The identification number of the MFA device that is associated with the IAM user who is making the GetSessionToken call. Specify this value if the IAM user has a policy that requires MFA authentication. The value is either the serial number for a hardware device (such as GAHT12345678) or an Amazon Resource Name (ARN) for a virtual device (such as arn:aws:iam::123456789012:mfa/user). You can find the device for an IAM user by going to the Amazon Web Services Management Console and viewing the user's security credentials. The regex used to validate this parameter is a string of characters consisting of upper- and lower-case alphanumeric characters with no spaces. You can also include underscores or any of the following characters: =,.@:/-",
+      "nested_params": []
+    },
+    {
+      "name": "TokenCode",
+      "type": "string",
+      "required": false,
+      "description": "The value provided by the MFA device, if MFA is required. If any policy requires the IAM user to submit an MFA code, specify this value. If MFA authentication is required, the user must provide a code when requesting a set of temporary security credentials. A user who fails to provide the code receives an 'access denied' response when requesting resources that require MFA authentication. The format for this parameter, as described by its regex pattern, is a sequence of six numeric digits.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Credentials",
+          "type": "dict",
+          "description": "The temporary security credentials, which include an access key ID, a secret access key, and a security (or session) token.",
+          "nested_items": [
+            {
+              "name": "AccessKeyId",
+              "type": "string",
+              "description": "The access key ID that identifies the temporary security credentials.",
+              "nested_items": []
+            },
+            {
+              "name": "SecretAccessKey",
+              "type": "string",
+              "description": "The secret access key that can be used to sign requests.",
+              "nested_items": []
+            },
+            {
+              "name": "SessionToken",
+              "type": "string",
+              "description": "The token that users must pass to the service API to use the temporary credentials.",
+              "nested_items": []
+            },
+            {
+              "name": "Expiration",
+              "type": "datetime",
+              "description": "The date on which the current credentials expire.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

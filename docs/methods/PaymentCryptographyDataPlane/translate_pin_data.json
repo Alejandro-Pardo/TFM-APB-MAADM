@@ -1,0 +1,393 @@
+{
+  "method_name": "translate_pin_data",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/payment-cryptography-data/client/translate_pin_data.html",
+  "description": "Translates encrypted PIN block from and to ISO 9564 formats 0,1,3,4. For more information, see Translate PIN data in the Amazon Web Services Payment Cryptography User Guide. PIN block translation involves changing a PIN block from one encryption key to another and optionally change its format. PIN block translation occurs entirely within the HSM boundary and PIN data never enters or leaves Amazon Web Services Payment Cryptography in clear text. The encryption key transformation can be from PEK (Pin Encryption Key) to BDK (Base Derivation Key) for DUKPT or from BDK for DUKPT to PEK. Amazon Web Services Payment Cryptography also supports use of dynamic keys and ECDH (Elliptic Curve Diffie-Hellman) based key exchange for this operation. Dynamic keys allow you to pass a PEK as a TR-31 WrappedKeyBlock. They can be used when key material is frequently rotated, such as during every card transaction, and there is need to avoid importing short-lived keys into Amazon Web Services Payment Cryptography. To translate PIN block using dynamic keys, the keyARN is the Key Encryption Key (KEK) of the TR-31 wrapped PEK. The incoming wrapped key shall have a key purpose of P0 with a mode of use of B or D. For more information, see Using Dynamic Keys in the Amazon Web Services Payment Cryptography User Guide. Using ECDH key exchange, you can receive cardholder selectable PINs into Amazon Web Services Payment Cryptography. The ECDH derived key protects the incoming PIN block, which is translated to a PEK encrypted PIN block for use within the service. You can also use ECDH for reveal PIN, wherein the service translates the PIN block from PEK to a ECDH derived encryption key. For more information on establishing ECDH derived keys, see the Generating keys in the Amazon Web Services Payment Cryptography User Guide. The allowed combinations of PIN block format translations are guided by PCI. It is important to note that not all encrypted PIN block formats (example, format 1) require PAN (Primary Account Number) as input. And as such, PIN block format that requires PAN (example, formats 0,3,4) cannot be translated to a format (format 1) that does not require a PAN for generation. For information about valid keys for this operation, see Understanding key attributes and Key types for specific data operations in the Amazon Web Services Payment Cryptography User Guide. Cross-account use: This operation can't be used across different Amazon Web Services accounts.",
+  "parameters": [
+    {
+      "name": "IncomingKeyIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the encryption key under which incoming PIN block data is encrypted. This key type can be PEK or BDK. For dynamic keys, it is the keyARN of KEK of the TR-31 wrapped PEK. For ECDH, it is the keyARN of the asymmetric ECC key.",
+      "nested_params": []
+    },
+    {
+      "name": "OutgoingKeyIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the encryption key for encrypting outgoing PIN block data. This key type can be PEK or BDK. For ECDH, it is the keyARN of the asymmetric ECC key.",
+      "nested_params": []
+    },
+    {
+      "name": "IncomingTranslationAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The format of the incoming PIN block data for translation within Amazon Web Services Payment Cryptography. IsoFormat0 (dict) --- Parameters that are required for ISO9564 PIN format 0 tranlation. The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder. IsoFormat1 (dict) --- Parameters that are required for ISO9564 PIN format 1 tranlation. IsoFormat3 (dict) --- Parameters that are required for ISO9564 PIN format 3 tranlation. IsoFormat4 (dict) --- Parameters that are required for ISO9564 PIN format 4 tranlation. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+      "nested_params": [
+        {
+          "name": "IsoFormat0",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 0 tranlation.",
+          "nested_params": [
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IsoFormat1",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 1 tranlation.",
+          "nested_params": []
+        },
+        {
+          "name": "IsoFormat3",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 3 tranlation.",
+          "nested_params": [
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IsoFormat4",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 4 tranlation.",
+          "nested_params": [
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OutgoingTranslationAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The format of the outgoing PIN block data after translation by Amazon Web Services Payment Cryptography. IsoFormat0 (dict) --- Parameters that are required for ISO9564 PIN format 0 tranlation. The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder. IsoFormat1 (dict) --- Parameters that are required for ISO9564 PIN format 1 tranlation. IsoFormat3 (dict) --- Parameters that are required for ISO9564 PIN format 3 tranlation. IsoFormat4 (dict) --- Parameters that are required for ISO9564 PIN format 4 tranlation. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+      "nested_params": [
+        {
+          "name": "IsoFormat0",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 0 tranlation.",
+          "nested_params": [
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IsoFormat1",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 1 tranlation.",
+          "nested_params": []
+        },
+        {
+          "name": "IsoFormat3",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 3 tranlation.",
+          "nested_params": [
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IsoFormat4",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required for ISO9564 PIN format 4 tranlation.",
+          "nested_params": [
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EncryptedPinBlock",
+      "type": "string",
+      "required": true,
+      "description": "The encrypted PIN block data that Amazon Web Services Payment Cryptography translates.",
+      "nested_params": []
+    },
+    {
+      "name": "IncomingDukptAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The attributes and values to use for incoming DUKPT encryption key for PIN block translation. The unique identifier known as Key Serial Number (KSN) that comes from an encrypting device using DUKPT encryption method. The KSN is derived from the encrypting device unique identifier and an internal transaction counter. DukptKeyDerivationType (string) --- The key type derived using DUKPT from a Base Derivation Key (BDK) and Key Serial Number (KSN). This must be less than or equal to the strength of the BDK. For example, you can't use AES_128 as a derivation type for a BDK of AES_128 or TDES_2KEY DukptKeyVariant (string) --- The type of use of DUKPT, which can be for incoming data decryption, outgoing data encryption, or both.",
+      "nested_params": [
+        {
+          "name": "KeySerialNumber",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier known as Key Serial Number (KSN) that comes from an encrypting device using DUKPT encryption method. The KSN is derived from the encrypting device unique identifier and an internal transaction counter.",
+          "nested_params": []
+        },
+        {
+          "name": "DukptKeyDerivationType",
+          "type": "string",
+          "required": false,
+          "description": "The key type derived using DUKPT from a Base Derivation Key (BDK) and Key Serial Number (KSN). This must be less than or equal to the strength of the BDK. For example, you can't use AES_128 as a derivation type for a BDK of AES_128 or TDES_2KEY.",
+          "nested_params": []
+        },
+        {
+          "name": "DukptKeyVariant",
+          "type": "string",
+          "required": false,
+          "description": "The type of use of DUKPT, which can be for incoming data decryption, outgoing data encryption, or both.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OutgoingDukptAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The attributes and values to use for outgoing DUKPT encryption key after PIN block translation. The unique identifier known as Key Serial Number (KSN) that comes from an encrypting device using DUKPT encryption method. The KSN is derived from the encrypting device unique identifier and an internal transaction counter. DukptKeyDerivationType (string) --- The key type derived using DUKPT from a Base Derivation Key (BDK) and Key Serial Number (KSN). This must be less than or equal to the strength of the BDK. For example, you can't use AES_128 as a derivation type for a BDK of AES_128 or TDES_2KEY DukptKeyVariant (string) --- The type of use of DUKPT, which can be for incoming data decryption, outgoing data encryption, or both.",
+      "nested_params": [
+        {
+          "name": "KeySerialNumber",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier known as Key Serial Number (KSN) that comes from an encrypting device using DUKPT encryption method. The KSN is derived from the encrypting device unique identifier and an internal transaction counter.",
+          "nested_params": []
+        },
+        {
+          "name": "DukptKeyDerivationType",
+          "type": "string",
+          "required": false,
+          "description": "The key type derived using DUKPT from a Base Derivation Key (BDK) and Key Serial Number (KSN). This must be less than or equal to the strength of the BDK. For example, you can't use AES_128 as a derivation type for a BDK of AES_128 or TDES_2KEY.",
+          "nested_params": []
+        },
+        {
+          "name": "DukptKeyVariant",
+          "type": "string",
+          "required": false,
+          "description": "The type of use of DUKPT, which can be for incoming data decryption, outgoing data encryption, or both.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "IncomingWrappedKey",
+      "type": "dict",
+      "required": true,
+      "description": "The WrappedKeyBlock containing the encryption key under which incoming PIN block data is encrypted. Parameter information of a WrappedKeyBlock for encryption key exchange. Tr31KeyBlock (string) --- The TR-31 wrapped key block. DiffieHellmanSymmetricKey (dict) --- The parameter information for deriving a ECDH shared key. The keyArn of the certificate that signed the client's PublicKeyCertificate. The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation. The key algorithm of the derived ECDH key. The key derivation function to use for deriving a key using ECDH. The hash type to use for deriving a key using ECDH. A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended. KeyCheckValueAlgorithm (string) --- The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+      "nested_params": [
+        {
+          "name": "WrappedKeyMaterial",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information of a WrappedKeyBlock for encryption key exchange.",
+          "nested_params": [
+            {
+              "name": "Tr31KeyBlock",
+              "type": "string",
+              "required": false,
+              "description": "The TR-31 wrapped key block.",
+              "nested_params": []
+            },
+            {
+              "name": "DiffieHellmanSymmetricKey",
+              "type": "dict",
+              "required": false,
+              "description": "The parameter information for deriving a ECDH shared key.",
+              "nested_params": [
+                {
+                  "name": "CertificateAuthorityPublicKeyIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "The keyArn of the certificate that signed the client's PublicKeyCertificate.",
+                  "nested_params": []
+                },
+                {
+                  "name": "PublicKeyCertificate",
+                  "type": "string",
+                  "required": false,
+                  "description": "The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key algorithm of the derived ECDH key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyDerivationFunction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key derivation function to use for deriving a key using ECDH.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyDerivationHashAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash type to use for deriving a key using ECDH.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SharedInformation",
+                  "type": "string",
+                  "required": false,
+                  "description": "A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KeyCheckValueAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OutgoingWrappedKey",
+      "type": "dict",
+      "required": true,
+      "description": "The WrappedKeyBlock containing the encryption key for encrypting outgoing PIN block data. Parameter information of a WrappedKeyBlock for encryption key exchange. Tr31KeyBlock (string) --- The TR-31 wrapped key block. DiffieHellmanSymmetricKey (dict) --- The parameter information for deriving a ECDH shared key. The keyArn of the certificate that signed the client's PublicKeyCertificate. The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation. The key algorithm of the derived ECDH key. The key derivation function to use for deriving a key using ECDH. The hash type to use for deriving a key using ECDH. A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended. KeyCheckValueAlgorithm (string) --- The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+      "nested_params": [
+        {
+          "name": "WrappedKeyMaterial",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information of a WrappedKeyBlock for encryption key exchange.",
+          "nested_params": [
+            {
+              "name": "Tr31KeyBlock",
+              "type": "string",
+              "required": false,
+              "description": "The TR-31 wrapped key block.",
+              "nested_params": []
+            },
+            {
+              "name": "DiffieHellmanSymmetricKey",
+              "type": "dict",
+              "required": false,
+              "description": "The parameter information for deriving a ECDH shared key.",
+              "nested_params": [
+                {
+                  "name": "CertificateAuthorityPublicKeyIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "The keyArn of the certificate that signed the client's PublicKeyCertificate.",
+                  "nested_params": []
+                },
+                {
+                  "name": "PublicKeyCertificate",
+                  "type": "string",
+                  "required": false,
+                  "description": "The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key algorithm of the derived ECDH key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyDerivationFunction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key derivation function to use for deriving a key using ECDH.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyDerivationHashAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash type to use for deriving a key using ECDH.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SharedInformation",
+                  "type": "string",
+                  "required": false,
+                  "description": "A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KeyCheckValueAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "PinBlock",
+          "type": "string",
+          "description": "The outgoing encrypted PIN block data after translation.",
+          "nested_items": []
+        },
+        {
+          "name": "KeyArn",
+          "type": "string",
+          "description": "The keyARN of the encryption key that Amazon Web Services Payment Cryptography uses to encrypt outgoing PIN block data after translation.",
+          "nested_items": []
+        },
+        {
+          "name": "KeyCheckValue",
+          "type": "string",
+          "description": "The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

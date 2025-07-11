@@ -1,0 +1,156 @@
+{
+  "method_name": "invoke_endpoint_with_response_stream",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker-runtime/client/invoke_endpoint_with_response_stream.html",
+  "description": "Invokes a model at the specified endpoint to return the inference response as a stream. The inference stream provides the response payload incrementally as a series of parts. Before you can get an inference stream, you must have access to a model that's deployed using Amazon SageMaker hosting services, and the container for that model must support inference streaming. For more information that can help you use this API, see the following sections in the Amazon SageMaker Developer Guide: Before you can use this operation, your IAM permissions must allow the sagemaker:InvokeEndpoint action. For more information about Amazon SageMaker actions for IAM policies, see Actions, resources, and condition keys for Amazon SageMaker in the IAM Service Authorization Reference. Amazon SageMaker strips all POST headers except those supported by the API. Amazon SageMaker might add additional headers. You should not rely on the behavior of headers outside those enumerated in the request syntax. Calls to InvokeEndpointWithResponseStream are authenticated by using Amazon Web Services Signature Version 4. For information, see Authenticating Requests (Amazon Web Services Signature Version 4) in the Amazon S3 API Reference.",
+  "parameters": [
+    {
+      "name": "EndpointName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the endpoint that you specified when you created the endpoint using the CreateEndpoint API.",
+      "nested_params": []
+    },
+    {
+      "name": "Body",
+      "type": "bytes or seekable file-like object",
+      "required": true,
+      "description": "Provides input data, in the format specified in the ContentType request header. Amazon SageMaker passes all of the data in the body to the model. For information about the format of the request body, see Common Data Formats-Inference.",
+      "nested_params": []
+    },
+    {
+      "name": "ContentType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Accept",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CustomAttributes",
+      "type": "string",
+      "required": false,
+      "description": "Provides additional information about a request for an inference submitted to a model hosted at an Amazon SageMaker endpoint. The information is an opaque value that is forwarded verbatim. You could use this value, for example, to provide an ID that you can use to track a request or to provide other metadata that a service endpoint was programmed to process. The value must consist of no more than 1024 visible US-ASCII characters as specified in Section 3.3.6. Field Value Components of the Hypertext Transfer Protocol (HTTP/1.1). The code in your model is responsible for setting or updating any custom attributes in the response. If your code does not set this value in the response, an empty value is returned. For example, if a custom attribute represents the trace ID, your model can prepend the custom attribute with Trace ID: in your post-processing function. This feature is currently supported in the Amazon Web Services SDKs but not in the Amazon SageMaker Python SDK.",
+      "nested_params": []
+    },
+    {
+      "name": "TargetVariant",
+      "type": "string",
+      "required": false,
+      "description": "Specify the production variant to send the inference request to when invoking an endpoint that is running two or more variants. Note that this parameter overrides the default behavior for the endpoint, which is to distribute the invocation traffic based on the variant weights. For information about how to use variant targeting to perform a/b testing, see Test models in production.",
+      "nested_params": []
+    },
+    {
+      "name": "TargetContainerHostname",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "InferenceId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "InferenceComponentName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SessionId",
+      "type": "string",
+      "required": false,
+      "description": "The ID of a stateful session to handle your request. You can't create a stateful session by using the InvokeEndpointWithResponseStream action. Instead, you can create one by using the InvokeEndpoint action. In your request, you specify NEW_SESSION for the SessionId request parameter. The response to that request provides the session ID for the NewSessionId response parameter.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Body",
+          "type": "EventStream",
+          "description": "A stream of payload parts. Each part contains a portion of the response for a streaming inference request.",
+          "nested_items": [
+            {
+              "name": "PayloadPart",
+              "type": "dict",
+              "description": "A wrapper for pieces of the payload that's returned in response to a streaming inference request. A streaming inference response consists of one or more payload parts.",
+              "nested_items": [
+                {
+                  "name": "Bytes",
+                  "type": "bytes",
+                  "description": "A blob that contains part of the response for your streaming inference request.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ModelStreamError",
+              "type": "dict",
+              "description": "An error occurred while streaming the response body. This error can have the following error codes:",
+              "nested_items": [
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "This error can have the following error codes:",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "InternalStreamFailure",
+              "type": "dict",
+              "description": "The stream processing failed because of an unknown error, exception or failure. Try your request again.",
+              "nested_items": [
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ContentType",
+          "type": "string",
+          "description": "The MIME type of the inference returned from the model container.",
+          "nested_items": []
+        },
+        {
+          "name": "InvokedProductionVariant",
+          "type": "string",
+          "description": "Identifies the production variant that was invoked.",
+          "nested_items": []
+        },
+        {
+          "name": "CustomAttributes",
+          "type": "string",
+          "description": "Provides additional information in the response about the inference returned by a model hosted at an Amazon SageMaker endpoint. The information is an opaque value that is forwarded verbatim. You could use this value, for example, to return an ID received in the CustomAttributes header of a request or other metadata that a service endpoint was programmed to produce. The value must consist of no more than 1024 visible US-ASCII characters as specified in Section 3.3.6. Field Value Components of the Hypertext Transfer Protocol (HTTP/1.1). If the customer wants the custom attribute returned, the model must set the custom attribute to be included on the way back.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

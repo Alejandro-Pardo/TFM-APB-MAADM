@@ -1,0 +1,1505 @@
+{
+  "method_name": "create_cluster",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/redshift/client/create_cluster.html",
+  "description": "Creates a new cluster with the specified parameters. To create a cluster in Virtual Private Cloud (VPC), you must provide a cluster subnet group name. The cluster subnet group identifies the subnets of your VPC that Amazon Redshift uses when creating the cluster. For more information about managing clusters, go to Amazon Redshift Clusters in the Amazon Redshift Cluster Management Guide. VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that you own in a Region from reaching or being reached from the internet through internet gateways and egress-only internet gateways. If a subnet group for a provisioned cluster is in an account with VPC BPA turned on, the following capabilities are blocked: For more information about VPC BPA, see Block public access to VPCs and subnets in the Amazon VPC User Guide.",
+  "parameters": [
+    {
+      "name": "DBName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the first database to be created when the cluster is created. To create additional databases after the cluster is created, connect to the cluster with a SQL client and use SQL commands to create a database. For more information, go to Create a Database in the Amazon Redshift Database Developer Guide. Default: dev Constraints: Must contain 1 to 64 alphanumeric characters. Must contain only lowercase letters. Cannot be a word that is reserved by the service. A list of reserved words can be found in Reserved Words in the Amazon Redshift Database Developer Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "ClusterIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the cluster. You use this identifier to refer to the cluster for any subsequent cluster operations such as deleting or modifying. The identifier also appears in the Amazon Redshift console. Constraints: Must contain from 1 to 63 alphanumeric characters or hyphens. Alphabetic characters must be lowercase. First character must be a letter. Cannot end with a hyphen or contain two consecutive hyphens. Must be unique for all clusters within an Amazon Web Services account. Example: myexamplecluster.",
+      "nested_params": []
+    },
+    {
+      "name": "ClusterType",
+      "type": "string",
+      "required": false,
+      "description": "The type of the cluster. When cluster type is specified as single-node, the NumberOfNodes parameter is not required. multi-node, the NumberOfNodes parameter is required. Valid Values: multi-node | single-node Default: multi-node.",
+      "nested_params": [
+        {
+          "name": "NumberOfNodes",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        },
+        {
+          "name": "NumberOfNodes",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "NodeType",
+      "type": "string",
+      "required": true,
+      "description": "The node type to be provisioned for the cluster. For information about node types, go to Working with Clusters in the Amazon Redshift Cluster Management Guide. Valid Values: dc2.large | dc2.8xlarge | ra3.large | ra3.xlplus | ra3.4xlarge | ra3.16xlarge.",
+      "nested_params": []
+    },
+    {
+      "name": "MasterUsername",
+      "type": "string",
+      "required": true,
+      "description": "The user name associated with the admin user account for the cluster that is being created. Constraints: Must be 1 - 128 alphanumeric characters or hyphens. The user name can't be PUBLIC. Must contain only lowercase letters, numbers, underscore, plus sign, period (dot), at symbol (@), or hyphen. The first character must be a letter. Must not contain a colon (:) or a slash (/). Cannot be a reserved word. A list of reserved words can be found in Reserved Words in the Amazon Redshift Database Developer Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "MasterUserPassword",
+      "type": "string",
+      "required": false,
+      "description": "The password associated with the admin user account for the cluster that is being created. You can't use MasterUserPassword if ManageMasterPassword is true. Constraints: Must be between 8 and 64 characters in length. Must contain at least one uppercase letter. Must contain at least one lowercase letter. Must contain one number. Can be any printable ASCII character (ASCII code 33-126) except ' (single quote), \" (double quote), \\, /, or @.",
+      "nested_params": []
+    },
+    {
+      "name": "ClusterSecurityGroups",
+      "type": "list",
+      "required": false,
+      "description": "A list of security groups to be associated with this cluster. Default: The default cluster security group for Amazon Redshift. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "VpcSecurityGroupIds",
+      "type": "list",
+      "required": false,
+      "description": "A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster. Default: The default VPC security group is associated with the cluster. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ClusterSubnetGroupName",
+      "type": "string",
+      "required": false,
+      "description": "The name of a cluster subnet group to be associated with this cluster. If this parameter is not provided the resulting cluster will be deployed outside virtual private cloud (VPC).",
+      "nested_params": []
+    },
+    {
+      "name": "AvailabilityZone",
+      "type": "string",
+      "required": false,
+      "description": "The EC2 Availability Zone (AZ) in which you want Amazon Redshift to provision the cluster. For example, if you have several EC2 instances running in a specific Availability Zone, then you might want the cluster to be provisioned in the same zone in order to decrease network latency. Default: A random, system-chosen Availability Zone in the region that is specified by the endpoint. Example: us-east-2d Constraint: The specified Availability Zone must be in the same region as the current endpoint.",
+      "nested_params": []
+    },
+    {
+      "name": "PreferredMaintenanceWindow",
+      "type": "string",
+      "required": false,
+      "description": "The weekly time range (in UTC) during which automated cluster maintenance can occur. Format: ddd:hh24:mi-ddd:hh24:mi Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week. For more information about the time blocks for each region, see Maintenance Windows in Amazon Redshift Cluster Management Guide. Valid Days: Mon | Tue | Wed | Thu | Fri | Sat | Sun Constraints: Minimum 30-minute window.",
+      "nested_params": []
+    },
+    {
+      "name": "ClusterParameterGroupName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the parameter group to be associated with this cluster. Default: The default Amazon Redshift cluster parameter group. For information about the default parameter group, go to Working with Amazon Redshift Parameter Groups Constraints: Must be 1 to 255 alphanumeric characters or hyphens. First character must be a letter. Cannot end with a hyphen or contain two consecutive hyphens.",
+      "nested_params": []
+    },
+    {
+      "name": "AutomatedSnapshotRetentionPeriod",
+      "type": "integer",
+      "required": false,
+      "description": "The number of days that automated snapshots are retained. If the value is 0, automated snapshots are disabled. Even if automated snapshots are disabled, you can still create manual snapshots when you want with  CreateClusterSnapshot. You can't disable automated snapshots for RA3 node types. Set the automated retention period from 1-35 days. Default: 1 Constraints: Must be a value from 0 to 35.",
+      "nested_params": []
+    },
+    {
+      "name": "ManualSnapshotRetentionPeriod",
+      "type": "integer",
+      "required": false,
+      "description": "The default number of days to retain a manual snapshot. If the value is -1, the snapshot is retained indefinitely. This setting doesn't change the retention period of existing snapshots. The value must be either -1 or an integer between 1 and 3,653.",
+      "nested_params": []
+    },
+    {
+      "name": "Port",
+      "type": "integer",
+      "required": false,
+      "description": "The port number on which the cluster accepts incoming connections. The cluster is accessible only via the JDBC and ODBC connection strings. Part of the connection string requires the port on which the cluster will listen for incoming connections. Default: 5439 Valid Values: For clusters with ra3 nodes - Select a port within the ranges 5431-5455 or 8191-8215. (If you have an existing cluster with ra3 nodes, it isn't required that you change the port to these ranges.) For clusters with dc2 nodes - Select a port within the range 1150-65535.",
+      "nested_params": []
+    },
+    {
+      "name": "ClusterVersion",
+      "type": "string",
+      "required": false,
+      "description": "The version of the Amazon Redshift engine software that you want to deploy on the cluster. The version selected runs on all the nodes in the cluster. Constraints: Only version 1.0 is currently available. Example: 1.0",
+      "nested_params": []
+    },
+    {
+      "name": "AllowVersionUpgrade",
+      "type": "boolean",
+      "required": false,
+      "description": "If true, major version upgrades can be applied during the maintenance window to the Amazon Redshift engine that is running on the cluster. When a new major version of the Amazon Redshift engine is released, you can request that the service automatically apply upgrades during the maintenance window to the Amazon Redshift engine that is running on your cluster. Default: true.",
+      "nested_params": []
+    },
+    {
+      "name": "NumberOfNodes",
+      "type": "integer",
+      "required": false,
+      "description": "The number of compute nodes in the cluster. This parameter is required when the ClusterType parameter is specified as multi-node. For information about determining how many nodes you need, go to Working with Clusters in the Amazon Redshift Cluster Management Guide. If you don't specify this parameter, you get a single-node cluster. When requesting a multi-node cluster, you must specify the number of nodes that you want in the cluster. Default: 1 Constraints: Value must be at least 1 and no more than 100.",
+      "nested_params": []
+    },
+    {
+      "name": "PubliclyAccessible",
+      "type": "boolean",
+      "required": false,
+      "description": "If true, the cluster can be accessed from a public network. Default: false.",
+      "nested_params": []
+    },
+    {
+      "name": "Encrypted",
+      "type": "boolean",
+      "required": false,
+      "description": "If true, the data in the cluster is encrypted at rest. If you set the value on this parameter to false, the request will fail. Default: true.",
+      "nested_params": []
+    },
+    {
+      "name": "HsmClientCertificateIdentifier",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "HsmConfigurationIdentifier",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ElasticIp",
+      "type": "string",
+      "required": false,
+      "description": "The Elastic IP (EIP) address for the cluster. Constraints: The cluster must be provisioned in EC2-VPC and publicly-accessible through an Internet gateway. Don't specify the Elastic IP address for a publicly accessible cluster with availability zone relocation turned on. For more information about provisioning clusters in EC2-VPC, go to Supported Platforms to Launch Your Cluster in the Amazon Redshift Cluster Management Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": false,
+      "description": "A list of tag instances. (dict) --- A tag consisting of a name/value pair for a resource. Key (string) --- The key, or name, for the resource tag. Value (string) --- The value for the resource tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key, or name, for the resource tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value for the resource tag.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "KmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "EnhancedVpcRouting",
+      "type": "boolean",
+      "required": false,
+      "description": "An option that specifies whether to create the cluster with enhanced VPC routing enabled. To create a cluster that uses enhanced VPC routing, the cluster must be in a VPC. For more information, see Enhanced VPC Routing in the Amazon Redshift Cluster Management Guide. If this option is true, enhanced VPC routing is enabled. Default: false.",
+      "nested_params": []
+    },
+    {
+      "name": "AdditionalInfo",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "IamRoles",
+      "type": "list",
+      "required": false,
+      "description": "A list of Identity and Access Management (IAM) roles that can be used by the cluster to access other Amazon Web Services services. You must supply the IAM roles in their Amazon Resource Name (ARN) format. The maximum number of IAM roles that you can associate is subject to a quota. For more information, go to Quotas and limits in the Amazon Redshift Cluster Management Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "MaintenanceTrackName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SnapshotScheduleIdentifier",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AvailabilityZoneRelocation",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AquaConfigurationStatus",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DefaultIamRoleArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "LoadSampleData",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ManageMasterPassword",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MasterPasswordSecretKmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "IpAddressType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MultiAZ",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "RedshiftIdcApplicationArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "ClusterIdentifier",
+              "type": "string",
+              "description": "The unique identifier of the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "NodeType",
+              "type": "string",
+              "description": "The node type for the nodes in the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "ClusterStatus",
+              "type": "string",
+              "description": "The current state of the cluster. Possible values are the following:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "available.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "available, prep-for-resize.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "available, resize-cleanup.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "cancelling-resize.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "creating.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "deleting.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "final-snapshot.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "hardware-failure.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "incompatible-hsm.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "incompatible-network.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "incompatible-parameters.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "incompatible-restore.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "modifying.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "paused.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "rebooting.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "renaming.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "resizing.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "rotating-keys.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "storage-full.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "updating-hsm.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ClusterAvailabilityStatus",
+              "type": "string",
+              "description": "The availability status of the cluster for queries. Possible values are the following:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Available - The cluster is available for queries.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Unavailable - The cluster is not available for queries.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Maintenance - The cluster is intermittently available for queries due to maintenance activities.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Modifying - The cluster is intermittently available for queries due to changes that modify the cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Failed - The cluster failed and is not available for queries.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ModifyStatus",
+              "type": "string",
+              "description": "The status of a modify operation, if any, initiated for the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "MasterUsername",
+              "type": "string",
+              "description": "The admin user name for the cluster. This name is used to connect to the database that is specified in the DBName parameter.",
+              "nested_items": []
+            },
+            {
+              "name": "DBName",
+              "type": "string",
+              "description": "The name of the initial database that was created when the cluster was created. This same name is returned for the life of the cluster. If an initial database was not specified, a database named ``dev``dev was created by default.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Address",
+                  "type": "string",
+                  "description": "The DNS address of the Cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Port",
+                  "type": "integer",
+                  "description": "The port that the database engine is listening on.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VpcEndpoints",
+                  "type": "list",
+                  "description": "Describes a connection endpoint.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "VpcEndpointId",
+                          "type": "string",
+                          "description": "The connection endpoint ID for connecting an Amazon Redshift cluster through the proxy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "VpcId",
+                          "type": "string",
+                          "description": "The VPC identifier that the endpoint is associated.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NetworkInterfaces",
+                          "type": "list",
+                          "description": "One or more network interfaces of the endpoint. Also known as an interface endpoint.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "NetworkInterfaceId",
+                                  "type": "string",
+                                  "description": "The network interface identifier.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "SubnetId",
+                                  "type": "string",
+                                  "description": "The subnet identifier.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "PrivateIpAddress",
+                                  "type": "string",
+                                  "description": "The IPv4 address of the network interface within the subnet.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "AvailabilityZone",
+                                  "type": "string",
+                                  "description": "The Availability Zone.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Ipv6Address",
+                                  "type": "string",
+                                  "description": "The IPv6 address of the network interface within the subnet.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ClusterCreateTime",
+              "type": "datetime",
+              "description": "The date and time that the cluster was created.",
+              "nested_items": []
+            },
+            {
+              "name": "AutomatedSnapshotRetentionPeriod",
+              "type": "integer",
+              "description": "The number of days that automatic cluster snapshots are retained.",
+              "nested_items": []
+            },
+            {
+              "name": "ManualSnapshotRetentionPeriod",
+              "type": "integer",
+              "description": "The default number of days to retain a manual snapshot. If the value is -1, the snapshot is retained indefinitely. This setting doesn't change the retention period of existing snapshots.",
+              "nested_items": []
+            },
+            {
+              "name": "ClusterSecurityGroups",
+              "type": "list",
+              "description": "A list of cluster security group that are associated with the cluster. Each security group is represented by an element that contains ClusterSecurityGroup.Name and ClusterSecurityGroup.Status subelements.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ClusterSecurityGroupName",
+                      "type": "string",
+                      "description": "The name of the cluster security group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the cluster security group.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VpcSecurityGroups",
+              "type": "list",
+              "description": "A list of Amazon Virtual Private Cloud (Amazon VPC) security groups that are associated with the cluster. This parameter is returned only if the cluster is in a VPC.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "VpcSecurityGroupId",
+                      "type": "string",
+                      "description": "The identifier of the VPC security group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the VPC security group.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ClusterParameterGroups",
+              "type": "list",
+              "description": "The list of cluster parameter groups that are associated with this cluster. Each parameter group in the list is returned with its status.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ParameterGroupName",
+                      "type": "string",
+                      "description": "The name of the cluster parameter group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ParameterApplyStatus",
+                      "type": "string",
+                      "description": "The status of parameter updates.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ClusterParameterStatusList",
+                      "type": "list",
+                      "description": "The list of parameter statuses.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "ParameterName",
+                              "type": "string",
+                              "description": "The name of the parameter.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ParameterApplyStatus",
+                              "type": "string",
+                              "description": "The status of the parameter that indicates whether the parameter is in sync with the database, waiting for a cluster reboot, or encountered an error when being applied.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "in-sync: The parameter value is in sync with the database.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "pending-reboot: The parameter value will be applied after the cluster reboots.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "applying: The parameter value is being applied to the database.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "invalid-parameter: Cannot apply the parameter value because it has an invalid value or syntax.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "apply-deferred: The parameter contains static property changes. The changes are deferred until the cluster reboots.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "apply-error: Cannot connect to the cluster. The parameter change will be applied after the cluster reboots.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "unknown-error: Cannot apply the parameter change right now. The change will be applied after the cluster reboots.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ParameterApplyErrorDescription",
+                              "type": "string",
+                              "description": "The error that prevented the parameter from being applied to the database.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ClusterSubnetGroupName",
+              "type": "string",
+              "description": "The name of the subnet group that is associated with the cluster. This parameter is valid only when the cluster is in a VPC.",
+              "nested_items": []
+            },
+            {
+              "name": "VpcId",
+              "type": "string",
+              "description": "The identifier of the VPC the cluster is in, if the cluster is in a VPC.",
+              "nested_items": []
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string",
+              "description": "The name of the Availability Zone in which the cluster is located.",
+              "nested_items": []
+            },
+            {
+              "name": "PreferredMaintenanceWindow",
+              "type": "string",
+              "description": "The weekly time range, in Universal Coordinated Time (UTC), during which system maintenance can occur.",
+              "nested_items": []
+            },
+            {
+              "name": "PendingModifiedValues",
+              "type": "dict",
+              "description": "A value that, if present, indicates that changes to the cluster are pending. Specific pending changes are identified by subelements.",
+              "nested_items": [
+                {
+                  "name": "MasterUserPassword",
+                  "type": "string",
+                  "description": "The pending or in-progress change of the admin user password for the cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NodeType",
+                  "type": "string",
+                  "description": "The pending or in-progress change of the cluster's node type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NumberOfNodes",
+                  "type": "integer",
+                  "description": "The pending or in-progress change of the number of nodes in the cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ClusterType",
+                  "type": "string",
+                  "description": "The pending or in-progress change of the cluster type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ClusterVersion",
+                  "type": "string",
+                  "description": "The pending or in-progress change of the service version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AutomatedSnapshotRetentionPeriod",
+                  "type": "integer",
+                  "description": "The pending or in-progress change of the automated snapshot retention period.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ClusterIdentifier",
+                  "type": "string",
+                  "description": "The pending or in-progress change of the new identifier for the cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PubliclyAccessible",
+                  "type": "boolean",
+                  "description": "The pending or in-progress change of the ability to connect to the cluster from the public network.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EnhancedVpcRouting",
+                  "type": "boolean",
+                  "description": "An option that specifies whether to create the cluster with enhanced VPC routing enabled. To create a cluster that uses enhanced VPC routing, the cluster must be in a VPC. For more information, see Enhanced VPC Routing in the Amazon Redshift Cluster Management Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaintenanceTrackName",
+                  "type": "string",
+                  "description": "The name of the maintenance track that the cluster will change to during the next maintenance window.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EncryptionType",
+                  "type": "string",
+                  "description": "The encryption type for a cluster. Possible values are: KMS and None.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ClusterVersion",
+              "type": "string",
+              "description": "The version ID of the Amazon Redshift engine that is running on the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "AllowVersionUpgrade",
+              "type": "boolean",
+              "description": "A boolean value that, if true, indicates that major version upgrades will be applied automatically to the cluster during the maintenance window.",
+              "nested_items": []
+            },
+            {
+              "name": "NumberOfNodes",
+              "type": "integer",
+              "description": "The number of compute nodes in the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "PubliclyAccessible",
+              "type": "boolean",
+              "description": "A boolean value that, if true, indicates that the cluster can be accessed from a public network.",
+              "nested_items": []
+            },
+            {
+              "name": "Encrypted",
+              "type": "boolean",
+              "description": "A boolean value that, if true, indicates that data in the cluster is encrypted at rest.",
+              "nested_items": []
+            },
+            {
+              "name": "RestoreStatus",
+              "type": "dict",
+              "description": "A value that describes the status of a cluster restore action. This parameter returns null if the cluster was not created by restoring a snapshot.",
+              "nested_items": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The status of the restore action. Returns starting, restoring, completed, or failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CurrentRestoreRateInMegaBytesPerSecond",
+                  "type": "float",
+                  "description": "The number of megabytes per second being transferred from the backup storage. Returns the average rate for a completed backup. This field is only updated when you restore to DC2 node types.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SnapshotSizeInMegaBytes",
+                  "type": "integer",
+                  "description": "The size of the set of snapshot data used to restore the cluster. This field is only updated when you restore to DC2 node types.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ProgressInMegaBytes",
+                  "type": "integer",
+                  "description": "The number of megabytes that have been transferred from snapshot storage. This field is only updated when you restore to DC2 node types.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ElapsedTimeInSeconds",
+                  "type": "integer",
+                  "description": "The amount of time an in-progress restore has been running, or the amount of time it took a completed restore to finish. This field is only updated when you restore to DC2 node types.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EstimatedTimeToCompletionInSeconds",
+                  "type": "integer",
+                  "description": "The estimate of the time remaining before the restore will complete. Returns 0 for a completed restore. This field is only updated when you restore to DC2 node types.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "DataTransferProgress",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "Describes the status of the cluster. While the transfer is in progress the status is transferringdata.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CurrentRateInMegaBytesPerSecond",
+                  "type": "float",
+                  "description": "Describes the data transfer rate in MB's per second.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TotalDataInMegaBytes",
+                  "type": "integer",
+                  "description": "Describes the total amount of data to be transfered in megabytes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DataTransferredInMegaBytes",
+                  "type": "integer",
+                  "description": "Describes the total amount of data that has been transfered in MB's.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EstimatedTimeToCompletionInSeconds",
+                  "type": "integer",
+                  "description": "Describes the estimated number of seconds remaining to complete the transfer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ElapsedTimeInSeconds",
+                  "type": "integer",
+                  "description": "Describes the number of seconds that have elapsed during the data transfer.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "HsmStatus",
+              "type": "dict",
+              "description": "A value that reports whether the Amazon Redshift cluster has finished applying any hardware security module (HSM) settings changes specified in a modify cluster command.",
+              "nested_items": [
+                {
+                  "name": "HsmClientCertificateIdentifier",
+                  "type": "string",
+                  "description": "Specifies the name of the HSM client certificate the Amazon Redshift cluster uses to retrieve the data encryption keys stored in an HSM.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HsmConfigurationIdentifier",
+                  "type": "string",
+                  "description": "Specifies the name of the HSM configuration that contains the information the Amazon Redshift cluster can use to retrieve and store keys in an HSM.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "Reports whether the Amazon Redshift cluster has finished applying any HSM settings changes specified in a modify cluster command.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ClusterSnapshotCopyStatus",
+              "type": "dict",
+              "description": "A value that returns the destination region and retention period that are configured for cross-region snapshot copy.",
+              "nested_items": [
+                {
+                  "name": "DestinationRegion",
+                  "type": "string",
+                  "description": "The destination region that snapshots are automatically copied to when cross-region snapshot copy is enabled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RetentionPeriod",
+                  "type": "integer",
+                  "description": "The number of days that automated snapshots are retained in the destination region after they are copied from a source region.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ManualSnapshotRetentionPeriod",
+                  "type": "integer",
+                  "description": "The number of days that automated snapshots are retained in the destination region after they are copied from a source region. If the value is -1, the manual snapshot is retained indefinitely.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SnapshotCopyGrantName",
+                  "type": "string",
+                  "description": "The name of the snapshot copy grant.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ClusterPublicKey",
+              "type": "string",
+              "description": "The public key for the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "ClusterNodes",
+              "type": "list",
+              "description": "The nodes in the cluster.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "NodeRole",
+                      "type": "string",
+                      "description": "Whether the node is a leader node or a compute node.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PrivateIPAddress",
+                      "type": "string",
+                      "description": "The private IP address of a node within a cluster.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PublicIPAddress",
+                      "type": "string",
+                      "description": "The public IP address of a node within a cluster.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ElasticIpStatus",
+              "type": "dict",
+              "description": "The status of the elastic IP (EIP) address.",
+              "nested_items": [
+                {
+                  "name": "ElasticIp",
+                  "type": "string",
+                  "description": "The elastic IP (EIP) address for the cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The status of the elastic IP (EIP) address.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ClusterRevisionNumber",
+              "type": "string",
+              "description": "The specific revision number of the database in the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "description": "The list of tags for the cluster.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "The key, or name, for the resource tag.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "The value for the resource tag.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "The Key Management Service (KMS) key ID of the encryption key used to encrypt data in the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "EnhancedVpcRouting",
+              "type": "boolean",
+              "description": "An option that specifies whether to create the cluster with enhanced VPC routing enabled. To create a cluster that uses enhanced VPC routing, the cluster must be in a VPC. For more information, see Enhanced VPC Routing in the Amazon Redshift Cluster Management Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "IamRoles",
+              "type": "list",
+              "description": "A list of Identity and Access Management (IAM) roles that can be used by the cluster to access other Amazon Web Services services.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "IamRoleArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the IAM role, for example, arn:aws:iam::123456789012:role/RedshiftCopyUnload.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ApplyStatus",
+                      "type": "string",
+                      "description": "A value that describes the status of the IAM role's association with an Amazon Redshift cluster.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "in-sync: The role is available for use by the cluster.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "adding: The role is in the process of being associated with the cluster.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "removing: The role is in the process of being disassociated with the cluster.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "PendingActions",
+              "type": "list",
+              "description": "Cluster operations that are waiting to be started.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MaintenanceTrackName",
+              "type": "string",
+              "description": "The name of the maintenance track for the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "ElasticResizeNumberOfNodeOptions",
+              "type": "string",
+              "description": "The number of nodes that you can resize the cluster to with the elastic resize method.",
+              "nested_items": []
+            },
+            {
+              "name": "DeferredMaintenanceWindows",
+              "type": "list",
+              "description": "Describes a group of DeferredMaintenanceWindow objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "DeferMaintenanceIdentifier",
+                      "type": "string",
+                      "description": "A unique identifier for the maintenance window.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DeferMaintenanceStartTime",
+                      "type": "datetime",
+                      "description": "A timestamp for the beginning of the time period when we defer maintenance.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DeferMaintenanceEndTime",
+                      "type": "datetime",
+                      "description": "A timestamp for the end of the time period when we defer maintenance.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "SnapshotScheduleIdentifier",
+              "type": "string",
+              "description": "A unique identifier for the cluster snapshot schedule.",
+              "nested_items": []
+            },
+            {
+              "name": "SnapshotScheduleState",
+              "type": "string",
+              "description": "The current state of the cluster snapshot schedule.",
+              "nested_items": []
+            },
+            {
+              "name": "ExpectedNextSnapshotScheduleTime",
+              "type": "datetime",
+              "description": "The date and time when the next snapshot is expected to be taken for clusters with a valid snapshot schedule and backups enabled.",
+              "nested_items": []
+            },
+            {
+              "name": "ExpectedNextSnapshotScheduleTimeStatus",
+              "type": "string",
+              "description": "The status of next expected snapshot for clusters having a valid snapshot schedule and backups enabled. Possible values are the following:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "OnTrack - The next snapshot is expected to be taken on time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Pending - The next snapshot is pending to be taken.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "NextMaintenanceWindowStartTime",
+              "type": "datetime",
+              "description": "The date and time in UTC when system maintenance can begin.",
+              "nested_items": []
+            },
+            {
+              "name": "ResizeInfo",
+              "type": "dict",
+              "description": "Returns the following:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AllowCancelResize: a boolean value indicating if the resize operation can be cancelled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ResizeType: Returns ClassicResize.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "AvailabilityZoneRelocationStatus",
+              "type": "string",
+              "description": "Describes the status of the Availability Zone relocation operation.",
+              "nested_items": []
+            },
+            {
+              "name": "ClusterNamespaceArn",
+              "type": "string",
+              "description": "The namespace Amazon Resource Name (ARN) of the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalStorageCapacityInMegaBytes",
+              "type": "integer",
+              "description": "The total storage capacity of the cluster in megabytes.",
+              "nested_items": []
+            },
+            {
+              "name": "AquaConfiguration",
+              "type": "dict",
+              "description": "This field is retired. Amazon Redshift automatically determines whether to use AQUA (Advanced Query Accelerator).",
+              "nested_items": [
+                {
+                  "name": "AquaStatus",
+                  "type": "string",
+                  "description": "This field is retired. Amazon Redshift automatically determines whether to use AQUA (Advanced Query Accelerator).",
+                  "nested_items": []
+                },
+                {
+                  "name": "AquaConfigurationStatus",
+                  "type": "string",
+                  "description": "This field is retired. Amazon Redshift automatically determines whether to use AQUA (Advanced Query Accelerator).",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "DefaultIamRoleArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) for the IAM role set as default for the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "ReservedNodeExchangeStatus",
+              "type": "dict",
+              "description": "The status of the reserved-node exchange request. Statuses include in-progress and requested.",
+              "nested_items": [
+                {
+                  "name": "ReservedNodeExchangeRequestId",
+                  "type": "string",
+                  "description": "The identifier of the reserved-node exchange request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The status of the reserved-node exchange request. Statuses include in-progress and requested.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RequestTime",
+                  "type": "datetime",
+                  "description": "A date and time that indicate when the reserved-node exchange was requested.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SourceReservedNodeId",
+                  "type": "string",
+                  "description": "The identifier of the source reserved node.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SourceReservedNodeType",
+                  "type": "string",
+                  "description": "The source reserved-node type, for example ra3.4xlarge.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SourceReservedNodeCount",
+                  "type": "integer",
+                  "description": "The source reserved-node count in the cluster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetReservedNodeOfferingId",
+                  "type": "string",
+                  "description": "The identifier of the target reserved node offering.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetReservedNodeType",
+                  "type": "string",
+                  "description": "The node type of the target reserved node, for example ra3.4xlarge.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetReservedNodeCount",
+                  "type": "integer",
+                  "description": "The count of target reserved nodes in the cluster.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "CustomDomainName",
+              "type": "string",
+              "description": "The custom domain name associated with the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomDomainCertificateArn",
+              "type": "string",
+              "description": "The certificate Amazon Resource Name (ARN) for the custom domain name.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomDomainCertificateExpiryDate",
+              "type": "datetime",
+              "description": "The expiration date for the certificate associated with the custom domain name.",
+              "nested_items": []
+            },
+            {
+              "name": "MasterPasswordSecretArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) for the cluster's admin user credentials secret.",
+              "nested_items": []
+            },
+            {
+              "name": "MasterPasswordSecretKmsKeyId",
+              "type": "string",
+              "description": "The ID of the Key Management Service (KMS) key used to encrypt and store the cluster's admin credentials secret.",
+              "nested_items": []
+            },
+            {
+              "name": "IpAddressType",
+              "type": "string",
+              "description": "The IP address type for the cluster. Possible values are ipv4 and dualstack.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiAZ",
+              "type": "string",
+              "description": "A boolean value that, if true, indicates that the cluster is deployed in two Availability Zones.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiAZSecondary",
+              "type": "dict",
+              "description": "The secondary compute unit of a cluster, if Multi-AZ deployment is turned on.",
+              "nested_items": [
+                {
+                  "name": "AvailabilityZone",
+                  "type": "string",
+                  "description": "The name of the Availability Zone in which the secondary compute unit of the cluster is located.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ClusterNodes",
+                  "type": "list",
+                  "description": "The nodes in the secondary compute unit.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "NodeRole",
+                          "type": "string",
+                          "description": "Whether the node is a leader node or a compute node.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "PrivateIPAddress",
+                          "type": "string",
+                          "description": "The private IP address of a node within a cluster.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "PublicIPAddress",
+                          "type": "string",
+                          "description": "The public IP address of a node within a cluster.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

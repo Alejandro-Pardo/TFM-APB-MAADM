@@ -1,0 +1,55 @@
+{
+  "method_name": "put_record",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker-featurestore-runtime/client/put_record.html",
+  "description": "The PutRecord API is used to ingest a list of Records into your feature group. If a new record's EventTime is greater, the new record is written to both the OnlineStore and OfflineStore. Otherwise, the record is a historic record and it is written only to the OfflineStore. You can specify the ingestion to be applied to the OnlineStore, OfflineStore, or both by using the TargetStores request parameter. You can set the ingested record to expire at a given time to live (TTL) duration after the record's event time, ExpiresAt = EventTime + TtlDuration, by specifying the TtlDuration parameter. A record level TtlDuration is set when specifying the TtlDuration parameter using the PutRecord API call. If the input TtlDuration is null or unspecified, TtlDuration is set to the default feature group level TtlDuration. A record level TtlDuration supersedes the group level TtlDuration.",
+  "parameters": [
+    {
+      "name": "FeatureGroupName",
+      "type": "string",
+      "required": true,
+      "description": "The name or Amazon Resource Name (ARN) of the feature group that you want to insert the record into.",
+      "nested_params": []
+    },
+    {
+      "name": "Record",
+      "type": "list",
+      "required": true,
+      "description": "List of FeatureValues to be inserted. This will be a full over-write. If you only want to update few of the feature values, do the following: Use GetRecord to retrieve the latest record. Update the record returned from GetRecord. Use PutRecord to update feature values. (dict) --- The value associated with a feature. The name of a feature that a feature value corresponds to. ValueAsString (string) --- The value in string format associated with a feature. Used when your CollectionType is None. Note that features types can be String, Integral, or Fractional. This value represents all three types as a string. ValueAsStringList (list) --- The list of values in string format associated with a feature. Used when your CollectionType is a List, Set, or Vector. These values represents all three types as a string. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "TargetStores",
+      "type": "list",
+      "required": false,
+      "description": "A list of stores to which you're adding the record. By default, Feature Store adds the record to all of the stores that you're using for the FeatureGroup. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "TtlDuration",
+      "type": "dict",
+      "required": true,
+      "description": "Time to live duration, where the record is hard deleted after the expiration time is reached; ExpiresAt = EventTime + TtlDuration. For information on HardDelete, see the DeleteRecord API in the Amazon SageMaker API Reference guide. TtlDuration time unit. TtlDuration time value.",
+      "nested_params": [
+        {
+          "name": "Unit",
+          "type": "string",
+          "required": false,
+          "description": "TtlDuration time unit.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "integer",
+          "required": false,
+          "description": "TtlDuration time value.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

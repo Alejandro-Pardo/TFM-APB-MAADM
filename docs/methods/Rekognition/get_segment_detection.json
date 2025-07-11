@@ -1,0 +1,331 @@
+{
+  "method_name": "get_segment_detection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/get_segment_detection.html",
+  "description": "Gets the segment detection results of a Amazon Rekognition Video analysis started by  StartSegmentDetection. Segment detection with Amazon Rekognition Video is an asynchronous operation. You start segment detection by calling  StartSegmentDetection which returns a job identifier ( JobId). When the segment detection operation finishes, Amazon Rekognition publishes a completion status to the Amazon Simple Notification Service topic registered in the initial call to StartSegmentDetection. To get the results of the segment detection operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. if so, call GetSegmentDetection and pass the job identifier ( JobId) from the initial call of StartSegmentDetection. GetSegmentDetection returns detected segments in an array ( Segments) of  SegmentDetection objects. Segments is sorted by the segment types specified in the SegmentTypes input parameter of StartSegmentDetection. Each element of the array includes the detected segment, the precentage confidence in the acuracy of the detected segment, the type of the segment, and the frame in which the segment was detected. Use SelectedSegmentTypes to find out the type of segment detection requested in the call to StartSegmentDetection. Use the MaxResults parameter to limit the number of segment detections returned. If there are more results than specified in MaxResults, the value of NextToken in the operation response contains a pagination token for getting the next set of results. To get the next page of results, call GetSegmentDetection and populate the NextToken request parameter with the token value returned from the previous call to GetSegmentDetection. For more information, see Detecting video segments in stored video in the Amazon Rekognition Developer Guide.",
+  "parameters": [
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "Job identifier for the text detection operation for which you want results returned. You get the job identifer from an initial call to StartSegmentDetection.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobStatus",
+          "type": "string",
+          "description": "Current status of the segment detection job.",
+          "nested_items": []
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "If the job fails, StatusMessage provides a descriptive error message.",
+          "nested_items": []
+        },
+        {
+          "name": "VideoMetadata",
+          "type": "list",
+          "description": "Currently, Amazon Rekognition Video returns a single object in the VideoMetadata array. The object contains information about the video stream in the input file that Amazon Rekognition Video chose to analyze. The VideoMetadata object includes the video codec, video format and other information. Video metadata is returned in each page of information returned by GetSegmentDetection.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Codec",
+                  "type": "string",
+                  "description": "Type of compression used in the analyzed video.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationMillis",
+                  "type": "integer",
+                  "description": "Length of the video in milliseconds.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Format",
+                  "type": "string",
+                  "description": "Format of the analyzed video. Possible values are MP4, MOV and AVI.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FrameRate",
+                  "type": "float",
+                  "description": "Number of frames per second in the video.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FrameHeight",
+                  "type": "integer",
+                  "description": "Vertical pixel dimension of the video.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FrameWidth",
+                  "type": "integer",
+                  "description": "Horizontal pixel dimension of the video.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ColorRange",
+                  "type": "string",
+                  "description": "A description of the range of luminance values in a video, either LIMITED (16 to 235) or FULL (0 to 255).",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AudioMetadata",
+          "type": "list",
+          "description": "An array of objects. There can be multiple audio streams. Each AudioMetadata object contains metadata for a single audio stream. Audio information in an AudioMetadata objects includes the audio codec, the number of audio channels, the duration of the audio stream, and the sample rate. Audio metadata is returned in each page of information returned by GetSegmentDetection.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Codec",
+                  "type": "string",
+                  "description": "The audio codec used to encode or decode the audio stream.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationMillis",
+                  "type": "integer",
+                  "description": "The duration of the audio stream in milliseconds.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SampleRate",
+                  "type": "integer",
+                  "description": "The sample rate for the audio stream.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NumberOfChannels",
+                  "type": "integer",
+                  "description": "The number of audio channels in the segment.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the previous response was incomplete (because there are more labels to retrieve), Amazon Rekognition Video returns a pagination token in the response. You can use this pagination token to retrieve the next set of text.",
+          "nested_items": []
+        },
+        {
+          "name": "Segments",
+          "type": "list",
+          "description": "An array of segments detected in a video. The array is sorted by the segment types (TECHNICAL_CUE or SHOT) specified in the SegmentTypes input parameter of StartSegmentDetection. Within each segment type the array is sorted by timestamp values.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "The type of the segment. Valid values are TECHNICAL_CUE and SHOT.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StartTimestampMillis",
+                  "type": "integer",
+                  "description": "The start time of the detected segment in milliseconds from the start of the video. This value is rounded down. For example, if the actual timestamp is 100.6667 milliseconds, Amazon Rekognition Video returns a value of 100 millis.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EndTimestampMillis",
+                  "type": "integer",
+                  "description": "The end time of the detected segment, in milliseconds, from the start of the video. This value is rounded down.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationMillis",
+                  "type": "integer",
+                  "description": "The duration of the detected segment in milliseconds.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StartTimecodeSMPTE",
+                  "type": "string",
+                  "description": "The frame-accurate SMPTE timecode, from the start of a video, for the start of a detected segment. StartTimecode is in HH:MM:SS:fr format (and ;fr for drop frame-rates).",
+                  "nested_items": []
+                },
+                {
+                  "name": "EndTimecodeSMPTE",
+                  "type": "string",
+                  "description": "The frame-accurate SMPTE timecode, from the start of a video, for the end of a detected segment. EndTimecode is in HH:MM:SS:fr format (and ;fr for drop frame-rates).",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationSMPTE",
+                  "type": "string",
+                  "description": "The duration of the timecode for the detected segment in SMPTE format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TechnicalCueSegment",
+                  "type": "dict",
+                  "description": "If the segment is a technical cue, contains information about the technical cue.",
+                  "nested_items": [
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "The type of the technical cue.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "The confidence that Amazon Rekognition Video has in the accuracy of the detected segment.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ShotSegment",
+                  "type": "dict",
+                  "description": "If the segment is a shot detection, contains information about the shot detection.",
+                  "nested_items": [
+                    {
+                      "name": "Index",
+                      "type": "integer",
+                      "description": "An Identifier for a shot detection segment detected in a video.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "The confidence that Amazon Rekognition Video has in the accuracy of the detected segment.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StartFrameNumber",
+                  "type": "integer",
+                  "description": "The frame number of the start of a video segment, using a frame index that starts with 0.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EndFrameNumber",
+                  "type": "integer",
+                  "description": "The frame number at the end of a video segment, using a frame index that starts with 0.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationFrames",
+                  "type": "integer",
+                  "description": "The duration of a video segment, expressed in frames.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SelectedSegmentTypes",
+          "type": "list",
+          "description": "An array containing the segment types requested in the call to StartSegmentDetection.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "The type of a segment (technical cue or shot detection).",
+                  "nested_items": []
+                },
+                {
+                  "name": "ModelVersion",
+                  "type": "string",
+                  "description": "The version of the model used to detect segments.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "Job identifier for the segment detection operation for which you want to obtain results. The job identifer is returned by an initial call to StartSegmentDetection.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "description": "Name of the S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "S3 object key name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "If the bucket is versioning enabled, you can specify the object version.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobTag",
+          "type": "string",
+          "description": "A job identifier specified in the call to StartSegmentDetection and returned in the job completion notification sent to your Amazon Simple Notification Service topic.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

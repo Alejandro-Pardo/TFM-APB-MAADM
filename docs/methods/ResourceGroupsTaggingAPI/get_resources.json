@@ -1,0 +1,163 @@
+{
+  "method_name": "get_resources",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/resourcegroupstaggingapi/client/get_resources.html",
+  "description": "Returns all the tagged or previously tagged resources that are located in the specified Amazon Web Services Region for the account. Depending on what information you want returned, you can also specify the following: This operation supports pagination, where the response can be sent in multiple pages. You should check the PaginationToken response parameter to determine if there are additional results available to return. Repeat the query, passing the PaginationToken response parameter value as an input to the next request until you recieve a null value. A null value for PaginationToken indicates that there are no more results waiting to be returned.",
+  "parameters": [
+    {
+      "name": "PaginationToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "TagFilters",
+      "type": "list",
+      "required": false,
+      "description": "Specifies a list of TagFilters (keys and values) to restrict the output to only those resources that have tags with the specified keys and, if included, the specified values. Each TagFilter must contain a key with values optional. A request can include up to 50 keys, and each key can include up to 20 values. Note the following when deciding how to use TagFilters: If you don't specify a TagFilter, the response includes all resources that are currently tagged or ever had a tag. Resources that currently don't have tags are shown with an empty tag set, like this: \"Tags\": []. If you specify more than one filter in a single request, the response returns only those resources that satisfy all filters. If you specify a filter that contains more than one value for a key, the response returns resources that match any of the specified values for that key. If you don't specify a value for a key, the response returns all resources that are tagged with that key, with any or no value. For example, for the following filters: filter1= {keyA,{value1}}, filter2={keyB,{value2,value3,value4}}, filter3= {keyC}: GetResources({filter1}) returns resources tagged with key1=value1 GetResources({filter2}) returns resources tagged with key2=value2 or key2=value3 or key2=value4 GetResources({filter3}) returns resources tagged with any tag with the key key3, and with any or no value GetResources({filter1,filter2,filter3}) returns resources tagged with (key1=value1) and (key2=value2 or key2=value3 or key2=value4) and (key3, any or no value) (dict) --- A list of tags (keys and values) that are used to specify the associated resources. Key (string) --- One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values. Values (list) --- One part of a key-value pair that make up a tag. A value acts as a descriptor within a tag category (key). The value can be empty or null. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ResourcesPerPage",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "TagsPerPage",
+      "type": "integer",
+      "required": false,
+      "description": "Amazon Web Services recommends using ResourcesPerPage instead of this parameter. A limit that restricts the number of tags (key and value pairs) returned by GetResources in paginated output. A resource with no tags is counted as having one tag (one key and value pair). GetResources does not split a resource and its associated tags across pages. If the specified TagsPerPage would cause such a break, a PaginationToken is returned in place of the affected resource and its tags. Use that token in another request to get the remaining data. For example, if you specify a TagsPerPage of 100 and the account has 22 resources with 10 tags each (meaning that each resource has 10 key and value pairs), the output will consist of three pages. The first page displays the first 10 resources, each with its 10 tags. The second page displays the next 10 resources, each with its 10 tags. The third page displays the remaining 2 resources, each with its 10 tags. You can set TagsPerPage to a minimum of 100 items up to a maximum of 500 items.",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceTypeFilters",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the resource types that you want included in the response. The format of each resource type is service[:resourceType]. For example, specifying a resource type of ec2 returns all Amazon EC2 resources (which includes EC2 instances). Specifying a resource type of ec2:instance returns only EC2 instances. The string for each service name and resource type is the same as that embedded in a resource's Amazon Resource Name (ARN). For the list of services whose resources you can use in this parameter, see Services that support the Resource Groups Tagging API. You can specify multiple resource types by using an array. The array can include up to 100 items. Note that the length constraint requirement applies to each resource type filter. For example, the following string would limit the response to only Amazon EC2 instances, Amazon S3 buckets, or any Audit Manager resource: ec2:instance,s3:bucket,auditmanager (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "IncludeComplianceDetails",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExcludeCompliantResources",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether to exclude resources that are compliant with the tag policy. Set this to true if you are interested in retrieving information on noncompliant resources only. You can use this parameter only if the IncludeComplianceDetails parameter is also set to true.",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceARNList",
+      "type": "list",
+      "required": false,
+      "description": "Specifies a list of ARNs of resources for which you want to retrieve tag data. You can't specify both this parameter and any of the pagination parameters ( ResourcesPerPage, TagsPerPage, PaginationToken) in the same request. If you specify both, you get an Invalid Parameter exception. If a resource specified by this parameter doesn't exist, it doesn't generate an error; it simply isn't included in the response. An ARN (Amazon Resource Name) uniquely identifies a resource. For more information, see Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces in the Amazon Web Services General Reference. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "PaginationToken",
+          "type": "string",
+          "description": "A string that indicates that there is more data available than this response contains. To receive the next part of the response, specify this response value as the PaginationToken value in the request for the next page.",
+          "nested_items": []
+        },
+        {
+          "name": "ResourceTagMappingList",
+          "type": "list",
+          "description": "A list of resource ARNs and the tags (keys and values) associated with each.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ResourceARN",
+                  "type": "string",
+                  "description": "The ARN of the resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Tags",
+                  "type": "list",
+                  "description": "The tags that have been applied to one or more Amazon Web Services resources.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Key",
+                          "type": "string",
+                          "description": "One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "description": "One part of a key-value pair that make up a tag. A value acts as a descriptor within a tag category (key). The value can be empty or null.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ComplianceDetails",
+                  "type": "dict",
+                  "description": "Information that shows whether a resource is compliant with the effective tag policy, including details on any noncompliant tag keys.",
+                  "nested_items": [
+                    {
+                      "name": "NoncompliantKeys",
+                      "type": "list",
+                      "description": "These tag keys on the resource are noncompliant with the effective tag policy.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "KeysWithNoncompliantValues",
+                      "type": "list",
+                      "description": "These are keys defined in the effective policy that are on the resource with either incorrect case treatment or noncompliant values.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ComplianceStatus",
+                      "type": "boolean",
+                      "description": "Whether a resource is compliant with the effective tag policy.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

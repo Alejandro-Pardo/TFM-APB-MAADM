@@ -1,0 +1,177 @@
+{
+  "method_name": "assume_role_with_saml",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sts/client/assume_role_with_saml.html",
+  "description": "Returns a set of temporary security credentials for users who have been authenticated via a SAML authentication response. This operation provides a mechanism for tying an enterprise identity store or directory to role-based Amazon Web Services access without user-specific credentials or configuration. For a comparison of AssumeRoleWithSAML with the other API operations that produce temporary credentials, see Requesting Temporary Security Credentials and Compare STS credentials in the IAM User Guide. The temporary security credentials returned by this operation consist of an access key ID, a secret access key, and a security token. Applications can use these temporary security credentials to sign calls to Amazon Web Services services. By default, the temporary security credentials created by AssumeRoleWithSAML last for one hour. However, you can use the optional DurationSeconds parameter to specify the duration of your session. Your role session lasts for the duration that you specify, or until the time specified in the SAML authentication response's SessionNotOnOrAfter value, whichever is shorter. You can provide a DurationSeconds value from 900 seconds (15 minutes) up to the maximum session duration setting for the role. This setting can have a value from 1 hour to 12 hours. To learn how to view the maximum value for your role, see View the Maximum Session Duration Setting for a Role in the IAM User Guide. The maximum session duration limit applies when you use the AssumeRole* API operations or the assume-role* CLI commands. However the limit does not apply when you use those operations to create a console URL. For more information, see Using IAM Roles in the IAM User Guide. The temporary security credentials created by AssumeRoleWithSAML can be used to make API calls to any Amazon Web Services service with the following exception: you cannot call the STS GetFederationToken or GetSessionToken API operations. (Optional) You can pass inline or managed session policies to this operation. You can pass a single JSON policy document to use as an inline session policy. You can also specify up to 10 managed policy Amazon Resource Names (ARNs) to use as managed session policies. The plaintext that you use for both inline and managed session policies can't exceed 2,048 characters. Passing policies to this operation returns new temporary credentials. The resulting session's permissions are the intersection of the role's identity-based policy and the session policies. You can use the role's temporary credentials in subsequent Amazon Web Services API calls to access resources in the account that owns the role. You cannot use session policies to grant more permissions than those allowed by the identity-based policy of the role that is being assumed. For more information, see Session Policies in the IAM User Guide. Calling AssumeRoleWithSAML does not require the use of Amazon Web Services security credentials. The identity of the caller is validated by using keys in the metadata document that is uploaded for the SAML provider entity for your identity provider. (Optional) You can configure your IdP to pass attributes into your SAML assertion as session tags. Each session tag consists of a key name and an associated value. For more information about session tags, see Passing Session Tags in STS in the IAM User Guide. You can pass up to 50 session tags. The plaintext session tag keys can't exceed 128 characters and the values can't exceed 256 characters. For these and additional limits, see IAM and STS Character Limits in the IAM User Guide. You can pass a session tag with the same key as a tag that is attached to the role. When you do, session tags override the role's tags with the same key. An administrator must grant you the permissions necessary to pass session tags. The administrator can also create granular permissions to allow you to pass only specific session tags. For more information, see Tutorial: Using Tags for Attribute-Based Access Control in the IAM User Guide. You can set the session tags as transitive. Transitive tags persist during role chaining. For more information, see Chaining Roles with Session Tags in the IAM User Guide. Before your application can call AssumeRoleWithSAML, you must configure your SAML identity provider (IdP) to issue the claims required by Amazon Web Services. Additionally, you must use Identity and Access Management (IAM) to create a SAML provider entity in your Amazon Web Services account that represents your identity provider. You must also create an IAM role that specifies this SAML provider in its trust policy. For more information, see the following resources:",
+  "parameters": [
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the role that the caller is assuming.",
+      "nested_params": []
+    },
+    {
+      "name": "PrincipalArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the SAML provider in IAM that describes the IdP.",
+      "nested_params": []
+    },
+    {
+      "name": "SAMLAssertion",
+      "type": "string",
+      "required": true,
+      "description": "The base64 encoded SAML authentication response provided by the IdP. For more information, see Configuring a Relying Party and Adding Claims in the IAM User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "PolicyArns",
+      "type": "list",
+      "required": false,
+      "description": "The Amazon Resource Names (ARNs) of the IAM managed policies that you want to use as managed session policies. The policies must exist in the same account as the role. This parameter is optional. You can provide up to 10 managed policy ARNs. However, the plaintext that you use for both inline and managed session policies can't exceed 2,048 characters. For more information about ARNs, see Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces in the Amazon Web Services General Reference. Passing policies to this operation returns new temporary credentials. The resulting session's permissions are the intersection of the role's identity-based policy and the session policies. You can use the role's temporary credentials in subsequent Amazon Web Services API calls to access resources in the account that owns the role. You cannot use session policies to grant more permissions than those allowed by the identity-based policy of the role that is being assumed. For more information, see Session Policies in the IAM User Guide. (dict) --- A reference to the IAM managed policy that is passed as a session policy for a role session or a federated user session. arn (string) --- The Amazon Resource Name (ARN) of the IAM managed policy to use as a session policy for the role. For more information about ARNs, see Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces in the Amazon Web Services General Reference.",
+      "nested_params": [
+        {
+          "name": "arn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the IAM managed policy to use as a session policy for the role. For more information about ARNs, see Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces in the Amazon Web Services General Reference.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Policy",
+      "type": "string",
+      "required": false,
+      "description": "An IAM policy in JSON format that you want to use as an inline session policy. This parameter is optional. Passing policies to this operation returns new temporary credentials. The resulting session's permissions are the intersection of the role's identity-based policy and the session policies. You can use the role's temporary credentials in subsequent Amazon Web Services API calls to access resources in the account that owns the role. You cannot use session policies to grant more permissions than those allowed by the identity-based policy of the role that is being assumed. For more information, see Session Policies in the IAM User Guide. The plaintext that you use for both inline and managed session policies can't exceed 2,048 characters. The JSON policy characters can be any ASCII character from the space character to the end of the valid character list (u0020 through u00FF). It can also include the tab (u0009), linefeed (u000A), and carriage return (u000D) characters. For more information about role session permissions, see Session policies.",
+      "nested_params": []
+    },
+    {
+      "name": "DurationSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "The duration, in seconds, of the role session. Your role session lasts for the duration that you specify for the DurationSeconds parameter, or until the time specified in the SAML authentication response's SessionNotOnOrAfter value, whichever is shorter. You can provide a DurationSeconds value from 900 seconds (15 minutes) up to the maximum session duration setting for the role. This setting can have a value from 1 hour to 12 hours. If you specify a value higher than this setting, the operation fails. For example, if you specify a session duration of 12 hours, but your administrator set the maximum session duration to 6 hours, your operation fails. To learn how to view the maximum value for your role, see View the Maximum Session Duration Setting for a Role in the IAM User Guide. By default, the value is set to 3600 seconds.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Credentials",
+          "type": "dict",
+          "description": "The temporary security credentials, which include an access key ID, a secret access key, and a security (or session) token.",
+          "nested_items": [
+            {
+              "name": "AccessKeyId",
+              "type": "string",
+              "description": "The access key ID that identifies the temporary security credentials.",
+              "nested_items": []
+            },
+            {
+              "name": "SecretAccessKey",
+              "type": "string",
+              "description": "The secret access key that can be used to sign requests.",
+              "nested_items": []
+            },
+            {
+              "name": "SessionToken",
+              "type": "string",
+              "description": "The token that users must pass to the service API to use the temporary credentials.",
+              "nested_items": []
+            },
+            {
+              "name": "Expiration",
+              "type": "datetime",
+              "description": "The date on which the current credentials expire.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "AssumedRoleUser",
+          "type": "dict",
+          "description": "The identifiers for the temporary security credentials that the operation returns.",
+          "nested_items": [
+            {
+              "name": "AssumedRoleId",
+              "type": "string",
+              "description": "A unique identifier that contains the role ID and the role session name of the role that is being assumed. The role ID is generated by Amazon Web Services when the role is created.",
+              "nested_items": []
+            },
+            {
+              "name": "Arn",
+              "type": "string",
+              "description": "The ARN of the temporary security credentials that are returned from the  AssumeRole action. For more information about ARNs and how to use them in policies, see IAM Identifiers in the IAM User Guide.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "PackedPolicySize",
+          "type": "integer",
+          "description": "A percentage value that indicates the packed size of the session policies and session tags combined passed in the request. The request fails if the packed size is greater than 100 percent, which means the policies and tags exceeded the allowed space.",
+          "nested_items": []
+        },
+        {
+          "name": "Subject",
+          "type": "string",
+          "description": "The value of the NameID element in the Subject element of the SAML assertion.",
+          "nested_items": []
+        },
+        {
+          "name": "SubjectType",
+          "type": "string",
+          "description": "The format of the name ID, as defined by the Format attribute in the NameID element of the SAML assertion. Typical examples of the format are transient or persistent.",
+          "nested_items": []
+        },
+        {
+          "name": "Issuer",
+          "type": "string",
+          "description": "The value of the Issuer element of the SAML assertion.",
+          "nested_items": []
+        },
+        {
+          "name": "Audience",
+          "type": "string",
+          "description": "The value of the Recipient attribute of the SubjectConfirmationData element of the SAML assertion.",
+          "nested_items": []
+        },
+        {
+          "name": "NameQualifier",
+          "type": "string",
+          "description": "A hash value based on the concatenation of the following:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "The Issuer response value.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "The Amazon Web Services account ID.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "the last part of the ARN",
+              "description": "The friendly name (the last part of the ARN) of the SAML provider in IAM.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "SourceIdentity",
+          "type": "string",
+          "description": "The value in the SourceIdentity attribute in the SAML assertion. The source identity value persists across chained role sessions.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

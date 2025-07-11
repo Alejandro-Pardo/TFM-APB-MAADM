@@ -1,0 +1,275 @@
+{
+  "method_name": "get_text_detection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/get_text_detection.html",
+  "description": "Gets the text detection results of a Amazon Rekognition Video analysis started by  StartTextDetection. Text detection with Amazon Rekognition Video is an asynchronous operation. You start text detection by calling  StartTextDetection which returns a job identifier ( JobId) When the text detection operation finishes, Amazon Rekognition publishes a completion status to the Amazon Simple Notification Service topic registered in the initial call to StartTextDetection. To get the results of the text detection operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. if so, call GetTextDetection and pass the job identifier ( JobId) from the initial call of StartLabelDetection. GetTextDetection returns an array of detected text ( TextDetections) sorted by the time the text was detected, up to 100 words per frame of video. Each element of the array includes the detected text, the precentage confidence in the acuracy of the detected text, the time the text was detected, bounding box information for where the text was located, and unique identifiers for words and their lines. Use MaxResults parameter to limit the number of text detections returned. If there are more results than specified in MaxResults, the value of NextToken in the operation response contains a pagination token for getting the next set of results. To get the next page of results, call GetTextDetection and populate the NextToken request parameter with the token value returned from the previous call to GetTextDetection.",
+  "parameters": [
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "Job identifier for the text detection operation for which you want results returned. You get the job identifer from an initial call to StartTextDetection.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobStatus",
+          "type": "string",
+          "description": "Current status of the text detection job.",
+          "nested_items": []
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "If the job fails, StatusMessage provides a descriptive error message.",
+          "nested_items": []
+        },
+        {
+          "name": "VideoMetadata",
+          "type": "dict",
+          "description": "Information about a video that Amazon Rekognition analyzed. Videometadata is returned in every page of paginated responses from a Amazon Rekognition video operation.",
+          "nested_items": [
+            {
+              "name": "Codec",
+              "type": "string",
+              "description": "Type of compression used in the analyzed video.",
+              "nested_items": []
+            },
+            {
+              "name": "DurationMillis",
+              "type": "integer",
+              "description": "Length of the video in milliseconds.",
+              "nested_items": []
+            },
+            {
+              "name": "Format",
+              "type": "string",
+              "description": "Format of the analyzed video. Possible values are MP4, MOV and AVI.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameRate",
+              "type": "float",
+              "description": "Number of frames per second in the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameHeight",
+              "type": "integer",
+              "description": "Vertical pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameWidth",
+              "type": "integer",
+              "description": "Horizontal pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "ColorRange",
+              "type": "string",
+              "description": "A description of the range of luminance values in a video, either LIMITED (16 to 235) or FULL (0 to 255).",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "TextDetections",
+          "type": "list",
+          "description": "An array of text detected in the video. Each element contains the detected text, the time in milliseconds from the start of the video that the text was detected, and where it was detected on the screen.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Timestamp",
+                  "type": "integer",
+                  "description": "The time, in milliseconds from the start of the video, that the text was detected. Note that Timestamp is not guaranteed to be accurate to the individual frame where the text first appears.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TextDetection",
+                  "type": "dict",
+                  "description": "Details about text detected in a video.",
+                  "nested_items": [
+                    {
+                      "name": "DetectedText",
+                      "type": "string",
+                      "description": "The word or line of text recognized by Amazon Rekognition.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "The type of text that was detected.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Id",
+                      "type": "integer",
+                      "description": "The identifier for the detected text. The identifier is only unique for a single call to DetectText.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ParentId",
+                      "type": "integer",
+                      "description": "The Parent identifier for the detected text identified by the value of ID. If the type of detected text is LINE, the value of ParentId is Null.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "The confidence that Amazon Rekognition has in the accuracy of the detected text and the accuracy of the geometry points around the detected text.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "BoundingBox",
+                          "type": "dict",
+                          "description": "An axis-aligned coarse representation of the detected item's location on the image.",
+                          "nested_items": [
+                            {
+                              "name": "Width",
+                              "type": "float",
+                              "description": "Width of the bounding box as a ratio of the overall image width.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Height",
+                              "type": "float",
+                              "description": "Height of the bounding box as a ratio of the overall image height.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Left",
+                              "type": "float",
+                              "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Top",
+                              "type": "float",
+                              "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Polygon",
+                          "type": "list",
+                          "description": "Within the bounding box, a fine-grained polygon around the detected item.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "X",
+                                  "type": "float",
+                                  "description": "The value of the X coordinate for a point on a Polygon.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Y",
+                                  "type": "float",
+                                  "description": "The value of the Y coordinate for a point on a Polygon.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the response is truncated, Amazon Rekognition Video returns this token that you can use in the subsequent request to retrieve the next set of text.",
+          "nested_items": []
+        },
+        {
+          "name": "TextModelVersion",
+          "type": "string",
+          "description": "Version number of the text detection model that was used to detect text.",
+          "nested_items": []
+        },
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "Job identifier for the text detection operation for which you want to obtain results. The job identifer is returned by an initial call to StartTextDetection.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "description": "Name of the S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "S3 object key name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "If the bucket is versioning enabled, you can specify the object version.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobTag",
+          "type": "string",
+          "description": "A job identifier specified in the call to StartTextDetection and returned in the job completion notification sent to your Amazon Simple Notification Service topic.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "method_name": "create_connector",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/pca-connector-scep/client/create_connector.html",
+  "description": "Creates a SCEP connector. A SCEP connector links Amazon Web Services Private Certificate Authority to your SCEP-compatible devices and mobile device management (MDM) systems. Before you create a connector, you must complete a set of prerequisites, including creation of a private certificate authority (CA) to use with this connector. For more information, see Connector for SCEP prerequisites.",
+  "parameters": [
+    {
+      "name": "CertificateAuthorityArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the Amazon Web Services Private Certificate Authority certificate authority to use with this connector. Due to security vulnerabilities present in the SCEP protocol, we recommend using a private CA that's dedicated for use with the connector. To retrieve the private CAs associated with your account, you can call ListCertificateAuthorities using the Amazon Web Services Private CA API.",
+      "nested_params": []
+    },
+    {
+      "name": "MobileDeviceManagement",
+      "type": "dict",
+      "required": true,
+      "description": "If you don't supply a value, by default Connector for SCEP creates a connector for general-purpose use. A general-purpose connector is designed to work with clients or endpoints that support the SCEP protocol, except Connector for SCEP for Microsoft Intune. With connectors for general-purpose use, you manage SCEP challenge passwords using Connector for SCEP. For information about considerations and limitations with using Connector for SCEP, see Considerations and Limitations. If you provide an IntuneConfiguration, Connector for SCEP creates a connector for use with Microsoft Intune, and you manage the challenge passwords using Microsoft Intune. For more information, see Using Connector for SCEP for Microsoft Intune. Intune (dict) --- Configuration settings for use with Microsoft Intune. For information about using Connector for SCEP for Microsoft Intune, see Using Connector for SCEP for Microsoft Intune. The directory (tenant) ID from your Microsoft Entra ID app registration. The primary domain from your Microsoft Entra ID app registration.",
+      "nested_params": [
+        {
+          "name": "Intune",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration settings for use with Microsoft Intune. For information about using Connector for SCEP for Microsoft Intune, see Using Connector for SCEP for Microsoft Intune.",
+          "nested_params": [
+            {
+              "name": "AzureApplicationId",
+              "type": "string",
+              "required": false,
+              "description": "The directory (tenant) ID from your Microsoft Entra ID app registration.",
+              "nested_params": []
+            },
+            {
+              "name": "Domain",
+              "type": "string",
+              "required": false,
+              "description": "The primary domain from your Microsoft Entra ID app registration.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "Custom string that can be used to distinguish between calls to the CreateChallenge action. Client tokens for CreateChallenge time out after five minutes. Therefore, if you call CreateChallenge multiple times with the same client token within five minutes, Connector for SCEP recognizes that you are requesting only one challenge and will only respond with one. If you change the client token for each call, Connector for SCEP recognizes that you are requesting multiple challenge passwords. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "The key-value pairs to associate with the resource. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ConnectorArn",
+          "type": "string",
+          "description": "Returns the Amazon Resource Name (ARN) of the connector.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

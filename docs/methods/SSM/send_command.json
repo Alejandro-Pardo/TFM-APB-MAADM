@@ -1,0 +1,567 @@
+{
+  "method_name": "send_command",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm/client/send_command.html",
+  "description": "Runs commands on one or more managed nodes.",
+  "parameters": [
+    {
+      "name": "InstanceIds",
+      "type": "list",
+      "required": false,
+      "description": "The IDs of the managed nodes where the command should run. Specifying managed node IDs is most useful when you are targeting a limited number of managed nodes, though you can specify up to 50 IDs. To target a larger number of managed nodes, or if you prefer not to list individual node IDs, we recommend using the Targets option instead. Using Targets, which accepts tag key-value pairs to identify the managed nodes to send commands to, you can a send command to tens, hundreds, or thousands of nodes at once. For more information about how to use targets, see Run commands at scale in the Amazon Web Services Systems Manager User Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Targets",
+      "type": "list",
+      "required": false,
+      "description": "An array of search criteria that targets managed nodes using a Key,Value combination that you specify. Specifying targets is most useful when you want to send a command to a large number of managed nodes at once. Using Targets, which accepts tag key-value pairs to identify managed nodes, you can send a command to tens, hundreds, or thousands of nodes at once. To send a command to a smaller number of managed nodes, you can use the InstanceIds option instead. For more information about how to use targets, see Run commands at scale in the Amazon Web Services Systems Manager User Guide. (dict) --- An array of search criteria that targets managed nodes using a key-value pair that you specify. Supported formats include the following. Key=tag-key,Values=tag-value-1,tag-value-2 Key=tag:tag-key,Values=tag-value Key=ResourceGroup,Values=resource-group-name Key=ParameterValues,Values=value-1,value-2,value-3 To target all instances in the Amazon Web Services Region: Key=AWS::EC2::Instance,Values=* Key=InstanceIds,Values=* Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 Key=resource-groups:Name,Values=resource-group-name Additionally, Maintenance Windows support targeting resource types: Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2 Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 To target all instances in the Amazon Web Services Region: Key=InstanceIds,Values=* For more information about how to send commands that target managed nodes using Key,Value parameters, see Targeting multiple managed nodes in the Amazon Web Services Systems Manager User Guide. Key (string) --- User-defined criteria for sending commands that target managed nodes that meet the criteria. Values (list) --- User-defined criteria that maps to Key. For example, if you specified tag:ServerRole, you could specify value:WebServer to run a command on instances that include EC2 tags of ServerRole,WebServer. Depending on the type of target, the maximum number of values for a key might be lower than the global maximum of 50. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "DocumentName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Amazon Web Services Systems Manager document (SSM document) to run. This can be a public document or a custom document. To run a shared document belonging to another account, specify the document Amazon Resource Name (ARN). For more information about how to use shared documents, see Sharing SSM documents in the Amazon Web Services Systems Manager User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "DocumentVersion",
+      "type": "string",
+      "required": false,
+      "description": "The SSM document version to use in the request. You can specify $DEFAULT, $LATEST, or a specific version number. If you run commands by using the Command Line Interface (Amazon Web Services CLI), then you must escape the first two options by using a backslash. If you specify a version number, then you don't need to use the backslash. For example: ---document-version '$DEFAULT' ---document-version '$LATEST' ---document-version '3'",
+      "nested_params": []
+    },
+    {
+      "name": "DocumentHash",
+      "type": "string",
+      "required": false,
+      "description": "The Sha256 or Sha1 hash created by the system when the document was created.",
+      "nested_params": []
+    },
+    {
+      "name": "DocumentHashType",
+      "type": "string",
+      "required": false,
+      "description": "Sha256 or Sha1.",
+      "nested_params": []
+    },
+    {
+      "name": "TimeoutSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Comment",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Parameters",
+      "type": "dict",
+      "required": false,
+      "description": "The required and optional parameters specified in the document being run. (string) --- (list) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "OutputS3Region",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OutputS3BucketName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OutputS3KeyPrefix",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxConcurrency",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxErrors",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ServiceRoleArn",
+      "type": "string",
+      "required": false,
+      "description": "The ARN of the Identity and Access Management (IAM) service role to use to publish Amazon Simple Notification Service (Amazon SNS) notifications for Run Command commands. This role must provide the sns:Publish permission for your notification topic. For information about creating and using this service role, see Monitoring Systems Manager status changes using Amazon SNS notifications in the Amazon Web Services Systems Manager User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "NotificationConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Configurations for sending notifications. NotificationArn (string) --- An Amazon Resource Name (ARN) for an Amazon Simple Notification Service (Amazon SNS) topic. Run Command pushes notifications about command status changes to this topic. NotificationEvents (list) --- The different events for which you can receive notifications. To learn more about these events, see Monitoring Systems Manager status changes using Amazon SNS notifications in the Amazon Web Services Systems Manager User Guide. (string) --- NotificationType (string) --- The type of notification. Command: Receive notification when the status of a command changes. Invocation: For commands sent to multiple managed nodes, receive notification on a per-node basis when the status of a command changes.",
+      "nested_params": [
+        {
+          "name": "NotificationArn",
+          "type": "string",
+          "required": false,
+          "description": "An Amazon Resource Name (ARN) for an Amazon Simple Notification Service (Amazon SNS) topic. Run Command pushes notifications about command status changes to this topic.",
+          "nested_params": []
+        },
+        {
+          "name": "NotificationEvents",
+          "type": "list",
+          "required": false,
+          "description": "The different events for which you can receive notifications. To learn more about these events, see Monitoring Systems Manager status changes using Amazon SNS notifications in the Amazon Web Services Systems Manager User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "NotificationType",
+          "type": "string",
+          "required": false,
+          "description": "The type of notification.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "CloudWatchOutputConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Enables Amazon Web Services Systems Manager to send Run Command output to Amazon CloudWatch Logs. Run Command is a tool in Amazon Web Services Systems Manager. CloudWatchLogGroupName (string) --- The name of the CloudWatch Logs log group where you want to send command output. If you don't specify a group name, Amazon Web Services Systems Manager automatically creates a log group for you. The log group uses the following naming format: aws/ssm/SystemsManagerDocumentName CloudWatchOutputEnabled (boolean) --- Enables Systems Manager to send command output to CloudWatch Logs.",
+      "nested_params": [
+        {
+          "name": "CloudWatchLogGroupName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the CloudWatch Logs log group where you want to send command output. If you don't specify a group name, Amazon Web Services Systems Manager automatically creates a log group for you. The log group uses the following naming format: aws/ssm/SystemsManagerDocumentName.",
+          "nested_params": []
+        },
+        {
+          "name": "CloudWatchOutputEnabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Enables Systems Manager to send command output to CloudWatch Logs.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AlarmConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The CloudWatch alarm you want to apply to your command. IgnorePollAlarmFailure (boolean) --- When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false. The name of the CloudWatch alarm specified in the configuration. (dict) --- A CloudWatch alarm you apply to an automation or command. The name of your CloudWatch alarm.",
+      "nested_params": [
+        {
+          "name": "IgnorePollAlarmFailure",
+          "type": "boolean",
+          "required": false,
+          "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+          "nested_params": []
+        },
+        {
+          "name": "Alarms",
+          "type": "list",
+          "required": false,
+          "description": "The name of the CloudWatch alarm specified in the configuration.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of your CloudWatch alarm.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "CommandId",
+              "type": "string",
+              "description": "A unique identifier for this command.",
+              "nested_items": []
+            },
+            {
+              "name": "DocumentName",
+              "type": "string",
+              "description": "The name of the document requested for execution.",
+              "nested_items": []
+            },
+            {
+              "name": "DocumentVersion",
+              "type": "string",
+              "description": "The Systems Manager document (SSM document) version.",
+              "nested_items": []
+            },
+            {
+              "name": "Comment",
+              "type": "string",
+              "description": "User-specified information about the command, such as a brief description of what the command should do.",
+              "nested_items": []
+            },
+            {
+              "name": "ExpiresAfter",
+              "type": "datetime",
+              "description": "If a command expires, it changes status to DeliveryTimedOut for all invocations that have the status InProgress, Pending, or Delayed. ExpiresAfter is calculated based on the total timeout for the overall command. For more information, see Understanding command timeout values in the Amazon Web Services Systems Manager User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "Parameters",
+              "type": "dict",
+              "description": "The parameter values to be inserted in the document when running the command.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "list",
+                      "description": "(list) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "InstanceIds",
+              "type": "list",
+              "description": "The managed node IDs against which this command was requested.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Targets",
+              "type": "list",
+              "description": "An array of search criteria that targets managed nodes using a Key,Value combination that you specify. Targets is required if you don't provide one or more managed node IDs in the call.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Key=tag-key,Values=tag-value-1,tag-value-2",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RequestedDateTime",
+              "type": "datetime",
+              "description": "The date and time the command was requested.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The status of the command.",
+              "nested_items": []
+            },
+            {
+              "name": "StatusDetails",
+              "type": "string",
+              "description": "A detailed status of the command execution. StatusDetails includes more information than Status because it includes states resulting from error and concurrency control parameters. StatusDetails can show different results than Status. For more information about these statuses, see Understanding command statuses in the Amazon Web Services Systems Manager User Guide. StatusDetails can be one of the following values:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Pending: The command hasn't been sent to any managed nodes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "In Progress: The command has been sent to at least one managed node but hasn't reached a final state on all managed nodes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Success: The command successfully ran on all invocations. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Delivery Timed Out: The value of MaxErrors or more command invocations shows a status of Delivery Timed Out. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Execution Timed Out: The value of MaxErrors or more command invocations shows a status of Execution Timed Out. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Failed: The value of MaxErrors or more command invocations shows a status of Failed. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Incomplete: The command was attempted on all managed nodes and one or more invocations doesn't have a value of Success but not enough invocations failed for the status to be Failed. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Cancelled: The command was terminated before it was completed. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Rate Exceeded: The number of managed nodes targeted by the command exceeded the account limit for pending invocations. The system has canceled the command before running it on any managed node. This is a terminal state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Delayed: The system attempted to send the command to the managed node but wasn't successful. The system retries again.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "OutputS3Region",
+              "type": "string",
+              "description": "(Deprecated) You can no longer specify this parameter. The system ignores it. Instead, Systems Manager automatically determines the Amazon Web Services Region of the S3 bucket.",
+              "nested_items": []
+            },
+            {
+              "name": "OutputS3BucketName",
+              "type": "string",
+              "description": "The S3 bucket where the responses to the command executions should be stored. This was requested when issuing the command.",
+              "nested_items": []
+            },
+            {
+              "name": "OutputS3KeyPrefix",
+              "type": "string",
+              "description": "The S3 directory path inside the bucket where the responses to the command executions should be stored. This was requested when issuing the command.",
+              "nested_items": []
+            },
+            {
+              "name": "MaxConcurrency",
+              "type": "string",
+              "description": "The maximum number of managed nodes that are allowed to run the command at the same time. You can specify a number of managed nodes, such as 10, or a percentage of nodes, such as 10%. The default value is 50. For more information about how to use MaxConcurrency, see Amazon Web Services Systems Manager Run Command in the Amazon Web Services Systems Manager User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "MaxErrors",
+              "type": "string",
+              "description": "The maximum number of errors allowed before the system stops sending the command to additional targets. You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 0. For more information about how to use MaxErrors, see Amazon Web Services Systems Manager Run Command in the Amazon Web Services Systems Manager User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "TargetCount",
+              "type": "integer",
+              "description": "The number of targets for the command.",
+              "nested_items": []
+            },
+            {
+              "name": "CompletedCount",
+              "type": "integer",
+              "description": "The number of targets for which the command invocation reached a terminal state. Terminal states include the following: Success, Failed, Execution Timed Out, Delivery Timed Out, Cancelled, Terminated, or Undeliverable.",
+              "nested_items": []
+            },
+            {
+              "name": "ErrorCount",
+              "type": "integer",
+              "description": "The number of targets for which the status is Failed or Execution Timed Out.",
+              "nested_items": []
+            },
+            {
+              "name": "DeliveryTimedOutCount",
+              "type": "integer",
+              "description": "The number of targets for which the status is Delivery Timed Out.",
+              "nested_items": []
+            },
+            {
+              "name": "ServiceRole",
+              "type": "string",
+              "description": "The Identity and Access Management (IAM) service role that Run Command, a tool in Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes.",
+              "nested_items": []
+            },
+            {
+              "name": "NotificationConfig",
+              "type": "dict",
+              "description": "Configurations for sending notifications about command status changes.",
+              "nested_items": [
+                {
+                  "name": "NotificationArn",
+                  "type": "string",
+                  "description": "An Amazon Resource Name (ARN) for an Amazon Simple Notification Service (Amazon SNS) topic. Run Command pushes notifications about command status changes to this topic.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NotificationEvents",
+                  "type": "list",
+                  "description": "The different events for which you can receive notifications. To learn more about these events, see Monitoring Systems Manager status changes using Amazon SNS notifications in the Amazon Web Services Systems Manager User Guide.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "NotificationType",
+                  "type": "string",
+                  "description": "The type of notification.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Command: Receive notification when the status of a command changes.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Invocation: For commands sent to multiple managed nodes, receive notification on a per-node basis when the status of a command changes.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CloudWatchOutputConfig",
+              "type": "dict",
+              "description": "Amazon CloudWatch Logs information where you want Amazon Web Services Systems Manager to send the command output.",
+              "nested_items": [
+                {
+                  "name": "CloudWatchLogGroupName",
+                  "type": "string",
+                  "description": "The name of the CloudWatch Logs log group where you want to send command output. If you don't specify a group name, Amazon Web Services Systems Manager automatically creates a log group for you. The log group uses the following naming format:",
+                  "nested_items": []
+                },
+                {
+                  "name": "CloudWatchOutputEnabled",
+                  "type": "boolean",
+                  "description": "Enables Systems Manager to send command output to CloudWatch Logs.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TimeoutSeconds",
+              "type": "integer",
+              "description": "The TimeoutSeconds value specified for a command.",
+              "nested_items": []
+            },
+            {
+              "name": "AlarmConfiguration",
+              "type": "dict",
+              "description": "The details for the CloudWatch alarm applied to your command.",
+              "nested_items": [
+                {
+                  "name": "IgnorePollAlarmFailure",
+                  "type": "boolean",
+                  "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Alarms",
+                  "type": "list",
+                  "description": "The name of the CloudWatch alarm specified in the configuration.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of your CloudWatch alarm.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TriggeredAlarms",
+              "type": "list",
+              "description": "The CloudWatch alarm that was invoked by the command.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "description": "The name of your CloudWatch alarm.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "State",
+                      "type": "string",
+                      "description": "The state of your CloudWatch alarm.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

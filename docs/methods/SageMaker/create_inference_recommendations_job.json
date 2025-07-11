@@ -1,0 +1,488 @@
+{
+  "method_name": "create_inference_recommendations_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker/client/create_inference_recommendations_job.html",
+  "description": "Starts a recommendation job. You can create either an instance recommendation or load test job.",
+  "parameters": [
+    {
+      "name": "JobName",
+      "type": "string",
+      "required": true,
+      "description": "A name for the recommendation job. The name must be unique within the Amazon Web Services Region and within your Amazon Web Services account. The job name is passed down to the resources created by the recommendation job. The names of resources (such as the model, endpoint configuration, endpoint, and compilation) that are prefixed with the job name are truncated at 40 characters.",
+      "nested_params": []
+    },
+    {
+      "name": "JobType",
+      "type": "string",
+      "required": true,
+      "description": "Defines the type of recommendation job. Specify Default to initiate an instance recommendation and Advanced to initiate a load test. If left unspecified, Amazon SageMaker Inference Recommender will run an instance recommendation ( DEFAULT) job.",
+      "nested_params": []
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker to perform tasks on your behalf.",
+      "nested_params": []
+    },
+    {
+      "name": "InputConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Provides information about the versioned model package Amazon Resource Name (ARN), the traffic pattern, and endpoint configurations. ModelPackageVersionArn (string) --- The Amazon Resource Name (ARN) of a versioned model package. ModelName (string) --- The name of the created model. JobDurationInSeconds (integer) --- Specifies the maximum duration of the job, in seconds. The maximum value is 18,000 seconds. TrafficPattern (dict) --- Specifies the traffic pattern of the job. TrafficType (string) --- Defines the traffic patterns. Choose either PHASES or STAIRS. Phases (list) --- Defines the phases traffic specification. (dict) --- Defines the traffic pattern. InitialNumberOfUsers (integer) --- Specifies how many concurrent users to start with. The value should be between 1 and 3. SpawnRate (integer) --- Specified how many new users to spawn in a minute. DurationInSeconds (integer) --- Specifies how long a traffic phase should be. For custom load tests, the value should be between 120 and 3600. This value should not exceed JobDurationInSeconds. Stairs (dict) --- Defines the stairs traffic pattern. DurationInSeconds (integer) --- Defines how long each traffic step should be. NumberOfSteps (integer) --- Specifies how many steps to perform during traffic. UsersPerStep (integer) --- Specifies how many new users to spawn in each step. ResourceLimit (dict) --- Defines the resource limit of the job. MaxNumberOfTests (integer) --- Defines the maximum number of load tests. MaxParallelOfTests (integer) --- Defines the maximum number of parallel load tests. EndpointConfigurations (list) --- Specifies the endpoint configuration to use for a job. (dict) --- The endpoint configuration for the load test. InstanceType (string) --- The instance types to use for the load test. ServerlessConfig (dict) --- Specifies the serverless configuration for an endpoint variant. The memory size of your serverless endpoint. Valid values are in 1 GB increments: 1024 MB, 2048 MB, 3072 MB, 4096 MB, 5120 MB, or 6144 MB. The maximum number of concurrent invocations your serverless endpoint can process. ProvisionedConcurrency (integer) --- The amount of provisioned concurrency to allocate for the serverless endpoint. Should be less than or equal to MaxConcurrency. InferenceSpecificationName (string) --- The inference specification name in the model package version. EnvironmentParameterRanges (dict) --- The parameter you want to benchmark against. CategoricalParameterRanges (list) --- Specified a list of parameters for each category. (dict) --- Environment parameters you want to benchmark your load test against. The Name of the environment variable. The list of values you can pass. (string) --- VolumeKmsKeyId (string) --- The Amazon Resource Name (ARN) of a Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt data on the storage volume attached to the ML compute instance that hosts the endpoint. This key will be passed to SageMaker Hosting for endpoint creation. The SageMaker execution role must have kms:CreateGrant permission in order to encrypt data on the storage volume of the endpoints created for inference recommendation. The inference recommendation job will fail asynchronously during endpoint configuration creation if the role passed does not have kms:CreateGrant permission. The KmsKeyId can be any of the following formats: // KMS Key ID \"1234abcd-12ab-34cd-56ef-1234567890ab\" // Amazon Resource Name (ARN) of a KMS Key \"arn:aws:kms:<region>:<account>:key/<key-id-12ab-34cd-56ef-1234567890ab>\" // KMS Key Alias \"alias/ExampleAlias\" // Amazon Resource Name (ARN) of a KMS Key Alias \"arn:aws:kms:<region>:<account>:alias/<ExampleAlias>\" For more information about key identifiers, see Key identifiers (KeyID) in the Amazon Web Services Key Management Service (Amazon Web Services KMS) documentation. ContainerConfig (dict) --- Specifies mandatory fields for running an Inference Recommender job. The fields specified in ContainerConfig override the corresponding fields in the model package. Domain (string) --- The machine learning domain of the model and its components. Valid Values: COMPUTER_VISION | NATURAL_LANGUAGE_PROCESSING | MACHINE_LEARNING Task (string) --- The machine learning task that the model accomplishes. Valid Values: IMAGE_CLASSIFICATION | OBJECT_DETECTION | TEXT_GENERATION | IMAGE_SEGMENTATION | FILL_MASK | CLASSIFICATION | REGRESSION | OTHER Framework (string) --- The machine learning framework of the container image. Valid Values: TENSORFLOW | PYTORCH | XGBOOST | SAGEMAKER-SCIKIT-LEARN FrameworkVersion (string) --- The framework version of the container image. PayloadConfig (dict) --- Specifies the SamplePayloadUrl and all other sample payload-related fields. SamplePayloadUrl (string) --- The Amazon Simple Storage Service (Amazon S3) path where the sample payload is stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix). SupportedContentTypes (list) --- The supported MIME types for the input data. (string) --- NearestModelName (string) --- The name of a pre-trained machine learning model benchmarked by Amazon SageMaker Inference Recommender that matches your model. Valid Values: efficientnetb7 | unet | xgboost | faster-rcnn-resnet101 | nasnetlarge | vgg16 | inception-v3 | mask-rcnn | sagemaker-scikit-learn | densenet201-gluon | resnet18v2-gluon | xception | densenet201 | yolov4 | resnet152 | bert-base-cased | xceptionV1-keras | resnet50 | retinanet SupportedInstanceTypes (list) --- A list of the instance types that are used to generate inferences in real-time. (string) --- SupportedEndpointType (string) --- The endpoint type to receive recommendations for. By default this is null, and the results of the inference recommendation job return a combined list of both real-time and serverless benchmarks. By specifying a value for this field, you can receive a longer list of benchmarks for the desired endpoint type. DataInputConfig (string) --- Specifies the name and shape of the expected data inputs for your trained model with a JSON dictionary form. This field is used for optimizing your model using SageMaker Neo. For more information, see DataInputConfig. SupportedResponseMIMETypes (list) --- The supported MIME types for the output data. (string) --- Endpoints (list) --- Existing customer endpoints on which to run an Inference Recommender job. (dict) --- Details about a customer endpoint that was compared in an Inference Recommender job. EndpointName (string) --- The name of a customer's endpoint. VpcConfig (dict) --- Inference Recommender provisions SageMaker endpoints with access to VPC in the inference recommendation job. The VPC security group IDs. IDs have the form of sg-xxxxxxxx. Specify the security groups for the VPC that is specified in the Subnets field. (string) --- The ID of the subnets in the VPC to which you want to connect your model. (string) ---",
+      "nested_params": [
+        {
+          "name": "ModelPackageVersionArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of a versioned model package.",
+          "nested_params": []
+        },
+        {
+          "name": "ModelName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the created model.",
+          "nested_params": []
+        },
+        {
+          "name": "JobDurationInSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "Specifies the maximum duration of the job, in seconds. The maximum value is 18,000 seconds.",
+          "nested_params": []
+        },
+        {
+          "name": "TrafficPattern",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the traffic pattern of the job.",
+          "nested_params": [
+            {
+              "name": "TrafficType",
+              "type": "string",
+              "required": false,
+              "description": "Defines the traffic patterns. Choose either PHASES or STAIRS.",
+              "nested_params": []
+            },
+            {
+              "name": "Phases",
+              "type": "list",
+              "required": false,
+              "description": "Defines the phases traffic specification.",
+              "nested_params": [
+                {
+                  "name": "InitialNumberOfUsers",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Specifies how many concurrent users to start with. The value should be between 1 and 3.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SpawnRate",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Specified how many new users to spawn in a minute.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DurationInSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Specifies how long a traffic phase should be. For custom load tests, the value should be between 120 and 3600. This value should not exceed JobDurationInSeconds.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Stairs",
+              "type": "dict",
+              "required": false,
+              "description": "Defines the stairs traffic pattern.",
+              "nested_params": [
+                {
+                  "name": "DurationInSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Defines how long each traffic step should be.",
+                  "nested_params": []
+                },
+                {
+                  "name": "NumberOfSteps",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Specifies how many steps to perform during traffic.",
+                  "nested_params": []
+                },
+                {
+                  "name": "UsersPerStep",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Specifies how many new users to spawn in each step.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ResourceLimit",
+          "type": "dict",
+          "required": false,
+          "description": "Defines the resource limit of the job.",
+          "nested_params": [
+            {
+              "name": "MaxNumberOfTests",
+              "type": "integer",
+              "required": false,
+              "description": "Defines the maximum number of load tests.",
+              "nested_params": []
+            },
+            {
+              "name": "MaxParallelOfTests",
+              "type": "integer",
+              "required": false,
+              "description": "Defines the maximum number of parallel load tests.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EndpointConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "Specifies the endpoint configuration to use for a job.",
+          "nested_params": [
+            {
+              "name": "InstanceType",
+              "type": "string",
+              "required": false,
+              "description": "The instance types to use for the load test.",
+              "nested_params": []
+            },
+            {
+              "name": "ServerlessConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the serverless configuration for an endpoint variant.",
+              "nested_params": [
+                {
+                  "name": "MemorySizeInMB",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The memory size of your serverless endpoint. Valid values are in 1 GB increments: 1024 MB, 2048 MB, 3072 MB, 4096 MB, 5120 MB, or 6144 MB.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MaxConcurrency",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The maximum number of concurrent invocations your serverless endpoint can process.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ProvisionedConcurrency",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The amount of provisioned concurrency to allocate for the serverless endpoint. Should be less than or equal to MaxConcurrency.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "InferenceSpecificationName",
+              "type": "string",
+              "required": false,
+              "description": "The inference specification name in the model package version.",
+              "nested_params": []
+            },
+            {
+              "name": "EnvironmentParameterRanges",
+              "type": "dict",
+              "required": false,
+              "description": "The parameter you want to benchmark against.",
+              "nested_params": [
+                {
+                  "name": "CategoricalParameterRanges",
+                  "type": "list",
+                  "required": false,
+                  "description": "Specified a list of parameters for each category.",
+                  "nested_params": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The Name of the environment variable.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "list",
+                      "required": false,
+                      "description": "The list of values you can pass.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "VolumeKmsKeyId",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of a Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt data on the storage volume attached to the ML compute instance that hosts the endpoint. This key will be passed to SageMaker Hosting for endpoint creation. The SageMaker execution role must have kms:CreateGrant permission in order to encrypt data on the storage volume of the endpoints created for inference recommendation. The inference recommendation job will fail asynchronously during endpoint configuration creation if the role passed does not have kms:CreateGrant permission. The KmsKeyId can be any of the following formats:",
+          "nested_params": []
+        },
+        {
+          "name": "ContainerConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies mandatory fields for running an Inference Recommender job. The fields specified in ContainerConfig override the corresponding fields in the model package.",
+          "nested_params": [
+            {
+              "name": "Domain",
+              "type": "string",
+              "required": false,
+              "description": "The machine learning domain of the model and its components. Valid Values: COMPUTER_VISION | NATURAL_LANGUAGE_PROCESSING | MACHINE_LEARNING.",
+              "nested_params": []
+            },
+            {
+              "name": "Task",
+              "type": "string",
+              "required": false,
+              "description": "The machine learning task that the model accomplishes. Valid Values: IMAGE_CLASSIFICATION | OBJECT_DETECTION | TEXT_GENERATION | IMAGE_SEGMENTATION | FILL_MASK | CLASSIFICATION | REGRESSION | OTHER.",
+              "nested_params": []
+            },
+            {
+              "name": "Framework",
+              "type": "string",
+              "required": false,
+              "description": "The machine learning framework of the container image. Valid Values: TENSORFLOW | PYTORCH | XGBOOST | SAGEMAKER-SCIKIT-LEARN.",
+              "nested_params": []
+            },
+            {
+              "name": "FrameworkVersion",
+              "type": "string",
+              "required": false,
+              "description": "The framework version of the container image.",
+              "nested_params": []
+            },
+            {
+              "name": "PayloadConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the SamplePayloadUrl and all other sample payload-related fields.",
+              "nested_params": [
+                {
+                  "name": "SamplePayloadUrl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Simple Storage Service (Amazon S3) path where the sample payload is stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix).",
+                  "nested_params": []
+                },
+                {
+                  "name": "SupportedContentTypes",
+                  "type": "list",
+                  "required": false,
+                  "description": "The supported MIME types for the input data.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "NearestModelName",
+              "type": "string",
+              "required": false,
+              "description": "The name of a pre-trained machine learning model benchmarked by Amazon SageMaker Inference Recommender that matches your model. Valid Values: efficientnetb7 | unet | xgboost | faster-rcnn-resnet101 | nasnetlarge | vgg16 | inception-v3 | mask-rcnn | sagemaker-scikit-learn | densenet201-gluon | resnet18v2-gluon | xception | densenet201 | yolov4 | resnet152 | bert-base-cased | xceptionV1-keras | resnet50 | retinanet.",
+              "nested_params": []
+            },
+            {
+              "name": "SupportedInstanceTypes",
+              "type": "list",
+              "required": false,
+              "description": "A list of the instance types that are used to generate inferences in real-time.",
+              "nested_params": []
+            },
+            {
+              "name": "SupportedEndpointType",
+              "type": "string",
+              "required": false,
+              "description": "The endpoint type to receive recommendations for. By default this is null, and the results of the inference recommendation job return a combined list of both real-time and serverless benchmarks. By specifying a value for this field, you can receive a longer list of benchmarks for the desired endpoint type.",
+              "nested_params": []
+            },
+            {
+              "name": "DataInputConfig",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the name and shape of the expected data inputs for your trained model with a JSON dictionary form. This field is used for optimizing your model using SageMaker Neo. For more information, see DataInputConfig.",
+              "nested_params": []
+            },
+            {
+              "name": "SupportedResponseMIMETypes",
+              "type": "list",
+              "required": false,
+              "description": "The supported MIME types for the output data.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Endpoints",
+          "type": "list",
+          "required": false,
+          "description": "Existing customer endpoints on which to run an Inference Recommender job.",
+          "nested_params": [
+            {
+              "name": "EndpointName",
+              "type": "string",
+              "required": false,
+              "description": "The name of a customer's endpoint.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "VpcConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Inference Recommender provisions SageMaker endpoints with access to VPC in the inference recommendation job.",
+          "nested_params": [
+            {
+              "name": "SecurityGroupIds",
+              "type": "list",
+              "required": false,
+              "description": "The VPC security group IDs. IDs have the form of sg-xxxxxxxx. Specify the security groups for the VPC that is specified in the Subnets field.",
+              "nested_params": []
+            },
+            {
+              "name": "Subnets",
+              "type": "list",
+              "required": false,
+              "description": "The ID of the subnets in the VPC to which you want to connect your model.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "JobDescription",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StoppingConditions",
+      "type": "dict",
+      "required": false,
+      "description": "A set of conditions for stopping a recommendation job. If any of the conditions are met, the job is automatically stopped. MaxInvocations (integer) --- The maximum number of requests per minute expected for the endpoint. ModelLatencyThresholds (list) --- The interval of time taken by a model to respond as viewed from SageMaker. The interval includes the local communication time taken to send the request and to fetch the response from the container of a model and the time taken to complete the inference in the container. (dict) --- The model latency threshold. Percentile (string) --- The model latency percentile threshold. Acceptable values are P95 and P99. For custom load tests, specify the value as P95. ValueInMilliseconds (integer) --- The model latency percentile value in milliseconds. FlatInvocations (string) --- Stops a load test when the number of invocations (TPS) peaks and flattens, which means that the instance has reached capacity. The default value is Stop. If you want the load test to continue after invocations have flattened, set the value to Continue.",
+      "nested_params": [
+        {
+          "name": "MaxInvocations",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of requests per minute expected for the endpoint.",
+          "nested_params": []
+        },
+        {
+          "name": "ModelLatencyThresholds",
+          "type": "list",
+          "required": false,
+          "description": "The interval of time taken by a model to respond as viewed from SageMaker. The interval includes the local communication time taken to send the request and to fetch the response from the container of a model and the time taken to complete the inference in the container.",
+          "nested_params": [
+            {
+              "name": "Percentile",
+              "type": "string",
+              "required": false,
+              "description": "The model latency percentile threshold. Acceptable values are P95 and P99. For custom load tests, specify the value as P95.",
+              "nested_params": []
+            },
+            {
+              "name": "ValueInMilliseconds",
+              "type": "integer",
+              "required": false,
+              "description": "The model latency percentile value in milliseconds.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "FlatInvocations",
+          "type": "string",
+          "required": false,
+          "description": "Stops a load test when the number of invocations (TPS) peaks and flattens, which means that the instance has reached capacity. The default value is Stop. If you want the load test to continue after invocations have flattened, set the value to Continue.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OutputConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Provides information about the output artifacts and the KMS key to use for Amazon S3 server-side encryption. KmsKeyId (string) --- The Amazon Resource Name (ARN) of a Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt your output artifacts with Amazon S3 server-side encryption. The SageMaker execution role must have kms:GenerateDataKey permission. The KmsKeyId can be any of the following formats: // KMS Key ID \"1234abcd-12ab-34cd-56ef-1234567890ab\" // Amazon Resource Name (ARN) of a KMS Key \"arn:aws:kms:<region>:<account>:key/<key-id-12ab-34cd-56ef-1234567890ab>\" // KMS Key Alias \"alias/ExampleAlias\" // Amazon Resource Name (ARN) of a KMS Key Alias \"arn:aws:kms:<region>:<account>:alias/<ExampleAlias>\" For more information about key identifiers, see Key identifiers (KeyID) in the Amazon Web Services Key Management Service (Amazon Web Services KMS) documentation. CompiledOutputConfig (dict) --- Provides information about the output configuration for the compiled model. S3OutputUri (string) --- Identifies the Amazon S3 bucket where you want SageMaker to store the compiled model artifacts.",
+      "nested_params": [
+        {
+          "name": "KmsKeyId",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of a Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt your output artifacts with Amazon S3 server-side encryption. The SageMaker execution role must have kms:GenerateDataKey permission. The KmsKeyId can be any of the following formats:",
+          "nested_params": []
+        },
+        {
+          "name": "CompiledOutputConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Provides information about the output configuration for the compiled model.",
+          "nested_params": [
+            {
+              "name": "S3OutputUri",
+              "type": "string",
+              "required": false,
+              "description": "Identifies the Amazon S3 bucket where you want SageMaker to store the compiled model artifacts.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "The metadata that you apply to Amazon Web Services resources to help you categorize and organize them. Each tag consists of a key and a value, both of which you define. For more information, see Tagging Amazon Web Services Resources in the Amazon Web Services General Reference. (dict) --- A tag object that consists of a key and an optional value, used to manage metadata for SageMaker Amazon Web Services resources. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints. For more information on adding tags to SageMaker resources, see AddTags. For more information on adding metadata to your Amazon Web Services resources with tagging, see Tagging Amazon Web Services resources. For advice on best practices for managing Amazon Web Services resources with tagging, see Tagging Best Practices: Implement an Effective Amazon Web Services Resource Tagging Strategy. The tag key. Tag keys must be unique per resource. The tag value.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The tag key. Tag keys must be unique per resource.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The tag value.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the recommendation job.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

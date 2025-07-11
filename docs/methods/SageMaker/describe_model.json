@@ -1,0 +1,986 @@
+{
+  "method_name": "describe_model",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker/client/describe_model.html",
+  "description": "Describes a model that you created using the CreateModel API.",
+  "parameters": [
+    {
+      "name": "ModelName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the model.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ModelName",
+          "type": "string",
+          "description": "Name of the SageMaker model.",
+          "nested_items": []
+        },
+        {
+          "name": "PrimaryContainer",
+          "type": "dict",
+          "description": "The location of the primary inference code, associated artifacts, and custom environment map that the inference code uses when it is deployed in production.",
+          "nested_items": [
+            {
+              "name": "ContainerHostname",
+              "type": "string",
+              "description": "This parameter is ignored for models that contain only a PrimaryContainer.",
+              "nested_items": []
+            },
+            {
+              "name": "Image",
+              "type": "string",
+              "description": "The path where inference code is stored. This can be either in Amazon EC2 Container Registry or in a Docker registry that is accessible from the same VPC that you configure for your endpoint. If you are using your own custom algorithm instead of an algorithm provided by SageMaker, the inference code must meet SageMaker requirements. SageMaker supports both registry/repository[:tag] and registry/repository[@digest] image path formats. For more information, see Using Your Own Algorithms with Amazon SageMaker.",
+              "nested_items": []
+            },
+            {
+              "name": "ImageConfig",
+              "type": "dict",
+              "description": "Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). For information about storing containers in a private Docker registry, see Use a Private Docker Registry for Real-Time Inference Containers.",
+              "nested_items": [
+                {
+                  "name": "RepositoryAccessMode",
+                  "type": "string",
+                  "description": "Set this to one of the following values:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Platform - The model image is hosted in Amazon ECR.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Vpc - The model image is hosted in a private Docker registry in your VPC.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "RepositoryAuthConfig",
+                  "type": "dict",
+                  "description": "(Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication.",
+                  "nested_items": [
+                    {
+                      "name": "RepositoryCredentialsProviderArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of an Amazon Web Services Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an Amazon Web Services Lambda function, see Create a Lambda function with the console in the Amazon Web Services Lambda Developer Guide.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Mode",
+              "type": "string",
+              "description": "Whether the container hosts a single model or multiple models.",
+              "nested_items": []
+            },
+            {
+              "name": "ModelDataUrl",
+              "type": "string",
+              "description": "The S3 path where the model artifacts, which result from model training, are stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix). The S3 path is required for SageMaker built-in algorithms, but not if you use your own algorithms. For more information on built-in algorithms, see Common Parameters.",
+              "nested_items": []
+            },
+            {
+              "name": "ModelDataSource",
+              "type": "dict",
+              "description": "Specifies the location of ML model data to deploy.",
+              "nested_items": [
+                {
+                  "name": "S3DataSource",
+                  "type": "dict",
+                  "description": "Specifies the S3 location of ML model data to deploy.",
+                  "nested_items": [
+                    {
+                      "name": "S3Uri",
+                      "type": "string",
+                      "description": "Specifies the S3 path of ML model data to deploy.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "S3DataType",
+                      "type": "string",
+                      "description": "Specifies the type of ML model data to deploy.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CompressionType",
+                      "type": "string",
+                      "description": "Specifies how the ML model data is prepared.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "/",
+                          "description": "If you choose S3Object as the value of S3DataType, then SageMaker will split the key of the S3 object referenced by S3Uri by slash (/), and use the last part as the filename of the file holding the content of the S3 object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "relative to /opt/ml/model",
+                          "description": "If you choose S3Prefix as the value of S3DataType, then for each S3 object under the key name pefix referenced by S3Uri, SageMaker will trim its key by the prefix, and use the remainder as the path (relative to /opt/ml/model) of the file holding the content of the S3 object. SageMaker will split the remainder by slash (/), using intermediate parts as directory names and the last part as filename of the file holding the content of the S3 object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": ".",
+                          "description": "Do not use any of the following as file names or directory names:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "An empty or blank string.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "A string which contains null bytes.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "A string longer than 255 bytes.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": ".",
+                              "description": "A single dot ( .)",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "..",
+                              "description": "A double dot ( ..)",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "a regular file",
+                          "description": "Ambiguous file names will result in model deployment failure. For example, if your uncompressed ML model consists of two S3 objects s3://mybucket/model/weights and s3://mybucket/model/weights/part1 and you specify s3://mybucket/model/ as the value of S3Uri and S3Prefix as the value of S3DataType, then it will result in name clash between /opt/ml/model/weights (a regular file) and /opt/ml/model/weights/ (a directory).",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "/",
+                          "description": "Do not organize the model artifacts in S3 console using folders. When you create a folder in S3 console, S3 creates a 0-byte object with a key set to the folder name you provide. They key of the 0-byte object ends with a slash (/) which violates SageMaker restrictions on model artifact file names, leading to model deployment failure.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ModelAccessConfig",
+                      "type": "dict",
+                      "description": "Specifies the access configuration file for the ML model. You can explicitly accept the model end-user license agreement (EULA) within the ModelAccessConfig. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                      "nested_items": [
+                        {
+                          "name": "AcceptEula",
+                          "type": "boolean",
+                          "description": "Specifies agreement to the model end-user license agreement (EULA). The AcceptEula value must be explicitly defined as True in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "HubAccessConfig",
+                      "type": "dict",
+                      "description": "Configuration information for hub access.",
+                      "nested_items": [
+                        {
+                          "name": "HubContentArn",
+                          "type": "string",
+                          "description": "The ARN of the hub content for which deployment access is allowed.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ManifestS3Uri",
+                      "type": "string",
+                      "description": "The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ETag",
+                      "type": "string",
+                      "description": "The ETag associated with S3 URI.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ManifestEtag",
+                      "type": "string",
+                      "description": "The ETag associated with Manifest S3 URI.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AdditionalModelDataSources",
+              "type": "list",
+              "description": "Data sources that are available to your model in addition to the one that you specify for ModelDataSource when you use the CreateModel action.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ChannelName",
+                      "type": "string",
+                      "description": "A custom name for this AdditionalModelDataSource object.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "S3DataSource",
+                      "type": "dict",
+                      "description": "Specifies the S3 location of ML model data to deploy.",
+                      "nested_items": [
+                        {
+                          "name": "S3Uri",
+                          "type": "string",
+                          "description": "Specifies the S3 path of ML model data to deploy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "S3DataType",
+                          "type": "string",
+                          "description": "Specifies the type of ML model data to deploy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "CompressionType",
+                          "type": "string",
+                          "description": "Specifies how the ML model data is prepared.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "/",
+                              "description": "If you choose S3Object as the value of S3DataType, then SageMaker will split the key of the S3 object referenced by S3Uri by slash (/), and use the last part as the filename of the file holding the content of the S3 object.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "relative to /opt/ml/model",
+                              "description": "If you choose S3Prefix as the value of S3DataType, then for each S3 object under the key name pefix referenced by S3Uri, SageMaker will trim its key by the prefix, and use the remainder as the path (relative to /opt/ml/model) of the file holding the content of the S3 object. SageMaker will split the remainder by slash (/), using intermediate parts as directory names and the last part as filename of the file holding the content of the S3 object.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": ".",
+                              "description": "Do not use any of the following as file names or directory names:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "An empty or blank string.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A string which contains null bytes.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A string longer than 255 bytes.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": ".",
+                                  "description": "A single dot ( .)",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "..",
+                                  "description": "A double dot ( ..)",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "a regular file",
+                              "description": "Ambiguous file names will result in model deployment failure. For example, if your uncompressed ML model consists of two S3 objects s3://mybucket/model/weights and s3://mybucket/model/weights/part1 and you specify s3://mybucket/model/ as the value of S3Uri and S3Prefix as the value of S3DataType, then it will result in name clash between /opt/ml/model/weights (a regular file) and /opt/ml/model/weights/ (a directory).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "/",
+                              "description": "Do not organize the model artifacts in S3 console using folders. When you create a folder in S3 console, S3 creates a 0-byte object with a key set to the folder name you provide. They key of the 0-byte object ends with a slash (/) which violates SageMaker restrictions on model artifact file names, leading to model deployment failure.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ModelAccessConfig",
+                          "type": "dict",
+                          "description": "Specifies the access configuration file for the ML model. You can explicitly accept the model end-user license agreement (EULA) within the ModelAccessConfig. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                          "nested_items": [
+                            {
+                              "name": "AcceptEula",
+                              "type": "boolean",
+                              "description": "Specifies agreement to the model end-user license agreement (EULA). The AcceptEula value must be explicitly defined as True in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HubAccessConfig",
+                          "type": "dict",
+                          "description": "Configuration information for hub access.",
+                          "nested_items": [
+                            {
+                              "name": "HubContentArn",
+                              "type": "string",
+                              "description": "The ARN of the hub content for which deployment access is allowed.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ManifestS3Uri",
+                          "type": "string",
+                          "description": "The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ETag",
+                          "type": "string",
+                          "description": "The ETag associated with S3 URI.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ManifestEtag",
+                          "type": "string",
+                          "description": "The ETag associated with Manifest S3 URI.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Environment",
+              "type": "dict",
+              "description": "The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ModelPackageName",
+              "type": "string",
+              "description": "The name or Amazon Resource Name (ARN) of the model package to use to create the model.",
+              "nested_items": []
+            },
+            {
+              "name": "InferenceSpecificationName",
+              "type": "string",
+              "description": "The inference specification name in the model package version.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiModelConfig",
+              "type": "dict",
+              "description": "Specifies additional configuration for multi-model endpoints.",
+              "nested_items": [
+                {
+                  "name": "ModelCacheSetting",
+                  "type": "string",
+                  "description": "Whether to cache models for a multi-model endpoint. By default, multi-model endpoints cache models so that a model does not have to be loaded into memory each time it is invoked. Some use cases do not benefit from model caching. For example, if an endpoint hosts a large number of models that are each invoked infrequently, the endpoint might perform better if you disable model caching. To disable model caching, set the value of this parameter to Disabled.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Containers",
+          "type": "list",
+          "description": "The containers in the inference pipeline.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ContainerHostname",
+                  "type": "string",
+                  "description": "This parameter is ignored for models that contain only a PrimaryContainer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Image",
+                  "type": "string",
+                  "description": "The path where inference code is stored. This can be either in Amazon EC2 Container Registry or in a Docker registry that is accessible from the same VPC that you configure for your endpoint. If you are using your own custom algorithm instead of an algorithm provided by SageMaker, the inference code must meet SageMaker requirements. SageMaker supports both registry/repository[:tag] and registry/repository[@digest] image path formats. For more information, see Using Your Own Algorithms with Amazon SageMaker.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ImageConfig",
+                  "type": "dict",
+                  "description": "Specifies whether the model container is in Amazon ECR or a private Docker registry accessible from your Amazon Virtual Private Cloud (VPC). For information about storing containers in a private Docker registry, see Use a Private Docker Registry for Real-Time Inference Containers.",
+                  "nested_items": [
+                    {
+                      "name": "RepositoryAccessMode",
+                      "type": "string",
+                      "description": "Set this to one of the following values:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Platform - The model image is hosted in Amazon ECR.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Vpc - The model image is hosted in a private Docker registry in your VPC.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "RepositoryAuthConfig",
+                      "type": "dict",
+                      "description": "(Optional) Specifies an authentication configuration for the private docker registry where your model image is hosted. Specify a value for this property only if you specified Vpc as the value for the RepositoryAccessMode field, and the private Docker registry where the model image is hosted requires authentication.",
+                      "nested_items": [
+                        {
+                          "name": "RepositoryCredentialsProviderArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of an Amazon Web Services Lambda function that provides credentials to authenticate to the private Docker registry where your model image is hosted. For information about how to create an Amazon Web Services Lambda function, see Create a Lambda function with the console in the Amazon Web Services Lambda Developer Guide.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Mode",
+                  "type": "string",
+                  "description": "Whether the container hosts a single model or multiple models.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ModelDataUrl",
+                  "type": "string",
+                  "description": "The S3 path where the model artifacts, which result from model training, are stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix). The S3 path is required for SageMaker built-in algorithms, but not if you use your own algorithms. For more information on built-in algorithms, see Common Parameters.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ModelDataSource",
+                  "type": "dict",
+                  "description": "Specifies the location of ML model data to deploy.",
+                  "nested_items": [
+                    {
+                      "name": "S3DataSource",
+                      "type": "dict",
+                      "description": "Specifies the S3 location of ML model data to deploy.",
+                      "nested_items": [
+                        {
+                          "name": "S3Uri",
+                          "type": "string",
+                          "description": "Specifies the S3 path of ML model data to deploy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "S3DataType",
+                          "type": "string",
+                          "description": "Specifies the type of ML model data to deploy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "CompressionType",
+                          "type": "string",
+                          "description": "Specifies how the ML model data is prepared.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "/",
+                              "description": "If you choose S3Object as the value of S3DataType, then SageMaker will split the key of the S3 object referenced by S3Uri by slash (/), and use the last part as the filename of the file holding the content of the S3 object.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "relative to /opt/ml/model",
+                              "description": "If you choose S3Prefix as the value of S3DataType, then for each S3 object under the key name pefix referenced by S3Uri, SageMaker will trim its key by the prefix, and use the remainder as the path (relative to /opt/ml/model) of the file holding the content of the S3 object. SageMaker will split the remainder by slash (/), using intermediate parts as directory names and the last part as filename of the file holding the content of the S3 object.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": ".",
+                              "description": "Do not use any of the following as file names or directory names:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "An empty or blank string.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A string which contains null bytes.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "A string longer than 255 bytes.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": ".",
+                                  "description": "A single dot ( .)",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "..",
+                                  "description": "A double dot ( ..)",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "a regular file",
+                              "description": "Ambiguous file names will result in model deployment failure. For example, if your uncompressed ML model consists of two S3 objects s3://mybucket/model/weights and s3://mybucket/model/weights/part1 and you specify s3://mybucket/model/ as the value of S3Uri and S3Prefix as the value of S3DataType, then it will result in name clash between /opt/ml/model/weights (a regular file) and /opt/ml/model/weights/ (a directory).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "/",
+                              "description": "Do not organize the model artifacts in S3 console using folders. When you create a folder in S3 console, S3 creates a 0-byte object with a key set to the folder name you provide. They key of the 0-byte object ends with a slash (/) which violates SageMaker restrictions on model artifact file names, leading to model deployment failure.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ModelAccessConfig",
+                          "type": "dict",
+                          "description": "Specifies the access configuration file for the ML model. You can explicitly accept the model end-user license agreement (EULA) within the ModelAccessConfig. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                          "nested_items": [
+                            {
+                              "name": "AcceptEula",
+                              "type": "boolean",
+                              "description": "Specifies agreement to the model end-user license agreement (EULA). The AcceptEula value must be explicitly defined as True in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "HubAccessConfig",
+                          "type": "dict",
+                          "description": "Configuration information for hub access.",
+                          "nested_items": [
+                            {
+                              "name": "HubContentArn",
+                              "type": "string",
+                              "description": "The ARN of the hub content for which deployment access is allowed.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ManifestS3Uri",
+                          "type": "string",
+                          "description": "The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ETag",
+                          "type": "string",
+                          "description": "The ETag associated with S3 URI.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ManifestEtag",
+                          "type": "string",
+                          "description": "The ETag associated with Manifest S3 URI.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "AdditionalModelDataSources",
+                  "type": "list",
+                  "description": "Data sources that are available to your model in addition to the one that you specify for ModelDataSource when you use the CreateModel action.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "ChannelName",
+                          "type": "string",
+                          "description": "A custom name for this AdditionalModelDataSource object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "S3DataSource",
+                          "type": "dict",
+                          "description": "Specifies the S3 location of ML model data to deploy.",
+                          "nested_items": [
+                            {
+                              "name": "S3Uri",
+                              "type": "string",
+                              "description": "Specifies the S3 path of ML model data to deploy.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "S3DataType",
+                              "type": "string",
+                              "description": "Specifies the type of ML model data to deploy.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "CompressionType",
+                              "type": "string",
+                              "description": "Specifies how the ML model data is prepared.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "/",
+                                  "description": "If you choose S3Object as the value of S3DataType, then SageMaker will split the key of the S3 object referenced by S3Uri by slash (/), and use the last part as the filename of the file holding the content of the S3 object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "relative to /opt/ml/model",
+                                  "description": "If you choose S3Prefix as the value of S3DataType, then for each S3 object under the key name pefix referenced by S3Uri, SageMaker will trim its key by the prefix, and use the remainder as the path (relative to /opt/ml/model) of the file holding the content of the S3 object. SageMaker will split the remainder by slash (/), using intermediate parts as directory names and the last part as filename of the file holding the content of the S3 object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": ".",
+                                  "description": "Do not use any of the following as file names or directory names:",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "An empty or blank string.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "A string which contains null bytes.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "A string longer than 255 bytes.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": ".",
+                                      "description": "A single dot ( .)",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "..",
+                                      "description": "A double dot ( ..)",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "",
+                                  "type": "a regular file",
+                                  "description": "Ambiguous file names will result in model deployment failure. For example, if your uncompressed ML model consists of two S3 objects s3://mybucket/model/weights and s3://mybucket/model/weights/part1 and you specify s3://mybucket/model/ as the value of S3Uri and S3Prefix as the value of S3DataType, then it will result in name clash between /opt/ml/model/weights (a regular file) and /opt/ml/model/weights/ (a directory).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "/",
+                                  "description": "Do not organize the model artifacts in S3 console using folders. When you create a folder in S3 console, S3 creates a 0-byte object with a key set to the folder name you provide. They key of the 0-byte object ends with a slash (/) which violates SageMaker restrictions on model artifact file names, leading to model deployment failure.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ModelAccessConfig",
+                              "type": "dict",
+                              "description": "Specifies the access configuration file for the ML model. You can explicitly accept the model end-user license agreement (EULA) within the ModelAccessConfig. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                              "nested_items": [
+                                {
+                                  "name": "AcceptEula",
+                                  "type": "boolean",
+                                  "description": "Specifies agreement to the model end-user license agreement (EULA). The AcceptEula value must be explicitly defined as True in order to accept the EULA that this model requires. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "HubAccessConfig",
+                              "type": "dict",
+                              "description": "Configuration information for hub access.",
+                              "nested_items": [
+                                {
+                                  "name": "HubContentArn",
+                                  "type": "string",
+                                  "description": "The ARN of the hub content for which deployment access is allowed.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ManifestS3Uri",
+                              "type": "string",
+                              "description": "The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ETag",
+                              "type": "string",
+                              "description": "The ETag associated with S3 URI.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ManifestEtag",
+                              "type": "string",
+                              "description": "The ETag associated with Manifest S3 URI.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Environment",
+                  "type": "dict",
+                  "description": "The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ModelPackageName",
+                  "type": "string",
+                  "description": "The name or Amazon Resource Name (ARN) of the model package to use to create the model.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InferenceSpecificationName",
+                  "type": "string",
+                  "description": "The inference specification name in the model package version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MultiModelConfig",
+                  "type": "dict",
+                  "description": "Specifies additional configuration for multi-model endpoints.",
+                  "nested_items": [
+                    {
+                      "name": "ModelCacheSetting",
+                      "type": "string",
+                      "description": "Whether to cache models for a multi-model endpoint. By default, multi-model endpoints cache models so that a model does not have to be loaded into memory each time it is invoked. Some use cases do not benefit from model caching. For example, if an endpoint hosts a large number of models that are each invoked infrequently, the endpoint might perform better if you disable model caching. To disable model caching, set the value of this parameter to Disabled.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "InferenceExecutionConfig",
+          "type": "dict",
+          "description": "Specifies details of how containers in a multi-container endpoint are called.",
+          "nested_items": [
+            {
+              "name": "Mode",
+              "type": "string",
+              "description": "How containers in a multi-container are run. The following values are valid.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SERIAL - Containers run as a serial pipeline.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DIRECT - Only the individual container that you specify is run.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ExecutionRoleArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the IAM role that you specified for the model.",
+          "nested_items": []
+        },
+        {
+          "name": "VpcConfig",
+          "type": "dict",
+          "description": "A VpcConfig object that specifies the VPC that this model has access to. For more information, see Protect Endpoints by Using an Amazon Virtual Private Cloud.",
+          "nested_items": [
+            {
+              "name": "SecurityGroupIds",
+              "type": "list",
+              "description": "The VPC security group IDs, in the form sg-xxxxxxxx. Specify the security groups for the VPC that is specified in the Subnets field.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Subnets",
+              "type": "list",
+              "description": "The ID of the subnets in the VPC to which you want to connect your training job or model. For information about the availability of specific instance types, see Supported Instance Types and Availability Zones.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CreationTime",
+          "type": "datetime",
+          "description": "A timestamp that shows when the model was created.",
+          "nested_items": []
+        },
+        {
+          "name": "ModelArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the model.",
+          "nested_items": []
+        },
+        {
+          "name": "EnableNetworkIsolation",
+          "type": "boolean",
+          "description": "If True, no inbound or outbound network calls can be made to or from the model container.",
+          "nested_items": []
+        },
+        {
+          "name": "DeploymentRecommendation",
+          "type": "dict",
+          "description": "A set of recommended deployment configurations for the model.",
+          "nested_items": [
+            {
+              "name": "RecommendationStatus",
+              "type": "string",
+              "description": "Status of the deployment recommendation. The status NOT_APPLICABLE means that SageMaker is unable to provide a default recommendation for the model using the information provided. If the deployment status is IN_PROGRESS, retry your API call after a few seconds to get a COMPLETED deployment recommendation.",
+              "nested_items": []
+            },
+            {
+              "name": "RealTimeInferenceRecommendations",
+              "type": "list",
+              "description": "A list of RealTimeInferenceRecommendation items.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "RecommendationId",
+                      "type": "string",
+                      "description": "The recommendation ID which uniquely identifies each recommendation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "InstanceType",
+                      "type": "string",
+                      "description": "The recommended instance type for Real-Time Inference.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Environment",
+                      "type": "dict",
+                      "description": "The recommended environment variables to set in the model container for Real-Time Inference.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

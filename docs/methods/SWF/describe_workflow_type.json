@@ -1,0 +1,133 @@
+{
+  "method_name": "describe_workflow_type",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/swf/client/describe_workflow_type.html",
+  "description": "Returns information about the specified workflow type. This includes configuration settings specified when the type was registered and other information such as creation date, current status, etc. You can use IAM policies to control this action's access to Amazon SWF resources as follows: If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's cause parameter is set to OPERATION_NOT_PERMITTED. For details and example IAM policies, see Using IAM to Manage Access to Amazon SWF Workflows in the Amazon SWF Developer Guide.",
+  "parameters": [
+    {
+      "name": "domain",
+      "type": "string",
+      "required": true,
+      "description": "The name of the domain in which this workflow type is registered.",
+      "nested_params": []
+    },
+    {
+      "name": "workflowType",
+      "type": "dict",
+      "required": true,
+      "description": "The workflow type to describe. The name of the workflow type. The version of the workflow type.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the workflow type.",
+          "nested_params": []
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "required": false,
+          "description": "The version of the workflow type.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "REGISTERED --- The type is registered and available. Workers supporting this type should be running.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "DEPRECATED --- The type was deprecated using  DeprecateWorkflowType, but is still in use. You should keep workers supporting this type running. You cannot create new workflow executions of this type.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "configuration",
+          "type": "dict",
+          "description": "Configuration settings of the workflow type registered through  RegisterWorkflowType.",
+          "nested_items": [
+            {
+              "name": "defaultTaskStartToCloseTimeout",
+              "type": "string",
+              "description": "The default maximum duration, specified when registering the workflow type, that a decision task for executions of this workflow type might take before returning completion or failure. If the task doesn'tdo close in the specified time then the task is automatically timed out and rescheduled. If the decider eventually reports a completion or failure, it is ignored. This default can be overridden when starting a workflow execution using the  StartWorkflowExecution action or the StartChildWorkflowExecution  Decision.",
+              "nested_items": []
+            },
+            {
+              "name": "defaultExecutionStartToCloseTimeout",
+              "type": "string",
+              "description": "The default maximum duration, specified when registering the workflow type, for executions of this workflow type. This default can be overridden when starting a workflow execution using the  StartWorkflowExecution action or the StartChildWorkflowExecution  Decision.",
+              "nested_items": []
+            },
+            {
+              "name": "defaultTaskList",
+              "type": "dict",
+              "description": "The default task list, specified when registering the workflow type, for decisions tasks scheduled for workflow executions of this type. This default can be overridden when starting a workflow execution using the  StartWorkflowExecution action or the StartChildWorkflowExecution  Decision.",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the task list.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "defaultTaskPriority",
+              "type": "string",
+              "description": "The default task priority, specified when registering the workflow type, for all decision tasks of this workflow type. This default can be overridden when starting a workflow execution using the  StartWorkflowExecution action or the StartChildWorkflowExecution decision.",
+              "nested_items": []
+            },
+            {
+              "name": "defaultChildPolicy",
+              "type": "string",
+              "description": "The default policy to use for the child workflow executions when a workflow execution of this type is terminated, by calling the  TerminateWorkflowExecution action explicitly or due to an expired timeout. This default can be overridden when starting a workflow execution using the  StartWorkflowExecution action or the StartChildWorkflowExecution  Decision.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TERMINATE --- The child executions are terminated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "REQUEST_CANCEL --- A request to cancel is attempted for each child execution by recording a WorkflowExecutionCancelRequested event in its history. It is up to the decider to take appropriate actions when it receives an execution history with this event.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ABANDON --- No action is taken. The child executions continue to run.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "defaultLambdaRole",
+              "type": "string",
+              "description": "The default IAM role attached to this workflow type.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

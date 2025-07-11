@@ -1,0 +1,298 @@
+{
+  "method_name": "update_receipt_rule",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ses/client/update_receipt_rule.html",
+  "description": "Updates a receipt rule. For information about managing receipt rules, see the Amazon SES Developer Guide. You can execute this operation no more than once per second.",
+  "parameters": [
+    {
+      "name": "RuleSetName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the receipt rule set that the receipt rule belongs to.",
+      "nested_params": []
+    },
+    {
+      "name": "Rule",
+      "type": "dict",
+      "required": true,
+      "description": "A data structure that contains the updated receipt rule information. The name of the receipt rule. The name must meet the following requirements: Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), dashes (-), or periods (.). Start and end with a letter or number. Contain 64 characters or fewer. Enabled (boolean) --- If true, the receipt rule is active. The default value is false. TlsPolicy (string) --- Specifies whether Amazon SES should require that incoming email is delivered over a connection encrypted with Transport Layer Security (TLS). If this parameter is set to Require, Amazon SES bounces emails that are not received over TLS. The default is Optional. Recipients (list) --- The recipient domains and email addresses that the receipt rule applies to. If this field is not specified, this rule matches all recipients on all verified domains. (string) --- Actions (list) --- An ordered list of actions to perform on messages that match at least one of the recipient email addresses or domains specified in the receipt rule. (dict) --- An action that Amazon SES can take when it receives an email on behalf of one or more email addresses or domains that you own. An instance of this data type can represent only one action. For information about setting up receipt rules, see the Amazon SES Developer Guide. S3Action (dict) --- Saves the received message to an Amazon Simple Storage Service (Amazon S3) bucket and, optionally, publishes a notification to Amazon SNS. TopicArn (string) --- The ARN of the Amazon SNS topic to notify when the message is saved to the Amazon S3 bucket. You can find the ARN of a topic by using the ListTopics operation in Amazon SNS. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide. The name of the Amazon S3 bucket for incoming email. ObjectKeyPrefix (string) --- The key prefix of the Amazon S3 bucket. The key prefix is similar to a directory name that enables you to store similar data under the same directory in a bucket. KmsKeyArn (string) --- The customer managed key that Amazon SES should use to encrypt your emails before saving them to the Amazon S3 bucket. You can use the Amazon Web Services managed key or a customer managed key that you created in Amazon Web Services KMS as follows: To use the Amazon Web Services managed key, provide an ARN in the form of arn:aws:kms:REGION:ACCOUNT-ID-WITHOUT-HYPHENS:alias/aws/ses. For example, if your Amazon Web Services account ID is 123456789012 and you want to use the Amazon Web Services managed key in the US West (Oregon) Region, the ARN of the Amazon Web Services managed key would be arn:aws:kms:us-west-2:123456789012:alias/aws/ses. If you use the Amazon Web Services managed key, you don't need to perform any extra steps to give Amazon SES permission to use the key. To use a customer managed key that you created in Amazon Web Services KMS, provide the ARN of the customer managed key and ensure that you add a statement to your key's policy to give Amazon SES permission to use it. For more information about giving permissions, see the Amazon SES Developer Guide. For more information about key policies, see the Amazon Web Services KMS Developer Guide. If you do not specify an Amazon Web Services KMS key, Amazon SES does not encrypt your emails. IamRoleArn (string) --- The ARN of the IAM role to be used by Amazon Simple Email Service while writing to the Amazon S3 bucket, optionally encrypting your mail via the provided customer managed key, and publishing to the Amazon SNS topic. This role should have access to the following APIs: s3:PutObject, kms:Encrypt and kms:GenerateDataKey for the given Amazon S3 bucket. kms:GenerateDataKey for the given Amazon Web Services KMS customer managed key. sns:Publish for the given Amazon SNS topic. BounceAction (dict) --- Rejects the received email by returning a bounce response to the sender and, optionally, publishes a notification to Amazon Simple Notification Service (Amazon SNS). TopicArn (string) --- The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the bounce action is taken. The SMTP reply code, as defined by RFC 5321. StatusCode (string) --- The SMTP enhanced status code, as defined by RFC 3463. Human-readable text to include in the bounce message. The email address of the sender of the bounced email. This is the address from which the bounce message is sent. WorkmailAction (dict) --- Calls Amazon WorkMail and, optionally, publishes a notification to Amazon Amazon SNS. TopicArn (string) --- The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the WorkMail action is called. The Amazon Resource Name (ARN) of the Amazon WorkMail organization. Amazon WorkMail ARNs use the following format: arn:aws:workmail:<region>:<awsAccountId>:organization/<workmailOrganizationId> You can find the ID of your organization by using the ListOrganizations operation in Amazon WorkMail. Amazon WorkMail organization IDs begin with ' m-', followed by a string of alphanumeric characters. For information about Amazon WorkMail organizations, see the Amazon WorkMail Administrator Guide. LambdaAction (dict) --- Calls an Amazon Web Services Lambda function, and optionally, publishes a notification to Amazon SNS. TopicArn (string) --- The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the Lambda action is executed. The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function. An example of an Amazon Web Services Lambda function ARN is arn:aws:lambda:us-west-2:account-id:function:MyFunction. For more information about Amazon Web Services Lambda, see the Amazon Web Services Lambda Developer Guide. InvocationType (string) --- The invocation type of the Amazon Web Services Lambda function. An invocation type of RequestResponse means that the execution of the function immediately results in a response, and a value of Event means that the function is invoked asynchronously. The default value is Event. For information about Amazon Web Services Lambda invocation types, see the Amazon Web Services Lambda Developer Guide. StopAction (dict) --- Terminates the evaluation of the receipt rule set and optionally publishes a notification to Amazon SNS. The scope of the StopAction. The only acceptable value is RuleSet. TopicArn (string) --- The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the stop action is taken. You can find the ARN of a topic by using the ListTopics Amazon SNS operation. AddHeaderAction (dict) --- Adds a header to the received email. The name of the header to add to the incoming message. The name must contain at least one character, and can contain up to 50 characters. It consists of alphanumeric (a---z, A---Z, 0---9) characters and dashes. The content to include in the header. This value can contain up to 2048 characters. It can't contain newline ( \\n) or carriage return ( \\r) characters. SNSAction (dict) --- Publishes the email content within a notification to Amazon SNS. The Amazon Resource Name (ARN) of the Amazon SNS topic to notify. Encoding (string) --- The encoding to use for the email within the Amazon SNS notification. UTF-8 is easier to use, but may not preserve all special characters when a message was encoded with a different encoding format. Base64 preserves all special characters. The default value is UTF-8. ConnectAction (dict) --- Parses the received message and starts an email contact in Amazon Connect on your behalf. The Amazon Resource Name (ARN) for the Amazon Connect instance that Amazon SES integrates with for starting email contacts. For more information about Amazon Connect instances, see the Amazon Connect Administrator Guide The Amazon Resource Name (ARN) of the IAM role to be used by Amazon Simple Email Service while starting email contacts to the Amazon Connect instance. This role should have permission to invoke connect:StartEmailContact for the given Amazon Connect instance. ScanEnabled (boolean) --- If true, then messages that this receipt rule applies to are scanned for spam and viruses. The default value is false.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the receipt rule. The name must meet the following requirements:",
+          "nested_params": []
+        },
+        {
+          "name": "Enabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the receipt rule is active. The default value is false.",
+          "nested_params": []
+        },
+        {
+          "name": "TlsPolicy",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether Amazon SES should require that incoming email is delivered over a connection encrypted with Transport Layer Security (TLS). If this parameter is set to Require, Amazon SES bounces emails that are not received over TLS. The default is Optional.",
+          "nested_params": []
+        },
+        {
+          "name": "Recipients",
+          "type": "list",
+          "required": false,
+          "description": "The recipient domains and email addresses that the receipt rule applies to. If this field is not specified, this rule matches all recipients on all verified domains.",
+          "nested_params": []
+        },
+        {
+          "name": "Actions",
+          "type": "list",
+          "required": false,
+          "description": "An ordered list of actions to perform on messages that match at least one of the recipient email addresses or domains specified in the receipt rule.",
+          "nested_params": [
+            {
+              "name": "S3Action",
+              "type": "dict",
+              "required": false,
+              "description": "Saves the received message to an Amazon Simple Storage Service (Amazon S3) bucket and, optionally, publishes a notification to Amazon SNS.",
+              "nested_params": [
+                {
+                  "name": "TopicArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the Amazon SNS topic to notify when the message is saved to the Amazon S3 bucket. You can find the ARN of a topic by using the ListTopics operation in Amazon SNS. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "BucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Amazon S3 bucket for incoming email.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ObjectKeyPrefix",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key prefix of the Amazon S3 bucket. The key prefix is similar to a directory name that enables you to store similar data under the same directory in a bucket.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KmsKeyArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The customer managed key that Amazon SES should use to encrypt your emails before saving them to the Amazon S3 bucket. You can use the Amazon Web Services managed key or a customer managed key that you created in Amazon Web Services KMS as follows:",
+                  "nested_params": []
+                },
+                {
+                  "name": "IamRoleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role to be used by Amazon Simple Email Service while writing to the Amazon S3 bucket, optionally encrypting your mail via the provided customer managed key, and publishing to the Amazon SNS topic. This role should have access to the following APIs:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "BounceAction",
+              "type": "dict",
+              "required": false,
+              "description": "Rejects the received email by returning a bounce response to the sender and, optionally, publishes a notification to Amazon Simple Notification Service (Amazon SNS).",
+              "nested_params": [
+                {
+                  "name": "TopicArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the bounce action is taken. You can find the ARN of a topic by using the ListTopics operation in Amazon SNS. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SmtpReplyCode",
+                  "type": "string",
+                  "required": false,
+                  "description": "The SMTP reply code, as defined by RFC 5321.",
+                  "nested_params": []
+                },
+                {
+                  "name": "StatusCode",
+                  "type": "string",
+                  "required": false,
+                  "description": "The SMTP enhanced status code, as defined by RFC 3463.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "required": false,
+                  "description": "Human-readable text to include in the bounce message.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Sender",
+                  "type": "string",
+                  "required": false,
+                  "description": "The email address of the sender of the bounced email. This is the address from which the bounce message is sent.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "WorkmailAction",
+              "type": "dict",
+              "required": false,
+              "description": "Calls Amazon WorkMail and, optionally, publishes a notification to Amazon Amazon SNS.",
+              "nested_params": [
+                {
+                  "name": "TopicArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the WorkMail action is called. You can find the ARN of a topic by using the ListTopics operation in Amazon SNS. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "OrganizationArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon WorkMail organization. Amazon WorkMail ARNs use the following format: arn:aws:workmail:<region>:<awsAccountId>:organization/<workmailOrganizationId> You can find the ID of your organization by using the ListOrganizations operation in Amazon WorkMail. Amazon WorkMail organization IDs begin with ' m-', followed by a string of alphanumeric characters. For information about Amazon WorkMail organizations, see the Amazon WorkMail Administrator Guide.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "LambdaAction",
+              "type": "dict",
+              "required": false,
+              "description": "Calls an Amazon Web Services Lambda function, and optionally, publishes a notification to Amazon SNS.",
+              "nested_params": [
+                {
+                  "name": "TopicArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the Lambda action is executed. You can find the ARN of a topic by using the ListTopics operation in Amazon SNS. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "FunctionArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon Web Services Lambda function. An example of an Amazon Web Services Lambda function ARN is arn:aws:lambda:us-west-2:account-id:function:MyFunction. For more information about Amazon Web Services Lambda, see the Amazon Web Services Lambda Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "InvocationType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The invocation type of the Amazon Web Services Lambda function. An invocation type of RequestResponse means that the execution of the function immediately results in a response, and a value of Event means that the function is invoked asynchronously. The default value is Event. For information about Amazon Web Services Lambda invocation types, see the Amazon Web Services Lambda Developer Guide.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "StopAction",
+              "type": "dict",
+              "required": false,
+              "description": "Terminates the evaluation of the receipt rule set and optionally publishes a notification to Amazon SNS.",
+              "nested_params": [
+                {
+                  "name": "Scope",
+                  "type": "string",
+                  "required": false,
+                  "description": "The scope of the StopAction. The only acceptable value is RuleSet.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TopicArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic to notify when the stop action is taken. You can find the ARN of a topic by using the ListTopics Amazon SNS operation. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "AddHeaderAction",
+              "type": "dict",
+              "required": false,
+              "description": "Adds a header to the received email.",
+              "nested_params": [
+                {
+                  "name": "HeaderName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the header to add to the incoming message. The name must contain at least one character, and can contain up to 50 characters. It consists of alphanumeric (a---z, A---Z, 0---9) characters and dashes.",
+                  "nested_params": []
+                },
+                {
+                  "name": "HeaderValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The content to include in the header. This value can contain up to 2048 characters. It can't contain newline ( \\n) or carriage return ( \\r) characters.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "SNSAction",
+              "type": "dict",
+              "required": false,
+              "description": "Publishes the email content within a notification to Amazon SNS.",
+              "nested_params": [
+                {
+                  "name": "TopicArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic to notify. You can find the ARN of a topic by using the ListTopics operation in Amazon SNS. For more information about Amazon SNS topics, see the Amazon SNS Developer Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Encoding",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encoding to use for the email within the Amazon SNS notification. UTF-8 is easier to use, but may not preserve all special characters when a message was encoded with a different encoding format. Base64 preserves all special characters. The default value is UTF-8.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ConnectAction",
+              "type": "dict",
+              "required": false,
+              "description": "Parses the received message and starts an email contact in Amazon Connect on your behalf.",
+              "nested_params": [
+                {
+                  "name": "InstanceARN",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) for the Amazon Connect instance that Amazon SES integrates with for starting email contacts. For more information about Amazon Connect instances, see the Amazon Connect Administrator Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "IAMRoleARN",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the IAM role to be used by Amazon Simple Email Service while starting email contacts to the Amazon Connect instance. This role should have permission to invoke connect:StartEmailContact for the given Amazon Connect instance.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ScanEnabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, then messages that this receipt rule applies to are scanned for spam and viruses. The default value is false.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

@@ -1,0 +1,406 @@
+{
+  "method_name": "list_data_integration_flows",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/supplychain/client/list_data_integration_flows.html",
+  "description": "Enables you to programmatically list all data pipelines for the provided Amazon Web Services Supply Chain instance.",
+  "parameters": [
+    {
+      "name": "instanceId",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Web Services Supply Chain instance identifier.",
+      "nested_params": []
+    },
+    {
+      "name": "nextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "maxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "flows",
+          "type": "list",
+          "description": "The response parameters for ListDataIntegrationFlows.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "instanceId",
+                  "type": "string",
+                  "description": "The DataIntegrationFlow instance ID.",
+                  "nested_items": []
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The DataIntegrationFlow name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "sources",
+                  "type": "list",
+                  "description": "The DataIntegrationFlow source configurations.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "sourceType",
+                          "type": "string",
+                          "description": "The DataIntegrationFlow source type.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "sourceName",
+                          "type": "string",
+                          "description": "The DataIntegrationFlow source name that can be used as table alias in SQL transformation query.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "bucketName",
+                              "type": "string",
+                              "description": "The bucketName of the S3 source objects.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "prefix",
+                              "type": "string",
+                              "description": "The prefix of the S3 source objects. To trigger data ingestion, S3 files need to be put under s3://bucketName/prefix/.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "fileType",
+                                  "type": "string",
+                                  "description": "The Amazon S3 file type in S3 options.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "datasetSource",
+                          "type": "dict",
+                          "description": "The dataset DataIntegrationFlow source.",
+                          "nested_items": [
+                            {
+                              "name": "datasetIdentifier",
+                              "type": "string",
+                              "description": "The ARN of the dataset.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "loadType",
+                                  "type": "string",
+                                  "description": "The target dataset's data load type. This only affects how source S3 files are selected in the S3-to-dataset flow.",
+                                  "nested_items": [
+                                    {
+                                      "name": "REPLACE",
+                                      "type": "",
+                                      "description": "",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "INCREMENTAL",
+                                      "type": "",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "dedupeRecords",
+                                  "type": "boolean",
+                                  "description": "The option to perform deduplication on data records sharing same primary key values. If disabled, transformed data with duplicate primary key values will ingest into dataset, for datasets within asc namespace, such duplicates will cause ingestion fail. If enabled without dedupeStrategy, deduplication is done by retaining a random data record among those sharing the same primary key values. If enabled with dedupeStragtegy, the deduplication is done following the strategy.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "dedupeStrategy",
+                                  "type": "dict",
+                                  "description": "The deduplication strategy to dedupe the data records sharing same primary key values of the target dataset. This strategy only applies to target dataset with primary keys and with dedupeRecords option enabled. If transformed data still got duplicates after the dedupeStrategy evaluation, a random data record is chosen to be retained.",
+                                  "nested_items": [
+                                    {
+                                      "name": "type",
+                                      "type": "string",
+                                      "description": "The type of the deduplication strategy.",
+                                      "nested_items": [
+                                        {
+                                          "name": "FIELD_PRIORITY",
+                                          "type": "",
+                                          "description": "",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "fieldPriority",
+                                      "type": "dict",
+                                      "description": "The field priority deduplication strategy.",
+                                      "nested_items": [
+                                        {
+                                          "name": "fields",
+                                          "type": "list",
+                                          "description": "The list of field names and their sort order for deduplication, arranged in descending priority from highest to lowest.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "name",
+                                                  "type": "string",
+                                                  "description": "The name of the deduplication field. Must exist in the dataset and not be a primary key.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "sortOrder",
+                                                  "type": "string",
+                                                  "description": "The sort order for the deduplication field.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "transformation",
+                  "type": "dict",
+                  "description": "The DataIntegrationFlow transformation configurations.",
+                  "nested_items": [
+                    {
+                      "name": "transformationType",
+                      "type": "string",
+                      "description": "The DataIntegrationFlow transformation type.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "sqlTransformation",
+                      "type": "dict",
+                      "description": "The SQL DataIntegrationFlow transformation configuration.",
+                      "nested_items": [
+                        {
+                          "name": "query",
+                          "type": "string",
+                          "description": "The transformation SQL query body based on SparkSQL.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "targetType",
+                      "type": "string",
+                      "description": "The DataIntegrationFlow target type.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "bucketName",
+                          "type": "string",
+                          "description": "The bucketName of the S3 target objects.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "prefix",
+                          "type": "string",
+                          "description": "The prefix of the S3 target objects.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "fileType",
+                              "type": "string",
+                              "description": "The Amazon S3 file type in S3 options.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "datasetTarget",
+                      "type": "dict",
+                      "description": "The dataset DataIntegrationFlow target. Note that for AWS Supply Chain dataset under asc namespace, it has a connection_id internal field that is not allowed to be provided by client directly, they will be auto populated.",
+                      "nested_items": [
+                        {
+                          "name": "datasetIdentifier",
+                          "type": "string",
+                          "description": "The dataset ARN.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "loadType",
+                              "type": "string",
+                              "description": "The target dataset's data load type. This only affects how source S3 files are selected in the S3-to-dataset flow.",
+                              "nested_items": [
+                                {
+                                  "name": "REPLACE",
+                                  "type": "",
+                                  "description": "",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "INCREMENTAL",
+                                  "type": "",
+                                  "description": "",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "dedupeRecords",
+                              "type": "boolean",
+                              "description": "The option to perform deduplication on data records sharing same primary key values. If disabled, transformed data with duplicate primary key values will ingest into dataset, for datasets within asc namespace, such duplicates will cause ingestion fail. If enabled without dedupeStrategy, deduplication is done by retaining a random data record among those sharing the same primary key values. If enabled with dedupeStragtegy, the deduplication is done following the strategy.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "dedupeStrategy",
+                              "type": "dict",
+                              "description": "The deduplication strategy to dedupe the data records sharing same primary key values of the target dataset. This strategy only applies to target dataset with primary keys and with dedupeRecords option enabled. If transformed data still got duplicates after the dedupeStrategy evaluation, a random data record is chosen to be retained.",
+                              "nested_items": [
+                                {
+                                  "name": "type",
+                                  "type": "string",
+                                  "description": "The type of the deduplication strategy.",
+                                  "nested_items": [
+                                    {
+                                      "name": "FIELD_PRIORITY",
+                                      "type": "",
+                                      "description": "",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "fieldPriority",
+                                  "type": "dict",
+                                  "description": "The field priority deduplication strategy.",
+                                  "nested_items": [
+                                    {
+                                      "name": "fields",
+                                      "type": "list",
+                                      "description": "The list of field names and their sort order for deduplication, arranged in descending priority from highest to lowest.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "name",
+                                              "type": "string",
+                                              "description": "The name of the deduplication field. Must exist in the dataset and not be a primary key.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "sortOrder",
+                                              "type": "string",
+                                              "description": "The sort order for the deduplication field.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "createdTime",
+                  "type": "datetime",
+                  "description": "The DataIntegrationFlow creation timestamp.",
+                  "nested_items": []
+                },
+                {
+                  "name": "lastModifiedTime",
+                  "type": "datetime",
+                  "description": "The DataIntegrationFlow last modified timestamp.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nextToken",
+          "type": "string",
+          "description": "The pagination token to fetch the next page of the DataIntegrationFlows.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}
