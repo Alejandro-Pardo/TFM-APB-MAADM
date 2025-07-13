@@ -1,0 +1,288 @@
+{
+  "method_name": "create_server",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transfer/client/create_server.html",
+  "description": "Instantiates an auto-scaling virtual server based on the selected file transfer protocol in Amazon Web Services. When you make updates to your file transfer protocol-enabled server or when you work with users, use the service-generated ServerId property that is assigned to the newly created server.",
+  "parameters": [
+    {
+      "name": "Certificate",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Resource Name (ARN) of the Certificate Manager (ACM) certificate. Required when Protocols is set to FTPS. To request a new public certificate, see Request a public certificate in the Certificate Manager User Guide. To import an existing certificate into ACM, see Importing certificates into ACM in the Certificate Manager User Guide. To request a private certificate to use FTPS through private IP addresses, see Request a private certificate in the Certificate Manager User Guide. Certificates with the following cryptographic algorithms and key sizes are supported: 2048-bit RSA (RSA_2048) 4096-bit RSA (RSA_4096) Elliptic Prime Curve 256 bit (EC_prime256v1) Elliptic Prime Curve 384 bit (EC_secp384r1) Elliptic Prime Curve 521 bit (EC_secp521r1)",
+      "nested_params": []
+    },
+    {
+      "name": "Domain",
+      "type": "string",
+      "required": false,
+      "description": "The domain of the storage system that is used for file transfers. There are two domains available: Amazon Simple Storage Service (Amazon S3) and Amazon Elastic File System (Amazon EFS). The default value is S3.",
+      "nested_params": []
+    },
+    {
+      "name": "EndpointDetails",
+      "type": "dict",
+      "required": false,
+      "description": "The virtual private cloud (VPC) endpoint settings that are configured for your server. When you host your endpoint within your VPC, you can make your endpoint accessible only to resources within your VPC, or you can attach Elastic IP addresses and make your endpoint accessible to clients over the internet. Your VPC's default security groups are automatically assigned to your endpoint. AddressAllocationIds (list) --- A list of address allocation IDs that are required to attach an Elastic IP address to your server's endpoint. An address allocation ID corresponds to the allocation ID of an Elastic IP address. This value can be retrieved from the allocationId field from the Amazon EC2 Address data type. One way to retrieve this value is by calling the EC2 DescribeAddresses API. This parameter is optional. Set this parameter if you want to make your VPC endpoint public-facing. For details, see Create an internet-facing endpoint for your server. (string) --- SubnetIds (list) --- A list of subnet IDs that are required to host your server endpoint in your VPC. (string) --- VpcEndpointId (string) --- The identifier of the VPC endpoint. VpcId (string) --- The VPC identifier of the VPC in which a server's endpoint will be hosted. SecurityGroupIds (list) --- A list of security groups IDs that are available to attach to your server's endpoint. (string) ---",
+      "nested_params": [
+        {
+          "name": "AddressAllocationIds",
+          "type": "list",
+          "required": false,
+          "description": "A list of address allocation IDs that are required to attach an Elastic IP address to your server's endpoint. An address allocation ID corresponds to the allocation ID of an Elastic IP address. This value can be retrieved from the allocationId field from the Amazon EC2 Address data type. One way to retrieve this value is by calling the EC2 DescribeAddresses API. This parameter is optional. Set this parameter if you want to make your VPC endpoint public-facing. For details, see Create an internet-facing endpoint for your server.",
+          "nested_params": []
+        },
+        {
+          "name": "SubnetIds",
+          "type": "list",
+          "required": false,
+          "description": "A list of subnet IDs that are required to host your server endpoint in your VPC.",
+          "nested_params": []
+        },
+        {
+          "name": "VpcEndpointId",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the VPC endpoint.",
+          "nested_params": []
+        },
+        {
+          "name": "VpcId",
+          "type": "string",
+          "required": false,
+          "description": "The VPC identifier of the VPC in which a server's endpoint will be hosted.",
+          "nested_params": []
+        },
+        {
+          "name": "SecurityGroupIds",
+          "type": "list",
+          "required": false,
+          "description": "A list of security groups IDs that are available to attach to your server's endpoint.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "EndpointType",
+      "type": "string",
+      "required": false,
+      "description": "The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.",
+      "nested_params": []
+    },
+    {
+      "name": "HostKey",
+      "type": "string",
+      "required": false,
+      "description": "The RSA, ECDSA, or ED25519 private key to use for your SFTP-enabled server. You can add multiple host keys, in case you want to rotate keys, or have a set of active keys that use different algorithms. Use the following command to generate an RSA 2048 bit key with no passphrase: ssh-keygen -t rsa -b 2048 -N \"\" -m PEM -f my-new-server-key. Use a minimum value of 2048 for the -b option. You can create a stronger key by using 3072 or 4096. Use the following command to generate an ECDSA 256 bit key with no passphrase: ssh-keygen -t ecdsa -b 256 -N \"\" -m PEM -f my-new-server-key. Valid values for the -b option for ECDSA are 256, 384, and 521. Use the following command to generate an ED25519 key with no passphrase: ssh-keygen -t ed25519 -N \"\" -f my-new-server-key. For all of these commands, you can replace my-new-server-key with a string of your choice. For more information, see Manage host keys for your SFTP-enabled server in the Transfer Family User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "IdentityProviderDetails",
+      "type": "dict",
+      "required": false,
+      "description": "Required when IdentityProviderType is set to AWS_DIRECTORY_SERVICE, Amazon Web Services_LAMBDA or API_GATEWAY. Accepts an array containing all of the information required to use a directory in AWS_DIRECTORY_SERVICE or invoke a customer-supplied authentication API, including the API Gateway URL. Cannot be specified when IdentityProviderType is set to SERVICE_MANAGED. Url (string) --- Provides the location of the service endpoint used to authenticate users. InvocationRole (string) --- This parameter is only applicable if your IdentityProviderType is API_GATEWAY. Provides the type of InvocationRole used to authenticate the user account. DirectoryId (string) --- The identifier of the Directory Service directory that you want to use as your identity provider. Function (string) --- The ARN for a Lambda function to use for the Identity provider. SftpAuthenticationMethods (string) --- For SFTP-enabled servers, and for custom identity providers only, you can specify whether to authenticate using a password, SSH key pair, or both. PASSWORD - users must provide their password to connect. PUBLIC_KEY - users must provide their private key to connect. PUBLIC_KEY_OR_PASSWORD - users can authenticate with either their password or their key. This is the default value. PUBLIC_KEY_AND_PASSWORD - users must provide both their private key and their password to connect. The server checks the key first, and then if the key is valid, the system prompts for a password. If the private key provided does not match the public key that is stored, authentication fails.",
+      "nested_params": [
+        {
+          "name": "Url",
+          "type": "string",
+          "required": false,
+          "description": "Provides the location of the service endpoint used to authenticate users.",
+          "nested_params": []
+        },
+        {
+          "name": "InvocationRole",
+          "type": "string",
+          "required": false,
+          "description": "This parameter is only applicable if your IdentityProviderType is API_GATEWAY. Provides the type of InvocationRole used to authenticate the user account.",
+          "nested_params": []
+        },
+        {
+          "name": "DirectoryId",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the Directory Service directory that you want to use as your identity provider.",
+          "nested_params": []
+        },
+        {
+          "name": "Function",
+          "type": "string",
+          "required": false,
+          "description": "The ARN for a Lambda function to use for the Identity provider.",
+          "nested_params": []
+        },
+        {
+          "name": "SftpAuthenticationMethods",
+          "type": "string",
+          "required": false,
+          "description": "For SFTP-enabled servers, and for custom identity providers only, you can specify whether to authenticate using a password, SSH key pair, or both.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "IdentityProviderType",
+      "type": "string",
+      "required": false,
+      "description": "The mode of authentication for a server. The default value is SERVICE_MANAGED, which allows you to store and access user credentials within the Transfer Family service. Use AWS_DIRECTORY_SERVICE to provide access to Active Directory groups in Directory Service for Microsoft Active Directory or Microsoft Active Directory in your on-premises environment or in Amazon Web Services using AD Connector. This option also requires you to provide a Directory ID by using the IdentityProviderDetails parameter. Use the API_GATEWAY value to integrate with an identity provider of your choosing. The API_GATEWAY setting requires you to provide an Amazon API Gateway endpoint URL to call for authentication by using the IdentityProviderDetails parameter. Use the AWS_LAMBDA value to directly use an Lambda function as your identity provider. If you choose this value, you must specify the ARN for the Lambda function in the Function parameter for the IdentityProviderDetails data type.",
+      "nested_params": []
+    },
+    {
+      "name": "LoggingRole",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "PostAuthenticationLoginBanner",
+      "type": "string",
+      "required": false,
+      "description": "Specifies a string to display when users connect to a server. This string is displayed after the user authenticates.",
+      "nested_params": []
+    },
+    {
+      "name": "PreAuthenticationLoginBanner",
+      "type": "string",
+      "required": false,
+      "description": "Specifies a string to display when users connect to a server. This string is displayed before the user authenticates. For example, the following banner displays details about using the system: This system is for the use of authorized users only. Individuals using this computer system without authority, or in excess of their authority, are subject to having all of their activities on this system monitored and recorded by system personnel.",
+      "nested_params": []
+    },
+    {
+      "name": "Protocols",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the file transfer protocol or protocols over which your file transfer protocol client can connect to your server's endpoint. The available protocols are: SFTP (Secure Shell (SSH) File Transfer Protocol): File transfer over SSH FTPS (File Transfer Protocol Secure): File transfer with TLS encryption FTP (File Transfer Protocol): Unencrypted file transfer AS2 (Applicability Statement 2): used for transporting structured business-to-business data (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ProtocolDetails",
+      "type": "dict",
+      "required": false,
+      "description": "The protocol settings that are configured for your server. To indicate passive mode (for FTP and FTPS protocols), use the PassiveIp parameter. Enter a single dotted-quad IPv4 address, such as the external IP address of a firewall, router, or load balancer. To ignore the error that is generated when the client attempts to use the SETSTAT command on a file that you are uploading to an Amazon S3 bucket, use the SetStatOption parameter. To have the Transfer Family server ignore the SETSTAT command and upload files without needing to make any changes to your SFTP client, set the value to ENABLE_NO_OP. If you set the SetStatOption parameter to ENABLE_NO_OP, Transfer Family generates a log entry to Amazon CloudWatch Logs, so that you can determine when the client is making a SETSTAT call. To determine whether your Transfer Family server resumes recent, negotiated sessions through a unique session ID, use the TlsSessionResumptionMode parameter. As2Transports indicates the transport method for the AS2 messages. Currently, only HTTP is supported. PassiveIp (string) --- Indicates passive mode, for FTP and FTPS protocols. Enter a single IPv4 address, such as the public IP address of a firewall, router, or load balancer. For example: aws transfer update-server --protocol-details PassiveIp=0.0.0.0 Replace 0.0.0.0 in the example above with the actual IP address you want to use. Special values The AUTO and 0.0.0.0 are special values for the PassiveIp parameter. The value PassiveIp=AUTO is assigned by default to FTP and FTPS type servers. In this case, the server automatically responds with one of the endpoint IPs within the PASV response. PassiveIp=0.0.0.0 has a more unique application for its usage. For example, if you have a High Availability (HA) Network Load Balancer (NLB) environment, where you have 3 subnets, you can only specify a single IP address using the PassiveIp parameter. This reduces the effectiveness of having High Availability. In this case, you can specify PassiveIp=0.0.0.0. This tells the client to use the same IP address as the Control connection and utilize all AZs for their connections. Note, however, that not all FTP clients support the PassiveIp=0.0.0.0 response. FileZilla and WinSCP do support it. If you are using other clients, check to see if your client supports the PassiveIp=0.0.0.0 response. TlsSessionResumptionMode (string) --- A property used with Transfer Family servers that use the FTPS protocol. TLS Session Resumption provides a mechanism to resume or share a negotiated secret key between the control and data connection for an FTPS session. TlsSessionResumptionMode determines whether or not the server resumes recent, negotiated sessions through a unique session ID. This property is available during CreateServer and UpdateServer calls. If a TlsSessionResumptionMode value is not specified during CreateServer, it is set to ENFORCED by default. DISABLED: the server does not process TLS session resumption client requests and creates a new TLS session for each request. ENABLED: the server processes and accepts clients that are performing TLS session resumption. The server doesn't reject client data connections that do not perform the TLS session resumption client processing. ENFORCED: the server processes and accepts clients that are performing TLS session resumption. The server rejects client data connections that do not perform the TLS session resumption client processing. Before you set the value to ENFORCED, test your clients. SetStatOption (string) --- Use the SetStatOption to ignore the error that is generated when the client attempts to use SETSTAT on a file you are uploading to an S3 bucket. Some SFTP file transfer clients can attempt to change the attributes of remote files, including timestamp and permissions, using commands, such as SETSTAT when uploading the file. However, these commands are not compatible with object storage systems, such as Amazon S3. Due to this incompatibility, file uploads from these clients can result in errors even when the file is otherwise successfully uploaded. Set the value to ENABLE_NO_OP to have the Transfer Family server ignore the SETSTAT command, and upload files without needing to make any changes to your SFTP client. While the SetStatOption ENABLE_NO_OP setting ignores the error, it does generate a log entry in Amazon CloudWatch Logs, so you can determine when the client is making a SETSTAT call. As2Transports (list) --- Indicates the transport method for the AS2 messages. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "SecurityPolicyName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Key-value pairs that can be used to group and search for servers. (dict) --- Creates a key-value pair for a specific resource. Tags are metadata that you can use to search for and group a resource for various purposes. You can apply tags to servers, users, and roles. A tag key can take more than one value. For example, to group servers for accounting purposes, you might create a tag called Group and assign the values Research and Accounting to that group. The name assigned to the tag that you create. Contains one or more values that you assigned to the key name you create.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The name assigned to the tag that you create.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "Contains one or more values that you assigned to the key name you create.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "WorkflowDetails",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the workflow ID for the workflow to assign and the execution role that's used for executing the workflow. In addition to a workflow to execute when a file is uploaded completely, WorkflowDetails can also contain a workflow ID (and execution role) for a workflow to execute on partial upload. A partial upload occurs when the server session disconnects while the file is still being uploaded. OnUpload (list) --- A trigger that starts a workflow: the workflow begins to execute after a file is uploaded. To remove an associated workflow from a server, you can provide an empty OnUpload object, as in the following example. aws transfer update-server --server-id s-01234567890abcdef --workflow-details '{\"OnUpload\":[]}' (dict) --- Specifies the workflow ID for the workflow to assign and the execution role that's used for executing the workflow. A unique identifier for the workflow. Includes the necessary permissions for S3, EFS, and Lambda operations that Transfer can assume, so that all workflow steps can operate on the required resources OnPartialUpload (list) --- A trigger that starts a workflow if a file is only partially uploaded. You can attach a workflow to a server that executes whenever there is a partial upload. A partial upload occurs when a file is open when the session disconnects. (dict) --- Specifies the workflow ID for the workflow to assign and the execution role that's used for executing the workflow. Includes the necessary permissions for S3, EFS, and Lambda operations that Transfer can assume, so that all workflow steps can operate on the required resources.",
+      "nested_params": [
+        {
+          "name": "OnUpload",
+          "type": "list",
+          "required": false,
+          "description": "A trigger that starts a workflow: the workflow begins to execute after a file is uploaded. To remove an associated workflow from a server, you can provide an empty OnUpload object, as in the following example. aws transfer update-server --server-id s-01234567890abcdef --workflow-details '{\"OnUpload\":[]}'",
+          "nested_params": [
+            {
+              "name": "WorkflowId",
+              "type": "string",
+              "required": false,
+              "description": "A unique identifier for the workflow.",
+              "nested_params": []
+            },
+            {
+              "name": "ExecutionRole",
+              "type": "string",
+              "required": false,
+              "description": "Includes the necessary permissions for S3, EFS, and Lambda operations that Transfer can assume, so that all workflow steps can operate on the required resources.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "OnPartialUpload",
+          "type": "list",
+          "required": false,
+          "description": "A trigger that starts a workflow if a file is only partially uploaded. You can attach a workflow to a server that executes whenever there is a partial upload. A partial upload occurs when a file is open when the session disconnects.",
+          "nested_params": [
+            {
+              "name": "WorkflowId",
+              "type": "string",
+              "required": false,
+              "description": "A unique identifier for the workflow.",
+              "nested_params": []
+            },
+            {
+              "name": "ExecutionRole",
+              "type": "string",
+              "required": false,
+              "description": "Includes the necessary permissions for S3, EFS, and Lambda operations that Transfer can assume, so that all workflow steps can operate on the required resources.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "StructuredLogDestinations",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the log groups to which your server logs are sent. To specify a log group, you must provide the ARN for an existing log group. In this case, the format of the log group is as follows: arn:aws:logs:region-name:amazon-account-id:log-group:log-group-name:* For example, arn:aws:logs:us-east-1:111122223333:log-group:mytestgroup:* If you have previously specified a log group for a server, you can clear it, and in effect turn off structured logging, by providing an empty value for this parameter in an update-server call. For example: update-server --server-id s-1234567890abcdef0 --structured-log-destinations (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "S3StorageOptions",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies whether or not performance for your Amazon S3 directories is optimized. This is disabled by default. By default, home directory mappings have a TYPE of DIRECTORY. If you enable this option, you would then need to explicitly set the HomeDirectoryMapEntry Type to FILE if you want a mapping to have a file target. DirectoryListingOptimization (string) --- Specifies whether or not performance for your Amazon S3 directories is optimized. If you enable this option, you would then need to explicitly set the HomeDirectoryMapEntry Type to FILE if you want a mapping to have a file target.",
+      "nested_params": [
+        {
+          "name": "DirectoryListingOptimization",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether or not performance for your Amazon S3 directories is optimized. This is disabled by default. By default, home directory mappings have a TYPE of DIRECTORY. If you enable this option, you would then need to explicitly set the HomeDirectoryMapEntry Type to FILE if you want a mapping to have a file target.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "IpAddressType",
+      "type": "string",
+      "required": false,
+      "description": "Specifies whether to use IPv4 only, or to use dual-stack (IPv4 and IPv6) for your Transfer Family endpoint. The default value is IPV4.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ServerId",
+          "type": "string",
+          "description": "The service-assigned identifier of the server that is created.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

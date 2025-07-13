@@ -1,0 +1,189 @@
+{
+  "method_name": "create_workflow",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transfer/client/create_workflow.html",
+  "description": "Allows you to create a workflow with specified steps and step details the workflow invokes after file transfer completes. After creating a workflow, you can associate the workflow created with any transfer servers by specifying the workflow-details field in CreateServer and UpdateServer operations.",
+  "parameters": [
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Steps",
+      "type": "list",
+      "required": true,
+      "description": "Specifies the details for the steps that are in the specified workflow. The TYPE specifies which of the following actions is being taken for this step. COPY - Copy the file to another location. CUSTOM - Perform a custom step with an Lambda function target. DECRYPT - Decrypt a file that was encrypted before it was uploaded. DELETE - Delete the file. TAG - Add a tag to the file. For file location, you specify either the Amazon S3 bucket and key, or the Amazon EFS file system ID and path. (dict) --- The basic building block of a workflow. Type (string) --- Currently, the following step types are supported. CopyStepDetails (dict) --- Details for a step that performs a file copy. Consists of the following values: A description An Amazon S3 location for the destination of the file copy. A flag that indicates whether to overwrite an existing file of the same name. The default is FALSE. Name (string) --- The name of the step, used as an identifier. DestinationFileLocation (dict) --- Specifies the location for the file being copied. Use ${Transfer:UserName} or ${Transfer:UploadDate} in this field to parametrize the destination prefix by username or uploaded date. Set the value of DestinationFileLocation to ${Transfer:UserName} to copy uploaded files to an Amazon S3 bucket that is prefixed with the name of the Transfer Family user that uploaded the file. Set the value of DestinationFileLocation to ${Transfer:UploadDate} to copy uploaded files to an Amazon S3 bucket that is prefixed with the date of the upload. S3FileLocation (dict) --- Specifies the details for the Amazon S3 file that's being copied or decrypted. Bucket (string) --- Specifies the S3 bucket for the customer input file. Key (string) --- The name assigned to the file when it was created in Amazon S3. You use the object key to retrieve the object. EfsFileLocation (dict) --- Specifies the details for the Amazon Elastic File System (Amazon EFS) file that's being decrypted. FileSystemId (string) --- The identifier of the file system, assigned by Amazon EFS. Path (string) --- The pathname for the folder being used by a workflow. OverwriteExisting (string) --- A flag that indicates whether to overwrite an existing file of the same name. If the workflow is processing a file that has the same name as an existing file, the behavior is as follows: If OverwriteExisting is TRUE, the existing file is replaced with the file being processed. If OverwriteExisting is FALSE, nothing happens, and the workflow processing stops. SourceFileLocation (string) --- Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. To use the previous file as the input, enter ${previous.file}. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. To use the originally uploaded file location as input for this step, enter ${original.file}. CustomStepDetails (dict) --- Details for a step that invokes an Lambda function. Consists of the Lambda function's name, target, and timeout (in seconds). Target (string) --- The ARN for the Lambda function that is being called. TimeoutSeconds (integer) --- Timeout, in seconds, for the step. DeleteStepDetails (dict) --- Details for a step that deletes the file. TagStepDetails (dict) --- Details for a step that creates one or more tags. You specify one or more tags. Each tag contains a key-value pair. Tags (list) --- Array that contains from 1 to 10 key/value pairs. (dict) --- Specifies the key-value pair that are assigned to a file during the execution of a Tagging step. The name assigned to the tag that you create. The value that corresponds to the key. DecryptStepDetails (dict) --- Details for a step that decrypts an encrypted file. Consists of the following values: A descriptive name An Amazon S3 or Amazon Elastic File System (Amazon EFS) location for the source file to decrypt. An S3 or Amazon EFS location for the destination of the file decryption. The type of encryption that's used. Currently, only PGP encryption is supported. The type of encryption used. Currently, this value must be PGP. Specifies the location for the file being decrypted. Set the value of DestinationFileLocation to ${Transfer:UserName} to decrypt uploaded files to an Amazon S3 bucket that is prefixed with the name of the Transfer Family user that uploaded the file. Set the value of DestinationFileLocation to ${Transfer:UploadDate} to decrypt uploaded files to an Amazon S3 bucket that is prefixed with the date of the upload. Path (string) --- The pathname for the folder being used by a workflow.",
+      "nested_params": []
+    },
+    {
+      "name": "OnExceptionSteps",
+      "type": "list",
+      "required": true,
+      "description": "Specifies the steps (actions) to take if errors are encountered during execution of the workflow. (dict) --- The basic building block of a workflow. Type (string) --- Currently, the following step types are supported. COPY - Copy the file to another location. CUSTOM - Perform a custom step with an Lambda function target. DECRYPT - Decrypt a file that was encrypted before it was uploaded. DELETE - Delete the file. TAG - Add a tag to the file. CopyStepDetails (dict) --- Details for a step that performs a file copy. Consists of the following values: A description An Amazon S3 location for the destination of the file copy. A flag that indicates whether to overwrite an existing file of the same name. The default is FALSE. Name (string) --- The name of the step, used as an identifier. DestinationFileLocation (dict) --- Specifies the location for the file being copied. Use ${Transfer:UserName} or ${Transfer:UploadDate} in this field to parametrize the destination prefix by username or uploaded date. Set the value of DestinationFileLocation to ${Transfer:UserName} to copy uploaded files to an Amazon S3 bucket that is prefixed with the name of the Transfer Family user that uploaded the file. Set the value of DestinationFileLocation to ${Transfer:UploadDate} to copy uploaded files to an Amazon S3 bucket that is prefixed with the date of the upload. S3FileLocation (dict) --- Specifies the details for the Amazon S3 file that's being copied or decrypted. Bucket (string) --- Specifies the S3 bucket for the customer input file. Key (string) --- The name assigned to the file when it was created in Amazon S3. You use the object key to retrieve the object. EfsFileLocation (dict) --- Specifies the details for the Amazon Elastic File System (Amazon EFS) file that's being decrypted. FileSystemId (string) --- The identifier of the file system, assigned by Amazon EFS. Path (string) --- The pathname for the folder being used by a workflow. OverwriteExisting (string) --- A flag that indicates whether to overwrite an existing file of the same name. If the workflow is processing a file that has the same name as an existing file, the behavior is as follows: If OverwriteExisting is TRUE, the existing file is replaced with the file being processed. If OverwriteExisting is FALSE, nothing happens, and the workflow processing stops. SourceFileLocation (string) --- Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow. To use the previous file as the input, enter ${previous.file}. In this case, this workflow step uses the output file from the previous workflow step as input. This is the default value. To use the originally uploaded file location as input for this step, enter ${original.file}. CustomStepDetails (dict) --- Details for a step that invokes an Lambda function. Consists of the Lambda function's name, target, and timeout (in seconds). Target (string) --- The ARN for the Lambda function that is being called. TimeoutSeconds (integer) --- Timeout, in seconds, for the step. DeleteStepDetails (dict) --- Details for a step that deletes the file. TagStepDetails (dict) --- Details for a step that creates one or more tags. You specify one or more tags. Each tag contains a key-value pair. Tags (list) --- Array that contains from 1 to 10 key/value pairs. (dict) --- Specifies the key-value pair that are assigned to a file during the execution of a Tagging step. The name assigned to the tag that you create. The value that corresponds to the key. DecryptStepDetails (dict) --- Details for a step that decrypts an encrypted file. Consists of the following values: A descriptive name An Amazon S3 or Amazon Elastic File System (Amazon EFS) location for the source file to decrypt. An S3 or Amazon EFS location for the destination of the file decryption. The type of encryption that's used. Currently, only PGP encryption is supported. The type of encryption used. Currently, this value must be PGP. Specifies the location for the file being decrypted. Set the value of DestinationFileLocation to ${Transfer:UserName} to decrypt uploaded files to an Amazon S3 bucket that is prefixed with the name of the Transfer Family user that uploaded the file. Set the value of DestinationFileLocation to ${Transfer:UploadDate} to decrypt uploaded files to an Amazon S3 bucket that is prefixed with the date of the upload. Path (string) --- The pathname for the folder being used by a workflow.",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "Currently, the following step types are supported.",
+          "nested_params": []
+        },
+        {
+          "name": "CopyStepDetails",
+          "type": "dict",
+          "required": false,
+          "description": "Details for a step that performs a file copy. Consists of the following values:",
+          "nested_params": []
+        },
+        {
+          "name": "CustomStepDetails",
+          "type": "dict",
+          "required": false,
+          "description": "Details for a step that invokes an Lambda function. Consists of the Lambda function's name, target, and timeout (in seconds).",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the step, used as an identifier.",
+              "nested_params": []
+            },
+            {
+              "name": "Target",
+              "type": "string",
+              "required": false,
+              "description": "The ARN for the Lambda function that is being called.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeoutSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "Timeout, in seconds, for the step.",
+              "nested_params": []
+            },
+            {
+              "name": "SourceFileLocation",
+              "type": "string",
+              "required": false,
+              "description": "Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "DeleteStepDetails",
+          "type": "dict",
+          "required": false,
+          "description": "Details for a step that deletes the file.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the step, used as an identifier.",
+              "nested_params": []
+            },
+            {
+              "name": "SourceFileLocation",
+              "type": "string",
+              "required": false,
+              "description": "Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "TagStepDetails",
+          "type": "dict",
+          "required": false,
+          "description": "Details for a step that creates one or more tags. You specify one or more tags. Each tag contains a key-value pair.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the step, used as an identifier.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "Array that contains from 1 to 10 key/value pairs.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name assigned to the tag that you create.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value that corresponds to the key.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "SourceFileLocation",
+              "type": "string",
+              "required": false,
+              "description": "Specifies which file to use as input to the workflow step: either the output from the previous step, or the originally uploaded file for the workflow.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "DecryptStepDetails",
+          "type": "dict",
+          "required": false,
+          "description": "Details for a step that decrypts an encrypted file. Consists of the following values:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Key-value pairs that can be used to group and search for workflows. Tags are metadata attached to workflows for any purpose. (dict) --- Creates a key-value pair for a specific resource. Tags are metadata that you can use to search for and group a resource for various purposes. You can apply tags to servers, users, and roles. A tag key can take more than one value. For example, to group servers for accounting purposes, you might create a tag called Group and assign the values Research and Accounting to that group. The name assigned to the tag that you create. Contains one or more values that you assigned to the key name you create.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The name assigned to the tag that you create.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "Contains one or more values that you assigned to the key name you create.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "WorkflowId",
+          "type": "string",
+          "description": "A unique identifier for the workflow.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

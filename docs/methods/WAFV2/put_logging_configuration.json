@@ -1,0 +1,183 @@
+{
+  "method_name": "put_logging_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/wafv2/client/put_logging_configuration.html",
+  "description": "Enables the specified  LoggingConfiguration, to start logging from a web ACL, according to the configuration provided. If you configure data protection for the web ACL, the protection applies to the data that WAF sends to the logs. You can access information about the traffic that WAF inspects using the following steps: When you successfully enable logging using a PutLoggingConfiguration request, WAF creates an additional role or policy that is required to write logs to the logging destination. For an Amazon CloudWatch Logs log group, WAF creates a resource policy on the log group. For an Amazon S3 bucket, WAF creates a bucket policy. For an Amazon Kinesis Data Firehose, WAF creates a service-linked role. For additional information about web ACL logging, see Logging web ACL traffic information in the WAF Developer Guide.",
+  "parameters": [],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "LoggingConfiguration",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "ResourceArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the web ACL that you want to associate with LogDestinationConfigs.",
+              "nested_items": []
+            },
+            {
+              "name": "LogDestinationConfigs",
+              "type": "list",
+              "description": "The logging destination configuration that you want to associate with the web ACL.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "RedactedFields",
+              "type": "list",
+              "description": "The parts of the request that you want to keep out of the logs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "In a rule statement, this is the part of the web request that you want WAF to inspect. Include the single FieldToMatch type that you want to inspect, with additional specifications as needed, according to the type. You specify a single request component in FieldToMatch for each rule statement that requires it. To inspect more than one component of the web request, create a separate rule statement for each component. Example JSON for a QueryString field to match: \"FieldToMatch\": { \"QueryString\": {} } Example JSON for a Method field to match specification: \"FieldToMatch\": { \"Method\": { \"Name\": \"DELETE\" } }",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "In a logging configuration, this is used in the RedactedFields property to specify a field to redact from the logging records. For this use case, note the following:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Even though all FieldToMatch settings are available, the only valid settings for field redaction are UriPath, QueryString, SingleHeader, and Method.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "In this documentation, the descriptions of the individual fields talk about specifying the web request component to inspect, but for field redaction, you are specifying the component type to redact from the logs.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "If you have request sampling enabled, the redacted fields configuration for logging has no impact on sampling. You can only exclude fields from request sampling by disabling sampling in the web ACL visibility configuration or by configuring data protection for the web ACL.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ManagedByFirewallManager",
+              "type": "boolean",
+              "description": "Indicates whether the logging configuration was created by Firewall Manager, as part of an WAF policy configuration. If true, only Firewall Manager can modify or delete the configuration.",
+              "nested_items": []
+            },
+            {
+              "name": "LoggingFilter",
+              "type": "dict",
+              "description": "Filtering that specifies which web requests are kept in the logs and which are dropped. You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation.",
+              "nested_items": [
+                {
+                  "name": "Filters",
+                  "type": "list",
+                  "description": "The filters that you want to apply to the logs.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Behavior",
+                          "type": "string",
+                          "description": "How to handle logs that satisfy the filter's conditions and requirement.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Requirement",
+                          "type": "string",
+                          "description": "Logic to apply to the filtering conditions. You can specify that, in order to satisfy the filter, a log must match all conditions or must match at least one condition.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Conditions",
+                          "type": "list",
+                          "description": "Match conditions for the filter.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "ActionCondition",
+                                  "type": "dict",
+                                  "description": "A single action condition. This is the action setting that a log record must contain in order to meet the condition.",
+                                  "nested_items": [
+                                    {
+                                      "name": "Action",
+                                      "type": "string",
+                                      "description": "The action setting that a log record must contain in order to meet the condition. This is the action that WAF applied to the web request.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "LabelNameCondition",
+                                  "type": "dict",
+                                  "description": "A single label name condition. This is the fully qualified label name that a log record must contain in order to meet the condition. Fully qualified labels have a prefix, optional namespaces, and label name. The prefix identifies the rule group or web ACL context of the rule that added the label.",
+                                  "nested_items": [
+                                    {
+                                      "name": "LabelName",
+                                      "type": "string",
+                                      "description": "The label name that a log record must contain in order to meet the condition. This must be a fully qualified label name. Fully qualified labels have a prefix, optional namespaces, and label name. The prefix identifies the rule group or web ACL context of the rule that added the label.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "DefaultBehavior",
+                  "type": "string",
+                  "description": "Default handling for logs that don't match any of the specified filtering conditions.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "LogType",
+              "type": "string",
+              "description": "Used to distinguish between various logging options. Currently, there is one option.",
+              "nested_items": []
+            },
+            {
+              "name": "LogScope",
+              "type": "string",
+              "description": "The owner of the logging configuration, which must be set to CUSTOMER for the configurations that you manage.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

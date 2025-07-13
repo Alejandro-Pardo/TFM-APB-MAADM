@@ -1,0 +1,168 @@
+{
+  "method_name": "create_sql_injection_match_set",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/waf-regional/client/create_sql_injection_match_set.html",
+  "description": "Creates a  SqlInjectionMatchSet, which you use to allow, block, or count requests that contain snippets of SQL code in a specified part of web requests. AWS WAF searches for character sequences that are likely to be malicious strings. To create and configure a SqlInjectionMatchSet, perform the following steps: For more information about how to use the AWS WAF API to allow or block HTTP requests, see the AWS WAF Developer Guide.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "A friendly name or description for the  SqlInjectionMatchSet that you're creating. You can't change Name after you create the SqlInjectionMatchSet.",
+      "nested_params": []
+    },
+    {
+      "name": "ChangeToken",
+      "type": "string",
+      "required": true,
+      "description": "The value returned by the most recent call to  GetChangeToken.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SqlInjectionMatchSet",
+          "type": "dict",
+          "description": "A  SqlInjectionMatchSet.",
+          "nested_items": [
+            {
+              "name": "SqlInjectionMatchSetId",
+              "type": "string",
+              "description": "A unique identifier for a SqlInjectionMatchSet. You use SqlInjectionMatchSetId to get information about a SqlInjectionMatchSet (see  GetSqlInjectionMatchSet), update a SqlInjectionMatchSet (see  UpdateSqlInjectionMatchSet), insert a SqlInjectionMatchSet into a Rule or delete one from a Rule (see  UpdateRule), and delete a SqlInjectionMatchSet from AWS WAF (see  DeleteSqlInjectionMatchSet).",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "The name, if any, of the SqlInjectionMatchSet.",
+              "nested_items": []
+            },
+            {
+              "name": "SqlInjectionMatchTuples",
+              "type": "list",
+              "description": "Specifies the parts of web requests that you want to inspect for snippets of malicious SQL code.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "FieldToMatch",
+                      "type": "dict",
+                      "description": "Specifies where in a web request to look for snippets of malicious SQL code.",
+                      "nested_items": [
+                        {
+                          "name": "Type",
+                          "type": "string",
+                          "description": "The part of the web request that you want AWS WAF to search for a specified string. Parts of a request that you can search include the following:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "HEADER: A specified request header, for example, the value of the User-Agent or Referer header. If you choose HEADER for the type, specify the name of the header in Data.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "METHOD: The HTTP method, which indicated the type of operation that the request is asking the origin to perform. Amazon CloudFront supports the following methods: DELETE, GET, HEAD, OPTIONS, PATCH, POST, and PUT.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "QUERY_STRING: A query string, which is the part of a URL that appears after a ? character, if any.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "URI: The part of a web request that identifies a resource, for example, /images/daily-ad.jpg.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "BODY: The part of a request that contains any additional data that you want to send to your web server as the HTTP request body, such as data from a form. The request body immediately follows the request headers. Note that only the first 8192 bytes of the request body are forwarded to AWS WAF for inspection. To allow or block requests based on the length of the body, you can create a size constraint set. For more information, see  CreateSizeConstraintSet.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "SINGLE_QUERY_ARG: The parameter in the query string that you will inspect, such as UserName or SalesRegion. The maximum length for SINGLE_QUERY_ARG is 30 characters.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "ALL_QUERY_ARGS: Similar to SINGLE_QUERY_ARG, but rather than inspecting a single parameter, AWS WAF will inspect all parameters within the query for the value or regex pattern that you specify in TargetString.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Data",
+                          "type": "string",
+                          "description": "When the value of Type is HEADER, enter the name of the header that you want AWS WAF to search, for example, User-Agent or Referer. The name of the header is not case sensitive.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TextTransformation",
+                      "type": "string",
+                      "description": "Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass AWS WAF. If you specify a transformation, AWS WAF performs the transformation on FieldToMatch before inspecting it for a match.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Delete the following characters: ' --\u0098 ^",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Delete spaces before the following characters: / (",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Replace the following characters with a space: , ;",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Replace multiple spaces with one space.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "A-Z",
+                          "description": "Convert uppercase letters (A-Z) to lowercase (a-z)",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChangeToken",
+          "type": "string",
+          "description": "The ChangeToken that you used to submit the CreateSqlInjectionMatchSet request. You can also use this value to query the status of the request. For more information, see  GetChangeTokenStatus.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

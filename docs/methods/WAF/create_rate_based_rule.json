@@ -1,0 +1,148 @@
+{
+  "method_name": "create_rate_based_rule",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/waf/client/create_rate_based_rule.html",
+  "description": "Creates a  RateBasedRule. The RateBasedRule contains a RateLimit, which specifies the maximum number of requests that AWS WAF allows from a specified IP address in a five-minute period. The RateBasedRule also contains the IPSet objects, ByteMatchSet objects, and other predicates that identify the requests that you want to count or block if these requests exceed the RateLimit. If you add more than one predicate to a RateBasedRule, a request not only must exceed the RateLimit, but it also must match all the conditions to be counted or blocked. For example, suppose you add the following to a RateBasedRule: Further, you specify a RateLimit of 1,000. You then add the RateBasedRule to a WebACL and specify that you want to block requests that meet the conditions in the rule. For a request to be blocked, it must come from the IP address 192.0.2.44 and the User-Agent header in the request must contain the value BadBot. Further, requests that match these two conditions must be received at a rate of more than 1,000 requests every five minutes. If both conditions are met and the rate is exceeded, AWS WAF blocks the requests. If the rate drops below 1,000 for a five-minute period, AWS WAF no longer blocks the requests. As a second example, suppose you want to limit requests to a particular page on your site. To do this, you could add the following to a RateBasedRule: Further, you specify a RateLimit of 1,000. By adding this RateBasedRule to a WebACL, you could limit requests to your login page without affecting the rest of your site. To create and configure a RateBasedRule, perform the following steps: For more information about how to use the AWS WAF API to allow or block HTTP requests, see the AWS WAF Developer Guide.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "A friendly name or description of the  RateBasedRule. You can't change the name of a RateBasedRule after you create it.",
+      "nested_params": []
+    },
+    {
+      "name": "MetricName",
+      "type": "string",
+      "required": true,
+      "description": "A friendly name or description for the metrics for this RateBasedRule. The name can contain only alphanumeric characters (A-Z, a-z, 0-9), with maximum length 128 and minimum length one. It can't contain whitespace or metric names reserved for AWS WAF, including 'All' and 'Default_Action.' You can't change the name of the metric after you create the RateBasedRule.",
+      "nested_params": []
+    },
+    {
+      "name": "RateKey",
+      "type": "string",
+      "required": true,
+      "description": "The field that AWS WAF uses to determine if requests are likely arriving from a single source and thus subject to rate monitoring. The only valid value for RateKey is IP. IP indicates that requests that arrive from the same IP address are subject to the RateLimit that is specified in the RateBasedRule.",
+      "nested_params": []
+    },
+    {
+      "name": "RateLimit",
+      "type": "integer",
+      "required": true,
+      "description": "The maximum number of requests, which have an identical value in the field that is specified by RateKey, allowed in a five-minute period. If the number of requests exceeds the RateLimit and the other predicates specified in the rule are also met, AWS WAF triggers the action that is specified for this rule.",
+      "nested_params": []
+    },
+    {
+      "name": "ChangeToken",
+      "type": "string",
+      "required": true,
+      "description": "The ChangeToken that you used to submit the CreateRateBasedRule request. You can also use this value to query the status of the request. For more information, see  GetChangeTokenStatus.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "(dict) --- A tag associated with an AWS resource. Tags are key:value pairs that you can use to categorize and manage your resources, for purposes like billing. For example, you might set the tag key to 'customer' and the value to the customer name or ID. You can specify one or more tags to add to each AWS resource, up to 50 tags for a resource. Tagging is only available through the API, SDKs, and CLI. You can't manage or view tags through the AWS WAF Classic console. You can tag the AWS resources that you manage through AWS WAF Classic: web ACLs, rule groups, and rules.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "RuleId",
+              "type": "string",
+              "description": "A unique identifier for a RateBasedRule. You use RuleId to get more information about a RateBasedRule (see  GetRateBasedRule), update a RateBasedRule (see  UpdateRateBasedRule), insert a RateBasedRule into a WebACL or delete one from a WebACL (see  UpdateWebACL), or delete a RateBasedRule from AWS WAF (see  DeleteRateBasedRule).",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "A friendly name or description for a RateBasedRule. You can't change the name of a RateBasedRule after you create it.",
+              "nested_items": []
+            },
+            {
+              "name": "MetricName",
+              "type": "string",
+              "description": "A friendly name or description for the metrics for a RateBasedRule. The name can contain only alphanumeric characters (A-Z, a-z, 0-9), with maximum length 128 and minimum length one. It can't contain whitespace or metric names reserved for AWS WAF, including 'All' and 'Default_Action.' You can't change the name of the metric after you create the RateBasedRule.",
+              "nested_items": []
+            },
+            {
+              "name": "MatchPredicates",
+              "type": "list",
+              "description": "The Predicates object contains one Predicate element for each  ByteMatchSet,  IPSet, or  SqlInjectionMatchSet object that you want to include in a RateBasedRule.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Negated",
+                      "type": "boolean",
+                      "description": "Set Negated to False if you want AWS WAF to allow, block, or count requests based on the settings in the specified  ByteMatchSet,  IPSet,  SqlInjectionMatchSet,  XssMatchSet,  RegexMatchSet,  GeoMatchSet, or  SizeConstraintSet. For example, if an IPSet includes the IP address 192.0.2.44, AWS WAF will allow or block requests based on that IP address.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "The type of predicate in a Rule, such as ByteMatch or IPSet.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DataId",
+                      "type": "string",
+                      "description": "A unique identifier for a predicate in a Rule, such as ByteMatchSetId or IPSetId. The ID is returned by the corresponding Create or List command.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RateKey",
+              "type": "string",
+              "description": "The field that AWS WAF uses to determine if requests are likely arriving from single source and thus subject to rate monitoring. The only valid value for RateKey is IP. IP indicates that requests arriving from the same IP address are subject to the RateLimit that is specified in the RateBasedRule.",
+              "nested_items": []
+            },
+            {
+              "name": "RateLimit",
+              "type": "integer",
+              "description": "The maximum number of requests, which have an identical value in the field specified by the RateKey, allowed in a five-minute period. If the number of requests exceeds the RateLimit and the other predicates specified in the rule are also met, AWS WAF triggers the action that is specified for this rule.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ChangeToken",
+          "type": "string",
+          "description": "The ChangeToken that you used to submit the CreateRateBasedRule request. You can also use this value to query the status of the request. For more information, see  GetChangeTokenStatus.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

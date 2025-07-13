@@ -1,0 +1,313 @@
+{
+  "method_name": "get_sampled_requests",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/wafv2/client/get_sampled_requests.html",
+  "description": "Gets detailed information about a specified number of requests---a sample---that WAF randomly selects from among the first 5,000 requests that your Amazon Web Services resource received during a time range that you choose. You can specify a sample size of up to 500 requests, and you can specify any time range in the previous three hours. GetSampledRequests returns a time range, which is usually the time range that you specified. However, if your resource (such as a CloudFront distribution) received 5,000 requests before the specified time range elapsed, GetSampledRequests returns an updated time range. This new time range indicates the actual period during which WAF selected the requests in the sample.",
+  "parameters": [
+    {
+      "name": "WebAclArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon resource name (ARN) of the WebACL for which you want a sample of requests.",
+      "nested_params": []
+    },
+    {
+      "name": "RuleMetricName",
+      "type": "string",
+      "required": true,
+      "description": "The metric name assigned to the Rule or RuleGroup dimension for which you want a sample of requests.",
+      "nested_params": []
+    },
+    {
+      "name": "Scope",
+      "type": "string",
+      "required": true,
+      "description": "Specifies whether this is for a global resource type, such as a Amazon CloudFront distribution. For an Amplify application, use CLOUDFRONT. To work with CloudFront, you must also specify the Region US East (N. Virginia) as follows: CLI - Specify the Region when you use the CloudFront scope: --scope=CLOUDFRONT --region=us-east-1. API and SDKs - For all calls, use the Region endpoint us-east-1.",
+      "nested_params": []
+    },
+    {
+      "name": "TimeWindow",
+      "type": "dict",
+      "required": true,
+      "description": "The start date and time and the end date and time of the range for which you want GetSampledRequests to return a sample of requests. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". You can specify any time range in the previous three hours. If you specify a start time that's earlier than three hours ago, WAF sets it to three hours ago. The beginning of the time range from which you want GetSampledRequests to return a sample of the requests that your Amazon Web Services resource received. The end of the time range from which you want GetSampledRequests to return a sample of the requests that your Amazon Web Services resource received. You can specify any time range in the previous three hours.",
+      "nested_params": [
+        {
+          "name": "StartTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The beginning of the time range from which you want GetSampledRequests to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". You can specify any time range in the previous three hours.",
+          "nested_params": []
+        },
+        {
+          "name": "EndTime",
+          "type": "datetime",
+          "required": false,
+          "description": "The end of the time range from which you want GetSampledRequests to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". You can specify any time range in the previous three hours.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "MaxItems",
+      "type": "integer",
+      "required": true,
+      "description": "The number of requests that you want WAF to return from among the first 5,000 requests that your Amazon Web Services resource received during the time range. If your resource received fewer requests than the value of MaxItems, GetSampledRequests returns information about all of them.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SampledRequests",
+          "type": "list",
+          "description": "A complex type that contains detailed information about each of the requests in the sample.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ClientIP",
+                      "type": "string",
+                      "description": "The IP address that the request originated from. If the web ACL is associated with a CloudFront distribution, this is the value of one of the following fields in CloudFront access logs:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "c-ip, if the viewer did not use an HTTP proxy or a load balancer to send the request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "x-forwarded-for, if the viewer did use an HTTP proxy or a load balancer to send the request.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Country",
+                      "type": "string",
+                      "description": "The two-letter country code for the country that the request originated from. For a current list of country codes, see the Wikipedia entry ISO 3166-1 alpha-2.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "URI",
+                      "type": "string",
+                      "description": "The URI path of the request, which identifies the resource, for example, /images/daily-ad.jpg.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Method",
+                      "type": "string",
+                      "description": "The HTTP method specified in the sampled web request.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "HTTPVersion",
+                      "type": "string",
+                      "description": "The HTTP version specified in the sampled web request, for example, HTTP/1.1.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Headers",
+                      "type": "list",
+                      "description": "A complex type that contains the name and value for each header in the sampled web request.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the HTTP header.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Value",
+                              "type": "string",
+                              "description": "The value of the HTTP header.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Weight",
+                  "type": "integer",
+                  "description": "A value that indicates how one result in the response relates proportionally to other results in the response. For example, a result that has a weight of 2 represents roughly twice as many web requests as a result that has a weight of 1.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Timestamp",
+                  "type": "datetime",
+                  "description": "The time at which WAF received the request from your Amazon Web Services resource, in Unix time format (in seconds).",
+                  "nested_items": []
+                },
+                {
+                  "name": "Action",
+                  "type": "string",
+                  "description": "The action that WAF applied to the request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RuleNameWithinRuleGroup",
+                  "type": "string",
+                  "description": "The name of the Rule that the request matched. For managed rule groups, the format for this name is <vendor name>#<managed rule group name>#<rule name>. For your own rule groups, the format for this name is <rule group name>#<rule name>. If the rule is not in a rule group, this field is absent.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RequestHeadersInserted",
+                  "type": "list",
+                  "description": "Custom request headers inserted by WAF into the request, according to the custom request configuration for the matching rule action.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of the HTTP header.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "description": "The value of the HTTP header.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ResponseCodeSent",
+                  "type": "integer",
+                  "description": "The response code that was sent for the request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Labels",
+                  "type": "list",
+                  "description": "Labels applied to the web request by matching rules. WAF applies fully qualified labels to matching web requests. A fully qualified label is the concatenation of a label namespace and a rule label. The rule's rule group or web ACL defines the label namespace.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The label string.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "CaptchaResponse",
+                  "type": "dict",
+                  "description": "The CAPTCHA response for the request.",
+                  "nested_items": [
+                    {
+                      "name": "ResponseCode",
+                      "type": "integer",
+                      "description": "The HTTP response code indicating the status of the CAPTCHA token in the web request. If the token is missing, invalid, or expired, this code is 405 Method Not Allowed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SolveTimestamp",
+                      "type": "integer",
+                      "description": "The time that the CAPTCHA was last solved for the supplied token.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FailureReason",
+                      "type": "string",
+                      "description": "The reason for failure, populated when the evaluation of the token fails.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ChallengeResponse",
+                  "type": "dict",
+                  "description": "The Challenge response for the request.",
+                  "nested_items": [
+                    {
+                      "name": "ResponseCode",
+                      "type": "integer",
+                      "description": "The HTTP response code indicating the status of the challenge token in the web request. If the token is missing, invalid, or expired, this code is 202 Request Accepted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SolveTimestamp",
+                      "type": "integer",
+                      "description": "The time that the challenge was last solved for the supplied token.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FailureReason",
+                      "type": "string",
+                      "description": "The reason for failure, populated when the evaluation of the token fails.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OverriddenAction",
+                  "type": "string",
+                  "description": "Used only for rule group rules that have a rule action override in place in the web ACL. This is the action that the rule group rule is configured for, and not the action that was applied to the request. The action that WAF applied is the Action value.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PopulationSize",
+          "type": "integer",
+          "description": "The total number of requests from which GetSampledRequests got a sample of MaxItems requests. If PopulationSize is less than MaxItems, the sample includes every request that your Amazon Web Services resource received during the specified time range.",
+          "nested_items": []
+        },
+        {
+          "name": "TimeWindow",
+          "type": "dict",
+          "description": "Usually, TimeWindow is the time range that you specified in the GetSampledRequests request. However, if your Amazon Web Services resource received more than 5,000 requests during the time range that you specified in the request, GetSampledRequests returns the time range for the first 5,000 requests. Times are in Coordinated Universal Time (UTC) format.",
+          "nested_items": [
+            {
+              "name": "StartTime",
+              "type": "datetime",
+              "description": "The beginning of the time range from which you want GetSampledRequests to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". You can specify any time range in the previous three hours.",
+              "nested_items": []
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime",
+              "description": "The end of the time range from which you want GetSampledRequests to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". You can specify any time range in the previous three hours.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

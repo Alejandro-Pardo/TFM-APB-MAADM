@@ -1,0 +1,218 @@
+{
+  "method_name": "evaluate_session",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/voice-id/client/evaluate_session.html",
+  "description": "Evaluates a specified session based on audio data accumulated during a streaming Amazon Connect Voice ID call.",
+  "parameters": [
+    {
+      "name": "DomainId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the domain where the session started.",
+      "nested_params": []
+    },
+    {
+      "name": "SessionNameOrId",
+      "type": "string",
+      "required": true,
+      "description": "The session identifier, or name of the session, that you want to evaluate. In Voice ID integration, this is the Contact-Id.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AuthenticationResult",
+          "type": "dict",
+          "description": "Details resulting from the authentication process, such as authentication decision and authentication score.",
+          "nested_items": [
+            {
+              "name": "AudioAggregationEndedAt",
+              "type": "datetime",
+              "description": "A timestamp of when audio aggregation ended for this authentication result.",
+              "nested_items": []
+            },
+            {
+              "name": "AudioAggregationStartedAt",
+              "type": "datetime",
+              "description": "A timestamp of when audio aggregation started for this authentication result.",
+              "nested_items": []
+            },
+            {
+              "name": "AuthenticationResultId",
+              "type": "string",
+              "description": "The unique identifier for this authentication result. Because there can be multiple authentications for a given session, this field helps to identify if the returned result is from a previous streaming activity or a new result. Note that in absence of any new streaming activity, AcceptanceThreshold changes, or SpeakerId changes, Voice ID always returns cached Authentication Result for this API.",
+              "nested_items": []
+            },
+            {
+              "name": "Configuration",
+              "type": "dict",
+              "description": "The AuthenticationConfiguration used to generate this authentication result.",
+              "nested_items": [
+                {
+                  "name": "AcceptanceThreshold",
+                  "type": "integer",
+                  "description": "The minimum threshold needed to successfully authenticate a speaker.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "CustomerSpeakerId",
+              "type": "string",
+              "description": "The client-provided identifier for the speaker whose authentication result is produced. Only present if a SpeakerId is provided for the session.",
+              "nested_items": []
+            },
+            {
+              "name": "Decision",
+              "type": "string",
+              "description": "The authentication decision produced by Voice ID, processed against the current session state and streamed audio of the speaker.",
+              "nested_items": []
+            },
+            {
+              "name": "GeneratedSpeakerId",
+              "type": "string",
+              "description": "The service-generated identifier for the speaker whose authentication result is produced.",
+              "nested_items": []
+            },
+            {
+              "name": "Score",
+              "type": "integer",
+              "description": "The authentication score for the speaker whose authentication result is produced. This value is only present if the authentication decision is either ACCEPT or REJECT.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "DomainId",
+          "type": "string",
+          "description": "The identifier of the domain that contains the session.",
+          "nested_items": []
+        },
+        {
+          "name": "FraudDetectionResult",
+          "type": "dict",
+          "description": "Details resulting from the fraud detection process, such as fraud detection decision and risk score.",
+          "nested_items": [
+            {
+              "name": "AudioAggregationEndedAt",
+              "type": "datetime",
+              "description": "A timestamp of when audio aggregation ended for this fraud detection result.",
+              "nested_items": []
+            },
+            {
+              "name": "AudioAggregationStartedAt",
+              "type": "datetime",
+              "description": "A timestamp of when audio aggregation started for this fraud detection result.",
+              "nested_items": []
+            },
+            {
+              "name": "Configuration",
+              "type": "dict",
+              "description": "The FraudDetectionConfiguration used to generate this fraud detection result.",
+              "nested_items": [
+                {
+                  "name": "RiskThreshold",
+                  "type": "integer",
+                  "description": "Threshold value for determining whether the speaker is a fraudster. If the detected risk score calculated by Voice ID is higher than the threshold, the speaker is considered a fraudster.",
+                  "nested_items": []
+                },
+                {
+                  "name": "WatchlistId",
+                  "type": "string",
+                  "description": "The identifier of the watchlist against which fraud detection is performed.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Decision",
+              "type": "string",
+              "description": "The fraud detection decision produced by Voice ID, processed against the current session state and streamed audio of the speaker.",
+              "nested_items": []
+            },
+            {
+              "name": "FraudDetectionResultId",
+              "type": "string",
+              "description": "The unique identifier for this fraud detection result. Given there can be multiple fraud detections for a given session, this field helps in identifying if the returned result is from previous streaming activity or a new result. Note that in the absence of any new streaming activity or risk threshold changes, Voice ID always returns cached Fraud Detection result for this API.",
+              "nested_items": []
+            },
+            {
+              "name": "Reasons",
+              "type": "list",
+              "description": "The reason speaker was flagged by the fraud detection system. This is only be populated if fraud detection Decision is HIGH_RISK, and the following possible values: KNOWN_FRAUDSTER and VOICE_SPOOFING.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "RiskDetails",
+              "type": "dict",
+              "description": "Details about each risk analyzed for this speaker. Currently, this contains KnownFraudsterRisk and VoiceSpoofingRisk details.",
+              "nested_items": [
+                {
+                  "name": "KnownFraudsterRisk",
+                  "type": "dict",
+                  "description": "The details resulting from --\u0098Known Fraudster Risk' analysis of the speaker.",
+                  "nested_items": [
+                    {
+                      "name": "GeneratedFraudsterId",
+                      "type": "string",
+                      "description": "The identifier of the fraudster that is the closest match to the speaker. If there are no fraudsters registered in a given domain, or if there are no fraudsters with a non-zero RiskScore, this value is null.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RiskScore",
+                      "type": "integer",
+                      "description": "The score indicating the likelihood the speaker is a known fraudster.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "VoiceSpoofingRisk",
+                  "type": "dict",
+                  "description": "The details resulting from --\u0098Voice Spoofing Risk' analysis of the speaker.",
+                  "nested_items": [
+                    {
+                      "name": "RiskScore",
+                      "type": "integer",
+                      "description": "The score indicating the likelihood of speaker's voice being spoofed.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SessionId",
+          "type": "string",
+          "description": "The service-generated identifier of the session.",
+          "nested_items": []
+        },
+        {
+          "name": "SessionName",
+          "type": "string",
+          "description": "The client-provided name of the session.",
+          "nested_items": []
+        },
+        {
+          "name": "StreamingStatus",
+          "type": "string",
+          "description": "The current status of audio streaming for this session. This field is useful to infer next steps when the Authentication or Fraud Detection results are empty or the decision is NOT_ENOUGH_SPEECH. In this situation, if the StreamingStatus is ONGOING/PENDING_CONFIGURATION, it can mean that the client should call the API again later, after Voice ID has enough audio to produce a result. If the decision remains NOT_ENOUGH_SPEECH even after StreamingStatus is ENDED, it means that the previously streamed session did not have enough speech to perform evaluation, and a new streaming session is needed to try again.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

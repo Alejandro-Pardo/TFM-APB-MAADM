@@ -1,0 +1,43 @@
+{
+  "method_name": "update_size_constraint_set",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/waf-regional/client/update_size_constraint_set.html",
+  "description": "Inserts or deletes  SizeConstraint objects (filters) in a  SizeConstraintSet. For each SizeConstraint object, you specify the following values: For example, you can add a SizeConstraintSetUpdate object that matches web requests in which the length of the User-Agent header is greater than 100 bytes. You can then configure AWS WAF to block those requests. To create and configure a SizeConstraintSet, perform the following steps: For more information about how to use the AWS WAF API to allow or block HTTP requests, see the AWS WAF Developer Guide.",
+  "parameters": [
+    {
+      "name": "SizeConstraintSetId",
+      "type": "string",
+      "required": true,
+      "description": "The SizeConstraintSetId of the  SizeConstraintSet that you want to update. SizeConstraintSetId is returned by  CreateSizeConstraintSet and by  ListSizeConstraintSets.",
+      "nested_params": []
+    },
+    {
+      "name": "ChangeToken",
+      "type": "string",
+      "required": true,
+      "description": "The value returned by the most recent call to  GetChangeToken.",
+      "nested_params": []
+    },
+    {
+      "name": "Updates",
+      "type": "list",
+      "required": true,
+      "description": "An array of SizeConstraintSetUpdate objects that you want to insert into or delete from a  SizeConstraintSet. For more information, see the applicable data types: SizeConstraintSetUpdate: Contains Action and SizeConstraint SizeConstraint: Contains FieldToMatch, TextTransformation, ComparisonOperator, and Size FieldToMatch: Contains Data and Type (dict) --- Specifies the part of a web request that you want to inspect the size of and indicates whether you want to add the specification to a  SizeConstraintSet or delete it from a SizeConstraintSet. Specify INSERT to add a  SizeConstraintSetUpdate to a  SizeConstraintSet. Use DELETE to remove a SizeConstraintSetUpdate from a SizeConstraintSet. Specifies a constraint on the size of a part of the web request. AWS WAF uses the Size, ComparisonOperator, and FieldToMatch to build an expression in the form of ' Size ComparisonOperator size in bytes of FieldToMatch'. If that expression is true, the SizeConstraint is considered to match. Specifies where in a web request to look for the size constraint. The part of the web request that you want AWS WAF to search for a specified string. Parts of a request that you can search include the following: HEADER: A specified request header, for example, the value of the User-Agent or Referer header. If you choose HEADER for the type, specify the name of the header in Data. METHOD: The HTTP method, which indicated the type of operation that the request is asking the origin to perform. Amazon CloudFront supports the following methods: DELETE, GET, HEAD, OPTIONS, PATCH, POST, and PUT. QUERY_STRING: A query string, which is the part of a URL that appears after a ? character, if any. URI: The part of a web request that identifies a resource, for example, /images/daily-ad.jpg. BODY: The part of a request that contains any additional data that you want to send to your web server as the HTTP request body, such as data from a form. The request body immediately follows the request headers. Note that only the first 8192 bytes of the request body are forwarded to AWS WAF for inspection. To allow or block requests based on the length of the body, you can create a size constraint set. For more information, see  CreateSizeConstraintSet. SINGLE_QUERY_ARG: The parameter in the query string that you will inspect, such as UserName or SalesRegion. The maximum length for SINGLE_QUERY_ARG is 30 characters. ALL_QUERY_ARGS: Similar to SINGLE_QUERY_ARG, but rather than inspecting a single parameter, AWS WAF will inspect all parameters within the query for the value or regex pattern that you specify in TargetString. Data (string) --- When the value of Type is HEADER, enter the name of the header that you want AWS WAF to search, for example, User-Agent or Referer. The name of the header is not case sensitive. When the value of Type is SINGLE_QUERY_ARG, enter the name of the parameter that you want AWS WAF to search, for example, UserName or SalesRegion. The parameter name is not case sensitive. If the value of Type is any other value, omit Data. Text transformations eliminate some of the unusual formatting that attackers use in web requests in an effort to bypass AWS WAF. If you specify a transformation, AWS WAF performs the transformation on FieldToMatch before inspecting it for a match. You can only specify a single type of TextTransformation. Note that if you choose BODY for the value of Type, you must choose NONE for TextTransformation because CloudFront forwards only the first 8192 bytes for inspection. Specify NONE if you don't want to perform any text transformations. When you're concerned that attackers are injecting an operating system command line command and using unusual formatting to disguise some or all of the command, use this option to perform the following transformations: Delete the following characters: ' --\u0098 ^ Delete spaces before the following characters: / ( Replace the following characters with a space: , ; Replace multiple spaces with one space Convert uppercase letters (A-Z) to lowercase (a-z) Use this option to replace the following characters with a space character (decimal 32): f, formfeed, decimal 12 t, tab, decimal 9 n, newline, decimal 10 r, carriage return, decimal 13 v, vertical tab, decimal 11 non-breaking space, decimal 160 COMPRESS_WHITE_SPACE also replaces multiple spaces with one space. Use this option to replace HTML-encoded characters with unencoded characters. HTML_ENTITY_DECODE performs the following operations: Replaces (ampersand)quot; with \" Replaces (ampersand)nbsp; with a non-breaking space, decimal 160 Replaces (ampersand)lt; with a 'less than' symbol Replaces (ampersand)gt; with > Replaces characters that are represented in hexadecimal format, (ampersand)#xhhhh;, with the corresponding characters Replaces characters that are represented in decimal format, (ampersand)#nnnn;, with the corresponding characters Use this option to convert uppercase letters (A-Z) to lowercase (a-z). Use this option to decode a URL-encoded value. The type of comparison you want AWS WAF to perform. AWS WAF uses this in combination with the provided Size and FieldToMatch to build an expression in the form of ' Size ComparisonOperator size in bytes of FieldToMatch'. EQ: Used to test if the Size is equal to the size of the FieldToMatch NE: Used to test if the Size is not equal to the size of the FieldToMatch LE: Used to test if the Size is less than or equal to the size of the FieldToMatch LT: Used to test if the Size is strictly less than the size of the FieldToMatch GE: Used to test if the Size is greater than or equal to the size of the FieldToMatch GT: Used to test if the Size is strictly greater than the size of the FieldToMatch The size in bytes that you want AWS WAF to compare against the size of the specified FieldToMatch. AWS WAF uses this in combination with ComparisonOperator and FieldToMatch to build an expression in the form of ' Size ComparisonOperator size in bytes of FieldToMatch'. Valid values for size are 0 - 21474836480 bytes (0 - 20 GB). If you specify URI for the value of Type, the / in the URI counts as one character. For example, the URI /logo.jpg is nine characters long.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ChangeToken",
+          "type": "string",
+          "description": "The ChangeToken that you used to submit the UpdateSizeConstraintSet request. You can also use this value to query the status of the request. For more information, see  GetChangeTokenStatus.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}
