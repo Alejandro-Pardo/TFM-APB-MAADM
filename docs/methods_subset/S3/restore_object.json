@@ -1,0 +1,486 @@
+{
+  "method_name": "restore_object",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/restore_object.html",
+  "description": "Restores an archived copy of an object back into Amazon S3 This functionality is not supported for Amazon S3 on Outposts. This action performs the following types of requests: For more information about the S3 structure in the request body, see the following: To use this operation, you must have permissions to perform the s3:RestoreObject action. The bucket owner has this permission by default and can grant this permission to others. For more information about permissions, see Permissions Related to Bucket Subresource Operations and Managing Access Permissions to Your Amazon S3 Resources in the Amazon S3 User Guide. Objects that you archive to the S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive storage class, and S3 Intelligent-Tiering Archive or S3 Intelligent-Tiering Deep Archive tiers, are not accessible in real time. For objects in the S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive storage classes, you must first initiate a restore request, and then wait until a temporary copy of the object is available. If you want a permanent copy of the object, create a copy of it in the Amazon S3 Standard storage class in your S3 bucket. To access an archived object, you must restore the object for the duration (number of days) that you specify. For objects in the Archive Access or Deep Archive Access tiers of S3 Intelligent-Tiering, you must first initiate a restore request, and then wait until the object is moved into the Frequent Access tier. To restore a specific object version, you can provide a version ID. If you don't provide a version ID, Amazon S3 restores the current version. When restoring an archived object, you can specify one of the following data access tier options in the Tier element of the request body: For more information about archive retrieval options and provisioned capacity for Expedited data access, see Restoring Archived Objects in the Amazon S3 User Guide. You can use Amazon S3 restore speed upgrade to change the restore speed to a faster speed while it is in progress. For more information, see Upgrading the speed of an in-progress restore in the Amazon S3 User Guide. To get the status of object restoration, you can send a HEAD request. Operations return the x-amz-restore header, which provides information about the restoration status, in the response. You can use Amazon S3 event notifications to notify you when a restore is initiated or completed. For more information, see Configuring Amazon S3 Event Notifications in the Amazon S3 User Guide. After restoring an archived object, you can update the restoration period by reissuing the request with a new period. Amazon S3 updates the restoration period relative to the current time and charges only for the request-there are no data transfer charges. You cannot update the restoration period when Amazon S3 is actively processing your current restore request for the object. If your bucket has a lifecycle configuration with a rule that includes an expiration action, the object expiration overrides the life span that you specify in a restore request. For example, if you restore an object copy for 10 days, but the object is scheduled to expire in 3 days, Amazon S3 deletes the object in 3 days. For more information about lifecycle configuration, see PutBucketLifecycleConfiguration and Object Lifecycle Management in Amazon S3 User Guide. A successful action returns either the 200 OK or 202 Accepted status code. The following operations are related to RestoreObject:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The bucket name containing the object to restore. Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide. S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": true,
+      "description": "Object key for which the action was initiated.",
+      "nested_params": []
+    },
+    {
+      "name": "VersionId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "RestoreRequest",
+      "type": "dict",
+      "required": true,
+      "description": "Container for restore job parameters. Days (integer) --- Lifetime of the active copy in days. Do not use with restores that specify OutputLocation. The Days element is required for regular restores, and must not be provided for select requests. GlacierJobParameters (dict) --- S3 Glacier related parameters pertaining to this job. Retrieval tier at which the restore will be processed. Type (string) --- Type of restore request. Tier (string) --- Retrieval tier at which the restore will be processed. Description (string) --- The optional description for the job. SelectParameters (dict) --- Describes the parameters for Select job types. Describes the serialization format of the object. CSV (dict) --- Describes the serialization of a CSV-encoded object. FileHeaderInfo (string) --- Describes the first line of input. Valid values are: NONE: First line is not a header. IGNORE: First line is a header, but you can't use the header values to indicate the column in an expression. You can use column position (such as _1, _2, --\u00a6) to indicate the column ( SELECT s._1 FROM OBJECT s). Use: First line is a header, and you can use the header value to identify a column in an expression ( SELECT \"name\" FROM OBJECT). Comments (string) --- A single character used to indicate that a row should be ignored when the character is present at the start of that row. You can specify any character to indicate a comment line. The default character is #. Default: # QuoteEscapeCharacter (string) --- A single character used for escaping the quotation mark character inside an already escaped value. For example, the value \"\"\" a , b \"\"\" is parsed as \" a , b \". RecordDelimiter (string) --- A single character used to separate individual records in the input. Instead of the default value, you can specify an arbitrary delimiter. FieldDelimiter (string) --- A single character used to separate individual fields in a record. You can specify an arbitrary delimiter. QuoteCharacter (string) --- A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \". Type: String Default: \" Ancestors: CSV AllowQuotedRecordDelimiter (boolean) --- Specifies that CSV field values may contain quoted record delimiters and such records should be allowed. Default value is FALSE. Setting this value to TRUE may lower performance. CompressionType (string) --- Specifies object's compression format. Valid values: NONE, GZIP, BZIP2. Default Value: NONE. JSON (dict) --- Specifies JSON as object's input serialization format. Type (string) --- The type of JSON. Valid values: Document, Lines. Parquet (dict) --- Specifies Parquet as object's input serialization format. The type of the provided expression (for example, SQL). The expression that is used to query the object. Describes how the results of the Select job are serialized. CSV (dict) --- Describes the serialization of CSV-encoded Select results. QuoteFields (string) --- Indicates whether to use quotation marks around output fields. ALWAYS: Always use quotation marks for output fields. ASNEEDED: Use quotation marks for output fields when needed. QuoteEscapeCharacter (string) --- The single character used for escaping the quote character inside an already escaped value. RecordDelimiter (string) --- A single character used to separate individual records in the output. FieldDelimiter (string) --- The value used to separate individual fields in a record. JSON (dict) --- Specifies JSON as request's output serialization format. RecordDelimiter (string) --- The value used to separate individual records in the output. If no value is specified, Amazon S3 uses a newline character ('n'). OutputLocation (dict) --- Describes the location where the restore job's output is stored. S3 (dict) --- Describes an S3 location that will receive the results of the restore request. The name of the bucket where the restore results will be placed. The prefix that is prepended to the restore results for this request. Encryption (dict) --- Contains the type of server-side encryption used. The server-side encryption algorithm used when storing job results in Amazon S3 (for example, AES256, aws:kms). KMSKeyId (string) --- If the encryption type is aws:kms, this optional value specifies the ID of the symmetric encryption customer managed key to use for encryption of job results. Amazon S3 only supports symmetric encryption KMS keys. For more information, see Asymmetric keys in KMS in the Amazon Web Services Key Management Service Developer Guide. KMSContext (string) --- If the encryption type is aws:kms, this optional value can be used to specify the encryption context for the restore results. CannedACL (string) --- The canned ACL to apply to the restore results. AccessControlList (list) --- A list of grants that control access to the staged results. (dict) --- Container for grant information. Grantee (dict) --- The person being granted permissions. DisplayName (string) --- Screen name of the grantee. EmailAddress (string) --- Email address of the grantee. ID (string) --- The canonical user ID of the grantee. Type of grantee URI (string) --- URI of the grantee group. Permission (string) --- Specifies the permission given to the grantee. Tagging (dict) --- The tag-set that is applied to the restore results. A collection for a set of tags (dict) --- A container of a key value name pair. Name of the object key. Value of the tag. UserMetadata (list) --- A list of metadata to store with the restore results in S3. (dict) --- A metadata key-value pair to store with an object. Name (string) --- Name of the object. Value (string) --- Value of the object. StorageClass (string) --- The class of storage used to store the restore results.",
+      "nested_params": [
+        {
+          "name": "Days",
+          "type": "integer",
+          "required": false,
+          "description": "Lifetime of the active copy in days. Do not use with restores that specify OutputLocation. The Days element is required for regular restores, and must not be provided for select requests.",
+          "nested_params": []
+        },
+        {
+          "name": "GlacierJobParameters",
+          "type": "dict",
+          "required": false,
+          "description": "S3 Glacier related parameters pertaining to this job. Do not use with restores that specify OutputLocation.",
+          "nested_params": [
+            {
+              "name": "Tier",
+              "type": "string",
+              "required": false,
+              "description": "Retrieval tier at which the restore will be processed.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "Type of restore request.",
+          "nested_params": []
+        },
+        {
+          "name": "Tier",
+          "type": "string",
+          "required": false,
+          "description": "Retrieval tier at which the restore will be processed.",
+          "nested_params": []
+        },
+        {
+          "name": "Description",
+          "type": "string",
+          "required": false,
+          "description": "The optional description for the job.",
+          "nested_params": []
+        },
+        {
+          "name": "SelectParameters",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the parameters for Select job types.",
+          "nested_params": [
+            {
+              "name": "InputSerialization",
+              "type": "dict",
+              "required": false,
+              "description": "Describes the serialization format of the object.",
+              "nested_params": [
+                {
+                  "name": "CSV",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Describes the serialization of a CSV-encoded object.",
+                  "nested_params": [
+                    {
+                      "name": "FileHeaderInfo",
+                      "type": "string",
+                      "required": false,
+                      "description": "Describes the first line of input. Valid values are:",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Comments",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used to indicate that a row should be ignored when the character is present at the start of that row. You can specify any character to indicate a comment line. The default character is #. Default: #",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "QuoteEscapeCharacter",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used for escaping the quotation mark character inside an already escaped value. For example, the value \"\"\" a , b \"\"\" is parsed as \" a , b \".",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "RecordDelimiter",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used to separate individual records in the input. Instead of the default value, you can specify an arbitrary delimiter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "FieldDelimiter",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used to separate individual fields in a record. You can specify an arbitrary delimiter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "QuoteCharacter",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \". Type: String Default: \" Ancestors: CSV.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AllowQuotedRecordDelimiter",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Specifies that CSV field values may contain quoted record delimiters and such records should be allowed. Default value is FALSE. Setting this value to TRUE may lower performance.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CompressionType",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies object's compression format. Valid values: NONE, GZIP, BZIP2. Default Value: NONE.",
+                  "nested_params": []
+                },
+                {
+                  "name": "JSON",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies JSON as object's input serialization format.",
+                  "nested_params": [
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "required": false,
+                      "description": "The type of JSON. Valid values: Document, Lines.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Parquet",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies Parquet as object's input serialization format.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ExpressionType",
+              "type": "string",
+              "required": false,
+              "description": "The type of the provided expression (for example, SQL).",
+              "nested_params": []
+            },
+            {
+              "name": "Expression",
+              "type": "string",
+              "required": false,
+              "description": "The expression that is used to query the object.",
+              "nested_params": []
+            },
+            {
+              "name": "OutputSerialization",
+              "type": "dict",
+              "required": false,
+              "description": "Describes how the results of the Select job are serialized.",
+              "nested_params": [
+                {
+                  "name": "CSV",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Describes the serialization of CSV-encoded Select results.",
+                  "nested_params": [
+                    {
+                      "name": "QuoteFields",
+                      "type": "string",
+                      "required": false,
+                      "description": "Indicates whether to use quotation marks around output fields.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "QuoteEscapeCharacter",
+                      "type": "string",
+                      "required": false,
+                      "description": "The single character used for escaping the quote character inside an already escaped value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "RecordDelimiter",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used to separate individual records in the output. Instead of the default value, you can specify an arbitrary delimiter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "FieldDelimiter",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value used to separate individual fields in a record. You can specify an arbitrary delimiter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "QuoteCharacter",
+                      "type": "string",
+                      "required": false,
+                      "description": "A single character used for escaping when the field delimiter is part of the value. For example, if the value is a, b, Amazon S3 wraps this field value in quotation marks, as follows: \" a , b \".",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "JSON",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies JSON as request's output serialization format.",
+                  "nested_params": [
+                    {
+                      "name": "RecordDelimiter",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value used to separate individual records in the output. If no value is specified, Amazon S3 uses a newline character ('n').",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "OutputLocation",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the location where the restore job's output is stored.",
+          "nested_params": [
+            {
+              "name": "S3",
+              "type": "dict",
+              "required": false,
+              "description": "Describes an S3 location that will receive the results of the restore request.",
+              "nested_params": [
+                {
+                  "name": "BucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the bucket where the restore results will be placed.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Prefix",
+                  "type": "string",
+                  "required": false,
+                  "description": "The prefix that is prepended to the restore results for this request.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Encryption",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Contains the type of server-side encryption used.",
+                  "nested_params": [
+                    {
+                      "name": "EncryptionType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The server-side encryption algorithm used when storing job results in Amazon S3 (for example, AES256, aws:kms).",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "KMSKeyId",
+                      "type": "string",
+                      "required": false,
+                      "description": "If the encryption type is aws:kms, this optional value specifies the ID of the symmetric encryption customer managed key to use for encryption of job results. Amazon S3 only supports symmetric encryption KMS keys. For more information, see Asymmetric keys in KMS in the Amazon Web Services Key Management Service Developer Guide.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "KMSContext",
+                      "type": "string",
+                      "required": false,
+                      "description": "If the encryption type is aws:kms, this optional value can be used to specify the encryption context for the restore results.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CannedACL",
+                  "type": "string",
+                  "required": false,
+                  "description": "The canned ACL to apply to the restore results.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AccessControlList",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of grants that control access to the staged results.",
+                  "nested_params": [
+                    {
+                      "name": "Grantee",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The person being granted permissions.",
+                      "nested_params": [
+                        {
+                          "name": "DisplayName",
+                          "type": "string",
+                          "required": false,
+                          "description": "Screen name of the grantee.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "EmailAddress",
+                          "type": "string",
+                          "required": false,
+                          "description": "Email address of the grantee.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "ID",
+                          "type": "string",
+                          "required": false,
+                          "description": "The canonical user ID of the grantee.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Type",
+                          "type": "string",
+                          "required": false,
+                          "description": "Type of grantee.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "URI",
+                          "type": "string",
+                          "required": false,
+                          "description": "URI of the grantee group.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Permission",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the permission given to the grantee.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Tagging",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The tag-set that is applied to the restore results.",
+                  "nested_params": [
+                    {
+                      "name": "TagSet",
+                      "type": "list",
+                      "required": false,
+                      "description": "A collection for a set of tags.",
+                      "nested_params": [
+                        {
+                          "name": "Key",
+                          "type": "string",
+                          "required": false,
+                          "description": "Name of the object key.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "required": false,
+                          "description": "Value of the tag.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "UserMetadata",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of metadata to store with the restore results in S3.",
+                  "nested_params": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "required": false,
+                      "description": "Name of the object.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "required": false,
+                      "description": "Value of the object.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StorageClass",
+                  "type": "string",
+                  "required": false,
+                  "description": "The class of storage used to store the restore results.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RequestPayer",
+      "type": "string",
+      "required": false,
+      "description": "Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for corresponding charges to copy the object. For information about downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays Buckets in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "ChecksumAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding x-amz-checksum or x-amz-trailer header sent. Otherwise, Amazon S3 fails the request with the HTTP status code 400 Bad Request. For more information, see Checking object integrity in the Amazon S3 User Guide. If you provide an individual checksum, Amazon S3 ignores any provided ChecksumAlgorithm parameter.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "RequestCharged",
+          "type": "string",
+          "description": "If present, indicates that the requester was successfully charged for the request. For more information, see Using Requester Pays buckets for storage transfers and usage in the Amazon Simple Storage Service user guide.",
+          "nested_items": []
+        },
+        {
+          "name": "RestoreOutputPath",
+          "type": "string",
+          "description": "Indicates the path in the provided S3 output location where Select results will be restored to.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

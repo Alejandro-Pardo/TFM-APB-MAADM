@@ -1,0 +1,921 @@
+{
+  "method_name": "delete_table",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb/client/delete_table.html",
+  "description": "The DeleteTable operation deletes a table and all of its items. After a DeleteTable request, the specified table is in the DELETING state until DynamoDB completes the deletion. If the table is in the ACTIVE state, you can delete it. If a table is in CREATING or UPDATING states, then DynamoDB returns a ResourceInUseException. If the specified table does not exist, DynamoDB returns a ResourceNotFoundException. If table is already in the DELETING state, no error is returned. When you delete a table, any indexes on that table are also deleted. If you have DynamoDB Streams enabled on the table, then the corresponding stream on that table goes into the DISABLED state, and the stream is automatically deleted after 24 hours. Use the DescribeTable action to check the status of the table.",
+  "parameters": [
+    {
+      "name": "TableName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the table to delete. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "TableDescription",
+          "type": "dict",
+          "description": "Represents the properties of a table.",
+          "nested_items": [
+            {
+              "name": "AttributeDefinitions",
+              "type": "list",
+              "description": "An array of AttributeDefinition objects. Each of these objects describes one attribute in the table and index key schema.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AttributeName - The name of the attribute.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AttributeType - The data type for the attribute.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TableName",
+              "type": "string",
+              "description": "The name of the table.",
+              "nested_items": []
+            },
+            {
+              "name": "KeySchema",
+              "type": "list",
+              "description": "The primary key structure for the table. Each KeySchemaElement consists of:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AttributeName - The name of the attribute.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "KeyType - The role of the attribute:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "HASH - partition key.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RANGE - sort key.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TableStatus",
+              "type": "string",
+              "description": "The current state of the table:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATING - The table is being created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UPDATING - The table/index configuration is being updated. The table/index remains available for data operations when UPDATING.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETING - The table is being deleted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ACTIVE - The table is ready for use.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INACCESSIBLE_ENCRYPTION_CREDENTIALS - The KMS key used to encrypt the table in inaccessible. Table operations may fail due to failure to use the KMS key. DynamoDB will initiate the table archival process when a table's KMS key remains inaccessible for more than seven days.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ARCHIVING - The table is being archived. Operations are not allowed until archival is complete.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ARCHIVED - The table has been archived. See the ArchivalReason for more information.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "CreationDateTime",
+              "type": "datetime",
+              "description": "The date and time when the table was created, in UNIX epoch time format.",
+              "nested_items": []
+            },
+            {
+              "name": "ProvisionedThroughput",
+              "type": "dict",
+              "description": "The provisioned throughput settings for the table, consisting of read and write capacity units, along with data about increases and decreases.",
+              "nested_items": [
+                {
+                  "name": "LastIncreaseDateTime",
+                  "type": "datetime",
+                  "description": "The date and time of the last provisioned throughput increase for this table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastDecreaseDateTime",
+                  "type": "datetime",
+                  "description": "The date and time of the last provisioned throughput decrease for this table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "NumberOfDecreasesToday",
+                  "type": "integer",
+                  "description": "The number of provisioned throughput decreases for this table during this UTC calendar day. For current maximums on provisioned throughput decreases, see Service, Account, and Table Quotas in the Amazon DynamoDB Developer Guide.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ReadCapacityUnits",
+                  "type": "integer",
+                  "description": "The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException. Eventually consistent reads require less effort than strongly consistent reads, so a setting of 50 ReadCapacityUnits per second provides 100 eventually consistent ReadCapacityUnits per second.",
+                  "nested_items": []
+                },
+                {
+                  "name": "WriteCapacityUnits",
+                  "type": "integer",
+                  "description": "The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TableSizeBytes",
+              "type": "integer",
+              "description": "The total size of the specified table, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+              "nested_items": []
+            },
+            {
+              "name": "ItemCount",
+              "type": "integer",
+              "description": "The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+              "nested_items": []
+            },
+            {
+              "name": "TableArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) that uniquely identifies the table.",
+              "nested_items": []
+            },
+            {
+              "name": "TableId",
+              "type": "string",
+              "description": "Unique identifier for the table for which the backup was created.",
+              "nested_items": []
+            },
+            {
+              "name": "BillingModeSummary",
+              "type": "dict",
+              "description": "Contains the details for the read/write capacity mode.",
+              "nested_items": [
+                {
+                  "name": "BillingMode",
+                  "type": "string",
+                  "description": "Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PROVISIONED - Sets the read/write capacity mode to PROVISIONED. We recommend using PROVISIONED for predictable workloads.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PAY_PER_REQUEST - Sets the read/write capacity mode to PAY_PER_REQUEST. We recommend using PAY_PER_REQUEST for unpredictable workloads.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "LastUpdateToPayPerRequestDateTime",
+                  "type": "datetime",
+                  "description": "Represents the time when PAY_PER_REQUEST was last set as the read/write capacity mode.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "LocalSecondaryIndexes",
+              "type": "list",
+              "description": "Represents one or more local secondary indexes on the table. Each index is scoped to a given partition key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IndexName - The name of the local secondary index.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "inclusive",
+                  "description": "KeySchema - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "projected",
+                  "description": "Projection - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ProjectionType - One of the following:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "KEYS_ONLY - Only the index and primary keys are projected into the index.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "INCLUDE - Only the specified table attributes are projected into the index. The list of projected attributes is in NonKeyAttributes.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ALL - All of the table attributes are projected into the index.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NonKeyAttributes - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in NonKeyAttributes, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of INCLUDE. You still can specify the ProjectionType of ALL to project all attributes from the source table, even if the table has more than 100 attributes.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IndexSizeBytes - Represents the total size of the index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ItemCount - Represents the number of items in the index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "GlobalSecondaryIndexes",
+              "type": "list",
+              "description": "The global secondary indexes, if any, on the table. Each index is scoped to a given partition key value. Each element is composed of:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "This attribute does not appear for indexes that were created during a CreateTable operation.",
+                  "description": "Backfilling - If true, then the index is currently in the backfilling phase. Backfilling occurs only when a new global secondary index is added to the table. It is the process by which DynamoDB populates the new index with data from the table. (This attribute does not appear for indexes that were created during a CreateTable operation.) You can delete an index that is being created during the Backfilling phase when IndexStatus is set to CREATING and Backfilling is true. You can't delete the index that is being created when IndexStatus is set to CREATING and Backfilling is false. (This attribute does not appear for indexes that were created during a CreateTable operation.)",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IndexName - The name of the global secondary index.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IndexSizeBytes - The total size of the global secondary index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IndexStatus - The current status of the global secondary index:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CREATING - The index is being created.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "UPDATING - The index is being updated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DELETING - The index is being deleted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ACTIVE - The index is ready for use.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ItemCount - The number of items in the global secondary index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "inclusive",
+                  "description": "KeySchema - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "projected",
+                  "description": "Projection - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ProjectionType - One of the following:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "KEYS_ONLY - Only the index and primary keys are projected into the index.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "INCLUDE - In addition to the attributes described in KEYS_ONLY, the secondary index will include other non-key attributes that you specify.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ALL - All of the table attributes are projected into the index.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NonKeyAttributes - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in NonKeyAttributes, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of INCLUDE. You still can specify the ProjectionType of ALL to project all attributes from the source table, even if the table has more than 100 attributes.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ProvisionedThroughput - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units, along with data about increases and decreases.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "StreamSpecification",
+              "type": "dict",
+              "description": "The current DynamoDB Streams configuration for the table.",
+              "nested_items": [
+                {
+                  "name": "StreamEnabled",
+                  "type": "boolean",
+                  "description": "Indicates whether DynamoDB Streams is enabled (true) or disabled (false) on the table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StreamViewType",
+                  "type": "string",
+                  "description": "When an item in the table is modified, StreamViewType determines what information is written to the stream for this table. Valid values for StreamViewType are:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "KEYS_ONLY - Only the key attributes of the modified item are written to the stream.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NEW_IMAGE - The entire item, as it appears after it was modified, is written to the stream.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "OLD_IMAGE - The entire item, as it appeared before it was modified, is written to the stream.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NEW_AND_OLD_IMAGES - Both the new and the old item images of the item are written to the stream.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LatestStreamLabel",
+              "type": "string",
+              "description": "A timestamp, in ISO 8601 format, for this stream.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Amazon Web Services customer ID.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Table name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "StreamLabel.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "LatestStreamArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) that uniquely identifies the latest stream for this table.",
+              "nested_items": []
+            },
+            {
+              "name": "GlobalTableVersion",
+              "type": "string",
+              "description": "Represents the version of global tables in use, if the table is replicated across Amazon Web Services Regions.",
+              "nested_items": []
+            },
+            {
+              "name": "Replicas",
+              "type": "list",
+              "description": "Represents replicas of the table.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "RegionName",
+                      "type": "string",
+                      "description": "The name of the Region.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ReplicaStatus",
+                      "type": "string",
+                      "description": "The current state of the replica:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CREATING - The replica is being created.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "UPDATING - The replica is being updated.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DELETING - The replica is being deleted.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ACTIVE - The replica is ready for use.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "REGION_DISABLED - The replica is inaccessible because the Amazon Web Services Region has been disabled.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReplicaStatusDescription",
+                      "type": "string",
+                      "description": "Detailed information about the replica status.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ReplicaStatusPercentProgress",
+                      "type": "string",
+                      "description": "Specifies the progress of a Create, Update, or Delete action on the replica as a percentage.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "KMSMasterKeyId",
+                      "type": "string",
+                      "description": "The KMS key of the replica that will be used for KMS encryption.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ProvisionedThroughputOverride",
+                      "type": "dict",
+                      "description": "Replica-specific provisioned throughput. If not described, uses the source table's provisioned throughput settings.",
+                      "nested_items": [
+                        {
+                          "name": "ReadCapacityUnits",
+                          "type": "integer",
+                          "description": "Replica-specific read capacity units. If not specified, uses the source table's read capacity settings.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "OnDemandThroughputOverride",
+                      "type": "dict",
+                      "description": "Overrides the maximum on-demand throughput settings for the specified replica table.",
+                      "nested_items": [
+                        {
+                          "name": "MaxReadRequestUnits",
+                          "type": "integer",
+                          "description": "Maximum number of read request units for the specified replica table.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "WarmThroughput",
+                      "type": "dict",
+                      "description": "Represents the warm throughput value for this replica.",
+                      "nested_items": [
+                        {
+                          "name": "ReadUnitsPerSecond",
+                          "type": "integer",
+                          "description": "Represents the base table's warm throughput value in read units per second.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "WriteUnitsPerSecond",
+                          "type": "integer",
+                          "description": "Represents the base table's warm throughput value in write units per second.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Status",
+                          "type": "string",
+                          "description": "Represents warm throughput value of the base table.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "GlobalSecondaryIndexes",
+                      "type": "list",
+                      "description": "Replica-specific global secondary index settings.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "IndexName",
+                              "type": "string",
+                              "description": "The name of the global secondary index.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ProvisionedThroughputOverride",
+                              "type": "dict",
+                              "description": "If not described, uses the source table GSI's read capacity settings.",
+                              "nested_items": [
+                                {
+                                  "name": "ReadCapacityUnits",
+                                  "type": "integer",
+                                  "description": "Replica-specific read capacity units. If not specified, uses the source table's read capacity settings.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "OnDemandThroughputOverride",
+                              "type": "dict",
+                              "description": "Overrides the maximum on-demand throughput for the specified global secondary index in the specified replica table.",
+                              "nested_items": [
+                                {
+                                  "name": "MaxReadRequestUnits",
+                                  "type": "integer",
+                                  "description": "Maximum number of read request units for the specified replica table.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "WarmThroughput",
+                              "type": "dict",
+                              "description": "Represents the warm throughput of the global secondary index for this replica.",
+                              "nested_items": [
+                                {
+                                  "name": "ReadUnitsPerSecond",
+                                  "type": "integer",
+                                  "description": "Represents warm throughput read units per second value for a global secondary index.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "WriteUnitsPerSecond",
+                                  "type": "integer",
+                                  "description": "Represents warm throughput write units per second value for a global secondary index.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Status",
+                                  "type": "string",
+                                  "description": "Represents the warm throughput status being created or updated on a global secondary index. The status can only be UPDATING or ACTIVE.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReplicaInaccessibleDateTime",
+                      "type": "datetime",
+                      "description": "The time at which the replica was first detected as inaccessible. To determine cause of inaccessibility check the ReplicaStatus property.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ReplicaTableClassSummary",
+                      "type": "dict",
+                      "description": "Contains details of the table class.",
+                      "nested_items": [
+                        {
+                          "name": "TableClass",
+                          "type": "string",
+                          "description": "The table class of the specified table. Valid values are STANDARD and STANDARD_INFREQUENT_ACCESS.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "LastUpdateDateTime",
+                          "type": "datetime",
+                          "description": "The date and time at which the table class was last updated.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RestoreSummary",
+              "type": "dict",
+              "description": "Contains details for the restore.",
+              "nested_items": [
+                {
+                  "name": "SourceBackupArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the backup from which the table was restored.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SourceTableArn",
+                  "type": "string",
+                  "description": "The ARN of the source table of the backup that is being restored.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RestoreDateTime",
+                  "type": "datetime",
+                  "description": "Point in time or source backup time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RestoreInProgress",
+                  "type": "boolean",
+                  "description": "Indicates if a restore is in progress or not.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SSEDescription",
+              "type": "dict",
+              "description": "The description of the server-side encryption status on the specified table.",
+              "nested_items": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "Represents the current state of server-side encryption. The only supported values are:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ENABLED - Server-side encryption is enabled.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "UPDATING - Server-side encryption is being updated.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SSEType",
+                  "type": "string",
+                  "description": "Server-side encryption type. The only supported value is:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "KMS charges apply",
+                      "description": "KMS - Server-side encryption that uses Key Management Service. The key is stored in your account and is managed by KMS (KMS charges apply).",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "KMSMasterKeyArn",
+                  "type": "string",
+                  "description": "The KMS key ARN used for the KMS encryption.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InaccessibleEncryptionDateTime",
+                  "type": "datetime",
+                  "description": "Indicates the time, in UNIX epoch date format, when DynamoDB detected that the table's KMS key was inaccessible. This attribute will automatically be cleared when DynamoDB detects that the table's KMS key is accessible again. DynamoDB will initiate the table archival process when table's KMS key remains inaccessible for more than seven days from this date.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ArchivalSummary",
+              "type": "dict",
+              "description": "Contains information about the table archive.",
+              "nested_items": [
+                {
+                  "name": "ArchivalDateTime",
+                  "type": "datetime",
+                  "description": "The date and time when table archival was initiated by DynamoDB, in UNIX epoch time format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ArchivalReason",
+                  "type": "string",
+                  "description": "The reason DynamoDB archived the table. Currently, the only possible value is:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "INACCESSIBLE_ENCRYPTION_CREDENTIALS - The table was archived due to the table's KMS key being inaccessible for more than seven days. An On-Demand backup was created at the archival time.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ArchivalBackupArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the backup the table was archived to, when applicable in the archival reason. If you wish to restore this backup to the same table name, you will need to delete the original table.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TableClassSummary",
+              "type": "dict",
+              "description": "Contains details of the table class.",
+              "nested_items": [
+                {
+                  "name": "TableClass",
+                  "type": "string",
+                  "description": "The table class of the specified table. Valid values are STANDARD and STANDARD_INFREQUENT_ACCESS.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastUpdateDateTime",
+                  "type": "datetime",
+                  "description": "The date and time at which the table class was last updated.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "DeletionProtectionEnabled",
+              "type": "boolean",
+              "description": "Indicates whether deletion protection is enabled (true) or disabled (false) on the table.",
+              "nested_items": []
+            },
+            {
+              "name": "OnDemandThroughput",
+              "type": "dict",
+              "description": "The maximum number of read and write units for the specified on-demand table. If you use this parameter, you must specify MaxReadRequestUnits, MaxWriteRequestUnits, or both.",
+              "nested_items": [
+                {
+                  "name": "MaxReadRequestUnits",
+                  "type": "integer",
+                  "description": "Maximum number of read request units for the specified table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxWriteRequestUnits",
+                  "type": "integer",
+                  "description": "Maximum number of write request units for the specified table.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "WarmThroughput",
+              "type": "dict",
+              "description": "Describes the warm throughput value of the base table.",
+              "nested_items": [
+                {
+                  "name": "ReadUnitsPerSecond",
+                  "type": "integer",
+                  "description": "Represents the base table's warm throughput value in read units per second.",
+                  "nested_items": []
+                },
+                {
+                  "name": "WriteUnitsPerSecond",
+                  "type": "integer",
+                  "description": "Represents the base table's warm throughput value in write units per second.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "Represents warm throughput value of the base table.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MultiRegionConsistency",
+              "type": "string",
+              "description": "Indicates one of the following consistency modes for a global table:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "EVENTUAL: Indicates that the global table is configured for multi-Region eventual consistency.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "preview",
+                  "description": "STRONG: Indicates that the global table is configured for multi-Region strong consistency (preview).",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

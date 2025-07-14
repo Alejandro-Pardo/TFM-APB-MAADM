@@ -1,0 +1,2927 @@
+{
+  "method_name": "delete_objects",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/delete_objects.html",
+  "description": "This operation enables you to delete multiple objects from a bucket using a single HTTP request. If you know the object keys that you want to delete, then this operation provides a suitable alternative to sending individual delete requests, reducing per-request overhead. The request can contain a list of up to 1,000 keys that you want to delete. In the XML, you provide the object key names, and optionally, version IDs if you want to delete a specific version of the object from a versioning-enabled bucket. For each key, Amazon S3 performs a delete operation and returns the result of that delete, success or failure, in the response. If the object specified in the request isn't found, Amazon S3 confirms the deletion by returning the result as deleted. The operation supports two modes for the response: verbose and quiet. By default, the operation uses verbose mode in which the response includes the result of deletion of each key in your request. In quiet mode the response includes only keys where the delete operation encountered an error. For a successful deletion in a quiet mode, the operation does not return any information about the delete in the response body. When performing this action on an MFA Delete enabled bucket, that attempts to delete any versioned objects, you must include an MFA token. If you do not provide one, the entire request will fail, even if there are non-versioned objects you are trying to delete. If you provide an invalid token, whether there are versioned keys in the request or not, the entire Multi-Object Delete request will fail. For information about MFA Delete, see MFA Delete in the Amazon S3 User Guide. Directory buckets - The HTTP Host header syntax is Bucket-name.s3express-zone-id.region-code.amazonaws.com. The following operations are related to DeleteObjects:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The bucket name containing the objects to delete. Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format bucket-base-name--zone-id--x-s3 (for example, amzn-s3-demo-bucket--usw2-az1--x-s3). For information about bucket naming restrictions, see Directory bucket naming rules in the Amazon S3 User Guide. Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide. S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Delete",
+      "type": "dict",
+      "required": true,
+      "description": "Container for the request. The object to delete. (dict) --- Object Identifier is unique value to identify objects. Key name of the object. VersionId (string) --- Version ID for the specific version of the object to delete. ETag (string) --- An entity tag (ETag) is an identifier assigned by a web server to a specific version of a resource found at a URL. This header field makes the request method conditional on ETags. LastModifiedTime (datetime) --- If present, the objects are deleted only if its modification times matches the provided Timestamp. Size (integer) --- If present, the objects are deleted only if its size matches the provided size in bytes. Quiet (boolean) --- Element to enable quiet mode for the request. When you add this element, you must set its value to true.",
+      "nested_params": [
+        {
+          "name": "Objects",
+          "type": "list",
+          "required": false,
+          "description": "The object to delete.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "Key name of the object.",
+              "nested_params": []
+            },
+            {
+              "name": "VersionId",
+              "type": "string",
+              "required": false,
+              "description": "Version ID for the specific version of the object to delete.",
+              "nested_params": []
+            },
+            {
+              "name": "ETag",
+              "type": "string",
+              "required": false,
+              "description": "An entity tag (ETag) is an identifier assigned by a web server to a specific version of a resource found at a URL. This header field makes the request method conditional on ETags.",
+              "nested_params": []
+            },
+            {
+              "name": "LastModifiedTime",
+              "type": "datetime",
+              "required": false,
+              "description": "If present, the objects are deleted only if its modification times matches the provided Timestamp.",
+              "nested_params": []
+            },
+            {
+              "name": "Size",
+              "type": "integer",
+              "required": false,
+              "description": "If present, the objects are deleted only if its size matches the provided size in bytes.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Quiet",
+          "type": "boolean",
+          "required": false,
+          "description": "Element to enable quiet mode for the request. When you add this element, you must set its value to true.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "MFA",
+      "type": "string",
+      "required": false,
+      "description": "The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device. Required to permanently delete a versioned object if versioning is configured with MFA delete enabled. When performing the DeleteObjects operation on an MFA delete enabled bucket, which attempts to delete the specified versioned objects, you must include an MFA token. If you don't provide an MFA token, the entire request will fail, even if there are non-versioned objects that you are trying to delete. If you provide an invalid token, whether there are versioned object keys in the request or not, the entire Multi-Object Delete request will fail. For information about MFA Delete, see MFA Delete in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "RequestPayer",
+      "type": "string",
+      "required": false,
+      "description": "Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for corresponding charges to copy the object. For information about downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays Buckets in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "BypassGovernanceRetention",
+      "type": "boolean",
+      "required": false,
+      "description": "Specifies whether you want to delete this object even if it has a Governance-type Object Lock in place. To use this header, you must have the s3:BypassGovernanceRetention permission.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ChecksumAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding x-amz-checksum-algorithm or x-amz-trailer header sent. Otherwise, Amazon S3 fails the request with the HTTP status code 400 Bad Request. For the x-amz-checksum-algorithm header, replace algorithm with the supported algorithm from the following list: CRC32 CRC32C CRC64NVME SHA1 SHA256 For more information, see Checking object integrity in the Amazon S3 User Guide. If the individual checksum value you provide through x-amz-checksum-algorithm doesn't match the checksum algorithm you set through x-amz-sdk-checksum-algorithm, Amazon S3 fails the request with a BadDigest error. If you provide an individual checksum, Amazon S3 ignores any provided ChecksumAlgorithm parameter.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Deleted",
+          "type": "list",
+          "description": "Container element for a successful delete. It identifies the object that was successfully deleted.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "description": "The name of the deleted object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VersionId",
+                  "type": "string",
+                  "description": "The version ID of the deleted object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DeleteMarker",
+                  "type": "boolean",
+                  "description": "Indicates whether the specified object version that was permanently deleted was (true) or was not (false) a delete marker before deletion. In a simple DELETE, this header indicates whether (true) or not (false) the current version of the object is a delete marker. To learn more about delete markers, see Working with delete markers.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DeleteMarkerVersionId",
+                  "type": "string",
+                  "description": "The version ID of the delete marker created as a result of the DELETE operation. If you delete a specific object version, the value returned by this header is the version ID of the object version deleted.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RequestCharged",
+          "type": "string",
+          "description": "If present, indicates that the requester was successfully charged for the request. For more information, see Using Requester Pays buckets for storage transfers and usage in the Amazon Simple Storage Service user guide.",
+          "nested_items": []
+        },
+        {
+          "name": "Errors",
+          "type": "list",
+          "description": "Container for a failed delete action that describes the object that Amazon S3 attempted to delete and the error it encountered.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "description": "The error key.",
+                  "nested_items": []
+                },
+                {
+                  "name": "VersionId",
+                  "type": "string",
+                  "description": "The version ID of the error.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Code",
+                  "type": "string",
+                  "description": "The error code is a string that uniquely identifies an error condition. It is meant to be read and understood by programs that detect and handle errors by type. The following is a list of Amazon S3 error codes. For more information, see Error responses.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: AccessDenied.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: AccessDenied.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Access Denied.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: AccountProblem.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: AccountProblem.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: There is a problem with your Amazon Web Services account that prevents the action from completing successfully. Contact Amazon Web Services Support for further assistance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: AllAccessDisabled.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: AllAccessDisabled.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: All access to this Amazon S3 resource has been disabled. Contact Amazon Web Services Support for further assistance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: AmbiguousGrantByEmailAddress.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: AmbiguousGrantByEmailAddress.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The email address you provided is associated with more than one account.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: AuthorizationHeaderMalformed.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: AuthorizationHeaderMalformed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The authorization header you provided is invalid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: BadDigest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: BadDigest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The Content-MD5 you specified did not match what we received.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: BucketAlreadyExists.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: BucketAlreadyExists.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select a different name and try again.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 409 Conflict.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "ACLs",
+                      "description": "Code: BucketAlreadyOwnedByYou.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: BucketAlreadyOwnedByYou.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "ACLs",
+                          "description": "Description: The bucket you tried to create already exists, and you own it. Amazon S3 returns this error in all Amazon Web Services Regions except in the North Virginia Region. For legacy compatibility, if you re-create an existing bucket that you already own in the North Virginia Region, Amazon S3 returns 200 OK and resets the bucket access control lists (ACLs).",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "in all Regions except the North Virginia Region",
+                          "description": "Code: 409 Conflict (in all Regions except the North Virginia Region)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: BucketNotEmpty.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: BucketNotEmpty.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The bucket you tried to delete is not empty.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 409 Conflict.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: CredentialsNotSupported.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: CredentialsNotSupported.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: This request does not support credentials.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: CrossLocationLoggingProhibited.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: CrossLocationLoggingProhibited.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Cross-location logging not allowed. Buckets in one geographic location cannot log information to a bucket in another location.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: EntityTooSmall.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: EntityTooSmall.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your proposed upload is smaller than the minimum allowed object size.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: EntityTooLarge.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: EntityTooLarge.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your proposed upload exceeds the maximum allowed object size.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: ExpiredToken.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: ExpiredToken.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The provided token has expired.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: IllegalVersioningConfigurationException.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: IllegalVersioningConfigurationException.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Indicates that the versioning configuration specified in the request is invalid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: IncompleteBody.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: IncompleteBody.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: You did not provide the number of bytes specified by the Content-Length HTTP header.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: IncorrectNumberOfFilesInPostRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: IncorrectNumberOfFilesInPostRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: POST requires exactly one file upload per request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InlineDataTooLarge.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InlineDataTooLarge.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Inline data exceeds the maximum allowed size.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InternalError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InternalError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: We encountered an internal error. Please try again.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 500 Internal Server Error.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Server.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidAccessKeyId.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidAccessKeyId.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The Amazon Web Services access key ID you provided does not exist in our records.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidAddressingHeader.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidAddressingHeader.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: You must specify the Anonymous role.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: N/A.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidArgument.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidArgument.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Invalid Argument.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidBucketName.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidBucketName.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified bucket is not valid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidBucketState.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidBucketState.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The request is not valid with the current state of the bucket.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 409 Conflict.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidDigest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidDigest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The Content-MD5 you specified is not valid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidEncryptionAlgorithmError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidEncryptionAlgorithmError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The encryption request you specified is not valid. The valid value is AES256.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidLocationConstraint.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidLocationConstraint.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified location constraint is not valid. For more information about Regions, see How to Select a Region for Your Buckets.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidObjectState.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidObjectState.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The action is not valid for the current state of the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidPart.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidPart.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: One or more of the specified parts could not be found. The part might not have been uploaded, or the specified entity tag might not have matched the part's entity tag.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidPartOrder.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidPartOrder.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The list of parts was not in ascending order. Parts list must be specified in order by part number.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidPayer.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidPayer.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: All access to this object has been disabled. Please contact Amazon Web Services Support for further assistance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidPolicyDocument.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidPolicyDocument.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The content of the form does not meet the conditions specified in the policy document.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRange.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRange.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The requested range cannot be satisfied.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 416 Requested Range Not Satisfiable.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Please use AWS4-HMAC-SHA256.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: SOAP requests must be made over an HTTPS connection.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Amazon S3 Transfer Acceleration is not supported for buckets with non-DNS compliant names.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": ".",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": ".",
+                          "description": "Description: Amazon S3 Transfer Acceleration is not supported for buckets with periods (.) in their names.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Amazon S3 Transfer Accelerate endpoint only supports virtual style requests.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Amazon S3 Transfer Accelerate is not configured on this bucket.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Amazon S3 Transfer Accelerate is disabled on this bucket.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Amazon S3 Transfer Acceleration is not supported on this bucket. Contact Amazon Web Services Support for more information.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Amazon S3 Transfer Acceleration cannot be enabled on this bucket. Contact Amazon Web Services Support for more information.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: N/A.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidSecurity.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidSecurity.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The provided security credentials are not valid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidSOAPRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidSOAPRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The SOAP request body is invalid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidStorageClass.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidStorageClass.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The storage class you specified is not valid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidTargetBucketForLogging.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidTargetBucketForLogging.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The target bucket for logging does not exist, is not owned by you, or does not have the appropriate grants for the log-delivery group.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidToken.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidToken.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The provided token is malformed or otherwise invalid.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: InvalidURI.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: InvalidURI.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Couldn't parse the specified URI.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: KeyTooLongError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: KeyTooLongError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your key is too long.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MalformedACLError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MalformedACLError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The XML you provided was not well-formed or did not validate against our published schema.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MalformedPOSTRequest.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MalformedPOSTRequest.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The body of your POST request is not well-formed multipart/form-data.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "XML that doesn\u00e2\u0080\u0099t conform to the published XSD",
+                      "description": "Code: MalformedXML.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MalformedXML.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "XML that doesn\u00e2\u0080\u0099t conform to the published XSD",
+                          "description": "Description: This happens when the user sends malformed XML (XML that doesn't conform to the published XSD) for the configuration. The error message is, 'The XML you provided was not well-formed or did not validate against our published schema.'",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MaxMessageLengthExceeded.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MaxMessageLengthExceeded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your request was too big.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MaxPostPreDataLengthExceededError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MaxPostPreDataLengthExceededError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your POST request fields preceding the upload file were too large.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MetadataTooLarge.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MetadataTooLarge.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your metadata headers exceed the maximum allowed metadata size.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MethodNotAllowed.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MethodNotAllowed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified method is not allowed against this resource.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 405 Method Not Allowed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MissingAttachment.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MissingAttachment.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: A SOAP attachment was expected, but none were found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: N/A.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MissingContentLength.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MissingContentLength.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: You must provide the Content-Length HTTP header.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 411 Length Required.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MissingRequestBodyError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MissingRequestBodyError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: This happens when the user sends an empty XML document as a request. The error message is, 'Request body is empty.'",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MissingSecurityElement.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MissingSecurityElement.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The SOAP 1.1 request is missing a security element.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: MissingSecurityHeader.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: MissingSecurityHeader.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your request is missing a required header.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoLoggingStatusForKey.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoLoggingStatusForKey.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: There is no such thing as a logging status subresource for a key.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoSuchBucket.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoSuchBucket.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified bucket does not exist.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 404 Not Found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoSuchBucketPolicy.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoSuchBucketPolicy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified bucket does not have a bucket policy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 404 Not Found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoSuchKey.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoSuchKey.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified key does not exist.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 404 Not Found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoSuchLifecycleConfiguration.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoSuchLifecycleConfiguration.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The lifecycle configuration does not exist.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 404 Not Found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoSuchUpload.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoSuchUpload.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The specified multipart upload does not exist. The upload ID might be invalid, or the multipart upload might have been aborted or completed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 404 Not Found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NoSuchVersion.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NoSuchVersion.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Indicates that the version ID specified in the request does not match an existing version.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 404 Not Found.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NotImplemented.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NotImplemented.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: A header you provided implies functionality that is not implemented.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 501 Not Implemented.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Server.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: NotSignedUp.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: NotSignedUp.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your account is not signed up for the Amazon S3 service. You must sign up before you can use Amazon S3. You can sign up at the following URL: Amazon S3",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: OperationAborted.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: OperationAborted.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: A conflicting conditional action is currently in progress against this resource. Try again.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 409 Conflict.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: PermanentRedirect.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: PermanentRedirect.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The bucket you are attempting to access must be addressed using the specified endpoint. Send all future requests to this endpoint.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 301 Moved Permanently.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: PreconditionFailed.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: PreconditionFailed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: At least one of the preconditions you specified did not hold.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 412 Precondition Failed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: Redirect.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: Redirect.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Temporary redirect.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 307 Moved Temporarily.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: RestoreAlreadyInProgress.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: RestoreAlreadyInProgress.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Object restore is already in progress.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 409 Conflict.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: RequestIsNotMultiPartContent.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: RequestIsNotMultiPartContent.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Bucket POST must be of the enclosure-type multipart/form-data.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: RequestTimeout.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: RequestTimeout.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Your socket connection to the server was not read from or written to within the timeout period.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: RequestTimeTooSkewed.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: RequestTimeTooSkewed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The difference between the request time and the server's time is too large.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: RequestTorrentOfBucketError.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: RequestTorrentOfBucketError.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Requesting the torrent file of a bucket is not permitted.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: SignatureDoesNotMatch.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: SignatureDoesNotMatch.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The request signature we calculated does not match the signature you provided. Check your Amazon Web Services secret access key and signing method. For more information, see REST Authentication and SOAP Authentication for details.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 403 Forbidden.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: ServiceUnavailable.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: ServiceUnavailable.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Service is unable to handle request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 503 Service Unavailable.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Server.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: SlowDown.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: SlowDown.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: Reduce your request rate.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 503 Slow Down.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Server.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: TemporaryRedirect.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: TemporaryRedirect.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: You are being redirected to the bucket while DNS updates.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 307 Moved Temporarily.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: TokenRefreshRequired.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: TokenRefreshRequired.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The provided token must be refreshed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: TooManyBuckets.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: TooManyBuckets.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: You have attempted to create more buckets than allowed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: UnexpectedContent.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: UnexpectedContent.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: This request does not support content.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: UnresolvableGrantByEmailAddress.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: UnresolvableGrantByEmailAddress.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The email address you provided does not match any account on record.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Code: UserKeyMustBeSpecified.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Code: UserKeyMustBeSpecified.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Description: The bucket POST must contain the specified field name. If it is specified, check the order of the fields.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "HTTP Status Code: 400 Bad Request.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SOAP Fault Code Prefix: Client.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "The error message contains a generic description of the error condition in English. It is intended for a human audience. Simple programs display the message directly to the end user if they encounter an error condition they don't know how or don't care to handle. Sophisticated programs with more exhaustive error handling and proper internationalization are more likely to ignore the error message.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

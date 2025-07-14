@@ -1,0 +1,899 @@
+{
+  "method_name": "create_vpn_connection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/create_vpn_connection.html",
+  "description": "Creates a VPN connection between an existing virtual private gateway or transit gateway and a customer gateway. The supported connection type is ipsec.1. The response includes information that you need to give to your network administrator to configure your customer gateway. If you decide to shut down your VPN connection for any reason and later create a new VPN connection, you must reconfigure your customer gateway with the new information returned from this call. This is an idempotent operation. If you perform the operation more than once, Amazon EC2 doesn't return an error. For more information, see Amazon Web Services Site-to-Site VPN in the Amazon Web Services Site-to-Site VPN User Guide.",
+  "parameters": [
+    {
+      "name": "CustomerGatewayId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the customer gateway.",
+      "nested_params": []
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "required": true,
+      "description": "The type of VPN connection ( ipsec.1).",
+      "nested_params": []
+    },
+    {
+      "name": "VpnGatewayId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "TransitGatewayId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "TagSpecifications",
+      "type": "list",
+      "required": false,
+      "description": "The tags to apply to the VPN connection. (dict) --- The tags to apply to a resource when the resource is being created. When you specify a tag, you must specify the resource type to tag, otherwise the request will fail. ResourceType (string) --- The type of resource to tag on creation. Tags (list) --- The tags to apply to the resource. (dict) --- Describes a tag. Key (string) --- The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with aws:. Value (string) --- The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 256 Unicode characters.",
+      "nested_params": [
+        {
+          "name": "ResourceType",
+          "type": "string",
+          "required": false,
+          "description": "The type of resource to tag on creation.",
+          "nested_params": []
+        },
+        {
+          "name": "Tags",
+          "type": "list",
+          "required": false,
+          "description": "The tags to apply to the resource.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with aws:.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 256 Unicode characters.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DryRun",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Options",
+      "type": "dict",
+      "required": false,
+      "description": "The options for the VPN connection. EnableAcceleration (boolean) --- Indicate whether to enable acceleration for the VPN connection. Default: false TunnelInsideIpVersion (string) --- Indicate whether the VPN tunnels process IPv4 or IPv6 traffic. Default: ipv4 TunnelOptions (list) --- The tunnel options for the VPN connection. (dict) --- The tunnel options for a single VPN tunnel. TunnelInsideCidr (string) --- The range of inside IPv4 addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway. Constraints: A size /30 CIDR block from the 169.254.0.0/16 range. The following CIDR blocks are reserved and cannot be used: 169.254.0.0/30 169.254.1.0/30 169.254.2.0/30 169.254.3.0/30 169.254.4.0/30 169.254.5.0/30 169.254.169.252/30 TunnelInsideIpv6Cidr (string) --- The range of inside IPv6 addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same transit gateway. Constraints: A size /126 CIDR block from the local fd00::/8 range. PreSharedKey (string) --- The pre-shared key (PSK) to establish initial authentication between the virtual private gateway and customer gateway. Constraints: Allowed characters are alphanumeric characters, periods (.), and underscores (_). Must be between 8 and 64 characters in length and cannot start with zero (0). Phase1LifetimeSeconds (integer) --- The lifetime for phase 1 of the IKE negotiation, in seconds. Constraints: A value between 900 and 28,800. Default: 28800 Phase2LifetimeSeconds (integer) --- The lifetime for phase 2 of the IKE negotiation, in seconds. Constraints: A value between 900 and 3,600. The value must be less than the value for Phase1LifetimeSeconds. Default: 3600 RekeyMarginTimeSeconds (integer) --- The margin time, in seconds, before the phase 2 lifetime expires, during which the Amazon Web Services side of the VPN connection performs an IKE rekey. The exact time of the rekey is randomly selected based on the value for RekeyFuzzPercentage. Constraints: A value between 60 and half of Phase2LifetimeSeconds. Default: 270 RekeyFuzzPercentage (integer) --- The percentage of the rekey window (determined by RekeyMarginTimeSeconds) during which the rekey time is randomly selected. Constraints: A value between 0 and 100. Default: 100 ReplayWindowSize (integer) --- The number of packets in an IKE replay window. Constraints: A value between 64 and 2048. Default: 1024 DPDTimeoutSeconds (integer) --- The number of seconds after which a DPD timeout occurs. Constraints: A value greater than or equal to 30. Default: 30 DPDTimeoutAction (string) --- The action to take after DPD timeout occurs. Specify restart to restart the IKE initiation. Specify clear to end the IKE session. Valid Values: clear | none | restart Default: clear Phase1EncryptionAlgorithms (list) --- One or more encryption algorithms that are permitted for the VPN tunnel for phase 1 IKE negotiations. Valid values: AES128 | AES256 | AES128-GCM-16 | AES256-GCM-16 (dict) --- Specifies the encryption algorithm for the VPN tunnel for phase 1 IKE negotiations. Value (string) --- The value for the encryption algorithm. Phase2EncryptionAlgorithms (list) --- One or more encryption algorithms that are permitted for the VPN tunnel for phase 2 IKE negotiations. Valid values: AES128 | AES256 | AES128-GCM-16 | AES256-GCM-16 (dict) --- Specifies the encryption algorithm for the VPN tunnel for phase 2 IKE negotiations. Value (string) --- The encryption algorithm. Phase1IntegrityAlgorithms (list) --- One or more integrity algorithms that are permitted for the VPN tunnel for phase 1 IKE negotiations. Valid values: SHA1 | SHA2-256 | SHA2-384 | SHA2-512 (dict) --- Specifies the integrity algorithm for the VPN tunnel for phase 1 IKE negotiations. Value (string) --- The value for the integrity algorithm. Phase2IntegrityAlgorithms (list) --- One or more integrity algorithms that are permitted for the VPN tunnel for phase 2 IKE negotiations. Valid values: SHA1 | SHA2-256 | SHA2-384 | SHA2-512 (dict) --- Specifies the integrity algorithm for the VPN tunnel for phase 2 IKE negotiations. Value (string) --- The integrity algorithm. Phase1DHGroupNumbers (list) --- One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE negotiations. Valid values: 2 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 (dict) --- Specifies a Diffie-Hellman group number for the VPN tunnel for phase 1 IKE negotiations. Value (integer) --- The Diffie-Hellmann group number. Phase2DHGroupNumbers (list) --- One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE negotiations. Valid values: 2 | 5 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 (dict) --- Specifies a Diffie-Hellman group number for the VPN tunnel for phase 2 IKE negotiations. IKEVersions (list) --- The IKE versions that are permitted for the VPN tunnel. Valid values: ikev1 | ikev2 (dict) --- The IKE version that is permitted for the VPN tunnel. Value (string) --- The IKE version. StartupAction (string) --- The action to take when the establishing the tunnel for the VPN connection. By default, your customer gateway device must initiate the IKE negotiation and bring up the tunnel. Specify start for Amazon Web Services to initiate the IKE negotiation. Valid Values: add | start Default: add LogOptions (dict) --- Options for logging VPN tunnel activity. CloudWatchLogOptions (dict) --- Options for sending VPN tunnel logs to CloudWatch. LogEnabled (boolean) --- Enable or disable VPN tunnel logging feature. Default value is False. Valid values: True | False LogGroupArn (string) --- The Amazon Resource Name (ARN) of the CloudWatch log group to send logs to. LogOutputFormat (string) --- Set log format. Default format is json. Valid values: json | text EnableTunnelLifecycleControl (boolean) --- Turn on or off tunnel endpoint lifecycle control feature. LocalIpv4NetworkCidr (string) --- The IPv4 CIDR on the customer gateway (on-premises) side of the VPN connection. Default: 0.0.0.0/0 RemoteIpv4NetworkCidr (string) --- The IPv4 CIDR on the Amazon Web Services side of the VPN connection. Default: 0.0.0.0/0 LocalIpv6NetworkCidr (string) --- The IPv6 CIDR on the customer gateway (on-premises) side of the VPN connection. Default: ::/0 RemoteIpv6NetworkCidr (string) --- The IPv6 CIDR on the Amazon Web Services side of the VPN connection. Default: ::/0 OutsideIpAddressType (string) --- The type of IPv4 address assigned to the outside interface of the customer gateway device. Valid values: PrivateIpv4 | PublicIpv4 Default: PublicIpv4 TransportTransitGatewayAttachmentId (string) --- The transit gateway attachment ID to use for the VPN tunnel. Required if OutsideIpAddressType is set to PrivateIpv4. StaticRoutesOnly (boolean) --- Indicate whether the VPN connection uses static routes only. If you are creating a VPN connection for a device that does not support BGP, you must specify true. Use  CreateVpnConnectionRoute to create a static route. Default: false.",
+      "nested_params": [
+        {
+          "name": "EnableAcceleration",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicate whether to enable acceleration for the VPN connection. Default: false.",
+          "nested_params": []
+        },
+        {
+          "name": "TunnelInsideIpVersion",
+          "type": "string",
+          "required": false,
+          "description": "Indicate whether the VPN tunnels process IPv4 or IPv6 traffic. Default: ipv4",
+          "nested_params": []
+        },
+        {
+          "name": "TunnelOptions",
+          "type": "list",
+          "required": false,
+          "description": "The tunnel options for the VPN connection.",
+          "nested_params": [
+            {
+              "name": "TunnelInsideCidr",
+              "type": "string",
+              "required": false,
+              "description": "The range of inside IPv4 addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway. Constraints: A size /30 CIDR block from the 169.254.0.0/16 range. The following CIDR blocks are reserved and cannot be used:",
+              "nested_params": []
+            },
+            {
+              "name": "TunnelInsideIpv6Cidr",
+              "type": "string",
+              "required": false,
+              "description": "The range of inside IPv6 addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same transit gateway. Constraints: A size /126 CIDR block from the local fd00::/8 range.",
+              "nested_params": []
+            },
+            {
+              "name": "PreSharedKey",
+              "type": "string",
+              "required": false,
+              "description": "The pre-shared key (PSK) to establish initial authentication between the virtual private gateway and customer gateway. Constraints: Allowed characters are alphanumeric characters, periods (.), and underscores (_). Must be between 8 and 64 characters in length and cannot start with zero (0).",
+              "nested_params": []
+            },
+            {
+              "name": "Phase1LifetimeSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The lifetime for phase 1 of the IKE negotiation, in seconds. Constraints: A value between 900 and 28,800. Default: 28800",
+              "nested_params": []
+            },
+            {
+              "name": "Phase2LifetimeSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The lifetime for phase 2 of the IKE negotiation, in seconds. Constraints: A value between 900 and 3,600. The value must be less than the value for Phase1LifetimeSeconds. Default: 3600",
+              "nested_params": []
+            },
+            {
+              "name": "RekeyMarginTimeSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The margin time, in seconds, before the phase 2 lifetime expires, during which the Amazon Web Services side of the VPN connection performs an IKE rekey. The exact time of the rekey is randomly selected based on the value for RekeyFuzzPercentage. Constraints: A value between 60 and half of Phase2LifetimeSeconds. Default: 270",
+              "nested_params": []
+            },
+            {
+              "name": "RekeyFuzzPercentage",
+              "type": "integer",
+              "required": false,
+              "description": "The percentage of the rekey window (determined by RekeyMarginTimeSeconds) during which the rekey time is randomly selected. Constraints: A value between 0 and 100. Default: 100",
+              "nested_params": []
+            },
+            {
+              "name": "ReplayWindowSize",
+              "type": "integer",
+              "required": false,
+              "description": "The number of packets in an IKE replay window. Constraints: A value between 64 and 2048. Default: 1024",
+              "nested_params": []
+            },
+            {
+              "name": "DPDTimeoutSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The number of seconds after which a DPD timeout occurs. Constraints: A value greater than or equal to 30. Default: 30",
+              "nested_params": []
+            },
+            {
+              "name": "DPDTimeoutAction",
+              "type": "string",
+              "required": false,
+              "description": "The action to take after DPD timeout occurs. Specify restart to restart the IKE initiation. Specify clear to end the IKE session. Valid Values: clear | none | restart Default: clear.",
+              "nested_params": []
+            },
+            {
+              "name": "Phase1EncryptionAlgorithms",
+              "type": "list",
+              "required": false,
+              "description": "One or more encryption algorithms that are permitted for the VPN tunnel for phase 1 IKE negotiations. Valid values: AES128 | AES256 | AES128-GCM-16 | AES256-GCM-16",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value for the encryption algorithm.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Phase2EncryptionAlgorithms",
+              "type": "list",
+              "required": false,
+              "description": "One or more encryption algorithms that are permitted for the VPN tunnel for phase 2 IKE negotiations. Valid values: AES128 | AES256 | AES128-GCM-16 | AES256-GCM-16",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encryption algorithm.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Phase1IntegrityAlgorithms",
+              "type": "list",
+              "required": false,
+              "description": "One or more integrity algorithms that are permitted for the VPN tunnel for phase 1 IKE negotiations. Valid values: SHA1 | SHA2-256 | SHA2-384 | SHA2-512",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value for the integrity algorithm.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Phase2IntegrityAlgorithms",
+              "type": "list",
+              "required": false,
+              "description": "One or more integrity algorithms that are permitted for the VPN tunnel for phase 2 IKE negotiations. Valid values: SHA1 | SHA2-256 | SHA2-384 | SHA2-512",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The integrity algorithm.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Phase1DHGroupNumbers",
+              "type": "list",
+              "required": false,
+              "description": "One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 1 IKE negotiations. Valid values: 2 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The Diffie-Hellmann group number.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Phase2DHGroupNumbers",
+              "type": "list",
+              "required": false,
+              "description": "One or more Diffie-Hellman group numbers that are permitted for the VPN tunnel for phase 2 IKE negotiations. Valid values: 2 | 5 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The Diffie-Hellmann group number.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "IKEVersions",
+              "type": "list",
+              "required": false,
+              "description": "The IKE versions that are permitted for the VPN tunnel. Valid values: ikev1 | ikev2",
+              "nested_params": [
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IKE version.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "StartupAction",
+              "type": "string",
+              "required": false,
+              "description": "The action to take when the establishing the tunnel for the VPN connection. By default, your customer gateway device must initiate the IKE negotiation and bring up the tunnel. Specify start for Amazon Web Services to initiate the IKE negotiation. Valid Values: add | start Default: add.",
+              "nested_params": []
+            },
+            {
+              "name": "LogOptions",
+              "type": "dict",
+              "required": false,
+              "description": "Options for logging VPN tunnel activity.",
+              "nested_params": [
+                {
+                  "name": "CloudWatchLogOptions",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Options for sending VPN tunnel logs to CloudWatch.",
+                  "nested_params": [
+                    {
+                      "name": "LogEnabled",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Enable or disable VPN tunnel logging feature. Default value is False. Valid values: True | False.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LogGroupArn",
+                      "type": "string",
+                      "required": false,
+                      "description": "The Amazon Resource Name (ARN) of the CloudWatch log group to send logs to.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LogOutputFormat",
+                      "type": "string",
+                      "required": false,
+                      "description": "Set log format. Default format is json. Valid values: json | text.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "EnableTunnelLifecycleControl",
+              "type": "boolean",
+              "required": false,
+              "description": "Turn on or off tunnel endpoint lifecycle control feature.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "LocalIpv4NetworkCidr",
+          "type": "string",
+          "required": false,
+          "description": "The IPv4 CIDR on the customer gateway (on-premises) side of the VPN connection. Default: 0.0.0.0/0",
+          "nested_params": []
+        },
+        {
+          "name": "RemoteIpv4NetworkCidr",
+          "type": "string",
+          "required": false,
+          "description": "The IPv4 CIDR on the Amazon Web Services side of the VPN connection. Default: 0.0.0.0/0",
+          "nested_params": []
+        },
+        {
+          "name": "LocalIpv6NetworkCidr",
+          "type": "string",
+          "required": false,
+          "description": "The IPv6 CIDR on the customer gateway (on-premises) side of the VPN connection. Default: ::/0",
+          "nested_params": []
+        },
+        {
+          "name": "RemoteIpv6NetworkCidr",
+          "type": "string",
+          "required": false,
+          "description": "The IPv6 CIDR on the Amazon Web Services side of the VPN connection. Default: ::/0",
+          "nested_params": []
+        },
+        {
+          "name": "OutsideIpAddressType",
+          "type": "string",
+          "required": false,
+          "description": "The type of IPv4 address assigned to the outside interface of the customer gateway device. Valid values: PrivateIpv4 | PublicIpv4 Default: PublicIpv4",
+          "nested_params": []
+        },
+        {
+          "name": "TransportTransitGatewayAttachmentId",
+          "type": "string",
+          "required": false,
+          "description": "The transit gateway attachment ID to use for the VPN tunnel. Required if OutsideIpAddressType is set to PrivateIpv4.",
+          "nested_params": []
+        },
+        {
+          "name": "StaticRoutesOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicate whether the VPN connection uses static routes only. If you are creating a VPN connection for a device that does not support BGP, you must specify true. Use  CreateVpnConnectionRoute to create a static route. Default: false.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "VpnConnection",
+          "type": "dict",
+          "description": "Information about the VPN connection.",
+          "nested_items": [
+            {
+              "name": "Category",
+              "type": "string",
+              "description": "The category of the VPN connection. A value of VPN indicates an Amazon Web Services VPN connection. A value of VPN-Classic indicates an Amazon Web Services Classic VPN connection.",
+              "nested_items": []
+            },
+            {
+              "name": "TransitGatewayId",
+              "type": "string",
+              "description": "The ID of the transit gateway associated with the VPN connection.",
+              "nested_items": []
+            },
+            {
+              "name": "CoreNetworkArn",
+              "type": "string",
+              "description": "The ARN of the core network.",
+              "nested_items": []
+            },
+            {
+              "name": "CoreNetworkAttachmentArn",
+              "type": "string",
+              "description": "The ARN of the core network attachment.",
+              "nested_items": []
+            },
+            {
+              "name": "GatewayAssociationState",
+              "type": "string",
+              "description": "The current state of the gateway association.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "EnableAcceleration",
+                  "type": "boolean",
+                  "description": "Indicates whether acceleration is enabled for the VPN connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StaticRoutesOnly",
+                  "type": "boolean",
+                  "description": "Indicates whether the VPN connection uses static routes only. Static routes must be used for devices that don't support BGP.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LocalIpv4NetworkCidr",
+                  "type": "string",
+                  "description": "The IPv4 CIDR on the customer gateway (on-premises) side of the VPN connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RemoteIpv4NetworkCidr",
+                  "type": "string",
+                  "description": "The IPv4 CIDR on the Amazon Web Services side of the VPN connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LocalIpv6NetworkCidr",
+                  "type": "string",
+                  "description": "The IPv6 CIDR on the customer gateway (on-premises) side of the VPN connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RemoteIpv6NetworkCidr",
+                  "type": "string",
+                  "description": "The IPv6 CIDR on the Amazon Web Services side of the VPN connection.",
+                  "nested_items": []
+                },
+                {
+                  "name": "OutsideIpAddressType",
+                  "type": "string",
+                  "description": "The type of IPv4 address assigned to the outside interface of the customer gateway.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TransportTransitGatewayAttachmentId",
+                  "type": "string",
+                  "description": "The transit gateway attachment ID in use for the VPN tunnel.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TunnelInsideIpVersion",
+                  "type": "string",
+                  "description": "Indicates whether the VPN tunnels process IPv4 or IPv6 traffic.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TunnelOptions",
+                  "type": "list",
+                  "description": "Indicates the VPN tunnel options.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "OutsideIpAddress",
+                          "type": "string",
+                          "description": "The external IP address of the VPN tunnel.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TunnelInsideCidr",
+                          "type": "string",
+                          "description": "The range of inside IPv4 addresses for the tunnel.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TunnelInsideIpv6Cidr",
+                          "type": "string",
+                          "description": "The range of inside IPv6 addresses for the tunnel.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "PreSharedKey",
+                          "type": "string",
+                          "description": "The pre-shared key (PSK) to establish initial authentication between the virtual private gateway and the customer gateway.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Phase1LifetimeSeconds",
+                          "type": "integer",
+                          "description": "The lifetime for phase 1 of the IKE negotiation, in seconds.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Phase2LifetimeSeconds",
+                          "type": "integer",
+                          "description": "The lifetime for phase 2 of the IKE negotiation, in seconds.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RekeyMarginTimeSeconds",
+                          "type": "integer",
+                          "description": "The margin time, in seconds, before the phase 2 lifetime expires, during which the Amazon Web Services side of the VPN connection performs an IKE rekey.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RekeyFuzzPercentage",
+                          "type": "integer",
+                          "description": "The percentage of the rekey window determined by RekeyMarginTimeSeconds during which the rekey time is randomly selected.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ReplayWindowSize",
+                          "type": "integer",
+                          "description": "The number of packets in an IKE replay window.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DpdTimeoutSeconds",
+                          "type": "integer",
+                          "description": "The number of seconds after which a DPD timeout occurs.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DpdTimeoutAction",
+                          "type": "string",
+                          "description": "The action to take after a DPD timeout occurs.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Phase1EncryptionAlgorithms",
+                          "type": "list",
+                          "description": "The permitted encryption algorithms for the VPN tunnel for phase 1 IKE negotiations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The value for the encryption algorithm.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Phase2EncryptionAlgorithms",
+                          "type": "list",
+                          "description": "The permitted encryption algorithms for the VPN tunnel for phase 2 IKE negotiations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The encryption algorithm.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Phase1IntegrityAlgorithms",
+                          "type": "list",
+                          "description": "The permitted integrity algorithms for the VPN tunnel for phase 1 IKE negotiations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The value for the integrity algorithm.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Phase2IntegrityAlgorithms",
+                          "type": "list",
+                          "description": "The permitted integrity algorithms for the VPN tunnel for phase 2 IKE negotiations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The integrity algorithm.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Phase1DHGroupNumbers",
+                          "type": "list",
+                          "description": "The permitted Diffie-Hellman group numbers for the VPN tunnel for phase 1 IKE negotiations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "integer",
+                                  "description": "The Diffie-Hellmann group number.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Phase2DHGroupNumbers",
+                          "type": "list",
+                          "description": "The permitted Diffie-Hellman group numbers for the VPN tunnel for phase 2 IKE negotiations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "integer",
+                                  "description": "The Diffie-Hellmann group number.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "IkeVersions",
+                          "type": "list",
+                          "description": "The IKE versions that are permitted for the VPN tunnel.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The IKE version.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StartupAction",
+                          "type": "string",
+                          "description": "The action to take when the establishing the VPN tunnels for a VPN connection.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "LogOptions",
+                          "type": "dict",
+                          "description": "Options for logging VPN tunnel activity.",
+                          "nested_items": [
+                            {
+                              "name": "CloudWatchLogOptions",
+                              "type": "dict",
+                              "description": "Options for sending VPN tunnel logs to CloudWatch.",
+                              "nested_items": [
+                                {
+                                  "name": "LogEnabled",
+                                  "type": "boolean",
+                                  "description": "Status of VPN tunnel logging feature. Default value is False.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "LogGroupArn",
+                                  "type": "string",
+                                  "description": "The Amazon Resource Name (ARN) of the CloudWatch log group to send logs to.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "LogOutputFormat",
+                                  "type": "string",
+                                  "description": "Configured log format. Default format is json.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "EnableTunnelLifecycleControl",
+                          "type": "boolean",
+                          "description": "Status of tunnel endpoint lifecycle control feature.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Routes",
+              "type": "list",
+              "description": "The static routes associated with the VPN connection.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "DestinationCidrBlock",
+                      "type": "string",
+                      "description": "The CIDR block associated with the local subnet of the customer data center.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Source",
+                      "type": "string",
+                      "description": "Indicates how the routes were provided.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "State",
+                      "type": "string",
+                      "description": "The current state of the static route.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "description": "Any tags assigned to the VPN connection.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "The key of the tag.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "The value of the tag.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VgwTelemetry",
+              "type": "list",
+              "description": "Information about the VPN tunnel.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "AcceptedRouteCount",
+                      "type": "integer",
+                      "description": "The number of accepted routes.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "LastStatusChange",
+                      "type": "datetime",
+                      "description": "The date and time of the last change in status. This field is updated when changes in IKE (Phase 1), IPSec (Phase 2), or BGP status are detected.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OutsideIpAddress",
+                      "type": "string",
+                      "description": "The Internet-routable IP address of the virtual private gateway's outside interface.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the VPN tunnel.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "StatusMessage",
+                      "type": "string",
+                      "description": "If an error occurs, a description of the error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CertificateArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the VPN tunnel endpoint certificate.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VpnConnectionId",
+              "type": "string",
+              "description": "The ID of the VPN connection.",
+              "nested_items": []
+            },
+            {
+              "name": "State",
+              "type": "string",
+              "description": "The current state of the VPN connection.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomerGatewayConfiguration",
+              "type": "string",
+              "description": "The configuration information for the VPN connection's customer gateway (in the native XML format). This element is always present in the  CreateVpnConnection response; however, it's present in the  DescribeVpnConnections response only if the VPN connection is in the pending or available state.",
+              "nested_items": []
+            },
+            {
+              "name": "Type",
+              "type": "string",
+              "description": "The type of VPN connection.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomerGatewayId",
+              "type": "string",
+              "description": "The ID of the customer gateway at your end of the VPN connection.",
+              "nested_items": []
+            },
+            {
+              "name": "VpnGatewayId",
+              "type": "string",
+              "description": "The ID of the virtual private gateway at the Amazon Web Services side of the VPN connection.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

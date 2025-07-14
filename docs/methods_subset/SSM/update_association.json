@@ -1,0 +1,835 @@
+{
+  "method_name": "update_association",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm/client/update_association.html",
+  "description": "Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon Simple Storage Service (Amazon S3) output. When you call UpdateAssociation, the system removes all optional parameters from the request and overwrites the association with null values for those parameters. This is by design. You must specify all optional parameters in the call, even if you are not changing the parameters. This includes the Name parameter. Before calling this API action, we recommend that you call the  DescribeAssociation API operation and make a note of all optional parameters required for your UpdateAssociation call. In order to call this API operation, a user, group, or role must be granted permission to call the  DescribeAssociation API operation. If you don't have permission to call DescribeAssociation, then you receive the following error: An error occurred (AccessDeniedException) when calling the UpdateAssociation operation: User: <user_arn> isn't authorized to perform: ssm:DescribeAssociation on resource: <resource_arn>",
+  "parameters": [
+    {
+      "name": "AssociationId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the association you want to update.",
+      "nested_params": []
+    },
+    {
+      "name": "Parameters",
+      "type": "dict",
+      "required": false,
+      "description": "The parameters you want to update for the association. If you create a parameter using Parameter Store, a tool in Amazon Web Services Systems Manager, you can reference the parameter using {{ssm:parameter-name}}. (string) --- (list) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "DocumentVersion",
+      "type": "string",
+      "required": false,
+      "description": "The document version you want update for the association.",
+      "nested_params": []
+    },
+    {
+      "name": "ScheduleExpression",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OutputLocation",
+      "type": "dict",
+      "required": false,
+      "description": "An S3 bucket where you want to store the results of this request. S3Location (dict) --- An S3 bucket where you want to store the results of this request. OutputS3Region (string) --- The Amazon Web Services Region of the S3 bucket. OutputS3BucketName (string) --- The name of the S3 bucket. OutputS3KeyPrefix (string) --- The S3 bucket subfolder.",
+      "nested_params": [
+        {
+          "name": "S3Location",
+          "type": "dict",
+          "required": false,
+          "description": "An S3 bucket where you want to store the results of this request.",
+          "nested_params": [
+            {
+              "name": "OutputS3Region",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Web Services Region of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "OutputS3BucketName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "OutputS3KeyPrefix",
+              "type": "string",
+              "required": false,
+              "description": "The S3 bucket subfolder.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "required": false,
+      "description": "The name of the SSM Command document or Automation runbook that contains the configuration information for the managed node. You can specify Amazon Web Services-predefined documents, documents you created, or a document that is shared with you from another account. For Systems Manager document (SSM document) that are shared with you from other Amazon Web Services accounts, you must specify the complete SSM document ARN, in the following format: arn:aws:ssm:region:account-id:document/document-name For example: arn:aws:ssm:us-east-2:12345678912:document/My-Shared-Document For Amazon Web Services-predefined documents and SSM documents you created in your account, you only need to specify the document name. For example, AWS-ApplyPatchBaseline or My-Document.",
+      "nested_params": []
+    },
+    {
+      "name": "Targets",
+      "type": "list",
+      "required": false,
+      "description": "The targets of the association. (dict) --- An array of search criteria that targets managed nodes using a key-value pair that you specify. Supported formats include the following. Key=tag-key,Values=tag-value-1,tag-value-2 Key=tag:tag-key,Values=tag-value Key=ResourceGroup,Values=resource-group-name Key=ParameterValues,Values=value-1,value-2,value-3 To target all instances in the Amazon Web Services Region: Key=AWS::EC2::Instance,Values=* Key=InstanceIds,Values=* Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 Key=resource-groups:Name,Values=resource-group-name Additionally, Maintenance Windows support targeting resource types: Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2 Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 To target all instances in the Amazon Web Services Region: Key=InstanceIds,Values=* For more information about how to send commands that target managed nodes using Key,Value parameters, see Targeting multiple managed nodes in the Amazon Web Services Systems Manager User Guide. Key (string) --- User-defined criteria for sending commands that target managed nodes that meet the criteria. Values (list) --- User-defined criteria that maps to Key. For example, if you specified tag:ServerRole, you could specify value:WebServer to run a command on instances that include EC2 tags of ServerRole,WebServer. Depending on the type of target, the maximum number of values for a key might be lower than the global maximum of 50. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "AssociationName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AssociationVersion",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AutomationTargetParameterName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxErrors",
+      "type": "string",
+      "required": false,
+      "description": "The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops sending requests when the fourth error is received. If you specify 0, then the system stops sending requests after the first error is returned. If you run an association on 50 managed nodes and set MaxError to 10%, then the system stops sending the request when the sixth error is received. Executions that are already running an association when MaxErrors is reached are allowed to complete, but some of these executions may fail as well. If you need to ensure that there won't be more than max-errors failed executions, set MaxConcurrency to 1 so that executions proceed one at a time.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxConcurrency",
+      "type": "string",
+      "required": false,
+      "description": "The maximum number of targets allowed to run the association at the same time. You can specify a number, for example 10, or a percentage of the target set, for example 10%. The default value is 100%, which means all targets run the association at the same time. If a new managed node starts and attempts to run an association while Systems Manager is running MaxConcurrency associations, the association is allowed to run. During the next association interval, the new managed node will process its association within the limit specified for MaxConcurrency.",
+      "nested_params": []
+    },
+    {
+      "name": "ComplianceSeverity",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SyncCompliance",
+      "type": "string",
+      "required": false,
+      "description": "The mode for generating association compliance. You can specify AUTO or MANUAL. In AUTO mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is COMPLIANT. If the association execution doesn't run successfully, the association is NON-COMPLIANT. In MANUAL mode, you must specify the AssociationId as a parameter for the  PutComplianceItems API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the  PutComplianceItems API operation. By default, all associations use AUTO mode.",
+      "nested_params": []
+    },
+    {
+      "name": "ApplyOnlyAtCronInterval",
+      "type": "boolean",
+      "required": false,
+      "description": "By default, when you update an association, the system runs it immediately after it is updated and then according to the schedule you specified. Specify true for ApplyOnlyAtCronInterval if you want the association to run only according to the schedule you specified. If you chose this option when you created an association and later you edit that association or you make changes to the Automation runbook or SSM document on which that association is based, State Manager applies the association at the next specified cron interval. For example, if you chose the Latest version of an SSM document when you created an association and you edit the association by choosing a different document version on the Documents page, State Manager applies the association at the next specified cron interval if you previously set ApplyOnlyAtCronInterval to true. If this option wasn't selected, State Manager immediately runs the association. For more information, see Understanding when associations are applied to resources and About target updates with Automation runbooks in the Amazon Web Services Systems Manager User Guide. This parameter isn't supported for rate expressions. You can reset this parameter. To do so, specify the no-apply-only-at-cron-interval parameter when you update the association from the command line. This parameter forces the association to run immediately after updating it and according to the interval specified.",
+      "nested_params": []
+    },
+    {
+      "name": "CalendarNames",
+      "type": "list",
+      "required": false,
+      "description": "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents you want to gate your associations under. The associations only run when that change calendar is open. For more information, see Amazon Web Services Systems Manager Change Calendar in the Amazon Web Services Systems Manager User Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "TargetLocations",
+      "type": "list",
+      "required": true,
+      "description": "A location is a combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association. Use this action to update an association in multiple Regions and multiple accounts. (dict) --- The combination of Amazon Web Services Regions and Amazon Web Services accounts targeted by the current Automation execution. Accounts (list) --- The Amazon Web Services accounts targeted by the current Automation execution. (string) --- Regions (list) --- The Amazon Web Services Regions targeted by the current Automation execution. (string) --- TargetLocationMaxConcurrency (string) --- The maximum number of Amazon Web Services Regions and Amazon Web Services accounts allowed to run the Automation concurrently. TargetLocationMaxErrors (string) --- The maximum number of errors allowed before the system stops queueing additional Automation executions for the currently running Automation. ExecutionRoleName (string) --- The Automation execution role used by the currently running Automation. If not specified, the default value is AWS-SystemsManager-AutomationExecutionRole. TargetLocationAlarmConfiguration (dict) --- The details for the CloudWatch alarm you want to apply to an automation or command. IgnorePollAlarmFailure (boolean) --- When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false. The name of the CloudWatch alarm specified in the configuration. (dict) --- A CloudWatch alarm you apply to an automation or command. The name of your CloudWatch alarm. IncludeChildOrganizationUnits (boolean) --- Indicates whether to include child organizational units (OUs) that are children of the targeted OUs. The default is false. ExcludeAccounts (list) --- Amazon Web Services accounts or organizational units to exclude as expanded targets. (string) --- Targets (list) --- A list of key-value mappings to target resources. If you specify values for this data type, you must also specify a value for TargetParameterName. This Targets parameter takes precedence over the StartAutomationExecution:Targets parameter if both are supplied. (dict) --- An array of search criteria that targets managed nodes using a key-value pair that you specify. Supported formats include the following. Key=tag-key,Values=tag-value-1,tag-value-2 Key=tag:tag-key,Values=tag-value Key=ResourceGroup,Values=resource-group-name Key=ParameterValues,Values=value-1,value-2,value-3 To target all instances in the Amazon Web Services Region: Key=AWS::EC2::Instance,Values=* Key=InstanceIds,Values=* Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 Key=resource-groups:Name,Values=resource-group-name Additionally, Maintenance Windows support targeting resource types: Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2 Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 To target all instances in the Amazon Web Services Region: Key=InstanceIds,Values=* For more information about how to send commands that target managed nodes using Key,Value parameters, see Targeting multiple managed nodes in the Amazon Web Services Systems Manager User Guide. Key (string) --- User-defined criteria for sending commands that target managed nodes that meet the criteria. Values (list) --- User-defined criteria that maps to Key. For example, if you specified tag:ServerRole, you could specify value:WebServer to run a command on instances that include EC2 tags of ServerRole,WebServer. Depending on the type of target, the maximum number of values for a key might be lower than the global maximum of 50. (string) --- TargetsMaxConcurrency (string) --- The maximum number of targets allowed to run this task in parallel. This TargetsMaxConcurrency takes precedence over the StartAutomationExecution:MaxConcurrency parameter if both are supplied. TargetsMaxErrors (string) --- The maximum number of errors that are allowed before the system stops running the automation on additional targets. This TargetsMaxErrors parameter takes precedence over the StartAutomationExecution:MaxErrors parameter if both are supplied.",
+      "nested_params": [
+        {
+          "name": "Accounts",
+          "type": "list",
+          "required": false,
+          "description": "The Amazon Web Services accounts targeted by the current Automation execution.",
+          "nested_params": []
+        },
+        {
+          "name": "Regions",
+          "type": "list",
+          "required": false,
+          "description": "The Amazon Web Services Regions targeted by the current Automation execution.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetLocationMaxConcurrency",
+          "type": "string",
+          "required": false,
+          "description": "The maximum number of Amazon Web Services Regions and Amazon Web Services accounts allowed to run the Automation concurrently.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetLocationMaxErrors",
+          "type": "string",
+          "required": false,
+          "description": "The maximum number of errors allowed before the system stops queueing additional Automation executions for the currently running Automation.",
+          "nested_params": []
+        },
+        {
+          "name": "ExecutionRoleName",
+          "type": "string",
+          "required": false,
+          "description": "The Automation execution role used by the currently running Automation. If not specified, the default value is AWS-SystemsManager-AutomationExecutionRole.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetLocationAlarmConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The details for the CloudWatch alarm you want to apply to an automation or command.",
+          "nested_params": [
+            {
+              "name": "IgnorePollAlarmFailure",
+              "type": "boolean",
+              "required": false,
+              "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+              "nested_params": []
+            },
+            {
+              "name": "Alarms",
+              "type": "list",
+              "required": false,
+              "description": "The name of the CloudWatch alarm specified in the configuration.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of your CloudWatch alarm.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "IncludeChildOrganizationUnits",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether to include child organizational units (OUs) that are children of the targeted OUs. The default is false.",
+          "nested_params": []
+        },
+        {
+          "name": "ExcludeAccounts",
+          "type": "list",
+          "required": false,
+          "description": "Amazon Web Services accounts or organizational units to exclude as expanded targets.",
+          "nested_params": []
+        },
+        {
+          "name": "Targets",
+          "type": "list",
+          "required": false,
+          "description": "A list of key-value mappings to target resources. If you specify values for this data type, you must also specify a value for TargetParameterName. This Targets parameter takes precedence over the StartAutomationExecution:Targets parameter if both are supplied.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetsMaxConcurrency",
+          "type": "string",
+          "required": false,
+          "description": "The maximum number of targets allowed to run this task in parallel. This TargetsMaxConcurrency takes precedence over the StartAutomationExecution:MaxConcurrency parameter if both are supplied.",
+          "nested_params": []
+        },
+        {
+          "name": "TargetsMaxErrors",
+          "type": "string",
+          "required": false,
+          "description": "The maximum number of errors that are allowed before the system stops running the automation on additional targets. This TargetsMaxErrors parameter takes precedence over the StartAutomationExecution:MaxErrors parameter if both are supplied.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ScheduleOffset",
+      "type": "integer",
+      "required": false,
+      "description": "Number of days to wait after the scheduled day to run an association. For example, if you specified a cron schedule of cron(0 0 ? * THU#2 *), you could specify an offset of 3 to run the association each Sunday after the second Thursday of the month. For more information about cron schedules for associations, see Reference: Cron and rate expressions for Systems Manager in the Amazon Web Services Systems Manager User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Duration",
+      "type": "integer",
+      "required": false,
+      "description": "The number of hours the association can run before it is canceled. Duration applies to associations that are currently running, and any pending and in progress commands on all targets. If a target was taken offline for the association to run, it is made available again immediately, without a reboot. The Duration parameter applies only when both these conditions are true: The association for which you specify a duration is cancelable according to the parameters of the SSM command document or Automation runbook associated with this execution. The command specifies the ApplyOnlyAtCronInterval parameter, which means that the association doesn't run immediately after it is updated, but only according to the specified schedule.",
+      "nested_params": []
+    },
+    {
+      "name": "TargetMaps",
+      "type": "list",
+      "required": false,
+      "description": "A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together. (dict) --- (string) --- (list) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "AlarmConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The details for the CloudWatch alarm you want to apply to an automation or command. IgnorePollAlarmFailure (boolean) --- When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false. The name of the CloudWatch alarm specified in the configuration. (dict) --- A CloudWatch alarm you apply to an automation or command. The name of your CloudWatch alarm.",
+      "nested_params": [
+        {
+          "name": "IgnorePollAlarmFailure",
+          "type": "boolean",
+          "required": false,
+          "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+          "nested_params": []
+        },
+        {
+          "name": "Alarms",
+          "type": "list",
+          "required": false,
+          "description": "The name of the CloudWatch alarm specified in the configuration.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of your CloudWatch alarm.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AssociationDescription",
+          "type": "dict",
+          "description": "The description of the association that was updated.",
+          "nested_items": [
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "The name of the SSM document.",
+              "nested_items": []
+            },
+            {
+              "name": "InstanceId",
+              "type": "string",
+              "description": "The managed node ID.",
+              "nested_items": []
+            },
+            {
+              "name": "AssociationVersion",
+              "type": "string",
+              "description": "The association version.",
+              "nested_items": []
+            },
+            {
+              "name": "Date",
+              "type": "datetime",
+              "description": "The date when the association was made.",
+              "nested_items": []
+            },
+            {
+              "name": "LastUpdateAssociationDate",
+              "type": "datetime",
+              "description": "The date when the association was last updated.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Date",
+                  "type": "datetime",
+                  "description": "The date when the status changed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "The status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "The reason for the status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AdditionalInfo",
+                  "type": "string",
+                  "description": "A user-defined string.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The status of the association. Status can be: Pending, Success, or Failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DetailedStatus",
+                  "type": "string",
+                  "description": "A detailed status of the association.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AssociationStatusAggregatedCount",
+                  "type": "dict",
+                  "description": "Returns the number of targets for the association status. For example, if you created an association with two managed nodes, and one of them was successful, this would return the count of managed nodes by status.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "integer",
+                          "description": "(integer) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DocumentVersion",
+              "type": "string",
+              "description": "The document version.",
+              "nested_items": []
+            },
+            {
+              "name": "AutomationTargetParameterName",
+              "type": "string",
+              "description": "Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.",
+              "nested_items": []
+            },
+            {
+              "name": "Parameters",
+              "type": "dict",
+              "description": "A description of the parameters for a document.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "list",
+                      "description": "(list) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AssociationId",
+              "type": "string",
+              "description": "The association ID.",
+              "nested_items": []
+            },
+            {
+              "name": "Targets",
+              "type": "list",
+              "description": "The managed nodes targeted by the request.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Key=tag-key,Values=tag-value-1,tag-value-2",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ScheduleExpression",
+              "type": "string",
+              "description": "A cron expression that specifies a schedule when the association runs.",
+              "nested_items": []
+            },
+            {
+              "name": "OutputLocation",
+              "type": "dict",
+              "description": "An S3 bucket where you want to store the output details of the request.",
+              "nested_items": [
+                {
+                  "name": "S3Location",
+                  "type": "dict",
+                  "description": "An S3 bucket where you want to store the results of this request.",
+                  "nested_items": [
+                    {
+                      "name": "OutputS3Region",
+                      "type": "string",
+                      "description": "The Amazon Web Services Region of the S3 bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OutputS3BucketName",
+                      "type": "string",
+                      "description": "The name of the S3 bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OutputS3KeyPrefix",
+                      "type": "string",
+                      "description": "The S3 bucket subfolder.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LastExecutionDate",
+              "type": "datetime",
+              "description": "The date on which the association was last run.",
+              "nested_items": []
+            },
+            {
+              "name": "LastSuccessfulExecutionDate",
+              "type": "datetime",
+              "description": "The last date on which the association was successfully run.",
+              "nested_items": []
+            },
+            {
+              "name": "AssociationName",
+              "type": "string",
+              "description": "The association name.",
+              "nested_items": []
+            },
+            {
+              "name": "MaxErrors",
+              "type": "string",
+              "description": "The number of errors that are allowed before the system stops sending requests to run the association on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops sending requests when the fourth error is received. If you specify 0, then the system stops sending requests after the first error is returned. If you run an association on 50 managed nodes and set MaxError to 10%, then the system stops sending the request when the sixth error is received.",
+              "nested_items": []
+            },
+            {
+              "name": "MaxConcurrency",
+              "type": "string",
+              "description": "The maximum number of targets allowed to run the association at the same time. You can specify a number, for example 10, or a percentage of the target set, for example 10%. The default value is 100%, which means all targets run the association at the same time.",
+              "nested_items": []
+            },
+            {
+              "name": "ComplianceSeverity",
+              "type": "string",
+              "description": "The severity level that is assigned to the association.",
+              "nested_items": []
+            },
+            {
+              "name": "SyncCompliance",
+              "type": "string",
+              "description": "The mode for generating association compliance. You can specify AUTO or MANUAL. In AUTO mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is COMPLIANT. If the association execution doesn't run successfully, the association is NON-COMPLIANT.",
+              "nested_items": []
+            },
+            {
+              "name": "ApplyOnlyAtCronInterval",
+              "type": "boolean",
+              "description": "By default, when you create a new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.",
+              "nested_items": []
+            },
+            {
+              "name": "CalendarNames",
+              "type": "list",
+              "description": "The names or Amazon Resource Names (ARNs) of the Change Calendar type documents your associations are gated under. The associations only run when that change calendar is open. For more information, see Amazon Web Services Systems Manager Change Calendar in the Amazon Web Services Systems Manager User Guide.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TargetLocations",
+              "type": "list",
+              "description": "The combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Accounts",
+                      "type": "list",
+                      "description": "The Amazon Web Services accounts targeted by the current Automation execution.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Regions",
+                      "type": "list",
+                      "description": "The Amazon Web Services Regions targeted by the current Automation execution.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TargetLocationMaxConcurrency",
+                      "type": "string",
+                      "description": "The maximum number of Amazon Web Services Regions and Amazon Web Services accounts allowed to run the Automation concurrently.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TargetLocationMaxErrors",
+                      "type": "string",
+                      "description": "The maximum number of errors allowed before the system stops queueing additional Automation executions for the currently running Automation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ExecutionRoleName",
+                      "type": "string",
+                      "description": "The Automation execution role used by the currently running Automation. If not specified, the default value is AWS-SystemsManager-AutomationExecutionRole.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TargetLocationAlarmConfiguration",
+                      "type": "dict",
+                      "description": "The details for the CloudWatch alarm you want to apply to an automation or command.",
+                      "nested_items": [
+                        {
+                          "name": "IgnorePollAlarmFailure",
+                          "type": "boolean",
+                          "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Alarms",
+                          "type": "list",
+                          "description": "The name of the CloudWatch alarm specified in the configuration.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Name",
+                                  "type": "string",
+                                  "description": "The name of your CloudWatch alarm.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "IncludeChildOrganizationUnits",
+                      "type": "boolean",
+                      "description": "Indicates whether to include child organizational units (OUs) that are children of the targeted OUs. The default is false.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ExcludeAccounts",
+                      "type": "list",
+                      "description": "Amazon Web Services accounts or organizational units to exclude as expanded targets.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Targets",
+                      "type": "list",
+                      "description": "A list of key-value mappings to target resources. If you specify values for this data type, you must also specify a value for TargetParameterName.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Key=tag-key,Values=tag-value-1,tag-value-2",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TargetsMaxConcurrency",
+                      "type": "string",
+                      "description": "The maximum number of targets allowed to run this task in parallel. This TargetsMaxConcurrency takes precedence over the StartAutomationExecution:MaxConcurrency parameter if both are supplied.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TargetsMaxErrors",
+                      "type": "string",
+                      "description": "The maximum number of errors that are allowed before the system stops running the automation on additional targets. This TargetsMaxErrors parameter takes precedence over the StartAutomationExecution:MaxErrors parameter if both are supplied.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ScheduleOffset",
+              "type": "integer",
+              "description": "Number of days to wait after the scheduled day to run an association.",
+              "nested_items": []
+            },
+            {
+              "name": "Duration",
+              "type": "integer",
+              "description": "The number of hours that an association can run on specified targets. After the resulting cutoff time passes, associations that are currently running are cancelled, and no pending executions are started on remaining targets.",
+              "nested_items": []
+            },
+            {
+              "name": "TargetMaps",
+              "type": "list",
+              "description": "A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "list",
+                          "description": "(list) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AlarmConfiguration",
+              "type": "dict",
+              "description": "The details for the CloudWatch alarm you want to apply to an automation or command.",
+              "nested_items": [
+                {
+                  "name": "IgnorePollAlarmFailure",
+                  "type": "boolean",
+                  "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Alarms",
+                  "type": "list",
+                  "description": "The name of the CloudWatch alarm specified in the configuration.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of your CloudWatch alarm.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TriggeredAlarms",
+              "type": "list",
+              "description": "The CloudWatch alarm that was invoked during the association.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "description": "The name of your CloudWatch alarm.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "State",
+                      "type": "string",
+                      "description": "The state of your CloudWatch alarm.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

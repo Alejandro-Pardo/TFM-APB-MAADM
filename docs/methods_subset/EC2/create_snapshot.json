@@ -1,0 +1,259 @@
+{
+  "method_name": "create_snapshot",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/create_snapshot.html",
+  "description": "Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance. The location of the source EBS volume determines where you can create the snapshot. When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot. You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is pending. When you create a snapshot for an EBS volume that serves as a root device, we recommend that you stop the instance before taking the snapshot. Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected. For more information, see Amazon EBS encryption in the Amazon EBS User Guide.",
+  "parameters": [
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OutpostArn",
+      "type": "string",
+      "required": false,
+      "description": "To create the snapshot on the same Outpost as the source volume, specify the ARN of that Outpost. The snapshot must be created on the same Outpost as the volume. To create the snapshot in the parent Region of the Outpost, omit this parameter. For more information, see Create local snapshots from volumes on an Outpost in the Amazon EBS User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "VolumeId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the Amazon EBS volume.",
+      "nested_params": []
+    },
+    {
+      "name": "TagSpecifications",
+      "type": "list",
+      "required": false,
+      "description": "The tags to apply to the snapshot during creation. (dict) --- The tags to apply to a resource when the resource is being created. When you specify a tag, you must specify the resource type to tag, otherwise the request will fail. ResourceType (string) --- The type of resource to tag on creation. Tags (list) --- The tags to apply to the resource. (dict) --- Describes a tag. Key (string) --- The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with aws:. Value (string) --- The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 256 Unicode characters.",
+      "nested_params": [
+        {
+          "name": "ResourceType",
+          "type": "string",
+          "required": false,
+          "description": "The type of resource to tag on creation.",
+          "nested_params": []
+        },
+        {
+          "name": "Tags",
+          "type": "list",
+          "required": false,
+          "description": "The tags to apply to the resource.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with aws:.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 256 Unicode characters.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Location",
+      "type": "string",
+      "required": false,
+      "description": "To create a local snapshot in the same Local Zone as the source volume, specify local. To create a regional snapshot in the parent Region of the Local Zone, specify regional or omit this parameter. Default value: regional.",
+      "nested_params": []
+    },
+    {
+      "name": "DryRun",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "OwnerAlias",
+          "type": "string",
+          "description": "The Amazon Web Services owner alias, from an Amazon-maintained list ( amazon). This is not the user-configured Amazon Web Services account alias set using the IAM console.",
+          "nested_items": []
+        },
+        {
+          "name": "OutpostArn",
+          "type": "string",
+          "description": "The ARN of the Outpost on which the snapshot is stored. For more information, see Amazon EBS local snapshots on Outposts in the Amazon EBS User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "Tags",
+          "type": "list",
+          "description": "Any tags assigned to the snapshot.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "description": "The key of the tag.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "description": "The value of the tag.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "StorageTier",
+          "type": "string",
+          "description": "The storage tier in which the snapshot is stored. standard indicates that the snapshot is stored in the standard snapshot storage tier and that it is ready for use. archive indicates that the snapshot is currently archived and that it must be restored before it can be used.",
+          "nested_items": []
+        },
+        {
+          "name": "RestoreExpiryTime",
+          "type": "datetime",
+          "description": "Only for archived snapshots that are temporarily restored. Indicates the date and time when a temporarily restored snapshot will be automatically re-archived.",
+          "nested_items": []
+        },
+        {
+          "name": "SseType",
+          "type": "string",
+          "description": "Reserved for future use.",
+          "nested_items": []
+        },
+        {
+          "name": "AvailabilityZone",
+          "type": "string",
+          "description": "The Availability Zone or Local Zone of the snapshot. For example, us-west-1a (Availability Zone) or us-west-2-lax-1a (Local Zone).",
+          "nested_items": []
+        },
+        {
+          "name": "TransferType",
+          "type": "string",
+          "description": "Indicates whether the snapshot copy was created with a standard or time-based snapshot copy operation. Time-based snapshot copy operations complete within the completion duration specified in the request. Standard snapshot copy operations are completed on a best-effort basis.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "standard - The snapshot copy was created with a standard snapshot copy operation.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "time-based - The snapshot copy was created with a time-based snapshot copy operation.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "CompletionDurationMinutes",
+          "type": "integer",
+          "description": "The completion duration requested for the time-based snapshot copy operation.",
+          "nested_items": []
+        },
+        {
+          "name": "CompletionTime",
+          "type": "datetime",
+          "description": "The time stamp when the snapshot was completed.",
+          "nested_items": []
+        },
+        {
+          "name": "FullSnapshotSizeInBytes",
+          "type": "integer",
+          "description": "The full size of the snapshot, in bytes.",
+          "nested_items": []
+        },
+        {
+          "name": "SnapshotId",
+          "type": "string",
+          "description": "The ID of the snapshot. Each snapshot receives a unique identifier when it is created.",
+          "nested_items": []
+        },
+        {
+          "name": "VolumeId",
+          "type": "string",
+          "description": "The ID of the volume that was used to create the snapshot. Snapshots created by the  CopySnapshot action have an arbitrary volume ID that should not be used for any purpose.",
+          "nested_items": []
+        },
+        {
+          "name": "State",
+          "type": "string",
+          "description": "The snapshot state.",
+          "nested_items": []
+        },
+        {
+          "name": "StateMessage",
+          "type": "string",
+          "description": "Encrypted Amazon EBS snapshots are copied asynchronously. If a snapshot copy operation fails (for example, if the proper KMS permissions are not obtained) this field displays error state details to help you diagnose why the error occurred. This parameter is only returned by  DescribeSnapshots.",
+          "nested_items": []
+        },
+        {
+          "name": "StartTime",
+          "type": "datetime",
+          "description": "The time stamp when the snapshot was initiated.",
+          "nested_items": []
+        },
+        {
+          "name": "Progress",
+          "type": "string",
+          "description": "The progress of the snapshot, as a percentage.",
+          "nested_items": []
+        },
+        {
+          "name": "OwnerId",
+          "type": "string",
+          "description": "The ID of the Amazon Web Services account that owns the EBS snapshot.",
+          "nested_items": []
+        },
+        {
+          "name": "Description",
+          "type": "string",
+          "description": "The description for the snapshot.",
+          "nested_items": []
+        },
+        {
+          "name": "VolumeSize",
+          "type": "integer",
+          "description": "The size of the volume, in GiB.",
+          "nested_items": []
+        },
+        {
+          "name": "Encrypted",
+          "type": "boolean",
+          "description": "Indicates whether the snapshot is encrypted.",
+          "nested_items": []
+        },
+        {
+          "name": "KmsKeyId",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the KMS key that was used to protect the volume encryption key for the parent volume.",
+          "nested_items": []
+        },
+        {
+          "name": "DataEncryptionKeyId",
+          "type": "string",
+          "description": "The data encryption key identifier for the snapshot. This value is a unique identifier that corresponds to the data encryption key that was used to encrypt the original volume or snapshot copy. Because data encryption keys are inherited by volumes created from snapshots, and vice versa, if snapshots share the same data encryption key identifier, then they belong to the same volume/snapshot lineage. This parameter is only returned by  DescribeSnapshots.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

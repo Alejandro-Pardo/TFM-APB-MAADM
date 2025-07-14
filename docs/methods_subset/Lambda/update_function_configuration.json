@@ -1,0 +1,822 @@
+{
+  "method_name": "update_function_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda/client/update_function_configuration.html",
+  "description": "Modify the version-specific settings of a Lambda function. When you update a function, Lambda provisions an instance of the function and its supporting resources. If your function connects to a VPC, this process can take a minute. During this time, you can't modify the function, but you can still invoke it. The LastUpdateStatus, LastUpdateStatusReason, and LastUpdateStatusReasonCode fields in the response from  GetFunctionConfiguration indicate when the update is complete and the function is processing events with the new configuration. For more information, see Lambda function states. These settings can vary between versions of a function and are locked when you publish a version. You can't modify the configuration of a published version, only the unpublished version. To configure function concurrency, use  PutFunctionConcurrency. To grant invoke permissions to an Amazon Web Services account or Amazon Web Services service, use  AddPermission.",
+  "parameters": [
+    {
+      "name": "FunctionName",
+      "type": "string",
+      "required": true,
+      "description": "The name or ARN of the Lambda function. Function name --- my-function. Function ARN --- arn:aws:lambda:us-west-2:123456789012:function:my-function. Partial ARN --- 123456789012:function:my-function. The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.",
+      "nested_params": [
+        {
+          "name": "Function name",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        },
+        {
+          "name": "Function ARN",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        },
+        {
+          "name": "Partial ARN",
+          "type": "",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Role",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Handler",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Timeout",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MemorySize",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "VpcConfig",
+      "type": "dict",
+      "required": false,
+      "description": "For network connectivity to Amazon Web Services resources in a VPC, specify a list of security groups and subnets in the VPC. When you connect a function to a VPC, it can access resources and the internet only through that VPC. For more information, see Configuring a Lambda function to access resources in a VPC. SubnetIds (list) --- A list of VPC subnet IDs. (string) --- SecurityGroupIds (list) --- A list of VPC security group IDs. (string) --- Ipv6AllowedForDualStack (boolean) --- Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.",
+      "nested_params": [
+        {
+          "name": "SubnetIds",
+          "type": "list",
+          "required": false,
+          "description": "A list of VPC subnet IDs.",
+          "nested_params": []
+        },
+        {
+          "name": "SecurityGroupIds",
+          "type": "list",
+          "required": false,
+          "description": "A list of VPC security group IDs.",
+          "nested_params": []
+        },
+        {
+          "name": "Ipv6AllowedForDualStack",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Environment",
+      "type": "dict",
+      "required": false,
+      "description": "Environment variables that are accessible from function code during execution. Variables (dict) --- Environment variable key-value pairs. For more information, see Using Lambda environment variables. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "Variables",
+          "type": "dict",
+          "required": false,
+          "description": "Environment variable key-value pairs. For more information, see Using Lambda environment variables.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Runtime",
+      "type": "string",
+      "required": false,
+      "description": "The identifier of the function's runtime. Runtime is required if the deployment package is a .zip file archive. Specifying a runtime results in an error if you're deploying a function using a container image. The following list includes deprecated runtimes. Lambda blocks creating new functions and updating existing functions shortly after each runtime is deprecated. For more information, see Runtime use after deprecation. For a list of all currently supported runtimes, see Supported runtimes.",
+      "nested_params": []
+    },
+    {
+      "name": "DeadLetterConfig",
+      "type": "dict",
+      "required": false,
+      "description": "A dead-letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when they fail processing. For more information, see Dead-letter queues. TargetArn (string) --- The Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.",
+      "nested_params": [
+        {
+          "name": "TargetArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "KMSKeyArn",
+      "type": "string",
+      "required": false,
+      "description": "The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt the following resources: The function's environment variables. The function's Lambda SnapStart snapshots. When used with SourceKMSKeyArn, the unzipped version of the .zip deployment package that's used for function invocations. For more information, see Specifying a customer managed key for Lambda. The optimized version of the container image that's used for function invocations. Note that this is not the same key that's used to protect your container image in the Amazon Elastic Container Registry (Amazon ECR). For more information, see Function lifecycle. If you don't provide a customer managed key, Lambda uses an Amazon Web Services owned key or an Amazon Web Services managed key.",
+      "nested_params": []
+    },
+    {
+      "name": "TracingConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Set Mode to Active to sample and trace a subset of incoming requests with X-Ray. Mode (string) --- The tracing mode.",
+      "nested_params": [
+        {
+          "name": "Mode",
+          "type": "string",
+          "required": false,
+          "description": "The tracing mode.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "RevisionId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Layers",
+      "type": "list",
+      "required": false,
+      "description": "A list of function layers to add to the function's execution environment. Specify each layer by its ARN, including the version. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "FileSystemConfigs",
+      "type": "list",
+      "required": true,
+      "description": "Connection settings for an Amazon EFS file system. (dict) --- Details about the connection between a Lambda function and an Amazon EFS file system. The Amazon Resource Name (ARN) of the Amazon EFS access point that provides access to the file system. The path where the function can access the file system, starting with /mnt/.",
+      "nested_params": [
+        {
+          "name": "Arn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the Amazon EFS access point that provides access to the file system.",
+          "nested_params": []
+        },
+        {
+          "name": "LocalMountPath",
+          "type": "string",
+          "required": false,
+          "description": "The path where the function can access the file system, starting with /mnt/.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ImageConfig",
+      "type": "dict",
+      "required": false,
+      "description": "Container image configuration values that override the values in the container image Docker file. EntryPoint (list) --- Specifies the entry point to their application, which is typically the location of the runtime executable. (string) --- Command (list) --- Specifies parameters that you want to pass in with ENTRYPOINT. (string) --- WorkingDirectory (string) --- Specifies the working directory.",
+      "nested_params": [
+        {
+          "name": "EntryPoint",
+          "type": "list",
+          "required": false,
+          "description": "Specifies the entry point to their application, which is typically the location of the runtime executable.",
+          "nested_params": []
+        },
+        {
+          "name": "Command",
+          "type": "list",
+          "required": false,
+          "description": "Specifies parameters that you want to pass in with ENTRYPOINT.",
+          "nested_params": []
+        },
+        {
+          "name": "WorkingDirectory",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the working directory.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "EphemeralStorage",
+      "type": "dict",
+      "required": true,
+      "description": "The size of the function's /tmp directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For more information, see Configuring ephemeral storage (console). The size of the function's /tmp directory.",
+      "nested_params": [
+        {
+          "name": "Size",
+          "type": "integer",
+          "required": false,
+          "description": "The size of the function's /tmp directory.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "SnapStart",
+      "type": "dict",
+      "required": false,
+      "description": "The function's SnapStart setting. ApplyOn (string) --- Set to PublishedVersions to create a snapshot of the initialized execution environment when you publish a function version.",
+      "nested_params": [
+        {
+          "name": "ApplyOn",
+          "type": "string",
+          "required": false,
+          "description": "Set to PublishedVersions to create a snapshot of the initialized execution environment when you publish a function version.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "LoggingConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The function's Amazon CloudWatch Logs configuration settings. LogFormat (string) --- The format in which Lambda sends your function's application and system logs to CloudWatch. Select between plain text and structured JSON. ApplicationLogLevel (string) --- Set this property to filter the application logs for your function that Lambda sends to CloudWatch. Lambda only sends application logs at the selected level of detail and lower, where TRACE is the highest level and FATAL is the lowest. SystemLogLevel (string) --- Set this property to filter the system logs for your function that Lambda sends to CloudWatch. Lambda only sends system logs at the selected level of detail and lower, where DEBUG is the highest level and WARN is the lowest. LogGroup (string) --- The name of the Amazon CloudWatch log group the function sends logs to. By default, Lambda functions send logs to a default log group named /aws/lambda/<function name>. To use a different log group, enter an existing log group or enter a new log group name.",
+      "nested_params": [
+        {
+          "name": "LogFormat",
+          "type": "string",
+          "required": false,
+          "description": "The format in which Lambda sends your function's application and system logs to CloudWatch. Select between plain text and structured JSON.",
+          "nested_params": []
+        },
+        {
+          "name": "ApplicationLogLevel",
+          "type": "string",
+          "required": false,
+          "description": "Set this property to filter the application logs for your function that Lambda sends to CloudWatch. Lambda only sends application logs at the selected level of detail and lower, where TRACE is the highest level and FATAL is the lowest.",
+          "nested_params": []
+        },
+        {
+          "name": "SystemLogLevel",
+          "type": "string",
+          "required": false,
+          "description": "Set this property to filter the system logs for your function that Lambda sends to CloudWatch. Lambda only sends system logs at the selected level of detail and lower, where DEBUG is the highest level and WARN is the lowest.",
+          "nested_params": []
+        },
+        {
+          "name": "LogGroup",
+          "type": "string",
+          "required": false,
+          "description": "The name of the Amazon CloudWatch log group the function sends logs to. By default, Lambda functions send logs to a default log group named /aws/lambda/<function name>. To use a different log group, enter an existing log group or enter a new log group name.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "FunctionName",
+          "type": "string",
+          "description": "The name of the function.",
+          "nested_items": []
+        },
+        {
+          "name": "FunctionArn",
+          "type": "string",
+          "description": "The function's Amazon Resource Name (ARN).",
+          "nested_items": []
+        },
+        {
+          "name": "Runtime",
+          "type": "string",
+          "description": "The identifier of the function's runtime. Runtime is required if the deployment package is a .zip file archive. Specifying a runtime results in an error if you're deploying a function using a container image.",
+          "nested_items": []
+        },
+        {
+          "name": "Role",
+          "type": "string",
+          "description": "The function's execution role.",
+          "nested_items": []
+        },
+        {
+          "name": "Handler",
+          "type": "string",
+          "description": "The function that Lambda calls to begin running your function.",
+          "nested_items": []
+        },
+        {
+          "name": "CodeSize",
+          "type": "integer",
+          "description": "The size of the function's deployment package, in bytes.",
+          "nested_items": []
+        },
+        {
+          "name": "Description",
+          "type": "string",
+          "description": "The function's description.",
+          "nested_items": []
+        },
+        {
+          "name": "Timeout",
+          "type": "integer",
+          "description": "The amount of time in seconds that Lambda allows a function to run before stopping it.",
+          "nested_items": []
+        },
+        {
+          "name": "MemorySize",
+          "type": "integer",
+          "description": "The amount of memory available to the function at runtime.",
+          "nested_items": []
+        },
+        {
+          "name": "LastModified",
+          "type": "string",
+          "description": "The date and time that the function was last updated, in ISO-8601 format (YYYY-MM-DDThh:mm:ss.sTZD).",
+          "nested_items": []
+        },
+        {
+          "name": "CodeSha256",
+          "type": "string",
+          "description": "The SHA256 hash of the function's deployment package.",
+          "nested_items": []
+        },
+        {
+          "name": "Version",
+          "type": "string",
+          "description": "The version of the Lambda function.",
+          "nested_items": []
+        },
+        {
+          "name": "VpcConfig",
+          "type": "dict",
+          "description": "The function's networking configuration.",
+          "nested_items": [
+            {
+              "name": "SubnetIds",
+              "type": "list",
+              "description": "A list of VPC subnet IDs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SecurityGroupIds",
+              "type": "list",
+              "description": "A list of VPC security group IDs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "VpcId",
+              "type": "string",
+              "description": "The ID of the VPC.",
+              "nested_items": []
+            },
+            {
+              "name": "Ipv6AllowedForDualStack",
+              "type": "boolean",
+              "description": "Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack subnets.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "DeadLetterConfig",
+          "type": "dict",
+          "description": "The function's dead letter queue.",
+          "nested_items": [
+            {
+              "name": "TargetArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Environment",
+          "type": "dict",
+          "description": "The function's environment variables. Omitted from CloudTrail logs.",
+          "nested_items": [
+            {
+              "name": "Variables",
+              "type": "dict",
+              "description": "Environment variable key-value pairs. Omitted from CloudTrail logs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "The error code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "The error message.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KMSKeyArn",
+          "type": "string",
+          "description": "The ARN of the Key Management Service (KMS) customer managed key that's used to encrypt the following resources:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "The function's environment variables.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "The function's Lambda SnapStart snapshots.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "When used with SourceKMSKeyArn, the unzipped version of the .zip deployment package that's used for function invocations. For more information, see Specifying a customer managed key for Lambda.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "Amazon ECR",
+              "description": "The optimized version of the container image that's used for function invocations. Note that this is not the same key that's used to protect your container image in the Amazon Elastic Container Registry (Amazon ECR). For more information, see Function lifecycle.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "TracingConfig",
+          "type": "dict",
+          "description": "The function's X-Ray tracing configuration.",
+          "nested_items": [
+            {
+              "name": "Mode",
+              "type": "string",
+              "description": "The tracing mode.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "MasterArn",
+          "type": "string",
+          "description": "For Lambda@Edge functions, the ARN of the main function.",
+          "nested_items": []
+        },
+        {
+          "name": "RevisionId",
+          "type": "string",
+          "description": "The latest updated revision of the function or alias.",
+          "nested_items": []
+        },
+        {
+          "name": "Layers",
+          "type": "list",
+          "description": "The function's layers.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Arn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the function layer.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CodeSize",
+                  "type": "integer",
+                  "description": "The size of the layer archive in bytes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SigningProfileVersionArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) for a signing profile version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SigningJobArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of a signing job.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "State",
+          "type": "string",
+          "description": "The current state of the function. When the state is Inactive, you can reactivate the function by invoking it.",
+          "nested_items": []
+        },
+        {
+          "name": "StateReason",
+          "type": "string",
+          "description": "The reason for the function's current state.",
+          "nested_items": []
+        },
+        {
+          "name": "StateReasonCode",
+          "type": "string",
+          "description": "The reason code for the function's current state. When the code is Creating, you can't invoke or modify the function.",
+          "nested_items": []
+        },
+        {
+          "name": "LastUpdateStatus",
+          "type": "string",
+          "description": "The status of the last update that was performed on the function. This is first set to Successful after function creation completes.",
+          "nested_items": []
+        },
+        {
+          "name": "LastUpdateStatusReason",
+          "type": "string",
+          "description": "The reason for the last update that was performed on the function.",
+          "nested_items": []
+        },
+        {
+          "name": "LastUpdateStatusReasonCode",
+          "type": "string",
+          "description": "The reason code for the last update that was performed on the function.",
+          "nested_items": []
+        },
+        {
+          "name": "FileSystemConfigs",
+          "type": "list",
+          "description": "Connection settings for an Amazon EFS file system.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Arn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the Amazon EFS access point that provides access to the file system.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LocalMountPath",
+                  "type": "string",
+                  "description": "The path where the function can access the file system, starting with /mnt/.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PackageType",
+          "type": "string",
+          "description": "The type of deployment package. Set to Image for container image and set Zip for .zip file archive.",
+          "nested_items": []
+        },
+        {
+          "name": "ImageConfigResponse",
+          "type": "dict",
+          "description": "The function's image configuration values.",
+          "nested_items": [
+            {
+              "name": "ImageConfig",
+              "type": "dict",
+              "description": "Configuration values that override the container image Dockerfile.",
+              "nested_items": [
+                {
+                  "name": "EntryPoint",
+                  "type": "list",
+                  "description": "Specifies the entry point to their application, which is typically the location of the runtime executable.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Command",
+                  "type": "list",
+                  "description": "Specifies parameters that you want to pass in with ENTRYPOINT.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "WorkingDirectory",
+                  "type": "string",
+                  "description": "Specifies the working directory.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "Error code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "Error message.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SigningProfileVersionArn",
+          "type": "string",
+          "description": "The ARN of the signing profile version.",
+          "nested_items": []
+        },
+        {
+          "name": "SigningJobArn",
+          "type": "string",
+          "description": "The ARN of the signing job.",
+          "nested_items": []
+        },
+        {
+          "name": "Architectures",
+          "type": "list",
+          "description": "The instruction set architecture that the function supports. Architecture is a string array with one of the valid values. The default architecture value is x86_64.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "EphemeralStorage",
+          "type": "dict",
+          "description": "The size of the function's /tmp directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB. For more information, see Configuring ephemeral storage (console).",
+          "nested_items": [
+            {
+              "name": "Size",
+              "type": "integer",
+              "description": "The size of the function's /tmp directory.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "SnapStart",
+          "type": "dict",
+          "description": "Set ApplyOn to PublishedVersions to create a snapshot of the initialized execution environment when you publish a function version. For more information, see Improving startup performance with Lambda SnapStart.",
+          "nested_items": [
+            {
+              "name": "ApplyOn",
+              "type": "string",
+              "description": "When set to PublishedVersions, Lambda creates a snapshot of the execution environment when you publish a function version.",
+              "nested_items": []
+            },
+            {
+              "name": "OptimizationStatus",
+              "type": "string",
+              "description": "When you provide a qualified Amazon Resource Name (ARN), this response element indicates whether SnapStart is activated for the specified function version.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "RuntimeVersionConfig",
+          "type": "dict",
+          "description": "The ARN of the runtime and any errors that occured.",
+          "nested_items": [
+            {
+              "name": "RuntimeVersionArn",
+              "type": "string",
+              "description": "The ARN of the runtime version you want the function to use.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "The error code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "The error message.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "LoggingConfig",
+          "type": "dict",
+          "description": "The function's Amazon CloudWatch Logs configuration settings.",
+          "nested_items": [
+            {
+              "name": "LogFormat",
+              "type": "string",
+              "description": "The format in which Lambda sends your function's application and system logs to CloudWatch. Select between plain text and structured JSON.",
+              "nested_items": []
+            },
+            {
+              "name": "ApplicationLogLevel",
+              "type": "string",
+              "description": "Set this property to filter the application logs for your function that Lambda sends to CloudWatch. Lambda only sends application logs at the selected level of detail and lower, where TRACE is the highest level and FATAL is the lowest.",
+              "nested_items": []
+            },
+            {
+              "name": "SystemLogLevel",
+              "type": "string",
+              "description": "Set this property to filter the system logs for your function that Lambda sends to CloudWatch. Lambda only sends system logs at the selected level of detail and lower, where DEBUG is the highest level and WARN is the lowest.",
+              "nested_items": []
+            },
+            {
+              "name": "LogGroup",
+              "type": "string",
+              "description": "The name of the Amazon CloudWatch log group the function sends logs to. By default, Lambda functions send logs to a default log group named /aws/lambda/<function name>. To use a different log group, enter an existing log group or enter a new log group name.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

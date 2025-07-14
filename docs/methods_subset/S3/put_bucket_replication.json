@@ -1,0 +1,322 @@
+{
+  "method_name": "put_bucket_replication",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/put_bucket_replication.html",
+  "description": "Creates a replication configuration or replaces an existing one. For more information, see Replication in the Amazon S3 User Guide. Specify the replication configuration in the request body. In the replication configuration, you provide the name of the destination bucket or buckets where you want Amazon S3 to replicate objects, the IAM role that Amazon S3 can assume to replicate objects on your behalf, and other relevant information. You can invoke this request for a specific Amazon Web Services Region by using the aws:RequestedRegion condition key. A replication configuration must include at least one rule, and can contain a maximum of 1,000. Each rule identifies a subset of objects to replicate by filtering the objects in the source bucket. To choose additional subsets of objects to replicate, add a rule for each subset. To specify a subset of the objects in the source bucket to apply a replication rule to, add the Filter element as a child of the Rule element. You can filter objects based on an object key prefix, one or more object tags, or both. When you add the Filter element in the configuration, you must also add the following elements: DeleteMarkerReplication, Status, and Priority. For information about enabling versioning on a bucket, see Using Versioning. By default, Amazon S3 doesn't replicate objects that are stored at rest using server-side encryption with KMS keys. To replicate Amazon Web Services KMS-encrypted objects, add the following: SourceSelectionCriteria, SseKmsEncryptedObjects, Status, EncryptionConfiguration, and ReplicaKmsKeyID. For information about replication configuration, see Replicating Objects Created with SSE Using KMS keys. For information on PutBucketReplication errors, see List of replication-related error codes. To create a PutBucketReplication request, you must have s3:PutReplicationConfiguration permissions for the bucket. By default, a resource owner, in this case the Amazon Web Services account that created the bucket, can perform this operation. The resource owner can also grant others permissions to perform the operation. For more information about permissions, see Specifying Permissions in a Policy and Managing Access Permissions to Your Amazon S3 Resources. The following operations are related to PutBucketReplication:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The name of the bucket.",
+      "nested_params": []
+    },
+    {
+      "name": "ChecksumAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding x-amz-checksum or x-amz-trailer header sent. Otherwise, Amazon S3 fails the request with the HTTP status code 400 Bad Request. For more information, see Checking object integrity in the Amazon S3 User Guide. If you provide an individual checksum, Amazon S3 ignores any provided ChecksumAlgorithm parameter.",
+      "nested_params": []
+    },
+    {
+      "name": "ReplicationConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "A container for replication rules. You can add up to 1,000 rules. The maximum size of a replication configuration is 2 MB. The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that Amazon S3 assumes when replicating objects. For more information, see How to Set Up Replication in the Amazon S3 User Guide. A container for one or more replication rules. A replication configuration must have at least one rule and can contain a maximum of 1,000 rules. (dict) --- Specifies which Amazon S3 objects to replicate and where to store the replicas. ID (string) --- A unique identifier for the rule. The maximum value is 255 characters. Priority (integer) --- The priority indicates which rule has precedence whenever two or more replication rules conflict. Amazon S3 will attempt to replicate objects according to all replication rules. However, if there are two or more rules with the same destination bucket, then objects will be replicated according to the rule with the highest priority. The higher the number, the higher the priority. For more information, see Replication in the Amazon S3 User Guide. Prefix (string) --- An object key name prefix that identifies the object or objects to which the rule applies. The maximum prefix length is 1,024 characters. To include all objects in a bucket, specify an empty string. Filter (dict) --- A filter that identifies the subset of objects to which the replication rule applies. A Filter must specify exactly one Prefix, Tag, or an And child element. Prefix (string) --- An object key name prefix that identifies the subset of objects to which the rule applies. Tag (dict) --- A container for specifying a tag key and value. The rule applies only to objects that have the tag in their tag set. Name of the object key. Value of the tag. And (dict) --- A container for specifying rule filters. The filters determine the subset of objects to which the rule applies. This element is required only if you specify more than one filter. For example: If you specify both a Prefix and a Tag filter, wrap these filters in an And tag. If you specify a filter based on multiple tags, wrap the Tag elements in an And tag. Tags (list) --- An array of tags containing key and value pairs. (dict) --- A container of a key value name pair. Specifies whether the rule is enabled. SourceSelectionCriteria (dict) --- A container that describes additional filters for identifying the source objects that you want to replicate. You can choose to enable or disable the replication of these objects. Currently, Amazon S3 supports only the filter that you can specify for objects created with server-side encryption using a customer managed key stored in Amazon Web Services Key Management Service (SSE-KMS). SseKmsEncryptedObjects (dict) --- A container for filter information for the selection of Amazon S3 objects encrypted with Amazon Web Services KMS. If you include SourceSelectionCriteria in the replication configuration, this element is required. Specifies whether Amazon S3 replicates objects created with server-side encryption using an Amazon Web Services KMS key stored in Amazon Web Services Key Management Service. ReplicaModifications (dict) --- A filter that you can specify for selections for modifications on replicas. Amazon S3 doesn't replicate replica modifications by default. In the latest version of replication configuration (when Filter is specified), you can specify this element and set the status to Enabled to replicate modifications on replicas. Specifies whether Amazon S3 replicates modifications on replicas. ExistingObjectReplication (dict) --- Optional configuration to replicate existing source bucket objects. Specifies whether Amazon S3 replicates existing source bucket objects. A container for information about the replication destination and its configurations including enabling the S3 Replication Time Control (S3 RTC). The Amazon Resource Name (ARN) of the bucket where you want Amazon S3 to store the results. Account (string) --- Destination bucket owner account ID. In a cross-account scenario, if you direct Amazon S3 to change replica ownership to the Amazon Web Services account that owns the destination bucket by specifying the AccessControlTranslation property, this is the account ID of the destination bucket owner. For more information, see Replication Additional Configuration: Changing the Replica Owner in the Amazon S3 User Guide. StorageClass (string) --- The storage class to use when replicating objects, such as S3 Standard or reduced redundancy. By default, Amazon S3 uses the storage class of the source object to create the object replica. For valid values, see the StorageClass element of the PUT Bucket replication action in the Amazon S3 API Reference. FSX_OPENZFS is not an accepted value when replicating objects. AccessControlTranslation (dict) --- Specify this only in a cross-account scenario (where source and destination bucket owners are not the same), and you want to change replica ownership to the Amazon Web Services account that owns the destination bucket. If this is not specified in the replication configuration, the replicas are owned by same Amazon Web Services account that owns the source object. Specifies the replica ownership. For default and valid values, see PUT bucket replication in the Amazon S3 API Reference. EncryptionConfiguration (dict) --- A container that provides information about encryption. If SourceSelectionCriteria is specified, you must specify this element. ReplicaKmsKeyID (string) --- Specifies the ID (Key ARN or Alias ARN) of the customer managed Amazon Web Services KMS key stored in Amazon Web Services Key Management Service (KMS) for the destination bucket. Amazon S3 uses this key to encrypt replica objects. Amazon S3 only supports symmetric encryption KMS keys. For more information, see Asymmetric keys in Amazon Web Services KMS in the Amazon Web Services Key Management Service Developer Guide. ReplicationTime (dict) --- A container specifying S3 Replication Time Control (S3 RTC), including whether S3 RTC is enabled and the time when all objects and operations on objects must be replicated. Must be specified together with a Metrics block. Specifies whether the replication time is enabled. A container specifying the time by which replication should be complete for all objects and operations on objects. Minutes (integer) --- Contains an integer specifying time in minutes. Valid value: 15 Metrics (dict) --- A container specifying replication metrics-related settings enabling replication metrics and events. Specifies whether the replication metrics are enabled. EventThreshold (dict) --- A container specifying the time threshold for emitting the s3:Replication:OperationMissedThreshold event. Valid value: 15 DeleteMarkerReplication (dict) --- Specifies whether Amazon S3 replicates delete markers. If you specify a Filter in your replication configuration, you must also include a DeleteMarkerReplication element. If your Filter includes a Tag element, the DeleteMarkerReplication Status must be set to Disabled, because Amazon S3 does not support replicating delete markers for tag-based rules. For an example configuration, see Basic Rule Configuration. For more information about delete marker replication, see Basic Rule Configuration. Status (string) --- Indicates whether to replicate delete markers.",
+      "nested_params": [
+        {
+          "name": "Role",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that Amazon S3 assumes when replicating objects. For more information, see How to Set Up Replication in the Amazon S3 User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "Rules",
+          "type": "list",
+          "required": false,
+          "description": "A container for one or more replication rules. A replication configuration must have at least one rule and can contain a maximum of 1,000 rules.",
+          "nested_params": [
+            {
+              "name": "ID",
+              "type": "string",
+              "required": false,
+              "description": "A unique identifier for the rule. The maximum value is 255 characters.",
+              "nested_params": []
+            },
+            {
+              "name": "Priority",
+              "type": "integer",
+              "required": false,
+              "description": "The priority indicates which rule has precedence whenever two or more replication rules conflict. Amazon S3 will attempt to replicate objects according to all replication rules. However, if there are two or more rules with the same destination bucket, then objects will be replicated according to the rule with the highest priority. The higher the number, the higher the priority. For more information, see Replication in the Amazon S3 User Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "Prefix",
+              "type": "string",
+              "required": false,
+              "description": "An object key name prefix that identifies the object or objects to which the rule applies. The maximum prefix length is 1,024 characters. To include all objects in a bucket, specify an empty string.",
+              "nested_params": []
+            },
+            {
+              "name": "Filter",
+              "type": "dict",
+              "required": false,
+              "description": "A filter that identifies the subset of objects to which the replication rule applies. A Filter must specify exactly one Prefix, Tag, or an And child element.",
+              "nested_params": [
+                {
+                  "name": "Prefix",
+                  "type": "string",
+                  "required": false,
+                  "description": "An object key name prefix that identifies the subset of objects to which the rule applies.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Tag",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container for specifying a tag key and value. The rule applies only to objects that have the tag in their tag set.",
+                  "nested_params": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "required": false,
+                      "description": "Name of the object key.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "required": false,
+                      "description": "Value of the tag.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "And",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container for specifying rule filters. The filters determine the subset of objects to which the rule applies. This element is required only if you specify more than one filter. For example:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "required": false,
+              "description": "Specifies whether the rule is enabled.",
+              "nested_params": []
+            },
+            {
+              "name": "SourceSelectionCriteria",
+              "type": "dict",
+              "required": false,
+              "description": "A container that describes additional filters for identifying the source objects that you want to replicate. You can choose to enable or disable the replication of these objects. Currently, Amazon S3 supports only the filter that you can specify for objects created with server-side encryption using a customer managed key stored in Amazon Web Services Key Management Service (SSE-KMS).",
+              "nested_params": [
+                {
+                  "name": "SseKmsEncryptedObjects",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container for filter information for the selection of Amazon S3 objects encrypted with Amazon Web Services KMS. If you include SourceSelectionCriteria in the replication configuration, this element is required.",
+                  "nested_params": [
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies whether Amazon S3 replicates objects created with server-side encryption using an Amazon Web Services KMS key stored in Amazon Web Services Key Management Service.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ReplicaModifications",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A filter that you can specify for selections for modifications on replicas. Amazon S3 doesn't replicate replica modifications by default. In the latest version of replication configuration (when Filter is specified), you can specify this element and set the status to Enabled to replicate modifications on replicas.",
+                  "nested_params": [
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies whether Amazon S3 replicates modifications on replicas.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ExistingObjectReplication",
+              "type": "dict",
+              "required": false,
+              "description": "Optional configuration to replicate existing source bucket objects.",
+              "nested_params": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies whether Amazon S3 replicates existing source bucket objects.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Destination",
+              "type": "dict",
+              "required": false,
+              "description": "A container for information about the replication destination and its configurations including enabling the S3 Replication Time Control (S3 RTC).",
+              "nested_params": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the bucket where you want Amazon S3 to store the results.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Account",
+                  "type": "string",
+                  "required": false,
+                  "description": "Destination bucket owner account ID. In a cross-account scenario, if you direct Amazon S3 to change replica ownership to the Amazon Web Services account that owns the destination bucket by specifying the AccessControlTranslation property, this is the account ID of the destination bucket owner. For more information, see Replication Additional Configuration: Changing the Replica Owner in the Amazon S3 User Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "StorageClass",
+                  "type": "string",
+                  "required": false,
+                  "description": "The storage class to use when replicating objects, such as S3 Standard or reduced redundancy. By default, Amazon S3 uses the storage class of the source object to create the object replica. For valid values, see the StorageClass element of the PUT Bucket replication action in the Amazon S3 API Reference. FSX_OPENZFS is not an accepted value when replicating objects.",
+                  "nested_params": []
+                },
+                {
+                  "name": "AccessControlTranslation",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specify this only in a cross-account scenario (where source and destination bucket owners are not the same), and you want to change replica ownership to the Amazon Web Services account that owns the destination bucket. If this is not specified in the replication configuration, the replicas are owned by same Amazon Web Services account that owns the source object.",
+                  "nested_params": [
+                    {
+                      "name": "Owner",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the replica ownership. For default and valid values, see PUT bucket replication in the Amazon S3 API Reference.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "EncryptionConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container that provides information about encryption. If SourceSelectionCriteria is specified, you must specify this element.",
+                  "nested_params": [
+                    {
+                      "name": "ReplicaKmsKeyID",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the ID (Key ARN or Alias ARN) of the customer managed Amazon Web Services KMS key stored in Amazon Web Services Key Management Service (KMS) for the destination bucket. Amazon S3 uses this key to encrypt replica objects. Amazon S3 only supports symmetric encryption KMS keys. For more information, see Asymmetric keys in Amazon Web Services KMS in the Amazon Web Services Key Management Service Developer Guide.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ReplicationTime",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container specifying S3 Replication Time Control (S3 RTC), including whether S3 RTC is enabled and the time when all objects and operations on objects must be replicated. Must be specified together with a Metrics block.",
+                  "nested_params": [
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies whether the replication time is enabled.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Time",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A container specifying the time by which replication should be complete for all objects and operations on objects.",
+                      "nested_params": [
+                        {
+                          "name": "Minutes",
+                          "type": "integer",
+                          "required": false,
+                          "description": "Contains an integer specifying time in minutes. Valid value: 15",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Metrics",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container specifying replication metrics-related settings enabling replication metrics and events.",
+                  "nested_params": [
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies whether the replication metrics are enabled.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "EventThreshold",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A container specifying the time threshold for emitting the s3:Replication:OperationMissedThreshold event.",
+                      "nested_params": [
+                        {
+                          "name": "Minutes",
+                          "type": "integer",
+                          "required": false,
+                          "description": "Contains an integer specifying time in minutes. Valid value: 15",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DeleteMarkerReplication",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies whether Amazon S3 replicates delete markers. If you specify a Filter in your replication configuration, you must also include a DeleteMarkerReplication element. If your Filter includes a Tag element, the DeleteMarkerReplication Status must be set to Disabled, because Amazon S3 does not support replicating delete markers for tag-based rules. For an example configuration, see Basic Rule Configuration. For more information about delete marker replication, see Basic Rule Configuration.",
+              "nested_params": [
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "required": false,
+                  "description": "Indicates whether to replicate delete markers.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Token",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

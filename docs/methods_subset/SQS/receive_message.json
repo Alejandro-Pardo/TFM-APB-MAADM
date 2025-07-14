@@ -1,0 +1,230 @@
+{
+  "method_name": "receive_message",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sqs/client/receive_message.html",
+  "description": "Retrieves one or more messages (up to 10), from the specified queue. Using the WaitTimeSeconds parameter enables long-poll support. For more information, see Amazon SQS Long Polling in the Amazon SQS Developer Guide. Short poll is the default behavior where a weighted random set of machines is sampled on a ReceiveMessage call. Therefore, only the messages on the sampled machines are returned. If the number of messages in the queue is small (fewer than 1,000), you most likely get fewer messages than you requested per ReceiveMessage call. If the number of messages in the queue is extremely small, you might not receive any messages in a particular ReceiveMessage response. If this happens, repeat the request. For each message returned, the response includes the following: The receipt handle is the identifier you must provide when deleting the message. For more information, see Queue and Message Identifiers in the Amazon SQS Developer Guide. You can provide the VisibilityTimeout parameter in your request. The parameter is applied to the messages that Amazon SQS returns in the response. If you don't include the parameter, the overall visibility timeout for the queue is used for the returned messages. The default visibility timeout for a queue is 30 seconds.",
+  "parameters": [
+    {
+      "name": "QueueUrl",
+      "type": "string",
+      "required": true,
+      "description": "The URL of the Amazon SQS queue from which messages are received. Queue URLs and names are case-sensitive.",
+      "nested_params": []
+    },
+    {
+      "name": "AttributeNames",
+      "type": "list",
+      "required": false,
+      "description": "A list of attributes that need to be returned along with each message. These attributes include: All --- Returns all values. ApproximateFirstReceiveTimestamp --- Returns the time the message was first received from the queue ( epoch time in milliseconds). ApproximateReceiveCount --- Returns the number of times a message has been received across all queues but not deleted. AWSTraceHeader --- Returns the X-Ray trace header string. SenderId For a user, returns the user ID, for example ABCDEFGHI1JKLMNOPQ23R. For an IAM role, returns the IAM role ID, for example ABCDE1F2GH3I4JK5LMNOP:i-a123b456. SentTimestamp --- Returns the time the message was sent to the queue ( epoch time in milliseconds). SqsManagedSseEnabled --- Enables server-side queue encryption using SQS owned encryption keys. Only one server-side encryption option is supported per queue (for example, SSE-KMS or SSE-SQS). MessageDeduplicationId --- Returns the value provided by the producer that calls the SendMessage action. MessageGroupId --- Returns the value provided by the producer that calls the SendMessage action. Messages with the same MessageGroupId are returned in sequence. SequenceNumber --- Returns the value provided by Amazon SQS. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "MessageSystemAttributeNames",
+      "type": "list",
+      "required": false,
+      "description": "A list of attributes that need to be returned along with each message. These attributes include: All --- Returns all values. ApproximateFirstReceiveTimestamp --- Returns the time the message was first received from the queue ( epoch time in milliseconds). ApproximateReceiveCount --- Returns the number of times a message has been received across all queues but not deleted. AWSTraceHeader --- Returns the X-Ray trace header string. SenderId For a user, returns the user ID, for example ABCDEFGHI1JKLMNOPQ23R. For an IAM role, returns the IAM role ID, for example ABCDE1F2GH3I4JK5LMNOP:i-a123b456. SentTimestamp --- Returns the time the message was sent to the queue ( epoch time in milliseconds). SqsManagedSseEnabled --- Enables server-side queue encryption using SQS owned encryption keys. Only one server-side encryption option is supported per queue (for example, SSE-KMS or SSE-SQS). MessageDeduplicationId --- Returns the value provided by the producer that calls the SendMessage action. MessageGroupId --- Returns the value provided by the producer that calls the SendMessage action. Messages with the same MessageGroupId are returned in sequence. SequenceNumber --- Returns the value provided by Amazon SQS. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "MessageAttributeNames",
+      "type": "list",
+      "required": false,
+      "description": "The name of the message attribute, where N is the index. The name can contain alphanumeric characters and the underscore ( _), hyphen ( -), and period ( .). The name is case-sensitive and must be unique among all attribute names for the message. The name must not start with AWS-reserved prefixes such as AWS. or Amazon. (or any casing variants). The name must not start or end with a period ( .), and it should not have periods in succession ( ..). The name can be up to 256 characters long. When using ReceiveMessage, you can send a list of attribute names to receive, or you can return all of the attributes by specifying All or .* in your request. You can also use all message attributes starting with a prefix, for example bar.*. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "MaxNumberOfMessages",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "VisibilityTimeout",
+      "type": "integer",
+      "required": false,
+      "description": "The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request. If not specified, the default visibility timeout for the queue is used, which is 30 seconds. Understanding VisibilityTimeout: When a message is received from a queue, it becomes temporarily invisible to other consumers for the duration of the visibility timeout. This prevents multiple consumers from processing the same message simultaneously. If the message is not deleted or its visibility timeout is not extended before the timeout expires, it becomes visible again and can be retrieved by other consumers. Setting an appropriate visibility timeout is crucial. If it's too short, the message might become visible again before processing is complete, leading to duplicate processing. If it's too long, it delays the reprocessing of messages if the initial processing fails. You can adjust the visibility timeout using the --visibility-timeout parameter in the receive-message command to match the processing time required by your application. A message that isn't deleted or a message whose visibility isn't extended before the visibility timeout expires counts as a failed receive. Depending on the configuration of the queue, the message might be sent to the dead-letter queue. For more information, see Visibility Timeout in the Amazon SQS Developer Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "WaitTimeSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call does not return a message list. If you are using the Java SDK, it returns a ReceiveMessageResponse object, which has a empty list instead of a Null object.",
+      "nested_params": []
+    },
+    {
+      "name": "ReceiveRequestAttemptId",
+      "type": "string",
+      "required": false,
+      "description": "This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of ReceiveMessage calls. If a networking issue occurs after a ReceiveMessage action, and instead of a response you receive a generic error, it is possible to retry the same action with an identical ReceiveRequestAttemptId to retrieve the same set of messages, even if their visibility timeout has not yet expired. You can use ReceiveRequestAttemptId only for 5 minutes after a ReceiveMessage action. When you set FifoQueue, a caller of the ReceiveMessage action can provide a ReceiveRequestAttemptId explicitly. It is possible to retry the ReceiveMessage action with the same ReceiveRequestAttemptId if none of the messages have been modified (deleted or had their visibility changes). During a visibility timeout, subsequent calls with the same ReceiveRequestAttemptId return the same messages and receipt handles. If a retry occurs within the deduplication interval, it resets the visibility timeout. For more information, see Visibility Timeout in the Amazon SQS Developer Guide. While messages with a particular MessageGroupId are invisible, no more messages belonging to the same MessageGroupId are returned until the visibility timeout expires. You can still receive messages with another MessageGroupId as long as it is also visible. If a caller of ReceiveMessage can't track the ReceiveRequestAttemptId, no retries work until the original visibility timeout expires. As a result, delays might occur but the messages in the queue remain in a strict order. The maximum length of ReceiveRequestAttemptId is 128 characters. ReceiveRequestAttemptId can contain alphanumeric characters ( a-z, A-Z, 0-9) and punctuation ( !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~). For best practices of using ReceiveRequestAttemptId, see Using the ReceiveRequestAttemptId Request Parameter in the Amazon SQS Developer Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Messages",
+          "type": "list",
+          "description": "A list of messages.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "MessageId",
+                  "type": "string",
+                  "description": "A unique identifier for the message. A ``MessageId``is considered unique across all Amazon Web Services accounts for an extended period of time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ReceiptHandle",
+                  "type": "string",
+                  "description": "An identifier associated with the act of receiving the message. A new receipt handle is returned every time you receive a message. When deleting a message, you provide the last received receipt handle to delete the message.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MD5OfBody",
+                  "type": "string",
+                  "description": "An MD5 digest of the non-URL-encoded message body string.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Body",
+                  "type": "string",
+                  "description": "The message's contents (not URL-encoded).",
+                  "nested_items": []
+                },
+                {
+                  "name": "Attributes",
+                  "type": "dict",
+                  "description": "A map of the attributes requested in ReceiveMessage to their respective values. Supported attributes:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ApproximateReceiveCount.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ApproximateFirstReceiveTimestamp.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "MessageDeduplicationId.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "MessageGroupId.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SenderId.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SentTimestamp.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SequenceNumber.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MD5OfMessageAttributes",
+                  "type": "string",
+                  "description": "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message before creating the MD5 digest. For information about MD5, see RFC1321.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MessageAttributes",
+                  "type": "dict",
+                  "description": "Each message attribute consists of a Name, Type, and Value. For more information, see Amazon SQS message attributes in the Amazon SQS Developer Guide.",
+                  "nested_items": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "StringValue",
+                              "type": "string",
+                              "description": "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see ASCII Printable Characters.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "BinaryValue",
+                              "type": "bytes",
+                              "description": "Binary type attributes can store any binary data, such as compressed data, encrypted data, or images.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "StringListValues",
+                              "type": "list",
+                              "description": "Not implemented. Reserved for future use.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "BinaryListValues",
+                              "type": "list",
+                              "description": "Not implemented. Reserved for future use.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "bytes",
+                                  "description": "(bytes) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "DataType",
+                              "type": "string",
+                              "description": "Amazon SQS supports the following logical data types: String, Number, and Binary. For the Number data type, you must use StringValue.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
