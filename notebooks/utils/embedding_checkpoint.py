@@ -7,7 +7,7 @@ allowing the process to resume from where it left off in case of interruption.
 
 import json
 from pathlib import Path
-from typing import List, Dict
+from typing import List
 from datetime import datetime
 
 
@@ -46,6 +46,10 @@ class EmbeddingCheckpointManager:
         self.checkpoint_data["last_updated"] = datetime.now().isoformat()
         
         try:
+            # Ensure the directory exists before saving
+            checkpoint_path = Path(self.checkpoint_file)
+            checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+            
             with open(self.checkpoint_file, 'w') as f:
                 json.dump(self.checkpoint_data, f, indent=2)
         except Exception as e:
