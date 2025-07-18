@@ -7,7 +7,7 @@ allowing the process to resume from where it left off in case of interruption.
 
 import json
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 from datetime import datetime
 
 

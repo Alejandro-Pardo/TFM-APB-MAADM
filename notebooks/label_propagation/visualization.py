@@ -268,7 +268,12 @@ def print_service_predictions_summary(predictions: Dict[str, Dict[str, Any]],
         
         print(f"{service.upper()}:")
         print(f"  📊 {len(service_predictions)} predictions made")
-        print(f"  🏷️  Labels: {dict(label_counts)}")
+        
+        # Print labels in consistent order: sink, source, none
+        ordered_labels = ['sink', 'source', 'none']
+        ordered_label_counts = {label: label_counts[label] for label in ordered_labels if label_counts[label] > 0}
+        print(f"  🏷️  Labels: {ordered_label_counts}")
+        
         print(f"  📈 Avg confidence: {avg_confidence:.3f}")
         if similarities:
             print(f"  📈 Avg similarity: {avg_similarity:.3f}")
