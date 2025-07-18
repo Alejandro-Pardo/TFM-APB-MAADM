@@ -9,10 +9,10 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 
 
 def plot_confusion_matrix(y_true: List[str], y_pred: List[str], 
@@ -160,37 +160,6 @@ def plot_similarity_vs_confidence(predictions: Dict[str, Dict[str, Any]],
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
-
-
-def plot_threshold_analysis(results_by_threshold: Dict[float, Dict[str, Any]],
-                           title: str = "Threshold Analysis",
-                           figsize: tuple = (10, 6)) -> None:
-    """
-    Plot threshold analysis showing predictions count vs threshold.
-    
-    Args:
-        results_by_threshold: Dictionary of threshold -> results
-        title: Plot title
-        figsize: Figure size tuple
-    """
-    thresholds = sorted(results_by_threshold.keys())
-    total_counts = [results_by_threshold[t]['total_count'] for t in thresholds]
-    
-    plt.figure(figsize=figsize)
-    plt.plot(thresholds, total_counts, 'o-', linewidth=2, markersize=8)
-    plt.xlabel('Similarity Threshold')
-    plt.ylabel('Number of Predictions')
-    plt.title(title)
-    plt.grid(True, alpha=0.3)
-    
-    # Add value labels on points
-    for i, (threshold, count) in enumerate(zip(thresholds, total_counts)):
-        plt.annotate(f'{count}', (threshold, count), 
-                    textcoords="offset points", xytext=(0,10), ha='center')
-    
-    plt.tight_layout()
-    plt.show()
-
 
 def print_evaluation_summary(evaluation_results: Dict[str, Any], 
                             best_k: int,
@@ -348,15 +317,13 @@ def save_visualization_summary(predictions: Dict[str, Dict[str, Any]],
 
 
 def create_results_dashboard(predictions: Dict[str, Dict[str, Any]],
-                           evaluation_results: Dict[str, Any] = None,
-                           results_by_threshold: Dict[float, Dict[str, Any]] = None) -> None:
+                           evaluation_results: Dict[str, Any] = None) -> None:
     """
     Create a comprehensive dashboard with multiple visualizations.
     
     Args:
         predictions: Dictionary of service -> method -> prediction data
         evaluation_results: Optional evaluation results
-        results_by_threshold: Optional threshold analysis results
     """
     print("🎨 CREATING VISUALIZATION DASHBOARD")
     print("=" * 50)
@@ -369,11 +336,7 @@ def create_results_dashboard(predictions: Dict[str, Dict[str, Any]],
     if predictions:
         plot_similarity_vs_confidence(predictions, "Similarity vs Confidence Analysis")
     
-    # 3. Threshold analysis
-    if results_by_threshold:
-        plot_threshold_analysis(results_by_threshold, "Threshold Impact Analysis")
-    
-    # 4. Label distribution
+    # 3. Label distribution
     if predictions:
         label_counts = {}
         for service, methods in predictions.items():
