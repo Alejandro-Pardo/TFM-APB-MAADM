@@ -1,5 +1,6 @@
 """Core label propagation algorithms for AWS API security classification."""
 
+import json
 import numpy as np
 from typing import Dict, List, Tuple
 from sklearn.metrics.pairwise import cosine_similarity
@@ -46,8 +47,8 @@ class LabelPropagator:
         return neighbors_with_sims[:k]
     
     def propagate_within_service(self, service: str, k: int = 5, threshold: float = 0.7, 
-                               max_iterations: int = 10, min_confidence: float = 0.5, 
-                               min_threshold: float = 0.1) -> Dict[str, str]:
+                            max_iterations: int = 10, min_confidence: float = 0.5, 
+                            min_threshold: float = 0.1, save_history: bool = False) -> Dict[str, str]:
         """
         Iteratively propagate labels within a single service.
         Uses 'with_service_params' embeddings.
@@ -59,6 +60,7 @@ class LabelPropagator:
             max_iterations: Maximum number of iterations to perform
             min_confidence: Minimum confidence for accepting predictions
             min_threshold: Minimum threshold to lower to
+            save_history: Whether to save iteration history to history.json
             
         Returns:
             Dictionary of method -> predicted label
@@ -68,7 +70,7 @@ class LabelPropagator:
         
         # Get labeled and unlabeled methods for this service
         labeled_methods = [(svc, method) for (svc, method) in self.data_manager.method_labels.keys() 
-                          if svc == service]
+                        if svc == service]
         all_methods = [(service, method) for method in self.data_manager.service_methods[service]]
         unlabeled_methods = [m for m in all_methods if m not in self.data_manager.method_labels]
         
@@ -76,7 +78,33 @@ class LabelPropagator:
             print(f"⚠️ No labeled methods found for service: {service}")
             return predictions
         
-        print(f"🔄 Propagating in {service}: {len(labeled_methods)} labeled → {len(unlabeled_methods)} unlabeled")
+        print(f"\n🔄 Propagating in {service}: {len(labeled_methods)} labeled → {len(unlabeled_methods)} unlabeled")
+        
+        # Initialize history tracking (only if save_history is True)
+        history = None
+        if save_history:
+            history = {
+                'service': service,
+                'iterations': []
+            }
+            
+            # Add iteration 0 (initial labeled methods)
+            initial_labeled = {}
+            for method_key in labeled_methods:
+                method_name = method_key[1]  # Extract just the method name
+                label = self.data_manager.method_labels[method_key]
+                initial_labeled[method_name] = {
+                    'label': label,
+                    'iteration': 0,
+                    'initial': True
+                }
+            
+            history['iterations'].append({
+                'iteration': 0,
+                'threshold': threshold,
+                'newly_labeled': initial_labeled,
+                'total_labeled_count': len(initial_labeled)
+            })
         
         # Create a copy of method_labels to track temporary labels during iteration
         temp_method_labels = self.data_manager.method_labels.copy()
@@ -110,7 +138,7 @@ class LabelPropagator:
                     if labeled_neighbors:
                         # Filter by threshold
                         valid_neighbors = [(nk, sim) for nk, sim in labeled_neighbors 
-                                         if sim >= current_threshold]
+                                        if sim >= current_threshold]
                         
                         if valid_neighbors or iteration == max_iterations - 1:
                             # Use valid neighbors or all neighbors on final iteration
@@ -138,6 +166,29 @@ class LabelPropagator:
                                     'iteration': iteration + 1
                                 }
             
+            # Add iteration to history (only if save_history is True)
+            if save_history:
+                newly_labeled_for_history = {}
+                if iteration_predictions:
+                    for method_name, pred_data in iteration_predictions.items():
+                        newly_labeled_for_history[method_name] = {
+                            'label': pred_data['label'],
+                            'iteration': iteration + 1,
+                            'initial': False
+                        }
+                
+                # Calculate total labeled so far
+                total_labeled = len(initial_labeled) + len([p for p in predictions.values()])
+                if iteration_predictions:
+                    total_labeled += len(iteration_predictions)
+                
+                history['iterations'].append({
+                    'iteration': iteration + 1,
+                    'threshold': current_threshold,
+                    'newly_labeled': newly_labeled_for_history,
+                    'total_labeled_count': total_labeled
+                })
+            
             # Add new predictions
             if iteration_predictions:
                 predictions.update(iteration_predictions)
@@ -158,22 +209,48 @@ class LabelPropagator:
                         break
                     print(f"📉 Lowering threshold to {current_threshold:.1f}")
         
+        # Save history to JSON file (only if save_history is True)
+        if save_history and history:
+            self._save_history_to_file(history)
+        
         if remaining_unlabeled:
             print(f"⚠️ {len(remaining_unlabeled)} methods remain unlabeled after {iteration+1} iterations")
         else:
             print(f"🎉 All methods labeled after {iteration} iterations!")
         
         return predictions
-    
+
+    def _save_history_to_file(self, history):
+        """Save iteration history to JSON file."""
+        try:
+            # Load existing history or create new
+            history_file = config.HISTORY_FILE
+            if history_file.exists():
+                with open(history_file, 'r') as f:
+                    all_history = json.load(f)
+            else:
+                all_history = {}
+            
+            # Add this service's history
+            all_history[history['service']] = history
+            
+            # Save back to file
+            with open(history_file, 'w') as f:
+                json.dump(all_history, f, indent=2, default=str)
+            #print(f"💾 History saved for {history['service']} ({len(history['iterations'])} iterations)")
+            
+        except Exception as e:
+            print(f"⚠️ Failed to save history: {e}")
+
     def propagate_all_services(self, k: int = 5, threshold: float = 0.7, 
-                             max_iterations: int = 5, min_confidence: float = 0.5, 
-                             min_threshold: float = 0.1) -> Dict[str, Dict[str, str]]:
+                            max_iterations: int = 5, min_confidence: float = 0.5, 
+                            min_threshold: float = 0.1, save_history: bool = False) -> Dict[str, Dict[str, str]]:
         """Propagate labels for all loaded services."""
         all_predictions = {}
         
         for service in self.data_manager.service_methods.keys():
             predictions = self.propagate_within_service(
-                service, k, threshold, max_iterations, min_confidence, min_threshold
+                service, k, threshold, max_iterations, min_confidence, min_threshold, save_history
             )
             if predictions:
                 all_predictions[service] = predictions

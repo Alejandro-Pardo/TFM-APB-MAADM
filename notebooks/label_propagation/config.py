@@ -7,6 +7,8 @@ PROJECT_ROOT = Path("../..") # Go up two levels from notebooks/label_propagation
 EMBEDDINGS_DIR = PROJECT_ROOT / "embeddings"
 ANNOY_INDEXES_DIR = EMBEDDINGS_DIR / "annoy_indexes"
 LABELS_FILE = Path(".") / "labels.csv"
+ANIMATIONS_DIR = Path(".") / "animations"
+HISTORY_FILE = ANIMATIONS_DIR / "history.json"
 
 # Output files
 WITHIN_SERVICE_PREDICTIONS_FILE = Path(".") / "within_service_predictions.json"
@@ -18,20 +20,20 @@ VISUALIZATION_SUMMARY_FILE = Path(".") / "visualization_summary.json"
 EMBEDDING_DIM = 1024  # Qwen3-0.6B default dimension
 
 # Propagation parameters
-DEFAULT_K_NEIGHBORS = 5
-DEFAULT_WITHIN_SERVICE_THRESHOLD = 0.9
-DEFAULT_CROSS_SERVICE_THRESHOLD = 0.8
+DEFAULT_K_NEIGHBORS = 15
+DEFAULT_SERVICE_THRESHOLD = 0.9
 DEFAULT_MAX_ITERATIONS = 30
 DEFAULT_MIN_CONFIDENCE = 0.5
-DEFAULT_MIN_THRESHOLD = 0.1
+DEFAULT_MIN_THRESHOLD = 0.5
 
 # Evaluation parameters
 TEST_SIZE = 0.3
-K_VALUES_TO_TEST = [3, 5, 7, 10]
+K_VALUES_TO_TEST = [5, 7, 9, 11, 13, 15, 17]  # k values for KNN
 # THRESHOLDS_TO_TEST removed - using adaptive thresholding instead
 
 # Services
 LABELED_SERVICES = ['S3', 'DynamoDB', 'Lambda', 'EC2', 'IAM', 'SSM', 'SQS', 'SNS']
+SERVICE_TO_ANIMATE = "EC2"  # Default service for animation
 
 # Similar services mapping for cross-service propagation
 SIMILAR_SERVICES = {

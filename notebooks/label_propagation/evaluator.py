@@ -2,15 +2,12 @@
 
 import numpy as np
 from typing import Dict, List
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
 from sklearn.metrics import classification_report
 from sklearn.neighbors import KNeighborsClassifier
 from collections import defaultdict
 import config
-from visualization import (
-    plot_confusion_matrix,
-    print_service_predictions_summary,
-)
+from visualization import plot_confusion_matrix
 
 
 class Evaluator:
@@ -49,6 +46,32 @@ class Evaluator:
         # Predict
         y_pred = knn.predict(X_test)
         
+        # DEBUG: Print conflicting methods (can be deleted later)
+        print("🔍 DEBUG - Conflicting Methods:")
+        print("-" * 50)
+        conflicts = []
+        for i, (actual, predicted, method) in enumerate(zip(y_test, y_pred, methods_test)):
+            if actual != predicted:
+                conflicts.append({
+                    'method': method,
+                    'actual': actual,
+                    'predicted': predicted
+                })
+        
+        if conflicts:
+            print(f"Found {len(conflicts)} conflicting predictions:")
+            for conflict in conflicts:
+                method_key = conflict['method']
+                service = method_key[0] if isinstance(method_key, tuple) else str(method_key).split('.')[0]
+                method_name = method_key[1] if isinstance(method_key, tuple) else str(method_key)
+                print(f"  • {service}.{method_name}")
+                print(f"    Actual: {conflict['actual']}")
+                print(f"    Predicted: {conflict['predicted']}")
+        else:
+            print("No conflicts found - all predictions match actual labels!")
+        print("-" * 50)
+        # END DEBUG
+        
         # Calculate metrics
         report = classification_report(y_test, y_pred, output_dict=True)
         
@@ -61,7 +84,7 @@ class Evaluator:
         return report
     
     def find_optimal_k(self, k_values: List[int] = None) -> int:
-        """Find optimal k value using cross-validation."""
+        """Find optimal k value using cross-validation - FINAL FIXED VERSION."""
         if k_values is None:
             k_values = config.K_VALUES_TO_TEST
             
@@ -73,20 +96,74 @@ class Evaluator:
         X = np.array([self.data_manager.method_embeddings[method] for method in methods])
         y = [self.data_manager.method_labels[method] for method in methods]
         
+        # Debug information
+        print(f"📊 Data summary:")
+        print(f"   • Total samples: {len(X)}")
+        print(f"   • Embedding dimension: {X.shape[1] if len(X) > 0 else 'N/A'}")
+        print(f"   • Unique labels: {set(y)}")
+        print(f"   • Label distribution: {dict(zip(*np.unique(y, return_counts=True)))}")
+        
+        # Check for potential issues
+        if len(set(y)) <= 1:
+            print("⚠️ Only one class found - cannot perform classification")
+            return 5
+        
+        if len(X) < 6:  # Need at least 6 samples for cross-validation
+            print("⚠️ Too few samples for reliable cross-validation")
+            return 5
+        
         best_k = 5
         best_score = 0
+        valid_scores_found = False
         
         print("🔍 Finding optimal k value:")
+        
+        # Calculate minimum samples per class for stratified CV
+        min_class_size = min([list(y).count(label) for label in set(y)])
+        max_cv_folds = min(5, min_class_size)  # Can't have more folds than smallest class
+        
+        print(f"   • Min class size: {min_class_size}")
+        print(f"   • Max CV folds: {max_cv_folds}")
+        
+        if max_cv_folds < 2:
+            print("⚠️ Some classes have too few samples for cross-validation")
+            return 5
+        
         for k in k_values:
-            if k < len(set(y)):  # Ensure k is less than number of classes
-                knn = KNeighborsClassifier(n_neighbors=min(k, len(X)-1), metric='cosine')
-                scores = cross_val_score(knn, X, y, cv=min(5, len(X)//2), scoring='f1_macro')
+            # The only constraint should be that k < total samples
+            if k >= len(X):
+                print(f"   k={k}: Skipped (k >= total samples)")
+                continue
+            
+            if k < 1:
+                print(f"   k={k}: Skipped (k < 1)")
+                continue
+            
+            try:
+                knn = KNeighborsClassifier(n_neighbors=k, metric='cosine')
+                
+                # Use stratified CV with appropriate number of folds
+                cv = StratifiedKFold(n_splits=max_cv_folds, shuffle=True, random_state=42)
+                scores = cross_val_score(knn, X, y, cv=cv, scoring='f1_macro')
+                
                 avg_score = scores.mean()
-                print(f"  k={k}: F1-score = {avg_score:.3f} ± {scores.std():.3f}")
+                std_score = scores.std()
+                
+                print(f"   k={k}: F1-score = {avg_score:.3f} ± {std_score:.3f}")
                 
                 if avg_score > best_score:
                     best_score = avg_score
                     best_k = k
+                    valid_scores_found = True
+                    
+            except Exception as e:
+                print(f"   k={k}: Error during evaluation - {str(e)}")
+                continue
+        
+        if not valid_scores_found:
+            print("⚠️ No valid k values found, using default k=3")
+            best_k = 3
+            best_score = 0.0
         
         print(f"✅ Best k value: {best_k} (F1-score: {best_score:.3f})")
         return best_k
@@ -131,8 +208,7 @@ class Evaluator:
         summary = {
             'experiment_metadata': {
                 'optimal_k': best_k,
-                'within_service_threshold': config.DEFAULT_WITHIN_SERVICE_THRESHOLD,
-                'cross_service_threshold': config.DEFAULT_CROSS_SERVICE_THRESHOLD,
+                'service_similarity_threshold': config.DEFAULT_SERVICE_THRESHOLD,
                 'labeled_services': config.LABELED_SERVICES,
                 'total_labeled_methods': len(self.data_manager.method_labels),
                 'evaluation_results': evaluation_results
