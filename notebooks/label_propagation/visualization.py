@@ -41,14 +41,16 @@ def plot_confusion_matrix(y_true: List[str], y_pred: List[str],
 
 def plot_label_distribution(label_counts: Dict[str, Dict[str, int]], 
                            title: str = "Label Distribution by Service",
-                           figsize: tuple = (12, 8)) -> None:
+                           figsize: tuple = (12, 8),
+                           total_methods: Dict[str, int] = None,
+                           manual_labels: Dict[tuple, str] = None) -> None:
     """
-    Plot label distribution across services.
+    Plot label distribution across services with coverage percentages.
     
     Args:
-        label_counts: Dictionary of service -> label -> count
-        title: Plot title
-        figsize: Figure size tuple
+        label_counts: Dictionary of service -> label -> count (from predictions)
+        total_methods: Dictionary of service -> total method count
+        manual_labels: Dictionary of (service, method) -> label (original labels)
     """
     services = list(label_counts.keys())
     labels = ['none', 'sink', 'source']
@@ -61,6 +63,34 @@ def plot_label_distribution(label_counts: Dict[str, Dict[str, int]],
     for i, label in enumerate(labels):
         counts = [label_counts[service].get(label, 0) for service in services]
         ax.bar(x + i * width, counts, width, label=label)
+    
+    # Add coverage percentages above bars
+    if total_methods:
+        for i, service in enumerate(services):
+            total = total_methods.get(service, 0)
+            
+            # Count propagated predictions
+            propagated_count = sum(label_counts[service].values())
+            
+            # Count original manual labels for this service
+            manual_count = 0
+            if manual_labels:
+                manual_count = sum(1 for (label_service, method), label in manual_labels.items() 
+                                 if label_service == service)
+            
+            # Total labeled = propagated + manual (avoiding double counting)
+            # We assume propagated predictions don't include manual labels
+            total_labeled = propagated_count + manual_count
+            coverage = (total_labeled / total * 100) if total > 0 else 0
+            
+            # Find the highest bar for this service
+            max_height = max([label_counts[service].get(label, 0) for label in labels])
+            
+            # Add coverage text
+            ax.annotate(f'{coverage:.1f}%', 
+                       xy=(x[i] + width, max_height), 
+                       xytext=(0, 5), textcoords='offset points',
+                       ha='center', va='bottom', fontweight='bold')
     
     ax.set_xlabel('Services')
     ax.set_ylabel('Number of Methods')
@@ -317,13 +347,15 @@ def save_visualization_summary(predictions: Dict[str, Dict[str, Any]],
 
 
 def create_results_dashboard(predictions: Dict[str, Dict[str, Any]],
-                           evaluation_results: Dict[str, Any] = None) -> None:
+                           total_methods: Dict[str, int] = None,
+                           manual_labels: Dict[str, str] = None) -> None:
     """
     Create a comprehensive dashboard with multiple visualizations.
     
     Args:
         predictions: Dictionary of service -> method -> prediction data
-        evaluation_results: Optional evaluation results
+        total_methods: Dictionary of service -> total method count
+        manual_labels: Dictionary of (service, method) -> label (original prelabeled methods labels)
     """
     print("🎨 CREATING VISUALIZATION DASHBOARD")
     print("=" * 50)
@@ -347,6 +379,8 @@ def create_results_dashboard(predictions: Dict[str, Dict[str, Any]],
             label_counts[service] = dict(service_counts)
         
         if label_counts:
-            plot_label_distribution(label_counts, "Label Distribution by Service")
+            plot_label_distribution(label_counts, "Label Distribution by Service", 
+                       total_methods=total_methods, 
+                       manual_labels=manual_labels)
     
     print("✅ Dashboard visualization complete!")
