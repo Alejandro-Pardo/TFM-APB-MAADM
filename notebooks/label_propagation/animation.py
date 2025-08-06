@@ -209,7 +209,7 @@ class LabelAnimator:
         
         # Create animation with optimized settings
         anim = animation.FuncAnimation(fig, animate, frames=len(label_frames), 
-                                     interval=750, repeat=True, blit=False,
+                                     interval=500, repeat=True, blit=False,
                                      cache_frame_data=False)
         
         # Save if requested

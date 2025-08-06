@@ -67,13 +67,19 @@ class DataManager:
         print(f"📊 Using embedding format: {embedding_format}")
         
         for service in services:
-            service_dir = methods_dir / service
-            if not service_dir.exists():
+            # Find the actual service directory (case insensitive)
+            service_dir = None
+            for dir_path in methods_dir.iterdir():
+                if dir_path.is_dir() and dir_path.name.lower() == service.lower():
+                    service_dir = dir_path
+                    break
+            
+            if not service_dir or not service_dir.exists():
                 print(f"⚠️ Service directory not found: {service}")
                 continue
             
             method_files = list(service_dir.glob("*.json"))
-            print(f"📁 {service}: {len(method_files)} methods")
+            print(f"📁 {service_dir.name}: {len(method_files)} methods")
             
             for method_file in method_files:
                 with open(method_file, 'r') as f:
@@ -136,9 +142,7 @@ class DataManager:
             self.build_service_index(service)
     
     def save_indexes(self) -> None:
-        """Save Annoy indexes for fast loading."""
-        config.ANNOY_INDEXES_DIR.mkdir(exist_ok=True)
-        
+        """Save Annoy indexes for fast loading."""        
         for service, index in self.annoy_indexes.items():
             # Create service-specific directory
             service_dir = config.ANNOY_INDEXES_DIR / service
@@ -220,6 +224,85 @@ class DataManager:
         
         print(f"💾 Predictions saved to: {output_file}")
     
+    def flatten_group_predictions(self, group_predictions: Dict[str, Dict[str, Dict]]) -> Dict[str, Dict]:
+        """
+        Flatten group-based predictions to service-level format for easier processing.
+        
+        Args:
+            group_predictions: {group_name: {service: {method: prediction}}}
+            
+        Returns:
+            {service: {method: prediction}} - flattened format
+        """
+        flattened = {}
+        
+        for group_name, group_data in group_predictions.items():
+            for service, service_predictions in group_data.items():
+                if service not in flattened:
+                    flattened[service] = {}
+                
+                # Add group information to each prediction
+                for method, pred_data in service_predictions.items():
+                    if isinstance(pred_data, dict):
+                        pred_data_copy = pred_data.copy()
+                        pred_data_copy['source_group'] = group_name
+                        flattened[service][method] = pred_data_copy
+                    else:
+                        flattened[service][method] = {
+                            'label': pred_data,
+                            'source_group': group_name
+                        }
+        
+        return flattened
+    
+    def get_service_embeddings(self, service: str, embedding_format: str) -> Dict:
+        """
+        Get embeddings for a single service using the specified format.
+        
+        Args:
+            service: Service name
+            embedding_format: Format of embeddings to load ('method_only', 'with_params', etc.)
+            
+        Returns:
+            Dictionary of {(service, method): embedding_vector}
+        """
+        service = service.lower()
+        service_embeddings = {}
+        
+        if embedding_format == 'method_only':
+            # Load method_only embeddings from disk
+            methods_dir = config.EMBEDDINGS_DIR / "methods"
+            
+            # Find the actual service directory (case insensitive)
+            service_dir = None
+            for dir_path in methods_dir.iterdir():
+                if dir_path.is_dir() and dir_path.name.lower() == service.lower():
+                    service_dir = dir_path
+                    break
+            
+            if service_dir and service_dir.exists():
+                for method_file in service_dir.glob("*.json"):
+                    try:
+                        with open(method_file, 'r') as f:
+                            method_data = json.load(f)
+                            service_name = method_data['service_name'].lower()
+                            method_name = method_data['method_name']
+                            
+                            if ('method_only' in method_data.get('embeddings', {}) and 
+                                service_name == service):
+                                embedding = np.array(method_data['embeddings']['method_only'])
+                                if len(embedding) == config.EMBEDDING_DIM:
+                                    key = (service_name, method_name)
+                                    service_embeddings[key] = embedding
+                    except Exception as e:
+                        print(f"⚠️ Error loading {method_file}: {e}")
+        else:
+            # Use existing embeddings in memory
+            service_embeddings = {k: v for k, v in self.method_embeddings.items() 
+                                if k[0] == service}
+        
+        return service_embeddings
+    
     def get_combined_embeddings(self, service1: str, service2: str, 
                                embedding_format: str) -> Tuple[Dict, Dict]:
         """
@@ -238,8 +321,14 @@ class DataManager:
             methods_dir = config.EMBEDDINGS_DIR / "methods"
             
             for service in [service1, service2]:
-                service_dir = methods_dir / service
-                if not service_dir.exists():
+                # Find the actual service directory (case insensitive)
+                service_dir = None
+                for dir_path in methods_dir.iterdir():
+                    if dir_path.is_dir() and dir_path.name.lower() == service.lower():
+                        service_dir = dir_path
+                        break
+                
+                if not service_dir or not service_dir.exists():
                     continue
                 
                 for method_file in service_dir.glob("*.json"):

@@ -224,7 +224,6 @@ class Evaluator:
             'recommendations': {
                 'high_confidence_services': [],
                 'manual_review_needed': [],
-                'next_similar_services': {}
             }
         }
         
@@ -240,12 +239,6 @@ class Evaluator:
             low_conf_count = len(predictions) - service_summary['high_confidence_count']
             if low_conf_count > len(predictions) * 0.3:  # More than 30% low confidence
                 summary['recommendations']['manual_review_needed'].append(service)
-        
-        # Add similar services recommendations
-        for service in config.LABELED_SERVICES:
-            if service.lower() in config.SIMILAR_SERVICES:
-                summary['recommendations']['next_similar_services'][service] = \
-                    config.SIMILAR_SERVICES[service.lower()]
         
         return summary
     
@@ -300,7 +293,127 @@ class Evaluator:
             pred_count = len(final_predictions.get(service, {}))
             print(f"   • {service}: {pred_count} predictions (review low-confidence ones)")
         
-        print("3. 🔀 Recommended similar services for cross-service propagation:")
-        for source_service, similar_list in summary['recommendations']['next_similar_services'].items():
-            if similar_list:
-                print(f"   • {source_service} → {', '.join(similar_list)}")
+
+    def compare_cross_service_predictions(self, group_predictions: Dict, all_to_all_predictions: Dict) -> Dict:
+        """
+        Compare group-based cross-service predictions with all-to-all predictions.
+        
+        Args:
+            group_predictions: Results from group-based cross-service propagation
+            all_to_all_predictions: Results from all-to-all cross-service propagation
+            
+        Returns:
+            Dictionary with comparison statistics
+        """
+        
+        comparison_stats = {
+            'agreement_stats': {},
+            'disagreement_details': {},
+            'coverage_comparison': {},
+            'confidence_comparison': {},
+            'summary': {}
+        }
+        
+        # Flatten group predictions for easier comparison
+        group_flat = {}
+        for group_name, group_data in group_predictions.items():
+            for service, service_predictions in group_data.items():
+                if service not in group_flat:
+                    group_flat[service] = {}
+                group_flat[service].update(service_predictions)
+        
+        # Compare each service
+        for service in set(list(group_flat.keys()) + list(all_to_all_predictions.keys())):
+            group_preds = group_flat.get(service, {})
+            all_preds = all_to_all_predictions.get(service, {})
+            
+            # Find common methods
+            common_methods = set(group_preds.keys()) & set(all_preds.keys())
+            
+            if common_methods:
+                agreements = 0
+                disagreements = []
+                group_confidences = []
+                all_confidences = []
+                
+                for method in common_methods:
+                    group_pred = group_preds[method]
+                    all_pred = all_preds[method]
+                    
+                    group_label = group_pred['label'] if isinstance(group_pred, dict) else group_pred
+                    all_label = all_pred['label'] if isinstance(all_pred, dict) else all_pred
+                    
+                    if group_label == all_label:
+                        agreements += 1
+                    else:
+                        disagreements.append({
+                            'method': method,
+                            'group_prediction': group_label,
+                            'all_to_all_prediction': all_label,
+                            'group_confidence': group_pred.get('confidence', 0) if isinstance(group_pred, dict) else 0,
+                            'all_confidence': all_pred.get('confidence', 0) if isinstance(all_pred, dict) else 0
+                        })
+                    
+                    if isinstance(group_pred, dict) and 'confidence' in group_pred:
+                        group_confidences.append(group_pred['confidence'])
+                    if isinstance(all_pred, dict) and 'confidence' in all_pred:
+                        all_confidences.append(all_pred['confidence'])
+                
+                agreement_rate = agreements / len(common_methods) if common_methods else 0
+                
+                comparison_stats['agreement_stats'][service] = {
+                    'total_common_methods': len(common_methods),
+                    'agreements': agreements,
+                    'disagreements': len(disagreements),
+                    'agreement_rate': agreement_rate
+                }
+                
+                comparison_stats['disagreement_details'][service] = disagreements
+                
+                comparison_stats['confidence_comparison'][service] = {
+                    'group_avg_confidence': np.mean(group_confidences) if group_confidences else 0,
+                    'all_to_all_avg_confidence': np.mean(all_confidences) if all_confidences else 0
+                }
+            
+            # Coverage comparison
+            comparison_stats['coverage_comparison'][service] = {
+                'group_predictions': len(group_preds),
+                'all_to_all_predictions': len(all_preds),
+                'group_only': len(set(group_preds.keys()) - set(all_preds.keys())),
+                'all_to_all_only': len(set(all_preds.keys()) - set(group_preds.keys())),
+                'common_methods': len(set(group_preds.keys()) & set(all_preds.keys()))
+            }
+        
+        # Overall summary
+        total_agreements = sum(stats['agreements'] for stats in comparison_stats['agreement_stats'].values())
+        total_common = sum(stats['total_common_methods'] for stats in comparison_stats['agreement_stats'].values())
+        overall_agreement = total_agreements / total_common if total_common > 0 else 0
+        
+        total_group_predictions = sum(len(preds) for preds in group_flat.values())
+        total_all_predictions = sum(len(preds) for preds in all_to_all_predictions.values())
+        
+        comparison_stats['summary'] = {
+            'overall_agreement_rate': overall_agreement,
+            'total_common_predictions': total_common,
+            'total_agreements': total_agreements,
+            'total_disagreements': total_common - total_agreements,
+            'group_total_predictions': total_group_predictions,
+            'all_to_all_total_predictions': total_all_predictions
+        }
+        
+        # Print summary
+        print(f"📊 Overall Agreement Rate: {overall_agreement:.3f}")
+        print(f"🤝 Total Agreements: {total_agreements} / {total_common}")
+        print(f"📈 Group-based predictions: {total_group_predictions}")
+        print(f"🌍 All-to-all predictions: {total_all_predictions}")
+        
+        print("\n📋 Service-level Agreement Rates:")
+        for service, stats in comparison_stats['agreement_stats'].items():
+            print(f"   • {service}: {stats['agreement_rate']:.3f} "
+                  f"({stats['agreements']}/{stats['total_common_methods']})")
+        
+        if total_common - total_agreements > 0:
+            print(f"\n⚠️  Found {total_common - total_agreements} disagreements across all services")
+            print("   Review disagreement_details in the returned comparison stats for specific conflicts")
+        
+        return comparison_stats

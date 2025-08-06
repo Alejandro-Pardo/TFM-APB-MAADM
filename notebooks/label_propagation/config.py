@@ -13,11 +13,14 @@ HISTORY_FILE = ANIMATIONS_DIR / "history.json"
 # Output files
 WITHIN_SERVICE_PREDICTIONS_FILE = Path(".") / "within_service_predictions.json"
 CROSS_SERVICE_PREDICTIONS_FILE = Path(".") / "cross_service_predictions.json"
+GROUP_CROSS_SERVICE_PREDICTIONS_FILE = Path(".") / "group_cross_service_predictions.json"
+ALL_TO_ALL_CROSS_SERVICE_PREDICTIONS_FILE = Path(".") / "all_to_all_cross_service_predictions.json"
+CROSS_SERVICE_COMPARISON_FILE = Path(".") / "cross_service_comparison.json"
 PROPAGATION_SUMMARY_FILE = Path(".") / "propagation_summary.json"
 VISUALIZATION_SUMMARY_FILE = Path(".") / "visualization_summary.json"
 
 # Model settings
-EMBEDDING_DIM = 1024  # Qwen3-0.6B default dimension
+EMBEDDING_DIM = 2560  # Qwen3-4B default dimension
 
 # Propagation parameters
 DEFAULT_K_NEIGHBORS = 15
@@ -29,31 +32,44 @@ DEFAULT_MIN_THRESHOLD = 0.5
 # Evaluation parameters
 TEST_SIZE = 0.3
 K_VALUES_TO_TEST = [5, 7, 9, 11, 13, 15, 17]  # k values for KNN
-# THRESHOLDS_TO_TEST removed - using adaptive thresholding instead
 
 # Services
 LABELED_SERVICES = ['S3', 'DynamoDB', 'Lambda', 'EC2', 'IAM', 'SSM', 'SQS', 'SNS']
 SERVICE_TO_ANIMATE = "EC2"  # Default service for animation
 
-# Similar services mapping for cross-service propagation
-SIMILAR_SERVICES = {
-    's3': ['efs', 'fsx', 'backup'],  # Storage services
-    'dynamodb': ['rds', 'elasticache', 'neptune', 'documentdb'],  # Database services  
-    'lambda': ['ecs', 'batch', 'stepfunctions'],  # Compute services
-    'sqs': ['sns', 'eventbridge', 'kinesis', 'mq'],  # Messaging services
-    'iam': ['sts', 'ssm', 'cloudwatch'],  # Management services
-    'ec2': ['autoscaling', 'elb', 'ecs'],  # Infrastructure services
-    'sns': ['sqs', 'eventbridge', 'pinpoint'],  # Messaging services
-    'ssm': ['iam', 'cloudwatch', 'config']  # Management services
+# Cross-Service Groups Configuration
+CROSS_SERVICE_GROUPS = {
+    'storage_services': {
+        'core_services': ['S3'],
+        'target_services': ['EFS', 'FSx', 'Glacier', 'EBS'],
+        'description': 'Storage and file system services'
+    },
+    'database_services': {
+        'core_services': ['DynamoDB'],
+        'target_services': ['RDS', 'Neptune', 'DocumentDB', 'SimpleDB', 'ElastiCache'],
+        'description': 'Database and data storage services'
+    },
+    'compute_services': {
+        'core_services': ['Lambda'],
+        'target_services': ['ECS', 'AppRunner'], 
+        'description': 'Compute and container services'
+    },
+    'messaging_services': {
+        'core_services': ['SQS', 'SNS'],
+        'target_services': ['EventBridge', 'Kinesis', 'Pinpoint', 'SES', 'SESV2'],
+        'description': 'Messaging and event services'
+    },
+    'security_management': {
+        'core_services': ['IAM'],
+        'target_services': ['STS', 'CognitoIdentity', 'SSO'],
+        'description': 'Identity, access management and system management services'
+    },
+    'infrastructure_services': {
+        'core_services': ['EC2'],
+        'target_services': ['EKS', 'Lightsail'],
+        'description': 'Infrastructure and compute instance services'
+    }
 }
-
-# Cross-service test pairs
-CROSS_SERVICE_TEST_PAIRS = [
-    ('s3', 'efs'),
-    ('dynamodb', 'rds'), 
-    ('sqs', 'eventbridge'),
-    ('iam', 'sts')
-]
 
 # Annoy index parameters
 ANNOY_N_TREES = 10

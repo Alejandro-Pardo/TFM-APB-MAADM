@@ -12,7 +12,7 @@ import seaborn as sns
 from sklearn.metrics import confusion_matrix
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 
 
 def plot_confusion_matrix(y_true: List[str], y_pred: List[str], 
@@ -191,6 +191,204 @@ def plot_similarity_vs_confidence(predictions: Dict[str, Dict[str, Any]],
     plt.tight_layout()
     plt.show()
 
+
+def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14, 8)) -> None:
+    """
+    Create bar charts comparing group-based and all-to-all cross-service predictions.
+    
+    Args:
+        comparison_results: Results from compare_cross_service_predictions
+        figsize: Figure size tuple
+    """
+    if not comparison_results:
+        print("❌ No comparison data available for visualization")
+        return
+    
+    fig, axes = plt.subplots(2, 2, figsize=figsize)
+    fig.suptitle('Cross-Service Prediction Comparison', fontsize=16, fontweight='bold')
+    
+    # 1. Agreement rates by service (only for services with common predictions)
+    ax1 = axes[0, 0]
+    agreement_stats = comparison_results.get('agreement_stats', {})
+    
+    if agreement_stats:
+        agreement_services = list(agreement_stats.keys())
+        agreement_rates = [stats['agreement_rate'] for stats in agreement_stats.values()]
+        
+        colors = ['green' if rate >= 0.8 else 'orange' if rate >= 0.6 else 'red' 
+                  for rate in agreement_rates]
+        
+        bars = ax1.bar(range(len(agreement_services)), agreement_rates, color=colors, alpha=0.7)
+        ax1.set_xticks(range(len(agreement_services)))
+        ax1.set_xticklabels(agreement_services, rotation=45, ha='right', fontsize=8)
+        ax1.set_ylabel('Agreement Rate')
+        ax1.set_title('Agreement Rates by Service')
+        ax1.axhline(y=0.8, color='green', linestyle='--', alpha=0.5, label='Good (≥0.8)')
+        ax1.axhline(y=0.6, color='orange', linestyle='--', alpha=0.5, label='Fair (≥0.6)')
+        ax1.set_ylim(0, 1.1)
+        ax1.legend(loc='lower right', fontsize=9)
+        ax1.grid(True, alpha=0.3, axis='y')
+    else:
+        ax1.text(0.5, 0.5, 'No common predictions found', 
+                ha='center', va='center', transform=ax1.transAxes)
+        ax1.set_title('Agreement Rates by Service')
+    
+    # 2. Coverage comparison (for all services)
+    ax2 = axes[0, 1]
+    coverage_stats = comparison_results.get('coverage_comparison', {})
+    
+    if coverage_stats:
+        coverage_services = list(coverage_stats.keys())[:20]  # Limit to 20 services for readability
+        coverage_data = {s: coverage_stats[s] for s in coverage_services}
+        
+        group_coverage = [coverage_data[s]['group_predictions'] for s in coverage_services]
+        all_to_all_coverage = [coverage_data[s]['all_to_all_predictions'] for s in coverage_services]
+        
+        x = np.arange(len(coverage_services))
+        width = 0.35
+        
+        ax2.bar(x - width/2, group_coverage, width, label='Group-based', color='steelblue', alpha=0.8)
+        ax2.bar(x + width/2, all_to_all_coverage, width, label='All-to-all', color='coral', alpha=0.8)
+        
+        ax2.set_xticks(x)
+        ax2.set_xticklabels(coverage_services, rotation=45, ha='right', fontsize=8)
+        ax2.set_ylabel('Number of Predictions')
+        ax2.set_title(f'Prediction Coverage (Top {len(coverage_services)} Services)')
+        ax2.legend()
+        ax2.grid(True, alpha=0.3, axis='y')
+    else:
+        ax2.text(0.5, 0.5, 'No coverage data available', 
+                ha='center', va='center', transform=ax2.transAxes)
+        ax2.set_title('Prediction Coverage by Method')
+    
+    # 3. Label distribution in disagreements
+    ax3 = axes[1, 0]
+    disagreement_details = comparison_results.get('disagreement_details', {})
+    
+    label_disagreements = defaultdict(lambda: defaultdict(int))
+    total_disagreements = 0
+    
+    for service, disagreements in disagreement_details.items():
+        if isinstance(disagreements, list):
+            for disagreement in disagreements:
+                if isinstance(disagreement, dict) and 'group_prediction' in disagreement and 'all_to_all_prediction' in disagreement:
+                    group_label = disagreement['group_prediction']
+                    all_label = disagreement['all_to_all_prediction']
+                    label_disagreements[group_label][all_label] += 1
+                    total_disagreements += 1
+    
+    if total_disagreements > 0:
+        labels = ['none', 'sink', 'source']
+        matrix = np.zeros((len(labels), len(labels)))
+        
+        for i, label1 in enumerate(labels):
+            for j, label2 in enumerate(labels):
+                matrix[i, j] = label_disagreements[label1][label2]
+        
+        im = ax3.imshow(matrix, cmap='YlOrRd', aspect='auto', vmin=0)
+        ax3.set_xticks(np.arange(len(labels)))
+        ax3.set_yticks(np.arange(len(labels)))
+        ax3.set_xticklabels(labels)
+        ax3.set_yticklabels(labels)
+        ax3.set_xlabel('All-to-all Prediction')
+        ax3.set_ylabel('Group-based Prediction')
+        ax3.set_title(f'Label Disagreement Matrix ({total_disagreements} total)')
+        
+        # Add text annotations
+        for i in range(len(labels)):
+            for j in range(len(labels)):
+                if matrix[i, j] > 0:
+                    text = ax3.text(j, i, int(matrix[i, j]),
+                                   ha="center", va="center", color="black", fontweight='bold')
+        
+        plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
+    else:
+        ax3.text(0.5, 0.5, 'No disagreements found\n(Perfect agreement!)', 
+                ha='center', va='center', transform=ax3.transAxes, fontsize=12)
+        ax3.set_title('Label Disagreement Matrix')
+        ax3.set_xticks([])
+        ax3.set_yticks([])
+    
+    # 4. Summary statistics
+    ax4 = axes[1, 1]
+    ax4.axis('off')
+    
+    summary = comparison_results.get('summary', {})
+    
+    # Calculate agreement quality stats only if we have agreement data
+    agreement_quality_text = ""
+    if agreement_stats:
+        agreement_rates_list = [stats['agreement_rate'] for stats in agreement_stats.values()]
+        agreement_quality_text = f"""
+    Agreement Quality:
+    • Excellent (≥80%): {sum(1 for rate in agreement_rates_list if rate >= 0.8)} services
+    • Fair (60-80%): {sum(1 for rate in agreement_rates_list if 0.6 <= rate < 0.8)} services
+    • Poor (<60%): {sum(1 for rate in agreement_rates_list if rate < 0.6)} services"""
+    
+    summary_text = f"""
+    Overall Agreement: {summary.get('overall_agreement_rate', 0):.1%}
+    
+    Total Common Methods: {summary.get('total_common_predictions', 0)}
+    Total Agreements: {summary.get('total_agreements', 0)}
+    Total Disagreements: {summary.get('total_disagreements', 0)}
+    
+    Group-based Total: {summary.get('group_total_predictions', 0)}
+    All-to-all Total: {summary.get('all_to_all_total_predictions', 0)}
+    {agreement_quality_text}
+    """
+    
+    ax4.text(0.1, 0.5, summary_text, transform=ax4.transAxes,
+            fontsize=11, verticalalignment='center',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    ax4.set_title('Summary Statistics')
+    
+    plt.tight_layout()
+    plt.show()
+
+
+def create_propagation_dashboard(predictions: Dict[str, Dict[str, Any]],
+                                total_methods: Dict[str, int] = None,
+                                manual_labels: Dict[str, str] = None,
+                                title_prefix: str = "") -> None:
+    """
+    Create a comprehensive dashboard for a specific propagation type.
+    
+    Args:
+        predictions: Dictionary of service -> method -> prediction data
+        total_methods: Dictionary of service -> total method count
+        manual_labels: Dictionary of (service, method) -> label
+        title_prefix: Prefix for the dashboard title (e.g., "Within-Service", "Cross-Service")
+    """
+    if not predictions:
+        print(f"❌ No predictions available for {title_prefix} dashboard")
+        return
+    
+    print(f"🎨 Creating {title_prefix} Visualization Dashboard")
+    print("=" * 50)
+    
+    # 1. Confidence distribution
+    plot_confidence_distribution(predictions, f"{title_prefix} - Confidence Distribution")
+    
+    # 2. Similarity vs Confidence scatter plot
+    plot_similarity_vs_confidence(predictions, f"{title_prefix} - Similarity vs Confidence")
+    
+    # 3. Label distribution
+    label_counts = {}
+    for service, methods in predictions.items():
+        service_counts = defaultdict(int)
+        for method, data in methods.items():
+            if isinstance(data, dict):
+                service_counts[data['label']] += 1
+        label_counts[service] = dict(service_counts)
+    
+    if label_counts:
+        plot_label_distribution(label_counts, f"{title_prefix} - Label Distribution", 
+                              total_methods=total_methods, 
+                              manual_labels=manual_labels)
+    
+    print(f"✅ {title_prefix} dashboard complete!")
+
+
 def print_evaluation_summary(evaluation_results: Dict[str, Any], 
                             best_k: int,
                             total_labeled: int,
@@ -222,70 +420,6 @@ def print_evaluation_summary(evaluation_results: Dict[str, Any],
                 print(f"  {label:>6}: P={metrics['precision']:.3f}, "
                       f"R={metrics['recall']:.3f}, F1={metrics['f1-score']:.3f}, "
                       f"Support={metrics['support']}")
-
-
-def print_service_predictions_summary(predictions: Dict[str, Dict[str, Any]],
-                                     service_name: str = None) -> None:
-    """
-    Print a formatted summary of predictions for services.
-    
-    Args:
-        predictions: Dictionary of service -> method -> prediction data
-        service_name: Optional specific service to summarize
-    """
-    if service_name:
-        services_to_show = [service_name] if service_name in predictions else []
-        title = f"📊 PREDICTIONS SUMMARY - {service_name.upper()}"
-    else:
-        services_to_show = list(predictions.keys())
-        title = "📊 PREDICTIONS SUMMARY - ALL SERVICES"
-    
-    print(title)
-    print("=" * 50)
-    
-    for service in services_to_show:
-        service_predictions = predictions[service]
-        
-        if not service_predictions:
-            print(f"{service.upper()}: No predictions")
-            continue
-        
-        # Calculate statistics
-        label_counts = defaultdict(int)
-        confidences = []
-        similarities = []
-        
-        for method, pred_data in service_predictions.items():
-            if isinstance(pred_data, dict):
-                label_counts[pred_data['label']] += 1
-                confidences.append(pred_data['confidence'])
-                if 'similarity' in pred_data:
-                    similarities.append(pred_data['similarity'])
-        
-        avg_confidence = np.mean(confidences) if confidences else 0
-        avg_similarity = np.mean(similarities) if similarities else 0
-        
-        print(f"{service.upper()}:")
-        print(f"  📊 {len(service_predictions)} predictions made")
-        
-        # Print labels in consistent order: sink, source, none
-        ordered_labels = ['sink', 'source', 'none']
-        ordered_label_counts = {label: label_counts[label] for label in ordered_labels if label_counts[label] > 0}
-        print(f"  🏷️  Labels: {ordered_label_counts}")
-        
-        print(f"  📈 Avg confidence: {avg_confidence:.3f}")
-        if similarities:
-            print(f"  📈 Avg similarity: {avg_similarity:.3f}")
-        
-        # Show high-confidence predictions
-        high_conf_methods = [method for method, data in service_predictions.items() 
-                           if isinstance(data, dict) and data['confidence'] > 0.8]
-        if high_conf_methods:
-            print(f"  ✅ High-confidence ({len(high_conf_methods)} methods): "
-                  f"{', '.join(high_conf_methods[:5])}"
-                  f"{'...' if len(high_conf_methods) > 5 else ''}")
-        
-        print()
 
 
 def save_visualization_summary(predictions: Dict[str, Dict[str, Any]], 
@@ -344,43 +478,3 @@ def save_visualization_summary(predictions: Dict[str, Dict[str, Any]],
         json.dump(summary, f, indent=2)
     
     print(f"📊 Visualization summary saved to: {output_file}")
-
-
-def create_results_dashboard(predictions: Dict[str, Dict[str, Any]],
-                           total_methods: Dict[str, int] = None,
-                           manual_labels: Dict[str, str] = None) -> None:
-    """
-    Create a comprehensive dashboard with multiple visualizations.
-    
-    Args:
-        predictions: Dictionary of service -> method -> prediction data
-        total_methods: Dictionary of service -> total method count
-        manual_labels: Dictionary of (service, method) -> label (original prelabeled methods labels)
-    """
-    print("🎨 CREATING VISUALIZATION DASHBOARD")
-    print("=" * 50)
-    
-    # 1. Confidence distribution
-    if predictions:
-        plot_confidence_distribution(predictions, "Prediction Confidence Distribution")
-    
-    # 2. Similarity vs Confidence scatter plot
-    if predictions:
-        plot_similarity_vs_confidence(predictions, "Similarity vs Confidence Analysis")
-    
-    # 3. Label distribution
-    if predictions:
-        label_counts = {}
-        for service, methods in predictions.items():
-            service_counts = defaultdict(int)
-            for method, data in methods.items():
-                if isinstance(data, dict):
-                    service_counts[data['label']] += 1
-            label_counts[service] = dict(service_counts)
-        
-        if label_counts:
-            plot_label_distribution(label_counts, "Label Distribution by Service", 
-                       total_methods=total_methods, 
-                       manual_labels=manual_labels)
-    
-    print("✅ Dashboard visualization complete!")
