@@ -9,15 +9,17 @@ ANNOY_INDEXES_DIR = EMBEDDINGS_DIR / "annoy_indexes"
 LABELS_FILE = Path(".") / "labels.csv"
 ANIMATIONS_DIR = Path(".") / "animations"
 HISTORY_FILE = ANIMATIONS_DIR / "history.json"
+PREDICTIONS_DIR = Path(".") / "predictions"
+SUMMARIES_DIR = Path(".") / "summaries"
 
 # Output files
-WITHIN_SERVICE_PREDICTIONS_FILE = Path(".") / "within_service_predictions.json"
-CROSS_SERVICE_PREDICTIONS_FILE = Path(".") / "cross_service_predictions.json"
-GROUP_CROSS_SERVICE_PREDICTIONS_FILE = Path(".") / "group_cross_service_predictions.json"
-ALL_TO_ALL_CROSS_SERVICE_PREDICTIONS_FILE = Path(".") / "all_to_all_cross_service_predictions.json"
-CROSS_SERVICE_COMPARISON_FILE = Path(".") / "cross_service_comparison.json"
-PROPAGATION_SUMMARY_FILE = Path(".") / "propagation_summary.json"
-VISUALIZATION_SUMMARY_FILE = Path(".") / "visualization_summary.json"
+WITHIN_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "within_service_predictions.json"
+CROSS_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "cross_service_predictions.json"
+GROUP_CROSS_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "group_cross_service_predictions.json"
+ALL_TO_ALL_CROSS_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "all_to_all_cross_service_predictions.json"
+CROSS_SERVICE_COMPARISON_FILE = SUMMARIES_DIR / "cross_service_comparison.json"
+PROPAGATION_SUMMARY_FILE = SUMMARIES_DIR / "propagation_summary.json"
+VISUALIZATION_SUMMARY_FILE = SUMMARIES_DIR / "visualization_summary.json"
 
 # Model settings
 EMBEDDING_DIM = 2560  # Qwen3-4B default dimension

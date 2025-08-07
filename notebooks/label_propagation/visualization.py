@@ -41,7 +41,7 @@ def plot_confusion_matrix(y_true: List[str], y_pred: List[str],
 
 def plot_label_distribution(label_counts: Dict[str, Dict[str, int]], 
                            title: str = "Label Distribution by Service",
-                           figsize: tuple = (12, 8),
+                           figsize: tuple = (16, 8),
                            total_methods: Dict[str, int] = None,
                            manual_labels: Dict[tuple, str] = None) -> None:
     """
@@ -56,8 +56,8 @@ def plot_label_distribution(label_counts: Dict[str, Dict[str, int]],
     labels = ['none', 'sink', 'source']
     
     fig, ax = plt.subplots(figsize=figsize)
-    
-    x = np.arange(len(services))
+
+    x = np.arange(len(services)) * 1.75
     width = 0.25
     
     for i, label in enumerate(labels):
@@ -89,14 +89,14 @@ def plot_label_distribution(label_counts: Dict[str, Dict[str, int]],
             # Add coverage text
             ax.annotate(f'{coverage:.1f}%', 
                        xy=(x[i] + width, max_height), 
-                       xytext=(0, 5), textcoords='offset points',
+                       xytext=(5, 5), textcoords='offset points',
                        ha='center', va='bottom', fontweight='bold')
     
     ax.set_xlabel('Services')
     ax.set_ylabel('Number of Methods')
     ax.set_title(title)
     ax.set_xticks(x + width)
-    ax.set_xticklabels(services, rotation=45, ha='right')
+    ax.set_xticklabels(services, rotation=90, ha='right')
     ax.legend()
     
     plt.tight_layout()
@@ -105,7 +105,7 @@ def plot_label_distribution(label_counts: Dict[str, Dict[str, int]],
 
 def plot_confidence_distribution(predictions: Dict[str, Dict[str, Any]], 
                                 title: str = "Confidence Distribution",
-                                figsize: tuple = (10, 6)) -> None:
+                                figsize: tuple = (16, 6)) -> None:
     """
     Plot confidence score distribution for predictions.
     
@@ -141,7 +141,7 @@ def plot_confidence_distribution(predictions: Dict[str, Dict[str, Any]],
     ax2.set_xlabel('Service')
     ax2.set_ylabel('Confidence Score')
     ax2.set_title('Confidence by Service')
-    ax2.tick_params(axis='x', rotation=45)
+    ax2.tick_params(axis='x', rotation=90)
     
     plt.tight_layout()
     plt.show()

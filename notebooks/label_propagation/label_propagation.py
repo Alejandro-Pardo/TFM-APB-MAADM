@@ -378,28 +378,31 @@ class LabelPropagator:
             service_embeddings = self.data_manager.get_service_embeddings(service, embedding_format)
             combined_embeddings.update(service_embeddings)
         
-        # Create a temporary Annoy index for the core services
-        core_index = AnnoyIndex(config.EMBEDDING_DIM, config.ANNOY_METRIC)
-        core_lookup = {}
-        
-        idx = 0
-        for method_key in core_labeled_methods.keys():
-            if method_key in combined_embeddings:
-                core_index.add_item(idx, combined_embeddings[method_key])
-                core_lookup[idx] = method_key
-                idx += 1
-        
-        if idx == 0:
-            if verbose:
-                print(f"   ⚠️ No embeddings found for core labeled methods")
-            return group_predictions
-        
-        core_index.build(config.ANNOY_N_TREES)
-        
         # Propagate to each target service with adaptive thresholding
         for target_service in available_target_services:
             target_methods = [(target_service.lower(), method) for method in self.data_manager.service_methods[target_service]]
             service_predictions = {}
+            
+            # Create a copy of core labeled methods that will be updated with new predictions
+            temp_labeled_methods = core_labeled_methods.copy()
+            
+            # Build initial index with core labeled methods
+            core_index = AnnoyIndex(config.EMBEDDING_DIM, config.ANNOY_METRIC)
+            core_lookup = {}
+            
+            idx = 0
+            for method_key in temp_labeled_methods.keys():
+                if method_key in combined_embeddings:
+                    core_index.add_item(idx, combined_embeddings[method_key])
+                    core_lookup[idx] = method_key
+                    idx += 1
+            
+            if idx == 0:
+                if verbose:
+                    print(f"   ⚠️ No embeddings found for {target_service}")
+                continue
+            
+            core_index.build(config.ANNOY_N_TREES)
             
             # Adaptive threshold for this service
             current_threshold = threshold
@@ -409,16 +412,15 @@ class LabelPropagator:
                 print(f"   🎯 {target_service}: {len(unlabeled_methods)} methods to predict")
             
             iterations = 0
-            max_iterations = 5
             
-            while unlabeled_methods and iterations < max_iterations:
+            while unlabeled_methods:
                 iteration_predictions = {}
                 
                 for method_key in unlabeled_methods:
                     if method_key in combined_embeddings:
                         embedding = combined_embeddings[method_key]
                         
-                        # Get neighbors from core services
+                        # Get neighbors from current labeled set (includes newly labeled)
                         neighbor_indices = core_index.get_nns_by_vector(embedding, k)
                         
                         # Calculate similarities
@@ -438,7 +440,7 @@ class LabelPropagator:
                                 label_weights = defaultdict(float)
                                 label_counts = defaultdict(int)
                                 for neighbor_key, similarity in valid_neighbors:
-                                    label = core_labeled_methods[neighbor_key]
+                                    label = temp_labeled_methods[neighbor_key]
                                     label_weights[label] += similarity
                                     label_counts[label] += 1
                                 
@@ -449,33 +451,63 @@ class LabelPropagator:
                                 
                                 # Accept if confidence meets minimum
                                 if confidence >= min_confidence:
-                                    iteration_predictions[method_key[1]] = {
+                                    iteration_predictions[method_key] = {
                                         'label': predicted_label,
                                         'confidence': confidence,
                                         'similarity': max_similarity,
                                         'core_neighbors': [f"{nk[0]}.{nk[1]}" for nk, _ in valid_neighbors[:3]],
                                         'threshold_used': current_threshold,
-                                        'group': group_name
+                                        'group': group_name,
+                                        'iteration': iterations + 1
                                     }
                 
-                # Update predictions and unlabeled list
+                # Update predictions and labeled methods
                 if iteration_predictions:
-                    service_predictions.update(iteration_predictions)
+                    # Add to service predictions (only store method name as key)
+                    for method_key, pred_data in iteration_predictions.items():
+                        service_predictions[method_key[1]] = pred_data
+                        # Add to temporary labeled methods for next iteration
+                        temp_labeled_methods[method_key] = pred_data['label']
+                    
+                    # Rebuild index with newly labeled methods
+                    core_index = AnnoyIndex(config.EMBEDDING_DIM, config.ANNOY_METRIC)
+                    core_lookup = {}
+                    idx = 0
+                    for method_key in temp_labeled_methods.keys():
+                        if method_key in combined_embeddings:
+                            core_index.add_item(idx, combined_embeddings[method_key])
+                            core_lookup[idx] = method_key
+                            idx += 1
+                    core_index.build(config.ANNOY_N_TREES)
+                    
+                    # Update unlabeled list
                     unlabeled_methods = [m for m in unlabeled_methods 
                                         if m[1] not in service_predictions]
-                
-                # Lower threshold for next iteration
-                if not iteration_predictions and current_threshold > min_threshold:
-                    current_threshold = max(min_threshold, current_threshold - 0.1)
+                    
+                    if verbose:
+                        print(f"      Iteration {iterations+1}: {len(iteration_predictions)} predictions (threshold: {current_threshold:.2f})")
                 else:
-                    break
+                    # No predictions made at current threshold, try lowering threshold
+                    if current_threshold > min_threshold + 0.01:  # Small epsilon to avoid float comparison issues
+                        current_threshold = max(min_threshold, current_threshold - 0.1)
+                        if verbose:
+                            print(f"      Lowering threshold to {current_threshold:.2f}")
+                    else:
+                        if verbose:
+                            print(f"      Minimum threshold reached ({min_threshold:.2f})")
+                        break
                 
                 iterations += 1
             
             if service_predictions:
                 group_predictions[target_service.lower()] = service_predictions
                 if verbose:
+                    remaining_count = len(unlabeled_methods)
                     print(f"      ✅ {len(service_predictions)} predictions")
+                    if remaining_count > 0:
+                        print(f"      ⚠️ {remaining_count} methods remain unlabeled")
+            elif verbose and unlabeled_methods:
+                print(f"      ❌ No predictions made ({len(unlabeled_methods)} methods remain unlabeled)")
         
         return group_predictions
 
@@ -593,9 +625,8 @@ class LabelPropagator:
             
             current_threshold = threshold
             iterations = 0
-            max_iterations = 3  # Fewer iterations for all-to-all
             
-            while unlabeled_methods and iterations < max_iterations:
+            while unlabeled_methods:
                 iteration_predictions = {}
                 
                 for method_key in unlabeled_methods:
@@ -647,19 +678,33 @@ class LabelPropagator:
                     service_predictions.update(iteration_predictions)
                     unlabeled_methods = [m for m in unlabeled_methods 
                                         if m[1] not in service_predictions]
+                    if verbose:
+                        print(f"      Iteration {iterations+1}: {len(iteration_predictions)} predictions (threshold: {current_threshold:.2f})")
                 
-                # Lower threshold for next iteration
-                if not iteration_predictions and current_threshold > min_threshold:
-                    current_threshold = max(min_threshold, current_threshold - 0.1)
-                else:
-                    break
+                # Decide whether to continue or lower threshold
+                if not unlabeled_methods:
+                    break  # All methods labeled
+                elif not iteration_predictions:
+                    # No predictions made, try lowering threshold
+                    if current_threshold > min_threshold:
+                        current_threshold = max(min_threshold, current_threshold - 0.1)
+                        if verbose:
+                            print(f"      Lowering threshold to {current_threshold:.2f}")
+                    else:
+                        break  # Minimum threshold reached
+                # Otherwise continue with same threshold to label remaining methods
                 
                 iterations += 1
             
             if service_predictions:
                 all_predictions[target_service.lower()] = service_predictions
                 if verbose:
+                    remaining_count = len(unlabeled_methods)
                     print(f"      ✅ {len(service_predictions)} predictions")
+                    if remaining_count > 0:
+                        print(f"      ⚠️ {remaining_count} methods remain unlabeled")
+            elif verbose and len(unlabeled_methods) > 0:
+                print(f"      ❌ No predictions made ({len(unlabeled_methods)} methods remain unlabeled)")
         
         if verbose:
             total = sum(len(pred) for pred in all_predictions.values())

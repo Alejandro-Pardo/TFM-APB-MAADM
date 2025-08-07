@@ -219,6 +219,9 @@ class DataManager:
         else:
             output_data = serializable_predictions
         
+        # Ensure output directory exists
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=2)
         
