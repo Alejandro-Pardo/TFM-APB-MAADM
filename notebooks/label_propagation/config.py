@@ -14,10 +14,11 @@ SUMMARIES_DIR = Path(".") / "summaries"
 
 # Output files
 WITHIN_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "within_service_predictions.json"
-CROSS_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "cross_service_predictions.json"
-GROUP_CROSS_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "group_cross_service_predictions.json"
+GROUP_CROSS_SERVICE_PRELABELED_FILE = PREDICTIONS_DIR / "group_cross_service_prelabeled_only.json"
+GROUP_CROSS_SERVICE_ENHANCED_FILE = PREDICTIONS_DIR / "group_cross_service_enhanced.json"
 ALL_TO_ALL_CROSS_SERVICE_PREDICTIONS_FILE = PREDICTIONS_DIR / "all_to_all_cross_service_predictions.json"
 CROSS_SERVICE_COMPARISON_FILE = SUMMARIES_DIR / "cross_service_comparison.json"
+GROUP_COMPARISON_FILE = SUMMARIES_DIR / "group_methods_comparison.json"
 PROPAGATION_SUMMARY_FILE = SUMMARIES_DIR / "propagation_summary.json"
 VISUALIZATION_SUMMARY_FILE = SUMMARIES_DIR / "visualization_summary.json"
 

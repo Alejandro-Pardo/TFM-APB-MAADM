@@ -417,3 +417,157 @@ class Evaluator:
             print("   Review disagreement_details in the returned comparison stats for specific conflicts")
         
         return comparison_stats
+
+
+    def compare_group_methods(self, prelabeled_predictions: Dict, enhanced_predictions: Dict) -> Dict:
+        """
+        Compare group-based cross-service predictions using only prelabeled data vs enhanced with within-service predictions.
+        
+        Args:
+            prelabeled_predictions: Results from group-based cross-service propagation using only prelabeled data
+            enhanced_predictions: Results from group-based cross-service propagation enhanced with within-service predictions
+            
+        Returns:
+            Dictionary with comparison statistics
+        """
+        
+        comparison_stats = {
+            'agreement_stats': {},
+            'disagreement_details': {},
+            'coverage_comparison': {},
+            'confidence_comparison': {},
+            'enhancement_impact': {},
+            'summary': {}
+        }
+        
+        # Flatten both predictions for easier comparison
+        prelabeled_flat = {}
+        for group_name, group_data in prelabeled_predictions.items():
+            for service, service_predictions in group_data.items():
+                if service not in prelabeled_flat:
+                    prelabeled_flat[service] = {}
+                prelabeled_flat[service].update(service_predictions)
+        
+        enhanced_flat = {}
+        for group_name, group_data in enhanced_predictions.items():
+            for service, service_predictions in group_data.items():
+                if service not in enhanced_flat:
+                    enhanced_flat[service] = {}
+                enhanced_flat[service].update(service_predictions)
+        
+        # Compare each service
+        for service in set(list(prelabeled_flat.keys()) + list(enhanced_flat.keys())):
+            prelabeled_preds = prelabeled_flat.get(service, {})
+            enhanced_preds = enhanced_flat.get(service, {})
+            
+            # Find common methods
+            common_methods = set(prelabeled_preds.keys()) & set(enhanced_preds.keys())
+            
+            if common_methods:
+                agreements = 0
+                disagreements = []
+                prelabeled_confidences = []
+                enhanced_confidences = []
+                
+                for method in common_methods:
+                    prelabeled_pred = prelabeled_preds[method]
+                    enhanced_pred = enhanced_preds[method]
+                    
+                    prelabeled_label = prelabeled_pred['label'] if isinstance(prelabeled_pred, dict) else prelabeled_pred
+                    enhanced_label = enhanced_pred['label'] if isinstance(enhanced_pred, dict) else enhanced_pred
+                    
+                    if prelabeled_label == enhanced_label:
+                        agreements += 1
+                    else:
+                        disagreements.append({
+                            'method': method,
+                            'prelabeled_prediction': prelabeled_label,
+                            'enhanced_prediction': enhanced_label,
+                            'prelabeled_confidence': prelabeled_pred.get('confidence', 0) if isinstance(prelabeled_pred, dict) else 0,
+                            'enhanced_confidence': enhanced_pred.get('confidence', 0) if isinstance(enhanced_pred, dict) else 0
+                        })
+                    
+                    if isinstance(prelabeled_pred, dict) and 'confidence' in prelabeled_pred:
+                        prelabeled_confidences.append(prelabeled_pred['confidence'])
+                    if isinstance(enhanced_pred, dict) and 'confidence' in enhanced_pred:
+                        enhanced_confidences.append(enhanced_pred['confidence'])
+                
+                agreement_rate = agreements / len(common_methods) if common_methods else 0
+                
+                comparison_stats['agreement_stats'][service] = {
+                    'total_common_methods': len(common_methods),
+                    'agreements': agreements,
+                    'disagreements': len(disagreements),
+                    'agreement_rate': agreement_rate
+                }
+                
+                comparison_stats['disagreement_details'][service] = disagreements
+                
+                comparison_stats['confidence_comparison'][service] = {
+                    'prelabeled_avg_confidence': np.mean(prelabeled_confidences) if prelabeled_confidences else 0,
+                    'enhanced_avg_confidence': np.mean(enhanced_confidences) if enhanced_confidences else 0
+                }
+            
+            # Coverage comparison
+            prelabeled_only = set(prelabeled_preds.keys()) - set(enhanced_preds.keys())
+            enhanced_only = set(enhanced_preds.keys()) - set(prelabeled_preds.keys())
+            common = set(prelabeled_preds.keys()) & set(enhanced_preds.keys())
+            
+            comparison_stats['coverage_comparison'][service] = {
+                'prelabeled_predictions': len(prelabeled_preds),
+                'enhanced_predictions': len(enhanced_preds),
+                'prelabeled_only': len(prelabeled_only),
+                'enhanced_only': len(enhanced_only),
+                'common_methods': len(common)
+            }
+            
+            # Enhancement impact (how much did within-service labels help?)
+            improvement = len(enhanced_preds) - len(prelabeled_preds)
+            improvement_rate = improvement / len(prelabeled_preds) if len(prelabeled_preds) > 0 else float('inf') if len(enhanced_preds) > 0 else 0
+            
+            comparison_stats['enhancement_impact'][service] = {
+                'additional_predictions': improvement,
+                'improvement_rate': improvement_rate,
+                'prelabeled_only_methods': list(prelabeled_only),
+                'enhanced_only_methods': list(enhanced_only)
+            }
+        
+        # Overall summary
+        total_agreements = sum(stats['agreements'] for stats in comparison_stats['agreement_stats'].values())
+        total_common = sum(stats['total_common_methods'] for stats in comparison_stats['agreement_stats'].values())
+        overall_agreement = total_agreements / total_common if total_common > 0 else 0
+        
+        total_prelabeled_predictions = sum(len(preds) for preds in prelabeled_flat.values())
+        total_enhanced_predictions = sum(len(preds) for preds in enhanced_flat.values())
+        total_improvement = total_enhanced_predictions - total_prelabeled_predictions
+        
+        comparison_stats['summary'] = {
+            'overall_agreement_rate': overall_agreement,
+            'total_common_predictions': total_common,
+            'total_agreements': total_agreements,
+            'total_disagreements': total_common - total_agreements,
+            'prelabeled_total_predictions': total_prelabeled_predictions,
+            'enhanced_total_predictions': total_enhanced_predictions,
+            'total_additional_predictions': total_improvement,
+            'overall_improvement_rate': total_improvement / total_prelabeled_predictions if total_prelabeled_predictions > 0 else 0
+        }
+        
+        # Print summary
+        print(f"📊 Group Methods Comparison Summary")
+        print(f"🤝 Overall Agreement Rate: {overall_agreement:.3f}")
+        print(f"📈 Prelabeled-only predictions: {total_prelabeled_predictions}")
+        print(f"🚀 Enhanced predictions: {total_enhanced_predictions}")
+        print(f"⬆️  Additional predictions: {total_improvement} ({total_improvement/total_prelabeled_predictions*100:.1f}% improvement)")
+        
+        print("\n📋 Service-level Agreement Rates:")
+        for service, stats in comparison_stats['agreement_stats'].items():
+            enhancement = comparison_stats['enhancement_impact'][service]
+            print(f"   • {service}: {stats['agreement_rate']:.3f} "
+                  f"({stats['agreements']}/{stats['total_common_methods']}) | "
+                  f"+{enhancement['additional_predictions']} predictions")
+        
+        if total_common - total_agreements > 0:
+            print(f"\n⚠️  Found {total_common - total_agreements} disagreements across all services")
+            print("   Review disagreement_details in the returned comparison stats for specific conflicts")
+        
+        return comparison_stats

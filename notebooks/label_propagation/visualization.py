@@ -191,23 +191,36 @@ def plot_similarity_vs_confidence(predictions: Dict[str, Dict[str, Any]],
     plt.tight_layout()
     plt.show()
 
-
-def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14, 8)) -> None:
+def plot_comparison(comparison_results: Dict, 
+                   comparison_type: str = 'cross_service', 
+                   figsize: tuple = (14, 8)) -> None:
     """
-    Create bar charts comparing group-based and all-to-all cross-service predictions.
+    Unified function to visualize comparison results for cross-service or group methods analysis.
     
     Args:
-        comparison_results: Results from compare_cross_service_predictions
+        comparison_results: Results dictionary from comparison functions
+        comparison_type: 'cross_service' or 'group_methods'
         figsize: Figure size tuple
     """
+    # Validate comparison type
+    valid_types = ['cross_service', 'group_methods']
+    if comparison_type not in valid_types:
+        raise ValueError(f"Invalid comparison_type. Must be one of {valid_types}")
+    
+    # Handle empty results
     if not comparison_results:
         print("❌ No comparison data available for visualization")
         return
     
+    # Setup figure and title
     fig, axes = plt.subplots(2, 2, figsize=figsize)
-    fig.suptitle('Cross-Service Prediction Comparison', fontsize=16, fontweight='bold')
+    title = ('Cross-Service Prediction Comparison' if comparison_type == 'cross_service'
+             else 'Group Methods Comparison: Prelabeled vs Enhanced')
+    fig.suptitle(title, fontsize=16, fontweight='bold')
     
-    # 1. Agreement rates by service (only for services with common predictions)
+    # ========================
+    # 1. Agreement Rates Plot
+    # ========================
     ax1 = axes[0, 0]
     agreement_stats = comparison_results.get('agreement_stats', {})
     
@@ -218,13 +231,13 @@ def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14
         colors = ['green' if rate >= 0.8 else 'orange' if rate >= 0.6 else 'red' 
                   for rate in agreement_rates]
         
-        bars = ax1.bar(range(len(agreement_services)), agreement_rates, color=colors, alpha=0.7)
+        ax1.bar(range(len(agreement_services)), agreement_rates, color=colors, alpha=0.7)
         ax1.set_xticks(range(len(agreement_services)))
         ax1.set_xticklabels(agreement_services, rotation=45, ha='right', fontsize=8)
         ax1.set_ylabel('Agreement Rate')
         ax1.set_title('Agreement Rates by Service')
-        ax1.axhline(y=0.8, color='green', linestyle='--', alpha=0.5, label='Good (≥0.8)')
-        ax1.axhline(y=0.6, color='orange', linestyle='--', alpha=0.5, label='Fair (≥0.6)')
+        ax1.axhline(0.8, color='green', linestyle='--', alpha=0.5, label='Good (≥0.8)')
+        ax1.axhline(0.6, color='orange', linestyle='--', alpha=0.5, label='Fair (≥0.6)')
         ax1.set_ylim(0, 1.1)
         ax1.legend(loc='lower right', fontsize=9)
         ax1.grid(True, alpha=0.3, axis='y')
@@ -233,22 +246,32 @@ def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14
                 ha='center', va='center', transform=ax1.transAxes)
         ax1.set_title('Agreement Rates by Service')
     
-    # 2. Coverage comparison (for all services)
+    # =============================
+    # 2. Coverage Comparison Plot
+    # =============================
     ax2 = axes[0, 1]
     coverage_stats = comparison_results.get('coverage_comparison', {})
     
+    # Determine labels and data keys based on comparison type
+    if comparison_type == 'cross_service':
+        label1, label2 = 'Group-based', 'All-to-all'
+        key1, key2 = 'group_predictions', 'all_to_all_predictions'
+    else:  # group_methods
+        label1, label2 = 'Prelabeled Only', 'Enhanced'
+        key1, key2 = 'prelabeled_predictions', 'enhanced_predictions'
+    
     if coverage_stats:
-        coverage_services = list(coverage_stats.keys())[:20]  # Limit to 20 services for readability
+        coverage_services = list(coverage_stats.keys())[:20]  # Limit to 20 services
         coverage_data = {s: coverage_stats[s] for s in coverage_services}
         
-        group_coverage = [coverage_data[s]['group_predictions'] for s in coverage_services]
-        all_to_all_coverage = [coverage_data[s]['all_to_all_predictions'] for s in coverage_services]
+        values1 = [coverage_data[s][key1] for s in coverage_services]
+        values2 = [coverage_data[s][key2] for s in coverage_services]
         
         x = np.arange(len(coverage_services))
         width = 0.35
         
-        ax2.bar(x - width/2, group_coverage, width, label='Group-based', color='steelblue', alpha=0.8)
-        ax2.bar(x + width/2, all_to_all_coverage, width, label='All-to-all', color='coral', alpha=0.8)
+        ax2.bar(x - width/2, values1, width, label=label1, color='steelblue', alpha=0.8)
+        ax2.bar(x + width/2, values2, width, label=label2, color='coral', alpha=0.8)
         
         ax2.set_xticks(x)
         ax2.set_xticklabels(coverage_services, rotation=45, ha='right', fontsize=8)
@@ -259,23 +282,45 @@ def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14
     else:
         ax2.text(0.5, 0.5, 'No coverage data available', 
                 ha='center', va='center', transform=ax2.transAxes)
-        ax2.set_title('Prediction Coverage by Method')
+        ax2.set_title(f'Prediction Coverage: {label1} vs {label2}')
     
-    # 3. Label distribution in disagreements
+    # ====================================
+    # 3. Confusion Matrix (Row 1, Column 0)
+    # ====================================
     ax3 = axes[1, 0]
-    disagreement_details = comparison_results.get('disagreement_details', {})
     
+    # Both comparison types will now use confusion matrix
+    disagreement_details = comparison_results.get('disagreement_details', {})
     label_disagreements = defaultdict(lambda: defaultdict(int))
     total_disagreements = 0
     
-    for service, disagreements in disagreement_details.items():
-        if isinstance(disagreements, list):
-            for disagreement in disagreements:
-                if isinstance(disagreement, dict) and 'group_prediction' in disagreement and 'all_to_all_prediction' in disagreement:
-                    group_label = disagreement['group_prediction']
-                    all_label = disagreement['all_to_all_prediction']
-                    label_disagreements[group_label][all_label] += 1
-                    total_disagreements += 1
+    if comparison_type == 'cross_service':
+        # Cross-service confusion matrix
+        for service, disagreements in disagreement_details.items():
+            if isinstance(disagreements, list):
+                for d in disagreements:
+                    if isinstance(d, dict) and 'group_prediction' in d and 'all_to_all_prediction' in d:
+                        group_label = d['group_prediction']
+                        all_label = d['all_to_all_prediction']
+                        label_disagreements[group_label][all_label] += 1
+                        total_disagreements += 1
+        
+        xlabel = 'All-to-all Prediction'
+        ylabel = 'Group-based Prediction'
+        
+    else:  # group_methods
+        # Group methods confusion matrix
+        for service, disagreements in disagreement_details.items():
+            if isinstance(disagreements, list):
+                for d in disagreements:
+                    if isinstance(d, dict) and 'prelabeled_prediction' in d and 'enhanced_prediction' in d:
+                        prelabeled_label = d['prelabeled_prediction']
+                        enhanced_label = d['enhanced_prediction']
+                        label_disagreements[prelabeled_label][enhanced_label] += 1
+                        total_disagreements += 1
+        
+        xlabel = 'Enhanced Prediction'
+        ylabel = 'Prelabeled Prediction'
     
     if total_disagreements > 0:
         labels = ['none', 'sink', 'source']
@@ -290,16 +335,16 @@ def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14
         ax3.set_yticks(np.arange(len(labels)))
         ax3.set_xticklabels(labels)
         ax3.set_yticklabels(labels)
-        ax3.set_xlabel('All-to-all Prediction')
-        ax3.set_ylabel('Group-based Prediction')
+        ax3.set_xlabel(xlabel)
+        ax3.set_ylabel(ylabel)
         ax3.set_title(f'Label Disagreement Matrix ({total_disagreements} total)')
         
-        # Add text annotations
+        # Annotations
         for i in range(len(labels)):
             for j in range(len(labels)):
                 if matrix[i, j] > 0:
-                    text = ax3.text(j, i, int(matrix[i, j]),
-                                   ha="center", va="center", color="black", fontweight='bold')
+                    ax3.text(j, i, int(matrix[i, j]), ha="center", va="center", 
+                            color="black", fontweight='bold')
         
         plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
     else:
@@ -309,23 +354,27 @@ def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14
         ax3.set_xticks([])
         ax3.set_yticks([])
     
-    # 4. Summary statistics
+    # ====================
+    # 4. Summary Statistics
+    # ====================
     ax4 = axes[1, 1]
     ax4.axis('off')
-    
     summary = comparison_results.get('summary', {})
     
-    # Calculate agreement quality stats only if we have agreement data
+    # Agreement quality stats
     agreement_quality_text = ""
+    agreement_stats = comparison_results.get('agreement_stats', {})
     if agreement_stats:
-        agreement_rates_list = [stats['agreement_rate'] for stats in agreement_stats.values()]
+        agreement_rates = [stats['agreement_rate'] for stats in agreement_stats.values()]
         agreement_quality_text = f"""
     Agreement Quality:
-    • Excellent (≥80%): {sum(1 for rate in agreement_rates_list if rate >= 0.8)} services
-    • Fair (60-80%): {sum(1 for rate in agreement_rates_list if 0.6 <= rate < 0.8)} services
-    • Poor (<60%): {sum(1 for rate in agreement_rates_list if rate < 0.6)} services"""
+    • Excellent (≥80%): {sum(1 for rate in agreement_rates if rate >= 0.8)} services
+    • Fair (60-80%): {sum(1 for rate in agreement_rates if 0.6 <= rate < 0.8)} services
+    • Poor (<60%): {sum(1 for rate in agreement_rates if rate < 0.6)} services"""
     
-    summary_text = f"""
+    # Type-specific summary
+    if comparison_type == 'cross_service':
+        summary_text = f"""
     Overall Agreement: {summary.get('overall_agreement_rate', 0):.1%}
     
     Total Common Methods: {summary.get('total_common_predictions', 0)}
@@ -336,13 +385,31 @@ def plot_cross_service_comparison(comparison_results: Dict, figsize: tuple = (14
     All-to-all Total: {summary.get('all_to_all_total_predictions', 0)}
     {agreement_quality_text}
     """
+        bbox_color = 'wheat'
+    else:  # group_methods
+        total_improvement = summary.get('total_additional_predictions', 0)
+        improvement_rate = summary.get('overall_improvement_rate', 0)
+        summary_text = f"""
+    Overall Agreement: {summary.get('overall_agreement_rate', 0):.1%}
     
-    ax4.text(0.1, 0.5, summary_text, transform=ax4.transAxes,
-            fontsize=11, verticalalignment='center',
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    Total Common Methods: {summary.get('total_common_predictions', 0)}
+    Total Agreements: {summary.get('total_agreements', 0)}
+    Total Disagreements: {summary.get('total_disagreements', 0)}
+    
+    Prelabeled Total: {summary.get('prelabeled_total_predictions', 0)}
+    Enhanced Total: {summary.get('enhanced_total_predictions', 0)}
+    Additional Predictions: {total_improvement} (+{improvement_rate:.1%})
+    {agreement_quality_text}
+    """
+        bbox_color = 'lightgreen'
+    
+    ax4.text(0.5, 0.5, summary_text, transform=ax4.transAxes,
+             fontsize=10, va='center', ha='center',
+             bbox=dict(boxstyle='round', facecolor=bbox_color, alpha=0.7))
     ax4.set_title('Summary Statistics')
     
     plt.tight_layout()
+    plt.subplots_adjust(top=0.92)  # Adjust for suptitle
     plt.show()
 
 

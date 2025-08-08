@@ -2,14 +2,14 @@
 
 import json
 import numpy as np
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Union, Any
 from sklearn.metrics.pairwise import cosine_similarity
 from collections import defaultdict
 from annoy import AnnoyIndex
 import config
 
 
-class LabelPropagator:
+class BaseLabelPropagator:
     def __init__(self, data_manager):
         """
         Initialize the label propagator.
@@ -46,6 +46,26 @@ class LabelPropagator:
         neighbors_with_sims.sort(key=lambda x: x[1], reverse=True)
         return neighbors_with_sims[:k]
     
+    def _save_history_to_file(self, history):
+        """Save iteration history to JSON file."""
+        try:
+            history_file = config.HISTORY_FILE
+            if history_file.exists():
+                with open(history_file, 'r') as f:
+                    all_history = json.load(f)
+            else:
+                all_history = {}
+            
+            all_history[history['service']] = history
+            
+            with open(history_file, 'w') as f:
+                json.dump(all_history, f, indent=2, default=str)
+            
+        except Exception as e:
+            print(f"⚠️ Failed to save history: {e}")
+
+
+class WithinServiceLabelPropagator(BaseLabelPropagator):
     def propagate_within_service(self, service: str, k: int = 5, threshold: float = 0.7, 
                             max_iterations: int = 10, min_confidence: float = 0.5, 
                             min_threshold: float = 0.1, save_history: bool = False,
@@ -253,24 +273,6 @@ class LabelPropagator:
         
         return predictions
 
-    def _save_history_to_file(self, history):
-        """Save iteration history to JSON file."""
-        try:
-            history_file = config.HISTORY_FILE
-            if history_file.exists():
-                with open(history_file, 'r') as f:
-                    all_history = json.load(f)
-            else:
-                all_history = {}
-            
-            all_history[history['service']] = history
-            
-            with open(history_file, 'w') as f:
-                json.dump(all_history, f, indent=2, default=str)
-            
-        except Exception as e:
-            print(f"⚠️ Failed to save history: {e}")
-
     def propagate_all_services(self, k: int = 5, threshold: float = 0.7, 
                             max_iterations: int = 5, min_confidence: float = 0.5, 
                             min_threshold: float = 0.1, save_history: bool = False,
@@ -296,6 +298,8 @@ class LabelPropagator:
         
         return all_predictions
 
+
+class CrossServiceLabelPropagator(BaseLabelPropagator):
     def propagate_group_cross_service(self, group_name: str, group_config: Dict, 
                                     k: int = 5, threshold: float = 0.6,
                                     min_threshold: float = 0.3, min_confidence: float = 0.5,
