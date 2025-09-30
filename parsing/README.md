@@ -17,54 +17,57 @@ The application is structured into several focused modules:
 ### Core Modules
 
 - **`main.py`** - Main entry point and orchestration
-- **`config.py`** - Configuration management and logging setup
-- **`utils.py`** - Utility functions including timeout decorators and HTML preprocessing
-- **`checkpoint_manager.py`** - Progress tracking and resumable processing
-- **`description_cleaner.py`** - Text cleaning and formatting utilities
-- **`parsers/method_parser.py`** - Individual method documentation parsing
-- **`parsers/service_parser.py`** - Service documentation parsing (formerly parse_each_service.py)
-- **`parsers/service_url_parser.py`** - Service URL extraction (formerly parse_available_services.py)
 - **`service_processor.py`** - Service-level processing coordination
+- **`utils/config.py`** - Configuration management and logging setup
+- **`utils/checkpoint_manager.py`** - Progress tracking and resumable processing
+- **`utils/text_cleaner.py`** - Text cleaning and formatting utilities (DescriptionCleaner class)
+- **`utils/timeout.py`** - Timeout decorators and timeout exception handling
+- **`parsers/method_parser.py`** - Individual method documentation parsing
+- **`parsers/service_parser.py`** - Service documentation parsing
+- **`parsers/service_url_parser.py`** - Service URL extraction
 
 ### Module Dependencies
 
 ```
 main.py
-├── config.py
-├── checkpoint_manager.py
+├── utils/config.py
+├── utils/checkpoint_manager.py
 └── service_processor.py
     └── parsers/
         ├── method_parser.py
-        │   ├── description_cleaner.py
-        │   └── utils.py
+        │   ├── utils/text_cleaner.py
+        │   ├── utils/timeout.py
+        │   └── utils/config.py
         ├── service_parser.py
+        │   └── utils/text_cleaner.py
         └── service_url_parser.py
 ```
 
 ## Features
 
 ### Robust Processing
-- **Timeout Protection**: Prevents hanging on slow or unresponsive pages
-- **Retry Logic**: Handles temporary network issues and rate limiting
-- **Progress Tracking**: Checkpoint system allows resuming interrupted processing
-- **Error Handling**: Comprehensive error logging and failure tracking
+- **Timeout Protection**: Function-level timeouts using threading to prevent hanging
+- **HTTP Retry Logic**: Built-in retry mechanisms for network requests
+- **Progress Tracking**: Checkpoint system with resumable processing from interruptions
+- **Error Handling**: Comprehensive logging with clean console output and detailed file logs
 
 ### Data Extraction
-- **Method Information**: Complete method signatures and descriptions
-- **Parameter Analysis**: Detailed parameter specifications including types and requirements
-- **Return Structures**: Hierarchical return value documentation
-- **Text Cleaning**: Advanced text processing to handle encoding issues and duplicates
+- **Method Information**: Complete method signatures, descriptions, and documentation URLs
+- **Parameter Analysis**: Hierarchical parameter structures with types, requirements, and descriptions
+- **Return Structures**: Detailed return value documentation with nested item support
+- **Text Cleaning**: Advanced text processing using DescriptionCleaner for encoding and duplicate removal
 
 ### Scalability
-- **Modular Design**: Easy to extend and modify individual components
-- **Memory Efficient**: Processes services individually to minimize memory usage
-- **Rate Limiting**: Respectful scraping with configurable delays
+- **Modular Design**: Clean separation with utils/, parsers/, and core processing modules
+- **Memory Efficient**: Individual service processing to minimize memory footprint
+- **Rate Limiting**: Configurable delays between requests and services
+- **Graceful Interruption**: Keyboard interrupt handling with progress preservation
 
 ## Installation
 
 ### Requirements
 
-Create a `requirements.txt` file with the following dependencies:
+The project has a comprehensive `requirements.txt` file located in the project root. The main parsing dependencies include:
 
 ```
 requests>=2.31.0
@@ -73,11 +76,13 @@ tqdm>=4.65.0
 urllib3>=2.0.0
 ```
 
-Install dependencies:
+Install dependencies from the project root:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+**Note**: The project includes many additional dependencies for machine learning and data processing components beyond the parsing module.
 
 ### Setup
 
@@ -86,19 +91,21 @@ pip install -r requirements.txt
    ```
    parsing/
    ├── main.py
-   ├── config.py
+   ├── service_processor.py
+   ├── checkpoint.json         # Created after first run
+   ├── parser.log             # Created after first run
    ├── utils/
-   │   ├── checkpoint_manager.py
+   │   ├── __init__.py
    │   ├── config.py
+   │   ├── checkpoint_manager.py
    │   ├── text_cleaner.py
-   │   └── utils.py
+   │   └── timeout.py
    ├── parsers/
+   │   ├── __init__.py
    │   ├── method_parser.py
    │   ├── service_parser.py
    │   └── service_url_parser.py
-   ├── service_processor.py
-   ├── main.py
-   └── requirements.txt
+   └── __pycache__/          # Created during execution
    ```
 
 ## Usage
@@ -113,19 +120,21 @@ python main.py
 
 ### Configuration
 
-Modify `config.py` to adjust default settings:
+Modify `utils/config.py` to adjust default settings:
 
 ```python
 DEFAULT_CONFIG = {
-    'services_folder': "../docs/services",      # Input folder with service JSON files
-    'output_folder': "../docs/methods",        # Output folder for parsed methods
-    'checkpoint_file': "checkpoint.json",      # Checkpoint file for progress tracking
+    'services_folder': os.path.join(_project_root, "docs", "services"),
+    'output_folder': os.path.join(_project_root, "docs", "methods"),
+    'checkpoint_file': os.path.join(_parsing_dir, "checkpoint.json"),
     'request_timeout': 50,                     # HTTP request timeout (seconds)
     'processing_timeout': 300,                 # Service processing timeout (seconds)
     'sleep_between_requests': 1.0,             # Delay between method requests (seconds)
-    'sleep_between_services': 2.0              # Delay between service processing (seconds)
+    'sleep_between_services': 0.5              # Delay between service processing (seconds)
 }
 ```
+
+**Note**: The configuration uses absolute paths calculated from the current file location for better reliability.
 
 ### Processing Single Service
 
@@ -213,14 +222,24 @@ An `all_services_summary.json` file provides a complete overview:
 }
 ```
 
+### Generated Files During Execution
+
+The parser creates several files during execution:
+
+- **`checkpoint.json`** - Progress tracking file for resumable processing
+- **`parser.log`** - Detailed log file with timestamps and full error traces
+- **`../docs/methods/[ServiceName]/`** - Individual method JSON files organized by service
+- **`../docs/methods/[ServiceName]/_summary.json`** - Service-level summary files
+- **`../docs/methods/all_services_summary.json`** - Complete processing overview
+
 ## Error Handling
 
 ### Failure Tracking
 
 Failed operations are logged to specific files:
-- `failed_methods.txt` - Methods that failed to process
-- `failed_services.txt` - Services that failed completely
-- `parser.log` - Detailed application logs
+- `parser.log` - Detailed application logs with timestamps
+- Output to `../docs/methods/` - Individual method JSON files and service summaries
+- Console output with progress bars and status updates
 
 ### Common Issues and Solutions
 
@@ -233,10 +252,11 @@ Failed operations are logged to specific files:
 
 ### Adding New Features
 
-1. **New Extractors**: Add methods to `MethodParser` class
-2. **Data Cleaning**: Extend `DescriptionCleaner` class
-3. **Processing Logic**: Modify `ServiceProcessor` class
-4. **Configuration**: Add new settings to `config.py`
+1. **New Extractors**: Add methods to `MethodParser` class in `parsers/method_parser.py`
+2. **Data Cleaning**: Extend `DescriptionCleaner` class in `utils/text_cleaner.py`
+3. **Processing Logic**: Modify `ServiceProcessor` class in `service_processor.py`
+4. **Configuration**: Add new settings to `utils/config.py`
+5. **Timeout Handling**: Modify timeout decorators in `utils/timeout.py`
 
 ### Testing
 
@@ -250,17 +270,36 @@ result = parser.scrape_method_details(url, method_name)
 
 # Test service processing
 from service_processor import ServiceProcessor
-processor = ServiceProcessor(services_folder, output_folder)
+from utils.checkpoint_manager import CheckpointManager
+
+checkpoint_manager = CheckpointManager()
+processor = ServiceProcessor(services_folder, output_folder, checkpoint_manager)
 processor.process_service_file(service_file_path)
+
+# Test text cleaning
+from utils.text_cleaner import DescriptionCleaner
+cleaner = DescriptionCleaner()
+cleaned_text = cleaner.clean_description(raw_text)
 ```
 
 ### Logging
 
-The application uses structured logging with multiple levels:
-- `INFO`: General progress and status
-- `WARNING`: Recoverable issues
-- `ERROR`: Processing failures
-- `DEBUG`: Detailed debugging information (configure in `config.py`)
+The application uses a custom logging system with clean formatting:
+- **Console Output**: Clean formatting with emoji prefixes for better readability
+- **File Logging**: Detailed timestamped logs in `parser.log`
+- **Log Levels**: INFO, WARNING, ERROR, DEBUG (configure in `utils/config.py`)
+
+**Log Format Examples**:
+- Console: `[INFO] 📄 Processing service: AccessAnalyzer`
+- File: `2025-09-29 10:30:45 - INFO - Processing service: AccessAnalyzer`
+
+### Timeout Handling
+
+The application includes robust timeout protection:
+- **Function-level timeouts**: Using `@timeout(seconds)` decorator
+- **Request timeouts**: Configurable HTTP request timeouts
+- **Service processing timeouts**: 5-minute timeout per service
+- **Graceful handling**: TimeoutException for proper error handling
 
 ## Performance Considerations
 
