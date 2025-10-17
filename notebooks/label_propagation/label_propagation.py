@@ -638,21 +638,20 @@ class CrossServiceLabelPropagator(BaseLabelPropagator):
                         embedding = combined_embeddings[method_key]
                         
                         # Get neighbors from all labeled methods
-                        neighbor_indices = labeled_index.get_nns_by_vector(embedding, k * 2)  # Get more candidates
+                        neighbor_indices = labeled_index.get_nns_by_vector(embedding, k)
                         
-                        # Calculate similarities (excluding same service)
+                        # Calculate similarities
                         all_neighbors = []
                         for idx in neighbor_indices:
                             if idx in labeled_lookup:
                                 neighbor_key = labeled_lookup[idx]
-                                if neighbor_key[0] != target_service.lower():  # Skip same service
-                                    neighbor_embedding = combined_embeddings[neighbor_key]
-                                    similarity = cosine_similarity([embedding], [neighbor_embedding])[0][0]
-                                    all_neighbors.append((neighbor_key, similarity))
+                                neighbor_embedding = combined_embeddings[neighbor_key]
+                                similarity = cosine_similarity([embedding], [neighbor_embedding])[0][0]
+                                all_neighbors.append((neighbor_key, similarity))
                         
                         if all_neighbors:
-                            # Filter by threshold and take top k
-                            valid_neighbors = [(nk, sim) for nk, sim in all_neighbors if sim >= current_threshold][:k]
+                            # Filter by threshold
+                            valid_neighbors = [(nk, sim) for nk, sim in all_neighbors if sim >= current_threshold]
                             
                             if valid_neighbors:
                                 label_weights = defaultdict(float)
