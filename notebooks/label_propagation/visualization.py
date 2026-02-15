@@ -193,14 +193,15 @@ def plot_similarity_vs_confidence(predictions: Dict[str, Dict[str, Any]],
 
 def plot_comparison(comparison_results: Dict, 
                    comparison_type: str = 'cross_service', 
-                   figsize: tuple = (14, 8)) -> None:
+                   figsize: tuple = (10, 6)) -> None:
     """
     Unified function to visualize comparison results for cross-service or group methods analysis.
+    Creates separate plots instead of a single combined figure.
     
     Args:
         comparison_results: Results dictionary from comparison functions
         comparison_type: 'cross_service' or 'group_methods'
-        figsize: Figure size tuple
+        figsize: Figure size tuple for each individual plot
     """
     # Validate comparison type
     valid_types = ['cross_service', 'group_methods']
@@ -212,44 +213,57 @@ def plot_comparison(comparison_results: Dict,
         print("❌ No comparison data available for visualization")
         return
     
-    # Setup figure and title
-    fig, axes = plt.subplots(2, 2, figsize=figsize)
-    title = ('Cross-Service Prediction Comparison' if comparison_type == 'cross_service'
-             else 'Group Methods Comparison: Prelabeled vs Enhanced')
-    fig.suptitle(title, fontsize=16, fontweight='bold')
+    # Pastel color palette
+    pastel_colors = {
+        'green': '#B4E7B4',  # Pastel green
+        'orange': '#FFD4A3', # Pastel orange
+        'red': '#FFB4B4',    # Pastel red
+        'blue': '#A3C4E7',   # Pastel blue
+        'coral': '#FFB8A8',  # Pastel coral
+        'yellow': '#FFF4A3', # Pastel yellow
+        'purple': '#D4B4E7', # Pastel purple
+    }
+    
+    main_title = ('Cross-Service Prediction Comparison' if comparison_type == 'cross_service'
+                  else 'Group Methods Comparison: Prelabeled vs Enhanced')
     
     # ========================
     # 1. Agreement Rates Plot
     # ========================
-    ax1 = axes[0, 0]
+    fig1, ax1 = plt.subplots(figsize=figsize)
+    fig1.suptitle(f'{main_title}\nAgreement Rates by Service', fontsize=14, fontweight='bold')
+    
     agreement_stats = comparison_results.get('agreement_stats', {})
     
     if agreement_stats:
         agreement_services = list(agreement_stats.keys())
         agreement_rates = [stats['agreement_rate'] for stats in agreement_stats.values()]
         
-        colors = ['green' if rate >= 0.8 else 'orange' if rate >= 0.6 else 'red' 
-                  for rate in agreement_rates]
+        colors = [pastel_colors['green'] if rate >= 0.8 else 
+                  pastel_colors['orange'] if rate >= 0.6 else 
+                  pastel_colors['red'] for rate in agreement_rates]
         
-        ax1.bar(range(len(agreement_services)), agreement_rates, color=colors, alpha=0.7)
+        ax1.bar(range(len(agreement_services)), agreement_rates, color=colors, alpha=0.9, edgecolor='white', linewidth=1.5)
         ax1.set_xticks(range(len(agreement_services)))
-        ax1.set_xticklabels(agreement_services, rotation=45, ha='right', fontsize=8)
-        ax1.set_ylabel('Agreement Rate')
-        ax1.set_title('Agreement Rates by Service')
-        ax1.axhline(0.8, color='green', linestyle='--', alpha=0.5, label='Good (≥0.8)')
-        ax1.axhline(0.6, color='orange', linestyle='--', alpha=0.5, label='Fair (≥0.6)')
+        ax1.set_xticklabels(agreement_services, rotation=45, ha='right', fontsize=9)
+        ax1.set_ylabel('Agreement Rate', fontsize=11)
+        ax1.axhline(0.8, color='#4CAF50', linestyle='--', alpha=0.6, linewidth=2, label='Good (≥0.8)')
+        ax1.axhline(0.6, color='#FF9800', linestyle='--', alpha=0.6, linewidth=2, label='Fair (≥0.6)')
         ax1.set_ylim(0, 1.1)
-        ax1.legend(loc='lower right', fontsize=9)
-        ax1.grid(True, alpha=0.3, axis='y')
+        ax1.legend(loc='lower right', fontsize=10)
+        ax1.grid(True, alpha=0.2, axis='y', linestyle='--')
+        ax1.set_facecolor('#FAFAFA')
     else:
         ax1.text(0.5, 0.5, 'No common predictions found', 
-                ha='center', va='center', transform=ax1.transAxes)
-        ax1.set_title('Agreement Rates by Service')
+                ha='center', va='center', transform=ax1.transAxes, fontsize=12)
+    
+    plt.tight_layout()
+    plt.show()
     
     # =============================
     # 2. Coverage Comparison Plot
     # =============================
-    ax2 = axes[0, 1]
+    fig2, ax2 = plt.subplots(figsize=figsize)
     coverage_stats = comparison_results.get('coverage_comparison', {})
     
     # Determine labels and data keys based on comparison type
@@ -259,6 +273,8 @@ def plot_comparison(comparison_results: Dict,
     else:  # group_methods
         label1, label2 = 'Prelabeled Only', 'Enhanced'
         key1, key2 = 'prelabeled_predictions', 'enhanced_predictions'
+    
+    fig2.suptitle(f'{main_title}\nPrediction Coverage (Top 20 Services)', fontsize=14, fontweight='bold')
     
     if coverage_stats:
         coverage_services = list(coverage_stats.keys())[:20]  # Limit to 20 services
@@ -270,24 +286,26 @@ def plot_comparison(comparison_results: Dict,
         x = np.arange(len(coverage_services))
         width = 0.35
         
-        ax2.bar(x - width/2, values1, width, label=label1, color='steelblue', alpha=0.8)
-        ax2.bar(x + width/2, values2, width, label=label2, color='coral', alpha=0.8)
+        ax2.bar(x - width/2, values1, width, label=label1, color=pastel_colors['blue'], alpha=0.9, edgecolor='white', linewidth=1.5)
+        ax2.bar(x + width/2, values2, width, label=label2, color=pastel_colors['coral'], alpha=0.9, edgecolor='white', linewidth=1.5)
         
         ax2.set_xticks(x)
-        ax2.set_xticklabels(coverage_services, rotation=45, ha='right', fontsize=8)
-        ax2.set_ylabel('Number of Predictions')
-        ax2.set_title(f'Prediction Coverage (Top {len(coverage_services)} Services)')
-        ax2.legend()
-        ax2.grid(True, alpha=0.3, axis='y')
+        ax2.set_xticklabels(coverage_services, rotation=45, ha='right', fontsize=9)
+        ax2.set_ylabel('Number of Predictions', fontsize=11)
+        ax2.legend(fontsize=10)
+        ax2.grid(True, alpha=0.2, axis='y', linestyle='--')
+        ax2.set_facecolor('#FAFAFA')
     else:
         ax2.text(0.5, 0.5, 'No coverage data available', 
-                ha='center', va='center', transform=ax2.transAxes)
-        ax2.set_title(f'Prediction Coverage: {label1} vs {label2}')
+                ha='center', va='center', transform=ax2.transAxes, fontsize=12)
+    
+    plt.tight_layout()
+    plt.show()
     
     # ====================================
-    # 3. Confusion Matrix (Row 1, Column 0)
+    # 3. Confusion Matrix
     # ====================================
-    ax3 = axes[1, 0]
+    fig3, ax3 = plt.subplots(figsize=figsize)
     
     # Both comparison types will now use confusion matrix
     disagreement_details = comparison_results.get('disagreement_details', {})
@@ -322,6 +340,9 @@ def plot_comparison(comparison_results: Dict,
         xlabel = 'Enhanced Prediction'
         ylabel = 'Prelabeled Prediction'
     
+    fig3.suptitle(f'{main_title}\nLabel Disagreement Matrix ({total_disagreements} total)', 
+                  fontsize=14, fontweight='bold')
+    
     if total_disagreements > 0:
         labels = ['none', 'sink', 'source']
         matrix = np.zeros((len(labels), len(labels)))
@@ -330,34 +351,38 @@ def plot_comparison(comparison_results: Dict,
             for j, label2 in enumerate(labels):
                 matrix[i, j] = label_disagreements[label1][label2]
         
-        im = ax3.imshow(matrix, cmap='YlOrRd', aspect='auto', vmin=0)
+        # Use pastel colors for heatmap
+        im = ax3.imshow(matrix, cmap='YlOrRd', aspect='auto', vmin=0, alpha=0.7)
         ax3.set_xticks(np.arange(len(labels)))
         ax3.set_yticks(np.arange(len(labels)))
-        ax3.set_xticklabels(labels)
-        ax3.set_yticklabels(labels)
-        ax3.set_xlabel(xlabel)
-        ax3.set_ylabel(ylabel)
-        ax3.set_title(f'Label Disagreement Matrix ({total_disagreements} total)')
+        ax3.set_xticklabels(labels, fontsize=11)
+        ax3.set_yticklabels(labels, fontsize=11)
+        ax3.set_xlabel(xlabel, fontsize=11)
+        ax3.set_ylabel(ylabel, fontsize=11)
         
         # Annotations
         for i in range(len(labels)):
             for j in range(len(labels)):
                 if matrix[i, j] > 0:
                     ax3.text(j, i, int(matrix[i, j]), ha="center", va="center", 
-                            color="black", fontweight='bold')
+                            color="black", fontweight='bold', fontsize=12)
         
-        plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
+        cbar = plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
+        cbar.ax.tick_params(labelsize=10)
     else:
         ax3.text(0.5, 0.5, 'No disagreements found\n(Perfect agreement!)', 
-                ha='center', va='center', transform=ax3.transAxes, fontsize=12)
-        ax3.set_title('Label Disagreement Matrix')
+                ha='center', va='center', transform=ax3.transAxes, fontsize=14, 
+                bbox=dict(boxstyle='round', facecolor=pastel_colors['green'], alpha=0.8))
         ax3.set_xticks([])
         ax3.set_yticks([])
+    
+    plt.tight_layout()
+    plt.show()
     
     # ====================
     # 4. Summary Statistics
     # ====================
-    ax4 = axes[1, 1]
+    fig4, ax4 = plt.subplots(figsize=figsize)
     ax4.axis('off')
     summary = comparison_results.get('summary', {})
     
@@ -385,7 +410,7 @@ def plot_comparison(comparison_results: Dict,
     All-to-all Total: {summary.get('all_to_all_total_predictions', 0)}
     {agreement_quality_text}
     """
-        bbox_color = 'wheat'
+        bbox_color = pastel_colors['yellow']
     else:  # group_methods
         total_improvement = summary.get('total_additional_predictions', 0)
         improvement_rate = summary.get('overall_improvement_rate', 0)
@@ -401,16 +426,16 @@ def plot_comparison(comparison_results: Dict,
     Additional Predictions: {total_improvement} (+{improvement_rate:.1%})
     {agreement_quality_text}
     """
-        bbox_color = 'lightgreen'
+        bbox_color = pastel_colors['green']
     
+    fig4.suptitle(f'{main_title}\nSummary Statistics', fontsize=14, fontweight='bold')
     ax4.text(0.5, 0.5, summary_text, transform=ax4.transAxes,
-             fontsize=10, va='center', ha='center',
-             bbox=dict(boxstyle='round', facecolor=bbox_color, alpha=0.7))
-    ax4.set_title('Summary Statistics')
+             fontsize=11, va='center', ha='center',
+             bbox=dict(boxstyle='round', facecolor=bbox_color, alpha=0.8, edgecolor='white', linewidth=2))
     
     plt.tight_layout()
-    plt.subplots_adjust(top=0.92)  # Adjust for suptitle
     plt.show()
+
 
 
 def create_propagation_dashboard(predictions: Dict[str, Dict[str, Any]],
