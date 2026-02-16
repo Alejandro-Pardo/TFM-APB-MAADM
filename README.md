@@ -28,13 +28,13 @@ The pipeline scrapes the complete AWS Boto3 documentation, generates semantic em
 | Metric | Value |
 |---|---|
 | AWS services scraped | 401 |
-| API methods extracted | 18 380 |
-| Embedding dimensions | 2 560 (Qwen3-Embedding-4B) |
+| API methods extracted | 18380 |
+| Embedding dimensions | 2560 (Qwen3-Embedding-4B) |
 | Manual seed labels | 85 (across 8 core services) |
 | Best test accuracy | 85 % (macro F1 0.78, `with_params_returns`, k = 17) |
-| Within-service propagation | 1 167 predictions |
-| Group-based cross-service | 1 196 predictions (73.9 % high confidence) |
-| All-to-all cross-service | 1 428 predictions |
+| Within-service propagation | 1167 predictions |
+| Group-based cross-service | 1196 predictions (73.9 % high confidence) |
+| All-to-all cross-service | 1428 predictions |
 
 ## Methodology
 
