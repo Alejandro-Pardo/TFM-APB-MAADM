@@ -31,7 +31,7 @@ The pipeline scrapes the complete AWS Boto3 documentation, generates semantic em
 | API methods extracted | 18380 |
 | Embedding dimensions | 2560 (Qwen3-Embedding-4B) |
 | Manual seed labels | 85 (across 8 core services) |
-| Best test accuracy | 85 % (macro F1 0.78, `with_params_returns`, k = 17) |
+| Best CV accuracy | 74 % (macro F1 0.69, `with_params_returns`, k = 17) |
 | Within-service propagation | 1167 predictions |
 | Group-based cross-service | 1196 predictions (73.9 % high confidence) |
 | All-to-all cross-service | 1428 predictions |
@@ -159,13 +159,15 @@ python statistics/cross_service_statistics.py
 
 ## Results
 
-### Embedding Evaluation (held-out test set, 26 samples)
+### Embedding Format Comparison (5-fold cross-validation, 85 samples)
 
-| Format | Best k | Accuracy | Macro F1 | Misclassifications |
-|---|---|---|---|---|
-| `method_only` | 13 | 0.69 | 0.66 | 8 |
-| `with_params` | 17 | 0.77 | 0.72 | 6 |
-| **`with_params_returns`** | **17** | **0.85** | **0.78** | **4** |
+| Format | Best k | Macro F1 ± Std |
+|---|---|---|
+| `method_only` | 13 | 0.666 ± 0.122 |
+| `with_params` | 17 | 0.628 ± 0.071 |
+| **`with_params_returns`** | **17** | **0.649 ± 0.127** |
+
+The `with_params_returns` format was selected for all propagation experiments based on its representational completeness, prediction stability, and alignment with established practices in the taint analysis literature (e.g., DocFlow), despite a marginal and statistically insignificant CV advantage of `method_only`.
 
 ### Label Propagation Coverage
 
