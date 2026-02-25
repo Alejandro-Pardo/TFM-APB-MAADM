@@ -1,0 +1,145 @@
+{
+  "method_name": "create_custom_log_source",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/securitylake/client/create_custom_log_source.html",
+  "description": "Adds a third-party custom source in Amazon Security Lake, from the Amazon Web Services Region where you want to create a custom source. Security Lake can collect logs and events from third-party custom sources. After creating the appropriate IAM role to invoke Glue crawler, use this API to add a custom source name in Security Lake. This operation creates a partition in the Amazon S3 bucket for Security Lake as the target location for log files from the custom source. In addition, this operation also creates an associated Glue table and an Glue crawler.",
+  "parameters": [
+    {
+      "name": "configuration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration used for the third-party custom source. The configuration used for the Glue Crawler for a third-party custom source. The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role to be used by the Glue crawler. The recommended IAM policies are: The managed policy AWSGlueServiceRole A custom policy granting access to your Amazon S3 Data Lake The identity of the log provider for the third-party custom source. The external ID used to establish trust relationship with the Amazon Web Services identity. The Amazon Web Services identity principal.",
+      "nested_params": [
+        {
+          "name": "crawlerConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration used for the Glue Crawler for a third-party custom source.",
+          "nested_params": [
+            {
+              "name": "roleArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role to be used by the Glue crawler. The recommended IAM policies are:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "providerIdentity",
+          "type": "dict",
+          "required": false,
+          "description": "The identity of the log provider for the third-party custom source.",
+          "nested_params": [
+            {
+              "name": "externalId",
+              "type": "string",
+              "required": false,
+              "description": "The external ID used to establish trust relationship with the Amazon Web Services identity.",
+              "nested_params": []
+            },
+            {
+              "name": "principal",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Web Services identity principal.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "eventClasses",
+      "type": "list",
+      "required": false,
+      "description": "The Open Cybersecurity Schema Framework (OCSF) event classes which describes the type of data that the custom source will send to Security Lake. For the list of supported event classes, see the Amazon Security Lake User Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "sourceName",
+      "type": "string",
+      "required": true,
+      "description": "Specify the name for a third-party custom source. This must be a Regionally unique value. The sourceName you enter here, is used in the LogProviderRole name which follows the convention AmazonSecurityLake-Provider-{name of the custom source}-{region}. You must use a CustomLogSource name that is shorter than or equal to 20 characters. This ensures that the LogProviderRole name is below the 64 character limit.",
+      "nested_params": []
+    },
+    {
+      "name": "sourceVersion",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "attributes",
+              "type": "dict",
+              "description": "The attributes of a third-party custom source.",
+              "nested_items": [
+                {
+                  "name": "crawlerArn",
+                  "type": "string",
+                  "description": "The ARN of the Glue crawler.",
+                  "nested_items": []
+                },
+                {
+                  "name": "databaseArn",
+                  "type": "string",
+                  "description": "The ARN of the Glue database where results are written, such as: arn:aws:daylight:us-east-1::database/sometable/*.",
+                  "nested_items": []
+                },
+                {
+                  "name": "tableArn",
+                  "type": "string",
+                  "description": "The ARN of the Glue table.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "location",
+                  "type": "string",
+                  "description": "The location of the partition in the Amazon S3 bucket for Security Lake.",
+                  "nested_items": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "description": "The ARN of the IAM role to be used by the entity putting logs into your custom source partition. Security Lake will apply the correct access policies to this role, but you must first manually create the trust policy for this role. The IAM role name must start with the text --\u0098Security Lake'. The IAM role must trust the logProviderAccountId to assume the role.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "sourceName",
+              "type": "string",
+              "description": "The name for a third-party custom source. This must be a Regionally unique value.",
+              "nested_items": []
+            },
+            {
+              "name": "sourceVersion",
+              "type": "string",
+              "description": "The version for a third-party custom source. This must be a Regionally unique value.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

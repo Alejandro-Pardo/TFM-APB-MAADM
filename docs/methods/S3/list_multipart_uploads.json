@@ -1,0 +1,302 @@
+{
+  "method_name": "list_multipart_uploads",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_multipart_uploads.html",
+  "description": "This operation lists in-progress multipart uploads in a bucket. An in-progress multipart upload is a multipart upload that has been initiated by the CreateMultipartUpload request, but has not yet been completed or aborted. The ListMultipartUploads operation returns a maximum of 1,000 multipart uploads in the response. The limit of 1,000 multipart uploads is also the default value. You can further limit the number of uploads in a response by specifying the max-uploads request parameter. If there are more than 1,000 multipart uploads that satisfy your ListMultipartUploads request, the response returns an IsTruncated element with the value of true, a NextKeyMarker element, and a NextUploadIdMarker element. To list the remaining multipart uploads, you need to make subsequent ListMultipartUploads requests. In these requests, include two query parameters: key-marker and upload-id-marker. Set the value of key-marker to the NextKeyMarker value from the previous response. Similarly, set the value of upload-id-marker to the NextUploadIdMarker value from the previous response. For more information about multipart uploads, see Uploading Objects Using Multipart Upload in the Amazon S3 User Guide. Directory buckets - The HTTP Host header syntax is Bucket-name.s3express-zone-id.region-code.amazonaws.com. The following operations are related to ListMultipartUploads:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The name of the bucket to which the multipart upload was initiated. Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format bucket-base-name--zone-id--x-s3 (for example, amzn-s3-demo-bucket--usw2-az1--x-s3). For information about bucket naming restrictions, see Directory bucket naming rules in the Amazon S3 User Guide. Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide. S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Delimiter",
+      "type": "string",
+      "required": false,
+      "description": "Character you use to group keys. All keys that contain the same string between the prefix, if specified, and the first occurrence of the delimiter after the prefix are grouped under a single result element, CommonPrefixes. If you don't specify the prefix parameter, then the substring starts at the beginning of the key. The keys that are grouped under CommonPrefixes result element are not returned elsewhere in the response. CommonPrefixes is filtered out from results if it is not lexicographically greater than the key-marker.",
+      "nested_params": []
+    },
+    {
+      "name": "EncodingType",
+      "type": "string",
+      "required": false,
+      "description": "Encoding type used by Amazon S3 to encode the object keys in the response. Responses are encoded only in UTF-8. An object key can contain any Unicode character. However, the XML 1.0 parser can't parse certain characters, such as characters with an ASCII value from 0 to 10. For characters that aren't supported in XML 1.0, you can add this parameter to request that Amazon S3 encode the keys in the response. For more information about characters to avoid in object key names, see Object key naming guidelines.",
+      "nested_params": []
+    },
+    {
+      "name": "KeyMarker",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the multipart upload after which listing should begin.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxUploads",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Prefix",
+      "type": "string",
+      "required": false,
+      "description": "Lists in-progress uploads only for those keys that begin with the specified prefix. You can use prefixes to separate a bucket into different grouping of keys. (You can think of using prefix to make groups in the same way that you'd use a folder in a file system.)",
+      "nested_params": []
+    },
+    {
+      "name": "UploadIdMarker",
+      "type": "string",
+      "required": false,
+      "description": "Together with key-marker, specifies the multipart upload after which listing should begin. If key-marker is not specified, the upload-id-marker parameter is ignored. Otherwise, any multipart uploads for a key equal to the key-marker might be included in the list only if they have an upload ID lexicographically greater than the specified upload-id-marker.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "RequestPayer",
+      "type": "string",
+      "required": false,
+      "description": "Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for corresponding charges to copy the object. For information about downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays Buckets in the Amazon S3 User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Bucket",
+          "type": "string",
+          "description": "The name of the bucket to which the multipart upload was initiated. Does not return the access point ARN or access point alias if used.",
+          "nested_items": []
+        },
+        {
+          "name": "KeyMarker",
+          "type": "string",
+          "description": "The key at or after which the listing began.",
+          "nested_items": []
+        },
+        {
+          "name": "UploadIdMarker",
+          "type": "string",
+          "description": "Together with key-marker, specifies the multipart upload after which listing should begin. If key-marker is not specified, the upload-id-marker parameter is ignored. Otherwise, any multipart uploads for a key equal to the key-marker might be included in the list only if they have an upload ID lexicographically greater than the specified upload-id-marker.",
+          "nested_items": []
+        },
+        {
+          "name": "NextKeyMarker",
+          "type": "string",
+          "description": "When a list is truncated, this element specifies the value that should be used for the key-marker request parameter in a subsequent request.",
+          "nested_items": []
+        },
+        {
+          "name": "Prefix",
+          "type": "string",
+          "description": "When a prefix is provided in the request, this field contains the specified prefix. The result contains only keys starting with the specified prefix.",
+          "nested_items": []
+        },
+        {
+          "name": "Delimiter",
+          "type": "string",
+          "description": "Contains the delimiter you specified in the request. If you don't specify a delimiter in your request, this element is absent from the response.",
+          "nested_items": []
+        },
+        {
+          "name": "NextUploadIdMarker",
+          "type": "string",
+          "description": "When a list is truncated, this element specifies the value that should be used for the upload-id-marker request parameter in a subsequent request.",
+          "nested_items": []
+        },
+        {
+          "name": "MaxUploads",
+          "type": "integer",
+          "description": "Maximum number of multipart uploads that could have been included in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "IsTruncated",
+          "type": "boolean",
+          "description": "Indicates whether the returned list of multipart uploads is truncated. A value of true indicates that the list was truncated. The list can be truncated if the number of multipart uploads exceeds the limit allowed or specified by max uploads.",
+          "nested_items": []
+        },
+        {
+          "name": "Uploads",
+          "type": "list",
+          "description": "Container for elements related to a particular multipart upload. A response can contain zero or more Upload elements.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "UploadId",
+                  "type": "string",
+                  "description": "Upload ID that identifies the multipart upload.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "description": "Key of the object for which the multipart upload was initiated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Initiated",
+                  "type": "datetime",
+                  "description": "Date and time at which the multipart upload was initiated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StorageClass",
+                  "type": "string",
+                  "description": "The class of storage used to store the object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "DisplayName",
+                      "type": "string",
+                      "description": "Container for the display name of the owner. This value is only supported in the following Amazon Web Services Regions:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "N. Virginia",
+                          "description": "US East (N. Virginia)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "N. California",
+                          "description": "US West (N. California)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "Oregon",
+                          "description": "US West (Oregon)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "Singapore",
+                          "description": "Asia Pacific (Singapore)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "Sydney",
+                          "description": "Asia Pacific (Sydney)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "Tokyo",
+                          "description": "Asia Pacific (Tokyo)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "Ireland",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "S\u00c3\u00a3o Paulo",
+                          "description": "South America (S\u00c3\u00a3o Paulo)",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ID",
+                      "type": "string",
+                      "description": "Container for the ID of the owner.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Initiator",
+                  "type": "dict",
+                  "description": "Identifies who initiated the multipart upload.",
+                  "nested_items": [
+                    {
+                      "name": "ID",
+                      "type": "string",
+                      "description": "If the principal is an Amazon Web Services account, it provides the Canonical User ID. If the principal is an IAM User, it provides a user ARN value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DisplayName",
+                      "type": "string",
+                      "description": "Name of the Principal.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ChecksumAlgorithm",
+                  "type": "string",
+                  "description": "The algorithm that was used to create a checksum of the object.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ChecksumType",
+                  "type": "string",
+                  "description": "The checksum type that is used to calculate the object's checksum value. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CommonPrefixes",
+          "type": "list",
+          "description": "If you specify a delimiter in the request, then the result returns each distinct key prefix containing the delimiter in a CommonPrefixes element. The distinct key prefixes are returned in the Prefix child element.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Prefix",
+                  "type": "string",
+                  "description": "Container for the specified common prefix.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EncodingType",
+          "type": "string",
+          "description": "Encoding type used by Amazon S3 to encode object keys in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "RequestCharged",
+          "type": "string",
+          "description": "If present, indicates that the requester was successfully charged for the request. For more information, see Using Requester Pays buckets for storage transfers and usage in the Amazon Simple Storage Service user guide.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

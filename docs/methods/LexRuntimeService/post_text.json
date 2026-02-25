@@ -1,0 +1,473 @@
+{
+  "method_name": "post_text",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lex-runtime/client/post_text.html",
+  "description": "Sends user input to Amazon Lex. Client applications can use this API to send requests to Amazon Lex at runtime. Amazon Lex then interprets the user input using the machine learning model it built for the bot. In response, Amazon Lex returns the next message to convey to the user an optional responseCard to display. Consider the following example messages: Not all Amazon Lex messages require a user response. For example, a conclusion statement does not require a response. Some messages require only a 'yes' or 'no' user response. In addition to the message, Amazon Lex provides additional context about the message in the response that you might use to enhance client behavior, for example, to display the appropriate client user interface. These are the slotToElicit, dialogState, intentName, and slots fields in the response. Consider the following examples: In addition, Amazon Lex also returns your application-specific sessionAttributes. For more information, see Managing Conversation Context.",
+  "parameters": [
+    {
+      "name": "botName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Amazon Lex bot.",
+      "nested_params": []
+    },
+    {
+      "name": "botAlias",
+      "type": "string",
+      "required": true,
+      "description": "The alias of the Amazon Lex bot.",
+      "nested_params": []
+    },
+    {
+      "name": "userId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the client application user. Amazon Lex uses this to identify a user's conversation with your bot. At runtime, each request must contain the userID field. To decide the user ID to use for your application, consider the following factors. The userID field must not contain any personally identifiable information of the user, for example, name, personal identification numbers, or other end user personal information. If you want a user to start a conversation on one device and continue on another device, use a user-specific identifier. If you want the same user to be able to have two independent conversations on two different devices, choose a device-specific identifier. A user can't have two independent conversations with two different versions of the same bot. For example, a user can't have a conversation with the PROD and BETA versions of the same bot. If you anticipate that a user will need to have conversation with two different versions, for example, while testing, include the bot alias in the user ID to separate the two conversations.",
+      "nested_params": []
+    },
+    {
+      "name": "sessionAttributes",
+      "type": "dict",
+      "required": false,
+      "description": "Application-specific information passed between Amazon Lex and a client application. For more information, see Setting Session Attributes. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "requestAttributes",
+      "type": "dict",
+      "required": false,
+      "description": "Request-specific information passed between Amazon Lex and a client application. The namespace x-amz-lex: is reserved for special attributes. Don't create any request attributes with the prefix x-amz-lex:. For more information, see Setting Request Attributes. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "inputText",
+      "type": "string",
+      "required": true,
+      "description": "The text that the user entered (Amazon Lex interprets this text).",
+      "nested_params": []
+    },
+    {
+      "name": "activeContexts",
+      "type": "list",
+      "required": true,
+      "description": "A list of contexts active for the request. A context can be activated when a previous intent is fulfilled, or by including the context in the request, If you don't specify a list of contexts, Amazon Lex will use the current list of contexts for the session. If you specify an empty list, all contexts for the session are cleared. (dict) --- A context is a variable that contains information about the current state of the conversation between a user and Amazon Lex. Context can be set automatically by Amazon Lex when an intent is fulfilled, or it can be set at runtime using the PutContent, PutText, or PutSession operation. The name of the context. The length of time or number of turns that a context remains active. timeToLiveInSeconds (integer) --- The number of seconds that the context should be active after it is first sent in a PostContent or PostText response. You can set the value between 5 and 86,400 seconds (24 hours). turnsToLive (integer) --- The number of conversation turns that the context should be active. A conversation turn is one PostContent or PostText request and the corresponding response from Amazon Lex. State variables for the current context. You can use these values as default values for slots in subsequent events. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the context.",
+          "nested_params": []
+        },
+        {
+          "name": "timeToLive",
+          "type": "dict",
+          "required": false,
+          "description": "The length of time or number of turns that a context remains active.",
+          "nested_params": [
+            {
+              "name": "timeToLiveInSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The number of seconds that the context should be active after it is first sent in a PostContent or PostText response. You can set the value between 5 and 86,400 seconds (24 hours).",
+              "nested_params": []
+            },
+            {
+              "name": "turnsToLive",
+              "type": "integer",
+              "required": false,
+              "description": "The number of conversation turns that the context should be active. A conversation turn is one PostContent or PostText request and the corresponding response from Amazon Lex.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "parameters",
+          "type": "dict",
+          "required": false,
+          "description": "State variables for the current context. You can use these values as default values for slots in subsequent events.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "intentName",
+          "type": "string",
+          "description": "The current user intent that Amazon Lex is aware of.",
+          "nested_items": []
+        },
+        {
+          "name": "nluIntentConfidence",
+          "type": "dict",
+          "description": "Provides a score that indicates how confident Amazon Lex is that the returned intent is the one that matches the user's intent. The score is between 0.0 and 1.0. For more information, see Confidence Scores.",
+          "nested_items": [
+            {
+              "name": "score",
+              "type": "float",
+              "description": "A score that indicates how confident Amazon Lex is that an intent satisfies the user's intent. Ranges between 0.00 and 1.00. Higher scores indicate higher confidence.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "alternativeIntents",
+          "type": "list",
+          "description": "One to four alternative intents that may be applicable to the user's intent.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "intentName",
+                  "type": "string",
+                  "description": "The name of the intent that Amazon Lex suggests satisfies the user's intent.",
+                  "nested_items": []
+                },
+                {
+                  "name": "nluIntentConfidence",
+                  "type": "dict",
+                  "description": "Indicates how confident Amazon Lex is that an intent satisfies the user's intent.",
+                  "nested_items": [
+                    {
+                      "name": "score",
+                      "type": "float",
+                      "description": "A score that indicates how confident Amazon Lex is that an intent satisfies the user's intent. Ranges between 0.00 and 1.00. Higher scores indicate higher confidence.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sessionAttributes",
+          "type": "dict",
+          "description": "A map of key-value pairs representing the session-specific context information.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "The message to convey to the user. The message can come from the bot's configuration or from a Lambda function.",
+          "nested_items": []
+        },
+        {
+          "name": "sentimentResponse",
+          "type": "dict",
+          "description": "The sentiment expressed in and utterance.",
+          "nested_items": [
+            {
+              "name": "sentimentLabel",
+              "type": "string",
+              "description": "The inferred sentiment that Amazon Comprehend has the highest confidence in.",
+              "nested_items": []
+            },
+            {
+              "name": "sentimentScore",
+              "type": "string",
+              "description": "The likelihood that the sentiment was correctly inferred.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "messageFormat",
+          "type": "string",
+          "description": "The format of the response message. One of the following values:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "PlainText - The message contains plain UTF-8 text.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "CustomPayload - The message is a custom format defined by the Lambda function.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "SSML - The message contains text formatted for voice output.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Composite - The message contains an escaped JSON object containing one or more messages from the groups that messages were assigned to when the intent was created.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "dialogState",
+          "type": "string",
+          "description": "Identifies the current state of the user interaction. Amazon Lex returns one of the following values as dialogState. The client can optionally use this information to customize the user interface.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "\u00e2\u0080\u009cI want to order a pizza\u00e2\u0080\u009d",
+              "description": "ElicitIntent - Amazon Lex wants to elicit user intent. For example, a user might utter an intent ('I want to order a pizza'). If Amazon Lex cannot infer the user intent from this utterance, it will return this dialogState.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "in these examples, update the crust type slot value, or change intent from OrderPizza to OrderDrink",
+              "description": "ConfirmIntent - Amazon Lex is expecting a 'yes' or 'no' response. For example, Amazon Lex wants user confirmation before fulfilling an intent. Instead of a simple 'yes' or 'no,' a user might respond with additional information. For example, 'yes, but make it thick crust pizza' or 'no, I want to order a drink'. Amazon Lex can process such additional information (in these examples, update the crust type slot value, or change intent from OrderPizza to OrderDrink).",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "e.g., \u00e2\u0080\u009cmedium\u00e2\u0080\u009d",
+              "description": "ElicitSlot - Amazon Lex is expecting a slot value for the current intent. For example, suppose that in the response Amazon Lex sends this message: 'What size pizza would you like?'. A user might reply with the slot value (e.g., 'medium'). The user might also provide additional information in the response (e.g., 'medium thick crust pizza'). Amazon Lex can process such additional information appropriately.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Fulfilled - Conveys that the Lambda function configured for the intent has successfully fulfilled the intent.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "ReadyForFulfillment - Conveys that the client has to fulfill the intent.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "you can configure how many times Amazon Lex can prompt a user for specific information",
+              "description": "Failed - Conveys that the conversation with the user failed. This can happen for various reasons including that the user did not provide an appropriate response to prompts from the service (you can configure how many times Amazon Lex can prompt a user for specific information), or the Lambda function failed to fulfill the intent.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "slotToElicit",
+          "type": "string",
+          "description": "If the dialogState value is ElicitSlot, returns the name of the slot for which Amazon Lex is eliciting a value.",
+          "nested_items": []
+        },
+        {
+          "name": "responseCard",
+          "type": "dict",
+          "description": "Represents the options that the user has to respond to the current prompt. Response Card can come from the bot configuration (in the Amazon Lex console, choose the settings button next to a slot) or from a code hook (Lambda function).",
+          "nested_items": [
+            {
+              "name": "version",
+              "type": "string",
+              "description": "The version of the response card format.",
+              "nested_items": []
+            },
+            {
+              "name": "contentType",
+              "type": "string",
+              "description": "The content type of the response.",
+              "nested_items": []
+            },
+            {
+              "name": "genericAttachments",
+              "type": "list",
+              "description": "An array of attachment objects representing options.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "title",
+                      "type": "string",
+                      "description": "The title of the option.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "subTitle",
+                      "type": "string",
+                      "description": "The subtitle shown below the title.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "attachmentLinkUrl",
+                      "type": "string",
+                      "description": "The URL of an attachment to the response card.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "imageUrl",
+                      "type": "string",
+                      "description": "The URL of an image that is displayed to the user.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "buttons",
+                      "type": "list",
+                      "description": "The list of options to show to the user.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "text",
+                              "type": "string",
+                              "description": "Text that is visible to the user on the button.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "string",
+                              "description": "The value sent to Amazon Lex when a user chooses the button. For example, consider button text 'NYC.' When the user chooses the button, the value sent can be 'New York City.'",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sessionId",
+          "type": "string",
+          "description": "A unique identifier for the session.",
+          "nested_items": []
+        },
+        {
+          "name": "botVersion",
+          "type": "string",
+          "description": "The version of the bot that responded to the conversation. You can use this information to help determine if one version of a bot is performing better than another version.",
+          "nested_items": []
+        },
+        {
+          "name": "activeContexts",
+          "type": "list",
+          "description": "A list of active contexts for the session. A context can be set when an intent is fulfilled or by calling the PostContent, PostText, or PutSession operation.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the context.",
+                  "nested_items": []
+                },
+                {
+                  "name": "timeToLive",
+                  "type": "dict",
+                  "description": "The length of time or number of turns that a context remains active.",
+                  "nested_items": [
+                    {
+                      "name": "timeToLiveInSeconds",
+                      "type": "integer",
+                      "description": "The number of seconds that the context should be active after it is first sent in a PostContent or PostText response. You can set the value between 5 and 86,400 seconds (24 hours).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "turnsToLive",
+                      "type": "integer",
+                      "description": "The number of conversation turns that the context should be active. A conversation turn is one PostContent or PostText request and the corresponding response from Amazon Lex.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "parameters",
+                  "type": "dict",
+                  "description": "State variables for the current context. You can use these values as default values for slots in subsequent events.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

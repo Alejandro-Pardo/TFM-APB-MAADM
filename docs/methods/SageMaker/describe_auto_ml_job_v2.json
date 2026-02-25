@@ -1,0 +1,1432 @@
+{
+  "method_name": "describe_auto_ml_job_v2",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker/client/describe_auto_ml_job_v2.html",
+  "description": "Returns information about an AutoML job created by calling CreateAutoMLJobV2 or CreateAutoMLJob.",
+  "parameters": [
+    {
+      "name": "AutoMLJobName",
+      "type": "string",
+      "required": true,
+      "description": "Requests information about an AutoML job V2 using its unique name.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AutoMLJobName",
+          "type": "string",
+          "description": "Returns the name of the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLJobArn",
+          "type": "string",
+          "description": "Returns the Amazon Resource Name (ARN) of the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLJobInputDataConfig",
+          "type": "list",
+          "description": "Returns an array of channel objects describing the input data and their location.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ChannelType",
+                  "type": "string",
+                  "description": "The type of channel. Defines whether the data are used for training or validation. The default value is training. Channels for training and validation must share the same ContentType.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ContentType",
+                  "type": "string",
+                  "description": "The content type of the data from the input source. The following are the allowed content types for different problems:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For tabular problem types: text/csv;header=present or x-application/vnd.amazon+parquet. The default value is text/csv;header=present.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For image classification: image/png, image/jpeg, or image/*. The default value is image/*.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For text classification: text/csv;header=present or x-application/vnd.amazon+parquet. The default value is text/csv;header=present.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For time-series forecasting: text/csv;header=present or x-application/vnd.amazon+parquet. The default value is text/csv;header=present.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "LLMs fine-tuning",
+                      "description": "For text generation (LLMs fine-tuning): text/csv;header=present or x-application/vnd.amazon+parquet. The default value is text/csv;header=present.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CompressionType",
+                  "type": "string",
+                  "description": "The allowed compression types depend on the input format and problem type. We allow the compression type Gzip for S3Prefix inputs on tabular data only. For all other inputs, the compression type should be None. If no compression type is provided, we default to None.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DataSource",
+                  "type": "dict",
+                  "description": "The data source for an AutoML channel (Required).",
+                  "nested_items": [
+                    {
+                      "name": "S3DataSource",
+                      "type": "dict",
+                      "description": "The Amazon S3 location of the input data.",
+                      "nested_items": [
+                        {
+                          "name": "S3DataType",
+                          "type": "string",
+                          "description": "The data type.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "If you choose S3Prefix, S3Uri identifies a key name prefix. SageMaker AI uses all objects that match the specified key name prefix for model training. The S3Prefix should have the following format: s3://DOC-EXAMPLE-BUCKET/DOC-EXAMPLE-FOLDER-OR-FILE.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "If you choose ManifestFile, S3Uri identifies an object that is a manifest file containing a list of object keys that you want SageMaker AI to use for model training. A ManifestFile should have the format shown below: [ {\"prefix\": \"s3://DOC-EXAMPLE-BUCKET/DOC-EXAMPLE-FOLDER/DOC-EXAMPLE-PREFIX/\"}, \"DOC-EXAMPLE-RELATIVE-PATH/DOC-EXAMPLE-FOLDER/DATA-1\", \"DOC-EXAMPLE-RELATIVE-PATH/DOC-EXAMPLE-FOLDER/DATA-2\", ... \"DOC-EXAMPLE-RELATIVE-PATH/DOC-EXAMPLE-FOLDER/DATA-N\" ]",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "for example, for jobs created by calling CreateAutoMLJobV2",
+                              "description": "If you choose AugmentedManifestFile, S3Uri identifies an object that is an augmented manifest file in JSON lines format. This file contains the data you want to use for model training. AugmentedManifestFile is available for V2 API jobs only (for example, for jobs created by calling CreateAutoMLJobV2). Here is a minimal, single-record example of an AugmentedManifestFile: {\"source-ref\": \"s3://DOC-EXAMPLE-BUCKET/DOC-EXAMPLE-FOLDER/cats/cat.jpg\", \"label-metadata\": {\"class-name\": \"cat\" } For more information on AugmentedManifestFile, see Provide Dataset Metadata to Training Jobs with an Augmented Manifest File.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "S3Uri",
+                          "type": "string",
+                          "description": "The URL to the Amazon S3 data source. The Uri refers to the Amazon S3 prefix or ManifestFile depending on the data type.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "OutputDataConfig",
+          "type": "dict",
+          "description": "Returns the job's output data config.",
+          "nested_items": [
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "The Key Management Service encryption key ID.",
+              "nested_items": []
+            },
+            {
+              "name": "S3OutputPath",
+              "type": "string",
+              "description": "The Amazon S3 output path. Must be 512 characters or less.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "RoleArn",
+          "type": "string",
+          "description": "The ARN of the IAM role that has read permission to the input data location and write permission to the output data location in Amazon S3.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLJobObjective",
+          "type": "dict",
+          "description": "Returns the job's objective.",
+          "nested_items": [
+            {
+              "name": "MetricName",
+              "type": "string",
+              "description": "The name of the objective metric used to measure the predictive quality of a machine learning system. During training, the model's parameters are updated iteratively to optimize its performance based on the feedback provided by the objective metric when evaluating the model on the validation dataset.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For tabular problem types:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "List of available metrics:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Regression: MAE, MSE, R2, RMSE.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Binary classification: Accuracy, AUC, BalancedAccuracy, F1, Precision, Recall.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Multiclass classification: Accuracy, BalancedAccuracy, F1macro, PrecisionMacro, RecallMacro.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For image or text classification problem types:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "List of available metrics: Accuracy For a description of each metric, see Autopilot metrics for text and image classification.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Default objective metrics: Accuracy.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "For time-series forecasting problem types:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "List of available metrics: RMSE, wQL, Average wQL, MASE, MAPE, WAPE For a description of each metric, see Autopilot metrics for time-series forecasting.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Default objective metrics: AverageWeightedQuantileLoss.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "LLMs fine-tuning",
+                  "description": "For text generation problem types (LLMs fine-tuning): Fine-tuning language models in Autopilot does not require setting the AutoMLJobObjective field. Autopilot fine-tunes LLMs without requiring multiple candidates to be trained and evaluated. Instead, using your dataset, Autopilot directly fine-tunes your target model to enhance a default objective metric, the cross-entropy loss. After fine-tuning a language model, you can evaluate the quality of its generated text using different metrics. For a list of the available metrics, see Metrics for fine-tuning LLMs in Autopilot.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AutoMLProblemTypeConfig",
+          "type": "dict",
+          "description": "Returns the configuration settings of the problem type set for the AutoML job V2.",
+          "nested_items": [
+            {
+              "name": "ImageClassificationJobConfig",
+              "type": "dict",
+              "description": "Settings used to configure an AutoML job V2 for the image classification problem type.",
+              "nested_items": [
+                {
+                  "name": "CompletionCriteria",
+                  "type": "dict",
+                  "description": "How long a job is allowed to run, or how many candidates a job is allowed to generate.",
+                  "nested_items": [
+                    {
+                      "name": "MaxCandidates",
+                      "type": "integer",
+                      "description": "The maximum number of times a training job is allowed to run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxRuntimePerTrainingJobInSeconds",
+                      "type": "integer",
+                      "description": "The maximum time, in seconds, that each training job executed inside hyperparameter tuning is allowed to run as part of a hyperparameter tuning job. For more information, see the StoppingCondition used by the CreateHyperParameterTuningJob action.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxAutoMLJobRuntimeInSeconds",
+                      "type": "integer",
+                      "description": "The maximum runtime, in seconds, an AutoML job has to complete.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TextClassificationJobConfig",
+              "type": "dict",
+              "description": "Settings used to configure an AutoML job V2 for the text classification problem type.",
+              "nested_items": [
+                {
+                  "name": "CompletionCriteria",
+                  "type": "dict",
+                  "description": "How long a job is allowed to run, or how many candidates a job is allowed to generate.",
+                  "nested_items": [
+                    {
+                      "name": "MaxCandidates",
+                      "type": "integer",
+                      "description": "The maximum number of times a training job is allowed to run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxRuntimePerTrainingJobInSeconds",
+                      "type": "integer",
+                      "description": "The maximum time, in seconds, that each training job executed inside hyperparameter tuning is allowed to run as part of a hyperparameter tuning job. For more information, see the StoppingCondition used by the CreateHyperParameterTuningJob action.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxAutoMLJobRuntimeInSeconds",
+                      "type": "integer",
+                      "description": "The maximum runtime, in seconds, an AutoML job has to complete.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ContentColumn",
+                  "type": "string",
+                  "description": "The name of the column used to provide the sentences to be classified. It should not be the same as the target column.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetLabelColumn",
+                  "type": "string",
+                  "description": "The name of the column used to provide the class labels. It should not be same as the content column.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TimeSeriesForecastingJobConfig",
+              "type": "dict",
+              "description": "Settings used to configure an AutoML job V2 for the time-series forecasting problem type.",
+              "nested_items": [
+                {
+                  "name": "FeatureSpecificationS3Uri",
+                  "type": "string",
+                  "description": "A URL to the Amazon S3 data source containing additional selected features that complement the target, itemID, timestamp, and grouped columns set in TimeSeriesConfig. When not provided, the AutoML job V2 includes all the columns from the original dataset that are not already declared in TimeSeriesConfig. If provided, the AutoML job V2 only considers these additional columns as a complement to the ones declared in TimeSeriesConfig.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CompletionCriteria",
+                  "type": "dict",
+                  "description": "How long a job is allowed to run, or how many candidates a job is allowed to generate.",
+                  "nested_items": [
+                    {
+                      "name": "MaxCandidates",
+                      "type": "integer",
+                      "description": "The maximum number of times a training job is allowed to run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxRuntimePerTrainingJobInSeconds",
+                      "type": "integer",
+                      "description": "The maximum time, in seconds, that each training job executed inside hyperparameter tuning is allowed to run as part of a hyperparameter tuning job. For more information, see the StoppingCondition used by the CreateHyperParameterTuningJob action.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxAutoMLJobRuntimeInSeconds",
+                      "type": "integer",
+                      "description": "The maximum runtime, in seconds, an AutoML job has to complete.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ForecastFrequency",
+                  "type": "string",
+                  "description": "The frequency of predictions in a forecast.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Minute - 1-59",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Hour - 1-23",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Day - 1-6",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Week - 1-4",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Month - 1-11",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Year - 1",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ForecastHorizon",
+                  "type": "integer",
+                  "description": "The number of time-steps that the model predicts. The forecast horizon is also called the prediction length. The maximum forecast horizon is the lesser of 500 time-steps or 1/4 of the time-steps in the dataset.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ForecastQuantiles",
+                  "type": "list",
+                  "description": "The quantiles used to train the model for forecasts at a specified quantile. You can specify quantiles from 0.01 (p1) to 0.99 (p99), by increments of 0.01 or higher. Up to five forecast quantiles can be specified. When ForecastQuantiles is not provided, the AutoML job uses the quantiles p10, p50, and p90 as default.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Transformations",
+                  "type": "dict",
+                  "description": "The transformations modifying specific attributes of the time-series, such as filling strategies for missing values.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "Supported only for target column",
+                          "description": "frontfill: none (Supported only for target column)",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "middlefill: zero, value, median, mean, min, max.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "backfill: zero, value, median, mean, min, max.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "futurefill: zero, value, median, mean, min, max.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Aggregation",
+                      "type": "dict",
+                      "description": "A key value pair defining the aggregation method for a column, where the key is the column name and the value is the aggregation method.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TimeSeriesConfig",
+                  "type": "dict",
+                  "description": "The collection of components that defines the time-series.",
+                  "nested_items": [
+                    {
+                      "name": "TargetAttributeName",
+                      "type": "string",
+                      "description": "The name of the column representing the target variable that you want to predict for each item in your dataset. The data type of the target variable must be numerical.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimestampAttributeName",
+                      "type": "string",
+                      "description": "The name of the column indicating a point in time at which the target value of a given item is recorded.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ItemIdentifierAttributeName",
+                      "type": "string",
+                      "description": "The name of the column that represents the set of item identifiers for which you want to predict the target value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "GroupingAttributeNames",
+                      "type": "list",
+                      "description": "A set of columns names that can be grouped with the item identifier column to create a composite key for which a target value is predicted.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "HolidayConfig",
+                  "type": "list",
+                  "description": "The collection of holiday featurization attributes used to incorporate national holiday information into your forecasting model.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "CountryCode",
+                          "type": "string",
+                          "description": "The country code for the holiday calendar.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "CandidateGenerationConfig",
+                  "type": "dict",
+                  "description": "Stores the configuration information for how model candidates are generated using an AutoML job V2.",
+                  "nested_items": [
+                    {
+                      "name": "AlgorithmsConfig",
+                      "type": "list",
+                      "description": "Your Autopilot job trains a default set of algorithms on your dataset. For tabular and time-series data, you can customize the algorithm list by selecting a subset of algorithms for your problem type.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For the tabular problem type TabularJobConfig, the list of available algorithms to choose from depends on the training mode set in AutoMLJobConfig.Mode.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "AlgorithmsConfig should not be set when the training mode AutoMLJobConfig.Mode is set to AUTO.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "When AlgorithmsConfig is provided, one AutoMLAlgorithms attribute must be set and one only. If the list of algorithms provided as values for AutoMLAlgorithms is empty, CandidateGenerationConfig uses the full set of algorithms for the given training mode.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "When AlgorithmsConfig is not provided, CandidateGenerationConfig uses the full set of algorithms for the given training mode.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TabularJobConfig",
+              "type": "dict",
+              "description": "Settings used to configure an AutoML job V2 for the tabular problem type (regression, classification).",
+              "nested_items": [
+                {
+                  "name": "CandidateGenerationConfig",
+                  "type": "dict",
+                  "description": "The configuration information of how model candidates are generated.",
+                  "nested_items": [
+                    {
+                      "name": "AlgorithmsConfig",
+                      "type": "list",
+                      "description": "Your Autopilot job trains a default set of algorithms on your dataset. For tabular and time-series data, you can customize the algorithm list by selecting a subset of algorithms for your problem type.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "For the tabular problem type TabularJobConfig, the list of available algorithms to choose from depends on the training mode set in AutoMLJobConfig.Mode.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "AlgorithmsConfig should not be set when the training mode AutoMLJobConfig.Mode is set to AUTO.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "When AlgorithmsConfig is provided, one AutoMLAlgorithms attribute must be set and one only. If the list of algorithms provided as values for AutoMLAlgorithms is empty, CandidateGenerationConfig uses the full set of algorithms for the given training mode.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "When AlgorithmsConfig is not provided, CandidateGenerationConfig uses the full set of algorithms for the given training mode.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "CompletionCriteria",
+                  "type": "dict",
+                  "description": "How long a job is allowed to run, or how many candidates a job is allowed to generate.",
+                  "nested_items": [
+                    {
+                      "name": "MaxCandidates",
+                      "type": "integer",
+                      "description": "The maximum number of times a training job is allowed to run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxRuntimePerTrainingJobInSeconds",
+                      "type": "integer",
+                      "description": "The maximum time, in seconds, that each training job executed inside hyperparameter tuning is allowed to run as part of a hyperparameter tuning job. For more information, see the StoppingCondition used by the CreateHyperParameterTuningJob action.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxAutoMLJobRuntimeInSeconds",
+                      "type": "integer",
+                      "description": "The maximum runtime, in seconds, an AutoML job has to complete.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "FeatureSpecificationS3Uri",
+                  "type": "string",
+                  "description": "A URL to the Amazon S3 data source containing selected features from the input data source to run an Autopilot job V2. You can input FeatureAttributeNames (optional) in JSON format as shown below:",
+                  "nested_items": []
+                },
+                {
+                  "name": "Mode",
+                  "type": "string",
+                  "description": "The method that Autopilot uses to train the data. You can either specify the mode manually or let Autopilot choose for you based on the dataset size by selecting AUTO. In AUTO mode, Autopilot chooses ENSEMBLING for datasets smaller than 100 MB, and HYPERPARAMETER_TUNING for larger ones.",
+                  "nested_items": []
+                },
+                {
+                  "name": "GenerateCandidateDefinitionsOnly",
+                  "type": "boolean",
+                  "description": "Generates possible candidates without training the models. A model candidate is a combination of data preprocessors, algorithms, and algorithm parameter settings.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ProblemType",
+                  "type": "string",
+                  "description": "The type of supervised learning problem available for the model candidates of the AutoML job V2. For more information, see SageMaker Autopilot problem types.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetAttributeName",
+                  "type": "string",
+                  "description": "The name of the target variable in supervised learning, usually represented by --\u0098y'.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SampleWeightAttributeName",
+                  "type": "string",
+                  "description": "If specified, this column name indicates which column of the dataset should be treated as sample weights for use by the objective metric during the training, evaluation, and the selection of the best model. This column is not considered as a predictive feature. For more information on Autopilot metrics, see Metrics and validation.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TextGenerationJobConfig",
+              "type": "dict",
+              "description": "Settings used to configure an AutoML job V2 for the text generation (LLMs fine-tuning) problem type.",
+              "nested_items": [
+                {
+                  "name": "CompletionCriteria",
+                  "type": "dict",
+                  "description": "How long a fine-tuning job is allowed to run. For TextGenerationJobConfig problem types, the MaxRuntimePerTrainingJobInSeconds attribute of AutoMLJobCompletionCriteria defaults to 72h (259200s).",
+                  "nested_items": [
+                    {
+                      "name": "MaxCandidates",
+                      "type": "integer",
+                      "description": "The maximum number of times a training job is allowed to run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxRuntimePerTrainingJobInSeconds",
+                      "type": "integer",
+                      "description": "The maximum time, in seconds, that each training job executed inside hyperparameter tuning is allowed to run as part of a hyperparameter tuning job. For more information, see the StoppingCondition used by the CreateHyperParameterTuningJob action.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxAutoMLJobRuntimeInSeconds",
+                      "type": "integer",
+                      "description": "The maximum runtime, in seconds, an AutoML job has to complete.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BaseModelName",
+                  "type": "string",
+                  "description": "The name of the base model to fine-tune. Autopilot supports fine-tuning a variety of large language models. For information on the list of supported models, see Text generation models supporting fine-tuning in Autopilot. If no BaseModelName is provided, the default model used is Falcon7BInstruct.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TextGenerationHyperParameters",
+                  "type": "dict",
+                  "description": "The hyperparameters used to configure and optimize the learning process of the base model. You can set any combination of the following hyperparameters for all base models. For more information on each supported hyperparameter, see Optimize the learning process of your text generation models with hyperparameters.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "\"epochCount\": The number of times the model goes through the entire training dataset. Its value should be a string containing an integer value within the range of '1' to '10'.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "\"batchSize\": The number of data samples used in each iteration of training. Its value should be a string containing an integer value within the range of '1' to '64'.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "\"learningRate\": The step size at which a model's parameters are updated during training. Its value should be a string containing a floating-point value within the range of '0' to '1'.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "\"learningRateWarmupSteps\": The number of training steps during which the learning rate gradually increases before reaching its target or maximum value. Its value should be a string containing an integer value within the range of '0' to '250'.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ModelAccessConfig",
+                  "type": "dict",
+                  "description": "The access configuration file to control access to the ML model. You can explicitly accept the model end-user license agreement (EULA) within the ModelAccessConfig.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "If you are a Jumpstart user, see the End-user license agreements section for more details on accepting the EULA.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "If you are an AutoML user, see the Optional Parameters section of Create an AutoML job to fine-tune text generation models using the API for details on How to set the EULA acceptance when fine-tuning a model using the AutoML API.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AutoMLProblemTypeConfigName",
+          "type": "string",
+          "description": "Returns the name of the problem type configuration set for the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationTime",
+          "type": "datetime",
+          "description": "Returns the creation time of the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "EndTime",
+          "type": "datetime",
+          "description": "Returns the end time of the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "LastModifiedTime",
+          "type": "datetime",
+          "description": "Returns the job's last modified time.",
+          "nested_items": []
+        },
+        {
+          "name": "FailureReason",
+          "type": "string",
+          "description": "Returns the reason for the failure of the AutoML job V2, when applicable.",
+          "nested_items": []
+        },
+        {
+          "name": "PartialFailureReasons",
+          "type": "list",
+          "description": "Returns a list of reasons for partial failures within an AutoML job V2.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "PartialFailureMessage",
+                  "type": "string",
+                  "description": "The message containing the reason for a partial failure of an AutoML job.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "BestCandidate",
+          "type": "dict",
+          "description": "Information about the candidate produced by an AutoML training job V2, including its status, steps, and other properties.",
+          "nested_items": [
+            {
+              "name": "CandidateName",
+              "type": "string",
+              "description": "The name of the candidate.",
+              "nested_items": []
+            },
+            {
+              "name": "FinalAutoMLJobObjectiveMetric",
+              "type": "dict",
+              "description": "The best candidate result from an AutoML training job.",
+              "nested_items": [
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "The type of metric with the best result.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MetricName",
+                  "type": "string",
+                  "description": "The name of the metric with the best result. For a description of the possible objective metrics, see AutoMLJobObjective$MetricName.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Value",
+                  "type": "float",
+                  "description": "The value of the metric with the best result.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StandardMetricName",
+                  "type": "string",
+                  "description": "The name of the standard metric. For a description of the standard metrics, see Autopilot candidate metrics.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ObjectiveStatus",
+              "type": "string",
+              "description": "The objective's status.",
+              "nested_items": []
+            },
+            {
+              "name": "CandidateSteps",
+              "type": "list",
+              "description": "Information about the candidate's steps.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "CandidateStepType",
+                      "type": "string",
+                      "description": "Whether the candidate is at the transform, training, or processing step.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CandidateStepArn",
+                      "type": "string",
+                      "description": "The ARN for the candidate's step.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CandidateStepName",
+                      "type": "string",
+                      "description": "The name for the candidate's step.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CandidateStatus",
+              "type": "string",
+              "description": "The candidate's status.",
+              "nested_items": []
+            },
+            {
+              "name": "InferenceContainers",
+              "type": "list",
+              "description": "Information about the recommended inference container definitions.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Image",
+                      "type": "string",
+                      "description": "The Amazon Elastic Container Registry (Amazon ECR) path of the container. For more information, see ContainerDefinition.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ModelDataUrl",
+                      "type": "string",
+                      "description": "The location of the model artifacts. For more information, see ContainerDefinition.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Environment",
+                      "type": "dict",
+                      "description": "The environment variables to set in the container. For more information, see ContainerDefinition.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CreationTime",
+              "type": "datetime",
+              "description": "The creation time.",
+              "nested_items": []
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime",
+              "description": "The end time.",
+              "nested_items": []
+            },
+            {
+              "name": "LastModifiedTime",
+              "type": "datetime",
+              "description": "The last modified time.",
+              "nested_items": []
+            },
+            {
+              "name": "FailureReason",
+              "type": "string",
+              "description": "The failure reason.",
+              "nested_items": []
+            },
+            {
+              "name": "CandidateProperties",
+              "type": "dict",
+              "description": "The properties of an AutoML candidate job.",
+              "nested_items": [
+                {
+                  "name": "CandidateArtifactLocations",
+                  "type": "dict",
+                  "description": "The Amazon S3 prefix to the artifacts generated for an AutoML candidate.",
+                  "nested_items": [
+                    {
+                      "name": "Explainability",
+                      "type": "string",
+                      "description": "The Amazon S3 prefix to the explainability artifacts generated for the AutoML candidate.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ModelInsights",
+                      "type": "string",
+                      "description": "The Amazon S3 prefix to the model insight artifacts generated for the AutoML candidate.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BacktestResults",
+                      "type": "string",
+                      "description": "The Amazon S3 prefix to the accuracy metrics and the inference results observed over the testing window. Available only for the time-series forecasting problem type.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CandidateMetrics",
+                  "type": "list",
+                  "description": "Information about the candidate metrics for an AutoML job.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "MetricName",
+                          "type": "string",
+                          "description": "The name of the metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "StandardMetricName",
+                          "type": "string",
+                          "description": "The name of the standard metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "float",
+                          "description": "The value of the metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Set",
+                          "type": "string",
+                          "description": "The dataset split from which the AutoML job produced the metric.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "InferenceContainerDefinitions",
+              "type": "dict",
+              "description": "The mapping of all supported processing unit (CPU, GPU, etc--\u00a6) to inference container definitions for the candidate. This field is populated for the AutoML jobs V2 (for example, for jobs created by calling CreateAutoMLJobV2) related to image or text classification problem types only.",
+              "nested_items": [
+                {
+                  "name": "Image",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "Image",
+                      "type": "list",
+                      "description": "(list) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Image",
+                              "type": "string",
+                              "description": "The Amazon Elastic Container Registry (Amazon ECR) path of the container. For more information, see ContainerDefinition.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ModelDataUrl",
+                              "type": "string",
+                              "description": "The location of the model artifacts. For more information, see ContainerDefinition.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Environment",
+                              "type": "dict",
+                              "description": "The environment variables to set in the container. For more information, see ContainerDefinition.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AutoMLJobStatus",
+          "type": "string",
+          "description": "Returns the status of the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLJobSecondaryStatus",
+          "type": "string",
+          "description": "Returns the secondary status of the AutoML job V2.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLJobArtifacts",
+          "type": "dict",
+          "description": "The artifacts that are generated during an AutoML job.",
+          "nested_items": [
+            {
+              "name": "CandidateDefinitionNotebookLocation",
+              "type": "string",
+              "description": "The URL of the notebook location.",
+              "nested_items": []
+            },
+            {
+              "name": "DataExplorationNotebookLocation",
+              "type": "string",
+              "description": "The URL of the notebook location.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ResolvedAttributes",
+          "type": "dict",
+          "description": "Returns the resolved attributes used by the AutoML job V2.",
+          "nested_items": [
+            {
+              "name": "AutoMLJobObjective",
+              "type": "dict",
+              "description": "Specifies a metric to minimize or maximize as the objective of an AutoML job.",
+              "nested_items": [
+                {
+                  "name": "MetricName",
+                  "type": "string",
+                  "description": "The name of the objective metric used to measure the predictive quality of a machine learning system. During training, the model's parameters are updated iteratively to optimize its performance based on the feedback provided by the objective metric when evaluating the model on the validation dataset.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For tabular problem types:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "List of available metrics:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Regression: MAE, MSE, R2, RMSE.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Binary classification: Accuracy, AUC, BalancedAccuracy, F1, Precision, Recall.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Multiclass classification: Accuracy, BalancedAccuracy, F1macro, PrecisionMacro, RecallMacro.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For image or text classification problem types:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "List of available metrics: Accuracy For a description of each metric, see Autopilot metrics for text and image classification.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Default objective metrics: Accuracy.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For time-series forecasting problem types:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "List of available metrics: RMSE, wQL, Average wQL, MASE, MAPE, WAPE For a description of each metric, see Autopilot metrics for time-series forecasting.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Default objective metrics: AverageWeightedQuantileLoss.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "LLMs fine-tuning",
+                      "description": "For text generation problem types (LLMs fine-tuning): Fine-tuning language models in Autopilot does not require setting the AutoMLJobObjective field. Autopilot fine-tunes LLMs without requiring multiple candidates to be trained and evaluated. Instead, using your dataset, Autopilot directly fine-tunes your target model to enhance a default objective metric, the cross-entropy loss. After fine-tuning a language model, you can evaluate the quality of its generated text using different metrics. For a list of the available metrics, see Metrics for fine-tuning LLMs in Autopilot.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CompletionCriteria",
+              "type": "dict",
+              "description": "How long a job is allowed to run, or how many candidates a job is allowed to generate.",
+              "nested_items": [
+                {
+                  "name": "MaxCandidates",
+                  "type": "integer",
+                  "description": "The maximum number of times a training job is allowed to run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxRuntimePerTrainingJobInSeconds",
+                  "type": "integer",
+                  "description": "The maximum time, in seconds, that each training job executed inside hyperparameter tuning is allowed to run as part of a hyperparameter tuning job. For more information, see the StoppingCondition used by the CreateHyperParameterTuningJob action.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxAutoMLJobRuntimeInSeconds",
+                  "type": "integer",
+                  "description": "The maximum runtime, in seconds, an AutoML job has to complete.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "AutoMLProblemTypeResolvedAttributes",
+              "type": "dict",
+              "description": "Defines the resolved attributes specific to a problem type.",
+              "nested_items": [
+                {
+                  "name": "TabularResolvedAttributes",
+                  "type": "dict",
+                  "description": "The resolved attributes for the tabular problem type.",
+                  "nested_items": [
+                    {
+                      "name": "ProblemType",
+                      "type": "string",
+                      "description": "The type of supervised learning problem available for the model candidates of the AutoML job V2 (Binary Classification, Multiclass Classification, Regression). For more information, see SageMaker Autopilot problem types.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "TextGenerationResolvedAttributes",
+                  "type": "dict",
+                  "description": "The resolved attributes for the text generation problem type.",
+                  "nested_items": [
+                    {
+                      "name": "BaseModelName",
+                      "type": "string",
+                      "description": "The name of the base model to fine-tune.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ModelDeployConfig",
+          "type": "dict",
+          "description": "Indicates whether the model was deployed automatically to an endpoint and the name of that endpoint if deployed automatically.",
+          "nested_items": [
+            {
+              "name": "AutoGenerateEndpointName",
+              "type": "boolean",
+              "description": "Set to True to automatically generate an endpoint name for a one-click Autopilot model deployment; set to False otherwise. The default value is False.",
+              "nested_items": []
+            },
+            {
+              "name": "EndpointName",
+              "type": "string",
+              "description": "Specifies the endpoint name to use for a one-click Autopilot model deployment if the endpoint name is not generated automatically.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ModelDeployResult",
+          "type": "dict",
+          "description": "Provides information about endpoint for the model deployment.",
+          "nested_items": [
+            {
+              "name": "EndpointName",
+              "type": "string",
+              "description": "The name of the endpoint to which the model has been deployed.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "DataSplitConfig",
+          "type": "dict",
+          "description": "Returns the configuration settings of how the data are split into train and validation datasets.",
+          "nested_items": [
+            {
+              "name": "ValidationFraction",
+              "type": "float",
+              "description": "The validation fraction (optional) is a float that specifies the portion of the training dataset to be used for validation. The default value is 0.2, and values must be greater than 0 and less than 1. We recommend setting this value to be less than 0.5.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "SecurityConfig",
+          "type": "dict",
+          "description": "Returns the security configuration for traffic encryption or Amazon VPC settings.",
+          "nested_items": [
+            {
+              "name": "VolumeKmsKeyId",
+              "type": "string",
+              "description": "The key used to encrypt stored data.",
+              "nested_items": []
+            },
+            {
+              "name": "EnableInterContainerTrafficEncryption",
+              "type": "boolean",
+              "description": "Whether to use traffic encryption between the container layers.",
+              "nested_items": []
+            },
+            {
+              "name": "VpcConfig",
+              "type": "dict",
+              "description": "The VPC configuration.",
+              "nested_items": [
+                {
+                  "name": "SecurityGroupIds",
+                  "type": "list",
+                  "description": "The VPC security group IDs, in the form sg-xxxxxxxx. Specify the security groups for the VPC that is specified in the Subnets field.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Subnets",
+                  "type": "list",
+                  "description": "The ID of the subnets in the VPC to which you want to connect your training job or model. For information about the availability of specific instance types, see Supported Instance Types and Availability Zones.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AutoMLComputeConfig",
+          "type": "dict",
+          "description": "The compute configuration used for the AutoML job V2.",
+          "nested_items": [
+            {
+              "name": "EmrServerlessComputeConfig",
+              "type": "dict",
+              "description": "The configuration for using EMR Serverless to run the AutoML job V2.",
+              "nested_items": [
+                {
+                  "name": "ExecutionRoleARN",
+                  "type": "string",
+                  "description": "The ARN of the IAM role granting the AutoML job V2 the necessary permissions access policies to list, connect to, or manage EMR Serverless jobs. For detailed information about the required permissions of this role, see 'How to configure AutoML to initiate a remote job on EMR Serverless for large datasets' in Create a regression or classification job for tabular data using the AutoML API or Create an AutoML job for time-series forecasting using the API.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

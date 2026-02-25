@@ -1,0 +1,748 @@
+{
+  "method_name": "import_key",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/payment-cryptography/client/import_key.html",
+  "description": "Imports symmetric keys and public key certificates in PEM format (base64 encoded) into Amazon Web Services Payment Cryptography. Amazon Web Services Payment Cryptography simplifies key exchange by replacing the existing paper-based approach with a modern electronic approach. With ImportKey you can import symmetric keys using either symmetric and asymmetric key exchange mechanisms. For symmetric key exchange, Amazon Web Services Payment Cryptography uses the ANSI X9 TR-31 norm in accordance with PCI PIN guidelines. And for asymmetric key exchange, Amazon Web Services Payment Cryptography supports ANSI X9 TR-34 norm, RSA unwrap, and ECDH (Elliptic Curve Diffie-Hellman) key exchange mechanisms. Asymmetric key exchange methods are typically used to establish bi-directional trust between the two parties exhanging keys and are used for initial key exchange such as Key Encryption Key (KEK) or Zone Master Key (ZMK). After which you can import working keys using symmetric method to perform various cryptographic operations within Amazon Web Services Payment Cryptography. PCI requires specific minimum key strength of wrapping keys used to protect the keys being exchanged electronically. These requirements can change when PCI standards are revised. The rules specify that wrapping keys used for transport must be at least as strong as the key being protected. For more information on recommended key strength of wrapping keys and key exchange mechanism, see Importing and exporting keys in the Amazon Web Services Payment Cryptography User Guide. You can also import a root public key certificate, used to sign other public key certificates, or a trusted public key certificate under an already established root public key certificate. Using this operation, you can import the public component (in PEM cerificate format) of your private root key. You can use the imported public root key certificate for digital signatures, for example signing wrapping key or signing key in TR-34, within your Amazon Web Services Payment Cryptography account. Set the following parameters: The root public key certificate must be in place and operational before you import a trusted public key certificate. Set the following parameters: Using this operation, you can import initial key using TR-34 asymmetric key exchange. In TR-34 terminology, the sending party of the key is called Key Distribution Host (KDH) and the receiving party of the key is called Key Receiving Device (KRD). During the key import process, KDH is the user who initiates the key import and KRD is Amazon Web Services Payment Cryptography who receives the key. To initiate TR-34 key import, the KDH must obtain an import token by calling GetParametersForImport. This operation generates an encryption keypair for the purpose of key import, signs the key and returns back the wrapping key certificate (also known as KRD wrapping certificate) and the root certificate chain. The KDH must trust and install the KRD wrapping certificate on its HSM and use it to encrypt (wrap) the KDH key during TR-34 WrappedKeyBlock generation. The import token and associated KRD wrapping certificate expires after 30 days. Next the KDH generates a key pair for the purpose of signing the encrypted KDH key and provides the public certificate of the signing key to Amazon Web Services Payment Cryptography. The KDH will also need to import the root certificate chain of the KDH signing certificate by calling ImportKey for RootCertificatePublicKey. For more information on TR-34 key import, see section Importing symmetric keys in the Amazon Web Services Payment Cryptography User Guide. Set the following parameters: Using this operation, you can import initial key using asymmetric RSA wrap and unwrap key exchange method. To initiate import, call GetParametersForImport with KeyMaterial set to KEY_CRYPTOGRAM to generate an import token. This operation also generates an encryption keypair for the purpose of key import, signs the key and returns back the wrapping key certificate in PEM format (base64 encoded) and its root certificate chain. The import token and associated KRD wrapping certificate expires after 30 days. You must trust and install the wrapping certificate and its certificate chain on the sending HSM and use it to wrap the key under export for WrappedKeyCryptogram generation. Next call ImportKey with KeyMaterial set to KEY_CRYPTOGRAM and provide the ImportToken and KeyAttributes for the key under import. Amazon Web Services Payment Cryptography uses TR-31 symmetric key exchange norm to import working keys. A KEK must be established within Amazon Web Services Payment Cryptography by using TR-34 key import or by using CreateKey. To initiate a TR-31 key import, set the following parameters: You can also use ECDH key agreement to import working keys as a TR-31 keyblock, where the wrapping key is an ECDH derived key. To initiate a TR-31 key import using ECDH, both sides must create an ECC key pair with key usage K3 and exchange public key certificates. In Amazon Web Services Payment Cryptography, you can do this by calling CreateKey and then GetPublicKeyCertificate to retrieve its public key certificate. Next, you can then generate a TR-31 WrappedKeyBlock using your own ECC key pair, the public certificate of the service's ECC key pair, and the key derivation parameters including key derivation function, hash algorithm, derivation data, and key algorithm. If you have not already done so, you must import the CA chain that issued the receiving public key certificate by calling ImportKey with input RootCertificatePublicKey for root CA or TrustedPublicKey for intermediate CA. To complete the TR-31 key import, you can use the following parameters. It is important that the ECDH key derivation parameters you use should match those used during import to derive the same shared wrapping key within Amazon Web Services Payment Cryptography. Cross-account use: This operation can't be used across different Amazon Web Services accounts.",
+  "parameters": [
+    {
+      "name": "KeyMaterial",
+      "type": "dict",
+      "required": true,
+      "description": "The key or public key certificate type to use during key material import, for example TR-34 or RootCertificatePublicKey. RootCertificatePublicKey (dict) --- Parameter information for root public key certificate import. The role of the key, the algorithm it supports, and the cryptographic operations allowed with the key. This data is immutable after the root public key is imported. The cryptographic usage of an Amazon Web Services Payment Cryptography key as de\u00ef\u00ac\u0081ned in section A.5.2 of the TR-31 spec. The type of Amazon Web Services Payment Cryptography key to create, which determines the classi\u00ef\u00ac\u0081cation of the cryptographic method and whether Amazon Web Services Payment Cryptography key contains a symmetric key or an asymmetric key pair. The key algorithm to be use during creation of an Amazon Web Services Payment Cryptography key. For symmetric keys, Amazon Web Services Payment Cryptography supports AES and TDES algorithms. For asymmetric keys, Amazon Web Services Payment Cryptography supports RSA and ECC_NIST algorithms. The list of cryptographic operations that you can perform using the key. Encrypt (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to encrypt data. Decrypt (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to decrypt data. Wrap (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to wrap other keys. Unwrap (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to unwrap other keys. Generate (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to generate and verify other card and PIN verification keys. Sign (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used for signing. Verify (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to verify signatures. DeriveKey (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to derive new keys. NoRestrictions (boolean) --- Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key has no special restrictions other than the restrictions implied by KeyUsage. Parameter information for root public key certificate import. TrustedCertificatePublicKey (dict) --- Parameter information for trusted public key certificate import. This data is immutable after a trusted public key is imported. Parameter information for trusted public key certificate import. The KeyARN of the root public key certificate or certificate chain that signs the trusted public key certificate import. Tr31KeyBlock (dict) --- Parameter information for key material import using symmetric TR-31 key exchange method. The KeyARN of the key that will decrypt or unwrap a TR-31 key block during import. The TR-31 wrapped key block to import. Tr34KeyBlock (dict) --- Parameter information for key material import using the asymmetric TR-34 key exchange method. The KeyARN of the certificate chain that signs the signing key certificate during TR-34 key import. The public key component in PEM certificate format of the private key that signs the KDH TR-34 WrappedKeyBlock. The import token that initiates key import using the asymmetric TR-34 key exchange method into Amazon Web Services Payment Cryptography. It expires after 30 days. You can use the same import token to import multiple keys to the same service account. The TR-34 wrapped key block to import. The key block format to use during key import. The only value allowed is X9_TR34_2012. RandomNonce (string) --- A random number value that is unique to the TR-34 key block generated using 2 pass. The operation will fail, if a random nonce value is not provided for a TR-34 key block generated using 2 pass. KeyCryptogram (dict) --- Parameter information for key material import using asymmetric RSA wrap and unwrap key exchange method. This data is immutable after the key is created. Specifies whether the key is exportable from the service. The RSA wrapped key cryptogram under import. The import token that initiates key import using the asymmetric RSA wrap and unwrap key exchange method into AWS Payment Cryptography. WrappingSpec (string) --- The wrapping spec for the wrapped key cryptogram. DiffieHellmanTr31KeyBlock (dict) --- Key derivation parameter information for key material import using asymmetric ECDH key exchange method. The keyARN of the asymmetric ECC key created within Amazon Web Services Payment Cryptography. The keyARN of the CA that signed the PublicKeyCertificate for the client's receiving ECC key pair. The public key certificate of the client's receiving ECC key pair, in PEM format (base64 encoded), to use for ECDH key derivation. The key algorithm of the shared derived ECDH key. The key derivation function to use when deriving a key using ECDH. The hash type to use when deriving a key using ECDH. The shared information used when deriving a key using ECDH. SharedInformation (string) --- A string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes. It is not recommended to reuse shared information for multiple ECDH key derivations, as it could result in derived key material being the same across different derivations. The ECDH wrapped key block to import.",
+      "nested_params": [
+        {
+          "name": "RootCertificatePublicKey",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information for root public key certificate import.",
+          "nested_params": [
+            {
+              "name": "KeyAttributes",
+              "type": "dict",
+              "required": false,
+              "description": "The role of the key, the algorithm it supports, and the cryptographic operations allowed with the key. This data is immutable after the root public key is imported.",
+              "nested_params": [
+                {
+                  "name": "KeyUsage",
+                  "type": "string",
+                  "required": false,
+                  "description": "The cryptographic usage of an Amazon Web Services Payment Cryptography key as de\u00ef\u00ac\u0081ned in section A.5.2 of the TR-31 spec.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyClass",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of Amazon Web Services Payment Cryptography key to create, which determines the classi\u00ef\u00ac\u0081cation of the cryptographic method and whether Amazon Web Services Payment Cryptography key contains a symmetric key or an asymmetric key pair.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key algorithm to be use during creation of an Amazon Web Services Payment Cryptography key. For symmetric keys, Amazon Web Services Payment Cryptography supports AES and TDES algorithms. For asymmetric keys, Amazon Web Services Payment Cryptography supports RSA and ECC_NIST algorithms.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyModesOfUse",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The list of cryptographic operations that you can perform using the key.",
+                  "nested_params": [
+                    {
+                      "name": "Encrypt",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to encrypt data.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Decrypt",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to decrypt data.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Wrap",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to wrap other keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Unwrap",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to unwrap other keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Generate",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to generate and verify other card and PIN verification keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Sign",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used for signing.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Verify",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to verify signatures.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DeriveKey",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to derive new keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "NoRestrictions",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key has no special restrictions other than the restrictions implied by KeyUsage.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "PublicKeyCertificate",
+              "type": "string",
+              "required": false,
+              "description": "Parameter information for root public key certificate import.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "TrustedCertificatePublicKey",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information for trusted public key certificate import.",
+          "nested_params": [
+            {
+              "name": "KeyAttributes",
+              "type": "dict",
+              "required": false,
+              "description": "The role of the key, the algorithm it supports, and the cryptographic operations allowed with the key. This data is immutable after a trusted public key is imported.",
+              "nested_params": [
+                {
+                  "name": "KeyUsage",
+                  "type": "string",
+                  "required": false,
+                  "description": "The cryptographic usage of an Amazon Web Services Payment Cryptography key as de\u00ef\u00ac\u0081ned in section A.5.2 of the TR-31 spec.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyClass",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of Amazon Web Services Payment Cryptography key to create, which determines the classi\u00ef\u00ac\u0081cation of the cryptographic method and whether Amazon Web Services Payment Cryptography key contains a symmetric key or an asymmetric key pair.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key algorithm to be use during creation of an Amazon Web Services Payment Cryptography key. For symmetric keys, Amazon Web Services Payment Cryptography supports AES and TDES algorithms. For asymmetric keys, Amazon Web Services Payment Cryptography supports RSA and ECC_NIST algorithms.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyModesOfUse",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The list of cryptographic operations that you can perform using the key.",
+                  "nested_params": [
+                    {
+                      "name": "Encrypt",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to encrypt data.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Decrypt",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to decrypt data.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Wrap",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to wrap other keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Unwrap",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to unwrap other keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Generate",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to generate and verify other card and PIN verification keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Sign",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used for signing.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Verify",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to verify signatures.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DeriveKey",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to derive new keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "NoRestrictions",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key has no special restrictions other than the restrictions implied by KeyUsage.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "PublicKeyCertificate",
+              "type": "string",
+              "required": false,
+              "description": "Parameter information for trusted public key certificate import.",
+              "nested_params": []
+            },
+            {
+              "name": "CertificateAuthorityPublicKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The KeyARN of the root public key certificate or certificate chain that signs the trusted public key certificate import.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Tr31KeyBlock",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information for key material import using symmetric TR-31 key exchange method.",
+          "nested_params": [
+            {
+              "name": "WrappingKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The KeyARN of the key that will decrypt or unwrap a TR-31 key block during import.",
+              "nested_params": []
+            },
+            {
+              "name": "WrappedKeyBlock",
+              "type": "string",
+              "required": false,
+              "description": "The TR-31 wrapped key block to import.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Tr34KeyBlock",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information for key material import using the asymmetric TR-34 key exchange method.",
+          "nested_params": [
+            {
+              "name": "CertificateAuthorityPublicKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The KeyARN of the certificate chain that signs the signing key certificate during TR-34 key import.",
+              "nested_params": []
+            },
+            {
+              "name": "SigningKeyCertificate",
+              "type": "string",
+              "required": false,
+              "description": "The public key component in PEM certificate format of the private key that signs the KDH TR-34 WrappedKeyBlock.",
+              "nested_params": []
+            },
+            {
+              "name": "ImportToken",
+              "type": "string",
+              "required": false,
+              "description": "The import token that initiates key import using the asymmetric TR-34 key exchange method into Amazon Web Services Payment Cryptography. It expires after 30 days. You can use the same import token to import multiple keys to the same service account.",
+              "nested_params": []
+            },
+            {
+              "name": "WrappedKeyBlock",
+              "type": "string",
+              "required": false,
+              "description": "The TR-34 wrapped key block to import.",
+              "nested_params": []
+            },
+            {
+              "name": "KeyBlockFormat",
+              "type": "string",
+              "required": false,
+              "description": "The key block format to use during key import. The only value allowed is X9_TR34_2012.",
+              "nested_params": []
+            },
+            {
+              "name": "RandomNonce",
+              "type": "string",
+              "required": false,
+              "description": "A random number value that is unique to the TR-34 key block generated using 2 pass. The operation will fail, if a random nonce value is not provided for a TR-34 key block generated using 2 pass.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "KeyCryptogram",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information for key material import using asymmetric RSA wrap and unwrap key exchange method.",
+          "nested_params": [
+            {
+              "name": "KeyAttributes",
+              "type": "dict",
+              "required": false,
+              "description": "The role of the key, the algorithm it supports, and the cryptographic operations allowed with the key. This data is immutable after the key is created.",
+              "nested_params": [
+                {
+                  "name": "KeyUsage",
+                  "type": "string",
+                  "required": false,
+                  "description": "The cryptographic usage of an Amazon Web Services Payment Cryptography key as de\u00ef\u00ac\u0081ned in section A.5.2 of the TR-31 spec.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyClass",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of Amazon Web Services Payment Cryptography key to create, which determines the classi\u00ef\u00ac\u0081cation of the cryptographic method and whether Amazon Web Services Payment Cryptography key contains a symmetric key or an asymmetric key pair.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key algorithm to be use during creation of an Amazon Web Services Payment Cryptography key. For symmetric keys, Amazon Web Services Payment Cryptography supports AES and TDES algorithms. For asymmetric keys, Amazon Web Services Payment Cryptography supports RSA and ECC_NIST algorithms.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyModesOfUse",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The list of cryptographic operations that you can perform using the key.",
+                  "nested_params": [
+                    {
+                      "name": "Encrypt",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to encrypt data.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Decrypt",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to decrypt data.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Wrap",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to wrap other keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Unwrap",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to unwrap other keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Generate",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to generate and verify other card and PIN verification keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Sign",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used for signing.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Verify",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to verify signatures.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DeriveKey",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to derive new keys.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "NoRestrictions",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key has no special restrictions other than the restrictions implied by KeyUsage.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Exportable",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether the key is exportable from the service.",
+              "nested_params": []
+            },
+            {
+              "name": "WrappedKeyCryptogram",
+              "type": "string",
+              "required": false,
+              "description": "The RSA wrapped key cryptogram under import.",
+              "nested_params": []
+            },
+            {
+              "name": "ImportToken",
+              "type": "string",
+              "required": false,
+              "description": "The import token that initiates key import using the asymmetric RSA wrap and unwrap key exchange method into AWS Payment Cryptography. It expires after 30 days. You can use the same import token to import multiple keys to the same service account.",
+              "nested_params": []
+            },
+            {
+              "name": "WrappingSpec",
+              "type": "string",
+              "required": false,
+              "description": "The wrapping spec for the wrapped key cryptogram.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "DiffieHellmanTr31KeyBlock",
+          "type": "dict",
+          "required": false,
+          "description": "Key derivation parameter information for key material import using asymmetric ECDH key exchange method.",
+          "nested_params": [
+            {
+              "name": "PrivateKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The keyARN of the asymmetric ECC key created within Amazon Web Services Payment Cryptography.",
+              "nested_params": []
+            },
+            {
+              "name": "CertificateAuthorityPublicKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The keyARN of the CA that signed the PublicKeyCertificate for the client's receiving ECC key pair.",
+              "nested_params": []
+            },
+            {
+              "name": "PublicKeyCertificate",
+              "type": "string",
+              "required": false,
+              "description": "The public key certificate of the client's receiving ECC key pair, in PEM format (base64 encoded), to use for ECDH key derivation.",
+              "nested_params": []
+            },
+            {
+              "name": "DeriveKeyAlgorithm",
+              "type": "string",
+              "required": false,
+              "description": "The key algorithm of the shared derived ECDH key.",
+              "nested_params": []
+            },
+            {
+              "name": "KeyDerivationFunction",
+              "type": "string",
+              "required": false,
+              "description": "The key derivation function to use when deriving a key using ECDH.",
+              "nested_params": []
+            },
+            {
+              "name": "KeyDerivationHashAlgorithm",
+              "type": "string",
+              "required": false,
+              "description": "The hash type to use when deriving a key using ECDH.",
+              "nested_params": []
+            },
+            {
+              "name": "DerivationData",
+              "type": "dict",
+              "required": false,
+              "description": "The shared information used when deriving a key using ECDH.",
+              "nested_params": [
+                {
+                  "name": "SharedInformation",
+                  "type": "string",
+                  "required": false,
+                  "description": "A string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes. It is not recommended to reuse shared information for multiple ECDH key derivations, as it could result in derived key material being the same across different derivations.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "WrappedKeyBlock",
+              "type": "string",
+              "required": false,
+              "description": "The ECDH wrapped key block to import.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KeyCheckValueAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+      "nested_params": []
+    },
+    {
+      "name": "Enabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Assigns one or more tags to the Amazon Web Services Payment Cryptography key. Use this parameter to tag a key when it is imported. To tag an existing Amazon Web Services Payment Cryptography key, use the TagResource operation. Each tag consists of a tag key and a tag value. Both the tag key and the tag value are required, but the tag value can be an empty (null) string. You can't have more than one tag on an Amazon Web Services Payment Cryptography key with the same tag key. If you specify an existing tag key with a different tag value, Amazon Web Services Payment Cryptography replaces the current tag value with the specified one. (dict) --- A structure that contains information about a tag. The key of the tag. The value of the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the tag.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "KeyArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the key.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyAttributes",
+              "type": "dict",
+              "description": "The role of the key, the algorithm it supports, and the cryptographic operations allowed with the key. This data is immutable after the key is created.",
+              "nested_items": [
+                {
+                  "name": "KeyUsage",
+                  "type": "string",
+                  "description": "The cryptographic usage of an Amazon Web Services Payment Cryptography key as de\u00ef\u00ac\u0081ned in section A.5.2 of the TR-31 spec.",
+                  "nested_items": []
+                },
+                {
+                  "name": "KeyClass",
+                  "type": "string",
+                  "description": "The type of Amazon Web Services Payment Cryptography key to create, which determines the classi\u00ef\u00ac\u0081cation of the cryptographic method and whether Amazon Web Services Payment Cryptography key contains a symmetric key or an asymmetric key pair.",
+                  "nested_items": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "description": "The key algorithm to be use during creation of an Amazon Web Services Payment Cryptography key.",
+                  "nested_items": []
+                },
+                {
+                  "name": "KeyModesOfUse",
+                  "type": "dict",
+                  "description": "The list of cryptographic operations that you can perform using the key.",
+                  "nested_items": [
+                    {
+                      "name": "Encrypt",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to encrypt data.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Decrypt",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to decrypt data.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Wrap",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to wrap other keys.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Unwrap",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to unwrap other keys.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Generate",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to generate and verify other card and PIN verification keys.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Sign",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used for signing.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Verify",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to verify signatures.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DeriveKey",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key can be used to derive new keys.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "NoRestrictions",
+                      "type": "boolean",
+                      "description": "Speci\u00ef\u00ac\u0081es whether an Amazon Web Services Payment Cryptography key has no special restrictions other than the restrictions implied by KeyUsage.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "KeyCheckValue",
+              "type": "string",
+              "description": "The key check value (KCV) is used to check if all parties holding a given key have the same key or to detect that a key has changed.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyCheckValueAlgorithm",
+              "type": "string",
+              "description": "The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity.",
+              "nested_items": []
+            },
+            {
+              "name": "Enabled",
+              "type": "boolean",
+              "description": "Specifies whether the key is enabled.",
+              "nested_items": []
+            },
+            {
+              "name": "Exportable",
+              "type": "boolean",
+              "description": "Specifies whether the key is exportable. This data is immutable after the key is created.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyState",
+              "type": "string",
+              "description": "The state of key that is being created or deleted.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyOrigin",
+              "type": "string",
+              "description": "The source of the key material. For keys created within Amazon Web Services Payment Cryptography, the value is AWS_PAYMENT_CRYPTOGRAPHY. For keys imported into Amazon Web Services Payment Cryptography, the value is EXTERNAL.",
+              "nested_items": []
+            },
+            {
+              "name": "CreateTimestamp",
+              "type": "datetime",
+              "description": "The date and time when the key was created.",
+              "nested_items": []
+            },
+            {
+              "name": "UsageStartTimestamp",
+              "type": "datetime",
+              "description": "The date and time after which Amazon Web Services Payment Cryptography will start using the key material for cryptographic operations.",
+              "nested_items": []
+            },
+            {
+              "name": "UsageStopTimestamp",
+              "type": "datetime",
+              "description": "The date and time after which Amazon Web Services Payment Cryptography will stop using the key material for cryptographic operations.",
+              "nested_items": []
+            },
+            {
+              "name": "DeletePendingTimestamp",
+              "type": "datetime",
+              "description": "The date and time after which Amazon Web Services Payment Cryptography will delete the key. This value is present only when KeyState is DELETE_PENDING and the key is scheduled for deletion.",
+              "nested_items": []
+            },
+            {
+              "name": "DeleteTimestamp",
+              "type": "datetime",
+              "description": "The date and time after which Amazon Web Services Payment Cryptography will delete the key. This value is present only when when the KeyState is DELETE_COMPLETE and the Amazon Web Services Payment Cryptography key is deleted.",
+              "nested_items": []
+            },
+            {
+              "name": "DeriveKeyUsage",
+              "type": "string",
+              "description": "The cryptographic usage of an ECDH derived key as de\u00ef\u00ac\u0081ned in section A.5.2 of the TR-31 spec.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

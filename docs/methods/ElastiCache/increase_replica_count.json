@@ -1,0 +1,672 @@
+{
+  "method_name": "increase_replica_count",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elasticache/client/increase_replica_count.html",
+  "description": "Dynamically increases the number of replicas in a Valkey or Redis OSS (cluster mode disabled) replication group or the number of replica nodes in one or more node groups (shards) of a Valkey or Redis OSS (cluster mode enabled) replication group. This operation is performed with no cluster down time.",
+  "parameters": [
+    {
+      "name": "ReplicationGroupId",
+      "type": "string",
+      "required": true,
+      "description": "The id of the replication group to which you want to add replica nodes.",
+      "nested_params": []
+    },
+    {
+      "name": "NewReplicaCount",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ReplicaConfiguration",
+      "type": "list",
+      "required": true,
+      "description": "A list of ConfigureShard objects that can be used to configure each shard in a Valkey or Redis OSS (cluster mode enabled) replication group. The ConfigureShard has three members: NewReplicaCount, NodeGroupId, and PreferredAvailabilityZones. (dict) --- Node group (shard) configuration options when adding or removing replicas. Each node group (shard) configuration has the following members: NodeGroupId, NewReplicaCount, and PreferredAvailabilityZones. The 4-digit id for the node group you are configuring. For Valkey or Redis OSS (cluster mode disabled) replication groups, the node group id is always 0001. To find a Valkey or Redis OSS (cluster mode enabled)'s node group's (shard's) id, see Finding a Shard's Id. The number of replicas you want in this node group at the end of this operation. The maximum value for NewReplicaCount is 5. The minimum value depends upon the type of Valkey or Redis OSS replication group you are working with. The minimum number of replicas in a shard or replication group is: Valkey or Redis OSS (cluster mode disabled) If Multi-AZ: 1 If Multi-AZ: 0 Valkey or Redis OSS (cluster mode enabled): 0 (though you will not be able to failover to a replica if your primary node fails) PreferredAvailabilityZones (list) --- A list of PreferredAvailabilityZone strings that specify which availability zones the replication group's nodes are to be in. The nummber of PreferredAvailabilityZone values must equal the value of NewReplicaCount plus 1 to account for the primary node. If this member of ReplicaConfiguration is omitted, ElastiCache selects the availability zone for each of the replicas. (string) --- PreferredOutpostArns (list) --- The outpost ARNs in which the cache cluster is created. (string) ---",
+      "nested_params": [
+        {
+          "name": "NodeGroupId",
+          "type": "string",
+          "required": false,
+          "description": "The 4-digit id for the node group you are configuring. For Valkey or Redis OSS (cluster mode disabled) replication groups, the node group id is always 0001. To find a Valkey or Redis OSS (cluster mode enabled)'s node group's (shard's) id, see Finding a Shard's Id.",
+          "nested_params": []
+        },
+        {
+          "name": "NewReplicaCount",
+          "type": "integer",
+          "required": false,
+          "description": "The number of replicas you want in this node group at the end of this operation. The maximum value for NewReplicaCount is 5. The minimum value depends upon the type of Valkey or Redis OSS replication group you are working with. The minimum number of replicas in a shard or replication group is:",
+          "nested_params": []
+        },
+        {
+          "name": "PreferredAvailabilityZones",
+          "type": "list",
+          "required": false,
+          "description": "A list of PreferredAvailabilityZone strings that specify which availability zones the replication group's nodes are to be in. The nummber of PreferredAvailabilityZone values must equal the value of NewReplicaCount plus 1 to account for the primary node. If this member of ReplicaConfiguration is omitted, ElastiCache selects the availability zone for each of the replicas.",
+          "nested_params": []
+        },
+        {
+          "name": "PreferredOutpostArns",
+          "type": "list",
+          "required": false,
+          "description": "The outpost ARNs in which the cache cluster is created.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ApplyImmediately",
+      "type": "boolean",
+      "required": true,
+      "description": "If True, the number of replica nodes is increased immediately. ApplyImmediately=False is not currently supported.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ReplicationGroup",
+          "type": "dict",
+          "description": "Contains all of the attributes of a specific Valkey or Redis OSS replication group.",
+          "nested_items": [
+            {
+              "name": "ReplicationGroupId",
+              "type": "string",
+              "description": "The identifier for the replication group.",
+              "nested_items": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "description": "The user supplied description of the replication group.",
+              "nested_items": []
+            },
+            {
+              "name": "GlobalReplicationGroupInfo",
+              "type": "dict",
+              "description": "The name of the Global datastore and role of this replication group in the Global datastore.",
+              "nested_items": [
+                {
+                  "name": "GlobalReplicationGroupId",
+                  "type": "string",
+                  "description": "The name of the Global datastore.",
+                  "nested_items": []
+                },
+                {
+                  "name": "GlobalReplicationGroupMemberRole",
+                  "type": "string",
+                  "description": "The role of the replication group in a Global datastore. Can be primary or secondary.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The current state of this replication group - creating, available, modifying, deleting, create-failed, snapshotting.",
+              "nested_items": []
+            },
+            {
+              "name": "PendingModifiedValues",
+              "type": "dict",
+              "description": "A group of settings to be applied to the replication group, either immediately or during the next maintenance window.",
+              "nested_items": [
+                {
+                  "name": "PrimaryClusterId",
+                  "type": "string",
+                  "description": "The primary cluster ID that is applied immediately (if --apply-immediately was specified), or during the next maintenance window.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AutomaticFailoverStatus",
+                  "type": "string",
+                  "description": "Indicates the status of automatic failover for this Valkey or Redis OSS replication group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Resharding",
+                  "type": "dict",
+                  "description": "The status of an online resharding operation.",
+                  "nested_items": [
+                    {
+                      "name": "SlotMigration",
+                      "type": "dict",
+                      "description": "Represents the progress of an online resharding operation.",
+                      "nested_items": [
+                        {
+                          "name": "ProgressPercentage",
+                          "type": "float",
+                          "description": "The percentage of the slot migration that is complete.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "AuthTokenStatus",
+                  "type": "string",
+                  "description": "The auth token status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UserGroups",
+                  "type": "dict",
+                  "description": "The user group being modified.",
+                  "nested_items": [
+                    {
+                      "name": "UserGroupIdsToAdd",
+                      "type": "list",
+                      "description": "The ID of the user group to add.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UserGroupIdsToRemove",
+                      "type": "list",
+                      "description": "The ID of the user group to remove.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "LogDeliveryConfigurations",
+                  "type": "list",
+                  "description": "The log delivery configurations being modified.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "LogType",
+                          "type": "string",
+                          "description": "Refers to slow-log or engine-log..",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DestinationType",
+                          "type": "string",
+                          "description": "Returns the destination type, either CloudWatch Logs or Kinesis Data Firehose.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DestinationDetails",
+                          "type": "dict",
+                          "description": "Configuration details of either a CloudWatch Logs destination or Kinesis Data Firehose destination.",
+                          "nested_items": [
+                            {
+                              "name": "CloudWatchLogsDetails",
+                              "type": "dict",
+                              "description": "The configuration details of the CloudWatch Logs destination.",
+                              "nested_items": [
+                                {
+                                  "name": "LogGroup",
+                                  "type": "string",
+                                  "description": "The name of the CloudWatch Logs log group.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "KinesisFirehoseDetails",
+                              "type": "dict",
+                              "description": "The configuration details of the Kinesis Data Firehose destination.",
+                              "nested_items": [
+                                {
+                                  "name": "DeliveryStream",
+                                  "type": "string",
+                                  "description": "The name of the Kinesis Data Firehose delivery stream.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "LogFormat",
+                          "type": "string",
+                          "description": "Returns the log format, either JSON or TEXT.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TransitEncryptionEnabled",
+                  "type": "boolean",
+                  "description": "A flag that enables in-transit encryption when set to true.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TransitEncryptionMode",
+                  "type": "string",
+                  "description": "A setting that allows you to migrate your clients to use in-transit encryption, with no downtime.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ClusterMode",
+                  "type": "string",
+                  "description": "Enabled or Disabled. To modify cluster mode from Disabled to Enabled, you must first set the cluster mode to Compatible. Compatible mode allows your Valkey or Redis OSS clients to connect using both cluster mode enabled and cluster mode disabled. After you migrate all Valkey or Redis OSS clients to use cluster mode enabled, you can then complete cluster mode configuration and set the cluster mode to Enabled.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MemberClusters",
+              "type": "list",
+              "description": "The names of all the cache clusters that are part of this replication group.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "NodeGroups",
+              "type": "list",
+              "description": "A list of node groups in this replication group. For Valkey or Redis OSS (cluster mode disabled) replication groups, this is a single-element list. For Valkey or Redis OSS (cluster mode enabled) replication groups, the list contains an entry for each node group (shard).",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "NodeGroupId",
+                      "type": "string",
+                      "description": "The identifier for the node group (shard). A Valkey or Redis OSS (cluster mode disabled) replication group contains only 1 node group; therefore, the node group ID is 0001. A Valkey or Redis OSS (cluster mode enabled) replication group contains 1 to 90 node groups numbered 0001 to 0090. Optionally, the user can provide the id for a node group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The current state of this replication group - creating, available, modifying, deleting.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PrimaryEndpoint",
+                      "type": "dict",
+                      "description": "The endpoint of the primary node in this node group (shard).",
+                      "nested_items": [
+                        {
+                          "name": "Address",
+                          "type": "string",
+                          "description": "The DNS hostname of the cache node.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Port",
+                          "type": "integer",
+                          "description": "The port number that the cache engine is listening on.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReaderEndpoint",
+                      "type": "dict",
+                      "description": "The endpoint of the replica nodes in this node group (shard). This value is read-only.",
+                      "nested_items": [
+                        {
+                          "name": "Address",
+                          "type": "string",
+                          "description": "The DNS hostname of the cache node.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Port",
+                          "type": "integer",
+                          "description": "The port number that the cache engine is listening on.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Slots",
+                      "type": "string",
+                      "description": "The keyspace for this node group (shard).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "NodeGroupMembers",
+                      "type": "list",
+                      "description": "A list containing information about individual nodes within the node group (shard).",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "CacheClusterId",
+                              "type": "string",
+                              "description": "The ID of the cluster to which the node belongs.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "CacheNodeId",
+                              "type": "string",
+                              "description": "The ID of the node within its cluster. A node ID is a numeric identifier (0001, 0002, etc.).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ReadEndpoint",
+                              "type": "dict",
+                              "description": "The information required for client programs to connect to a node for read operations. The read endpoint is only applicable on Valkey or Redis OSS (cluster mode disabled) clusters.",
+                              "nested_items": [
+                                {
+                                  "name": "Address",
+                                  "type": "string",
+                                  "description": "The DNS hostname of the cache node.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Port",
+                                  "type": "integer",
+                                  "description": "The port number that the cache engine is listening on.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "PreferredAvailabilityZone",
+                              "type": "string",
+                              "description": "The name of the Availability Zone in which the node is located.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "PreferredOutpostArn",
+                              "type": "string",
+                              "description": "The outpost ARN of the node group member.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "CurrentRole",
+                              "type": "string",
+                              "description": "The role that is currently assigned to the node - primary or replica. This member is only applicable for Valkey or Redis OSS (cluster mode disabled) replication groups.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "SnapshottingClusterId",
+              "type": "string",
+              "description": "The cluster ID that is used as the daily snapshot source for the replication group.",
+              "nested_items": []
+            },
+            {
+              "name": "AutomaticFailover",
+              "type": "string",
+              "description": "Indicates the status of automatic failover for this Valkey or Redis OSS replication group.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiAZ",
+              "type": "string",
+              "description": "A flag indicating if you have Multi-AZ enabled to enhance fault tolerance. For more information, see Minimizing Downtime: Multi-AZ.",
+              "nested_items": []
+            },
+            {
+              "name": "ConfigurationEndpoint",
+              "type": "dict",
+              "description": "The configuration endpoint for this replication group. Use the configuration endpoint to connect to this replication group.",
+              "nested_items": [
+                {
+                  "name": "Address",
+                  "type": "string",
+                  "description": "The DNS hostname of the cache node.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Port",
+                  "type": "integer",
+                  "description": "The port number that the cache engine is listening on.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SnapshotRetentionLimit",
+              "type": "integer",
+              "description": "The number of days for which ElastiCache retains automatic cluster snapshots before deleting them. For example, if you set SnapshotRetentionLimit to 5, a snapshot that was taken today is retained for 5 days before being deleted.",
+              "nested_items": []
+            },
+            {
+              "name": "SnapshotWindow",
+              "type": "string",
+              "description": "The daily time range (in UTC) during which ElastiCache begins taking a daily snapshot of your node group (shard).",
+              "nested_items": []
+            },
+            {
+              "name": "ClusterEnabled",
+              "type": "boolean",
+              "description": "A flag indicating whether or not this replication group is cluster enabled; i.e., whether its data can be partitioned across multiple shards (API/CLI: node groups).",
+              "nested_items": []
+            },
+            {
+              "name": "CacheNodeType",
+              "type": "string",
+              "description": "The name of the compute and memory capacity node type for each node in the replication group.",
+              "nested_items": []
+            },
+            {
+              "name": "AuthTokenEnabled",
+              "type": "boolean",
+              "description": "A flag that enables using an AuthToken (password) when issuing Valkey or Redis OSS commands.",
+              "nested_items": []
+            },
+            {
+              "name": "AuthTokenLastModifiedDate",
+              "type": "datetime",
+              "description": "The date the auth token was last modified.",
+              "nested_items": []
+            },
+            {
+              "name": "TransitEncryptionEnabled",
+              "type": "boolean",
+              "description": "A flag that enables in-transit encryption when set to true.",
+              "nested_items": []
+            },
+            {
+              "name": "AtRestEncryptionEnabled",
+              "type": "boolean",
+              "description": "A flag that enables encryption at-rest when set to true.",
+              "nested_items": []
+            },
+            {
+              "name": "MemberClustersOutpostArns",
+              "type": "list",
+              "description": "The outpost ARNs of the replication group's member clusters.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "The ID of the KMS key used to encrypt the disk in the cluster.",
+              "nested_items": []
+            },
+            {
+              "name": "ARN",
+              "type": "string",
+              "description": "The ARN (Amazon Resource Name) of the replication group.",
+              "nested_items": []
+            },
+            {
+              "name": "UserGroupIds",
+              "type": "list",
+              "description": "The ID of the user group associated to the replication group.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "LogDeliveryConfigurations",
+              "type": "list",
+              "description": "Returns the destination, format and type of the logs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "LogType",
+                      "type": "string",
+                      "description": "Refers to slow-log or engine-log.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DestinationType",
+                      "type": "string",
+                      "description": "Returns the destination type, either cloudwatch-logs or kinesis-firehose.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DestinationDetails",
+                      "type": "dict",
+                      "description": "Configuration details of either a CloudWatch Logs destination or Kinesis Data Firehose destination.",
+                      "nested_items": [
+                        {
+                          "name": "CloudWatchLogsDetails",
+                          "type": "dict",
+                          "description": "The configuration details of the CloudWatch Logs destination.",
+                          "nested_items": [
+                            {
+                              "name": "LogGroup",
+                              "type": "string",
+                              "description": "The name of the CloudWatch Logs log group.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "KinesisFirehoseDetails",
+                          "type": "dict",
+                          "description": "The configuration details of the Kinesis Data Firehose destination.",
+                          "nested_items": [
+                            {
+                              "name": "DeliveryStream",
+                              "type": "string",
+                              "description": "The name of the Kinesis Data Firehose delivery stream.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "LogFormat",
+                      "type": "string",
+                      "description": "Returns the log format, either JSON or TEXT.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "Returns the log delivery configuration status. Values are one of enabling | disabling | modifying | active | error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Message",
+                      "type": "string",
+                      "description": "Returns an error message for the log delivery configuration.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ReplicationGroupCreateTime",
+              "type": "datetime",
+              "description": "The date and time when the cluster was created.",
+              "nested_items": []
+            },
+            {
+              "name": "DataTiering",
+              "type": "string",
+              "description": "Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type. This parameter must be set to true when using r6gd nodes. For more information, see Data tiering.",
+              "nested_items": []
+            },
+            {
+              "name": "AutoMinorVersionUpgrade",
+              "type": "boolean",
+              "description": "If you are running Valkey 7.2 and above, or Redis OSS engine version 6.0 and above, set this parameter to yes if you want to opt-in to the next auto minor version upgrade campaign. This parameter is disabled for previous versions.",
+              "nested_items": []
+            },
+            {
+              "name": "NetworkType",
+              "type": "string",
+              "description": "Must be either ipv4 | ipv6 | dual_stack. IPv6 is supported for workloads using Valkey 7.2 and above, Redis OSS engine version 6.2 to 7.1 or Memcached engine version 1.6.6 and above on all instances built on the Nitro system.",
+              "nested_items": []
+            },
+            {
+              "name": "IpDiscovery",
+              "type": "string",
+              "description": "The network type you choose when modifying a cluster, either ipv4 | ipv6. IPv6 is supported for workloads using Valkey 7.2 and above, Redis OSS engine version 6.2 to 7.1 or Memcached engine version 1.6.6 and above on all instances built on the Nitro system.",
+              "nested_items": []
+            },
+            {
+              "name": "TransitEncryptionMode",
+              "type": "string",
+              "description": "A setting that allows you to migrate your clients to use in-transit encryption, with no downtime.",
+              "nested_items": []
+            },
+            {
+              "name": "ClusterMode",
+              "type": "string",
+              "description": "Enabled or Disabled. To modify cluster mode from Disabled to Enabled, you must first set the cluster mode to Compatible. Compatible mode allows your Valkey or Redis OSS clients to connect using both cluster mode enabled and cluster mode disabled. After you migrate all Valkey or Redis OSS clients to use cluster mode enabled, you can then complete cluster mode configuration and set the cluster mode to Enabled.",
+              "nested_items": []
+            },
+            {
+              "name": "Engine",
+              "type": "string",
+              "description": "The engine used in a replication group. The options are redis, memcached or valkey.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

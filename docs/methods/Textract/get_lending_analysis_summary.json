@@ -1,0 +1,200 @@
+{
+  "method_name": "get_lending_analysis_summary",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract/client/get_lending_analysis_summary.html",
+  "description": "Gets summarized results for the StartLendingAnalysis operation, which analyzes text in a lending document. The returned summary consists of information about documents grouped together by a common document type. Information like detected signatures, page numbers, and split documents is returned with respect to the type of grouped document. You start asynchronous text analysis by calling StartLendingAnalysis, which returns a job identifier ( JobId). When the text analysis operation finishes, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that's registered in the initial call to StartLendingAnalysis. To get the results of the text analysis operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If so, call GetLendingAnalysisSummary, and pass the job identifier ( JobId) from the initial call to StartLendingAnalysis.",
+  "parameters": [
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the lending or text-detection job. The JobId is returned from StartLendingAnalysis. A JobId value is only valid for 7 days.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DocumentMetadata",
+          "type": "dict",
+          "description": "Information about the input document.",
+          "nested_items": [
+            {
+              "name": "Pages",
+              "type": "integer",
+              "description": "The number of pages that are detected in the document.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "JobStatus",
+          "type": "string",
+          "description": "The current status of the lending analysis job.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "DocumentGroups",
+              "type": "list",
+              "description": "Contains an array of all DocumentGroup objects.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "The type of document that Amazon Textract has detected. See Analyze Lending Response Objects for a list of all types returned by Textract.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SplitDocuments",
+                      "type": "list",
+                      "description": "An array that contains information about the pages of a document, defined by logical boundary.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Index",
+                              "type": "integer",
+                              "description": "The index for a given document in a DocumentGroup of a specific Type.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Pages",
+                              "type": "list",
+                              "description": "An array of page numbers for a for a given document, ordered by logical boundary.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "integer",
+                                  "description": "(integer) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "DetectedSignatures",
+                      "type": "list",
+                      "description": "A list of the detected signatures found in a document group.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Page",
+                              "type": "integer",
+                              "description": "The page a detected signature was found on.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "UndetectedSignatures",
+                      "type": "list",
+                      "description": "A list of any expected signatures not found in a document group.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Page",
+                              "type": "integer",
+                              "description": "The page where a signature was expected but not found.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "UndetectedDocumentTypes",
+              "type": "list",
+              "description": "UndetectedDocumentTypes.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Warnings",
+          "type": "list",
+          "description": "A list of warnings that occurred during the lending analysis operation.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "The error code for the warning.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Pages",
+                  "type": "list",
+                  "description": "A list of the pages that the warning applies to.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "integer",
+                      "description": "(integer) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "Returns if the lending analysis could not be completed. Contains explanation for what error occurred.",
+          "nested_items": []
+        },
+        {
+          "name": "AnalyzeLendingModelVersion",
+          "type": "string",
+          "description": "The current model version of the Analyze Lending API.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

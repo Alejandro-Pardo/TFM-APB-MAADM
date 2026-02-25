@@ -1,0 +1,472 @@
+{
+  "method_name": "create_campaign",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iotfleetwise/client/create_campaign.html",
+  "description": "Creates an orchestration of data collection rules. The Amazon Web Services IoT FleetWise Edge Agent software running in vehicles uses campaigns to decide how to collect and transfer data to the cloud. You create campaigns in the cloud. After you or your team approve campaigns, Amazon Web Services IoT FleetWise automatically deploys them to vehicles. For more information, see Collect and transfer data with campaigns in the Amazon Web Services IoT FleetWise Developer Guide.",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the campaign to create.",
+      "nested_params": []
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "signalCatalogArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the signal catalog to associate with the campaign.",
+      "nested_params": []
+    },
+    {
+      "name": "targetArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the vehicle or fleet to deploy a campaign to.",
+      "nested_params": []
+    },
+    {
+      "name": "startTime",
+      "type": "datetime",
+      "required": false,
+      "description": "The time, in milliseconds, to deliver a campaign after it was approved. If it's not specified, 0 is used. Default: 0",
+      "nested_params": []
+    },
+    {
+      "name": "expiryTime",
+      "type": "datetime",
+      "required": false,
+      "description": "The time the campaign expires, in seconds since epoch (January 1, 1970 at midnight UTC time). Vehicle data isn't collected after the campaign expires. Default: 253402214400 (December 31, 9999, 00:00:00 UTC)",
+      "nested_params": []
+    },
+    {
+      "name": "postTriggerCollectionDuration",
+      "type": "integer",
+      "required": false,
+      "description": "How long (in milliseconds) to collect raw data after a triggering event initiates the collection. If it's not specified, 0 is used. Default: 0",
+      "nested_params": []
+    },
+    {
+      "name": "diagnosticsMode",
+      "type": "string",
+      "required": false,
+      "description": "Option for a vehicle to send diagnostic trouble codes to Amazon Web Services IoT FleetWise. If you want to send diagnostic trouble codes, use SEND_ACTIVE_DTCS. If it's not specified, OFF is used. Default: OFF.",
+      "nested_params": []
+    },
+    {
+      "name": "spoolingMode",
+      "type": "string",
+      "required": false,
+      "description": "Determines whether to store collected data after a vehicle lost a connection with the cloud. After a connection is re-established, the data is automatically forwarded to Amazon Web Services IoT FleetWise. If you want to store collected data when a vehicle loses connection with the cloud, use TO_DISK. If it's not specified, OFF is used. Default: OFF.",
+      "nested_params": []
+    },
+    {
+      "name": "compression",
+      "type": "string",
+      "required": false,
+      "description": "Determines whether to compress signals before transmitting data to Amazon Web Services IoT FleetWise. If you don't want to compress the signals, use OFF. If it's not specified, SNAPPY is used. Default: SNAPPY.",
+      "nested_params": []
+    },
+    {
+      "name": "priority",
+      "type": "integer",
+      "required": false,
+      "description": "A number indicating the priority of one campaign over another campaign for a certain vehicle or fleet. A campaign with the lowest value is deployed to vehicles before any other campaigns. If it's not specified, 0 is used. Default: 0",
+      "nested_params": []
+    },
+    {
+      "name": "signalsToCollect",
+      "type": "list",
+      "required": true,
+      "description": "A list of information about signals to collect. (dict) --- Information about a signal. The name of the signal. maxSampleCount (integer) --- The maximum number of samples to collect. minimumSamplingIntervalMs (integer) --- The minimum duration of time (in milliseconds) between two triggering events to collect data. dataPartitionId (string) --- The ID of the data partition this signal is associated with. The ID must match one of the IDs provided in dataPartitions. This is accomplished either by specifying a particular data partition ID or by using default for an established default partition. You can establish a default partition in the DataPartition data type.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the signal.",
+          "nested_params": []
+        },
+        {
+          "name": "maxSampleCount",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of samples to collect.",
+          "nested_params": []
+        },
+        {
+          "name": "minimumSamplingIntervalMs",
+          "type": "integer",
+          "required": false,
+          "description": "The minimum duration of time (in milliseconds) between two triggering events to collect data.",
+          "nested_params": []
+        },
+        {
+          "name": "dataPartitionId",
+          "type": "string",
+          "required": false,
+          "description": "The ID of the data partition this signal is associated with. The ID must match one of the IDs provided in dataPartitions. This is accomplished either by specifying a particular data partition ID or by using default for an established default partition. You can establish a default partition in the DataPartition data type.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "collectionScheme",
+      "type": "dict",
+      "required": true,
+      "description": "The data collection scheme associated with the campaign. You can specify a scheme that collects data based on time or an event. timeBasedCollectionScheme (dict) --- Information about a collection scheme that uses a time period to decide how often to collect data. The time period (in milliseconds) to decide how often to collect data. For example, if the time period is 60000, the Edge Agent software collects data once every minute. conditionBasedCollectionScheme (dict) --- Information about a collection scheme that uses a simple logical expression to recognize what data to collect. The logical expression used to recognize what data to collect. For example, $variable.`Vehicle.OutsideAirTemperature` >= 105.0. minimumTriggerIntervalMs (integer) --- The minimum duration of time between two triggering events to collect data, in milliseconds. triggerMode (string) --- Whether to collect data for all triggering events ( ALWAYS). Specify ( RISING_EDGE), or specify only when the condition first evaluates to false. For example, triggering on 'AirbagDeployed'; Users aren't interested on triggering when the airbag is already exploded; they only care about the change from not deployed => deployed. conditionLanguageVersion (integer) --- Specifies the version of the conditional expression language.",
+      "nested_params": [
+        {
+          "name": "timeBasedCollectionScheme",
+          "type": "dict",
+          "required": false,
+          "description": "Information about a collection scheme that uses a time period to decide how often to collect data.",
+          "nested_params": [
+            {
+              "name": "periodMs",
+              "type": "integer",
+              "required": false,
+              "description": "The time period (in milliseconds) to decide how often to collect data. For example, if the time period is 60000, the Edge Agent software collects data once every minute.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "conditionBasedCollectionScheme",
+          "type": "dict",
+          "required": false,
+          "description": "Information about a collection scheme that uses a simple logical expression to recognize what data to collect.",
+          "nested_params": [
+            {
+              "name": "expression",
+              "type": "string",
+              "required": false,
+              "description": "The logical expression used to recognize what data to collect. For example, $variable.`Vehicle.OutsideAirTemperature` >= 105.0.",
+              "nested_params": []
+            },
+            {
+              "name": "minimumTriggerIntervalMs",
+              "type": "integer",
+              "required": false,
+              "description": "The minimum duration of time between two triggering events to collect data, in milliseconds.",
+              "nested_params": []
+            },
+            {
+              "name": "triggerMode",
+              "type": "string",
+              "required": false,
+              "description": "Whether to collect data for all triggering events ( ALWAYS). Specify ( RISING_EDGE), or specify only when the condition first evaluates to false. For example, triggering on 'AirbagDeployed'; Users aren't interested on triggering when the airbag is already exploded; they only care about the change from not deployed => deployed.",
+              "nested_params": []
+            },
+            {
+              "name": "conditionLanguageVersion",
+              "type": "integer",
+              "required": false,
+              "description": "Specifies the version of the conditional expression language.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dataExtraDimensions",
+      "type": "list",
+      "required": false,
+      "description": "A list of vehicle attributes to associate with a campaign. Enrich the data with specified vehicle attributes. For example, add make and model to the campaign, and Amazon Web Services IoT FleetWise will associate the data with those attributes as dimensions in Amazon Timestream. You can then query the data against make and model. Default: An empty array (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "tags",
+      "type": "list",
+      "required": true,
+      "description": "Metadata that can be used to manage the campaign. (dict) --- A set of key/value pairs that are used to manage the resource. The tag's key. The tag's value.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The tag's key.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The tag's value.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "dataDestinationConfigs",
+      "type": "list",
+      "required": true,
+      "description": "The destination where the campaign sends data. You can send data to an MQTT topic, or store it in Amazon S3 or Amazon Timestream. MQTT is the publish/subscribe messaging protocol used by Amazon Web Services IoT to communicate with your devices. Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. Amazon Web Services IoT FleetWise supports at-least-once file delivery to S3. Your vehicle data is stored on multiple Amazon Web Services IoT FleetWise servers for redundancy and high availability. You can use Amazon Timestream to access and analyze time series data, and Timestream to query vehicle data so that you can identify trends and patterns. (dict) --- The destination where the campaign sends data. s3Config (dict) --- The Amazon S3 bucket where the Amazon Web Services IoT FleetWise campaign sends data. The Amazon Resource Name (ARN) of the Amazon S3 bucket. dataFormat (string) --- Specify the format that files are saved in the Amazon S3 bucket. You can save files in an Apache Parquet or JSON format. Parquet - Store data in a columnar storage file format. Parquet is optimal for fast data retrieval and can reduce costs. This option is selected by default. JSON - Store data in a standard text-based JSON file format. storageCompressionFormat (string) --- By default, stored data is compressed as a .gzip file. Compressed files have a reduced file size, which can optimize the cost of data storage. prefix (string) --- Enter an S3 bucket prefix. The prefix is the string of characters after the bucket name and before the object name. You can use the prefix to organize data stored in Amazon S3 buckets. For more information, see Organizing objects using prefixes in the Amazon Simple Storage Service User Guide. By default, Amazon Web Services IoT FleetWise sets the prefix processed-data/year=YY/month=MM/date=DD/hour=HH/ (in UTC) to data it delivers to Amazon S3. You can enter a prefix to append it to this default prefix. For example, if you enter the prefix vehicles, the prefix will be vehicles/processed-data/year=YY/month=MM/date=DD/hour=HH/. timestreamConfig (dict) --- The Amazon Timestream table where the campaign sends data. The Amazon Resource Name (ARN) of the Amazon Timestream table. The Amazon Resource Name (ARN) of the task execution role that grants Amazon Web Services IoT FleetWise permission to deliver data to the Amazon Timestream table. mqttTopicConfig (dict) --- The MQTT topic to which the Amazon Web Services IoT FleetWise campaign routes data. The ARN of the MQTT topic. The ARN of the role that grants Amazon Web Services IoT FleetWise permission to access and act on messages sent to the MQTT topic.",
+      "nested_params": [
+        {
+          "name": "s3Config",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon S3 bucket where the Amazon Web Services IoT FleetWise campaign sends data.",
+          "nested_params": [
+            {
+              "name": "bucketArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Amazon S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "dataFormat",
+              "type": "string",
+              "required": false,
+              "description": "Specify the format that files are saved in the Amazon S3 bucket. You can save files in an Apache Parquet or JSON format.",
+              "nested_params": []
+            },
+            {
+              "name": "storageCompressionFormat",
+              "type": "string",
+              "required": false,
+              "description": "By default, stored data is compressed as a .gzip file. Compressed files have a reduced file size, which can optimize the cost of data storage.",
+              "nested_params": []
+            },
+            {
+              "name": "prefix",
+              "type": "string",
+              "required": false,
+              "description": "Enter an S3 bucket prefix. The prefix is the string of characters after the bucket name and before the object name. You can use the prefix to organize data stored in Amazon S3 buckets. For more information, see Organizing objects using prefixes in the Amazon Simple Storage Service User Guide. By default, Amazon Web Services IoT FleetWise sets the prefix processed-data/year=YY/month=MM/date=DD/hour=HH/ (in UTC) to data it delivers to Amazon S3. You can enter a prefix to append it to this default prefix. For example, if you enter the prefix vehicles, the prefix will be vehicles/processed-data/year=YY/month=MM/date=DD/hour=HH/.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "timestreamConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon Timestream table where the campaign sends data.",
+          "nested_params": [
+            {
+              "name": "timestreamTableArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Amazon Timestream table.",
+              "nested_params": []
+            },
+            {
+              "name": "executionRoleArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the task execution role that grants Amazon Web Services IoT FleetWise permission to deliver data to the Amazon Timestream table.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "mqttTopicConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The MQTT topic to which the Amazon Web Services IoT FleetWise campaign routes data.",
+          "nested_params": [
+            {
+              "name": "mqttTopicArn",
+              "type": "string",
+              "required": false,
+              "description": "The ARN of the MQTT topic.",
+              "nested_params": []
+            },
+            {
+              "name": "executionRoleArn",
+              "type": "string",
+              "required": false,
+              "description": "The ARN of the role that grants Amazon Web Services IoT FleetWise permission to access and act on messages sent to the MQTT topic.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dataPartitions",
+      "type": "list",
+      "required": true,
+      "description": "The data partitions associated with the signals collected from the vehicle. (dict) --- The configuration for signal data storage and upload options. You can only specify these options when the campaign's spooling mode is TO_DISK. The ID of the data partition. The data partition ID must be unique within a campaign. You can establish a data partition as the default partition for a campaign by using default as the ID. The storage options for a data partition. The maximum storage size of the data stored in the data partition. The data type of the data to store. The maximum amount of time to store data. The folder name for the data partition under the campaign storage folder. The amount of time that data in this partition will be kept on disk. After the designated amount of time passes, the data can be removed, but it's not guaranteed to be removed. Before the time expires, data in this partition can still be deleted if the partition reaches its configured maximum size. Newer data will overwrite older data when the partition reaches the maximum size. The time increment type. The minimum amount of time to store the data. uploadOptions (dict) --- The upload options for the data partition. The logical expression used to recognize what data to collect. For example, $variable.`Vehicle.OutsideAirTemperature` >= 105.0. conditionLanguageVersion (integer) --- The version of the condition language. Defaults to the most recent condition language version.",
+      "nested_params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The ID of the data partition. The data partition ID must be unique within a campaign. You can establish a data partition as the default partition for a campaign by using default as the ID.",
+          "nested_params": []
+        },
+        {
+          "name": "storageOptions",
+          "type": "dict",
+          "required": false,
+          "description": "The storage options for a data partition.",
+          "nested_params": [
+            {
+              "name": "maximumSize",
+              "type": "dict",
+              "required": false,
+              "description": "The maximum storage size of the data stored in the data partition.",
+              "nested_params": [
+                {
+                  "name": "unit",
+                  "type": "string",
+                  "required": false,
+                  "description": "The data type of the data to store.",
+                  "nested_params": []
+                },
+                {
+                  "name": "value",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The maximum amount of time to store data.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "storageLocation",
+              "type": "string",
+              "required": false,
+              "description": "The folder name for the data partition under the campaign storage folder.",
+              "nested_params": []
+            },
+            {
+              "name": "minimumTimeToLive",
+              "type": "dict",
+              "required": false,
+              "description": "The amount of time that data in this partition will be kept on disk.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "uploadOptions",
+          "type": "dict",
+          "required": false,
+          "description": "The upload options for the data partition.",
+          "nested_params": [
+            {
+              "name": "expression",
+              "type": "string",
+              "required": false,
+              "description": "The logical expression used to recognize what data to collect. For example, $variable.`Vehicle.OutsideAirTemperature` >= 105.0.",
+              "nested_params": []
+            },
+            {
+              "name": "conditionLanguageVersion",
+              "type": "integer",
+              "required": false,
+              "description": "The version of the condition language. Defaults to the most recent condition language version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "signalsToFetch",
+      "type": "list",
+      "required": true,
+      "description": "A list of information about signals to fetch. (dict) --- Information about the signal to be fetched. The fully qualified name of the signal to be fetched. The configuration of the signal fetch operation. timeBased (dict) --- The configuration of a time-based signal fetch operation. The frequency with which the signal fetch will be executed. conditionBased (dict) --- The configuration of a condition-based signal fetch operation. The condition that must be satisfied to trigger a signal fetch. Indicates the mode in which the signal fetch is triggered. conditionLanguageVersion (integer) --- The version of the condition language used. The actions to be performed by the signal fetch. (string) ---",
+      "nested_params": [
+        {
+          "name": "fullyQualifiedName",
+          "type": "string",
+          "required": false,
+          "description": "The fully qualified name of the signal to be fetched.",
+          "nested_params": []
+        },
+        {
+          "name": "signalFetchConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration of the signal fetch operation.",
+          "nested_params": [
+            {
+              "name": "timeBased",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration of a time-based signal fetch operation.",
+              "nested_params": [
+                {
+                  "name": "executionFrequencyMs",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The frequency with which the signal fetch will be executed.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "conditionBased",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration of a condition-based signal fetch operation.",
+              "nested_params": [
+                {
+                  "name": "conditionExpression",
+                  "type": "string",
+                  "required": false,
+                  "description": "The condition that must be satisfied to trigger a signal fetch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "triggerMode",
+                  "type": "string",
+                  "required": false,
+                  "description": "Indicates the mode in which the signal fetch is triggered.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "conditionLanguageVersion",
+          "type": "integer",
+          "required": false,
+          "description": "The version of the condition language used.",
+          "nested_params": []
+        },
+        {
+          "name": "actions",
+          "type": "list",
+          "required": false,
+          "description": "The actions to be performed by the signal fetch.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the created campaign.",
+          "nested_items": []
+        },
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The ARN of the created campaign.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,507 @@
+{
+  "method_name": "get_reservation_utilization",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/get_reservation_utilization.html",
+  "description": "Retrieves the reservation utilization for your account. Management account in an organization have access to member accounts. You can filter data by dimensions in a time period. You can use GetDimensionValues to determine the possible dimension values. Currently, you can group only by SUBSCRIPTION_ID.",
+  "parameters": [
+    {
+      "name": "TimePeriod",
+      "type": "dict",
+      "required": true,
+      "description": "Sets the start and end dates for retrieving Reserved Instance (RI) utilization. The start date is inclusive, but the end date is exclusive. For example, if start is 2017-01-01 and end is 2017-05-01, then the cost and usage data is retrieved from 2017-01-01 up to and including 2017-04-30 but not including 2017-05-01. The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error. The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+      "nested_params": [
+        {
+          "name": "Start",
+          "type": "string",
+          "required": false,
+          "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+          "nested_params": []
+        },
+        {
+          "name": "End",
+          "type": "string",
+          "required": false,
+          "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "GroupBy",
+      "type": "list",
+      "required": false,
+      "description": "Groups only by SUBSCRIPTION_ID. Metadata is included. (dict) --- Represents a group when you specify a group by criteria or in the response to a query with a specific grouping. Type (string) --- The string that represents the type of group. Key (string) --- The string that represents a key for a specified group.",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The string that represents the type of group.",
+          "nested_params": []
+        },
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The string that represents a key for a specified group.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Granularity",
+      "type": "string",
+      "required": false,
+      "description": "If GroupBy is set, Granularity can't be set. If Granularity isn't set, the response object doesn't include Granularity, either MONTHLY or DAILY. If both GroupBy and Granularity aren't set, GetReservationUtilization defaults to DAILY. The GetReservationUtilization operation supports only DAILY and MONTHLY granularities.",
+      "nested_params": []
+    },
+    {
+      "name": "Filter",
+      "type": "dict",
+      "required": false,
+      "description": "Filters utilization data by dimensions. You can filter by the following dimensions: AZ CACHE_ENGINE DEPLOYMENT_OPTION INSTANCE_TYPE LINKED_ACCOUNT OPERATING_SYSTEM PLATFORM REGION SERVICE SCOPE TENANCY GetReservationUtilization uses the same Expression object as the other operations, but only AND is supported among each dimension, and nesting is supported up to only one level deep. If there are multiple values for a dimension, they are OR'd together. Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "SortBy",
+      "type": "dict",
+      "required": true,
+      "description": "The value that you want to sort the data by. The following values are supported for Key: UtilizationPercentage UtilizationPercentageInUnits PurchasedHours PurchasedUnits TotalActualHours TotalActualUnits UnusedHours UnusedUnits OnDemandCostOfRIHoursUsed NetRISavings TotalPotentialRISavings AmortizedUpfrontFee AmortizedRecurringFee TotalAmortizedFee RICostForUnusedHours RealizedSavings UnrealizedSavings The supported values for SortOrder are ASCENDING and DESCENDING. The key that's used to sort the data. SortOrder (string) --- The order that's used to sort the data.",
+      "nested_params": []
+    },
+    {
+      "name": "NextPageToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "UtilizationsByTime",
+          "type": "list",
+          "description": "The amount of time that you used your Reserved Instances (RIs).",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "TimePeriod",
+                  "type": "dict",
+                  "description": "The period of time that this utilization was used for.",
+                  "nested_items": [
+                    {
+                      "name": "Start",
+                      "type": "string",
+                      "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "string",
+                      "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Groups",
+                  "type": "list",
+                  "description": "The groups that this utilization result uses.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Key",
+                          "type": "string",
+                          "description": "The key for a specific reservation attribute.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "description": "The value of a specific reservation attribute.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Attributes",
+                          "type": "dict",
+                          "description": "The attributes for this group of reservations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Utilization",
+                          "type": "dict",
+                          "description": "How much you used this group of reservations.",
+                          "nested_items": [
+                            {
+                              "name": "UtilizationPercentage",
+                              "type": "string",
+                              "description": "The percentage of reservation time that you used.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UtilizationPercentageInUnits",
+                              "type": "string",
+                              "description": "The percentage of Amazon EC2 reservation time that you used. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "PurchasedHours",
+                              "type": "string",
+                              "description": "How many reservation hours that you purchased.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "PurchasedUnits",
+                              "type": "string",
+                              "description": "The number of Amazon EC2 reservation hours that you purchased. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "TotalActualHours",
+                              "type": "string",
+                              "description": "The total number of reservation hours that you used.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "TotalActualUnits",
+                              "type": "string",
+                              "description": "The total number of Amazon EC2 reservation hours that you used. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UnusedHours",
+                              "type": "string",
+                              "description": "The number of reservation hours that you didn't use.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UnusedUnits",
+                              "type": "string",
+                              "description": "The number of Amazon EC2 reservation hours that you didn't use. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "OnDemandCostOfRIHoursUsed",
+                              "type": "string",
+                              "description": "How much your reservation costs if charged On-Demand rates.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "NetRISavings",
+                              "type": "string",
+                              "description": "How much you saved due to purchasing and utilizing reservation. Amazon Web Services calculates this by subtracting TotalAmortizedFee from OnDemandCostOfRIHoursUsed.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "TotalPotentialRISavings",
+                              "type": "string",
+                              "description": "How much you might save if you use your entire reservation.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AmortizedUpfrontFee",
+                              "type": "string",
+                              "description": "The upfront cost of your reservation. It's amortized over the reservation period.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AmortizedRecurringFee",
+                              "type": "string",
+                              "description": "The monthly cost of your reservation. It's amortized over the reservation period.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "TotalAmortizedFee",
+                              "type": "string",
+                              "description": "The total cost of your reservation. It's amortized over the reservation period.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "RICostForUnusedHours",
+                              "type": "string",
+                              "description": "The cost of unused hours for your reservation.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "RealizedSavings",
+                              "type": "string",
+                              "description": "The realized savings because of purchasing and using a reservation.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UnrealizedSavings",
+                              "type": "string",
+                              "description": "The unrealized savings because of purchasing and using a reservation.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "UtilizationPercentage",
+                      "type": "string",
+                      "description": "The percentage of reservation time that you used.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UtilizationPercentageInUnits",
+                      "type": "string",
+                      "description": "The percentage of Amazon EC2 reservation time that you used. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PurchasedHours",
+                      "type": "string",
+                      "description": "How many reservation hours that you purchased.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PurchasedUnits",
+                      "type": "string",
+                      "description": "The number of Amazon EC2 reservation hours that you purchased. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalActualHours",
+                      "type": "string",
+                      "description": "The total number of reservation hours that you used.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalActualUnits",
+                      "type": "string",
+                      "description": "The total number of Amazon EC2 reservation hours that you used. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UnusedHours",
+                      "type": "string",
+                      "description": "The number of reservation hours that you didn't use.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UnusedUnits",
+                      "type": "string",
+                      "description": "The number of Amazon EC2 reservation hours that you didn't use. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OnDemandCostOfRIHoursUsed",
+                      "type": "string",
+                      "description": "How much your reservation costs if charged On-Demand rates.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "NetRISavings",
+                      "type": "string",
+                      "description": "How much you saved due to purchasing and utilizing reservation. Amazon Web Services calculates this by subtracting TotalAmortizedFee from OnDemandCostOfRIHoursUsed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalPotentialRISavings",
+                      "type": "string",
+                      "description": "How much you might save if you use your entire reservation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AmortizedUpfrontFee",
+                      "type": "string",
+                      "description": "The upfront cost of your reservation. It's amortized over the reservation period.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AmortizedRecurringFee",
+                      "type": "string",
+                      "description": "The monthly cost of your reservation. It's amortized over the reservation period.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalAmortizedFee",
+                      "type": "string",
+                      "description": "The total cost of your reservation. It's amortized over the reservation period.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RICostForUnusedHours",
+                      "type": "string",
+                      "description": "The cost of unused hours for your reservation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RealizedSavings",
+                      "type": "string",
+                      "description": "The realized savings because of purchasing and using a reservation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UnrealizedSavings",
+                      "type": "string",
+                      "description": "The unrealized savings because of purchasing and using a reservation.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "UtilizationPercentage",
+              "type": "string",
+              "description": "The percentage of reservation time that you used.",
+              "nested_items": []
+            },
+            {
+              "name": "UtilizationPercentageInUnits",
+              "type": "string",
+              "description": "The percentage of Amazon EC2 reservation time that you used. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+              "nested_items": []
+            },
+            {
+              "name": "PurchasedHours",
+              "type": "string",
+              "description": "How many reservation hours that you purchased.",
+              "nested_items": []
+            },
+            {
+              "name": "PurchasedUnits",
+              "type": "string",
+              "description": "The number of Amazon EC2 reservation hours that you purchased. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalActualHours",
+              "type": "string",
+              "description": "The total number of reservation hours that you used.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalActualUnits",
+              "type": "string",
+              "description": "The total number of Amazon EC2 reservation hours that you used. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+              "nested_items": []
+            },
+            {
+              "name": "UnusedHours",
+              "type": "string",
+              "description": "The number of reservation hours that you didn't use.",
+              "nested_items": []
+            },
+            {
+              "name": "UnusedUnits",
+              "type": "string",
+              "description": "The number of Amazon EC2 reservation hours that you didn't use. It's converted to normalized units. Normalized units are available only for Amazon EC2 usage after November 11, 2017.",
+              "nested_items": []
+            },
+            {
+              "name": "OnDemandCostOfRIHoursUsed",
+              "type": "string",
+              "description": "How much your reservation costs if charged On-Demand rates.",
+              "nested_items": []
+            },
+            {
+              "name": "NetRISavings",
+              "type": "string",
+              "description": "How much you saved due to purchasing and utilizing reservation. Amazon Web Services calculates this by subtracting TotalAmortizedFee from OnDemandCostOfRIHoursUsed.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalPotentialRISavings",
+              "type": "string",
+              "description": "How much you might save if you use your entire reservation.",
+              "nested_items": []
+            },
+            {
+              "name": "AmortizedUpfrontFee",
+              "type": "string",
+              "description": "The upfront cost of your reservation. It's amortized over the reservation period.",
+              "nested_items": []
+            },
+            {
+              "name": "AmortizedRecurringFee",
+              "type": "string",
+              "description": "The monthly cost of your reservation. It's amortized over the reservation period.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalAmortizedFee",
+              "type": "string",
+              "description": "The total cost of your reservation. It's amortized over the reservation period.",
+              "nested_items": []
+            },
+            {
+              "name": "RICostForUnusedHours",
+              "type": "string",
+              "description": "The cost of unused hours for your reservation.",
+              "nested_items": []
+            },
+            {
+              "name": "RealizedSavings",
+              "type": "string",
+              "description": "The realized savings because of purchasing and using a reservation.",
+              "nested_items": []
+            },
+            {
+              "name": "UnrealizedSavings",
+              "type": "string",
+              "description": "The unrealized savings because of purchasing and using a reservation.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "NextPageToken",
+          "type": "string",
+          "description": "The token for the next set of retrievable results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

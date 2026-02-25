@@ -1,0 +1,224 @@
+{
+  "method_name": "create_flow_logs",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/create_flow_logs.html",
+  "description": "Creates one or more flow logs to capture information about IP traffic for a specific network interface, subnet, or VPC. Flow log data for a monitored network interface is recorded as flow log records, which are log events consisting of fields that describe the traffic flow. For more information, see Flow log records in the Amazon VPC User Guide. When publishing to CloudWatch Logs, flow log records are published to a log group, and each network interface has a unique log stream in the log group. When publishing to Amazon S3, flow log records for all of the monitored network interfaces are published to a single log file object that is stored in the specified bucket. For more information, see VPC Flow Logs in the Amazon VPC User Guide.",
+  "parameters": [
+    {
+      "name": "DryRun",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DeliverLogsPermissionArn",
+      "type": "string",
+      "required": false,
+      "description": "The ARN of the IAM role that allows Amazon EC2 to publish flow logs to the log destination. This parameter is required if the destination type is cloud-watch-logs, or if the destination type is kinesis-data-firehose and the delivery stream and the resources to monitor are in different accounts.",
+      "nested_params": []
+    },
+    {
+      "name": "DeliverCrossAccountRole",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "LogGroupName",
+      "type": "string",
+      "required": false,
+      "description": "The name of a new or existing CloudWatch Logs log group where Amazon EC2 publishes your flow logs. This parameter is valid only if the destination type is cloud-watch-logs.",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceIds",
+      "type": "list",
+      "required": true,
+      "description": "The IDs of the resources to monitor. For example, if the resource type is VPC, specify the IDs of the VPCs. Constraints: Maximum of 25 for transit gateway resource types. Maximum of 1000 for the other resource types. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceType",
+      "type": "string",
+      "required": true,
+      "description": "The type of resource to monitor.",
+      "nested_params": []
+    },
+    {
+      "name": "TrafficType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "LogDestinationType",
+      "type": "string",
+      "required": false,
+      "description": "The type of destination for the flow log data. Default: cloud-watch-logs.",
+      "nested_params": []
+    },
+    {
+      "name": "LogDestination",
+      "type": "string",
+      "required": false,
+      "description": "The destination for the flow log data. The meaning of this parameter depends on the destination type. If the destination type is cloud-watch-logs, specify the ARN of a CloudWatch Logs log group. For example: arn:aws:logs:region:account_id:log-group:my_group Alternatively, use the LogGroupName parameter. If the destination type is s3, specify the ARN of an S3 bucket. For example: arn:aws:s3:::my_bucket/my_subfolder/ The subfolder is optional. Note that you can't use AWSLogs as a subfolder name. If the destination type is kinesis-data-firehose, specify the ARN of a Kinesis Data Firehose delivery stream. For example: arn:aws:firehose:region:account_id:deliverystream:my_stream.",
+      "nested_params": []
+    },
+    {
+      "name": "LogFormat",
+      "type": "string",
+      "required": false,
+      "description": "The fields to include in the flow log record. List the fields in the order in which they should appear. If you omit this parameter, the flow log is created using the default format. If you specify this parameter, you must include at least one field. For more information about the available fields, see Flow log records in the Amazon VPC User Guide or Transit Gateway Flow Log records in the Amazon Web Services Transit Gateway Guide. Specify the fields using the ${field-id} format, separated by spaces.",
+      "nested_params": []
+    },
+    {
+      "name": "TagSpecifications",
+      "type": "list",
+      "required": false,
+      "description": "The tags to apply to the flow logs. (dict) --- The tags to apply to a resource when the resource is being created. When you specify a tag, you must specify the resource type to tag, otherwise the request will fail. ResourceType (string) --- The type of resource to tag on creation. Tags (list) --- The tags to apply to the resource. (dict) --- Describes a tag. Key (string) --- The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with aws:. Value (string) --- The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 256 Unicode characters.",
+      "nested_params": [
+        {
+          "name": "ResourceType",
+          "type": "string",
+          "required": false,
+          "description": "The type of resource to tag on creation.",
+          "nested_params": []
+        },
+        {
+          "name": "Tags",
+          "type": "list",
+          "required": false,
+          "description": "The tags to apply to the resource.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with aws:.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 256 Unicode characters.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MaxAggregationInterval",
+      "type": "integer",
+      "required": false,
+      "description": "The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record. The possible values are 60 seconds (1 minute) or 600 seconds (10 minutes). This parameter must be 60 seconds for transit gateway resource types. When a network interface is attached to a Nitro-based instance, the aggregation interval is always 60 seconds or less, regardless of the value that you specify. Default: 600",
+      "nested_params": []
+    },
+    {
+      "name": "DestinationOptions",
+      "type": "dict",
+      "required": false,
+      "description": "The destination options. FileFormat (string) --- The format for the flow log. The default is plain-text. HiveCompatiblePartitions (boolean) --- Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. The default is false. PerHourPartition (boolean) --- Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. The default is false.",
+      "nested_params": [
+        {
+          "name": "FileFormat",
+          "type": "string",
+          "required": false,
+          "description": "The format for the flow log. The default is plain-text.",
+          "nested_params": []
+        },
+        {
+          "name": "HiveCompatiblePartitions",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether to use Hive-compatible prefixes for flow logs stored in Amazon S3. The default is false.",
+          "nested_params": []
+        },
+        {
+          "name": "PerHourPartition",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether to partition the flow log per hour. This reduces the cost and response time for queries. The default is false.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ClientToken",
+          "type": "string",
+          "description": "Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.",
+          "nested_items": []
+        },
+        {
+          "name": "FlowLogIds",
+          "type": "list",
+          "description": "The IDs of the flow logs.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Unsuccessful",
+          "type": "list",
+          "description": "Information about the flow logs that could not be created successfully.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Code",
+                      "type": "string",
+                      "description": "The error code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Message",
+                      "type": "string",
+                      "description": "The error message accompanying the error code.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ResourceId",
+                  "type": "string",
+                  "description": "The ID of the resource.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

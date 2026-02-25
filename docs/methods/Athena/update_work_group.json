@@ -1,0 +1,260 @@
+{
+  "method_name": "update_work_group",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/athena/client/update_work_group.html",
+  "description": "Updates the workgroup with the specified name. The workgroup's name cannot be changed. Only ConfigurationUpdates can be specified.",
+  "parameters": [
+    {
+      "name": "WorkGroup",
+      "type": "string",
+      "required": true,
+      "description": "The specified workgroup that will be updated.",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ConfigurationUpdates",
+      "type": "dict",
+      "required": true,
+      "description": "Contains configuration updates for an Athena SQL workgroup. EnforceWorkGroupConfiguration (boolean) --- If set to 'true', the settings for the workgroup override client-side settings. If set to 'false' client-side settings are used. For more information, see Workgroup Settings Override Client-Side Settings. ResultConfigurationUpdates (dict) --- The result configuration information about the queries in this workgroup that will be updated. Includes the updated results location and an updated option for encrypting query results. OutputLocation (string) --- The location in Amazon S3 where your query and calculation results are stored, such as s3://path/to/query/bucket/. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The 'workgroup settings override' is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See  WorkGroupConfiguration$EnforceWorkGroupConfiguration. RemoveOutputLocation (boolean) --- If set to 'true', indicates that the previously-specified query results location (also known as a client-side setting) for queries in this workgroup should be ignored and set to null. If set to 'false' or not set, and a value is present in the OutputLocation in ResultConfigurationUpdates (the client-side setting), the OutputLocation in the workgroup's ResultConfiguration will be updated with the new value. EncryptionConfiguration (dict) --- The encryption configuration for query and calculation results. Indicates whether Amazon S3 server-side encryption with Amazon S3-managed keys ( SSE_S3), server-side encryption with KMS-managed keys ( SSE_KMS), or client-side encryption with KMS-managed keys ( CSE_KMS) is used. If a query runs in a workgroup and the workgroup overrides client-side settings, then the workgroup's setting for encryption is used. It specifies whether query results must be encrypted, for all queries that run in this workgroup. KmsKey (string) --- For SSE_KMS and CSE_KMS, this is the KMS key ARN or ID. RemoveEncryptionConfiguration (boolean) --- If set to 'true', indicates that the previously-specified encryption configuration (also known as the client-side setting) for queries in this workgroup should be ignored and set to null. If set to 'false' or not set, and a value is present in the EncryptionConfiguration in ResultConfigurationUpdates (the client-side setting), the EncryptionConfiguration in the workgroup's ResultConfiguration will be updated with the new value. ExpectedBucketOwner (string) --- The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by  ResultConfiguration$OutputLocation. If set, Athena uses the value for ExpectedBucketOwner when it makes Amazon S3 calls to your specified output location. If the ExpectedBucketOwner Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error. If workgroup settings override client-side settings, then the query uses the ExpectedBucketOwner setting that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See  WorkGroupConfiguration$EnforceWorkGroupConfiguration and Workgroup Settings Override Client-Side Settings. RemoveExpectedBucketOwner (boolean) --- If set to 'true', removes the Amazon Web Services account ID previously specified for  ResultConfiguration$ExpectedBucketOwner. If set to 'false' or not set, and a value is present in the ExpectedBucketOwner in ResultConfigurationUpdates (the client-side setting), the ExpectedBucketOwner in the workgroup's ResultConfiguration is updated with the new value. AclConfiguration (dict) --- The ACL configuration for the query results. The Amazon S3 canned ACL that Athena should specify when storing query results, including data files inserted by Athena as the result of statements like CTAS or INSERT INTO. Currently the only supported canned ACL is BUCKET_OWNER_FULL_CONTROL. If a query runs in a workgroup and the workgroup overrides client-side settings, then the Amazon S3 canned ACL specified in the workgroup's settings is used for all queries that run in the workgroup. For more information about Amazon S3 canned ACLs, see Canned ACL in the Amazon S3 User Guide. RemoveAclConfiguration (boolean) --- If set to true, indicates that the previously-specified ACL configuration for queries in this workgroup should be ignored and set to null. If set to false or not set, and a value is present in the AclConfiguration of ResultConfigurationUpdates, the AclConfiguration in the workgroup's ResultConfiguration is updated with the new value. PublishCloudWatchMetricsEnabled (boolean) --- Indicates whether this workgroup enables publishing metrics to Amazon CloudWatch. BytesScannedCutoffPerQuery (integer) --- The upper limit (cutoff) for the amount of bytes a single query in a workgroup is allowed to scan. RemoveBytesScannedCutoffPerQuery (boolean) --- Indicates that the data usage control limit per query is removed.  WorkGroupConfiguration$BytesScannedCutoffPerQuery RequesterPaysEnabled (boolean) --- If set to true, allows members assigned to a workgroup to specify Amazon S3 Requester Pays buckets in queries. If set to false, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is false. For more information about Requester Pays buckets, see Requester Pays Buckets in the Amazon Simple Storage Service Developer Guide. EngineVersion (dict) --- The engine version requested when a workgroup is updated. After the update, all queries on the workgroup run on the requested engine version. If no value was previously set, the default is Auto. Queries on the AmazonAthenaPreviewFunctionality workgroup run on the preview engine regardless of this setting. SelectedEngineVersion (string) --- The engine version requested by the user. Possible values are determined by the output of ListEngineVersions, including AUTO. The default is AUTO. EffectiveEngineVersion (string) --- Read only. The engine version on which the query runs. If the user requests a valid engine version other than Auto, the effective engine version is the same as the engine version that the user requested. If the user requests Auto, the effective engine version is chosen by Athena. When a request to update the engine version is made by a CreateWorkGroup or UpdateWorkGroup operation, the EffectiveEngineVersion field is ignored. RemoveCustomerContentEncryptionConfiguration (boolean) --- Removes content encryption configuration from an Apache Spark-enabled Athena workgroup. AdditionalConfiguration (string) --- Contains a user defined string in JSON format for a Spark-enabled workgroup. ExecutionRole (string) --- The ARN of the execution role used to access user resources for Spark sessions and Identity Center enabled workgroups. This property applies only to Spark enabled workgroups and Identity Center enabled workgroups. CustomerContentEncryptionConfiguration (dict) --- Specifies the customer managed KMS key that is used to encrypt the user's data stores in Athena. When an Amazon Web Services managed key is used, this value is null. This setting does not apply to Athena SQL workgroups. The customer managed KMS key that is used to encrypt the user's data stores in Athena. EnableMinimumEncryptionConfiguration (boolean) --- Enforces a minimal level of encryption for the workgroup for query and calculation results that are written to Amazon S3. When enabled, workgroup users can set encryption only to the minimum level set by the administrator or higher when they submit queries. This setting does not apply to Spark-enabled workgroups. The EnforceWorkGroupConfiguration setting takes precedence over the EnableMinimumEncryptionConfiguration flag. This means that if EnforceWorkGroupConfiguration is true, the EnableMinimumEncryptionConfiguration flag is ignored, and the workgroup configuration for encryption is used. QueryResultsS3AccessGrantsConfiguration (dict) --- Specifies whether Amazon S3 access grants are enabled for query results. Specifies whether Amazon S3 access grants are enabled for query results. CreateUserLevelPrefix (boolean) --- When enabled, appends the user ID as an Amazon S3 path prefix to the query result output location. The authentication type used for Amazon S3 access grants. Currently, only DIRECTORY_IDENTITY is supported.",
+      "nested_params": [
+        {
+          "name": "EnforceWorkGroupConfiguration",
+          "type": "boolean",
+          "required": false,
+          "description": "If set to 'true', the settings for the workgroup override client-side settings. If set to 'false' client-side settings are used. For more information, see Workgroup Settings Override Client-Side Settings.",
+          "nested_params": []
+        },
+        {
+          "name": "ResultConfigurationUpdates",
+          "type": "dict",
+          "required": false,
+          "description": "The result configuration information about the queries in this workgroup that will be updated. Includes the updated results location and an updated option for encrypting query results.",
+          "nested_params": [
+            {
+              "name": "OutputLocation",
+              "type": "string",
+              "required": false,
+              "description": "The location in Amazon S3 where your query and calculation results are stored, such as s3://path/to/query/bucket/. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The 'workgroup settings override' is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See  WorkGroupConfiguration$EnforceWorkGroupConfiguration.",
+              "nested_params": []
+            },
+            {
+              "name": "RemoveOutputLocation",
+              "type": "boolean",
+              "required": false,
+              "description": "If set to 'true', indicates that the previously-specified query results location (also known as a client-side setting) for queries in this workgroup should be ignored and set to null. If set to 'false' or not set, and a value is present in the OutputLocation in ResultConfigurationUpdates (the client-side setting), the OutputLocation in the workgroup's ResultConfiguration will be updated with the new value. For more information, see Workgroup Settings Override Client-Side Settings.",
+              "nested_params": []
+            },
+            {
+              "name": "EncryptionConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "The encryption configuration for query and calculation results.",
+              "nested_params": [
+                {
+                  "name": "EncryptionOption",
+                  "type": "string",
+                  "required": false,
+                  "description": "Indicates whether Amazon S3 server-side encryption with Amazon S3-managed keys ( SSE_S3), server-side encryption with KMS-managed keys ( SSE_KMS), or client-side encryption with KMS-managed keys ( CSE_KMS) is used. If a query runs in a workgroup and the workgroup overrides client-side settings, then the workgroup's setting for encryption is used. It specifies whether query results must be encrypted, for all queries that run in this workgroup.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KmsKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "For SSE_KMS and CSE_KMS, this is the KMS key ARN or ID.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "RemoveEncryptionConfiguration",
+              "type": "boolean",
+              "required": false,
+              "description": "If set to 'true', indicates that the previously-specified encryption configuration (also known as the client-side setting) for queries in this workgroup should be ignored and set to null. If set to 'false' or not set, and a value is present in the EncryptionConfiguration in ResultConfigurationUpdates (the client-side setting), the EncryptionConfiguration in the workgroup's ResultConfiguration will be updated with the new value. For more information, see Workgroup Settings Override Client-Side Settings.",
+              "nested_params": []
+            },
+            {
+              "name": "ExpectedBucketOwner",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by  ResultConfiguration$OutputLocation. If set, Athena uses the value for ExpectedBucketOwner when it makes Amazon S3 calls to your specified output location. If the ExpectedBucketOwner Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error. If workgroup settings override client-side settings, then the query uses the ExpectedBucketOwner setting that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See  WorkGroupConfiguration$EnforceWorkGroupConfiguration and Workgroup Settings Override Client-Side Settings.",
+              "nested_params": []
+            },
+            {
+              "name": "RemoveExpectedBucketOwner",
+              "type": "boolean",
+              "required": false,
+              "description": "If set to 'true', removes the Amazon Web Services account ID previously specified for  ResultConfiguration$ExpectedBucketOwner. If set to 'false' or not set, and a value is present in the ExpectedBucketOwner in ResultConfigurationUpdates (the client-side setting), the ExpectedBucketOwner in the workgroup's ResultConfiguration is updated with the new value. For more information, see Workgroup Settings Override Client-Side Settings.",
+              "nested_params": []
+            },
+            {
+              "name": "AclConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "The ACL configuration for the query results.",
+              "nested_params": [
+                {
+                  "name": "S3AclOption",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon S3 canned ACL that Athena should specify when storing query results, including data files inserted by Athena as the result of statements like CTAS or INSERT INTO. Currently the only supported canned ACL is BUCKET_OWNER_FULL_CONTROL. If a query runs in a workgroup and the workgroup overrides client-side settings, then the Amazon S3 canned ACL specified in the workgroup's settings is used for all queries that run in the workgroup. For more information about Amazon S3 canned ACLs, see Canned ACL in the Amazon S3 User Guide.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "RemoveAclConfiguration",
+              "type": "boolean",
+              "required": false,
+              "description": "If set to true, indicates that the previously-specified ACL configuration for queries in this workgroup should be ignored and set to null. If set to false or not set, and a value is present in the AclConfiguration of ResultConfigurationUpdates, the AclConfiguration in the workgroup's ResultConfiguration is updated with the new value. For more information, see Workgroup Settings Override Client-Side Settings.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "PublishCloudWatchMetricsEnabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether this workgroup enables publishing metrics to Amazon CloudWatch.",
+          "nested_params": []
+        },
+        {
+          "name": "BytesScannedCutoffPerQuery",
+          "type": "integer",
+          "required": false,
+          "description": "The upper limit (cutoff) for the amount of bytes a single query in a workgroup is allowed to scan.",
+          "nested_params": []
+        },
+        {
+          "name": "RemoveBytesScannedCutoffPerQuery",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates that the data usage control limit per query is removed.  WorkGroupConfiguration$BytesScannedCutoffPerQuery.",
+          "nested_params": []
+        },
+        {
+          "name": "RequesterPaysEnabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If set to true, allows members assigned to a workgroup to specify Amazon S3 Requester Pays buckets in queries. If set to false, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is false. For more information about Requester Pays buckets, see Requester Pays Buckets in the Amazon Simple Storage Service Developer Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "EngineVersion",
+          "type": "dict",
+          "required": false,
+          "description": "The engine version requested when a workgroup is updated. After the update, all queries on the workgroup run on the requested engine version. If no value was previously set, the default is Auto. Queries on the AmazonAthenaPreviewFunctionality workgroup run on the preview engine regardless of this setting.",
+          "nested_params": [
+            {
+              "name": "SelectedEngineVersion",
+              "type": "string",
+              "required": false,
+              "description": "The engine version requested by the user. Possible values are determined by the output of ListEngineVersions, including AUTO. The default is AUTO.",
+              "nested_params": []
+            },
+            {
+              "name": "EffectiveEngineVersion",
+              "type": "string",
+              "required": false,
+              "description": "Read only. The engine version on which the query runs. If the user requests a valid engine version other than Auto, the effective engine version is the same as the engine version that the user requested. If the user requests Auto, the effective engine version is chosen by Athena. When a request to update the engine version is made by a CreateWorkGroup or UpdateWorkGroup operation, the EffectiveEngineVersion field is ignored.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "RemoveCustomerContentEncryptionConfiguration",
+          "type": "boolean",
+          "required": false,
+          "description": "Removes content encryption configuration from an Apache Spark-enabled Athena workgroup.",
+          "nested_params": []
+        },
+        {
+          "name": "AdditionalConfiguration",
+          "type": "string",
+          "required": false,
+          "description": "Contains a user defined string in JSON format for a Spark-enabled workgroup.",
+          "nested_params": []
+        },
+        {
+          "name": "ExecutionRole",
+          "type": "string",
+          "required": false,
+          "description": "The ARN of the execution role used to access user resources for Spark sessions and Identity Center enabled workgroups. This property applies only to Spark enabled workgroups and Identity Center enabled workgroups.",
+          "nested_params": []
+        },
+        {
+          "name": "CustomerContentEncryptionConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the customer managed KMS key that is used to encrypt the user's data stores in Athena. When an Amazon Web Services managed key is used, this value is null. This setting does not apply to Athena SQL workgroups.",
+          "nested_params": [
+            {
+              "name": "KmsKey",
+              "type": "string",
+              "required": false,
+              "description": "The customer managed KMS key that is used to encrypt the user's data stores in Athena.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EnableMinimumEncryptionConfiguration",
+          "type": "boolean",
+          "required": false,
+          "description": "Enforces a minimal level of encryption for the workgroup for query and calculation results that are written to Amazon S3. When enabled, workgroup users can set encryption only to the minimum level set by the administrator or higher when they submit queries. This setting does not apply to Spark-enabled workgroups. The EnforceWorkGroupConfiguration setting takes precedence over the EnableMinimumEncryptionConfiguration flag. This means that if EnforceWorkGroupConfiguration is true, the EnableMinimumEncryptionConfiguration flag is ignored, and the workgroup configuration for encryption is used.",
+          "nested_params": []
+        },
+        {
+          "name": "QueryResultsS3AccessGrantsConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies whether Amazon S3 access grants are enabled for query results.",
+          "nested_params": [
+            {
+              "name": "EnableS3AccessGrants",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether Amazon S3 access grants are enabled for query results.",
+              "nested_params": []
+            },
+            {
+              "name": "CreateUserLevelPrefix",
+              "type": "boolean",
+              "required": false,
+              "description": "When enabled, appends the user ID as an Amazon S3 path prefix to the query result output location.",
+              "nested_params": []
+            },
+            {
+              "name": "AuthenticationType",
+              "type": "string",
+              "required": false,
+              "description": "The authentication type used for Amazon S3 access grants. Currently, only DIRECTORY_IDENTITY is supported.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "State",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+{
+  "method_name": "create_component_version",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/greengrassv2/client/create_component_version.html",
+  "description": "Creates a component. Components are software that run on Greengrass core devices. After you develop and test a component on your core device, you can use this operation to upload your component to IoT Greengrass. Then, you can deploy the component to other core devices. You can use this operation to do the following:",
+  "parameters": [
+    {
+      "name": "inlineRecipe",
+      "type": "bytes",
+      "required": false,
+      "description": "The recipe to use to create the component. The recipe defines the component's metadata, parameters, dependencies, lifecycle, artifacts, and platform compatibility. You must specify either inlineRecipe or lambdaFunction.",
+      "nested_params": []
+    },
+    {
+      "name": "lambdaFunction",
+      "type": "dict",
+      "required": true,
+      "description": "The parameters to create a component from a Lambda function. You must specify either inlineRecipe or lambdaFunction. The ARN of the Lambda function. The ARN must include the version of the function to import. You can't use version aliases like $LATEST. componentName (string) --- The name of the component. Defaults to the name of the Lambda function. componentVersion (string) --- The version of the component. Defaults to the version of the Lambda function as a semantic version. For example, if your function version is 3, the component version becomes 3.0.0. componentPlatforms (list) --- The platforms that the component version supports. (dict) --- Contains information about a platform that a component supports. name (string) --- The friendly name of the platform. This name helps you identify the platform. If you omit this parameter, IoT Greengrass creates a friendly name from the os and architecture of the platform. attributes (dict) --- A dictionary of attributes for the platform. The IoT Greengrass Core software defines the os and architecture by default. You can specify additional platform attributes for a core device when you deploy the Greengrass nucleus component. For more information, see the Greengrass nucleus component in the IoT Greengrass V2 Developer Guide. (string) --- (string) --- componentDependencies (dict) --- The component versions on which this Lambda function component depends. (string) --- (dict) --- Contains information about a component dependency for a Lambda function component. versionRequirement (string) --- The component version requirement for the component dependency. IoT Greengrass V2 uses semantic version constraints. For more information, see Semantic Versioning. dependencyType (string) --- The type of this dependency. Choose from the following options: SOFT --- The component doesn't restart if the dependency changes state. HARD --- The component restarts if the dependency changes state. Default: HARD componentLambdaParameters (dict) --- The system and runtime parameters for the Lambda function as it runs on the Greengrass core device. eventSources (list) --- The list of event sources to which to subscribe to receive work messages. The Lambda function runs when it receives a message from an event source. You can subscribe this function to local publish/subscribe messages and Amazon Web Services IoT Core MQTT messages. (dict) --- Contains information about an event source for an Lambda function. The event source defines the topics on which this Lambda function subscribes to receive messages that run the function. The topic to which to subscribe to receive event messages. The type of event source. Choose from the following options: PUB_SUB --- Subscribe to local publish/subscribe messages. This event source type doesn't support MQTT wildcards ( + and #) in the event source topic. IOT_CORE --- Subscribe to Amazon Web Services IoT Core MQTT messages. This event source type supports MQTT wildcards ( + and #) in the event source topic. maxQueueSize (integer) --- The maximum size of the message queue for the Lambda function component. The IoT Greengrass core stores messages in a FIFO (first-in-first-out) queue until it can run the Lambda function to consume each message. maxInstancesCount (integer) --- The maximum number of instances that a non-pinned Lambda function can run at the same time. maxIdleTimeInSeconds (integer) --- The maximum amount of time in seconds that a non-pinned Lambda function can idle before the IoT Greengrass Core software stops its process. timeoutInSeconds (integer) --- The maximum amount of time in seconds that the Lambda function can process a work item. statusTimeoutInSeconds (integer) --- The interval in seconds at which a pinned (also known as long-lived) Lambda function component sends status updates to the Lambda manager component. pinned (boolean) --- Whether or not the Lambda function is pinned, or long-lived. A pinned Lambda function starts when IoT Greengrass starts and keeps running in its own container. A non-pinned Lambda function starts only when it receives a work item and exists after it idles for maxIdleTimeInSeconds. If the function has multiple work items, the IoT Greengrass Core software creates multiple instances of the function. Default: true inputPayloadEncodingType (string) --- The encoding type that the Lambda function supports. Default: json execArgs (list) --- The list of arguments to pass to the Lambda function when it runs. (string) --- environmentVariables (dict) --- The map of environment variables that are available to the Lambda function when it runs. (string) --- (string) --- linuxProcessParams (dict) --- The parameters for the Linux process that contains the Lambda function. isolationMode (string) --- The isolation mode for the process that contains the Lambda function. The process can run in an isolated runtime environment inside the IoT Greengrass container, or as a regular process outside any container. Default: GreengrassContainer containerParams (dict) --- The parameters for the container in which the Lambda function runs. memorySizeInKB (integer) --- The memory size of the container, expressed in kilobytes. Default: 16384 (16 MB) mountROSysfs (boolean) --- Whether or not the container can read information from the device's /sys folder. Default: false volumes (list) --- The list of volumes that the container can access. (dict) --- Contains information about a volume that Linux processes in a container can access. When you define a volume, the IoT Greengrass Core software mounts the source files to the destination inside the container. The path to the physical volume in the file system. The path to the logical volume in the file system. permission (string) --- The permission to access the volume: read/only ( ro) or read/write ( rw). Default: ro addGroupOwner (boolean) --- Whether or not to add the IoT Greengrass user group as an owner of the volume. Default: false devices (list) --- The list of system devices that the container can access. (dict) --- Contains information about a device that Linux processes in a container can access. The mount path for the device in the file system. permission (string) --- The permission to access the device: read/only ( ro) or read/write ( rw). Default: ro addGroupOwner (boolean) --- Whether or not to add the component's system user as an owner of the device. Default: false.",
+      "nested_params": [
+        {
+          "name": "lambdaArn",
+          "type": "string",
+          "required": false,
+          "description": "The ARN of the Lambda function. The ARN must include the version of the function to import. You can't use version aliases like $LATEST.",
+          "nested_params": []
+        },
+        {
+          "name": "componentName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the component. Defaults to the name of the Lambda function.",
+          "nested_params": []
+        },
+        {
+          "name": "componentVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of the component. Defaults to the version of the Lambda function as a semantic version. For example, if your function version is 3, the component version becomes 3.0.0.",
+          "nested_params": []
+        },
+        {
+          "name": "componentPlatforms",
+          "type": "list",
+          "required": false,
+          "description": "The platforms that the component version supports.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The friendly name of the platform. This name helps you identify the platform. If you omit this parameter, IoT Greengrass creates a friendly name from the os and architecture of the platform.",
+              "nested_params": []
+            },
+            {
+              "name": "attributes",
+              "type": "dict",
+              "required": false,
+              "description": "A dictionary of attributes for the platform. The IoT Greengrass Core software defines the os and architecture by default. You can specify additional platform attributes for a core device when you deploy the Greengrass nucleus component. For more information, see the Greengrass nucleus component in the IoT Greengrass V2 Developer Guide.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "componentDependencies",
+          "type": "dict",
+          "required": false,
+          "description": "The component versions on which this Lambda function component depends.",
+          "nested_params": [
+            {
+              "name": "versionRequirement",
+              "type": "string",
+              "required": false,
+              "description": "The component version requirement for the component dependency. IoT Greengrass V2 uses semantic version constraints. For more information, see Semantic Versioning.",
+              "nested_params": []
+            },
+            {
+              "name": "dependencyType",
+              "type": "string",
+              "required": false,
+              "description": "The type of this dependency. Choose from the following options:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "componentLambdaParameters",
+          "type": "dict",
+          "required": false,
+          "description": "The system and runtime parameters for the Lambda function as it runs on the Greengrass core device.",
+          "nested_params": [
+            {
+              "name": "eventSources",
+              "type": "list",
+              "required": false,
+              "description": "The list of event sources to which to subscribe to receive work messages. The Lambda function runs when it receives a message from an event source. You can subscribe this function to local publish/subscribe messages and Amazon Web Services IoT Core MQTT messages.",
+              "nested_params": [
+                {
+                  "name": "topic",
+                  "type": "string",
+                  "required": false,
+                  "description": "The topic to which to subscribe to receive event messages.",
+                  "nested_params": []
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of event source. Choose from the following options:",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "maxQueueSize",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum size of the message queue for the Lambda function component. The IoT Greengrass core stores messages in a FIFO (first-in-first-out) queue until it can run the Lambda function to consume each message.",
+              "nested_params": []
+            },
+            {
+              "name": "maxInstancesCount",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum number of instances that a non-pinned Lambda function can run at the same time.",
+              "nested_params": []
+            },
+            {
+              "name": "maxIdleTimeInSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum amount of time in seconds that a non-pinned Lambda function can idle before the IoT Greengrass Core software stops its process.",
+              "nested_params": []
+            },
+            {
+              "name": "timeoutInSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The maximum amount of time in seconds that the Lambda function can process a work item.",
+              "nested_params": []
+            },
+            {
+              "name": "statusTimeoutInSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "The interval in seconds at which a pinned (also known as long-lived) Lambda function component sends status updates to the Lambda manager component.",
+              "nested_params": []
+            },
+            {
+              "name": "pinned",
+              "type": "boolean",
+              "required": false,
+              "description": "Whether or not the Lambda function is pinned, or long-lived.",
+              "nested_params": []
+            },
+            {
+              "name": "inputPayloadEncodingType",
+              "type": "string",
+              "required": false,
+              "description": "The encoding type that the Lambda function supports. Default: json.",
+              "nested_params": []
+            },
+            {
+              "name": "execArgs",
+              "type": "list",
+              "required": false,
+              "description": "The list of arguments to pass to the Lambda function when it runs.",
+              "nested_params": []
+            },
+            {
+              "name": "environmentVariables",
+              "type": "dict",
+              "required": false,
+              "description": "The map of environment variables that are available to the Lambda function when it runs.",
+              "nested_params": []
+            },
+            {
+              "name": "linuxProcessParams",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters for the Linux process that contains the Lambda function.",
+              "nested_params": [
+                {
+                  "name": "isolationMode",
+                  "type": "string",
+                  "required": false,
+                  "description": "The isolation mode for the process that contains the Lambda function. The process can run in an isolated runtime environment inside the IoT Greengrass container, or as a regular process outside any container. Default: GreengrassContainer.",
+                  "nested_params": []
+                },
+                {
+                  "name": "containerParams",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for the container in which the Lambda function runs.",
+                  "nested_params": [
+                    {
+                      "name": "memorySizeInKB",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The memory size of the container, expressed in kilobytes. Default: 16384 (16 MB)",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "mountROSysfs",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Whether or not the container can read information from the device's /sys folder. Default: false.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "volumes",
+                      "type": "list",
+                      "required": false,
+                      "description": "The list of volumes that the container can access.",
+                      "nested_params": [
+                        {
+                          "name": "sourcePath",
+                          "type": "string",
+                          "required": false,
+                          "description": "The path to the physical volume in the file system.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "destinationPath",
+                          "type": "string",
+                          "required": false,
+                          "description": "The path to the logical volume in the file system.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "permission",
+                          "type": "string",
+                          "required": false,
+                          "description": "The permission to access the volume: read/only ( ro) or read/write ( rw). Default: ro.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "addGroupOwner",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "Whether or not to add the IoT Greengrass user group as an owner of the volume. Default: false.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "devices",
+                      "type": "list",
+                      "required": false,
+                      "description": "The list of system devices that the container can access.",
+                      "nested_params": [
+                        {
+                          "name": "path",
+                          "type": "string",
+                          "required": false,
+                          "description": "The mount path for the device in the file system.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "permission",
+                          "type": "string",
+                          "required": false,
+                          "description": "The permission to access the device: read/only ( ro) or read/write ( rw). Default: ro.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "addGroupOwner",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "Whether or not to add the component's system user as an owner of the device. Default: false.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "A list of key-value pairs that contain metadata for the resource. For more information, see Tag your resources in the IoT Greengrass V2 Developer Guide. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier that you can provide to ensure that the request is idempotent. Idempotency means that the request is successfully processed only once, even if you send the request multiple times. When a request succeeds, and you specify the same client token for subsequent successful requests, the IoT Greengrass V2 service returns the successful response that it caches from the previous request. IoT Greengrass V2 caches successful responses for idempotent requests for up to 8 hours. This field is autopopulated if not provided.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The ARN of the component version.",
+          "nested_items": []
+        },
+        {
+          "name": "componentName",
+          "type": "string",
+          "description": "The name of the component.",
+          "nested_items": []
+        },
+        {
+          "name": "componentVersion",
+          "type": "string",
+          "description": "The version of the component.",
+          "nested_items": []
+        },
+        {
+          "name": "creationTimestamp",
+          "type": "datetime",
+          "description": "The time at which the component was created, expressed in ISO 8601 format.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "componentState",
+              "type": "string",
+              "description": "The state of the component version.",
+              "nested_items": []
+            },
+            {
+              "name": "message",
+              "type": "string",
+              "description": "A message that communicates details, such as errors, about the status of the component version.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "vendorGuidance",
+              "type": "string",
+              "description": "The vendor guidance state for the component version. This state indicates whether the component version has any issues that you should consider before you deploy it. The vendor guidance state can be:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ACTIVE --- This component version is available and recommended for use.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DISCONTINUED --- This component version has been discontinued by its publisher. You can deploy this component version, but we recommend that you use a different version of this component.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETED --- This component version has been deleted by its publisher, so you can't deploy it. If you have any existing deployments that specify this component version, those deployments will fail.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "vendorGuidanceMessage",
+              "type": "string",
+              "description": "A message that communicates details about the vendor guidance state of the component version. This message communicates why a component version is discontinued or deleted.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

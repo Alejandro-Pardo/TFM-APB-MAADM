@@ -1,0 +1,68 @@
+{
+  "method_name": "assume_decorated_role_with_saml",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lakeformation/client/assume_decorated_role_with_saml.html",
+  "description": "Allows a caller to assume an IAM role decorated as the SAML user specified in the SAML assertion included in the request. This decoration allows Lake Formation to enforce access policies against the SAML users and groups. This API operation requires SAML federation setup in the caller's account as it can only be called with valid SAML assertions. Lake Formation does not scope down the permission of the assumed role. All permissions attached to the role via the SAML federation setup will be included in the role session. This decorated role is expected to access data in Amazon S3 by getting temporary access from Lake Formation which is authorized via the virtual API GetDataAccess. Therefore, all SAML roles that can be assumed via AssumeDecoratedRoleWithSAML must at a minimum include lakeformation:GetDataAccess in their role policies. A typical IAM policy attached to such a role would look as follows:",
+  "parameters": [
+    {
+      "name": "SAMLAssertion",
+      "type": "string",
+      "required": true,
+      "description": "A SAML assertion consisting of an assertion statement for the user who needs temporary credentials. This must match the SAML assertion that was issued to IAM. This must be Base64 encoded.",
+      "nested_params": []
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The role that represents an IAM principal whose scope down policy allows it to call credential vending APIs such as GetTemporaryTableCredentials. The caller must also have iam:PassRole permission on this role.",
+      "nested_params": []
+    },
+    {
+      "name": "PrincipalArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the SAML provider in IAM that describes the IdP.",
+      "nested_params": []
+    },
+    {
+      "name": "DurationSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AccessKeyId",
+          "type": "string",
+          "description": "The access key ID for the temporary credentials. (The access key consists of an access key ID and a secret key).",
+          "nested_items": []
+        },
+        {
+          "name": "SecretAccessKey",
+          "type": "string",
+          "description": "The secret key for the temporary credentials. (The access key consists of an access key ID and a secret key).",
+          "nested_items": []
+        },
+        {
+          "name": "SessionToken",
+          "type": "string",
+          "description": "The session token for the temporary credentials.",
+          "nested_items": []
+        },
+        {
+          "name": "Expiration",
+          "type": "datetime",
+          "description": "The date and time when the temporary credentials expire.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

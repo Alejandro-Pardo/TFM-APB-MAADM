@@ -1,0 +1,271 @@
+{
+  "method_name": "get_managed_resource",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/arc-zonal-shift/client/get_managed_resource.html",
+  "description": "Get information about a resource that's been registered for zonal shifts with Amazon Route 53 Application Recovery Controller in this Amazon Web Services Region. Resources that are registered for zonal shifts are managed resources in ARC. You can start zonal shifts and configure zonal autoshift for managed resources.",
+  "parameters": [
+    {
+      "name": "resourceIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The identifier for the resource that Amazon Web Services shifts traffic for. The identifier is the Amazon Resource Name (ARN) for the resource. At this time, supported resources are Network Load Balancers and Application Load Balancers with cross-zone load balancing turned off.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "appliedWeights",
+          "type": "dict",
+          "description": "A collection of key-value pairs that indicate whether resources are active in Availability Zones or not. The key name is the Availability Zone where the resource is deployed. The value is 1 or 0.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "float",
+                  "description": "(float) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) for the resource.",
+          "nested_items": []
+        },
+        {
+          "name": "autoshifts",
+          "type": "list",
+          "description": "An array of the autoshifts that are active for the resource.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "appliedStatus",
+                  "type": "string",
+                  "description": "The appliedStatus field specifies which application traffic shift is in effect for a resource when there is more than one active traffic shift. There can be more than one application traffic shift in progress at the same time - that is, practice run zonal shifts, customer-initiated zonal shifts, or an autoshift. The appliedStatus field for a shift that is in progress for a resource can have one of two values: APPLIED or NOT_APPLIED. The zonal shift or autoshift that is currently in effect for the resource has an appliedStatus set to APPLIED.",
+                  "nested_items": []
+                },
+                {
+                  "name": "awayFrom",
+                  "type": "string",
+                  "description": "The Availability Zone (for example, use1-az1) that traffic is shifted away from for a resource, when Amazon Web Services starts an autoshift. Until the autoshift ends, traffic for the resource is instead directed to other Availability Zones in the Amazon Web Services Region. An autoshift can end for a resource, for example, when Amazon Web Services ends the autoshift for the Availability Zone or when you disable zonal autoshift for the resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "startTime",
+                  "type": "datetime",
+                  "description": "The time (UTC) when the autoshift started.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the resource.",
+          "nested_items": []
+        },
+        {
+          "name": "practiceRunConfiguration",
+          "type": "dict",
+          "description": "The practice run configuration for zonal autoshift that's associated with the resource.",
+          "nested_items": [
+            {
+              "name": "blockedDates",
+              "type": "list",
+              "description": "An array of one or more dates that you can specify when Amazon Web Services does not start practice runs for a resource.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "blockedWindows",
+              "type": "list",
+              "description": "An array of one or more windows of days and times that you can block ARC from starting practice runs for a resource.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "blockingAlarms",
+              "type": "list",
+              "description": "The blocking alarm for practice runs is an optional alarm that you can specify that blocks practice runs when the alarm is in an ALARM state.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "alarmIdentifier",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) for an Amazon CloudWatch alarm that you specify as a control condition for a practice run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The type of alarm specified for a practice run. You can only specify Amazon CloudWatch alarms for practice runs, so the only valid value is CLOUDWATCH.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "outcomeAlarms",
+              "type": "list",
+              "description": "The outcome alarm for practice runs is an alarm that you specify that ends a practice run when the alarm is in an ALARM state.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "alarmIdentifier",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) for an Amazon CloudWatch alarm that you specify as a control condition for a practice run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The type of alarm specified for a practice run. You can only specify Amazon CloudWatch alarms for practice runs, so the only valid value is CLOUDWATCH.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "zonalAutoshiftStatus",
+          "type": "string",
+          "description": "The status for zonal autoshift for a resource. When the autoshift status is ENABLED, Amazon Web Services shifts traffic for a resource away from an Availability Zone, on your behalf, when Amazon Web Services determines that there's an issue in the Availability Zone that could potentially affect customers.",
+          "nested_items": []
+        },
+        {
+          "name": "zonalShifts",
+          "type": "list",
+          "description": "The zonal shifts that are currently active for a resource.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "appliedStatus",
+                  "type": "string",
+                  "description": "The appliedStatus field specifies which application traffic shift is in effect for a resource when there is more than one active traffic shift. There can be more than one application traffic shift in progress at the same time - that is, practice run zonal shifts, customer-initiated zonal shifts, or an autoshift. The appliedStatus field for a shift that is in progress for a resource can have one of two values: APPLIED or NOT_APPLIED. The zonal shift or autoshift that is currently in effect for the resource has an appliedStatus set to APPLIED.",
+                  "nested_items": []
+                },
+                {
+                  "name": "awayFrom",
+                  "type": "string",
+                  "description": "The Availability Zone (for example, use1-az1) that traffic is moved away from for a resource when you start a zonal shift. Until the zonal shift expires or you cancel it, traffic for the resource is instead moved to other Availability Zones in the Amazon Web Services Region.",
+                  "nested_items": []
+                },
+                {
+                  "name": "comment",
+                  "type": "string",
+                  "description": "A comment that you enter for a customer-initiated zonal shift. Only the latest comment is retained; no comment history is maintained. That is, a new comment overwrites any existing comment string.",
+                  "nested_items": []
+                },
+                {
+                  "name": "expiryTime",
+                  "type": "datetime",
+                  "description": "The expiry time (expiration time) for a customer-initiated zonal shift. A zonal shift is temporary and must be set to expire when you start the zonal shift. You can initially set a zonal shift to expire in a maximum of three days (72 hours). However, you can update a zonal shift to set a new expiration at any time.",
+                  "nested_items": []
+                },
+                {
+                  "name": "practiceRunOutcome",
+                  "type": "string",
+                  "description": "The outcome, or end state, returned for a practice run. The following values can be returned:",
+                  "nested_items": [
+                    {
+                      "name": "PENDING:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SUCCEEDED:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "INTERRUPTED:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "FAILED:",
+                      "type": "",
+                      "description": "",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "resourceIdentifier",
+                  "type": "string",
+                  "description": "The identifier for the resource to include in a zonal shift. The identifier is the Amazon Resource Name (ARN) for the resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "shiftType",
+                  "type": "string",
+                  "description": "Defines the zonal shift type.",
+                  "nested_items": []
+                },
+                {
+                  "name": "startTime",
+                  "type": "datetime",
+                  "description": "The time (UTC) when the zonal shift starts.",
+                  "nested_items": []
+                },
+                {
+                  "name": "zonalShiftId",
+                  "type": "string",
+                  "description": "The identifier of a zonal shift.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

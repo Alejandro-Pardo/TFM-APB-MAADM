@@ -1,0 +1,329 @@
+{
+  "method_name": "start_edge_configuration_update",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesisvideo/client/start_edge_configuration_update.html",
+  "description": "An asynchronous API that updates a stream's existing edge configuration. The Kinesis Video Stream will sync the stream's edge configuration with the Edge Agent IoT Greengrass component that runs on an IoT Hub Device, setup at your premise. The time to sync can vary and depends on the connectivity of the Hub Device. The SyncStatus will be updated as the edge configuration is acknowledged, and synced with the Edge Agent. If this API is invoked for the first time, a new edge configuration will be created for the stream, and the sync status will be set to SYNCING. You will have to wait for the sync status to reach a terminal state such as: IN_SYNC, or SYNC_FAILED, before using this API again. If you invoke this API during the syncing process, a ResourceInUseException will be thrown. The connectivity of the stream's edge configuration and the Edge Agent will be retried for 15 minutes. After 15 minutes, the status will transition into the SYNC_FAILED state. To move an edge configuration from one device to another, use  DeleteEdgeConfiguration to delete the current edge configuration. You can then invoke StartEdgeConfigurationUpdate with an updated Hub Device ARN.",
+  "parameters": [
+    {
+      "name": "StreamName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StreamARN",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "EdgeConfig",
+      "type": "dict",
+      "required": true,
+      "description": "The edge configuration details required to invoke the update process. The 'Internet of Things (IoT) Thing' Arn of the stream. The recorder configuration consists of the local MediaSourceConfig details, that are used as credentials to access the local media files streamed on the camera. The configuration details that consist of the credentials required ( MediaUriSecretArn and MediaUriType) to access the media files streamed to the camera. The Amazon Web Services Secrets Manager ARN for the username and password of the camera, or a local media file location. The Uniform Resource Identifier (URI) type. The FILE_URI value can be used to stream local media files. ScheduleConfig (dict) --- The configuration that consists of the ScheduleExpression and the DurationInMinutes details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the ScheduleExpression attribute is not provided, then the Edge Agent will always be set to recording mode. The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the ScheduleExpression is not provided for the RecorderConfig, then the Edge Agent will always be set to recording mode. For more information about Quartz, refer to the Cron Trigger Tutorial page to understand the valid expressions and its use. The total duration to record the media. If the ScheduleExpression attribute is provided, then the DurationInSeconds attribute should also be specified. UploaderConfig (dict) --- The uploader configuration contains the ScheduleExpression details that are used to schedule upload jobs for the recorded media files from the Edge Agent to a Kinesis Video Stream. The configuration that consists of the ScheduleExpression and the DurationInMinutes details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the ScheduleConfig is not provided in this UploaderConfig, then the Edge Agent will upload at regular intervals (every 1 hour). DeletionConfig (dict) --- The deletion configuration is made up of the retention time ( EdgeRetentionInHours) and local size configuration ( LocalSizeConfig) details that are used to make the deletion. EdgeRetentionInHours (integer) --- The number of hours that you want to retain the data in the stream on the Edge Agent. The default value of the retention time is 720 hours, which translates to 30 days. LocalSizeConfig (dict) --- The value of the local size required in order to delete the edge configuration. MaxLocalMediaSizeInMB (integer) --- The overall maximum size of the media that you want to store for a stream on the Edge Agent. StrategyOnFullSize (string) --- The strategy to perform when a stream's MaxLocalMediaSizeInMB limit is reached. DeleteAfterUpload (boolean) --- The boolean value used to indicate whether or not you want to mark the media for deletion, once it has been uploaded to the Kinesis Video Stream cloud. The media files can be deleted if any of the deletion configuration values are set to true, such as when the limit for the EdgeRetentionInHours, or the MaxLocalMediaSizeInMB, has been reached. Since the default value is set to true, configure the uploader schedule such that the media files are not being deleted before they are initially uploaded to the Amazon Web Services cloud.",
+      "nested_params": [
+        {
+          "name": "HubDeviceArn",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "nested_params": []
+        },
+        {
+          "name": "RecorderConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The recorder configuration consists of the local MediaSourceConfig details, that are used as credentials to access the local media files streamed on the camera.",
+          "nested_params": [
+            {
+              "name": "MediaSourceConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration details that consist of the credentials required ( MediaUriSecretArn and MediaUriType) to access the media files streamed to the camera.",
+              "nested_params": [
+                {
+                  "name": "MediaUriSecretArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Web Services Secrets Manager ARN for the username and password of the camera, or a local media file location.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MediaUriType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Uniform Resource Identifier (URI) type. The FILE_URI value can be used to stream local media files.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ScheduleConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration that consists of the ScheduleExpression and the DurationInMinutes details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the ScheduleExpression attribute is not provided, then the Edge Agent will always be set to recording mode.",
+              "nested_params": [
+                {
+                  "name": "ScheduleExpression",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the ScheduleExpression is not provided for the RecorderConfig, then the Edge Agent will always be set to recording mode. For more information about Quartz, refer to the Cron Trigger Tutorial page to understand the valid expressions and its use.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DurationInSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The total duration to record the media. If the ScheduleExpression attribute is provided, then the DurationInSeconds attribute should also be specified.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UploaderConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The uploader configuration contains the ScheduleExpression details that are used to schedule upload jobs for the recorded media files from the Edge Agent to a Kinesis Video Stream.",
+          "nested_params": [
+            {
+              "name": "ScheduleConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration that consists of the ScheduleExpression and the DurationInMinutes details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the ScheduleConfig is not provided in this UploaderConfig, then the Edge Agent will upload at regular intervals (every 1 hour).",
+              "nested_params": [
+                {
+                  "name": "ScheduleExpression",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the ScheduleExpression is not provided for the RecorderConfig, then the Edge Agent will always be set to recording mode. For more information about Quartz, refer to the Cron Trigger Tutorial page to understand the valid expressions and its use.",
+                  "nested_params": []
+                },
+                {
+                  "name": "DurationInSeconds",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The total duration to record the media. If the ScheduleExpression attribute is provided, then the DurationInSeconds attribute should also be specified.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DeletionConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The deletion configuration is made up of the retention time ( EdgeRetentionInHours) and local size configuration ( LocalSizeConfig) details that are used to make the deletion.",
+          "nested_params": [
+            {
+              "name": "EdgeRetentionInHours",
+              "type": "integer",
+              "required": false,
+              "description": "The number of hours that you want to retain the data in the stream on the Edge Agent. The default value of the retention time is 720 hours, which translates to 30 days.",
+              "nested_params": []
+            },
+            {
+              "name": "LocalSizeConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The value of the local size required in order to delete the edge configuration.",
+              "nested_params": [
+                {
+                  "name": "MaxLocalMediaSizeInMB",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The overall maximum size of the media that you want to store for a stream on the Edge Agent.",
+                  "nested_params": []
+                },
+                {
+                  "name": "StrategyOnFullSize",
+                  "type": "string",
+                  "required": false,
+                  "description": "The strategy to perform when a stream's MaxLocalMediaSizeInMB limit is reached.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "DeleteAfterUpload",
+              "type": "boolean",
+              "required": false,
+              "description": "The boolean value used to indicate whether or not you want to mark the media for deletion, once it has been uploaded to the Kinesis Video Stream cloud. The media files can be deleted if any of the deletion configuration values are set to true, such as when the limit for the EdgeRetentionInHours, or the MaxLocalMediaSizeInMB, has been reached. Since the default value is set to true, configure the uploader schedule such that the media files are not being deleted before they are initially uploaded to the Amazon Web Services cloud.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "StreamName",
+          "type": "string",
+          "description": "The name of the stream from which the edge configuration was updated.",
+          "nested_items": []
+        },
+        {
+          "name": "StreamARN",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the stream.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationTime",
+          "type": "datetime",
+          "description": "The timestamp at which a stream's edge configuration was first created.",
+          "nested_items": []
+        },
+        {
+          "name": "LastUpdatedTime",
+          "type": "datetime",
+          "description": "The timestamp at which a stream's edge configuration was last updated.",
+          "nested_items": []
+        },
+        {
+          "name": "SyncStatus",
+          "type": "string",
+          "description": "The current sync status of the stream's edge configuration. When you invoke this API, the sync status will be set to the SYNCING state. Use the DescribeEdgeConfiguration API to get the latest status of the edge configuration.",
+          "nested_items": []
+        },
+        {
+          "name": "FailedStatusDetails",
+          "type": "string",
+          "description": "A description of the generated failure status.",
+          "nested_items": []
+        },
+        {
+          "name": "EdgeConfig",
+          "type": "dict",
+          "description": "A description of the stream's edge configuration that will be used to sync with the Edge Agent IoT Greengrass component. The Edge Agent component will run on an IoT Hub Device setup at your premise.",
+          "nested_items": [
+            {
+              "name": "HubDeviceArn",
+              "type": "string",
+              "description": "The 'Internet of Things (IoT) Thing' Arn of the stream.",
+              "nested_items": []
+            },
+            {
+              "name": "RecorderConfig",
+              "type": "dict",
+              "description": "The recorder configuration consists of the local MediaSourceConfig details, that are used as credentials to access the local media files streamed on the camera.",
+              "nested_items": [
+                {
+                  "name": "MediaSourceConfig",
+                  "type": "dict",
+                  "description": "The configuration details that consist of the credentials required ( MediaUriSecretArn and MediaUriType) to access the media files streamed to the camera.",
+                  "nested_items": [
+                    {
+                      "name": "MediaUriSecretArn",
+                      "type": "string",
+                      "description": "The Amazon Web Services Secrets Manager ARN for the username and password of the camera, or a local media file location.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MediaUriType",
+                      "type": "string",
+                      "description": "The Uniform Resource Identifier (URI) type. The FILE_URI value can be used to stream local media files.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ScheduleConfig",
+                  "type": "dict",
+                  "description": "The configuration that consists of the ScheduleExpression and the DurationInMinutes details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the ScheduleExpression attribute is not provided, then the Edge Agent will always be set to recording mode.",
+                  "nested_items": [
+                    {
+                      "name": "ScheduleExpression",
+                      "type": "string",
+                      "description": "The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the ScheduleExpression is not provided for the RecorderConfig, then the Edge Agent will always be set to recording mode.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DurationInSeconds",
+                      "type": "integer",
+                      "description": "The total duration to record the media. If the ScheduleExpression attribute is provided, then the DurationInSeconds attribute should also be specified.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "UploaderConfig",
+              "type": "dict",
+              "description": "The uploader configuration contains the ScheduleExpression details that are used to schedule upload jobs for the recorded media files from the Edge Agent to a Kinesis Video Stream.",
+              "nested_items": [
+                {
+                  "name": "ScheduleConfig",
+                  "type": "dict",
+                  "description": "The configuration that consists of the ScheduleExpression and the DurationInMinutes details that specify the scheduling to record from a camera, or local media file, onto the Edge Agent. If the ScheduleConfig is not provided in this UploaderConfig, then the Edge Agent will upload at regular intervals (every 1 hour).",
+                  "nested_items": [
+                    {
+                      "name": "ScheduleExpression",
+                      "type": "string",
+                      "description": "The Quartz cron expression that takes care of scheduling jobs to record from the camera, or local media file, onto the Edge Agent. If the ScheduleExpression is not provided for the RecorderConfig, then the Edge Agent will always be set to recording mode.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DurationInSeconds",
+                      "type": "integer",
+                      "description": "The total duration to record the media. If the ScheduleExpression attribute is provided, then the DurationInSeconds attribute should also be specified.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DeletionConfig",
+              "type": "dict",
+              "description": "The deletion configuration is made up of the retention time ( EdgeRetentionInHours) and local size configuration ( LocalSizeConfig) details that are used to make the deletion.",
+              "nested_items": [
+                {
+                  "name": "EdgeRetentionInHours",
+                  "type": "integer",
+                  "description": "The number of hours that you want to retain the data in the stream on the Edge Agent. The default value of the retention time is 720 hours, which translates to 30 days.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LocalSizeConfig",
+                  "type": "dict",
+                  "description": "The value of the local size required in order to delete the edge configuration.",
+                  "nested_items": [
+                    {
+                      "name": "MaxLocalMediaSizeInMB",
+                      "type": "integer",
+                      "description": "The overall maximum size of the media that you want to store for a stream on the Edge Agent.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "StrategyOnFullSize",
+                      "type": "string",
+                      "description": "The strategy to perform when a stream's MaxLocalMediaSizeInMB limit is reached.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DeleteAfterUpload",
+                  "type": "boolean",
+                  "description": "The boolean value used to indicate whether or not you want to mark the media for deletion, once it has been uploaded to the Kinesis Video Stream cloud. The media files can be deleted if any of the deletion configuration values are set to true, such as when the limit for the EdgeRetentionInHours, or the MaxLocalMediaSizeInMB, has been reached.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,366 @@
+{
+  "method_name": "update_kx_environment_network",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/finspace/client/update_kx_environment_network.html",
+  "description": "Updates environment network to connect to your internal network by using a transit gateway. This API supports request to create a transit gateway attachment from FinSpace VPC to your transit gateway ID and create a custom Route-53 outbound resolvers. Once you send a request to update a network, you cannot change it again. Network update might require termination of any clusters that are running in the existing network.",
+  "parameters": [
+    {
+      "name": "environmentId",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the kdb environment.",
+      "nested_params": []
+    },
+    {
+      "name": "transitGatewayConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the transit gateway and network configuration to connect the kdb environment to an internal network. The identifier of the transit gateway created by the customer to connect outbound traffics from kdb network to your internal network. The routing CIDR on behalf of kdb environment. It could be any '/26 range in the 100.64.0.0 CIDR space. After providing, it will be added to the customer's transit gateway routing table so that the traffics could be routed to kdb network. attachmentNetworkAclConfiguration (list) --- The rules that define how you manage the outbound traffic from kdb network to your internal network. (dict) --- The network access control list (ACL) is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets. The entry is a set of numbered ingress and egress rules that determine whether a packet should be allowed in or out of a subnet associated with the ACL. We process the entries in the ACL according to the rule numbers, in ascending order. The rule number for the entry. For example 100. All the network ACL entries are processed in ascending order by rule number. The protocol number. A value of -1 means all the protocols. Indicates whether to allow or deny the traffic that matches the rule. portRange (dict) --- The range of ports the rule applies to. The first port in the range. The last port in the range. icmpTypeCode (dict) --- Defines the ICMP protocol that consists of the ICMP type and code. The ICMP type. A value of -1 means all types. The ICMP code. A value of -1 means all codes for the specified ICMP type. The IPv4 network range to allow or deny, in CIDR notation. For example, 172.16.0.0/24. We modify the specified CIDR block to its canonical form. For example, if you specify 100.68.0.18/18, we modify it to 100.68.0.0/18.",
+      "nested_params": [
+        {
+          "name": "transitGatewayID",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the transit gateway created by the customer to connect outbound traffics from kdb network to your internal network.",
+          "nested_params": []
+        },
+        {
+          "name": "routableCIDRSpace",
+          "type": "string",
+          "required": false,
+          "description": "The routing CIDR on behalf of kdb environment. It could be any '/26 range in the 100.64.0.0 CIDR space. After providing, it will be added to the customer's transit gateway routing table so that the traffics could be routed to kdb network.",
+          "nested_params": []
+        },
+        {
+          "name": "attachmentNetworkAclConfiguration",
+          "type": "list",
+          "required": false,
+          "description": "The rules that define how you manage the outbound traffic from kdb network to your internal network.",
+          "nested_params": [
+            {
+              "name": "ruleNumber",
+              "type": "integer",
+              "required": false,
+              "description": "The rule number for the entry. For example 100. All the network ACL entries are processed in ascending order by rule number.",
+              "nested_params": []
+            },
+            {
+              "name": "protocol",
+              "type": "string",
+              "required": false,
+              "description": "The protocol number. A value of -1 means all the protocols.",
+              "nested_params": []
+            },
+            {
+              "name": "ruleAction",
+              "type": "string",
+              "required": false,
+              "description": "Indicates whether to allow or deny the traffic that matches the rule.",
+              "nested_params": []
+            },
+            {
+              "name": "portRange",
+              "type": "dict",
+              "required": false,
+              "description": "The range of ports the rule applies to.",
+              "nested_params": [
+                {
+                  "name": "from",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The first port in the range.",
+                  "nested_params": []
+                },
+                {
+                  "name": "to",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The last port in the range.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "icmpTypeCode",
+              "type": "dict",
+              "required": false,
+              "description": "Defines the ICMP protocol that consists of the ICMP type and code.",
+              "nested_params": [
+                {
+                  "name": "type",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The ICMP type. A value of -1 means all types.",
+                  "nested_params": []
+                },
+                {
+                  "name": "code",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The ICMP code. A value of -1 means all codes for the specified ICMP type.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cidrBlock",
+              "type": "string",
+              "required": false,
+              "description": "The IPv4 network range to allow or deny, in CIDR notation. For example, 172.16.0.0/24. We modify the specified CIDR block to its canonical form. For example, if you specify 100.68.0.18/18, we modify it to 100.68.0.0/18.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "customDNSConfiguration",
+      "type": "list",
+      "required": true,
+      "description": "A list of DNS server name and server IP. This is used to set up Route-53 outbound resolvers. (dict) --- A list of DNS server name and server IP. The name of the DNS server. The IP address of the DNS server.",
+      "nested_params": [
+        {
+          "name": "customDNSServerName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the DNS server.",
+          "nested_params": []
+        },
+        {
+          "name": "customDNSServerIP",
+          "type": "string",
+          "required": false,
+          "description": "The IP address of the DNS server.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "clientToken",
+      "type": "string",
+      "required": false,
+      "description": "A token that ensures idempotency. This token expires in 10 minutes. This field is autopopulated if not provided.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The name of the kdb environment.",
+          "nested_items": []
+        },
+        {
+          "name": "environmentId",
+          "type": "string",
+          "description": "A unique identifier for the kdb environment.",
+          "nested_items": []
+        },
+        {
+          "name": "awsAccountId",
+          "type": "string",
+          "description": "The unique identifier of the AWS account that is used to create the kdb environment.",
+          "nested_items": []
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "The status of the kdb environment.",
+          "nested_items": []
+        },
+        {
+          "name": "tgwStatus",
+          "type": "string",
+          "description": "The status of the network configuration.",
+          "nested_items": []
+        },
+        {
+          "name": "dnsStatus",
+          "type": "string",
+          "description": "The status of DNS configuration.",
+          "nested_items": []
+        },
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "description": "Specifies the error message that appears if a flow fails.",
+          "nested_items": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "The description of the environment.",
+          "nested_items": []
+        },
+        {
+          "name": "environmentArn",
+          "type": "string",
+          "description": "The ARN identifier of the environment.",
+          "nested_items": []
+        },
+        {
+          "name": "kmsKeyId",
+          "type": "string",
+          "description": "The KMS key ID to encrypt your data in the FinSpace environment.",
+          "nested_items": []
+        },
+        {
+          "name": "dedicatedServiceAccountId",
+          "type": "string",
+          "description": "A unique identifier for the AWS environment infrastructure account.",
+          "nested_items": []
+        },
+        {
+          "name": "transitGatewayConfiguration",
+          "type": "dict",
+          "description": "The structure of the transit gateway and network configuration that is used to connect the kdb environment to an internal network.",
+          "nested_items": [
+            {
+              "name": "transitGatewayID",
+              "type": "string",
+              "description": "The identifier of the transit gateway created by the customer to connect outbound traffics from kdb network to your internal network.",
+              "nested_items": []
+            },
+            {
+              "name": "routableCIDRSpace",
+              "type": "string",
+              "description": "The routing CIDR on behalf of kdb environment. It could be any '/26 range in the 100.64.0.0 CIDR space. After providing, it will be added to the customer's transit gateway routing table so that the traffics could be routed to kdb network.",
+              "nested_items": []
+            },
+            {
+              "name": "attachmentNetworkAclConfiguration",
+              "type": "list",
+              "description": "The rules that define how you manage the outbound traffic from kdb network to your internal network.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ruleNumber",
+                      "type": "integer",
+                      "description": "The rule number for the entry. For example 100. All the network ACL entries are processed in ascending order by rule number.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "protocol",
+                      "type": "string",
+                      "description": "The protocol number. A value of -1 means all the protocols.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ruleAction",
+                      "type": "string",
+                      "description": "Indicates whether to allow or deny the traffic that matches the rule.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "portRange",
+                      "type": "dict",
+                      "description": "The range of ports the rule applies to.",
+                      "nested_items": [
+                        {
+                          "name": "from",
+                          "type": "integer",
+                          "description": "The first port in the range.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "to",
+                          "type": "integer",
+                          "description": "The last port in the range.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "icmpTypeCode",
+                      "type": "dict",
+                      "description": "Defines the ICMP protocol that consists of the ICMP type and code.",
+                      "nested_items": [
+                        {
+                          "name": "type",
+                          "type": "integer",
+                          "description": "The ICMP type. A value of -1 means all types.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "code",
+                          "type": "integer",
+                          "description": "The ICMP code. A value of -1 means all codes for the specified ICMP type.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "cidrBlock",
+                      "type": "string",
+                      "description": "The IPv4 network range to allow or deny, in CIDR notation. For example, 172.16.0.0/24. We modify the specified CIDR block to its canonical form. For example, if you specify 100.68.0.18/18, we modify it to 100.68.0.0/18.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "customDNSConfiguration",
+          "type": "list",
+          "description": "A list of DNS server name and server IP. This is used to set up Route-53 outbound resolvers.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "customDNSServerName",
+                  "type": "string",
+                  "description": "The name of the DNS server.",
+                  "nested_items": []
+                },
+                {
+                  "name": "customDNSServerIP",
+                  "type": "string",
+                  "description": "The IP address of the DNS server.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "creationTimestamp",
+          "type": "datetime",
+          "description": "The timestamp at which the kdb environment was created in FinSpace.",
+          "nested_items": []
+        },
+        {
+          "name": "updateTimestamp",
+          "type": "datetime",
+          "description": "The timestamp at which the kdb environment was updated.",
+          "nested_items": []
+        },
+        {
+          "name": "availabilityZoneIds",
+          "type": "list",
+          "description": "The identifier of the availability zones where subnets for the environment are created.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

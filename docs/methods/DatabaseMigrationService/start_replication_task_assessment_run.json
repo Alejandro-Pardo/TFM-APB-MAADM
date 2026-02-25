@@ -1,0 +1,294 @@
+{
+  "method_name": "start_replication_task_assessment_run",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dms/client/start_replication_task_assessment_run.html",
+  "description": "Starts a new premigration assessment run for one or more individual assessments of a migration task. The assessments that you can specify depend on the source and target database engine and the migration type defined for the given task. To run this operation, your migration task must already be created. After you run this operation, you can review the status of each individual assessment. You can also run the migration task manually after the assessment run and its individual assessments complete.",
+  "parameters": [
+    {
+      "name": "ReplicationTaskArn",
+      "type": "string",
+      "required": true,
+      "description": "Amazon Resource Name (ARN) of the migration task associated with the premigration assessment run that you want to start.",
+      "nested_params": []
+    },
+    {
+      "name": "ServiceAccessRoleArn",
+      "type": "string",
+      "required": true,
+      "description": "ARN of the service role needed to start the assessment run. The role must allow the iam:PassRole action.",
+      "nested_params": []
+    },
+    {
+      "name": "ResultLocationBucket",
+      "type": "string",
+      "required": true,
+      "description": "Amazon S3 bucket where you want DMS to store the results of this assessment run.",
+      "nested_params": []
+    },
+    {
+      "name": "ResultLocationFolder",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResultEncryptionMode",
+      "type": "string",
+      "required": false,
+      "description": "Encryption mode that you can specify to encrypt the results of this assessment run. If you don't specify this request parameter, DMS stores the assessment run results without encryption. You can specify one of the options following: \"SSE_S3\" --- The server-side encryption provided as a default by Amazon S3. \"SSE_KMS\" --- Key Management Service (KMS) encryption. This encryption can use either a custom KMS encryption key that you specify or the default KMS encryption key that DMS provides.",
+      "nested_params": []
+    },
+    {
+      "name": "ResultKmsKeyArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AssessmentRunName",
+      "type": "string",
+      "required": true,
+      "description": "Unique name to identify the assessment run.",
+      "nested_params": []
+    },
+    {
+      "name": "IncludeOnly",
+      "type": "list",
+      "required": false,
+      "description": "Space-separated list of names for specific individual assessments that you want to include. These names come from the default list of individual assessments that DMS supports for the associated migration task. This task is specified by ReplicationTaskArn. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Exclude",
+      "type": "list",
+      "required": false,
+      "description": "Space-separated list of names for specific individual assessments that you want to exclude. These names come from the default list of individual assessments that DMS supports for the associated migration task. This task is specified by ReplicationTaskArn. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": false,
+      "description": "One or more tags to be assigned to the premigration assessment run that you want to start. (dict) --- A user-defined key-value pair that describes metadata added to an DMS resource and that is used by operations such as the following: AddTagsToResource ListTagsForResource RemoveTagsFromResource Key (string) --- A key is the required name of the tag. The string value can be 1-128 Unicode characters in length and can't be prefixed with 'aws:' or 'dms:'. The string can only contain only the set of Unicode letters, digits, white-space, --\u0098_', --\u0098.', --\u0098/', --\u0098=', --\u0098+', --\u0098-' (Java regular expressions: '^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$'). Value (string) --- A value is the optional value of the tag. The string value can be 1-256 Unicode characters in length and can't be prefixed with 'aws:' or 'dms:'. ResourceArn (string) --- The Amazon Resource Name (ARN) string that uniquely identifies the resource for which the tag is created.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ReplicationTaskAssessmentRun",
+          "type": "dict",
+          "description": "The premigration assessment run that was started.",
+          "nested_items": [
+            {
+              "name": "ReplicationTaskAssessmentRunArn",
+              "type": "string",
+              "description": "Amazon Resource Name (ARN) of this assessment run.",
+              "nested_items": []
+            },
+            {
+              "name": "ReplicationTaskArn",
+              "type": "string",
+              "description": "ARN of the migration task associated with this premigration assessment run.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "Assessment run status.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"cancelling\" --- The assessment run was canceled by the CancelReplicationTaskAssessmentRun operation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"deleting\" --- The assessment run was deleted by the DeleteReplicationTaskAssessmentRun operation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"failed\" --- At least one individual assessment completed with a failed status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "during provisioning status",
+                  "description": "\"error-provisioning\" --- An internal error occurred while resources were provisioned (during provisioning status).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "during running status",
+                  "description": "\"error-executing\" --- An internal error occurred while individual assessments ran (during running status).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"invalid state\" --- The assessment run is in an unknown state.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"passed\" --- All individual assessments have completed, and none has a failed status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"provisioning\" --- Resources required to run individual assessments are being provisioned.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"running\" --- Individual assessments are being run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "\"starting\" --- The assessment run is starting, but resources are not yet being provisioned for individual assessments.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "completed with a skipped status",
+                  "description": "\"warning\" --- At least one individual assessment completed with a warning status or all individual assessments were skipped (completed with a skipped status).",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ReplicationTaskAssessmentRunCreationDate",
+              "type": "datetime",
+              "description": "Date on which the assessment run was created using the StartReplicationTaskAssessmentRun operation.",
+              "nested_items": []
+            },
+            {
+              "name": "AssessmentProgress",
+              "type": "dict",
+              "description": "Indication of the completion progress for the individual assessments specified to run.",
+              "nested_items": [
+                {
+                  "name": "IndividualAssessmentCount",
+                  "type": "integer",
+                  "description": "The number of individual assessments that are specified to run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "IndividualAssessmentCompletedCount",
+                  "type": "integer",
+                  "description": "The number of individual assessments that have completed, successfully or not.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "LastFailureMessage",
+              "type": "string",
+              "description": "Last message generated by an individual assessment failure.",
+              "nested_items": []
+            },
+            {
+              "name": "ServiceAccessRoleArn",
+              "type": "string",
+              "description": "ARN of the service role used to start the assessment run using the StartReplicationTaskAssessmentRun operation. The role must allow the iam:PassRole action.",
+              "nested_items": []
+            },
+            {
+              "name": "ResultLocationBucket",
+              "type": "string",
+              "description": "Amazon S3 bucket where DMS stores the results of this assessment run.",
+              "nested_items": []
+            },
+            {
+              "name": "ResultLocationFolder",
+              "type": "string",
+              "description": "Folder in an Amazon S3 bucket where DMS stores the results of this assessment run.",
+              "nested_items": []
+            },
+            {
+              "name": "ResultEncryptionMode",
+              "type": "string",
+              "description": "Encryption mode used to encrypt the assessment run results.",
+              "nested_items": []
+            },
+            {
+              "name": "ResultKmsKeyArn",
+              "type": "string",
+              "description": "ARN of the KMS encryption key used to encrypt the assessment run results.",
+              "nested_items": []
+            },
+            {
+              "name": "AssessmentRunName",
+              "type": "string",
+              "description": "Unique name of the assessment run.",
+              "nested_items": []
+            },
+            {
+              "name": "IsLatestTaskAssessmentRun",
+              "type": "boolean",
+              "description": "Indicates that the following PreflightAssessmentRun is the latest for the ReplicationTask. The status is either true or false.",
+              "nested_items": []
+            },
+            {
+              "name": "ResultStatistic",
+              "type": "dict",
+              "description": "Result statistics for a completed assessment run, showing aggregated statistics of IndividualAssessments for how many assessments were passed, failed, or encountered issues such as errors or warnings.",
+              "nested_items": [
+                {
+                  "name": "Passed",
+                  "type": "integer",
+                  "description": "The number of individual assessments that successfully passed all checks in the assessment run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Failed",
+                  "type": "integer",
+                  "description": "The number of individual assessments that failed to meet the criteria defined in the assessment run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Error",
+                  "type": "integer",
+                  "description": "The number of individual assessments that encountered a critical error and could not complete properly.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Warning",
+                  "type": "integer",
+                  "description": "Indicates that the recent completed AssessmentRun triggered a warning.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Cancelled",
+                  "type": "integer",
+                  "description": "The number of individual assessments that were cancelled during the assessment run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Skipped",
+                  "type": "integer",
+                  "description": "The number of individual assessments that were skipped during the assessment run.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,355 @@
+{
+  "method_name": "generate_pin_data",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/payment-cryptography-data/client/generate_pin_data.html",
+  "description": "Generates pin-related data such as PIN, PIN Verification Value (PVV), PIN Block, and PIN Offset during new card issuance or reissuance. For more information, see Generate PIN data in the Amazon Web Services Payment Cryptography User Guide. PIN data is never transmitted in clear to or from Amazon Web Services Payment Cryptography. This operation generates PIN, PVV, or PIN Offset and then encrypts it using Pin Encryption Key (PEK) to create an EncryptedPinBlock for transmission from Amazon Web Services Payment Cryptography. This operation uses a separate Pin Verification Key (PVK) for VISA PVV generation. Using ECDH key exchange, you can receive cardholder selectable PINs into Amazon Web Services Payment Cryptography. The ECDH derived key protects the incoming PIN block. You can also use it for reveal PIN, wherein the generated PIN block is protected by the ECDH derived key before transmission from Amazon Web Services Payment Cryptography. For more information on establishing ECDH derived keys, see the Generating keys in the Amazon Web Services Payment Cryptography User Guide. For information about valid keys for this operation, see Understanding key attributes and Key types for specific data operations in the Amazon Web Services Payment Cryptography User Guide. Cross-account use: This operation can't be used across different Amazon Web Services accounts.",
+  "parameters": [
+    {
+      "name": "GenerationKeyIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the PEK that Amazon Web Services Payment Cryptography uses for pin data generation.",
+      "nested_params": []
+    },
+    {
+      "name": "EncryptionKeyIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the PEK that Amazon Web Services Payment Cryptography uses to encrypt the PIN Block. For ECDH, it is the keyARN of the asymmetric ECC key.",
+      "nested_params": []
+    },
+    {
+      "name": "GenerationAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The attributes and values to use for PIN, PVV, or PIN Offset generation. VisaPin (dict) --- Parameters that are required to generate or verify Visa PIN. The value for PIN verification index. It is used in the Visa PIN algorithm to calculate the PVV (PIN Verification Value). VisaPinVerificationValue (dict) --- Parameters that are required to generate or verify Visa PIN Verification Value (PVV). The encrypted PIN block data to verify. Ibm3624PinOffset (dict) --- Parameters that are required to generate or verify Ibm3624 PIN offset PIN. The encrypted PIN block data. According to ISO 9564 standard, a PIN Block is an encoded representation of a payment card Personal Account Number (PAN) and the cardholder Personal Identification Number (PIN). The decimalization table to use for IBM 3624 PIN algorithm. The table is used to convert the algorithm intermediate result from hexadecimal characters to decimal. The padding character for validation data. The unique data for cardholder identification. Ibm3624NaturalPin (dict) --- Parameters that are required to generate or verify Ibm3624 natural PIN. Ibm3624RandomPin (dict) --- Parameters that are required to generate or verify Ibm3624 random PIN. Ibm3624PinFromOffset (dict) --- Parameters that are required to generate or verify Ibm3624 PIN from offset PIN. The PIN offset value.",
+      "nested_params": [
+        {
+          "name": "VisaPin",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required to generate or verify Visa PIN.",
+          "nested_params": [
+            {
+              "name": "PinVerificationKeyIndex",
+              "type": "integer",
+              "required": false,
+              "description": "The value for PIN verification index. It is used in the Visa PIN algorithm to calculate the PVV (PIN Verification Value).",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "VisaPinVerificationValue",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required to generate or verify Visa PIN Verification Value (PVV).",
+          "nested_params": [
+            {
+              "name": "EncryptedPinBlock",
+              "type": "string",
+              "required": false,
+              "description": "The encrypted PIN block data to verify.",
+              "nested_params": []
+            },
+            {
+              "name": "PinVerificationKeyIndex",
+              "type": "integer",
+              "required": false,
+              "description": "The value for PIN verification index. It is used in the Visa PIN algorithm to calculate the PVV (PIN Verification Value).",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Ibm3624PinOffset",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required to generate or verify Ibm3624 PIN offset PIN.",
+          "nested_params": [
+            {
+              "name": "EncryptedPinBlock",
+              "type": "string",
+              "required": false,
+              "description": "The encrypted PIN block data. According to ISO 9564 standard, a PIN Block is an encoded representation of a payment card Personal Account Number (PAN) and the cardholder Personal Identification Number (PIN).",
+              "nested_params": []
+            },
+            {
+              "name": "DecimalizationTable",
+              "type": "string",
+              "required": false,
+              "description": "The decimalization table to use for IBM 3624 PIN algorithm. The table is used to convert the algorithm intermediate result from hexadecimal characters to decimal.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationDataPadCharacter",
+              "type": "string",
+              "required": false,
+              "description": "The padding character for validation data.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationData",
+              "type": "string",
+              "required": false,
+              "description": "The unique data for cardholder identification.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Ibm3624NaturalPin",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required to generate or verify Ibm3624 natural PIN.",
+          "nested_params": [
+            {
+              "name": "DecimalizationTable",
+              "type": "string",
+              "required": false,
+              "description": "The decimalization table to use for IBM 3624 PIN algorithm. The table is used to convert the algorithm intermediate result from hexadecimal characters to decimal.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationDataPadCharacter",
+              "type": "string",
+              "required": false,
+              "description": "The padding character for validation data.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationData",
+              "type": "string",
+              "required": false,
+              "description": "The unique data for cardholder identification.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Ibm3624RandomPin",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required to generate or verify Ibm3624 random PIN.",
+          "nested_params": [
+            {
+              "name": "DecimalizationTable",
+              "type": "string",
+              "required": false,
+              "description": "The decimalization table to use for IBM 3624 PIN algorithm. The table is used to convert the algorithm intermediate result from hexadecimal characters to decimal.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationDataPadCharacter",
+              "type": "string",
+              "required": false,
+              "description": "The padding character for validation data.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationData",
+              "type": "string",
+              "required": false,
+              "description": "The unique data for cardholder identification.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Ibm3624PinFromOffset",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters that are required to generate or verify Ibm3624 PIN from offset PIN.",
+          "nested_params": [
+            {
+              "name": "DecimalizationTable",
+              "type": "string",
+              "required": false,
+              "description": "The decimalization table to use for IBM 3624 PIN algorithm. The table is used to convert the algorithm intermediate result from hexadecimal characters to decimal.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationDataPadCharacter",
+              "type": "string",
+              "required": false,
+              "description": "The padding character for validation data.",
+              "nested_params": []
+            },
+            {
+              "name": "PinValidationData",
+              "type": "string",
+              "required": false,
+              "description": "The unique data for cardholder identification.",
+              "nested_params": []
+            },
+            {
+              "name": "PinOffset",
+              "type": "string",
+              "required": false,
+              "description": "The PIN offset value.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PinDataLength",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "PrimaryAccountNumber",
+      "type": "string",
+      "required": true,
+      "description": "The Primary Account Number (PAN), a unique identifier for a payment credit or debit card that associates the card with a specific account holder.",
+      "nested_params": []
+    },
+    {
+      "name": "PinBlockFormat",
+      "type": "string",
+      "required": true,
+      "description": "The PIN encoding format for pin data generation as specified in ISO 9564. Amazon Web Services Payment Cryptography supports ISO_Format_0 and ISO_Format_3. The ISO_Format_0 PIN block format is equivalent to the ANSI X9.8, VISA-1, and ECI-1 PIN block formats. It is similar to a VISA-4 PIN block format. It supports a PIN from 4 to 12 digits in length. The ISO_Format_3 PIN block format is the same as ISO_Format_0 except that the fill digits are random values from 10 to 15.",
+      "nested_params": []
+    },
+    {
+      "name": "EncryptionWrappedKey",
+      "type": "dict",
+      "required": true,
+      "description": "Parameter information of a WrappedKeyBlock for encryption key exchange. Tr31KeyBlock (string) --- The TR-31 wrapped key block. DiffieHellmanSymmetricKey (dict) --- The parameter information for deriving a ECDH shared key. The keyArn of the certificate that signed the client's PublicKeyCertificate. The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation. The key algorithm of the derived ECDH key. The key derivation function to use for deriving a key using ECDH. The hash type to use for deriving a key using ECDH. A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended. KeyCheckValueAlgorithm (string) --- The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+      "nested_params": [
+        {
+          "name": "WrappedKeyMaterial",
+          "type": "dict",
+          "required": false,
+          "description": "Parameter information of a WrappedKeyBlock for encryption key exchange.",
+          "nested_params": [
+            {
+              "name": "Tr31KeyBlock",
+              "type": "string",
+              "required": false,
+              "description": "The TR-31 wrapped key block.",
+              "nested_params": []
+            },
+            {
+              "name": "DiffieHellmanSymmetricKey",
+              "type": "dict",
+              "required": false,
+              "description": "The parameter information for deriving a ECDH shared key.",
+              "nested_params": [
+                {
+                  "name": "CertificateAuthorityPublicKeyIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "The keyArn of the certificate that signed the client's PublicKeyCertificate.",
+                  "nested_params": []
+                },
+                {
+                  "name": "PublicKeyCertificate",
+                  "type": "string",
+                  "required": false,
+                  "description": "The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key algorithm of the derived ECDH key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyDerivationFunction",
+                  "type": "string",
+                  "required": false,
+                  "description": "The key derivation function to use for deriving a key using ECDH.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyDerivationHashAlgorithm",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash type to use for deriving a key using ECDH.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SharedInformation",
+                  "type": "string",
+                  "required": false,
+                  "description": "A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key. It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KeyCheckValueAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity. For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "GenerationKeyArn",
+          "type": "string",
+          "description": "The keyARN of the pin data generation key that Amazon Web Services Payment Cryptography uses for PIN, PVV or PIN Offset generation.",
+          "nested_items": []
+        },
+        {
+          "name": "GenerationKeyCheckValue",
+          "type": "string",
+          "description": "The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.",
+          "nested_items": []
+        },
+        {
+          "name": "EncryptionKeyArn",
+          "type": "string",
+          "description": "The keyARN of the PEK that Amazon Web Services Payment Cryptography uses for encrypted pin block generation. For ECDH, it is the keyARN of the asymmetric ECC key.",
+          "nested_items": []
+        },
+        {
+          "name": "EncryptionKeyCheckValue",
+          "type": "string",
+          "description": "The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.",
+          "nested_items": []
+        },
+        {
+          "name": "EncryptedPinBlock",
+          "type": "string",
+          "description": "The PIN block encrypted under PEK from Amazon Web Services Payment Cryptography. The encrypted PIN block is a composite of PAN (Primary Account Number) and PIN (Personal Identification Number), generated in accordance with ISO 9564 standard.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "PinOffset",
+              "type": "string",
+              "description": "The PIN offset value.",
+              "nested_items": []
+            },
+            {
+              "name": "VerificationValue",
+              "type": "string",
+              "description": "The unique data to identify a cardholder. In most cases, this is the same as cardholder's Primary Account Number (PAN). If a value is not provided, it defaults to PAN.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "method_name": "register_game_server",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/gamelift/client/register_game_server.html",
+  "description": "Creates a new game server resource and notifies Amazon GameLift FleetIQ that the game server is ready to host gameplay and players. This operation is called by a game server process that is running on an instance in a game server group. Registering game servers enables Amazon GameLift FleetIQ to track available game servers and enables game clients and services to claim a game server for a new game session. To register a game server, identify the game server group and instance where the game server is running, and provide a unique identifier for the game server. You can also include connection and game server data. Once a game server is successfully registered, it is put in status AVAILABLE. A request to register a game server may fail if the instance it is running on is in the process of shutting down as part of instance balancing or scale-down activity. Amazon GameLift FleetIQ Guide.",
+  "parameters": [
+    {
+      "name": "GameServerGroupName",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the game server group where the game server is running.",
+      "nested_params": []
+    },
+    {
+      "name": "GameServerId",
+      "type": "string",
+      "required": true,
+      "description": "A custom string that uniquely identifies the game server to register. Game server IDs are developer-defined and must be unique across all game server groups in your Amazon Web Services account.",
+      "nested_params": []
+    },
+    {
+      "name": "InstanceId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier for the instance where the game server is running. This ID is available in the instance metadata. EC2 instance IDs use a 17-character format, for example: i-1234567890abcdef0.",
+      "nested_params": []
+    },
+    {
+      "name": "ConnectionInfo",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "GameServerData",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "GameServer",
+          "type": "dict",
+          "description": "Object that describes the newly registered game server.",
+          "nested_items": [
+            {
+              "name": "GameServerGroupName",
+              "type": "string",
+              "description": "A unique identifier for the game server group where the game server is running.",
+              "nested_items": []
+            },
+            {
+              "name": "GameServerGroupArn",
+              "type": "string",
+              "description": "The ARN identifier for the game server group where the game server is located.",
+              "nested_items": []
+            },
+            {
+              "name": "GameServerId",
+              "type": "string",
+              "description": "A custom string that uniquely identifies the game server. Game server IDs are developer-defined and are unique across all game server groups in an Amazon Web Services account.",
+              "nested_items": []
+            },
+            {
+              "name": "InstanceId",
+              "type": "string",
+              "description": "The unique identifier for the instance where the game server is running. This ID is available in the instance metadata. EC2 instance IDs use a 17-character format, for example: i-1234567890abcdef0.",
+              "nested_items": []
+            },
+            {
+              "name": "ConnectionInfo",
+              "type": "string",
+              "description": "The port and IP address that must be used to establish a client connection to the game server.",
+              "nested_items": []
+            },
+            {
+              "name": "GameServerData",
+              "type": "string",
+              "description": "A set of custom game server properties, formatted as a single string value. This data is passed to a game client or service when it requests information on game servers.",
+              "nested_items": []
+            },
+            {
+              "name": "ClaimStatus",
+              "type": "string",
+              "description": "Indicates when an available game server has been reserved for gameplay but has not yet started hosting a game. Once it is claimed, the game server remains in CLAIMED status for a maximum of one minute. During this time, game clients connect to the game server to start the game and trigger the game server to update its utilization status. After one minute, the game server claim status reverts to null.",
+              "nested_items": []
+            },
+            {
+              "name": "UtilizationStatus",
+              "type": "string",
+              "description": "Indicates whether the game server is currently available for new games or is busy. Possible statuses include:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AVAILABLE - The game server is available to be claimed. A game server that has been claimed remains in this status until it reports game hosting activity.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UTILIZED - The game server is currently hosting a game session with players.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "RegistrationTime",
+              "type": "datetime",
+              "description": "Timestamp that indicates when the game server registered. The format is a number expressed in Unix time as milliseconds (for example \"1469498468.057\").",
+              "nested_items": []
+            },
+            {
+              "name": "LastClaimTime",
+              "type": "datetime",
+              "description": "Timestamp that indicates the last time the game server was claimed. The format is a number expressed in Unix time as milliseconds (for example \"1469498468.057\"). This value is used to calculate when a claimed game server's status should revert to null.",
+              "nested_items": []
+            },
+            {
+              "name": "LastHealthCheckTime",
+              "type": "datetime",
+              "description": "Timestamp that indicates the last time the game server was updated with health status. The format is a number expressed in Unix time as milliseconds (for example \"1469498468.057\"). After game server registration, this property is only changed when a game server update specifies a health check value.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

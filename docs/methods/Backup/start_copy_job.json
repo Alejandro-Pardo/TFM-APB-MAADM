@@ -1,0 +1,98 @@
+{
+  "method_name": "start_copy_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/backup/client/start_copy_job.html",
+  "description": "Starts a job to create a one-time copy of the specified resource. Does not support continuous backups.",
+  "parameters": [
+    {
+      "name": "RecoveryPointArn",
+      "type": "string",
+      "required": true,
+      "description": "An ARN that uniquely identifies a recovery point to use for the copy job; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.",
+      "nested_params": []
+    },
+    {
+      "name": "SourceBackupVaultName",
+      "type": "string",
+      "required": true,
+      "description": "The name of a logical source container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.",
+      "nested_params": []
+    },
+    {
+      "name": "DestinationBackupVaultArn",
+      "type": "string",
+      "required": true,
+      "description": "An Amazon Resource Name (ARN) that uniquely identifies a destination backup vault to copy to; for example, arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault.",
+      "nested_params": []
+    },
+    {
+      "name": "IamRoleArn",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the IAM role ARN used to copy the target recovery point; for example, arn:aws:iam::123456789012:role/S3Access.",
+      "nested_params": []
+    },
+    {
+      "name": "IdempotencyToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Lifecycle",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies the time period, in days, before a recovery point transitions to cold storage or is deleted. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, on the console, the retention setting must be 90 days greater than the transition to cold after days setting. The transition to cold after days setting can't be changed after a backup has been transitioned to cold. Resource types that can transition to cold storage are listed in the Feature availability by resource table. Backup ignores this expression for other resource types. To remove the existing lifecycle and retention periods and keep your recovery points indefinitely, specify -1 for MoveToColdStorageAfterDays and DeleteAfterDays. MoveToColdStorageAfterDays (integer) --- The number of days after creation that a recovery point is moved to cold storage. DeleteAfterDays (integer) --- The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays. OptInToArchiveForSupportedResources (boolean) --- If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+      "nested_params": [
+        {
+          "name": "MoveToColdStorageAfterDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days after creation that a recovery point is moved to cold storage.",
+          "nested_params": []
+        },
+        {
+          "name": "DeleteAfterDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays.",
+          "nested_params": []
+        },
+        {
+          "name": "OptInToArchiveForSupportedResources",
+          "type": "boolean",
+          "required": false,
+          "description": "If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CopyJobId",
+          "type": "string",
+          "description": "Uniquely identifies a copy job.",
+          "nested_items": []
+        },
+        {
+          "name": "CreationDate",
+          "type": "datetime",
+          "description": "The date and time that a copy job is created, in Unix format and Coordinated Universal Time (UTC). The value of CreationDate is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.",
+          "nested_items": []
+        },
+        {
+          "name": "IsParent",
+          "type": "boolean",
+          "description": "This is a returned boolean value indicating this is a parent (composite) copy job.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "method_name": "get_generated_policy",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/accessanalyzer/client/get_generated_policy.html",
+  "description": "Retrieves the policy that was generated using StartPolicyGeneration.",
+  "parameters": [
+    {
+      "name": "jobId",
+      "type": "string",
+      "required": true,
+      "description": "The JobId that is returned by the StartPolicyGeneration operation. The JobId can be used with GetGeneratedPolicy to retrieve the generated policies or used with CancelPolicyGeneration to cancel the policy generation request.",
+      "nested_params": []
+    },
+    {
+      "name": "includeResourcePlaceholders",
+      "type": "boolean",
+      "required": false,
+      "description": "The level of detail that you want to generate. You can specify whether to generate policies with placeholders for resource ARNs for actions that support resource level granularity in policies. For example, in the resource section of a policy, you can receive a placeholder such as \"Resource\":\"arn:aws:s3:::${BucketName}\" instead of \"*\".",
+      "nested_params": []
+    },
+    {
+      "name": "includeServiceLevelTemplate",
+      "type": "boolean",
+      "required": false,
+      "description": "The level of detail that you want to generate. You can specify whether to generate service-level policies. IAM Access Analyzer uses iam:servicelastaccessed to identify services that have been used recently to create this service-level template.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "jobDetails",
+          "type": "dict",
+          "description": "A GeneratedPolicyDetails object that contains details about the generated policy.",
+          "nested_items": [
+            {
+              "name": "jobId",
+              "type": "string",
+              "description": "The JobId that is returned by the StartPolicyGeneration operation. The JobId can be used with GetGeneratedPolicy to retrieve the generated policies or used with CancelPolicyGeneration to cancel the policy generation request.",
+              "nested_items": []
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The status of the job request.",
+              "nested_items": []
+            },
+            {
+              "name": "startedOn",
+              "type": "datetime",
+              "description": "A timestamp of when the job was started.",
+              "nested_items": []
+            },
+            {
+              "name": "completedOn",
+              "type": "datetime",
+              "description": "A timestamp of when the job was completed.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "code",
+                  "type": "string",
+                  "description": "The job error code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "message",
+                  "type": "string",
+                  "description": "Specific information about the error. For example, which service quota was exceeded or which resource was not found.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "generatedPolicyResult",
+          "type": "dict",
+          "description": "A GeneratedPolicyResult object that contains the generated policies and associated details.",
+          "nested_items": [
+            {
+              "name": "properties",
+              "type": "dict",
+              "description": "A GeneratedPolicyProperties object that contains properties of the generated policy.",
+              "nested_items": [
+                {
+                  "name": "isComplete",
+                  "type": "boolean",
+                  "description": "This value is set to true if the generated policy contains all possible actions for a service that IAM Access Analyzer identified from the CloudTrail trail that you specified, and false otherwise.",
+                  "nested_items": []
+                },
+                {
+                  "name": "principalArn",
+                  "type": "string",
+                  "description": "The ARN of the IAM entity (user or role) for which you are generating a policy.",
+                  "nested_items": []
+                },
+                {
+                  "name": "cloudTrailProperties",
+                  "type": "dict",
+                  "description": "Lists details about the Trail used to generated policy.",
+                  "nested_items": [
+                    {
+                      "name": "trailProperties",
+                      "type": "list",
+                      "description": "A TrailProperties object that contains settings for trail properties.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "cloudTrailArn",
+                              "type": "string",
+                              "description": "Specifies the ARN of the trail. The format of a trail ARN is arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "regions",
+                              "type": "list",
+                              "description": "A list of regions to get CloudTrail data from and analyze to generate a policy.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "allRegions",
+                              "type": "boolean",
+                              "description": "Possible values are true or false. If set to true, IAM Access Analyzer retrieves CloudTrail data from all regions to analyze and generate a policy.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "startTime",
+                      "type": "datetime",
+                      "description": "The start of the time range for which IAM Access Analyzer reviews your CloudTrail events. Events with a timestamp before this time are not considered to generate a policy.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "endTime",
+                      "type": "datetime",
+                      "description": "The end of the time range for which IAM Access Analyzer reviews your CloudTrail events. Events with a timestamp after this time are not considered to generate a policy. If this is not included in the request, the default value is the current time.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "generatedPolicies",
+              "type": "list",
+              "description": "The text to use as the content for the new policy. The policy is created using the CreatePolicy action.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "policy",
+                      "type": "string",
+                      "description": "The text to use as the content for the new policy. The policy is created using the CreatePolicy action.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

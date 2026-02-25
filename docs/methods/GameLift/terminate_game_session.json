@@ -1,0 +1,203 @@
+{
+  "method_name": "terminate_game_session",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/gamelift/client/terminate_game_session.html",
+  "description": "Ends a game session that's currently in progress. Use this action to terminate any game session that isn't in ERROR status. Terminating a game session is the most efficient way to free up a server process when it's hosting a game session that's in a bad state or not ending properly. You can use this action to terminate a game session that's being hosted on any type of Amazon GameLift fleet compute, including computes for managed EC2, managed container, and Anywhere fleets. The game server must be integrated with Amazon GameLift server SDK 5.x or greater. Request termination for a single game session. Provide the game session ID and the termination mode. There are two potential methods for terminating a game session: If successful, game session termination is initiated. During this activity, the game session status is changed to TERMINATING. When completed, the server process that was hosting the game session has been stopped and replaced with a new server process that's ready to host a new game session. The old game session's status is changed to TERMINATED with a status reason that indicates the termination method used. Add Amazon GameLift to your game server. Amazon GameLift server SDK 5 reference guide for OnProcessTerminate() ( C++) ( C#) ( Unreal) ( Go)",
+  "parameters": [
+    {
+      "name": "GameSessionId",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the game session to be terminated. A game session ARN has the following format: arn:aws:gamelift:<location>::gamesession/<fleet ID>/<custom ID string or idempotency token>.",
+      "nested_params": []
+    },
+    {
+      "name": "TerminationMode",
+      "type": "string",
+      "required": true,
+      "description": "The method to use to terminate the game session. Available methods include: TRIGGER_ON_PROCESS_TERMINATE --- Prompts the Amazon GameLift service to send an OnProcessTerminate() callback to the server process and initiate the normal game session shutdown sequence. The OnProcessTerminate method, which is implemented in the game server code, must include a call to the server SDK action ProcessEnding(), which is how the server process signals to Amazon GameLift that a game session is ending. If the server process doesn't call ProcessEnding(), the game session termination won't conclude successfully. FORCE_TERMINATE --- Prompts the Amazon GameLift service to stop the server process immediately. Amazon GameLift takes action (depending on the type of fleet) to shut down the server process without the normal game session shutdown sequence.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "GameSession",
+          "type": "dict",
+          "description": "Properties describing a game session.",
+          "nested_items": [
+            {
+              "name": "GameSessionId",
+              "type": "string",
+              "description": "A unique identifier for the game session. A game session ARN has the following format: arn:aws:gamelift:<location>::gamesession/<fleet ID>/<custom ID string or idempotency token>.",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "A descriptive label that is associated with a game session. Session names do not need to be unique.",
+              "nested_items": []
+            },
+            {
+              "name": "FleetId",
+              "type": "string",
+              "description": "A unique identifier for the fleet that the game session is running on.",
+              "nested_items": []
+            },
+            {
+              "name": "FleetArn",
+              "type": "string",
+              "description": "The Amazon Resource Name ( ARN) associated with the GameLift fleet that this game session is running on.",
+              "nested_items": []
+            },
+            {
+              "name": "CreationTime",
+              "type": "datetime",
+              "description": "A time stamp indicating when this data object was created. Format is a number expressed in Unix time as milliseconds (for example \"1469498468.057\").",
+              "nested_items": []
+            },
+            {
+              "name": "TerminationTime",
+              "type": "datetime",
+              "description": "A time stamp indicating when this data object was terminated. Format is a number expressed in Unix time as milliseconds (for example \"1469498468.057\").",
+              "nested_items": []
+            },
+            {
+              "name": "CurrentPlayerSessionCount",
+              "type": "integer",
+              "description": "Number of players currently in the game session.",
+              "nested_items": []
+            },
+            {
+              "name": "MaximumPlayerSessionCount",
+              "type": "integer",
+              "description": "The maximum number of players that can be connected simultaneously to the game session.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "Current status of the game session. A game session must have an ACTIVE status to have player sessions.",
+              "nested_items": []
+            },
+            {
+              "name": "StatusReason",
+              "type": "string",
+              "description": "Provides additional information about game session status.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INTERRUPTED --- The game session was hosted on an EC2 Spot instance that was reclaimed, causing the active game session to be stopped.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TRIGGERED_ON_PROCESS_TERMINATE --- The game session was stopped by calling TerminateGameSession with the termination mode TRIGGER_ON_PROCESS_TERMINATE.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FORCE_TERMINATED --- The game session was stopped by calling TerminateGameSession with the termination mode FORCE_TERMINATE.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "GameProperties",
+              "type": "list",
+              "description": "A set of key-value pairs that can store custom data in a game session. For example: {\"Key\": \"difficulty\", \"Value\": \"novice\"}.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Key",
+                      "type": "string",
+                      "description": "The game property identifier.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Value",
+                      "type": "string",
+                      "description": "The game property value.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "IpAddress",
+              "type": "string",
+              "description": "The IP address of the game session. To connect to a Amazon GameLift game server, an app needs both the IP address and port number.",
+              "nested_items": []
+            },
+            {
+              "name": "DnsName",
+              "type": "string",
+              "description": "The DNS identifier assigned to the instance that is running the game session. Values have the following format:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TLS-enabled fleets: <unique identifier>.<region identifier>.amazongamelift.com.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "See Amazon EC2 Instance IP Addressing.",
+                  "description": "Non-TLS-enabled fleets: ec2-<unique identifier>.compute.amazonaws.com. (See Amazon EC2 Instance IP Addressing.)",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Port",
+              "type": "integer",
+              "description": "The port number for the game session. To connect to a Amazon GameLift game server, an app needs both the IP address and port number.",
+              "nested_items": []
+            },
+            {
+              "name": "PlayerSessionCreationPolicy",
+              "type": "string",
+              "description": "Indicates whether the game session is accepting new players.",
+              "nested_items": []
+            },
+            {
+              "name": "CreatorId",
+              "type": "string",
+              "description": "A unique identifier for a player. This ID is used to enforce a resource protection policy (if one exists), that limits the number of game sessions a player can create.",
+              "nested_items": []
+            },
+            {
+              "name": "GameSessionData",
+              "type": "string",
+              "description": "A set of custom game session properties, formatted as a single string value. This data is passed to a game server process with a request to start a new game session. For more information, see Start a game session.",
+              "nested_items": []
+            },
+            {
+              "name": "MatchmakerData",
+              "type": "string",
+              "description": "Information about the matchmaking process that resulted in the game session, if matchmaking was used. Data is in JSON syntax, formatted as a string. Information includes the matchmaker ID as well as player attributes and team assignments. For more details on matchmaker data, see Match Data. Matchmaker data is updated whenever new players are added during a successful backfill (see StartMatchBackfill).",
+              "nested_items": []
+            },
+            {
+              "name": "Location",
+              "type": "string",
+              "description": "The fleet location where the game session is running. This value might specify the fleet's home Region or a remote location. Location is expressed as an Amazon Web Services Region code such as us-west-2.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

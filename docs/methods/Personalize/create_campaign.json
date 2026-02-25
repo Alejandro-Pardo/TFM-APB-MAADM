@@ -1,0 +1,94 @@
+{
+  "method_name": "create_campaign",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/personalize/client/create_campaign.html",
+  "description": "Creates a campaign that deploys a solution version. When a client calls the GetRecommendations and GetPersonalizedRanking APIs, a campaign is specified in the request. When you create an Amazon Personalize campaign, you can specify the minimum provisioned transactions per second ( minProvisionedTPS) for the campaign. This is the baseline transaction throughput for the campaign provisioned by Amazon Personalize. It sets the minimum billing charge for the campaign while it is active. A transaction is a single GetRecommendations or GetPersonalizedRanking request. The default minProvisionedTPS is 1. If your TPS increases beyond the minProvisionedTPS, Amazon Personalize auto-scales the provisioned capacity up and down, but never below minProvisionedTPS. There's a short time delay while the capacity is increased that might cause loss of transactions. When your traffic reduces, capacity returns to the minProvisionedTPS. You are charged for the the minimum provisioned TPS or, if your requests exceed the minProvisionedTPS, the actual TPS. The actual TPS is the total number of recommendation requests you make. We recommend starting with a low minProvisionedTPS, track your usage using Amazon CloudWatch metrics, and then increase the minProvisionedTPS as necessary. For more information about campaign costs, see Amazon Personalize pricing. A campaign can be in one of the following states: To get the campaign status, call DescribeCampaign.",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "A name for the new campaign. The campaign name must be unique within your account.",
+      "nested_params": []
+    },
+    {
+      "name": "solutionVersionArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the trained model to deploy with the campaign. To specify the latest solution version of your solution, specify the ARN of your solution in SolutionArn/$LATEST format. You must use this format if you set syncWithLatestSolutionVersion to True in the CampaignConfig. To deploy a model that isn't the latest solution version of your solution, specify the ARN of the solution version. For more information about automatic campaign updates, see Enabling automatic campaign updates.",
+      "nested_params": []
+    },
+    {
+      "name": "minProvisionedTPS",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "campaignConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The configuration details of a campaign. itemExplorationConfig (dict) --- Specifies the exploration configuration hyperparameters, including explorationWeight and explorationItemAgeCutOff, you want to use to configure the amount of item exploration Amazon Personalize uses when recommending items. Provide itemExplorationConfig data only if your solution uses the User-Personalization recipe. (string) --- (string) --- enableMetadataWithRecommendations (boolean) --- Whether metadata with recommendations is enabled for the campaign. If enabled, you can specify the columns from your Items dataset in your request for recommendations. Amazon Personalize returns this data for each item in the recommendation response. For information about enabling metadata for a campaign, see Enabling metadata in recommendations for a campaign. If you enable metadata in recommendations, you will incur additional costs. For more information, see Amazon Personalize pricing. syncWithLatestSolutionVersion (boolean) --- Whether the campaign automatically updates to use the latest solution version (trained model) of a solution. If you specify True, you must specify the ARN of your solution for the SolutionVersionArn parameter. It must be in SolutionArn/$LATEST format. The default is False and you must manually update the campaign to deploy the latest solution version. For more information about automatic campaign updates, see Enabling automatic campaign updates.",
+      "nested_params": [
+        {
+          "name": "itemExplorationConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the exploration configuration hyperparameters, including explorationWeight and explorationItemAgeCutOff, you want to use to configure the amount of item exploration Amazon Personalize uses when recommending items. Provide itemExplorationConfig data only if your solution uses the User-Personalization recipe.",
+          "nested_params": []
+        },
+        {
+          "name": "enableMetadataWithRecommendations",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether metadata with recommendations is enabled for the campaign. If enabled, you can specify the columns from your Items dataset in your request for recommendations. Amazon Personalize returns this data for each item in the recommendation response. For information about enabling metadata for a campaign, see Enabling metadata in recommendations for a campaign. If you enable metadata in recommendations, you will incur additional costs. For more information, see Amazon Personalize pricing.",
+          "nested_params": []
+        },
+        {
+          "name": "syncWithLatestSolutionVersion",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the campaign automatically updates to use the latest solution version (trained model) of a solution. If you specify True, you must specify the ARN of your solution for the SolutionVersionArn parameter. It must be in SolutionArn/$LATEST format. The default is False and you must manually update the campaign to deploy the latest solution version. For more information about automatic campaign updates, see Enabling automatic campaign updates.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags to apply to the campaign. (dict) --- The optional metadata that you apply to resources to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define. For more information see Tagging Amazon Personalize resources. One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values. The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": [
+        {
+          "name": "tagKey",
+          "type": "string",
+          "required": false,
+          "description": "One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values.",
+          "nested_params": []
+        },
+        {
+          "name": "tagValue",
+          "type": "string",
+          "required": false,
+          "description": "The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "campaignArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the campaign.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

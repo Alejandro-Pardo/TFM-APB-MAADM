@@ -1,0 +1,448 @@
+{
+  "method_name": "put_auto_scaling_policy",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/emr/client/put_auto_scaling_policy.html",
+  "description": "Creates or updates an automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. The automatic scaling policy defines how an instance group dynamically adds and terminates Amazon EC2 instances in response to the value of a CloudWatch metric.",
+  "parameters": [
+    {
+      "name": "ClusterId",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the ID of a cluster. The instance group to which the automatic scaling policy is applied is within this cluster.",
+      "nested_params": []
+    },
+    {
+      "name": "InstanceGroupId",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the ID of the instance group to which the automatic scaling policy is applied.",
+      "nested_params": []
+    },
+    {
+      "name": "AutoScalingPolicy",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the definition of the automatic scaling policy. The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits. The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary. The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary. The scale-in and scale-out rules that comprise the automatic scaling policy. (dict) --- A scale-in or scale-out rule that defines scaling activity, including the CloudWatch metric alarm that triggers activity, how Amazon EC2 instances are added or removed, and the periodicity of adjustments. The automatic scaling policy for an instance group can comprise one or more automatic scaling rules. The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy. Description (string) --- A friendly, more verbose description of the automatic scaling rule. The conditions that trigger an automatic scaling activity. Market (string) --- Not available for instance groups. Instance groups use the market type specified for the group. The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment. AdjustmentType (string) --- The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer. The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity. CoolDown (integer) --- The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0. The CloudWatch alarm definition that determines when automatic scaling activity is triggered. The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins. Determines how the metric specified by MetricName is compared to the value specified by Threshold. EvaluationPeriods (integer) --- The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1. The name of the CloudWatch metric that is watched to determine an alarm condition. Namespace (string) --- The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce. The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300. Statistic (string) --- The statistic to apply to the metric associated with the alarm. The default is AVERAGE. The value against which the specified statistic is compared. Unit (string) --- The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric. Dimensions (list) --- A CloudWatch metric dimension. (dict) --- A CloudWatch dimension, which is specified using a Key (known as a Name in CloudWatch), Value pair. By default, Amazon EMR uses one dimension whose Key is JobFlowID and Value is a variable representing the cluster ID, which is ${emr.clusterId}. This enables the rule to bootstrap when the cluster ID becomes available. Key (string) --- The dimension name. Value (string) --- The dimension value.",
+      "nested_params": [
+        {
+          "name": "Constraints",
+          "type": "dict",
+          "required": false,
+          "description": "The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits.",
+          "nested_params": [
+            {
+              "name": "MinCapacity",
+              "type": "integer",
+              "required": false,
+              "description": "The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary.",
+              "nested_params": []
+            },
+            {
+              "name": "MaxCapacity",
+              "type": "integer",
+              "required": false,
+              "description": "The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Rules",
+          "type": "list",
+          "required": false,
+          "description": "The scale-in and scale-out rules that comprise the automatic scaling policy.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy.",
+              "nested_params": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "required": false,
+              "description": "A friendly, more verbose description of the automatic scaling rule.",
+              "nested_params": []
+            },
+            {
+              "name": "Action",
+              "type": "dict",
+              "required": false,
+              "description": "The conditions that trigger an automatic scaling activity.",
+              "nested_params": [
+                {
+                  "name": "Market",
+                  "type": "string",
+                  "required": false,
+                  "description": "Not available for instance groups. Instance groups use the market type specified for the group.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SimpleScalingPolicyConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment.",
+                  "nested_params": [
+                    {
+                      "name": "AdjustmentType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ScalingAdjustment",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CoolDown",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Trigger",
+              "type": "dict",
+              "required": false,
+              "description": "The CloudWatch alarm definition that determines when automatic scaling activity is triggered.",
+              "nested_params": [
+                {
+                  "name": "CloudWatchAlarmDefinition",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins.",
+                  "nested_params": [
+                    {
+                      "name": "ComparisonOperator",
+                      "type": "string",
+                      "required": false,
+                      "description": "Determines how the metric specified by MetricName is compared to the value specified by Threshold.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "EvaluationPeriods",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "MetricName",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the CloudWatch metric that is watched to determine an alarm condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Namespace",
+                      "type": "string",
+                      "required": false,
+                      "description": "The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Period",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Statistic",
+                      "type": "string",
+                      "required": false,
+                      "description": "The statistic to apply to the metric associated with the alarm. The default is AVERAGE.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Threshold",
+                      "type": "float",
+                      "required": false,
+                      "description": "The value against which the specified statistic is compared.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Dimensions",
+                      "type": "list",
+                      "required": false,
+                      "description": "A CloudWatch metric dimension.",
+                      "nested_params": [
+                        {
+                          "name": "Key",
+                          "type": "string",
+                          "required": false,
+                          "description": "The dimension name.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "required": false,
+                          "description": "The dimension value.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ClusterId",
+          "type": "string",
+          "description": "Specifies the ID of a cluster. The instance group to which the automatic scaling policy is applied is within this cluster.",
+          "nested_items": []
+        },
+        {
+          "name": "InstanceGroupId",
+          "type": "string",
+          "description": "Specifies the ID of the instance group to which the scaling policy is applied.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoScalingPolicy",
+          "type": "dict",
+          "description": "The automatic scaling policy definition.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "State",
+                  "type": "string",
+                  "description": "Indicates the status of the automatic scaling policy.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StateChangeReason",
+                  "type": "dict",
+                  "description": "The reason for a change in status.",
+                  "nested_items": [
+                    {
+                      "name": "Code",
+                      "type": "string",
+                      "description": "The code indicating the reason for the change in status. USER_REQUEST indicates that the scaling policy status was changed by a user. PROVISION_FAILURE indicates that the status change was because the policy failed to provision. CLEANUP_FAILURE indicates an error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Message",
+                      "type": "string",
+                      "description": "A friendly, more verbose message that accompanies an automatic scaling policy state change.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Constraints",
+              "type": "dict",
+              "description": "The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits.",
+              "nested_items": [
+                {
+                  "name": "MinCapacity",
+                  "type": "integer",
+                  "description": "The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxCapacity",
+                  "type": "integer",
+                  "description": "The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Rules",
+              "type": "list",
+              "description": "The scale-in and scale-out rules that comprise the automatic scaling policy.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "description": "The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Description",
+                      "type": "string",
+                      "description": "A friendly, more verbose description of the automatic scaling rule.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Market",
+                          "type": "string",
+                          "description": "Not available for instance groups. Instance groups use the market type specified for the group.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "SimpleScalingPolicyConfiguration",
+                          "type": "dict",
+                          "description": "The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment.",
+                          "nested_items": [
+                            {
+                              "name": "AdjustmentType",
+                              "type": "string",
+                              "description": "The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ScalingAdjustment",
+                              "type": "integer",
+                              "description": "The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "CoolDown",
+                              "type": "integer",
+                              "description": "The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "CloudWatchAlarmDefinition",
+                          "type": "dict",
+                          "description": "The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins.",
+                          "nested_items": [
+                            {
+                              "name": "ComparisonOperator",
+                              "type": "string",
+                              "description": "Determines how the metric specified by MetricName is compared to the value specified by Threshold.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "EvaluationPeriods",
+                              "type": "integer",
+                              "description": "The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "MetricName",
+                              "type": "string",
+                              "description": "The name of the CloudWatch metric that is watched to determine an alarm condition.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Namespace",
+                              "type": "string",
+                              "description": "The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Period",
+                              "type": "integer",
+                              "description": "The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Statistic",
+                              "type": "string",
+                              "description": "The statistic to apply to the metric associated with the alarm. The default is AVERAGE.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Threshold",
+                              "type": "float",
+                              "description": "The value against which the specified statistic is compared.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Unit",
+                              "type": "string",
+                              "description": "The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Dimensions",
+                              "type": "list",
+                              "description": "A CloudWatch metric dimension.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "Key",
+                                      "type": "string",
+                                      "description": "The dimension name.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Value",
+                                      "type": "string",
+                                      "description": "The dimension value.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ClusterArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the cluster.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

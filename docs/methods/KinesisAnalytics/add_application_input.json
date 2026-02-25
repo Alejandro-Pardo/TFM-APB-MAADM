@@ -1,0 +1,237 @@
+{
+  "method_name": "add_application_input",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesisanalytics/client/add_application_input.html",
+  "description": "Adds a streaming source to your Amazon Kinesis application. For conceptual information, see Configuring Application Input. You can add a streaming source either when you create an application or you can use this operation to add a streaming source after you create an application. For more information, see CreateApplication. Any configuration update, including adding a streaming source using this operation, results in a new version of the application. You can use the DescribeApplication operation to find the current application version. This operation requires permissions to perform the kinesisanalytics:AddApplicationInput action.",
+  "parameters": [
+    {
+      "name": "ApplicationName",
+      "type": "string",
+      "required": true,
+      "description": "Name of your existing Amazon Kinesis Analytics application to which you want to add the streaming source.",
+      "nested_params": []
+    },
+    {
+      "name": "CurrentApplicationVersionId",
+      "type": "integer",
+      "required": true,
+      "description": "Current version of your Amazon Kinesis Analytics application. You can use the DescribeApplication operation to find the current application version.",
+      "nested_params": []
+    },
+    {
+      "name": "Input",
+      "type": "dict",
+      "required": true,
+      "description": "The Input to add. Name prefix to use when creating an in-application stream. Suppose that you specify a prefix 'MyInApplicationStream.' Amazon Kinesis Analytics then creates one or more (as per the InputParallelism count you specified) in-application streams with names 'MyInApplicationStream_001,' 'MyInApplicationStream_002,' and so on. InputProcessingConfiguration (dict) --- The InputProcessingConfiguration for the input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is InputLambdaProcessor. The InputLambdaProcessor that is used to preprocess the records in the stream before being processed by your application code. The ARN of the AWS Lambda function that operates on records in the stream. The ARN of the IAM role that is used to access the AWS Lambda function. KinesisStreamsInput (dict) --- If the streaming source is an Amazon Kinesis stream, identifies the stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either KinesisStreamsInput or KinesisFirehoseInput is required. ARN of the input Amazon Kinesis stream to read. ARN of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to grant the necessary permissions to this role. KinesisFirehoseInput (dict) --- If the streaming source is an Amazon Kinesis Firehose delivery stream, identifies the delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. ARN of the input delivery stream. You need to make sure that the role has the necessary permissions to access the stream. InputParallelism (dict) --- Describes the number of in-application streams to create. Data from your source is routed to these in-application input streams. (see Configuring Application Input. Count (integer) --- Number of in-application streams to create. For more information, see Limits. Describes the format of the data in the streaming source, and how each data element maps to corresponding columns in the in-application stream that is being created. Also used to describe the format of the reference data source. Specifies the format of the records on the streaming source. The type of record format. MappingParameters (dict) --- When configuring application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source. JSONMappingParameters (dict) --- Provides additional mapping information when JSON is the record format on the streaming source. Path to the top-level parent that contains the records. CSVMappingParameters (dict) --- Provides additional mapping information when the record format uses delimiters (for example, CSV). Row delimiter. For example, in a CSV format, --\u0098n' is the typical row delimiter. Column delimiter. For example, in a CSV format, a comma (',') is the typical column delimiter. RecordEncoding (string) --- Specifies the encoding of the records in the streaming source. For example, UTF-8. A list of RecordColumn objects. (dict) --- Describes the mapping of each data element in the streaming source to the corresponding column in the in-application stream. Name of the column created in the in-application input stream or reference table. Mapping (string) --- Reference to the data element in the streaming input or the reference data source. This element is required if the RecordFormatType is JSON. Type of column created in the in-application input stream or reference table.",
+      "nested_params": [
+        {
+          "name": "NamePrefix",
+          "type": "string",
+          "required": false,
+          "description": "Name prefix to use when creating an in-application stream. Suppose that you specify a prefix 'MyInApplicationStream.' Amazon Kinesis Analytics then creates one or more (as per the InputParallelism count you specified) in-application streams with names 'MyInApplicationStream_001,' 'MyInApplicationStream_002,' and so on.",
+          "nested_params": []
+        },
+        {
+          "name": "InputProcessingConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The InputProcessingConfiguration for the input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is InputLambdaProcessor.",
+          "nested_params": [
+            {
+              "name": "InputLambdaProcessor",
+              "type": "dict",
+              "required": false,
+              "description": "The InputLambdaProcessor that is used to preprocess the records in the stream before being processed by your application code.",
+              "nested_params": [
+                {
+                  "name": "ResourceARN",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the AWS Lambda function that operates on records in the stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "RoleARN",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that is used to access the AWS Lambda function.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KinesisStreamsInput",
+          "type": "dict",
+          "required": false,
+          "description": "If the streaming source is an Amazon Kinesis stream, identifies the stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either KinesisStreamsInput or KinesisFirehoseInput is required.",
+          "nested_params": [
+            {
+              "name": "ResourceARN",
+              "type": "string",
+              "required": false,
+              "description": "ARN of the input Amazon Kinesis stream to read.",
+              "nested_params": []
+            },
+            {
+              "name": "RoleARN",
+              "type": "string",
+              "required": false,
+              "description": "ARN of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to grant the necessary permissions to this role.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "KinesisFirehoseInput",
+          "type": "dict",
+          "required": false,
+          "description": "If the streaming source is an Amazon Kinesis Firehose delivery stream, identifies the delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either KinesisStreamsInput or KinesisFirehoseInput is required.",
+          "nested_params": [
+            {
+              "name": "ResourceARN",
+              "type": "string",
+              "required": false,
+              "description": "ARN of the input delivery stream.",
+              "nested_params": []
+            },
+            {
+              "name": "RoleARN",
+              "type": "string",
+              "required": false,
+              "description": "ARN of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to make sure that the role has the necessary permissions to access the stream.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "InputParallelism",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the number of in-application streams to create. Data from your source is routed to these in-application input streams. (see Configuring Application Input.",
+          "nested_params": [
+            {
+              "name": "Count",
+              "type": "integer",
+              "required": false,
+              "description": "Number of in-application streams to create. For more information, see Limits.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "InputSchema",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the format of the data in the streaming source, and how each data element maps to corresponding columns in the in-application stream that is being created. Also used to describe the format of the reference data source.",
+          "nested_params": [
+            {
+              "name": "RecordFormat",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the format of the records on the streaming source.",
+              "nested_params": [
+                {
+                  "name": "RecordFormatType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of record format.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MappingParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "When configuring application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.",
+                  "nested_params": [
+                    {
+                      "name": "JSONMappingParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Provides additional mapping information when JSON is the record format on the streaming source.",
+                      "nested_params": [
+                        {
+                          "name": "RecordRowPath",
+                          "type": "string",
+                          "required": false,
+                          "description": "Path to the top-level parent that contains the records.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CSVMappingParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Provides additional mapping information when the record format uses delimiters (for example, CSV).",
+                      "nested_params": [
+                        {
+                          "name": "RecordRowDelimiter",
+                          "type": "string",
+                          "required": false,
+                          "description": "Row delimiter. For example, in a CSV format, --\u0098n' is the typical row delimiter.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "RecordColumnDelimiter",
+                          "type": "string",
+                          "required": false,
+                          "description": "Column delimiter. For example, in a CSV format, a comma (',') is the typical column delimiter.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RecordEncoding",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the encoding of the records in the streaming source. For example, UTF-8.",
+              "nested_params": []
+            },
+            {
+              "name": "RecordColumns",
+              "type": "list",
+              "required": false,
+              "description": "A list of RecordColumn objects.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "Name of the column created in the in-application input stream or reference table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Mapping",
+                  "type": "string",
+                  "required": false,
+                  "description": "Reference to the data element in the streaming input or the reference data source. This element is required if the RecordFormatType is JSON.",
+                  "nested_params": []
+                },
+                {
+                  "name": "SqlType",
+                  "type": "string",
+                  "required": false,
+                  "description": "Type of column created in the in-application input stream or reference table.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": []
+    }
+  ]
+}

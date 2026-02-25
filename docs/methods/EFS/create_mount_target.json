@@ -1,0 +1,104 @@
+{
+  "method_name": "create_mount_target",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/efs/client/create_mount_target.html",
+  "description": "Creates a mount target for a file system. You can then mount the file system on EC2 instances by using the mount target. You can create one mount target in each Availability Zone in your VPC. All EC2 instances in a VPC within a given Availability Zone share a single mount target for a given file system. If you have multiple subnets in an Availability Zone, you create a mount target in one of the subnets. EC2 instances do not need to be in the same subnet as the mount target in order to access their file system. You can create only one mount target for a One Zone file system. You must create that mount target in the same Availability Zone in which the file system is located. Use the AvailabilityZoneName and AvailabiltyZoneId properties in the  DescribeFileSystems response object to get this information. Use the subnetId associated with the file system's Availability Zone when creating the mount target. For more information, see Amazon EFS: How it Works. To create a mount target for a file system, the file system's lifecycle state must be available. For more information, see  DescribeFileSystems. In the request, provide the following: After creating the mount target, Amazon EFS returns a response that includes, a MountTargetId and an IpAddress. You use this IP address when mounting the file system in an EC2 instance. You can also use the mount target's DNS name when mounting the file system. The EC2 instance on which you mount the file system by using the mount target can resolve the mount target's DNS name to its IP address. For more information, see How it Works: Implementation Overview. Note that you can create mount targets for a file system in only one VPC, and there can be only one mount target per Availability Zone. That is, if the file system already has one or more mount targets created for it, the subnet specified in the request to add another mount target must meet the following requirements: If the request satisfies the requirements, Amazon EFS does the following: Each Amazon EFS mount target has one corresponding requester-managed EC2 network interface. After the network interface is created, Amazon EFS sets the NetworkInterfaceId field in the mount target's description to the network interface ID, and the IpAddress field to its address. If network interface creation fails, the entire CreateMountTarget operation fails. We recommend that you create a mount target in each of the Availability Zones. There are cost considerations for using a file system in an Availability Zone through a mount target created in another Availability Zone. For more information, see Amazon EFS. In addition, by always using a mount target local to the instance's Availability Zone, you eliminate a partial failure scenario. If the Availability Zone in which your mount target is created goes down, then you can't access your file system through that mount target. This operation requires permissions for the following action on the file system: This operation also requires permissions for the following Amazon EC2 actions:",
+  "parameters": [
+    {
+      "name": "FileSystemId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the file system for which to create the mount target.",
+      "nested_params": []
+    },
+    {
+      "name": "SubnetId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the subnet to add the mount target in. For One Zone file systems, use the subnet that is associated with the file system's Availability Zone.",
+      "nested_params": []
+    },
+    {
+      "name": "IpAddress",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SecurityGroups",
+      "type": "list",
+      "required": false,
+      "description": "Up to five VPC security group IDs, of the form sg-xxxxxxxx. These must be for the same VPC as subnet specified. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "OwnerId",
+          "type": "string",
+          "description": "Amazon Web Services account ID that owns the resource.",
+          "nested_items": []
+        },
+        {
+          "name": "MountTargetId",
+          "type": "string",
+          "description": "System-assigned mount target ID.",
+          "nested_items": []
+        },
+        {
+          "name": "FileSystemId",
+          "type": "string",
+          "description": "The ID of the file system for which the mount target is intended.",
+          "nested_items": []
+        },
+        {
+          "name": "SubnetId",
+          "type": "string",
+          "description": "The ID of the mount target's subnet.",
+          "nested_items": []
+        },
+        {
+          "name": "LifeCycleState",
+          "type": "string",
+          "description": "Lifecycle state of the mount target.",
+          "nested_items": []
+        },
+        {
+          "name": "IpAddress",
+          "type": "string",
+          "description": "Address at which the file system can be mounted by using the mount target.",
+          "nested_items": []
+        },
+        {
+          "name": "NetworkInterfaceId",
+          "type": "string",
+          "description": "The ID of the network interface that Amazon EFS created when it created the mount target.",
+          "nested_items": []
+        },
+        {
+          "name": "AvailabilityZoneId",
+          "type": "string",
+          "description": "The unique and consistent identifier of the Availability Zone that the mount target resides in. For example, use1-az1 is an AZ ID for the us-east-1 Region and it has the same location in every Amazon Web Services account.",
+          "nested_items": []
+        },
+        {
+          "name": "AvailabilityZoneName",
+          "type": "string",
+          "description": "The name of the Availability Zone in which the mount target is located. Availability Zones are independently mapped to names for each Amazon Web Services account. For example, the Availability Zone us-east-1a for your Amazon Web Services account might not be the same location as us-east-1a for another Amazon Web Services account.",
+          "nested_items": []
+        },
+        {
+          "name": "VpcId",
+          "type": "string",
+          "description": "The virtual private cloud (VPC) ID that the mount target is configured in.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

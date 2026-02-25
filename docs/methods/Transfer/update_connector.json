@@ -1,0 +1,164 @@
+{
+  "method_name": "update_connector",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transfer/client/update_connector.html",
+  "description": "Updates some of the parameters for an existing connector. Provide the ConnectorId for the connector that you want to update, along with the new values for the parameters to update.",
+  "parameters": [
+    {
+      "name": "ConnectorId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier for the connector.",
+      "nested_params": []
+    },
+    {
+      "name": "Url",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "As2Config",
+      "type": "dict",
+      "required": false,
+      "description": "A structure that contains the parameters for an AS2 connector object. LocalProfileId (string) --- A unique identifier for the AS2 local profile. PartnerProfileId (string) --- A unique identifier for the partner profile for the connector. MessageSubject (string) --- Used as the Subject HTTP header attribute in AS2 messages that are being sent with the connector. Compression (string) --- Specifies whether the AS2 file is compressed. EncryptionAlgorithm (string) --- The algorithm that is used to encrypt the file. Note the following: Do not use the DES_EDE3_CBC algorithm unless you must support a legacy client that requires it, as it is a weak encryption algorithm. You can only specify NONE if the URL for your connector uses HTTPS. Using HTTPS ensures that no traffic is sent in clear text. SigningAlgorithm (string) --- The algorithm that is used to sign the AS2 messages sent with the connector. MdnSigningAlgorithm (string) --- The signing algorithm for the MDN response. MdnResponse (string) --- Used for outbound requests (from an Transfer Family connector to a partner AS2 server) to determine whether the partner response for transfers is synchronous or asynchronous. Specify either of the following values: SYNC: The system expects a synchronous MDN response, confirming that the file was transferred successfully (or not). NONE: Specifies that no MDN response is required. BasicAuthSecretId (string) --- Provides Basic authentication support to the AS2 Connectors API. To use Basic authentication, you must provide the name or Amazon Resource Name (ARN) of a secret in Secrets Manager. The default value for this parameter is null, which indicates that Basic authentication is not enabled for the connector. If the connector should use Basic authentication, the secret needs to be in the following format: { \"Username\": \"user-name\", \"Password\": \"user-password\" } Replace user-name and user-password with the credentials for the actual user that is being authenticated. Note the following: You are storing these credentials in Secrets Manager, not passing them directly into this API. If you are using the API, SDKs, or CloudFormation to configure your connector, then you must create the secret before you can enable Basic authentication. However, if you are using the Amazon Web Services management console, you can have the system create the secret for you. If you have previously enabled Basic authentication for a connector, you can disable it by using the UpdateConnector API call. For example, if you are using the CLI, you can run the following command to remove Basic authentication: update-connector --connector-id my-connector-id --as2-config 'BasicAuthSecretId=\"\"' PreserveContentType (string) --- Allows you to use the Amazon S3 Content-Type that is associated with objects in S3 instead of having the content type mapped based on the file extension. This parameter is enabled by default when you create an AS2 connector from the console, but disabled by default when you create an AS2 connector by calling the API directly.",
+      "nested_params": [
+        {
+          "name": "LocalProfileId",
+          "type": "string",
+          "required": false,
+          "description": "A unique identifier for the AS2 local profile.",
+          "nested_params": []
+        },
+        {
+          "name": "PartnerProfileId",
+          "type": "string",
+          "required": false,
+          "description": "A unique identifier for the partner profile for the connector.",
+          "nested_params": []
+        },
+        {
+          "name": "MessageSubject",
+          "type": "string",
+          "required": false,
+          "description": "Used as the Subject HTTP header attribute in AS2 messages that are being sent with the connector.",
+          "nested_params": []
+        },
+        {
+          "name": "Compression",
+          "type": "string",
+          "required": false,
+          "description": "Specifies whether the AS2 file is compressed.",
+          "nested_params": []
+        },
+        {
+          "name": "EncryptionAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "The algorithm that is used to encrypt the file. Note the following:",
+          "nested_params": []
+        },
+        {
+          "name": "SigningAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "The algorithm that is used to sign the AS2 messages sent with the connector.",
+          "nested_params": []
+        },
+        {
+          "name": "MdnSigningAlgorithm",
+          "type": "string",
+          "required": false,
+          "description": "The signing algorithm for the MDN response.",
+          "nested_params": []
+        },
+        {
+          "name": "MdnResponse",
+          "type": "string",
+          "required": false,
+          "description": "Used for outbound requests (from an Transfer Family connector to a partner AS2 server) to determine whether the partner response for transfers is synchronous or asynchronous. Specify either of the following values:",
+          "nested_params": []
+        },
+        {
+          "name": "BasicAuthSecretId",
+          "type": "string",
+          "required": false,
+          "description": "Provides Basic authentication support to the AS2 Connectors API. To use Basic authentication, you must provide the name or Amazon Resource Name (ARN) of a secret in Secrets Manager. The default value for this parameter is null, which indicates that Basic authentication is not enabled for the connector. If the connector should use Basic authentication, the secret needs to be in the following format: { \"Username\": \"user-name\", \"Password\": \"user-password\" } Replace user-name and user-password with the credentials for the actual user that is being authenticated. Note the following:",
+          "nested_params": []
+        },
+        {
+          "name": "PreserveContentType",
+          "type": "string",
+          "required": false,
+          "description": "Allows you to use the Amazon S3 Content-Type that is associated with objects in S3 instead of having the content type mapped based on the file extension. This parameter is enabled by default when you create an AS2 connector from the console, but disabled by default when you create an AS2 connector by calling the API directly.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AccessRole",
+      "type": "string",
+      "required": false,
+      "description": "Connectors are used to send files using either the AS2 or SFTP protocol. For the access role, provide the Amazon Resource Name (ARN) of the Identity and Access Management role to use. With AS2, you can send files by calling StartFileTransfer and specifying the file paths in the request parameter, SendFilePaths. We use the file's parent directory (for example, for --send-file-paths /bucket/dir/file.txt, parent directory is /bucket/dir/) to temporarily store a processed AS2 message file, store the MDN when we receive them from the partner, and write a final JSON file containing relevant metadata of the transmission. So, the AccessRole needs to provide read and write access to the parent directory of the file location used in the StartFileTransfer request. Additionally, you need to provide read and write access to the parent directory of the files that you intend to send with StartFileTransfer. If you are using Basic authentication for your AS2 connector, the access role requires the secretsmanager:GetSecretValue permission for the secret. If the secret is encrypted using a customer-managed key instead of the Amazon Web Services managed key in Secrets Manager, then the role also needs the kms:Decrypt permission for that key. Make sure that the access role provides read and write access to the parent directory of the file location that's used in the StartFileTransfer request. Additionally, make sure that the role provides secretsmanager:GetSecretValue permission to Secrets Manager.",
+      "nested_params": []
+    },
+    {
+      "name": "LoggingRole",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SftpConfig",
+      "type": "dict",
+      "required": false,
+      "description": "A structure that contains the parameters for an SFTP connector object. UserSecretId (string) --- The identifier for the secret (in Amazon Web Services Secrets Manager) that contains the SFTP user's private key, password, or both. The identifier must be the Amazon Resource Name (ARN) of the secret. TrustedHostKeys (list) --- The public portion of the host key, or keys, that are used to identify the external server to which you are connecting. You can use the ssh-keyscan command against the SFTP server to retrieve the necessary key. The three standard SSH public key format elements are <key type>, <body base64>, and an optional <comment>, with spaces between each element. Specify only the <key type> and <body base64>: do not enter the <comment> portion of the key. For the trusted host key, Transfer Family accepts RSA and ECDSA keys. For RSA keys, the <key type> string is ssh-rsa. For ECDSA keys, the <key type> string is either ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521, depending on the size of the key you generated. Run this command to retrieve the SFTP server host key, where your SFTP server name is ftp.host.com. ssh-keyscan ftp.host.com This prints the public host key to standard output. ftp.host.com ssh-rsa AAAAB3Nza...<long-string-for-public-key Copy and paste this string into the TrustedHostKeys field for the create-connector command or into the Trusted host keys field in the console. (string) --- MaxConcurrentConnections (integer) --- Specify the number of concurrent connections that your connector creates to the remote server. The default value is 5 (this is also the maximum value allowed). This parameter specifies the number of active connections that your connector can establish with the remote server at the same time. Increasing this value can enhance connector performance when transferring large file batches by enabling parallel operations.",
+      "nested_params": [
+        {
+          "name": "UserSecretId",
+          "type": "string",
+          "required": false,
+          "description": "The identifier for the secret (in Amazon Web Services Secrets Manager) that contains the SFTP user's private key, password, or both. The identifier must be the Amazon Resource Name (ARN) of the secret.",
+          "nested_params": []
+        },
+        {
+          "name": "TrustedHostKeys",
+          "type": "list",
+          "required": false,
+          "description": "The public portion of the host key, or keys, that are used to identify the external server to which you are connecting. You can use the ssh-keyscan command against the SFTP server to retrieve the necessary key. The three standard SSH public key format elements are <key type>, <body base64>, and an optional <comment>, with spaces between each element. Specify only the <key type> and <body base64>: do not enter the <comment> portion of the key. For the trusted host key, Transfer Family accepts RSA and ECDSA keys.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxConcurrentConnections",
+          "type": "integer",
+          "required": false,
+          "description": "Specify the number of concurrent connections that your connector creates to the remote server. The default value is 5 (this is also the maximum value allowed). This parameter specifies the number of active connections that your connector can establish with the remote server at the same time. Increasing this value can enhance connector performance when transferring large file batches by enabling parallel operations.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "SecurityPolicyName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ConnectorId",
+          "type": "string",
+          "description": "Returns the identifier of the connector object that you are updating.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

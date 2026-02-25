@@ -1,0 +1,124 @@
+{
+  "method_name": "start_document_text_detection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract/client/start_document_text_detection.html",
+  "description": "Starts the asynchronous detection of text in a document. Amazon Textract can detect lines of text and the words that make up a line of text. StartDocumentTextDetection can analyze text in documents that are in JPEG, PNG, TIFF, and PDF format. The documents are stored in an Amazon S3 bucket. Use  DocumentLocation to specify the bucket name and file name of the document. StartDocumentTextDetection returns a job identifier ( JobId) that you use to get the results of the operation. When text detection is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you specify in NotificationChannel. To get the results of the text detection operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If so, call  GetDocumentTextDetection, and pass the job identifier ( JobId) from the initial call to StartDocumentTextDetection. For more information, see Document Text Detection.",
+  "parameters": [
+    {
+      "name": "DocumentLocation",
+      "type": "dict",
+      "required": true,
+      "description": "The location of the document to be processed. S3Object (dict) --- The Amazon S3 bucket that contains the input document. Bucket (string) --- The name of the S3 bucket. Note that the # character is not valid in the file name. Name (string) --- The file name of the input document. Image files may be in PDF, TIFF, JPEG, or PNG format. Version (string) --- If the bucket has versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon S3 bucket that contains the input document.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The name of the S3 bucket. Note that the # character is not valid in the file name.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The file name of the input document. Image files may be in PDF, TIFF, JPEG, or PNG format.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket has versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ClientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "JobTag",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NotificationChannel",
+      "type": "dict",
+      "required": true,
+      "description": "The Amazon SNS topic ARN that you want Amazon Textract to publish the completion status of the operation to. The Amazon SNS topic that Amazon Textract posts the completion status to. The Amazon Resource Name (ARN) of an IAM role that gives Amazon Textract publishing permissions to the Amazon SNS topic.",
+      "nested_params": [
+        {
+          "name": "SNSTopicArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon SNS topic that Amazon Textract posts the completion status to.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of an IAM role that gives Amazon Textract publishing permissions to the Amazon SNS topic.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OutputConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Sets if the output will go to a customer defined bucket. By default Amazon Textract will save the results internally to be accessed with the GetDocumentTextDetection operation. The name of the bucket your output will go to. S3Prefix (string) --- The prefix of the object key that the output will be saved to. When not enabled, the prefix will be 'textract_output'.",
+      "nested_params": [
+        {
+          "name": "S3Bucket",
+          "type": "string",
+          "required": false,
+          "description": "The name of the bucket your output will go to.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Prefix",
+          "type": "string",
+          "required": false,
+          "description": "The prefix of the object key that the output will be saved to. When not enabled, the prefix will be 'textract_output'.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "KMSKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "The identifier of the text detection job for the document. Use JobId to identify the job in a subsequent call to GetDocumentTextDetection. A JobId value is only valid for 7 days.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

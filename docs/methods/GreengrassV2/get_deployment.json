@@ -1,0 +1,356 @@
+{
+  "method_name": "get_deployment",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/greengrassv2/client/get_deployment.html",
+  "description": "Gets a deployment. Deployments define the components that run on Greengrass core devices.",
+  "parameters": [
+    {
+      "name": "deploymentId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the deployment.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "targetArn",
+          "type": "string",
+          "description": "The ARN of the target IoT thing or thing group.",
+          "nested_items": []
+        },
+        {
+          "name": "revisionId",
+          "type": "string",
+          "description": "The revision number of the deployment.",
+          "nested_items": []
+        },
+        {
+          "name": "deploymentId",
+          "type": "string",
+          "description": "The ID of the deployment.",
+          "nested_items": []
+        },
+        {
+          "name": "deploymentName",
+          "type": "string",
+          "description": "The name of the deployment.",
+          "nested_items": []
+        },
+        {
+          "name": "deploymentStatus",
+          "type": "string",
+          "description": "The status of the deployment.",
+          "nested_items": []
+        },
+        {
+          "name": "iotJobId",
+          "type": "string",
+          "description": "The ID of the IoT job that applies the deployment to target devices.",
+          "nested_items": []
+        },
+        {
+          "name": "iotJobArn",
+          "type": "string",
+          "description": "The ARN of the IoT job that applies the deployment to target devices.",
+          "nested_items": []
+        },
+        {
+          "name": "components",
+          "type": "dict",
+          "description": "The components to deploy. This is a dictionary, where each key is the name of a component, and each key's value is the version and configuration to deploy for that component.",
+          "nested_items": [
+            {
+              "name": "componentVersion",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "componentVersion",
+                      "type": "string",
+                      "description": "The version of the component.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "configurationUpdate",
+                      "type": "dict",
+                      "description": "The configuration updates to deploy for the component. You can define reset updates and merge updates. A reset updates the keys that you specify to the default configuration for the component. A merge updates the core device's component configuration with the keys and values that you specify. The IoT Greengrass Core software applies reset updates before it applies merge updates. For more information, see Update component configurations in the IoT Greengrass V2 Developer Guide.",
+                      "nested_items": [
+                        {
+                          "name": "merge",
+                          "type": "string",
+                          "description": "A serialized JSON string that contains the configuration object to merge to target devices. The core device merges this configuration with the component's existing configuration. If this is the first time a component deploys on a device, the core device merges this configuration with the component's default configuration. This means that the core device keeps it's existing configuration for keys and values that you don't specify in this object. For more information, see Merge configuration updates in the IoT Greengrass V2 Developer Guide.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "reset",
+                          "type": "list",
+                          "description": "The list of configuration nodes to reset to default values on target devices. Use JSON pointers to specify each node to reset. JSON pointers start with a forward slash ( /) and use forward slashes to separate the key for each level in the object. For more information, see the JSON pointer specification and Reset configuration updates in the IoT Greengrass V2 Developer Guide.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "posixUser",
+                          "type": "string",
+                          "description": "The POSIX system user and, optionally, group to use to run this component on Linux core devices. The user, and group if specified, must exist on each Linux core device. Specify the user and group separated by a colon ( :) in the following format: user:group. The group is optional. If you don't specify a group, the IoT Greengrass Core software uses the primary user for the group.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "systemResourceLimits",
+                          "type": "dict",
+                          "description": "The system resource limits to apply to this component's process on the core device. IoT Greengrass currently supports this feature on only Linux core devices.",
+                          "nested_items": [
+                            {
+                              "name": "memory",
+                              "type": "integer",
+                              "description": "The maximum amount of RAM, expressed in kilobytes, that a component's processes can use on the core device.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "cpus",
+                              "type": "float",
+                              "description": "The maximum amount of CPU time that a component's processes can use on the core device. A core device's total CPU time is equivalent to the device's number of CPU cores. For example, on a core device with 4 CPU cores, you can set this value to 2 to limit the component's processes to 50 percent usage of each CPU core. On a device with 1 CPU core, you can set this value to 0.25 to limit the component's processes to 25 percent usage of the CPU. If you set this value to a number greater than the number of CPU cores, the IoT Greengrass Core software doesn't limit the component's CPU usage.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "windowsUser",
+                          "type": "string",
+                          "description": "The Windows user to use to run this component on Windows core devices. The user must exist on each Windows core device, and its name and password must be in the LocalSystem account's Credentials Manager instance.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "deploymentPolicies",
+          "type": "dict",
+          "description": "The deployment policies for the deployment. These policies define how the deployment updates components and handles failure.",
+          "nested_items": [
+            {
+              "name": "failureHandlingPolicy",
+              "type": "string",
+              "description": "The failure handling policy for the configuration deployment. This policy defines what to do if the deployment fails.",
+              "nested_items": []
+            },
+            {
+              "name": "componentUpdatePolicy",
+              "type": "dict",
+              "description": "The component update policy for the configuration deployment. This policy defines when it's safe to deploy the configuration to devices.",
+              "nested_items": [
+                {
+                  "name": "timeoutInSeconds",
+                  "type": "integer",
+                  "description": "The amount of time in seconds that each component on a device has to report that it's safe to update. If the component waits for longer than this timeout, then the deployment proceeds on the device.",
+                  "nested_items": []
+                },
+                {
+                  "name": "action",
+                  "type": "string",
+                  "description": "Whether or not to notify components and wait for components to become safe to update. Choose from the following options:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NOTIFY_COMPONENTS --- The deployment notifies each component before it stops and updates that component. Components can use the SubscribeToComponentUpdates IPC operation to receive these notifications. Then, components can respond with the DeferComponentUpdate IPC operation. For more information, see Create deployments in the IoT Greengrass V2 Developer Guide.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SKIP_NOTIFY_COMPONENTS --- The deployment doesn't notify components or wait for them to be safe to update.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "configurationValidationPolicy",
+              "type": "dict",
+              "description": "The configuration validation policy for the configuration deployment. This policy defines how long each component has to validate its configure updates.",
+              "nested_items": [
+                {
+                  "name": "timeoutInSeconds",
+                  "type": "integer",
+                  "description": "The amount of time in seconds that a component can validate its configuration updates. If the validation time exceeds this timeout, then the deployment proceeds for the device.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "iotJobConfiguration",
+          "type": "dict",
+          "description": "The job configuration for the deployment configuration. The job configuration specifies the rollout, timeout, and stop configurations for the deployment configuration.",
+          "nested_items": [
+            {
+              "name": "jobExecutionsRolloutConfig",
+              "type": "dict",
+              "description": "The rollout configuration for the job. This configuration defines the rate at which the job rolls out to the fleet of target devices.",
+              "nested_items": [
+                {
+                  "name": "exponentialRate",
+                  "type": "dict",
+                  "description": "The exponential rate to increase the job rollout rate.",
+                  "nested_items": [
+                    {
+                      "name": "baseRatePerMinute",
+                      "type": "integer",
+                      "description": "The minimum number of devices that receive a pending job notification, per minute, when the job starts. This parameter defines the initial rollout rate of the job.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "incrementFactor",
+                      "type": "float",
+                      "description": "The exponential factor to increase the rollout rate for the job.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "rateIncreaseCriteria",
+                      "type": "dict",
+                      "description": "The criteria to increase the rollout rate for the job.",
+                      "nested_items": [
+                        {
+                          "name": "numberOfNotifiedThings",
+                          "type": "integer",
+                          "description": "The number of devices to receive the job notification before the rollout rate increases.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "numberOfSucceededThings",
+                          "type": "integer",
+                          "description": "The number of devices to successfully run the configuration job before the rollout rate increases.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "maximumPerMinute",
+                  "type": "integer",
+                  "description": "The maximum number of devices that receive a pending job notification, per minute.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "abortConfig",
+              "type": "dict",
+              "description": "The stop configuration for the job. This configuration defines when and how to stop a job rollout.",
+              "nested_items": [
+                {
+                  "name": "criteriaList",
+                  "type": "list",
+                  "description": "The list of criteria that define when and how to cancel the configuration deployment.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The number of things that receive the deployment exceeds the minNumberOfExecutedThings.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The percentage of failures with type failureType exceeds the thresholdPercentage.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "timeoutConfig",
+              "type": "dict",
+              "description": "The timeout configuration for the job. This configuration defines the amount of time each device has to complete the job.",
+              "nested_items": [
+                {
+                  "name": "inProgressTimeoutInMinutes",
+                  "type": "integer",
+                  "description": "The amount of time, in minutes, that devices have to complete the job. The timer starts when the job status is set to IN_PROGRESS. If the job status doesn't change to a terminal state before the time expires, then the job status is set to TIMED_OUT.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "creationTimestamp",
+          "type": "datetime",
+          "description": "The time at which the deployment was created, expressed in ISO 8601 format.",
+          "nested_items": []
+        },
+        {
+          "name": "isLatestForTarget",
+          "type": "boolean",
+          "description": "Whether or not the deployment is the latest revision for its target.",
+          "nested_items": []
+        },
+        {
+          "name": "parentTargetArn",
+          "type": "string",
+          "description": "The parent deployment's target ARN within a subdeployment.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

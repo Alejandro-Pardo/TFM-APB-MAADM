@@ -1,0 +1,411 @@
+{
+  "method_name": "get_object",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/get_object.html",
+  "description": "Retrieves an object from Amazon S3. In the GetObject request, specify the full key name for the object. General purpose buckets - Both the virtual-hosted-style requests and the path-style requests are supported. For a virtual hosted-style request example, if you have the object photos/2006/February/sample.jpg, specify the object key name as /photos/2006/February/sample.jpg. For a path-style request example, if you have the object photos/2006/February/sample.jpg in the bucket named examplebucket, specify the object key name as /examplebucket/photos/2006/February/sample.jpg. For more information about request types, see HTTP Host Header Bucket Specification in the Amazon S3 User Guide. Directory buckets - Only virtual-hosted-style requests are supported. For a virtual hosted-style request example, if you have the object photos/2006/February/sample.jpg in the bucket named amzn-s3-demo-bucket--usw2-az1--x-s3, specify the object key name as /photos/2006/February/sample.jpg. Also, when you make requests to this API operation, your requests are sent to the Zonal endpoint. These endpoints support virtual-hosted-style requests in the format ``https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name ``. Path-style requests are not supported. For more information about endpoints in Availability Zones, see Regional and Zonal endpoints for directory buckets in Availability Zones in the Amazon S3 User Guide. For more information about endpoints in Local Zones, see Concepts for directory buckets in Local Zones in the Amazon S3 User Guide. If the object you are retrieving is stored in the S3 Glacier Flexible Retrieval storage class, the S3 Glacier Deep Archive storage class, the S3 Intelligent-Tiering Archive Access tier, or the S3 Intelligent-Tiering Deep Archive Access tier, before you can retrieve the object you must first restore a copy using RestoreObject. Otherwise, this operation returns an InvalidObjectState error. For information about restoring archived objects, see Restoring Archived Objects in the Amazon S3 User Guide. Directory buckets - Directory buckets only support EXPRESS_ONEZONE (the S3 Express One Zone storage class) in Availability Zones and ONEZONE_IA (the S3 One Zone-Infrequent Access storage class) in Dedicated Local Zones. Unsupported storage class values won't write a destination object and will respond with the HTTP status code 400 Bad Request. Encryption request headers, like x-amz-server-side-encryption, should not be sent for the GetObject requests, if your object uses server-side encryption with Amazon S3 managed encryption keys (SSE-S3), server-side encryption with Key Management Service (KMS) keys (SSE-KMS), or dual-layer server-side encryption with Amazon Web Services KMS keys (DSSE-KMS). If you include the header in your GetObject requests for the object that uses these types of keys, you'll get an HTTP 400 Bad Request error. Directory buckets - For directory buckets, there are only two supported options for server-side encryption: SSE-S3 and SSE-KMS. SSE-C isn't supported. For more information, see Protecting data with server-side encryption in the Amazon S3 User Guide. There are times when you want to override certain response header values of a GetObject response. For example, you might override the Content-Disposition response header value through your GetObject request. You can override values for a set of response headers. These modified response header values are included only in a successful response, that is, when the HTTP status code 200 OK is returned. The headers you can override using the following query parameters in the request are a subset of the headers that Amazon S3 accepts when you create an object. The response headers that you can override for the GetObject response are Cache-Control, Content-Disposition, Content-Encoding, Content-Language, Content-Type, and Expires. To override values for a set of response headers in the GetObject response, you can use the following query parameters in the request. Directory buckets - The HTTP Host header syntax is Bucket-name.s3express-zone-id.region-code.amazonaws.com. The following operations are related to GetObject:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The bucket name containing the object. Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format bucket-base-name--zone-id--x-s3 (for example, amzn-s3-demo-bucket--usw2-az1--x-s3). For information about bucket naming restrictions, see Directory bucket naming rules in the Amazon S3 User Guide. Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide. Object Lambda access points - When you use this action with an Object Lambda access point, you must direct requests to the Object Lambda access point hostname. The Object Lambda access point hostname takes the form AccessPointName-AccountId.s3-object-lambda.*Region*.amazonaws.com. S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "IfMatch",
+      "type": "string",
+      "required": false,
+      "description": "Return the object only if its entity tag (ETag) is the same as the one specified in this header; otherwise, return a 412 Precondition Failed error. If both of the If-Match and If-Unmodified-Since headers are present in the request as follows: If-Match condition evaluates to true, and; If-Unmodified-Since condition evaluates to false; then, S3 returns 200 OK and the data requested. For more information about conditional requests, see RFC 7232.",
+      "nested_params": []
+    },
+    {
+      "name": "IfModifiedSince",
+      "type": "datetime",
+      "required": false,
+      "description": "Return the object only if it has been modified since the specified time; otherwise, return a 304 Not Modified error. If both of the If-None-Match and If-Modified-Since headers are present in the request as follows: `` If-None-Match`` condition evaluates to false, and; If-Modified-Since condition evaluates to true; then, S3 returns 304 Not Modified status code. For more information about conditional requests, see RFC 7232.",
+      "nested_params": []
+    },
+    {
+      "name": "IfNoneMatch",
+      "type": "string",
+      "required": false,
+      "description": "Return the object only if its entity tag (ETag) is different from the one specified in this header; otherwise, return a 304 Not Modified error. If both of the If-None-Match and If-Modified-Since headers are present in the request as follows: `` If-None-Match`` condition evaluates to false, and; If-Modified-Since condition evaluates to true; then, S3 returns 304 Not Modified HTTP status code. For more information about conditional requests, see RFC 7232.",
+      "nested_params": []
+    },
+    {
+      "name": "IfUnmodifiedSince",
+      "type": "datetime",
+      "required": false,
+      "description": "Return the object only if it has not been modified since the specified time; otherwise, return a 412 Precondition Failed error. If both of the If-Match and If-Unmodified-Since headers are present in the request as follows: If-Match condition evaluates to true, and; If-Unmodified-Since condition evaluates to false; then, S3 returns 200 OK and the data requested. For more information about conditional requests, see RFC 7232.",
+      "nested_params": []
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": true,
+      "description": "Key of the object to get.",
+      "nested_params": []
+    },
+    {
+      "name": "Range",
+      "type": "string",
+      "required": false,
+      "description": "Downloads the specified byte range of an object. For more information about the HTTP Range header, see https://www.rfc-editor.org/rfc/rfc9110.html#name-range.",
+      "nested_params": []
+    },
+    {
+      "name": "ResponseCacheControl",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResponseContentDisposition",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResponseContentEncoding",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResponseContentLanguage",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResponseContentType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResponseExpires",
+      "type": "datetime",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "VersionId",
+      "type": "string",
+      "required": false,
+      "description": "Version ID used to reference a specific version of the object. By default, the GetObject operation returns the current version of an object. To return a different version, use the versionId subresource. For more information about versioning, see PutBucketVersioning.",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the algorithm to use when decrypting the object (for example, AES256). If you encrypt an object by using server-side encryption with customer-provided encryption keys (SSE-C) when you store the object in Amazon S3, then when you GET the object, you must use the following headers: x-amz-server-side-encryption-customer-algorithm x-amz-server-side-encryption-customer-key x-amz-server-side-encryption-customer-key-MD5 For more information about SSE-C, see Server-Side Encryption (Using Customer-Provided Encryption Keys) in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerKey",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the customer-provided encryption key that you originally provided for Amazon S3 to encrypt the data before storing it. This value is used to decrypt the object when recovering it and must match the one used when storing the data. The key must be appropriate for use with the algorithm specified in the x-amz-server-side-encryption-customer-algorithm header. If you encrypt an object by using server-side encryption with customer-provided encryption keys (SSE-C) when you store the object in Amazon S3, then when you GET the object, you must use the following headers: x-amz-server-side-encryption-customer-algorithm x-amz-server-side-encryption-customer-key x-amz-server-side-encryption-customer-key-MD5 For more information about SSE-C, see Server-Side Encryption (Using Customer-Provided Encryption Keys) in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "SSECustomerKeyMD5",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the 128-bit MD5 digest of the customer-provided encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error. If you encrypt an object by using server-side encryption with customer-provided encryption keys (SSE-C) when you store the object in Amazon S3, then when you GET the object, you must use the following headers: x-amz-server-side-encryption-customer-algorithm x-amz-server-side-encryption-customer-key x-amz-server-side-encryption-customer-key-MD5 For more information about SSE-C, see Server-Side Encryption (Using Customer-Provided Encryption Keys) in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "RequestPayer",
+      "type": "string",
+      "required": false,
+      "description": "Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for corresponding charges to copy the object. For information about downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays Buckets in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "PartNumber",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ChecksumMode",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Body",
+          "type": "StreamingBody",
+          "description": "Object data.",
+          "nested_items": []
+        },
+        {
+          "name": "DeleteMarker",
+          "type": "boolean",
+          "description": "Indicates whether the object retrieved was (true) or was not (false) a Delete Marker. If false, this response header does not appear in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "AcceptRanges",
+          "type": "string",
+          "description": "Indicates that a range of bytes was specified in the request.",
+          "nested_items": []
+        },
+        {
+          "name": "Expiration",
+          "type": "string",
+          "description": "If the object expiration is configured (see PutBucketLifecycleConfiguration), the response includes this header. It includes the expiry-date and rule-id key-value pairs providing object expiration information. The value of the rule-id is URL-encoded.",
+          "nested_items": []
+        },
+        {
+          "name": "Restore",
+          "type": "string",
+          "description": "Provides information about object restoration action and expiration time of the restored object copy.",
+          "nested_items": []
+        },
+        {
+          "name": "LastModified",
+          "type": "datetime",
+          "description": "Date and time when the object was last modified.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentLength",
+          "type": "integer",
+          "description": "Size of the body in bytes.",
+          "nested_items": []
+        },
+        {
+          "name": "ETag",
+          "type": "string",
+          "description": "An entity tag (ETag) is an opaque identifier assigned by a web server to a specific version of a resource found at a URL.",
+          "nested_items": []
+        },
+        {
+          "name": "ChecksumCRC32",
+          "type": "string",
+          "description": "The Base64 encoded, 32-bit CRC32 checksum of the object. This checksum is only present if the object was uploaded with the object. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "ChecksumCRC32C",
+          "type": "string",
+          "description": "The Base64 encoded, 32-bit CRC32C checksum of the object. This will only be present if the object was uploaded with the object. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "ChecksumCRC64NVME",
+          "type": "string",
+          "description": "The Base64 encoded, 64-bit CRC64NVME checksum of the object. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "ChecksumSHA1",
+          "type": "string",
+          "description": "The Base64 encoded, 160-bit SHA1 digest of the object. This will only be present if the object was uploaded with the object. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "ChecksumSHA256",
+          "type": "string",
+          "description": "The Base64 encoded, 256-bit SHA256 digest of the object. This will only be present if the object was uploaded with the object. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "ChecksumType",
+          "type": "string",
+          "description": "The checksum type, which determines how part-level checksums are combined to create an object-level checksum for multipart objects. You can use this header response to verify that the checksum type that is received is the same checksum type that was specified in the CreateMultipartUpload request. For more information, see Checking object integrity in the Amazon S3 User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "MissingMeta",
+          "type": "integer",
+          "description": "This is set to the number of metadata entries not returned in the headers that are prefixed with x-amz-meta-. This can happen if you create metadata using an API like SOAP that supports more flexible metadata than the REST API. For example, using SOAP, you can create metadata whose values are not legal HTTP headers.",
+          "nested_items": []
+        },
+        {
+          "name": "VersionId",
+          "type": "string",
+          "description": "Version ID of the object.",
+          "nested_items": []
+        },
+        {
+          "name": "CacheControl",
+          "type": "string",
+          "description": "Specifies caching behavior along the request/reply chain.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentDisposition",
+          "type": "string",
+          "description": "Specifies presentational information for the object.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentEncoding",
+          "type": "string",
+          "description": "Indicates what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentLanguage",
+          "type": "string",
+          "description": "The language the content is in.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentRange",
+          "type": "string",
+          "description": "The portion of the object returned in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "ContentType",
+          "type": "string",
+          "description": "A standard MIME type describing the format of the object data.",
+          "nested_items": []
+        },
+        {
+          "name": "Expires",
+          "type": "datetime",
+          "description": "The date and time at which the object is no longer cacheable.",
+          "nested_items": []
+        },
+        {
+          "name": "ExpiresString",
+          "type": "string",
+          "description": "The raw, unparsed value of the Expires field.",
+          "nested_items": []
+        },
+        {
+          "name": "WebsiteRedirectLocation",
+          "type": "string",
+          "description": "If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL. Amazon S3 stores the value of this header in the object metadata.",
+          "nested_items": []
+        },
+        {
+          "name": "ServerSideEncryption",
+          "type": "string",
+          "description": "The server-side encryption algorithm used when you store this object in Amazon S3 or Amazon FSx.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SSECustomerAlgorithm",
+          "type": "string",
+          "description": "If server-side encryption with a customer-provided encryption key was requested, the response will include this header to confirm the encryption algorithm that's used.",
+          "nested_items": []
+        },
+        {
+          "name": "SSECustomerKeyMD5",
+          "type": "string",
+          "description": "If server-side encryption with a customer-provided encryption key was requested, the response will include this header to provide the round-trip message integrity verification of the customer-provided encryption key.",
+          "nested_items": []
+        },
+        {
+          "name": "SSEKMSKeyId",
+          "type": "string",
+          "description": "If present, indicates the ID of the KMS key that was used for object encryption.",
+          "nested_items": []
+        },
+        {
+          "name": "BucketKeyEnabled",
+          "type": "boolean",
+          "description": "Indicates whether the object uses an S3 Bucket Key for server-side encryption with Key Management Service (KMS) keys (SSE-KMS).",
+          "nested_items": []
+        },
+        {
+          "name": "StorageClass",
+          "type": "string",
+          "description": "Provides storage class information of the object. Amazon S3 returns this header for all objects except for S3 Standard storage class objects.",
+          "nested_items": []
+        },
+        {
+          "name": "RequestCharged",
+          "type": "string",
+          "description": "If present, indicates that the requester was successfully charged for the request. For more information, see Using Requester Pays buckets for storage transfers and usage in the Amazon Simple Storage Service user guide.",
+          "nested_items": []
+        },
+        {
+          "name": "ReplicationStatus",
+          "type": "string",
+          "description": "Amazon S3 can return this if your request involves a bucket that is either a source or destination in a replication rule.",
+          "nested_items": []
+        },
+        {
+          "name": "PartsCount",
+          "type": "integer",
+          "description": "The count of parts this object has. This value is only returned if you specify partNumber in your request and the object was uploaded as a multipart upload.",
+          "nested_items": []
+        },
+        {
+          "name": "TagCount",
+          "type": "integer",
+          "description": "The number of tags, if any, on the object, when you have the relevant permission to read object tags.",
+          "nested_items": []
+        },
+        {
+          "name": "ObjectLockMode",
+          "type": "string",
+          "description": "The Object Lock mode that's currently in place for this object.",
+          "nested_items": []
+        },
+        {
+          "name": "ObjectLockRetainUntilDate",
+          "type": "datetime",
+          "description": "The date and time when this object's Object Lock will expire.",
+          "nested_items": []
+        },
+        {
+          "name": "ObjectLockLegalHoldStatus",
+          "type": "string",
+          "description": "Indicates whether this object has an active legal hold. This field is only returned if you have permission to view an object's legal hold status.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

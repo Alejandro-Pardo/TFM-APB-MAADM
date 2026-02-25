@@ -1,0 +1,286 @@
+{
+  "method_name": "get_metric_data",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/connect/client/get_metric_data.html",
+  "description": "Gets historical metric data from the specified Amazon Connect instance. For a description of each historical metric, see Metrics definitions in the Amazon Connect Administrator Guide.",
+  "parameters": [
+    {
+      "name": "InstanceId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.",
+      "nested_params": []
+    },
+    {
+      "name": "StartTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The timestamp, in UNIX Epoch time format, at which to start the reporting interval for the retrieval of historical metrics data. The time must be specified using a multiple of 5 minutes, such as 10:05, 10:10, 10:15. The start time cannot be earlier than 24 hours before the time of the request. Historical metrics are available only for 24 hours.",
+      "nested_params": []
+    },
+    {
+      "name": "EndTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The timestamp, in UNIX Epoch time format, at which to end the reporting interval for the retrieval of historical metrics data. The time must be specified using an interval of 5 minutes, such as 11:00, 11:05, 11:10, and must be later than the start time timestamp. The time range between the start and end time must be less than 24 hours.",
+      "nested_params": []
+    },
+    {
+      "name": "Filters",
+      "type": "dict",
+      "required": true,
+      "description": "The queues, up to 100, or channels, to use to filter the metrics returned. Metric data is retrieved only for the resources associated with the queues or channels included in the filter. You can include both queue IDs and queue ARNs in the same request. VOICE, CHAT, and TASK channels are supported. RoutingStepExpression is not a valid filter for GetMetricData and we recommend switching to GetMetricDataV2 for more up-to-date features. Queues (list) --- The queues to use to filter the metrics. You should specify at least one queue, and can specify up to 100 queues per request. The GetCurrentMetricsData API in particular requires a queue when you include a Filter in your request. (string) --- Channels (list) --- The channel to use to filter the metrics. (string) --- RoutingProfiles (list) --- A list of up to 100 routing profile IDs or ARNs. (string) --- RoutingStepExpressions (list) --- A list of expressions as a filter, in which an expression is an object of a step in a routing criteria. (string) ---",
+      "nested_params": [
+        {
+          "name": "Queues",
+          "type": "list",
+          "required": false,
+          "description": "The queues to use to filter the metrics. You should specify at least one queue, and can specify up to 100 queues per request. The GetCurrentMetricsData API in particular requires a queue when you include a Filter in your request.",
+          "nested_params": []
+        },
+        {
+          "name": "Channels",
+          "type": "list",
+          "required": false,
+          "description": "The channel to use to filter the metrics.",
+          "nested_params": []
+        },
+        {
+          "name": "RoutingProfiles",
+          "type": "list",
+          "required": false,
+          "description": "A list of up to 100 routing profile IDs or ARNs.",
+          "nested_params": []
+        },
+        {
+          "name": "RoutingStepExpressions",
+          "type": "list",
+          "required": false,
+          "description": "A list of expressions as a filter, in which an expression is an object of a step in a routing criteria.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Groupings",
+      "type": "list",
+      "required": false,
+      "description": "The grouping applied to the metrics returned. For example, when results are grouped by queue, the metrics returned are grouped by queue. The values returned apply to the metrics for each queue rather than aggregated for all queues. If no grouping is specified, a summary of metrics for all queues is returned. RoutingStepExpression is not a valid filter for GetMetricData and we recommend switching to GetMetricDataV2 for more up-to-date features. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "HistoricalMetrics",
+      "type": "list",
+      "required": true,
+      "description": "The metrics to retrieve. Specify the name, unit, and statistic for each metric. The following historical metrics are available. For a description of each metric, see Metrics definition in the Amazon Connect Administrator Guide. Unit: SECONDS Statistic: AVG AFTER_CONTACT_WORK_TIME Unit: SECONDS Statistic: AVG API_CONTACTS_HANDLED Unit: COUNT Statistic: SUM CALLBACK_CONTACTS_HANDLED Unit: COUNT Statistic: SUM CONTACTS_ABANDONED Unit: COUNT Statistic: SUM CONTACTS_AGENT_HUNG_UP_FIRST Unit: COUNT Statistic: SUM CONTACTS_CONSULTED Unit: COUNT Statistic: SUM CONTACTS_HANDLED Unit: COUNT Statistic: SUM CONTACTS_HANDLED_INCOMING Unit: COUNT Statistic: SUM CONTACTS_HANDLED_OUTBOUND Unit: COUNT Statistic: SUM CONTACTS_HOLD_ABANDONS Unit: COUNT Statistic: SUM CONTACTS_MISSED Unit: COUNT Statistic: SUM CONTACTS_QUEUED Unit: COUNT Statistic: SUM CONTACTS_TRANSFERRED_IN Unit: COUNT Statistic: SUM CONTACTS_TRANSFERRED_IN_FROM_QUEUE Unit: COUNT Statistic: SUM CONTACTS_TRANSFERRED_OUT Unit: COUNT Statistic: SUM CONTACTS_TRANSFERRED_OUT_FROM_QUEUE Unit: COUNT Statistic: SUM HANDLE_TIME Unit: SECONDS Statistic: AVG HOLD_TIME Unit: SECONDS Statistic: AVG INTERACTION_AND_HOLD_TIME Unit: SECONDS Statistic: AVG INTERACTION_TIME Unit: SECONDS Statistic: AVG OCCUPANCY Unit: PERCENT Statistic: AVG QUEUE_ANSWER_TIME Unit: SECONDS Statistic: AVG QUEUED_TIME Unit: SECONDS Statistic: MAX SERVICE_LEVEL You can include up to 20 SERVICE_LEVEL metrics in a request. Unit: PERCENT Statistic: AVG Threshold: For ThresholdValue, enter any whole number from 1 to 604800 (inclusive), in seconds. For Comparison, you must enter LT (for 'Less than'). (dict) --- Contains information about a historical metric. For a description of each metric, see Metrics definitions in the Amazon Connect Administrator Guide. Name (string) --- The name of the metric. Threshold (dict) --- The threshold for the metric, used with service level metrics. Comparison (string) --- The type of comparison. Only 'less than' (LT) comparisons are supported. ThresholdValue (float) --- The threshold value to compare. Statistic (string) --- The statistic for the metric. Unit (string) --- The unit for the metric.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the metric.",
+          "nested_params": []
+        },
+        {
+          "name": "Threshold",
+          "type": "dict",
+          "required": false,
+          "description": "The threshold for the metric, used with service level metrics.",
+          "nested_params": [
+            {
+              "name": "Comparison",
+              "type": "string",
+              "required": false,
+              "description": "The type of comparison. Only 'less than' (LT) comparisons are supported.",
+              "nested_params": []
+            },
+            {
+              "name": "ThresholdValue",
+              "type": "float",
+              "required": false,
+              "description": "The threshold value to compare.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Statistic",
+          "type": "string",
+          "required": false,
+          "description": "The statistic for the metric.",
+          "nested_params": []
+        },
+        {
+          "name": "Unit",
+          "type": "string",
+          "required": false,
+          "description": "The unit for the metric.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If there are additional results, this is the token for the next set of results.",
+          "nested_items": []
+        },
+        {
+          "name": "MetricResults",
+          "type": "list",
+          "description": "Information about the historical metrics.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Dimensions",
+                  "type": "dict",
+                  "description": "The dimension for the metrics.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Id",
+                          "type": "string",
+                          "description": "The identifier of the queue.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Arn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the queue.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Channel",
+                      "type": "string",
+                      "description": "The channel used for grouping and filters.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RoutingProfile",
+                      "type": "dict",
+                      "description": "Information about the routing profile assigned to the user.",
+                      "nested_items": [
+                        {
+                          "name": "Id",
+                          "type": "string",
+                          "description": "The identifier of the routing profile.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Arn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the routing profile.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "RoutingStepExpression",
+                      "type": "string",
+                      "description": "The expression of a step in a routing criteria.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Collections",
+                  "type": "list",
+                  "description": "The set of metrics.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the metric.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Threshold",
+                              "type": "dict",
+                              "description": "The threshold for the metric, used with service level metrics.",
+                              "nested_items": [
+                                {
+                                  "name": "Comparison",
+                                  "type": "string",
+                                  "description": "The type of comparison. Only 'less than' (LT) comparisons are supported.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ThresholdValue",
+                                  "type": "float",
+                                  "description": "The threshold value to compare.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Statistic",
+                              "type": "string",
+                              "description": "The statistic for the metric.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Unit",
+                              "type": "string",
+                              "description": "The unit for the metric.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Value",
+                          "type": "float",
+                          "description": "The value of the metric.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

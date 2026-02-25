@@ -1,0 +1,115 @@
+{
+  "method_name": "update_recovery_point_lifecycle",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/backup/client/update_recovery_point_lifecycle.html",
+  "description": "Sets the transition lifecycle of a recovery point. The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define. Resource types that can transition to cold storage are listed in the Feature availability by resource table. Backup ignores this expression for other resource types. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the 'retention' setting must be 90 days greater than the 'transition to cold after days' setting. The 'transition to cold after days' setting cannot be changed after a backup has been transitioned to cold. This operation does not support continuous backups.",
+  "parameters": [
+    {
+      "name": "BackupVaultName",
+      "type": "string",
+      "required": true,
+      "description": "The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.",
+      "nested_params": []
+    },
+    {
+      "name": "RecoveryPointArn",
+      "type": "string",
+      "required": true,
+      "description": "An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.",
+      "nested_params": []
+    },
+    {
+      "name": "Lifecycle",
+      "type": "dict",
+      "required": false,
+      "description": "The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define. Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the 'retention' setting must be 90 days greater than the 'transition to cold after days' setting. The 'transition to cold after days' setting cannot be changed after a backup has been transitioned to cold. MoveToColdStorageAfterDays (integer) --- The number of days after creation that a recovery point is moved to cold storage. DeleteAfterDays (integer) --- The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays. OptInToArchiveForSupportedResources (boolean) --- If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+      "nested_params": [
+        {
+          "name": "MoveToColdStorageAfterDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days after creation that a recovery point is moved to cold storage.",
+          "nested_params": []
+        },
+        {
+          "name": "DeleteAfterDays",
+          "type": "integer",
+          "required": false,
+          "description": "The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays.",
+          "nested_params": []
+        },
+        {
+          "name": "OptInToArchiveForSupportedResources",
+          "type": "boolean",
+          "required": false,
+          "description": "If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "BackupVaultArn",
+          "type": "string",
+          "description": "An ARN that uniquely identifies a backup vault; for example, arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault.",
+          "nested_items": []
+        },
+        {
+          "name": "RecoveryPointArn",
+          "type": "string",
+          "description": "An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45.",
+          "nested_items": []
+        },
+        {
+          "name": "Lifecycle",
+          "type": "dict",
+          "description": "The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define.",
+          "nested_items": [
+            {
+              "name": "MoveToColdStorageAfterDays",
+              "type": "integer",
+              "description": "The number of days after creation that a recovery point is moved to cold storage.",
+              "nested_items": []
+            },
+            {
+              "name": "DeleteAfterDays",
+              "type": "integer",
+              "description": "The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in MoveToColdStorageAfterDays.",
+              "nested_items": []
+            },
+            {
+              "name": "OptInToArchiveForSupportedResources",
+              "type": "boolean",
+              "description": "If the value is true, your backup plan transitions supported resources to archive (cold) storage tier in accordance with your lifecycle settings.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "CalculatedLifecycle",
+          "type": "dict",
+          "description": "A CalculatedLifecycle object containing DeleteAt and MoveToColdStorageAt timestamps.",
+          "nested_items": [
+            {
+              "name": "MoveToColdStorageAt",
+              "type": "datetime",
+              "description": "A timestamp that specifies when to transition a recovery point to cold storage.",
+              "nested_items": []
+            },
+            {
+              "name": "DeleteAt",
+              "type": "datetime",
+              "description": "A timestamp that specifies when to delete a recovery point.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

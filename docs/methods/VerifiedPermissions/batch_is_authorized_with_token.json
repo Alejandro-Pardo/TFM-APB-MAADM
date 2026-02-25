@@ -1,0 +1,569 @@
+{
+  "method_name": "batch_is_authorized_with_token",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/verifiedpermissions/client/batch_is_authorized_with_token.html",
+  "description": "Makes a series of decisions about multiple authorization requests for one token. The principal in this request comes from an external identity source in the form of an identity or access token, formatted as a JSON web token (JWT). The information in the parameters can also define additional context that Verified Permissions can include in the evaluations. The request is evaluated against all policies in the specified policy store that match the entities that you provide in the entities declaration and in the token. The result of the decisions is a series of Allow or Deny responses, along with the IDs of the policies that produced each decision. The entities of a BatchIsAuthorizedWithToken API request can contain up to 100 resources and up to 99 user groups. The requests of a BatchIsAuthorizedWithToken API request can contain up to 30 requests.",
+  "parameters": [
+    {
+      "name": "policyStoreId",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the ID of the policy store. Policies in this policy store will be used to make an authorization decision for the input.",
+      "nested_params": []
+    },
+    {
+      "name": "identityToken",
+      "type": "string",
+      "required": false,
+      "description": "Specifies an identity (ID) token for the principal that you want to authorize in each request. This token is provided to you by the identity provider (IdP) associated with the specified identity source. You must specify either an accessToken, an identityToken, or both. Must be an ID token. Verified Permissions returns an error if the token_use claim in the submitted token isn't id.",
+      "nested_params": []
+    },
+    {
+      "name": "accessToken",
+      "type": "string",
+      "required": false,
+      "description": "Specifies an access token for the principal that you want to authorize in each request. This token is provided to you by the identity provider (IdP) associated with the specified identity source. You must specify either an accessToken, an identityToken, or both. Must be an access token. Verified Permissions returns an error if the token_use claim in the submitted token isn't access.",
+      "nested_params": []
+    },
+    {
+      "name": "entities",
+      "type": "dict",
+      "required": true,
+      "description": "(Optional) Specifies the list of resources and their associated attributes that Verified Permissions can examine when evaluating the policies. These additional entities and their attributes can be referenced and checked by conditional elements in the policies in the specified policy store. entityList (list) --- An array of entities that are needed to successfully evaluate an authorization request. Each entity in this array must include an identifier for the entity, the attributes of the entity, and a list of any parent entities. (dict) --- Contains information about an entity that can be referenced in a Cedar policy. This data type is used as one of the fields in the EntitiesDefinition structure. { \"identifier\": { \"entityType\": \"Photo\", \"entityId\": \"VacationPhoto94.jpg\" }, \"attributes\": {}, \"parents\": [ { \"entityType\": \"Album\", \"entityId\": \"alice_folder\" } ] } The identifier of the entity. The type of an entity. Example: \"entityType\":\"typeName\" The identifier of an entity. \"entityId\":\"identifier\" attributes (dict) --- A list of attributes for the entity. (string) --- (dict) --- The value of an attribute. Contains information about the runtime context for a request for which an authorization decision is made. This data type is used as a member of the ContextDefinition structure which is uses as a request parameter for the IsAuthorized, BatchIsAuthorized, and IsAuthorizedWithToken operations. boolean (boolean) --- An attribute value of Boolean type. Example: {\"boolean\": true} entityIdentifier (dict) --- An attribute value of type EntityIdentifier. Example: \"entityIdentifier\": { \"entityId\": \"<id>\", \"entityType\": \"<entity type>\"} The type of an entity. \"entityId\":\"identifier\" long (integer) --- An attribute value of Long type. Example: {\"long\": 0} string (string) --- An attribute value of String type. Example: {\"string\": \"abc\"} set (list) --- An attribute value of Set type. Example: {\"set\": [ {} ] } (dict) --- The value of an attribute. record (dict) --- An attribute value of Record type. Example: {\"record\": { \"keyName\": {} } } (string) --- (dict) --- The value of an attribute. ipaddr (string) --- An attribute value of ipaddr type. Example: {\"ip\": \"192.168.1.100\"} decimal (string) --- An attribute value of decimal type. Example: {\"decimal\": \"1.1\"} parents (list) --- The parent entities in the hierarchy that contains the entity. A principal or resource entity can be defined with at most 99 transitive parents per authorization request. A transitive parent is an entity in the hierarchy of entities including all direct parents, and parents of parents. For example, a user can be a member of 91 groups if one of those groups is a member of eight groups, for a total of 100: one entity, 91 entity parents, and eight parents of parents. (dict) --- Contains the identifier of an entity, including its ID and type. This data type is used as a request parameter for IsAuthorized operation, and as a response parameter for the CreatePolicy, GetPolicy, and UpdatePolicy operations. Example: {\"entityId\":\"string\",\"entityType\":\"string\"} The type of an entity. \"entityId\":\"identifier\" cedarJson (string) --- A Cedar JSON string representation of the entities needed to successfully evaluate an authorization request. Example: {\"cedarJson\": \"[{\\\"uid\\\":{\\\"type\\\":\\\"Photo\\\",\\\"id\\\":\\\"VacationPhoto94.jpg\\\"},\\\"attrs\\\":{\\\"accessLevel\\\":\\\"public\\\"},\\\"parents\\\":[]}]\"}",
+      "nested_params": [
+        {
+          "name": "entityList",
+          "type": "list",
+          "required": false,
+          "description": "An array of entities that are needed to successfully evaluate an authorization request. Each entity in this array must include an identifier for the entity, the attributes of the entity, and a list of any parent entities.",
+          "nested_params": [
+            {
+              "name": "identifier",
+              "type": "dict",
+              "required": false,
+              "description": "The identifier of the entity.",
+              "nested_params": [
+                {
+                  "name": "entityType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of an entity. Example: \"entityType\":\"typeName\"",
+                  "nested_params": []
+                },
+                {
+                  "name": "entityId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of an entity. \"entityId\":\"identifier\"",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "attributes",
+              "type": "dict",
+              "required": false,
+              "description": "A list of attributes for the entity.",
+              "nested_params": [
+                {
+                  "name": "boolean",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "An attribute value of Boolean type. Example: {\"boolean\": true}",
+                  "nested_params": []
+                },
+                {
+                  "name": "entityIdentifier",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An attribute value of type EntityIdentifier. Example: \"entityIdentifier\": { \"entityId\": \"<id>\", \"entityType\": \"<entity type>\"}",
+                  "nested_params": [
+                    {
+                      "name": "entityType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The type of an entity. Example: \"entityType\":\"typeName\"",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "entityId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of an entity. \"entityId\":\"identifier\"",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "long",
+                  "type": "integer",
+                  "required": false,
+                  "description": "An attribute value of Long type. Example: {\"long\": 0}",
+                  "nested_params": []
+                },
+                {
+                  "name": "string",
+                  "type": "string",
+                  "required": false,
+                  "description": "An attribute value of String type. Example: {\"string\": \"abc\"}",
+                  "nested_params": []
+                },
+                {
+                  "name": "set",
+                  "type": "list",
+                  "required": false,
+                  "description": "An attribute value of Set type. Example: {\"set\": [ {} ] }",
+                  "nested_params": []
+                },
+                {
+                  "name": "record",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An attribute value of Record type. Example: {\"record\": { \"keyName\": {} } }",
+                  "nested_params": []
+                },
+                {
+                  "name": "ipaddr",
+                  "type": "string",
+                  "required": false,
+                  "description": "An attribute value of ipaddr type. Example: {\"ip\": \"192.168.1.100\"}",
+                  "nested_params": []
+                },
+                {
+                  "name": "decimal",
+                  "type": "string",
+                  "required": false,
+                  "description": "An attribute value of decimal type. Example: {\"decimal\": \"1.1\"}",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "parents",
+              "type": "list",
+              "required": false,
+              "description": "The parent entities in the hierarchy that contains the entity. A principal or resource entity can be defined with at most 99 transitive parents per authorization request. A transitive parent is an entity in the hierarchy of entities including all direct parents, and parents of parents. For example, a user can be a member of 91 groups if one of those groups is a member of eight groups, for a total of 100: one entity, 91 entity parents, and eight parents of parents.",
+              "nested_params": [
+                {
+                  "name": "entityType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of an entity. Example: \"entityType\":\"typeName\"",
+                  "nested_params": []
+                },
+                {
+                  "name": "entityId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of an entity. \"entityId\":\"identifier\"",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "cedarJson",
+          "type": "string",
+          "required": false,
+          "description": "A Cedar JSON string representation of the entities needed to successfully evaluate an authorization request. Example: {\"cedarJson\": \"[{\\\"uid\\\":{\\\"type\\\":\\\"Photo\\\",\\\"id\\\":\\\"VacationPhoto94.jpg\\\"},\\\"attrs\\\":{\\\"accessLevel\\\":\\\"public\\\"},\\\"parents\\\":[]}]\"}",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "requests",
+      "type": "list",
+      "required": true,
+      "description": "An array of up to 30 requests that you want Verified Permissions to evaluate. (dict) --- An authorization request that you include in a BatchIsAuthorizedWithToken API request. action (dict) --- Specifies the requested action to be authorized. For example, PhotoFlash::ReadPhoto. The type of an action. The ID of an action. resource (dict) --- Specifies the resource that you want an authorization decision for. For example, PhotoFlash::Photo. The type of an entity. Example: \"entityType\":\"typeName\" The identifier of an entity. \"entityId\":\"identifier\" context (dict) --- Specifies additional context that can be used to make more granular authorization decisions. contextMap (dict) --- An list of attributes that are needed to successfully evaluate an authorization request. Each attribute in this array must include a map of a data type and its value. Example: \"contextMap\":{\"<KeyName1>\":{\"boolean\":true},\"<KeyName2>\":{\"long\":1234}} (string) --- (dict) --- The value of an attribute. Contains information about the runtime context for a request for which an authorization decision is made. This data type is used as a member of the ContextDefinition structure which is uses as a request parameter for the IsAuthorized, BatchIsAuthorized, and IsAuthorizedWithToken operations. boolean (boolean) --- An attribute value of Boolean type. Example: {\"boolean\": true} entityIdentifier (dict) --- An attribute value of type EntityIdentifier. Example: \"entityIdentifier\": { \"entityId\": \"<id>\", \"entityType\": \"<entity type>\"} The type of an entity. \"entityId\":\"identifier\" long (integer) --- An attribute value of Long type. Example: {\"long\": 0} string (string) --- An attribute value of String type. Example: {\"string\": \"abc\"} set (list) --- An attribute value of Set type. Example: {\"set\": [ {} ] } (dict) --- The value of an attribute. record (dict) --- An attribute value of Record type. Example: {\"record\": { \"keyName\": {} } } (string) --- (dict) --- The value of an attribute. ipaddr (string) --- An attribute value of ipaddr type. Example: {\"ip\": \"192.168.1.100\"} decimal (string) --- An attribute value of decimal type. Example: {\"decimal\": \"1.1\"} cedarJson (string) --- A Cedar JSON string representation of the context needed to successfully evaluate an authorization request. Example: {\"cedarJson\":\"{\\\"<KeyName1>\\\": true, \\\"<KeyName2>\\\": 1234}\" }",
+      "nested_params": [
+        {
+          "name": "action",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the requested action to be authorized. For example, PhotoFlash::ReadPhoto.",
+          "nested_params": [
+            {
+              "name": "actionType",
+              "type": "string",
+              "required": false,
+              "description": "The type of an action.",
+              "nested_params": []
+            },
+            {
+              "name": "actionId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of an action.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "resource",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the resource that you want an authorization decision for. For example, PhotoFlash::Photo.",
+          "nested_params": [
+            {
+              "name": "entityType",
+              "type": "string",
+              "required": false,
+              "description": "The type of an entity. Example: \"entityType\":\"typeName\"",
+              "nested_params": []
+            },
+            {
+              "name": "entityId",
+              "type": "string",
+              "required": false,
+              "description": "The identifier of an entity. \"entityId\":\"identifier\"",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "context",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies additional context that can be used to make more granular authorization decisions.",
+          "nested_params": [
+            {
+              "name": "contextMap",
+              "type": "dict",
+              "required": false,
+              "description": "An list of attributes that are needed to successfully evaluate an authorization request. Each attribute in this array must include a map of a data type and its value. Example: \"contextMap\":{\"<KeyName1>\":{\"boolean\":true},\"<KeyName2>\":{\"long\":1234}}",
+              "nested_params": [
+                {
+                  "name": "boolean",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "An attribute value of Boolean type. Example: {\"boolean\": true}",
+                  "nested_params": []
+                },
+                {
+                  "name": "entityIdentifier",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An attribute value of type EntityIdentifier. Example: \"entityIdentifier\": { \"entityId\": \"<id>\", \"entityType\": \"<entity type>\"}",
+                  "nested_params": [
+                    {
+                      "name": "entityType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The type of an entity. Example: \"entityType\":\"typeName\"",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "entityId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of an entity. \"entityId\":\"identifier\"",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "long",
+                  "type": "integer",
+                  "required": false,
+                  "description": "An attribute value of Long type. Example: {\"long\": 0}",
+                  "nested_params": []
+                },
+                {
+                  "name": "string",
+                  "type": "string",
+                  "required": false,
+                  "description": "An attribute value of String type. Example: {\"string\": \"abc\"}",
+                  "nested_params": []
+                },
+                {
+                  "name": "set",
+                  "type": "list",
+                  "required": false,
+                  "description": "An attribute value of Set type. Example: {\"set\": [ {} ] }",
+                  "nested_params": []
+                },
+                {
+                  "name": "record",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An attribute value of Record type. Example: {\"record\": { \"keyName\": {} } }",
+                  "nested_params": []
+                },
+                {
+                  "name": "ipaddr",
+                  "type": "string",
+                  "required": false,
+                  "description": "An attribute value of ipaddr type. Example: {\"ip\": \"192.168.1.100\"}",
+                  "nested_params": []
+                },
+                {
+                  "name": "decimal",
+                  "type": "string",
+                  "required": false,
+                  "description": "An attribute value of decimal type. Example: {\"decimal\": \"1.1\"}",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cedarJson",
+              "type": "string",
+              "required": false,
+              "description": "A Cedar JSON string representation of the context needed to successfully evaluate an authorization request. Example: {\"cedarJson\":\"{\\\"<KeyName1>\\\": true, \\\"<KeyName2>\\\": 1234}\" }",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "principal",
+          "type": "dict",
+          "description": "The identifier of the principal in the ID or access token.",
+          "nested_items": [
+            {
+              "name": "entityType",
+              "type": "string",
+              "description": "The type of an entity.",
+              "nested_items": []
+            },
+            {
+              "name": "entityId",
+              "type": "string",
+              "description": "The identifier of an entity.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "results",
+          "type": "list",
+          "description": "A series of Allow or Deny decisions for each request, and the policies that produced them. These results are returned in the order they were requested.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "actionType",
+                          "type": "string",
+                          "description": "The type of an action.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "actionId",
+                          "type": "string",
+                          "description": "The ID of an action.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "entityType",
+                          "type": "string",
+                          "description": "The type of an entity.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "entityId",
+                          "type": "string",
+                          "description": "The identifier of an entity.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "contextMap",
+                          "type": "dict",
+                          "description": "An list of attributes that are needed to successfully evaluate an authorization request. Each attribute in this array must include a map of a data type and its value.",
+                          "nested_items": [
+                            {
+                              "name": "boolean",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "boolean",
+                                      "type": "boolean",
+                                      "description": "An attribute value of Boolean type.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "entityIdentifier",
+                                      "type": "dict",
+                                      "description": "An attribute value of type EntityIdentifier.",
+                                      "nested_items": [
+                                        {
+                                          "name": "entityType",
+                                          "type": "string",
+                                          "description": "The type of an entity.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "entityId",
+                                          "type": "string",
+                                          "description": "The identifier of an entity.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "long",
+                                      "type": "integer",
+                                      "description": "An attribute value of Long type.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "string",
+                                      "type": "string",
+                                      "description": "An attribute value of String type.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "set",
+                                      "type": "list",
+                                      "description": "An attribute value of Set type.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "string",
+                                          "description": "(string) ---",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "ipaddr",
+                                      "type": "string",
+                                      "description": "An attribute value of ipaddr type.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "decimal",
+                                      "type": "string",
+                                      "description": "An attribute value of decimal type.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "cedarJson",
+                          "type": "string",
+                          "description": "A Cedar JSON string representation of the context needed to successfully evaluate an authorization request.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "decision",
+                  "type": "string",
+                  "description": "An authorization decision that indicates if the authorization request should be allowed or denied.",
+                  "nested_items": []
+                },
+                {
+                  "name": "determiningPolicies",
+                  "type": "list",
+                  "description": "The list of determining policies used to make the authorization decision. For example, if there are two matching policies, where one is a forbid and the other is a permit, then the forbid policy will be the determining policy. In the case of multiple matching permit policies then there would be multiple determining policies. In the case that no policies match, and hence the response is DENY, there would be no determining policies.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "policyId",
+                          "type": "string",
+                          "description": "The Id of a policy that determined to an authorization decision.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "errors",
+                  "type": "list",
+                  "description": "Errors that occurred while making an authorization decision. For example, a policy might reference an entity or attribute that doesn't exist in the request.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "errorDescription",
+                          "type": "string",
+                          "description": "The error description.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

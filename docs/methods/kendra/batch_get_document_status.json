@@ -1,0 +1,121 @@
+{
+  "method_name": "batch_get_document_status",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kendra/client/batch_get_document_status.html",
+  "description": "Returns the indexing status for one or more documents submitted with the BatchPutDocument API. When you use the BatchPutDocument API, documents are indexed asynchronously. You can use the BatchGetDocumentStatus API to get the current status of a list of documents so that you can determine if they have been successfully indexed. You can also use the BatchGetDocumentStatus API to check the status of the BatchDeleteDocument API. When a document is deleted from the index, Amazon Kendra returns NOT_FOUND as the status.",
+  "parameters": [
+    {
+      "name": "IndexId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the index to add documents to. The index ID is returned by the CreateIndex API.",
+      "nested_params": []
+    },
+    {
+      "name": "DocumentInfoList",
+      "type": "list",
+      "required": true,
+      "description": "A list of DocumentInfo objects that identify the documents for which to get the status. You identify the documents by their document ID and optional attributes. (dict) --- Identifies a document for which to retrieve status information The identifier of the document. Attributes (list) --- Attributes that identify a specific version of a document to check. The only valid attributes are: version datasourceId jobExecutionId The attributes follow these rules: dataSourceId and jobExecutionId must be used together. version is ignored if dataSourceId and jobExecutionId are not provided. If dataSourceId and jobExecutionId are provided, but version is not, the version defaults to '0'. (dict) --- A document attribute or metadata field. To create custom document attributes, see Custom attributes. The identifier for the attribute. The value of the attribute. StringValue (string) --- A string, such as 'department'. StringListValue (list) --- A list of strings. The default maximum length or number of strings is 10. (string) --- LongValue (integer) --- A long integer value. DateValue (datetime) --- A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+      "nested_params": [
+        {
+          "name": "DocumentId",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the document.",
+          "nested_params": []
+        },
+        {
+          "name": "Attributes",
+          "type": "list",
+          "required": false,
+          "description": "Attributes that identify a specific version of a document to check. The only valid attributes are:",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Errors",
+          "type": "list",
+          "description": "A list of documents that Amazon Kendra couldn't get the status for. The list includes the ID of the document and the reason that the status couldn't be found.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "DocumentId",
+                  "type": "string",
+                  "description": "The identifier of the document whose status could not be retrieved.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DataSourceId",
+                  "type": "string",
+                  "description": "The identifier of the data source connector that the failed document belongs to.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "Indicates the source of the error.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorMessage",
+                  "type": "string",
+                  "description": "States that the API could not get the status of a document. This could be because the request is not valid or there is a system error.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DocumentStatusList",
+          "type": "list",
+          "description": "The status of documents. The status indicates if the document is waiting to be indexed, is in the process of indexing, has completed indexing, or failed indexing. If a document failed indexing, the status provides the reason why.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "DocumentId",
+                  "type": "string",
+                  "description": "The identifier of the document.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DocumentStatus",
+                  "type": "string",
+                  "description": "The current status of a document.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FailureCode",
+                  "type": "string",
+                  "description": "Indicates the source of the error.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FailureReason",
+                  "type": "string",
+                  "description": "Provides detailed information about why the document couldn't be indexed. Use this information to correct the error before you resubmit the document for indexing.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

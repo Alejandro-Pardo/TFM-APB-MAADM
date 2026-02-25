@@ -1,0 +1,164 @@
+{
+  "method_name": "list_executions",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transfer/client/list_executions.html",
+  "description": "Lists all in-progress executions for the specified workflow.",
+  "parameters": [
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "ListExecutions returns the NextToken parameter in the output. You can then pass the NextToken parameter in a subsequent command to continue listing additional executions. This is useful for pagination, for instance. If you have 100 executions for a workflow, you might only want to list first 10. If so, call the API by specifying the max-results: aws transfer list-executions --max-results 10 This returns details for the first 10 executions, as well as the pointer ( NextToken) to the eleventh execution. You can now call the API again, supplying the NextToken value you received: aws transfer list-executions --max-results 10 --next-token $somePointerReturnedFromPreviousListResult This call returns the next 10 executions, the 11th through the 20th. You can then repeat the call until the details for all 100 executions have been returned.",
+      "nested_params": []
+    },
+    {
+      "name": "WorkflowId",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the workflow.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "ListExecutions returns the NextToken parameter in the output. You can then pass the NextToken parameter in a subsequent command to continue listing additional executions.",
+          "nested_items": []
+        },
+        {
+          "name": "WorkflowId",
+          "type": "string",
+          "description": "A unique identifier for the workflow.",
+          "nested_items": []
+        },
+        {
+          "name": "Executions",
+          "type": "list",
+          "description": "Returns the details for each execution, in a ListedExecution array.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ExecutionId",
+                  "type": "string",
+                  "description": "A unique identifier for the execution of a workflow.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InitialFileLocation",
+                  "type": "dict",
+                  "description": "A structure that describes the Amazon S3 or EFS file location. This is the file location when the execution begins: if the file is being copied, this is the initial (as opposed to destination) file location.",
+                  "nested_items": [
+                    {
+                      "name": "S3FileLocation",
+                      "type": "dict",
+                      "description": "Specifies the S3 details for the file being used, such as bucket, ETag, and so forth.",
+                      "nested_items": [
+                        {
+                          "name": "Bucket",
+                          "type": "string",
+                          "description": "Specifies the S3 bucket that contains the file being used.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Key",
+                          "type": "string",
+                          "description": "The name assigned to the file when it was created in Amazon S3. You use the object key to retrieve the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "VersionId",
+                          "type": "string",
+                          "description": "Specifies the file version.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Etag",
+                          "type": "string",
+                          "description": "The entity tag is a hash of the object. The ETag reflects changes only to the contents of an object, not its metadata.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "EfsFileLocation",
+                      "type": "dict",
+                      "description": "Specifies the Amazon EFS identifier and the path for the file being used.",
+                      "nested_items": [
+                        {
+                          "name": "FileSystemId",
+                          "type": "string",
+                          "description": "The identifier of the file system, assigned by Amazon EFS.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Path",
+                          "type": "string",
+                          "description": "The pathname for the folder being used by a workflow.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ServiceMetadata",
+                  "type": "dict",
+                  "description": "A container object for the session details that are associated with a workflow.",
+                  "nested_items": [
+                    {
+                      "name": "UserDetails",
+                      "type": "dict",
+                      "description": "The Server ID ( ServerId), Session ID ( SessionId) and user ( UserName) make up the UserDetails.",
+                      "nested_items": [
+                        {
+                          "name": "UserName",
+                          "type": "string",
+                          "description": "A unique string that identifies a Transfer Family user associated with a server.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ServerId",
+                          "type": "string",
+                          "description": "The system-assigned unique identifier for a Transfer server instance.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "SessionId",
+                          "type": "string",
+                          "description": "The system-assigned unique identifier for a session that corresponds to the workflow.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The status is one of the execution. Can be in progress, completed, exception encountered, or handling the exception.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

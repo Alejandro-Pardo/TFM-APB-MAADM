@@ -1,0 +1,205 @@
+{
+  "method_name": "start_document_analysis",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract/client/start_document_analysis.html",
+  "description": "Starts the asynchronous analysis of an input document for relationships between detected items such as key-value pairs, tables, and selection elements. StartDocumentAnalysis can analyze text in documents that are in JPEG, PNG, TIFF, and PDF format. The documents are stored in an Amazon S3 bucket. Use  DocumentLocation to specify the bucket name and file name of the document. StartDocumentAnalysis returns a job identifier ( JobId) that you use to get the results of the operation. When text analysis is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you specify in NotificationChannel. To get the results of the text analysis operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If so, call  GetDocumentAnalysis, and pass the job identifier ( JobId) from the initial call to StartDocumentAnalysis. For more information, see Document Text Analysis.",
+  "parameters": [
+    {
+      "name": "DocumentLocation",
+      "type": "dict",
+      "required": true,
+      "description": "The location of the document to be processed. S3Object (dict) --- The Amazon S3 bucket that contains the input document. Bucket (string) --- The name of the S3 bucket. Note that the # character is not valid in the file name. Name (string) --- The file name of the input document. Image files may be in PDF, TIFF, JPEG, or PNG format. Version (string) --- If the bucket has versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon S3 bucket that contains the input document.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The name of the S3 bucket. Note that the # character is not valid in the file name.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The file name of the input document. Image files may be in PDF, TIFF, JPEG, or PNG format.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket has versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FeatureTypes",
+      "type": "list",
+      "required": true,
+      "description": "A list of the types of analysis to perform. Add TABLES to the list to return information about the tables that are detected in the input document. Add FORMS to return detected form data. To perform both types of analysis, add TABLES and FORMS to FeatureTypes. All lines and words detected in the document are included in the response (including text that isn't related to the value of FeatureTypes). (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ClientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "JobTag",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NotificationChannel",
+      "type": "dict",
+      "required": true,
+      "description": "The Amazon SNS topic ARN that you want Amazon Textract to publish the completion status of the operation to. The Amazon SNS topic that Amazon Textract posts the completion status to. The Amazon Resource Name (ARN) of an IAM role that gives Amazon Textract publishing permissions to the Amazon SNS topic.",
+      "nested_params": [
+        {
+          "name": "SNSTopicArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon SNS topic that Amazon Textract posts the completion status to.",
+          "nested_params": []
+        },
+        {
+          "name": "RoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of an IAM role that gives Amazon Textract publishing permissions to the Amazon SNS topic.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OutputConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Sets if the output will go to a customer defined bucket. By default, Amazon Textract will save the results internally to be accessed by the GetDocumentAnalysis operation. The name of the bucket your output will go to. S3Prefix (string) --- The prefix of the object key that the output will be saved to. When not enabled, the prefix will be 'textract_output'.",
+      "nested_params": [
+        {
+          "name": "S3Bucket",
+          "type": "string",
+          "required": false,
+          "description": "The name of the bucket your output will go to.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Prefix",
+          "type": "string",
+          "required": false,
+          "description": "The prefix of the object key that the output will be saved to. When not enabled, the prefix will be 'textract_output'.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "KMSKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "QueriesConfig",
+      "type": "dict",
+      "required": true,
+      "description": "(dict) --- Each query contains the question you want to ask in the Text and the alias you want to associate. Question that Amazon Textract will apply to the document. An example would be 'What is the customer's SSN?' Alias (string) --- Alias attached to the query, for ease of location. Pages (list) --- Pages is a parameter that the user inputs to specify which pages to apply a query to. The following is a list of rules for using this parameter. If a page is not specified, it is set to [\"1\"] by default. The following characters are allowed in the parameter's string: 0 1 2 3 4 5 6 7 8 9 - *. No whitespace is allowed. When using * to indicate all pages, it must be the only element in the list. You can use page intervals, such as ['1-3', '1-1', '4-*']. Where * indicates last page of document. Specified pages must be greater than 0 and less than or equal to the number of pages in the document. (string) ---",
+      "nested_params": [
+        {
+          "name": "Queries",
+          "type": "list",
+          "required": false,
+          "description": "",
+          "nested_params": [
+            {
+              "name": "Text",
+              "type": "string",
+              "required": false,
+              "description": "Question that Amazon Textract will apply to the document. An example would be 'What is the customer's SSN?'",
+              "nested_params": []
+            },
+            {
+              "name": "Alias",
+              "type": "string",
+              "required": false,
+              "description": "Alias attached to the query, for ease of location.",
+              "nested_params": []
+            },
+            {
+              "name": "Pages",
+              "type": "list",
+              "required": false,
+              "description": "Pages is a parameter that the user inputs to specify which pages to apply a query to. The following is a list of rules for using this parameter.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AdaptersConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the adapter to be used when analyzing a document. A list of adapters to be used when analyzing the specified document. (dict) --- An adapter selected for use when analyzing documents. Contains an adapter ID and a version number. Contains information on pages selected for analysis when analyzing documents asychronously. A unique identifier for the adapter resource. Pages (list) --- Pages is a parameter that the user inputs to specify which pages to apply an adapter to. The following is a list of rules for using this parameter. If a page is not specified, it is set to [\"1\"] by default. The following characters are allowed in the parameter's string: 0 1 2 3 4 5 6 7 8 9 - *. No whitespace is allowed. When using * to indicate all pages, it must be the only element in the list. You can use page intervals, such as [\"1-3\", \"1-1\", \"4-*\"]. Where * indicates last page of document. Specified pages must be greater than 0 and less than or equal to the number of pages in the document. (string) --- A string that identifies the version of the adapter.",
+      "nested_params": [
+        {
+          "name": "Adapters",
+          "type": "list",
+          "required": false,
+          "description": "A list of adapters to be used when analyzing the specified document.",
+          "nested_params": [
+            {
+              "name": "AdapterId",
+              "type": "string",
+              "required": false,
+              "description": "A unique identifier for the adapter resource.",
+              "nested_params": []
+            },
+            {
+              "name": "Pages",
+              "type": "list",
+              "required": false,
+              "description": "Pages is a parameter that the user inputs to specify which pages to apply an adapter to. The following is a list of rules for using this parameter.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "A string that identifies the version of the adapter.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "The identifier for the document text detection job. Use JobId to identify the job in a subsequent call to GetDocumentAnalysis. A JobId value is only valid for 7 days.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

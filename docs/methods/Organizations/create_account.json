@@ -1,0 +1,191 @@
+{
+  "method_name": "create_account",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/organizations/client/create_account.html",
+  "description": "Creates an Amazon Web Services account that is automatically a member of the organization whose credentials made the request. This is an asynchronous request that Amazon Web Services performs in the background. Because CreateAccount operates asynchronously, it can return a successful completion message even though account initialization might still be in progress. You might need to wait a few minutes before you can successfully access the account. To check the status of the request, do one of the following: The user who calls the API to create an account must have the organizations:CreateAccount permission. If you enabled all features in the organization, Organizations creates the required service-linked role named AWSServiceRoleForOrganizations. For more information, see Organizations and service-linked roles in the Organizations User Guide. If the request includes tags, then the requester must have the organizations:TagResource permission. Organizations preconfigures the new member account with a role (named OrganizationAccountAccessRole by default) that grants users in the management account administrator permissions in the new member account. Principals in the management account can assume the role. Organizations clones the company name and address information for the new account from the organization's management account. This operation can be called only from the organization's management account. For more information about creating accounts, see Creating a member account in your organization in the Organizations User Guide.",
+  "parameters": [
+    {
+      "name": "Email",
+      "type": "string",
+      "required": true,
+      "description": "The email address of the owner to assign to the new member account. This email address must not already be associated with another Amazon Web Services account. You must use a valid email address to complete account creation. The rules for a valid email address: The address must be a minimum of 6 and a maximum of 64 characters long. All characters must be 7-bit ASCII characters. There must be one and only one @ symbol, which separates the local name from the domain name. The local name can't contain any of the following characters: whitespace, ' --\u0098 ( ) < > [ ] : ; , | % & The local name can't begin with a dot (.) The domain name can consist of only the characters [a-z],[A-Z],[0-9], hyphen (-), or dot (.) The domain name can't begin or end with a hyphen (-) or dot (.) The domain name must contain at least one dot You can't access the root user of the account or remove an account that was created with an invalid email address.",
+      "nested_params": []
+    },
+    {
+      "name": "AccountName",
+      "type": "string",
+      "required": true,
+      "description": "The friendly name of the member account.",
+      "nested_params": []
+    },
+    {
+      "name": "RoleName",
+      "type": "string",
+      "required": false,
+      "description": "The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the management account, allowing users in the management account to assume the role, as permitted by the management account administrator. The role has administrator permissions in the new member account. If you don't specify this parameter, the role name defaults to OrganizationAccountAccessRole. For more information about how to use this role to access the member account, see the following links: Creating the OrganizationAccountAccessRole in an invited member account in the Organizations User Guide Steps 2 and 3 in IAM Tutorial: Delegate access across Amazon Web Services accounts using IAM roles in the IAM User Guide The regex pattern that is used to validate this parameter. The pattern can include uppercase letters, lowercase letters, digits with no spaces, and any of the following characters: =,.@-",
+      "nested_params": []
+    },
+    {
+      "name": "IamUserAccessToBilling",
+      "type": "string",
+      "required": false,
+      "description": "If set to ALLOW, the new account enables IAM users to access account billing information if they have the required permissions. If set to DENY, only the root user of the new account can access account billing information. For more information, see About IAM access to the Billing and Cost Management console in the Amazon Web Services Billing and Cost Management User Guide. If you don't specify this parameter, the value defaults to ALLOW, and IAM users and roles with the required permissions can access billing information for the new account.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags that you want to attach to the newly created account. For each tag in the list, you must specify both a tag key and a value. You can set the value to an empty string, but you can't set it to null. For more information about tagging, see Tagging Organizations resources in the Organizations User Guide. (dict) --- A custom key-value pair associated with a resource within your organization. You can attach tags to any of the following organization resources. Amazon Web Services account Organizational unit (OU) Organization root Policy The key identifier, or name, of the tag. The string value that's associated with the key of the tag. You can set the value of a tag to an empty string, but you can't set the value of a tag to null.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CreateAccountStatus",
+          "type": "dict",
+          "description": "A structure that contains details about the request to create an account. This response structure might not be fully populated when you first receive it because account creation is an asynchronous process. You can pass the returned CreateAccountStatus ID as a parameter to  DescribeCreateAccountStatus to get status about the progress of the request at later times. You can also check the CloudTrail log for the CreateAccountResult event. For more information, see Logging and monitoring in Organizations in the Organizations User Guide.",
+          "nested_items": [
+            {
+              "name": "Id",
+              "type": "string",
+              "description": "The unique identifier (ID) that references this request. You get this value from the response of the initial  CreateAccount request to create the account.",
+              "nested_items": []
+            },
+            {
+              "name": "AccountName",
+              "type": "string",
+              "description": "The account name given to the account when it was created.",
+              "nested_items": []
+            },
+            {
+              "name": "State",
+              "type": "string",
+              "description": "The status of the asynchronous request to create an Amazon Web Services account.",
+              "nested_items": []
+            },
+            {
+              "name": "RequestedTimestamp",
+              "type": "datetime",
+              "description": "The date and time that the request was made for the account creation.",
+              "nested_items": []
+            },
+            {
+              "name": "CompletedTimestamp",
+              "type": "datetime",
+              "description": "The date and time that the account was created and the request completed.",
+              "nested_items": []
+            },
+            {
+              "name": "AccountId",
+              "type": "string",
+              "description": "If the account was created successfully, the unique identifier (ID) of the new account.",
+              "nested_items": []
+            },
+            {
+              "name": "GovCloudAccountId",
+              "type": "string",
+              "description": "If the account was created successfully, the unique identifier (ID) of the new account in the Amazon Web Services GovCloud (US) Region.",
+              "nested_items": []
+            },
+            {
+              "name": "FailureReason",
+              "type": "string",
+              "description": "If the request failed, a description of the reason for the failure.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ACCOUNT_LIMIT_EXCEEDED: The account couldn't be created because you reached the limit on the number of accounts in your organization.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CONCURRENT_ACCOUNT_MODIFICATION: You already submitted a request with the same information.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "EMAIL_ALREADY_EXISTS: The account could not be created because another Amazon Web Services account with that email address already exists.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED_BUSINESS_VALIDATION: The Amazon Web Services account that owns your organization failed to receive business license validation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "US",
+                  "description": "GOVCLOUD_ACCOUNT_ALREADY_EXISTS: The account in the Amazon Web Services GovCloud (US) Region could not be created because this Region already includes an account with that email address.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "IDENTITY_INVALID_BUSINESS_VALIDATION: The Amazon Web Services account that owns your organization can't complete business license validation because it doesn't have valid identity data.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INVALID_ADDRESS: The account could not be created because the address you provided is not valid.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INVALID_EMAIL: The account could not be created because the email address you provided is not valid.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INVALID_PAYMENT_INSTRUMENT: The Amazon Web Services account that owns your organization does not have a supported payment method associated with the account. Amazon Web Services does not support cards issued by financial institutions in Russia or Belarus. For more information, see Managing your Amazon Web Services payments.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "INTERNAL_FAILURE: The account could not be created because of an internal failure. Try again later. If the problem persists, contact Amazon Web Services Customer Support.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "MISSING_BUSINESS_VALIDATION: The Amazon Web Services account that owns your organization has not received Business Validation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "MISSING_PAYMENT_INSTRUMENT: You must configure the management account with a valid payment method, such as a credit card.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "PENDING_BUSINESS_VALIDATION: The Amazon Web Services account that owns your organization is still in the process of completing business license validation.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UNKNOWN_BUSINESS_VALIDATION: The Amazon Web Services account that owns your organization has an unknown issue with business license validation.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

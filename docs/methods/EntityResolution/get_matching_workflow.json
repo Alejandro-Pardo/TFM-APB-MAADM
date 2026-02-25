@@ -1,0 +1,279 @@
+{
+  "method_name": "get_matching_workflow",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/entityresolution/client/get_matching_workflow.html",
+  "description": "Returns the MatchingWorkflow with a given name, if it exists.",
+  "parameters": [
+    {
+      "name": "workflowName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the workflow.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "workflowName",
+          "type": "string",
+          "description": "The name of the workflow.",
+          "nested_items": []
+        },
+        {
+          "name": "workflowArn",
+          "type": "string",
+          "description": "The ARN (Amazon Resource Name) that Entity Resolution generated for the MatchingWorkflow.",
+          "nested_items": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "A description of the workflow.",
+          "nested_items": []
+        },
+        {
+          "name": "inputSourceConfig",
+          "type": "list",
+          "description": "A list of InputSource objects, which have the fields InputSourceARN and SchemaName.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "inputSourceARN",
+                  "type": "string",
+                  "description": "An Glue table Amazon Resource Name (ARN) for the input source table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "schemaName",
+                  "type": "string",
+                  "description": "The name of the schema to be retrieved.",
+                  "nested_items": []
+                },
+                {
+                  "name": "applyNormalization",
+                  "type": "boolean",
+                  "description": "Normalizes the attributes defined in the schema in the input data. For example, if an attribute has an AttributeType of PHONE_NUMBER, and the data in the input table is in a format of 1234567890, Entity Resolution will normalize this field in the output to (123)-456-7890.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "outputSourceConfig",
+          "type": "list",
+          "description": "A list of OutputSource objects, each of which contains fields OutputS3Path, ApplyNormalization, and Output.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "outputS3Path",
+                  "type": "string",
+                  "description": "The S3 path to which Entity Resolution will write the output table.",
+                  "nested_items": []
+                },
+                {
+                  "name": "KMSArn",
+                  "type": "string",
+                  "description": "Customer KMS ARN for encryption at rest. If not provided, system will use an Entity Resolution managed KMS key.",
+                  "nested_items": []
+                },
+                {
+                  "name": "output",
+                  "type": "list",
+                  "description": "A list of OutputAttribute objects, each of which have the fields Name and Hashed. Each of these objects selects a column to be included in the output table, and whether the values of the column should be hashed.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "A name of a column to be written to the output. This must be an InputField name in the schema mapping.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "hashed",
+                          "type": "boolean",
+                          "description": "Enables the ability to hash the column values in the output.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "applyNormalization",
+                  "type": "boolean",
+                  "description": "Normalizes the attributes defined in the schema in the input data. For example, if an attribute has an AttributeType of PHONE_NUMBER, and the data in the input table is in a format of 1234567890, Entity Resolution will normalize this field in the output to (123)-456-7890.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "resolutionTechniques",
+          "type": "dict",
+          "description": "An object which defines the resolutionType and the ruleBasedProperties.",
+          "nested_items": [
+            {
+              "name": "resolutionType",
+              "type": "string",
+              "description": "The type of matching. There are three types of matching: RULE_MATCHING, ML_MATCHING, and PROVIDER.",
+              "nested_items": []
+            },
+            {
+              "name": "ruleBasedProperties",
+              "type": "dict",
+              "description": "An object which defines the list of matching rules to run and has a field Rules, which is a list of rule objects.",
+              "nested_items": [
+                {
+                  "name": "rules",
+                  "type": "list",
+                  "description": "A list of Rule objects, each of which have fields RuleName and MatchingKeys.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "ruleName",
+                          "type": "string",
+                          "description": "A name for the matching rule.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "matchingKeys",
+                          "type": "list",
+                          "description": "A list of MatchingKeys. The MatchingKeys must have been defined in the SchemaMapping. Two records are considered to match according to this rule if all of the MatchingKeys match.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "attributeMatchingModel",
+                  "type": "string",
+                  "description": "The comparison type. You can either choose ONE_TO_ONE or MANY_TO_MANY as the attributeMatchingModel.",
+                  "nested_items": []
+                },
+                {
+                  "name": "matchPurpose",
+                  "type": "string",
+                  "description": "An indicator of whether to generate IDs and index the data or not.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "providerProperties",
+              "type": "dict",
+              "description": "The properties of the provider service.",
+              "nested_items": [
+                {
+                  "name": "providerServiceArn",
+                  "type": "string",
+                  "description": "The ARN of the provider service.",
+                  "nested_items": []
+                },
+                {
+                  "name": "providerConfiguration",
+                  "type": "document",
+                  "description": "The required configuration fields to use with the provider service.",
+                  "nested_items": []
+                },
+                {
+                  "name": "intermediateSourceConfiguration",
+                  "type": "dict",
+                  "description": "The Amazon S3 location that temporarily stores your data while it processes. Your information won't be saved permanently.",
+                  "nested_items": [
+                    {
+                      "name": "intermediateS3Path",
+                      "type": "string",
+                      "description": "The Amazon S3 location (bucket and prefix). For example: s3://provider_bucket/DOC-EXAMPLE-BUCKET.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "createdAt",
+          "type": "datetime",
+          "description": "The timestamp of when the workflow was created.",
+          "nested_items": []
+        },
+        {
+          "name": "updatedAt",
+          "type": "datetime",
+          "description": "The timestamp of when the workflow was last updated.",
+          "nested_items": []
+        },
+        {
+          "name": "incrementalRunConfig",
+          "type": "dict",
+          "description": "An object which defines an incremental run type and has only incrementalRunType as a field.",
+          "nested_items": [
+            {
+              "name": "incrementalRunType",
+              "type": "string",
+              "description": "The type of incremental run. It takes only one value: IMMEDIATE.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "roleArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the IAM role. Entity Resolution assumes this role to access Amazon Web Services resources on your behalf.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

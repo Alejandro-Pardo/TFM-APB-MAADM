@@ -1,0 +1,105 @@
+{
+  "method_name": "create_email_identity",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/pinpoint-email/client/create_email_identity.html",
+  "description": "Verifies an email identity for use with Amazon Pinpoint. In Amazon Pinpoint, an identity is an email address or domain that you use when you send email. Before you can use an identity to send email with Amazon Pinpoint, you first have to verify it. By verifying an address, you demonstrate that you're the owner of the address, and that you've given Amazon Pinpoint permission to send email from the address. When you verify an email address, Amazon Pinpoint sends an email to the address. Your email address is verified as soon as you follow the link in the verification email. When you verify a domain, this operation provides a set of DKIM tokens, which you can convert into CNAME tokens. You add these CNAME tokens to the DNS configuration for your domain. Your domain is verified when Amazon Pinpoint detects these records in the DNS configuration for your domain. It usually takes around 72 hours to complete the domain verification process.",
+  "parameters": [
+    {
+      "name": "EmailIdentity",
+      "type": "string",
+      "required": true,
+      "description": "The email address or domain that you want to verify.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "An array of objects that define the tags (keys and values) that you want to associate with the email identity. (dict) --- An object that defines the tags that are associated with a resource. A\u00c2\u00a0tag\u00c2\u00a0is a label that you optionally define and associate with a resource in Amazon Pinpoint. Tags can help you categorize and manage resources in different ways, such as by purpose, owner, environment, or other criteria. A resource can have as many as 50 tags. Each tag consists of a required\u00c2\u00a0tag key\u00c2\u00a0and an associated\u00c2\u00a0tag value, both of which you define. A tag key is a general label that acts as a category for a more specific tag value. A tag value acts as a descriptor within a tag key. A tag key can contain as many as 128 characters. A tag value can contain as many as 256 characters. The characters can be Unicode letters, digits, white space, or one of the following symbols: _ . : / = + -. The following additional restrictions apply to tags: Tag keys and values are case sensitive. For each associated resource, each tag key must be unique and it can have only one value. The\u00c2\u00a0 aws:\u00c2\u00a0prefix is reserved for use by AWS; you can't use it in any tag keys or values that you define. In addition, you can't edit or remove tag keys or values that use this prefix. Tags that use this prefix don't count against the limit of 50 tags per resource. You can associate tags with public or shared resources, but the tags are available only for your AWS account, not any other accounts that share the resource. In addition, the tags are available only for resources that are located in the specified AWS Region for your AWS account. One part of a key-value pair that defines a tag. The maximum length of a tag key is 128 characters. The minimum length is 1 character. The optional part of a key-value pair that defines a tag. The maximum length of a tag value is 256 characters. The minimum length is 0 characters. If you don't want a resource to have a specific tag value, don't specify a value for this parameter. Amazon Pinpoint will set the value to an empty string.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "IdentityType",
+          "type": "string",
+          "description": "The email identity type.",
+          "nested_items": []
+        },
+        {
+          "name": "VerifiedForSendingStatus",
+          "type": "boolean",
+          "description": "Specifies whether or not the identity is verified. In Amazon Pinpoint, you can only send email from verified email addresses or domains. For more information about verifying identities, see the Amazon Pinpoint User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "DkimAttributes",
+          "type": "dict",
+          "description": "An object that contains information about the DKIM attributes for the identity. This object includes the tokens that you use to create the CNAME records that are required to complete the DKIM verification process.",
+          "nested_items": [
+            {
+              "name": "SigningEnabled",
+              "type": "boolean",
+              "description": "If the value is true, then the messages that Amazon Pinpoint sends from the identity are DKIM-signed. If the value is false, then the messages that Amazon Pinpoint sends from the identity aren't DKIM-signed.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "Describes whether or not Amazon Pinpoint has successfully located the DKIM records in the DNS records for the domain. The status can be one of the following:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "PENDING --- Amazon Pinpoint hasn't yet located the DKIM records in the DNS configuration for the domain, but will continue to attempt to locate them.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SUCCESS --- Amazon Pinpoint located the DKIM records in the DNS configuration for the domain and determined that they're correct. Amazon Pinpoint can now send DKIM-signed email from the identity.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED --- Amazon Pinpoint was unable to locate the DKIM records in the DNS settings for the domain, and won't continue to search for them.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TEMPORARY_FAILURE --- A temporary issue occurred, which prevented Amazon Pinpoint from determining the DKIM status for the domain.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "NOT_STARTED --- Amazon Pinpoint hasn't yet started searching for the DKIM records in the DKIM records for the domain.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Tokens",
+              "type": "list",
+              "description": "A set of unique strings that you use to create a set of CNAME records that you add to the DNS configuration for your domain. When Amazon Pinpoint detects these records in the DNS configuration for your domain, the DKIM authentication process is complete. Amazon Pinpoint usually detects these records within about 72 hours of adding them to the DNS configuration for your domain.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

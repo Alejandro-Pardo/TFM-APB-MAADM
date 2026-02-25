@@ -1,0 +1,104 @@
+{
+  "method_name": "delete_object",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/delete_object.html",
+  "description": "Removes an object from a bucket. The behavior depends on the bucket's versioning state: To remove a specific version, you must use the versionId query parameter. Using this query parameter permanently deletes the version. If the object deleted is a delete marker, Amazon S3 sets the response header x-amz-delete-marker to true. If the object you want to delete is in a bucket where the bucket versioning configuration is MFA Delete enabled, you must include the x-amz-mfa request header in the DELETE versionId request. Requests that include x-amz-mfa must use HTTPS. For more information about MFA Delete, see Using MFA Delete in the Amazon S3 User Guide. To see sample requests that use versioning, see Sample Request. You can delete objects by explicitly calling DELETE Object or calling ( PutBucketLifecycle) to enable Amazon S3 to remove them for you. If you want to block users or accounts from removing or deleting objects from your bucket, you must deny them the s3:DeleteObject, s3:DeleteObjectVersion, and s3:PutLifeCycleConfiguration actions. Directory buckets - The HTTP Host header syntax is Bucket-name.s3express-zone-id.region-code.amazonaws.com. The following action is related to DeleteObject:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The bucket name of the bucket containing the object. Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com. Path-style requests are not supported. Directory bucket names must be unique in the chosen Zone (Availability Zone or Local Zone). Bucket names must follow the format bucket-base-name--zone-id--x-s3 (for example, amzn-s3-demo-bucket--usw2-az1--x-s3). For information about bucket naming restrictions, see Directory bucket naming rules in the Amazon S3 User Guide. Access points - When you use this action with an access point for general purpose buckets, you must provide the alias of the access point in place of the bucket name or specify the access point ARN. When you use this action with an access point for directory buckets, you must provide the access point name in place of the bucket name. When using the access point ARN, you must direct requests to the access point hostname. The access point hostname takes the form AccessPointName-AccountId.s3-accesspoint.*Region*.amazonaws.com. When using this action with an access point through the Amazon Web Services SDKs, you provide the access point ARN in place of the bucket name. For more information about access point ARNs, see Using access points in the Amazon S3 User Guide. S3 on Outposts - When you use this action with S3 on Outposts, you must direct requests to the S3 on Outposts hostname. The S3 on Outposts hostname takes the form AccessPointName-AccountId.outpostID.s3-outposts.Region.amazonaws.com. When you use this action with S3 on Outposts, the destination bucket must be the Outposts access point ARN or the access point alias. For more information about S3 on Outposts, see What is S3 on Outposts? in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": true,
+      "description": "Key name of the object to delete.",
+      "nested_params": []
+    },
+    {
+      "name": "MFA",
+      "type": "string",
+      "required": false,
+      "description": "The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device. Required to permanently delete a versioned object if versioning is configured with MFA delete enabled.",
+      "nested_params": []
+    },
+    {
+      "name": "VersionId",
+      "type": "string",
+      "required": false,
+      "description": "Version ID used to reference a specific version of the object.",
+      "nested_params": []
+    },
+    {
+      "name": "RequestPayer",
+      "type": "string",
+      "required": false,
+      "description": "Confirms that the requester knows that they will be charged for the request. Bucket owners need not specify this parameter in their requests. If either the source or destination S3 bucket has Requester Pays enabled, the requester will pay for corresponding charges to copy the object. For information about downloading objects from Requester Pays buckets, see Downloading Objects in Requester Pays Buckets in the Amazon S3 User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "BypassGovernanceRetention",
+      "type": "boolean",
+      "required": false,
+      "description": "Indicates whether S3 Object Lock should bypass Governance-mode restrictions to process this operation. To use this header, you must have the s3:BypassGovernanceRetention permission.",
+      "nested_params": []
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "IfMatch",
+      "type": "string",
+      "required": false,
+      "description": "The If-Match header field makes the request method conditional on ETags. If the ETag value does not match, the operation returns a 412 Precondition Failed error. If the ETag matches or if the object doesn't exist, the operation will return a 204 Success (No Content) response. For more information about conditional requests, see RFC 7232.",
+      "nested_params": []
+    },
+    {
+      "name": "IfMatchLastModifiedTime",
+      "type": "datetime",
+      "required": false,
+      "description": "If present, the object is deleted only if its modification times matches the provided Timestamp. If the Timestamp values do not match, the operation returns a 412 Precondition Failed error. If the Timestamp matches or if the object doesn't exist, the operation returns a 204 Success (No Content) response.",
+      "nested_params": []
+    },
+    {
+      "name": "IfMatchSize",
+      "type": "integer",
+      "required": false,
+      "description": "If present, the object is deleted only if its size matches the provided size in bytes. If the Size value does not match, the operation returns a 412 Precondition Failed error. If the Size matches or if the object doesn't exist, the operation returns a 204 Success (No Content) response.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DeleteMarker",
+          "type": "boolean",
+          "description": "Indicates whether the specified object version that was permanently deleted was (true) or was not (false) a delete marker before deletion. In a simple DELETE, this header indicates whether (true) or not (false) the current version of the object is a delete marker. To learn more about delete markers, see Working with delete markers.",
+          "nested_items": []
+        },
+        {
+          "name": "VersionId",
+          "type": "string",
+          "description": "Returns the version ID of the delete marker created as a result of the DELETE operation.",
+          "nested_items": []
+        },
+        {
+          "name": "RequestCharged",
+          "type": "string",
+          "description": "If present, indicates that the requester was successfully charged for the request. For more information, see Using Requester Pays buckets for storage transfers and usage in the Amazon Simple Storage Service user guide.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

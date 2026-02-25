@@ -1,0 +1,249 @@
+{
+  "method_name": "put_bucket_notification_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/put_bucket_notification_configuration.html",
+  "description": "Enables notifications of specified events for a bucket. For more information about event notifications, see Configuring Event Notifications. Using this API, you can replace an existing notification configuration. The configuration is an XML file that defines the event types that you want Amazon S3 to publish and the destination where you want Amazon S3 to publish an event notification when it detects an event of the specified type. By default, your bucket has no event notifications configured. That is, the notification configuration will be an empty NotificationConfiguration. <NotificationConfiguration> </NotificationConfiguration> This action replaces the existing notification configuration with the configuration you include in the request body. After Amazon S3 receives this request, it first verifies that any Amazon Simple Notification Service (Amazon SNS) or Amazon Simple Queue Service (Amazon SQS) destination exists, and that the bucket owner has permission to publish to it by sending a test notification. In the case of Lambda destinations, Amazon S3 verifies that the Lambda function permissions grant Amazon S3 permission to invoke the function from the Amazon S3 bucket. For more information, see Configuring Notifications for Amazon S3 Events. You can disable notifications by adding the empty NotificationConfiguration element. For more information about the number of event notification configurations that you can create per bucket, see Amazon S3 service quotas in Amazon Web Services General Reference. By default, only the bucket owner can configure notifications on a bucket. However, bucket owners can use a bucket policy to grant permission to other users to set this configuration with the required s3:PutBucketNotification permission. If the configuration in the request body includes only one TopicConfiguration specifying only the s3:ReducedRedundancyLostObject event type, the response will also include the x-amz-sns-test-message-id header containing the message ID of the test notification sent to the topic. The following action is related to PutBucketNotificationConfiguration:",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The name of the bucket.",
+      "nested_params": []
+    },
+    {
+      "name": "NotificationConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "A container for specifying the notification configuration of the bucket. If this element is empty, notifications are turned off for the bucket. TopicConfigurations (list) --- The topic to which notifications are sent and the events for which notifications are generated. (dict) --- A container for specifying the configuration for publication of messages to an Amazon Simple Notification Service (Amazon SNS) topic when Amazon S3 detects specified events. Id (string) --- An optional unique identifier for configurations in a notification configuration. If you don't provide one, Amazon S3 will assign an ID. The Amazon Resource Name (ARN) of the Amazon SNS topic to which Amazon S3 publishes a message when it detects events of the specified type. The Amazon S3 bucket event about which to send notifications. For more information, see Supported Event Types in the Amazon S3 User Guide. (string) --- The bucket event for which to send notifications. Filter (dict) --- Specifies object key name filtering rules. For information about key name filtering, see Configuring event notifications using object key name filtering in the Amazon S3 User Guide. Key (dict) --- A container for object key name prefix and suffix filtering rules. FilterRules (list) --- A list of containers for the key-value pair that defines the criteria for the filter rule. (dict) --- Specifies the Amazon S3 object key name to filter on. An object key name is the name assigned to an object in your Amazon S3 bucket. You specify whether to filter on the suffix or prefix of the object key name. A prefix is a specific string of characters at the beginning of an object key name, which you can use to organize objects. For example, you can start the key names of related objects with a prefix, such as 2023- or engineering/. Then, you can use FilterRule to find objects in a bucket with key names that have the same prefix. A suffix is similar to a prefix, but it is at the end of the object key name instead of at the beginning. Name (string) --- The object key name prefix or suffix identifying one or more objects to which the filtering rule applies. The maximum length is 1,024 characters. Overlapping prefixes and suffixes are not supported. For more information, see Configuring Event Notifications in the Amazon S3 User Guide. Value (string) --- The value that the filter searches for in object key names. QueueConfigurations (list) --- The Amazon Simple Queue Service queues to publish messages to and the events for which to publish messages. (dict) --- Specifies the configuration for publishing messages to an Amazon Simple Queue Service (Amazon SQS) queue when Amazon S3 detects specified events. The Amazon Resource Name (ARN) of the Amazon SQS queue to which Amazon S3 publishes a message when it detects events of the specified type. A collection of bucket events for which to send notifications (string) --- The bucket event for which to send notifications. LambdaFunctionConfigurations (list) --- Describes the Lambda functions to invoke and the events for which to invoke them. (dict) --- A container for specifying the configuration for Lambda notifications. The Amazon Resource Name (ARN) of the Lambda function that Amazon S3 invokes when the specified event type occurs. The Amazon S3 bucket event for which to invoke the Lambda function. EventBridgeConfiguration (dict) --- Enables delivery of events to Amazon EventBridge.",
+      "nested_params": [
+        {
+          "name": "TopicConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "The topic to which notifications are sent and the events for which notifications are generated.",
+          "nested_params": [
+            {
+              "name": "Id",
+              "type": "string",
+              "required": false,
+              "description": "An optional unique identifier for configurations in a notification configuration. If you don't provide one, Amazon S3 will assign an ID.",
+              "nested_params": []
+            },
+            {
+              "name": "TopicArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Amazon SNS topic to which Amazon S3 publishes a message when it detects events of the specified type.",
+              "nested_params": []
+            },
+            {
+              "name": "Events",
+              "type": "list",
+              "required": false,
+              "description": "The Amazon S3 bucket event about which to send notifications. For more information, see Supported Event Types in the Amazon S3 User Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "Filter",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies object key name filtering rules. For information about key name filtering, see Configuring event notifications using object key name filtering in the Amazon S3 User Guide.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container for object key name prefix and suffix filtering rules.",
+                  "nested_params": [
+                    {
+                      "name": "FilterRules",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of containers for the key-value pair that defines the criteria for the filter rule.",
+                      "nested_params": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "required": false,
+                          "description": "The object key name prefix or suffix identifying one or more objects to which the filtering rule applies. The maximum length is 1,024 characters. Overlapping prefixes and suffixes are not supported. For more information, see Configuring Event Notifications in the Amazon S3 User Guide.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "required": false,
+                          "description": "The value that the filter searches for in object key names.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "QueueConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "The Amazon Simple Queue Service queues to publish messages to and the events for which to publish messages.",
+          "nested_params": [
+            {
+              "name": "Id",
+              "type": "string",
+              "required": false,
+              "description": "An optional unique identifier for configurations in a notification configuration. If you don't provide one, Amazon S3 will assign an ID.",
+              "nested_params": []
+            },
+            {
+              "name": "QueueArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Amazon SQS queue to which Amazon S3 publishes a message when it detects events of the specified type.",
+              "nested_params": []
+            },
+            {
+              "name": "Events",
+              "type": "list",
+              "required": false,
+              "description": "A collection of bucket events for which to send notifications.",
+              "nested_params": []
+            },
+            {
+              "name": "Filter",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies object key name filtering rules. For information about key name filtering, see Configuring event notifications using object key name filtering in the Amazon S3 User Guide.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container for object key name prefix and suffix filtering rules.",
+                  "nested_params": [
+                    {
+                      "name": "FilterRules",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of containers for the key-value pair that defines the criteria for the filter rule.",
+                      "nested_params": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "required": false,
+                          "description": "The object key name prefix or suffix identifying one or more objects to which the filtering rule applies. The maximum length is 1,024 characters. Overlapping prefixes and suffixes are not supported. For more information, see Configuring Event Notifications in the Amazon S3 User Guide.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "required": false,
+                          "description": "The value that the filter searches for in object key names.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "LambdaFunctionConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "Describes the Lambda functions to invoke and the events for which to invoke them.",
+          "nested_params": [
+            {
+              "name": "Id",
+              "type": "string",
+              "required": false,
+              "description": "An optional unique identifier for configurations in a notification configuration. If you don't provide one, Amazon S3 will assign an ID.",
+              "nested_params": []
+            },
+            {
+              "name": "LambdaFunctionArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the Lambda function that Amazon S3 invokes when the specified event type occurs.",
+              "nested_params": []
+            },
+            {
+              "name": "Events",
+              "type": "list",
+              "required": false,
+              "description": "The Amazon S3 bucket event for which to invoke the Lambda function. For more information, see Supported Event Types in the Amazon S3 User Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "Filter",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies object key name filtering rules. For information about key name filtering, see Configuring event notifications using object key name filtering in the Amazon S3 User Guide.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A container for object key name prefix and suffix filtering rules.",
+                  "nested_params": [
+                    {
+                      "name": "FilterRules",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of containers for the key-value pair that defines the criteria for the filter rule.",
+                      "nested_params": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "required": false,
+                          "description": "The object key name prefix or suffix identifying one or more objects to which the filtering rule applies. The maximum length is 1,024 characters. Overlapping prefixes and suffixes are not supported. For more information, see Configuring Event Notifications in the Amazon S3 User Guide.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "required": false,
+                          "description": "The value that the filter searches for in object key names.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "EventBridgeConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Enables delivery of events to Amazon EventBridge.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SkipDestinationValidation",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

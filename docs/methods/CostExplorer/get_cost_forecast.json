@@ -1,0 +1,143 @@
+{
+  "method_name": "get_cost_forecast",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/get_cost_forecast.html",
+  "description": "Retrieves a forecast for how much Amazon Web Services predicts that you will spend over the forecast time period that you select, based on your past costs.",
+  "parameters": [
+    {
+      "name": "TimePeriod",
+      "type": "dict",
+      "required": true,
+      "description": "The period of time that you want the forecast to cover. The start date must be equal to or no later than the current date to avoid a validation error. The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+      "nested_params": [
+        {
+          "name": "Start",
+          "type": "string",
+          "required": false,
+          "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+          "nested_params": []
+        },
+        {
+          "name": "End",
+          "type": "string",
+          "required": false,
+          "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Metric",
+      "type": "string",
+      "required": true,
+      "description": "Which metric Cost Explorer uses to create your forecast. For more information about blended and unblended rates, see Why does the 'blended' annotation appear on some line items in my bill?. Valid values for a GetCostForecast call are the following: AMORTIZED_COST BLENDED_COST NET_AMORTIZED_COST NET_UNBLENDED_COST UNBLENDED_COST.",
+      "nested_params": []
+    },
+    {
+      "name": "Granularity",
+      "type": "string",
+      "required": true,
+      "description": "How granular you want the forecast to be. You can get 3 months of DAILY forecasts or 12 months of MONTHLY forecasts. The GetCostForecast operation supports only DAILY and MONTHLY granularities.",
+      "nested_params": []
+    },
+    {
+      "name": "Filter",
+      "type": "dict",
+      "required": false,
+      "description": "The filters that you want to use to filter your forecast. The GetCostForecast API supports filtering by the following dimensions: AZ INSTANCE_TYPE LINKED_ACCOUNT OPERATION PURCHASE_TYPE REGION SERVICE USAGE_TYPE USAGE_TYPE_GROUP RECORD_TYPE OPERATING_SYSTEM TENANCY SCOPE PLATFORM SUBSCRIPTION_ID LEGAL_ENTITY_NAME DEPLOYMENT_OPTION DATABASE_ENGINE INSTANCE_TYPE_FAMILY BILLING_ENTITY RESERVATION_ID SAVINGS_PLAN_ARN Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "BillingViewArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "PredictionIntervalLevel",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "Amount",
+              "type": "string",
+              "description": "The actual number that represents the metric.",
+              "nested_items": []
+            },
+            {
+              "name": "Unit",
+              "type": "string",
+              "description": "The unit that the metric is given in.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ForecastResultsByTime",
+          "type": "list",
+          "description": "The forecasts for your query, in order. For DAILY forecasts, this is a list of days. For MONTHLY forecasts, this is a list of months.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "TimePeriod",
+                  "type": "dict",
+                  "description": "The period of time that the forecast covers.",
+                  "nested_items": [
+                    {
+                      "name": "Start",
+                      "type": "string",
+                      "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "End",
+                      "type": "string",
+                      "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MeanValue",
+                  "type": "string",
+                  "description": "The mean value of the forecast.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PredictionIntervalLowerBound",
+                  "type": "string",
+                  "description": "The lower limit for the prediction interval.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PredictionIntervalUpperBound",
+                  "type": "string",
+                  "description": "The upper limit for the prediction interval.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

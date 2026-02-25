@@ -1,0 +1,241 @@
+{
+  "method_name": "describe_key",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kms/client/describe_key.html",
+  "description": "Provides detailed information about a KMS key. You can run DescribeKey on a customer managed key or an Amazon Web Services managed key. This detailed information includes the key ARN, creation date (and deletion date, if applicable), the key state, and the origin and expiration date (if any) of the key material. It includes fields, like KeySpec, that help you distinguish different types of KMS keys. It also displays the key usage (encryption, signing, or generating and verifying MACs) and the algorithms that the KMS key supports. For multi-Region keys, DescribeKey displays the primary key and all related replica keys. For KMS keys in CloudHSM key stores, it includes information about the key store, such as the key store ID and the CloudHSM cluster ID. For KMS keys in external key stores, it includes the custom key store ID and the ID of the external key. DescribeKey does not return the following information: In general, DescribeKey is a non-mutating operation. It returns data about KMS keys, but doesn't change them. However, Amazon Web Services services use DescribeKey to create Amazon Web Services managed keys from a predefined Amazon Web Services alias with no key ID. Cross-account use: Yes. To perform this operation with a KMS key in a different Amazon Web Services account, specify the key ARN or alias ARN in the value of the KeyId parameter. Required permissions: kms:DescribeKey (key policy) Eventual consistency: The KMS API follows an eventual consistency model. For more information, see KMS eventual consistency.",
+  "parameters": [
+    {
+      "name": "KeyId",
+      "type": "string",
+      "required": true,
+      "description": "Describes the specified KMS key. If you specify a predefined Amazon Web Services alias (an Amazon Web Services alias with no key ID), KMS associates the alias with an Amazon Web Services managed key and returns its KeyId and Arn in the response. To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an alias name, prefix it with \"alias/\". To specify a KMS key in a different Amazon Web Services account, you must use the key ARN or alias ARN. For example: Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab Key ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab Alias name: alias/ExampleAlias Alias ARN: arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias To get the key ID and key ARN for a KMS key, use  ListKeys or  DescribeKey. To get the alias name and alias ARN, use  ListAliases.",
+      "nested_params": []
+    },
+    {
+      "name": "GrantTokens",
+      "type": "list",
+      "required": false,
+      "description": "A list of grant tokens. Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved eventual consistency. For more information, see Grant token and Using a grant token in the Key Management Service Developer Guide. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "KeyMetadata",
+          "type": "dict",
+          "description": "Metadata associated with the key.",
+          "nested_items": [
+            {
+              "name": "AWSAccountId",
+              "type": "string",
+              "description": "The twelve-digit account ID of the Amazon Web Services account that owns the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyId",
+              "type": "string",
+              "description": "The globally unique identifier for the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "Arn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the KMS key. For examples, see Key Management Service (KMS) in the Example ARNs section of the Amazon Web Services General Reference.",
+              "nested_items": []
+            },
+            {
+              "name": "CreationDate",
+              "type": "datetime",
+              "description": "The date and time when the KMS key was created.",
+              "nested_items": []
+            },
+            {
+              "name": "Enabled",
+              "type": "boolean",
+              "description": "Specifies whether the KMS key is enabled. When KeyState is Enabled this value is true, otherwise it is false.",
+              "nested_items": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "description": "The description of the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyUsage",
+              "type": "string",
+              "description": "The cryptographic operations for which you can use the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyState",
+              "type": "string",
+              "description": "The current status of the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "DeletionDate",
+              "type": "datetime",
+              "description": "The date and time after which KMS deletes this KMS key. This value is present only when the KMS key is scheduled for deletion, that is, when its KeyState is PendingDeletion.",
+              "nested_items": []
+            },
+            {
+              "name": "ValidTo",
+              "type": "datetime",
+              "description": "The time at which the imported key material expires. When the key material expires, KMS deletes the key material and the KMS key becomes unusable. This value is present only for KMS keys whose Origin is EXTERNAL and whose ExpirationModel is KEY_MATERIAL_EXPIRES, otherwise this value is omitted.",
+              "nested_items": []
+            },
+            {
+              "name": "Origin",
+              "type": "string",
+              "description": "The source of the key material for the KMS key. When this value is AWS_KMS, KMS created the key material. When this value is EXTERNAL, the key material was imported or the KMS key doesn't have any key material. When this value is AWS_CLOUDHSM, the key material was created in the CloudHSM cluster associated with a custom key store.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomKeyStoreId",
+              "type": "string",
+              "description": "A unique identifier for the custom key store that contains the KMS key. This field is present only when the KMS key is created in a custom key store.",
+              "nested_items": []
+            },
+            {
+              "name": "CloudHsmClusterId",
+              "type": "string",
+              "description": "The cluster ID of the CloudHSM cluster that contains the key material for the KMS key. When you create a KMS key in an CloudHSM custom key store, KMS creates the key material for the KMS key in the associated CloudHSM cluster. This field is present only when the KMS key is created in an CloudHSM key store.",
+              "nested_items": []
+            },
+            {
+              "name": "ExpirationModel",
+              "type": "string",
+              "description": "Specifies whether the KMS key's key material expires. This value is present only when Origin is EXTERNAL, otherwise this value is omitted.",
+              "nested_items": []
+            },
+            {
+              "name": "KeyManager",
+              "type": "string",
+              "description": "The manager of the KMS key. KMS keys in your Amazon Web Services account are either customer managed or Amazon Web Services managed. For more information about the difference, see KMS keys in the Key Management Service Developer Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "CustomerMasterKeySpec",
+              "type": "string",
+              "description": "Instead, use the KeySpec field.",
+              "nested_items": []
+            },
+            {
+              "name": "KeySpec",
+              "type": "string",
+              "description": "Describes the type of key material in the KMS key.",
+              "nested_items": []
+            },
+            {
+              "name": "EncryptionAlgorithms",
+              "type": "list",
+              "description": "The encryption algorithms that the KMS key supports. You cannot use the KMS key with other encryption algorithms within KMS.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SigningAlgorithms",
+              "type": "list",
+              "description": "The signing algorithms that the KMS key supports. You cannot use the KMS key with other signing algorithms within KMS.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "KeyAgreementAlgorithms",
+              "type": "list",
+              "description": "The key agreement algorithm used to derive a shared secret.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MultiRegion",
+              "type": "boolean",
+              "description": "Indicates whether the KMS key is a multi-Region ( True) or regional ( False) key. This value is True for multi-Region primary and replica keys and False for regional KMS keys.",
+              "nested_items": []
+            },
+            {
+              "name": "MultiRegionConfiguration",
+              "type": "dict",
+              "description": "Lists the primary and replica keys in same multi-Region key. This field is present only when the value of the MultiRegion field is True.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "MultiRegionKeyType indicates whether the KMS key is a PRIMARY or REPLICA key.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "PrimaryKey displays the key ARN and Region of the primary key. This field displays the current KMS key if it is the primary key.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ReplicaKeys displays the key ARNs and Regions of all replica keys. This field includes the current KMS key if it is a replica key.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "PendingDeletionWindowInDays",
+              "type": "integer",
+              "description": "The waiting period before the primary key in a multi-Region key is deleted. This waiting period begins when the last of its replica keys is deleted. This value is present only when the KeyState of the KMS key is PendingReplicaDeletion. That indicates that the KMS key is the primary key in a multi-Region key, it is scheduled for deletion, and it still has existing replica keys.",
+              "nested_items": []
+            },
+            {
+              "name": "MacAlgorithms",
+              "type": "list",
+              "description": "The message authentication code (MAC) algorithm that the HMAC KMS key supports.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "XksKeyConfiguration",
+              "type": "dict",
+              "description": "Information about the external key that is associated with a KMS key in an external key store.",
+              "nested_items": [
+                {
+                  "name": "Id",
+                  "type": "string",
+                  "description": "The ID of the external key in its external key manager. This is the ID that the external key store proxy uses to identify the external key.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

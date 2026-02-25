@@ -1,0 +1,105 @@
+{
+  "method_name": "get_sampling_targets",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/xray/client/get_sampling_targets.html",
+  "description": "Requests a sampling quota for rules that the service is using to sample requests.",
+  "parameters": [
+    {
+      "name": "SamplingStatisticsDocuments",
+      "type": "list",
+      "required": true,
+      "description": "Information about rules that the service is using to sample requests. (dict) --- Request sampling results for a single rule from a service. Results are for the last 10 seconds unless the service has been assigned a longer reporting interval after a previous call to GetSamplingTargets. RuleName (string) --- The name of the sampling rule. ClientID (string) --- A unique identifier for the service in hexadecimal. Timestamp (datetime) --- The current time. RequestCount (integer) --- The number of requests that matched the rule. SampledCount (integer) --- The number of requests recorded. BorrowCount (integer) --- The number of requests recorded with borrowed reservoir quota.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SamplingTargetDocuments",
+          "type": "list",
+          "description": "Updated rules that the service should use to sample requests.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "RuleName",
+                  "type": "string",
+                  "description": "The name of the sampling rule.",
+                  "nested_items": []
+                },
+                {
+                  "name": "FixedRate",
+                  "type": "float",
+                  "description": "The percentage of matching requests to instrument, after the reservoir is exhausted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ReservoirQuota",
+                  "type": "integer",
+                  "description": "The number of requests per second that X-Ray allocated for this service.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ReservoirQuotaTTL",
+                  "type": "datetime",
+                  "description": "When the reservoir quota expires.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Interval",
+                  "type": "integer",
+                  "description": "The number of seconds for the service to wait before getting sampling targets again.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "LastRuleModification",
+          "type": "datetime",
+          "description": "The last time a user changed the sampling rule configuration. If the sampling rule configuration changed since the service last retrieved it, the service should call GetSamplingRules to get the latest version.",
+          "nested_items": []
+        },
+        {
+          "name": "UnprocessedStatistics",
+          "type": "list",
+          "description": "Information about SamplingStatisticsDocument that X-Ray could not process.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "RuleName",
+                  "type": "string",
+                  "description": "The name of the sampling rule.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "The error code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Message",
+                  "type": "string",
+                  "description": "The error message.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

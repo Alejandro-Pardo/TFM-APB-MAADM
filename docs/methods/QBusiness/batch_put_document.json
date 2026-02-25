@@ -1,0 +1,668 @@
+{
+  "method_name": "batch_put_document",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/qbusiness/client/batch_put_document.html",
+  "description": "Adds one or more documents to an Amazon Q Business index. You use this API to: You can see the progress of the deletion, and any error messages related to the process, by using CloudWatch.",
+  "parameters": [
+    {
+      "name": "applicationId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the Amazon Q Business application.",
+      "nested_params": []
+    },
+    {
+      "name": "indexId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the Amazon Q Business index to add the documents to.",
+      "nested_params": []
+    },
+    {
+      "name": "documents",
+      "type": "list",
+      "required": true,
+      "description": "One or more documents to add to the index. (dict) --- A document in an Amazon Q Business application. The identifier of the document. attributes (list) --- Custom attributes to apply to the document for refining Amazon Q Business web experience responses. (dict) --- A document attribute or metadata field. The identifier for the attribute. The value of the attribute. stringValue (string) --- A string. stringListValue (list) --- A list of strings. (string) --- longValue (integer) --- A long integer value. dateValue (datetime) --- A date expressed as an ISO 8601 string. It's important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time. content (dict) --- The contents of the document. blob (bytes) --- The contents of the document. Documents passed to the blob parameter must be base64 encoded. Your code might not need to encode the document file bytes if you're using an Amazon Web Services SDK to call Amazon Q Business APIs. If you are calling the Amazon Q Business endpoint directly using REST, you must base64 encode the contents before sending. s3 (dict) --- The path to the document in an Amazon S3 bucket. The name of the S3 bucket that contains the file. The name of the file. contentType (string) --- The file type of the document in the Blob field. If you want to index snippets or subsets of HTML documents instead of the entirety of the HTML documents, you add the HTML start and closing tags ( <HTML>content</HTML>) around the content. title (string) --- The title of the document. accessConfiguration (dict) --- Configuration information for access permission to a document. A list of AccessControlList objects. (dict) --- A list of principals. Each principal can be either a USER or a GROUP and can be designated document access permissions of either ALLOW or DENY. Contains a list of principals, where a principal can be either a USER or a GROUP. Each principal can be have the following type of document access: ALLOW or DENY. (dict) --- Provides user and group information used for filtering documents to use for generating Amazon Q Business conversation responses. user (dict) --- The user associated with the principal. id (string) --- The identifier of the user. Provides information about whether to allow or deny access to the principal. membershipType (string) --- The type of group. group (dict) --- The group associated with the principal. name (string) --- The name of the group. memberRelation (string) --- Describes the member relation within a principal list. memberRelation (string) --- Describes the member relation within the AccessControlList object. documentEnrichmentConfiguration (dict) --- The configuration information for altering document metadata and content during the document ingestion process. inlineConfigurations (list) --- Configuration information to alter document attributes or metadata fields and content when ingesting documents into Amazon Q Business. (dict) --- Provides the configuration information for applying basic logic to alter document metadata and content when ingesting documents into Amazon Q Business. To apply advanced logic, to go beyond what you can do with basic logic, see HookConfiguration. For more information, see Custom document enrichment. condition (dict) --- The condition used for the target document attribute or metadata field when ingesting documents into Amazon Q Business. You use this with DocumentAttributeTarget to apply the condition. For example, you can create the --\u0098Department' target field and have it prefill department names associated with the documents based on information in the --\u0098Source_URI' field. Set the condition that if the --\u0098Source_URI' field contains --\u0098financial' in its URI value, then prefill the target field --\u0098Department' with the target value --\u0098Finance' for the document. Amazon Q Business can't create a target field if it has not already been created as an index field. After you create your index field, you can create a document metadata field using DocumentAttributeTarget. Amazon Q Business then will map your newly created metadata field to your index field. The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently doesn't support _document_body as an attribute key used for the condition. Amazon Q Business currently does not support _document_body as an attribute key used for the condition. value (dict) --- The value of a document attribute. You can only provide one value for a document attribute. target (dict) --- The target document attribute or metadata field you want to alter when ingesting documents into Amazon Q Business. For example, you can delete all customer identification numbers associated with the documents, stored in the document metadata field called --\u0098Customer_ID' by setting the target key as --\u0098Customer_ID' and the deletion flag to TRUE. This removes all customer ID values in the field --\u0098Customer_ID'. This would scrub personally identifiable information from each document's metadata. Amazon Q Business will then map your newly created document attribute to your index field. You can also use this with DocumentAttributeCondition. The identifier of the target document attribute or metadata field. For example, --\u0098Department' could be an identifier for the target attribute or metadata field that includes the department names associated with the documents. attributeValueOperator (string) --- TRUE to delete the existing target value for your specified target attribute key. You cannot create a target value and set this to TRUE. documentContentOperator (string) --- TRUE to delete content if the condition used for the target attribute is met. preExtractionHookConfiguration (dict) --- Provides the configuration information for invoking a Lambda function in Lambda to alter document metadata and content when ingesting documents into Amazon Q Business. You can configure your Lambda function using the PreExtractionHookConfiguration parameter if you want to apply advanced alterations on the original or raw documents. If you want to apply advanced alterations on the Amazon Q Business structured documents, you must configure your Lambda function using PostExtractionHookConfiguration. You can only invoke one Lambda function. However, this function can invoke other functions it requires. invocationCondition (dict) --- The condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Q Business should invoke a function that inserts the current date-time. lambdaArn (string) --- The Amazon Resource Name (ARN) of the Lambda function during ingestion. For more information, see Using Lambda functions for Amazon Q Business document enrichment. s3BucketName (string) --- Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions. roleArn (string) --- The Amazon Resource Name (ARN) of a role with permission to run PreExtractionHookConfiguration and PostExtractionHookConfiguration for altering document metadata and content during the document ingestion process. postExtractionHookConfiguration (dict) --- Provides the configuration information for invoking a Lambda function in Lambda to alter document metadata and content when ingesting documents into Amazon Q Business. mediaExtractionConfiguration (dict) --- The configuration for extracting information from media in the document. imageExtractionConfiguration (dict) --- The configuration for extracting semantic meaning from images in documents. For more information, see Extracting semantic meaning from images and visuals. Specify whether to extract semantic meaning from images and visuals from documents. audioExtractionConfiguration (dict) --- Configuration settings for extracting and processing audio content from media files. The status of audio extraction (ENABLED or DISABLED) for processing audio content from files. videoExtractionConfiguration (dict) --- Configuration settings for extracting and processing video content from media files. The status of video extraction (ENABLED or DISABLED) for processing video content from files.",
+      "nested_params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the document.",
+          "nested_params": []
+        },
+        {
+          "name": "attributes",
+          "type": "list",
+          "required": false,
+          "description": "Custom attributes to apply to the document for refining Amazon Q Business web experience responses.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The identifier for the attribute.",
+              "nested_params": []
+            },
+            {
+              "name": "value",
+              "type": "dict",
+              "required": false,
+              "description": "The value of the attribute.",
+              "nested_params": [
+                {
+                  "name": "stringValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "A string.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stringListValue",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of strings.",
+                  "nested_params": []
+                },
+                {
+                  "name": "longValue",
+                  "type": "integer",
+                  "required": false,
+                  "description": "A long integer value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "dateValue",
+                  "type": "datetime",
+                  "required": false,
+                  "description": "A date expressed as an ISO 8601 string. It's important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "content",
+          "type": "dict",
+          "required": false,
+          "description": "The contents of the document.",
+          "nested_params": [
+            {
+              "name": "blob",
+              "type": "bytes",
+              "required": false,
+              "description": "The contents of the document. Documents passed to the blob parameter must be base64 encoded. Your code might not need to encode the document file bytes if you're using an Amazon Web Services SDK to call Amazon Q Business APIs. If you are calling the Amazon Q Business endpoint directly using REST, you must base64 encode the contents before sending.",
+              "nested_params": []
+            },
+            {
+              "name": "s3",
+              "type": "dict",
+              "required": false,
+              "description": "The path to the document in an Amazon S3 bucket.",
+              "nested_params": [
+                {
+                  "name": "bucket",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the S3 bucket that contains the file.",
+                  "nested_params": []
+                },
+                {
+                  "name": "key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the file.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contentType",
+          "type": "string",
+          "required": false,
+          "description": "The file type of the document in the Blob field. If you want to index snippets or subsets of HTML documents instead of the entirety of the HTML documents, you add the HTML start and closing tags ( <HTML>content</HTML>) around the content.",
+          "nested_params": []
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "The title of the document.",
+          "nested_params": []
+        },
+        {
+          "name": "accessConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information for access permission to a document.",
+          "nested_params": [
+            {
+              "name": "accessControls",
+              "type": "list",
+              "required": false,
+              "description": "A list of AccessControlList objects.",
+              "nested_params": [
+                {
+                  "name": "principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "Contains a list of principals, where a principal can be either a USER or a GROUP. Each principal can be have the following type of document access: ALLOW or DENY.",
+                  "nested_params": [
+                    {
+                      "name": "user",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The user associated with the principal.",
+                      "nested_params": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": false,
+                          "description": "The identifier of the user.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "access",
+                          "type": "string",
+                          "required": false,
+                          "description": "Provides information about whether to allow or deny access to the principal.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "membershipType",
+                          "type": "string",
+                          "required": false,
+                          "description": "The type of group.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "group",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The group associated with the principal.",
+                      "nested_params": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "required": false,
+                          "description": "The name of the group.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "access",
+                          "type": "string",
+                          "required": false,
+                          "description": "Provides information about whether to allow or deny access to the principal.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "membershipType",
+                          "type": "string",
+                          "required": false,
+                          "description": "The type of group.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "memberRelation",
+                  "type": "string",
+                  "required": false,
+                  "description": "Describes the member relation within a principal list.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "memberRelation",
+              "type": "string",
+              "required": false,
+              "description": "Describes the member relation within the AccessControlList object.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "documentEnrichmentConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration information for altering document metadata and content during the document ingestion process.",
+          "nested_params": [
+            {
+              "name": "inlineConfigurations",
+              "type": "list",
+              "required": false,
+              "description": "Configuration information to alter document attributes or metadata fields and content when ingesting documents into Amazon Q Business.",
+              "nested_params": [
+                {
+                  "name": "condition",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The condition used for the target document attribute or metadata field when ingesting documents into Amazon Q Business. You use this with DocumentAttributeTarget to apply the condition. For example, you can create the --\u0098Department' target field and have it prefill department names associated with the documents based on information in the --\u0098Source_URI' field. Set the condition that if the --\u0098Source_URI' field contains --\u0098financial' in its URI value, then prefill the target field --\u0098Department' with the target value --\u0098Finance' for the document. Amazon Q Business can't create a target field if it has not already been created as an index field. After you create your index field, you can create a document metadata field using DocumentAttributeTarget. Amazon Q Business then will map your newly created metadata field to your index field.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently doesn't support _document_body as an attribute key used for the condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "operator",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently does not support _document_body as an attribute key used for the condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The value of a document attribute. You can only provide one value for a document attribute.",
+                      "nested_params": [
+                        {
+                          "name": "stringValue",
+                          "type": "string",
+                          "required": false,
+                          "description": "A string.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "stringListValue",
+                          "type": "list",
+                          "required": false,
+                          "description": "A list of strings.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "longValue",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A long integer value.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "dateValue",
+                          "type": "datetime",
+                          "required": false,
+                          "description": "A date expressed as an ISO 8601 string. It's important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "target",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The target document attribute or metadata field you want to alter when ingesting documents into Amazon Q Business. For example, you can delete all customer identification numbers associated with the documents, stored in the document metadata field called --\u0098Customer_ID' by setting the target key as --\u0098Customer_ID' and the deletion flag to TRUE. This removes all customer ID values in the field --\u0098Customer_ID'. This would scrub personally identifiable information from each document's metadata. Amazon Q Business can't create a target field if it has not already been created as an index field. After you create your index field, you can create a document metadata field using DocumentAttributeTarget. Amazon Q Business will then map your newly created document attribute to your index field. You can also use this with DocumentAttributeCondition.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the target document attribute or metadata field. For example, --\u0098Department' could be an identifier for the target attribute or metadata field that includes the department names associated with the documents.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The value of a document attribute. You can only provide one value for a document attribute.",
+                      "nested_params": [
+                        {
+                          "name": "stringValue",
+                          "type": "string",
+                          "required": false,
+                          "description": "A string.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "stringListValue",
+                          "type": "list",
+                          "required": false,
+                          "description": "A list of strings.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "longValue",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A long integer value.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "dateValue",
+                          "type": "datetime",
+                          "required": false,
+                          "description": "A date expressed as an ISO 8601 string. It's important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "attributeValueOperator",
+                      "type": "string",
+                      "required": false,
+                      "description": "TRUE to delete the existing target value for your specified target attribute key. You cannot create a target value and set this to TRUE.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "documentContentOperator",
+                  "type": "string",
+                  "required": false,
+                  "description": "TRUE to delete content if the condition used for the target attribute is met.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "preExtractionHookConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Provides the configuration information for invoking a Lambda function in Lambda to alter document metadata and content when ingesting documents into Amazon Q Business. You can configure your Lambda function using the PreExtractionHookConfiguration parameter if you want to apply advanced alterations on the original or raw documents. If you want to apply advanced alterations on the Amazon Q Business structured documents, you must configure your Lambda function using PostExtractionHookConfiguration. You can only invoke one Lambda function. However, this function can invoke other functions it requires. For more information, see Custom document enrichment.",
+              "nested_params": [
+                {
+                  "name": "invocationCondition",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Q Business should invoke a function that inserts the current date-time.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently doesn't support _document_body as an attribute key used for the condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "operator",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently does not support _document_body as an attribute key used for the condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The value of a document attribute. You can only provide one value for a document attribute.",
+                      "nested_params": [
+                        {
+                          "name": "stringValue",
+                          "type": "string",
+                          "required": false,
+                          "description": "A string.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "stringListValue",
+                          "type": "list",
+                          "required": false,
+                          "description": "A list of strings.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "longValue",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A long integer value.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "dateValue",
+                          "type": "datetime",
+                          "required": false,
+                          "description": "A date expressed as an ISO 8601 string. It's important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "lambdaArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Lambda function during ingestion. For more information, see Using Lambda functions for Amazon Q Business document enrichment.",
+                  "nested_params": []
+                },
+                {
+                  "name": "s3BucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of a role with permission to run PreExtractionHookConfiguration and PostExtractionHookConfiguration for altering document metadata and content during the document ingestion process.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "postExtractionHookConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Provides the configuration information for invoking a Lambda function in Lambda to alter document metadata and content when ingesting documents into Amazon Q Business. You can configure your Lambda function using the PreExtractionHookConfiguration parameter if you want to apply advanced alterations on the original or raw documents. If you want to apply advanced alterations on the Amazon Q Business structured documents, you must configure your Lambda function using PostExtractionHookConfiguration. You can only invoke one Lambda function. However, this function can invoke other functions it requires. For more information, see Custom document enrichment.",
+              "nested_params": [
+                {
+                  "name": "invocationCondition",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Q Business should invoke a function that inserts the current date-time.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently doesn't support _document_body as an attribute key used for the condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "operator",
+                      "type": "string",
+                      "required": false,
+                      "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Q Business currently does not support _document_body as an attribute key used for the condition.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The value of a document attribute. You can only provide one value for a document attribute.",
+                      "nested_params": [
+                        {
+                          "name": "stringValue",
+                          "type": "string",
+                          "required": false,
+                          "description": "A string.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "stringListValue",
+                          "type": "list",
+                          "required": false,
+                          "description": "A list of strings.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "longValue",
+                          "type": "integer",
+                          "required": false,
+                          "description": "A long integer value.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "dateValue",
+                          "type": "datetime",
+                          "required": false,
+                          "description": "A date expressed as an ISO 8601 string. It's important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "lambdaArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of the Lambda function during ingestion. For more information, see Using Lambda functions for Amazon Q Business document enrichment.",
+                  "nested_params": []
+                },
+                {
+                  "name": "s3BucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) of a role with permission to run PreExtractionHookConfiguration and PostExtractionHookConfiguration for altering document metadata and content during the document ingestion process.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mediaExtractionConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "The configuration for extracting information from media in the document.",
+          "nested_params": [
+            {
+              "name": "imageExtractionConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "The configuration for extracting semantic meaning from images in documents. For more information, see Extracting semantic meaning from images and visuals.",
+              "nested_params": [
+                {
+                  "name": "imageExtractionStatus",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specify whether to extract semantic meaning from images and visuals from documents.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "audioExtractionConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration settings for extracting and processing audio content from media files.",
+              "nested_params": [
+                {
+                  "name": "audioExtractionStatus",
+                  "type": "string",
+                  "required": false,
+                  "description": "The status of audio extraction (ENABLED or DISABLED) for processing audio content from files.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "videoExtractionConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration settings for extracting and processing video content from media files.",
+              "nested_params": [
+                {
+                  "name": "videoExtractionStatus",
+                  "type": "string",
+                  "required": false,
+                  "description": "The status of video extraction (ENABLED or DISABLED) for processing video content from files.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roleArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "dataSourceSyncId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "failedDocuments",
+          "type": "list",
+          "description": "A list of documents that were not added to the Amazon Q Business index because the document failed a validation check. Each document contains an error message that indicates why the document couldn't be added to the index.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The identifier of the document that couldn't be removed from the Amazon Q Business index.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "errorMessage",
+                      "type": "string",
+                      "description": "The message explaining the Amazon Q Business request error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "errorCode",
+                      "type": "string",
+                      "description": "The code associated with the Amazon Q Business request error.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "dataSourceId",
+                  "type": "string",
+                  "description": "The identifier of the Amazon Q Business data source connector that contains the failed document.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

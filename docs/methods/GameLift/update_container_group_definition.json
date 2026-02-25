@@ -1,0 +1,937 @@
+{
+  "method_name": "update_container_group_definition",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/gamelift/client/update_container_group_definition.html",
+  "description": "Updates properties in an existing container group definition. This operation doesn't replace the definition. Instead, it creates a new version of the definition and saves it separately. You can access all versions that you choose to retain. The only property you can't update is the container group type. If successful, this operation returns the complete properties of the new container group definition version. If the container group definition version is used in an active fleets, the update automatically initiates a new fleet deployment of the new version. You can track a fleet's deployments using ListFleetDeployments.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "A descriptive identifier for the container group definition. The name value must be unique in an Amazon Web Services Region.",
+      "nested_params": []
+    },
+    {
+      "name": "GameServerContainerDefinition",
+      "type": "dict",
+      "required": true,
+      "description": "An updated definition for the game server container in this group. Define a game server container only when the container group type is GAME_SERVER. You can pass in your container definitions as a JSON file. A string that uniquely identifies the container definition within a container group. DependsOn (list) --- Establishes dependencies between this container and the status of other containers in the same container group. A container can have dependencies on multiple different containers. You can use dependencies to establish a startup/shutdown sequence across the container group. For example, you might specify that ContainerB has a START dependency on ContainerA. This dependency means that ContainerB can't start until after ContainerA has started. This dependency is reversed on shutdown, which means that ContainerB must shut down before ContainerA can shut down. (dict) --- A container's dependency on another container in the same container group. The dependency impacts how the dependent container is able to start or shut down based the status of the other container. For example, ContainerA is configured with the following dependency: a START dependency on ContainerB. This means that ContainerA can't start until ContainerB has started. It also means that ContainerA must shut down before ContainerB. Part of: GameServerContainerDefinition, GameServerContainerDefinitionInput, SupportContainerDefinition, SupportContainerDefinitionInput A descriptive label for the container definition that this container depends on. The condition that the dependency container must reach before the dependent container can start. Valid conditions include: START - The dependency container must have started. COMPLETE - The dependency container has run to completion (exits). Use this condition with nonessential containers, such as those that run a script and then exit. The dependency container can't be an essential container. SUCCESS - The dependency container has run to completion and exited with a zero status. HEALTHY - The dependency container has passed its Docker health check. Use this condition with dependency containers that have health checks configured. This condition is confirmed at container group startup only. MountPoints (list) --- A mount point that binds a path inside the container to a file or directory on the host system and lets it access the file or directory. (dict) --- A mount point that binds a container to a file or directory on the host system. Part of: GameServerContainerDefinition, https://docs.aws.amazon.com/gamelift/latest/apireference/API_GameServerContainerDefinitionInput.html, SupportContainerDefinition, https://docs.aws.amazon.com/gamelift/latest/apireference/API_SupportContainerDefinitionInput.html The path to the source file or directory. ContainerPath (string) --- The mount path on the container. If this property isn't set, the instance path is used. AccessLevel (string) --- The type of access for the container. EnvironmentOverride (list) --- A set of environment variables to pass to the container on startup. See the ContainerDefinition::environment parameter in the Amazon Elastic Container Service API Reference. (dict) --- An environment variable to set inside a container, in the form of a key-value pair. Part of: GameServerContainerDefinition, GameServerContainerDefinitionInput, SupportContainerDefinition, SupportContainerDefinitionInput The environment variable name. The environment variable value. The location of the container image to deploy to a container fleet. Provide an image in an Amazon Elastic Container Registry public or private repository. The repository must be in the same Amazon Web Services account and Amazon Web Services Region where you're creating the container group definition. For limits on image size, see Amazon GameLift endpoints and quotas. You can use any of the following image URI formats: Image ID only: [AWS account].dkr.ecr.[AWS region].amazonaws.com/[repository ID] Image ID and digest: [AWS account].dkr.ecr.[AWS region].amazonaws.com/[repository ID]@[digest] Image ID and tag: [AWS account].dkr.ecr.[AWS region].amazonaws.com/[repository ID]:[tag] A set of ports that Amazon GameLift can assign to processes in the container. Processes, must be assigned a container port to accept inbound traffic connections. For example, a game server process requires a container port to allow game clients to connect to it. Container ports aren't directly accessed by inbound traffic. Instead, Amazon GameLift maps container ports to externally accessible connection ports (see the container fleet property ConnectionPortRange). A set of one or more container port number ranges. The ranges can't overlap. (dict) --- A set of one or more port numbers that can be opened on the container. Part of: ContainerPortConfiguration A starting value for the range of allowed port numbers. An ending value for the range of allowed port numbers. Port numbers are end-inclusive. This value must be equal to or greater than FromPort. The network protocol that these ports support. The Amazon GameLift server SDK version that the game server is integrated with. Only game servers using 5.2.0 or higher are compatible with container fleets.",
+      "nested_params": [
+        {
+          "name": "ContainerName",
+          "type": "string",
+          "required": false,
+          "description": "A string that uniquely identifies the container definition within a container group.",
+          "nested_params": []
+        },
+        {
+          "name": "DependsOn",
+          "type": "list",
+          "required": false,
+          "description": "Establishes dependencies between this container and the status of other containers in the same container group. A container can have dependencies on multiple different containers. You can use dependencies to establish a startup/shutdown sequence across the container group. For example, you might specify that ContainerB has a START dependency on ContainerA. This dependency means that ContainerB can't start until after ContainerA has started. This dependency is reversed on shutdown, which means that ContainerB must shut down before ContainerA can shut down.",
+          "nested_params": [
+            {
+              "name": "ContainerName",
+              "type": "string",
+              "required": false,
+              "description": "A descriptive label for the container definition that this container depends on.",
+              "nested_params": []
+            },
+            {
+              "name": "Condition",
+              "type": "string",
+              "required": false,
+              "description": "The condition that the dependency container must reach before the dependent container can start. Valid conditions include:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "MountPoints",
+          "type": "list",
+          "required": false,
+          "description": "A mount point that binds a path inside the container to a file or directory on the host system and lets it access the file or directory.",
+          "nested_params": [
+            {
+              "name": "InstancePath",
+              "type": "string",
+              "required": false,
+              "description": "The path to the source file or directory.",
+              "nested_params": []
+            },
+            {
+              "name": "ContainerPath",
+              "type": "string",
+              "required": false,
+              "description": "The mount path on the container. If this property isn't set, the instance path is used.",
+              "nested_params": []
+            },
+            {
+              "name": "AccessLevel",
+              "type": "string",
+              "required": false,
+              "description": "The type of access for the container.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EnvironmentOverride",
+          "type": "list",
+          "required": false,
+          "description": "A set of environment variables to pass to the container on startup. See the ContainerDefinition::environment parameter in the Amazon Elastic Container Service API Reference.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The environment variable name.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "The environment variable value.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ImageUri",
+          "type": "string",
+          "required": false,
+          "description": "The location of the container image to deploy to a container fleet. Provide an image in an Amazon Elastic Container Registry public or private repository. The repository must be in the same Amazon Web Services account and Amazon Web Services Region where you're creating the container group definition. For limits on image size, see Amazon GameLift endpoints and quotas. You can use any of the following image URI formats:",
+          "nested_params": []
+        },
+        {
+          "name": "PortConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "A set of ports that Amazon GameLift can assign to processes in the container. Processes, must be assigned a container port to accept inbound traffic connections. For example, a game server process requires a container port to allow game clients to connect to it. Container ports aren't directly accessed by inbound traffic. Instead, Amazon GameLift maps container ports to externally accessible connection ports (see the container fleet property ConnectionPortRange).",
+          "nested_params": [
+            {
+              "name": "ContainerPortRanges",
+              "type": "list",
+              "required": false,
+              "description": "A set of one or more container port number ranges. The ranges can't overlap.",
+              "nested_params": [
+                {
+                  "name": "FromPort",
+                  "type": "integer",
+                  "required": false,
+                  "description": "A starting value for the range of allowed port numbers.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ToPort",
+                  "type": "integer",
+                  "required": false,
+                  "description": "An ending value for the range of allowed port numbers. Port numbers are end-inclusive. This value must be equal to or greater than FromPort.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Protocol",
+                  "type": "string",
+                  "required": false,
+                  "description": "The network protocol that these ports support.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ServerSdkVersion",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon GameLift server SDK version that the game server is integrated with. Only game servers using 5.2.0 or higher are compatible with container fleets.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "SupportContainerDefinitions",
+      "type": "list",
+      "required": true,
+      "description": "One or more definitions for support containers in this group. You can define a support container in any type of container group. You can pass in your container definitions as a JSON file. (dict) --- Describes a support container in a container group. You can define a support container in either a game server container group or a per-instance container group. Support containers don't run game server processes. This definition includes container configuration, resources, and start instructions. Use this data type when creating or updating a container group definition. For properties of a deployed support container, see SupportContainerDefinition. Use with: CreateContainerGroupDefinition, UpdateContainerGroupDefinition A string that uniquely identifies the container definition within a container group. DependsOn (list) --- Establishes dependencies between this container and the status of other containers in the same container group. A container can have dependencies on multiple different containers. You can use dependencies to establish a startup/shutdown sequence across the container group. For example, you might specify that ContainerB has a START dependency on ContainerA. This dependency means that ContainerB can't start until after ContainerA has started. This dependency is reversed on shutdown, which means that ContainerB must shut down before ContainerA can shut down. (dict) --- A container's dependency on another container in the same container group. The dependency impacts how the dependent container is able to start or shut down based the status of the other container. For example, ContainerA is configured with the following dependency: a START dependency on ContainerB. This means that ContainerA can't start until ContainerB has started. It also means that ContainerA must shut down before ContainerB. Part of: GameServerContainerDefinition, GameServerContainerDefinitionInput, SupportContainerDefinition, SupportContainerDefinitionInput A descriptive label for the container definition that this container depends on. The condition that the dependency container must reach before the dependent container can start. Valid conditions include: START - The dependency container must have started. COMPLETE - The dependency container has run to completion (exits). Use this condition with nonessential containers, such as those that run a script and then exit. The dependency container can't be an essential container. SUCCESS - The dependency container has run to completion and exited with a zero status. HEALTHY - The dependency container has passed its Docker health check. Use this condition with dependency containers that have health checks configured. This condition is confirmed at container group startup only. MountPoints (list) --- A mount point that binds a path inside the container to a file or directory on the host system and lets it access the file or directory. (dict) --- A mount point that binds a container to a file or directory on the host system. Part of: GameServerContainerDefinition, https://docs.aws.amazon.com/gamelift/latest/apireference/API_GameServerContainerDefinitionInput.html, SupportContainerDefinition, https://docs.aws.amazon.com/gamelift/latest/apireference/API_SupportContainerDefinitionInput.html The path to the source file or directory. ContainerPath (string) --- The mount path on the container. If this property isn't set, the instance path is used. AccessLevel (string) --- The type of access for the container. EnvironmentOverride (list) --- A set of environment variables to pass to the container on startup. See the ContainerDefinition::environment parameter in the Amazon Elastic Container Service API Reference. (dict) --- An environment variable to set inside a container, in the form of a key-value pair. Part of: GameServerContainerDefinition, GameServerContainerDefinitionInput, SupportContainerDefinition, SupportContainerDefinitionInput The environment variable name. The environment variable value. Essential (boolean) --- Flags the container as vital for the container group to function properly. If an essential container fails, the entire container group restarts. At least one support container in a per-instance container group must be essential. When flagging a container as essential, also configure a health check so that the container can signal that it's healthy. HealthCheck (dict) --- Configuration for a non-terminal health check. A container automatically restarts if it stops functioning. With a health check, you can define additional reasons to flag a container as unhealthy and restart it. If an essential container fails a health check, the entire container group restarts. A string array that specifies the command that the container runs to determine if it's healthy. (string) --- Interval (integer) --- The time period (in seconds) between each health check. Retries (integer) --- The number of times to retry a failed health check before flagging the container unhealthy. The first run of the command does not count as a retry. StartPeriod (integer) --- The optional grace period (in seconds) to give a container time to bootstrap before the first failed health check counts toward the number of retries. Timeout (integer) --- The time period (in seconds) to wait for a health check to succeed before counting a failed health check. The location of the container image to deploy to a container fleet. Provide an image in an Amazon Elastic Container Registry public or private repository. The repository must be in the same Amazon Web Services account and Amazon Web Services Region where you're creating the container group definition. For limits on image size, see Amazon GameLift endpoints and quotas. You can use any of the following image URI formats: Image ID only: [AWS account].dkr.ecr.[AWS region].amazonaws.com/[repository ID] Image ID and digest: [AWS account].dkr.ecr.[AWS region].amazonaws.com/[repository ID]@[digest] Image ID and tag: [AWS account].dkr.ecr.[AWS region].amazonaws.com/[repository ID]:[tag] MemoryHardLimitMebibytes (integer) --- A specified amount of memory (in MiB) to reserve for this container. If you don't specify a container-specific memory limit, the container shares the container group's total memory allocation. Related data type: `ContainerGroupDefinition <https://docs.aws.amazon.com/gamelift/latest/apireference/API_ContainerGroupDefinition.html>`__TotalMemoryLimitMebibytes PortConfiguration (dict) --- A set of ports that Amazon GameLift can assign to processes in the container. Any processes that accept inbound traffic connections must be assigned a port from this set. The container port range must be large enough to assign one to each process in the container that needs one. Container ports aren't directly accessed by inbound traffic. Amazon GameLift maps these container ports to externally accessible connection ports, which are assigned as needed from the container fleet's ConnectionPortRange. A set of one or more container port number ranges. The ranges can't overlap. (dict) --- A set of one or more port numbers that can be opened on the container. Part of: ContainerPortConfiguration A starting value for the range of allowed port numbers. An ending value for the range of allowed port numbers. Port numbers are end-inclusive. This value must be equal to or greater than FromPort. The network protocol that these ports support. Vcpu (float) --- The number of vCPU units to reserve for this container. The container can use more resources when needed, if available. If you don't reserve CPU units for this container, it shares the container group's total vCPU limit. Related data type: ContainerGroupDefinition TotalCpuLimit.",
+      "nested_params": [
+        {
+          "name": "ContainerName",
+          "type": "string",
+          "required": false,
+          "description": "A string that uniquely identifies the container definition within a container group.",
+          "nested_params": []
+        },
+        {
+          "name": "DependsOn",
+          "type": "list",
+          "required": false,
+          "description": "Establishes dependencies between this container and the status of other containers in the same container group. A container can have dependencies on multiple different containers. You can use dependencies to establish a startup/shutdown sequence across the container group. For example, you might specify that ContainerB has a START dependency on ContainerA. This dependency means that ContainerB can't start until after ContainerA has started. This dependency is reversed on shutdown, which means that ContainerB must shut down before ContainerA can shut down.",
+          "nested_params": [
+            {
+              "name": "ContainerName",
+              "type": "string",
+              "required": false,
+              "description": "A descriptive label for the container definition that this container depends on.",
+              "nested_params": []
+            },
+            {
+              "name": "Condition",
+              "type": "string",
+              "required": false,
+              "description": "The condition that the dependency container must reach before the dependent container can start. Valid conditions include:",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "MountPoints",
+          "type": "list",
+          "required": false,
+          "description": "A mount point that binds a path inside the container to a file or directory on the host system and lets it access the file or directory.",
+          "nested_params": [
+            {
+              "name": "InstancePath",
+              "type": "string",
+              "required": false,
+              "description": "The path to the source file or directory.",
+              "nested_params": []
+            },
+            {
+              "name": "ContainerPath",
+              "type": "string",
+              "required": false,
+              "description": "The mount path on the container. If this property isn't set, the instance path is used.",
+              "nested_params": []
+            },
+            {
+              "name": "AccessLevel",
+              "type": "string",
+              "required": false,
+              "description": "The type of access for the container.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EnvironmentOverride",
+          "type": "list",
+          "required": false,
+          "description": "A set of environment variables to pass to the container on startup. See the ContainerDefinition::environment parameter in the Amazon Elastic Container Service API Reference.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The environment variable name.",
+              "nested_params": []
+            },
+            {
+              "name": "Value",
+              "type": "string",
+              "required": false,
+              "description": "The environment variable value.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Essential",
+          "type": "boolean",
+          "required": false,
+          "description": "Flags the container as vital for the container group to function properly. If an essential container fails, the entire container group restarts. At least one support container in a per-instance container group must be essential. When flagging a container as essential, also configure a health check so that the container can signal that it's healthy.",
+          "nested_params": []
+        },
+        {
+          "name": "HealthCheck",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration for a non-terminal health check. A container automatically restarts if it stops functioning. With a health check, you can define additional reasons to flag a container as unhealthy and restart it. If an essential container fails a health check, the entire container group restarts.",
+          "nested_params": [
+            {
+              "name": "Command",
+              "type": "list",
+              "required": false,
+              "description": "A string array that specifies the command that the container runs to determine if it's healthy.",
+              "nested_params": []
+            },
+            {
+              "name": "Interval",
+              "type": "integer",
+              "required": false,
+              "description": "The time period (in seconds) between each health check.",
+              "nested_params": []
+            },
+            {
+              "name": "Retries",
+              "type": "integer",
+              "required": false,
+              "description": "The number of times to retry a failed health check before flagging the container unhealthy. The first run of the command does not count as a retry.",
+              "nested_params": []
+            },
+            {
+              "name": "StartPeriod",
+              "type": "integer",
+              "required": false,
+              "description": "The optional grace period (in seconds) to give a container time to bootstrap before the first failed health check counts toward the number of retries.",
+              "nested_params": []
+            },
+            {
+              "name": "Timeout",
+              "type": "integer",
+              "required": false,
+              "description": "The time period (in seconds) to wait for a health check to succeed before counting a failed health check.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ImageUri",
+          "type": "string",
+          "required": false,
+          "description": "The location of the container image to deploy to a container fleet. Provide an image in an Amazon Elastic Container Registry public or private repository. The repository must be in the same Amazon Web Services account and Amazon Web Services Region where you're creating the container group definition. For limits on image size, see Amazon GameLift endpoints and quotas. You can use any of the following image URI formats:",
+          "nested_params": []
+        },
+        {
+          "name": "MemoryHardLimitMebibytes",
+          "type": "integer",
+          "required": false,
+          "description": "A specified amount of memory (in MiB) to reserve for this container. If you don't specify a container-specific memory limit, the container shares the container group's total memory allocation.",
+          "nested_params": []
+        },
+        {
+          "name": "PortConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "A set of ports that Amazon GameLift can assign to processes in the container. Any processes that accept inbound traffic connections must be assigned a port from this set. The container port range must be large enough to assign one to each process in the container that needs one. Container ports aren't directly accessed by inbound traffic. Amazon GameLift maps these container ports to externally accessible connection ports, which are assigned as needed from the container fleet's ConnectionPortRange.",
+          "nested_params": [
+            {
+              "name": "ContainerPortRanges",
+              "type": "list",
+              "required": false,
+              "description": "A set of one or more container port number ranges. The ranges can't overlap.",
+              "nested_params": [
+                {
+                  "name": "FromPort",
+                  "type": "integer",
+                  "required": false,
+                  "description": "A starting value for the range of allowed port numbers.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ToPort",
+                  "type": "integer",
+                  "required": false,
+                  "description": "An ending value for the range of allowed port numbers. Port numbers are end-inclusive. This value must be equal to or greater than FromPort.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Protocol",
+                  "type": "string",
+                  "required": false,
+                  "description": "The network protocol that these ports support.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Vcpu",
+          "type": "float",
+          "required": false,
+          "description": "The number of vCPU units to reserve for this container. The container can use more resources when needed, if available. If you don't reserve CPU units for this container, it shares the container group's total vCPU limit.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TotalMemoryLimitMebibytes",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "TotalVcpuLimit",
+      "type": "float",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "VersionDescription",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SourceVersionNumber",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OperatingSystem",
+      "type": "string",
+      "required": false,
+      "description": "The platform that all containers in the group use. Containers in a group must run on the same operating system.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ContainerGroupDefinition",
+          "type": "dict",
+          "description": "The properties of the updated container group definition version.",
+          "nested_items": [
+            {
+              "name": "ContainerGroupDefinitionArn",
+              "type": "string",
+              "description": "The Amazon Resource Name ( ARN) that is assigned to an Amazon GameLift ContainerGroupDefinition resource. It uniquely identifies the resource across all Amazon Web Services Regions. Format is arn:aws:gamelift:[region]::containergroupdefinition/[container group definition name]:[version].",
+              "nested_items": []
+            },
+            {
+              "name": "CreationTime",
+              "type": "datetime",
+              "description": "A time stamp indicating when this data object was created. Format is a number expressed in Unix time as milliseconds (for example \"1469498468.057\").",
+              "nested_items": []
+            },
+            {
+              "name": "OperatingSystem",
+              "type": "string",
+              "description": "The platform that all containers in the container group definition run on.",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "A descriptive identifier for the container group definition. The name value is unique in an Amazon Web Services Region.",
+              "nested_items": []
+            },
+            {
+              "name": "ContainerGroupType",
+              "type": "string",
+              "description": "The type of container group. Container group type determines how Amazon GameLift deploys the container group on each fleet instance.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalMemoryLimitMebibytes",
+              "type": "integer",
+              "description": "The amount of memory (in MiB) on a fleet instance to allocate for the container group. All containers in the group share these resources.",
+              "nested_items": []
+            },
+            {
+              "name": "TotalVcpuLimit",
+              "type": "float",
+              "description": "The amount of vCPU units on a fleet instance to allocate for the container group (1 vCPU is equal to 1024 CPU units). All containers in the group share these resources. You can set a limit for each container definition in the group. If individual containers have limits, this total value must be equal to or greater than the sum of the limits for each container in the group.",
+              "nested_items": []
+            },
+            {
+              "name": "GameServerContainerDefinition",
+              "type": "dict",
+              "description": "The definition for the game server container in this group. This property is used only when the container group type is GAME_SERVER. This container definition specifies a container image with the game server build.",
+              "nested_items": [
+                {
+                  "name": "ContainerName",
+                  "type": "string",
+                  "description": "The container definition identifier. Container names are unique within a container group definition.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DependsOn",
+                  "type": "list",
+                  "description": "Indicates that the container relies on the status of other containers in the same container group during startup and shutdown sequences. A container might have dependencies on multiple containers.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "ContainerName",
+                          "type": "string",
+                          "description": "A descriptive label for the container definition that this container depends on.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Condition",
+                          "type": "string",
+                          "description": "The condition that the dependency container must reach before the dependent container can start. Valid conditions include:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "START - The dependency container must have started.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "exits",
+                              "description": "COMPLETE - The dependency container has run to completion (exits). Use this condition with nonessential containers, such as those that run a script and then exit. The dependency container can't be an essential container.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "SUCCESS - The dependency container has run to completion and exited with a zero status. The dependency container can't be an essential container.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "HEALTHY - The dependency container has passed its Docker health check. Use this condition with dependency containers that have health checks configured. This condition is confirmed at container group startup only.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "MountPoints",
+                  "type": "list",
+                  "description": "A mount point that binds a path inside the container to a file or directory on the host system and lets it access the file or directory.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "InstancePath",
+                          "type": "string",
+                          "description": "The path to the source file or directory.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ContainerPath",
+                          "type": "string",
+                          "description": "The mount path on the container. If this property isn't set, the instance path is used.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AccessLevel",
+                          "type": "string",
+                          "description": "The type of access for the container.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "EnvironmentOverride",
+                  "type": "list",
+                  "description": "A set of environment variables that's passed to the container on startup. See the ContainerDefinition::environment parameter in the Amazon Elastic Container Service API Reference.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The environment variable name.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "description": "The environment variable value.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ImageUri",
+                  "type": "string",
+                  "description": "The URI to the image that Amazon GameLift uses when deploying this container to a container fleet. For a more specific identifier, see ResolvedImageDigest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "PortConfiguration",
+                  "type": "dict",
+                  "description": "The set of ports that are available to bind to processes in the container. For example, a game server process requires a container port to allow game clients to connect to it. Container ports aren't directly accessed by inbound traffic. Amazon GameLift maps these container ports to externally accessible connection ports, which are assigned as needed from the container fleet's ConnectionPortRange.",
+                  "nested_items": [
+                    {
+                      "name": "ContainerPortRanges",
+                      "type": "list",
+                      "description": "A set of one or more container port number ranges. The ranges can't overlap.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "FromPort",
+                              "type": "integer",
+                              "description": "A starting value for the range of allowed port numbers.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ToPort",
+                              "type": "integer",
+                              "description": "An ending value for the range of allowed port numbers. Port numbers are end-inclusive. This value must be equal to or greater than FromPort.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Protocol",
+                              "type": "string",
+                              "description": "The network protocol that these ports support.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ResolvedImageDigest",
+                  "type": "string",
+                  "description": "A unique and immutable identifier for the container image. The digest is a SHA 256 hash of the container image manifest.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ServerSdkVersion",
+                  "type": "string",
+                  "description": "The Amazon GameLift server SDK version that the game server is integrated with. Only game servers using 5.2.0 or higher are compatible with container fleets.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SupportContainerDefinitions",
+              "type": "list",
+              "description": "The set of definitions for support containers in this group. A container group definition might have zero support container definitions. Support container can be used in any type of container group.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ContainerName",
+                      "type": "string",
+                      "description": "The container definition identifier. Container names are unique within a container group definition.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DependsOn",
+                      "type": "list",
+                      "description": "Indicates that the container relies on the status of other containers in the same container group during its startup and shutdown sequences. A container might have dependencies on multiple containers.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "ContainerName",
+                              "type": "string",
+                              "description": "A descriptive label for the container definition that this container depends on.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Condition",
+                              "type": "string",
+                              "description": "The condition that the dependency container must reach before the dependent container can start. Valid conditions include:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "START - The dependency container must have started.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "exits",
+                                  "description": "COMPLETE - The dependency container has run to completion (exits). Use this condition with nonessential containers, such as those that run a script and then exit. The dependency container can't be an essential container.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "SUCCESS - The dependency container has run to completion and exited with a zero status. The dependency container can't be an essential container.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "HEALTHY - The dependency container has passed its Docker health check. Use this condition with dependency containers that have health checks configured. This condition is confirmed at container group startup only.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "MountPoints",
+                      "type": "list",
+                      "description": "A mount point that binds a path inside the container to a file or directory on the host system and lets it access the file or directory.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "InstancePath",
+                              "type": "string",
+                              "description": "The path to the source file or directory.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ContainerPath",
+                              "type": "string",
+                              "description": "The mount path on the container. If this property isn't set, the instance path is used.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "AccessLevel",
+                              "type": "string",
+                              "description": "The type of access for the container.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "EnvironmentOverride",
+                      "type": "list",
+                      "description": "A set of environment variables that's passed to the container on startup. See the ContainerDefinition::environment parameter in the Amazon Elastic Container Service API Reference.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The environment variable name.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Value",
+                              "type": "string",
+                              "description": "The environment variable value.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Essential",
+                      "type": "boolean",
+                      "description": "Indicates whether the container is vital to the container group. If an essential container fails, the entire container group restarts.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "HealthCheck",
+                      "type": "dict",
+                      "description": "A configuration for a non-terminal health check. A support container automatically restarts if it stops functioning or if it fails this health check.",
+                      "nested_items": [
+                        {
+                          "name": "Command",
+                          "type": "list",
+                          "description": "A string array that specifies the command that the container runs to determine if it's healthy.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Interval",
+                          "type": "integer",
+                          "description": "The time period (in seconds) between each health check.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Retries",
+                          "type": "integer",
+                          "description": "The number of times to retry a failed health check before flagging the container unhealthy. The first run of the command does not count as a retry.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "StartPeriod",
+                          "type": "integer",
+                          "description": "The optional grace period (in seconds) to give a container time to bootstrap before the first failed health check counts toward the number of retries.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Timeout",
+                          "type": "integer",
+                          "description": "The time period (in seconds) to wait for a health check to succeed before counting a failed health check.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ImageUri",
+                      "type": "string",
+                      "description": "The URI to the image that Amazon GameLift deploys to a container fleet. For a more specific identifier, see ResolvedImageDigest.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MemoryHardLimitMebibytes",
+                      "type": "integer",
+                      "description": "The amount of memory that Amazon GameLift makes available to the container. If memory limits aren't set for an individual container, the container shares the container group's total memory allocation.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PortConfiguration",
+                      "type": "dict",
+                      "description": "A set of ports that allow access to the container from external users. Processes running in the container can bind to a one of these ports. Container ports aren't directly accessed by inbound traffic. Amazon GameLift maps these container ports to externally accessible connection ports, which are assigned as needed from the container fleet's ConnectionPortRange.",
+                      "nested_items": [
+                        {
+                          "name": "ContainerPortRanges",
+                          "type": "list",
+                          "description": "A set of one or more container port number ranges. The ranges can't overlap.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "FromPort",
+                                  "type": "integer",
+                                  "description": "A starting value for the range of allowed port numbers.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ToPort",
+                                  "type": "integer",
+                                  "description": "An ending value for the range of allowed port numbers. Port numbers are end-inclusive. This value must be equal to or greater than FromPort.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Protocol",
+                                  "type": "string",
+                                  "description": "The network protocol that these ports support.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ResolvedImageDigest",
+                      "type": "string",
+                      "description": "A unique and immutable identifier for the container image. The digest is a SHA 256 hash of the container image manifest.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Vcpu",
+                      "type": "float",
+                      "description": "The number of vCPU units that are reserved for the container. If no resources are reserved, the container shares the total vCPU limit for the container group.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VersionNumber",
+              "type": "integer",
+              "description": "Indicates the version of a particular container group definition. This number is incremented automatically when you update a container group definition. You can view, update, or delete individual versions or the entire container group definition.",
+              "nested_items": []
+            },
+            {
+              "name": "VersionDescription",
+              "type": "string",
+              "description": "An optional description that was provided for a container group definition update. Each version can have a unique description.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "Current status of the container group definition resource. Values include:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "COPYING --- Amazon GameLift is in the process of making copies of all container images that are defined in the group. While in this state, the resource can't be used to create a container fleet.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "READY --- Amazon GameLift has copied the registry images for all containers that are defined in the group. You can use a container group definition in this status to create a container fleet.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED --- Amazon GameLift failed to create a valid container group definition resource. For more details on the cause of the failure, see StatusReason. A container group definition resource in failed status will be deleted within a few minutes.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "StatusReason",
+              "type": "string",
+              "description": "Additional information about a container group definition that's in FAILED status. Possible reasons include:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "An internal issue prevented Amazon GameLift from creating the container group definition resource. Delete the failed resource and call `CreateContainerGroupDefinition <https://docs.aws.amazon.com/gamelift/latest/apireference/API_CreateContainerGroupDefinition.html>`__again.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "An access-denied message means that you don't have permissions to access the container image on ECR. See IAM permission examples for help setting up required IAM permissions for Amazon GameLift.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "The ImageUri value for at least one of the containers in the container group definition was invalid or not found in the current Amazon Web Services account.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "At least one of the container images referenced in the container group definition exceeds the allowed size. For size limits, see Amazon GameLift endpoints and quotas.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "At least one of the container images referenced in the container group definition uses a different operating system than the one defined for the container group.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

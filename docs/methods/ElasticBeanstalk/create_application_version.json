@@ -1,0 +1,336 @@
+{
+  "method_name": "create_application_version",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elasticbeanstalk/client/create_application_version.html",
+  "description": "Creates an application version for the specified application. You can create an application version from a source bundle in Amazon S3, a commit in AWS CodeCommit, or the output of an AWS CodeBuild build as follows: Specify a commit in an AWS CodeCommit repository with SourceBuildInformation. Specify a build in an AWS CodeBuild with SourceBuildInformation and BuildConfiguration. Specify a source bundle in S3 with SourceBundle. Omit both SourceBuildInformation and SourceBundle to use the default sample application.",
+  "parameters": [
+    {
+      "name": "ApplicationName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the application. If no application is found with this name, and AutoCreateApplication is false, returns an InvalidParameterValue error.",
+      "nested_params": []
+    },
+    {
+      "name": "VersionLabel",
+      "type": "string",
+      "required": true,
+      "description": "A label identifying this version. Constraint: Must be unique per application. If an application version already exists with this label for the specified application, AWS Elastic Beanstalk returns an InvalidParameterValue error.",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SourceBuildInformation",
+      "type": "dict",
+      "required": true,
+      "description": "Specify a commit in an AWS CodeCommit Git repository to use as the source code for the application version. The type of repository. Git Zip Location where the repository is stored. CodeCommit S3 The location of the source code, as a formatted string, depending on the value of SourceRepository For CodeCommit, the format is the repository name and commit ID, separated by a forward slash. For example, my-git-repo/265cfa0cf6af46153527f55d6503ec030551f57a. For S3, the format is the S3 bucket name and object key, separated by a forward slash. For example, my-s3-bucket/Folders/my-source-file.",
+      "nested_params": [
+        {
+          "name": "SourceType",
+          "type": "string",
+          "required": false,
+          "description": "The type of repository.",
+          "nested_params": []
+        },
+        {
+          "name": "SourceRepository",
+          "type": "string",
+          "required": false,
+          "description": "Location where the repository is stored.",
+          "nested_params": []
+        },
+        {
+          "name": "SourceLocation",
+          "type": "string",
+          "required": false,
+          "description": "The location of the source code, as a formatted string, depending on the value of SourceRepository.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "SourceBundle",
+      "type": "dict",
+      "required": false,
+      "description": "The Amazon S3 bucket and key that identify the location of the source bundle for this version. Specify a source bundle in S3 or a commit in an AWS CodeCommit repository (with SourceBuildInformation), but not both. If neither SourceBundle nor SourceBuildInformation are provided, Elastic Beanstalk uses a sample application. S3Bucket (string) --- The Amazon S3 bucket where the data is located. S3Key (string) --- The Amazon S3 key where the data is located.",
+      "nested_params": [
+        {
+          "name": "S3Bucket",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon S3 bucket where the data is located.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Key",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon S3 key where the data is located.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "BuildConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Settings for an AWS CodeBuild build. ArtifactName (string) --- The name of the artifact of the CodeBuild build. If provided, Elastic Beanstalk stores the build artifact in the S3 location S3-bucket/resources/application-name/codebuild/codebuild-version-label-artifact-name.zip. If not provided, Elastic Beanstalk stores the build artifact in the S3 location S3-bucket/resources/application-name/codebuild/codebuild-version-label.zip. The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that enables AWS CodeBuild to interact with dependent AWS services on behalf of the AWS account. ComputeType (string) --- Information about the compute resources the build project will use. BUILD_GENERAL1_SMALL: Use up to 3 GB memory and 2 vCPUs for builds BUILD_GENERAL1_MEDIUM: Use up to 7 GB memory and 4 vCPUs for builds BUILD_GENERAL1_LARGE: Use up to 15 GB memory and 8 vCPUs for builds The ID of the Docker image to use for this build project. TimeoutInMinutes (integer) --- How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. The default is 60 minutes.",
+      "nested_params": [
+        {
+          "name": "ArtifactName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the artifact of the CodeBuild build. If provided, Elastic Beanstalk stores the build artifact in the S3 location S3-bucket/resources/application-name/codebuild/codebuild-version-label-artifact-name.zip. If not provided, Elastic Beanstalk stores the build artifact in the S3 location S3-bucket/resources/application-name/codebuild/codebuild-version-label.zip.",
+          "nested_params": []
+        },
+        {
+          "name": "CodeBuildServiceRole",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the AWS Identity and Access Management (IAM) role that enables AWS CodeBuild to interact with dependent AWS services on behalf of the AWS account.",
+          "nested_params": []
+        },
+        {
+          "name": "ComputeType",
+          "type": "string",
+          "required": false,
+          "description": "Information about the compute resources the build project will use.",
+          "nested_params": []
+        },
+        {
+          "name": "Image",
+          "type": "string",
+          "required": false,
+          "description": "The ID of the Docker image to use for this build project.",
+          "nested_params": []
+        },
+        {
+          "name": "TimeoutInMinutes",
+          "type": "integer",
+          "required": false,
+          "description": "How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. The default is 60 minutes.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AutoCreateApplication",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Process",
+      "type": "boolean",
+      "required": false,
+      "description": "Pre-processes and validates the environment manifest ( env.yaml) and configuration files ( *.config files in the .ebextensions folder) in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment. You must turn processing on for application versions that you create using AWS CodeBuild or AWS CodeCommit. For application versions built from a source bundle in Amazon S3, processing is optional.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the tags applied to the application version. Elastic Beanstalk applies these tags only to the application version. Environments that use the application version don't inherit the tags. (dict) --- Describes a tag applied to a resource in an environment. Key (string) --- The key of the tag. Value (string) --- The value of the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the tag.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ApplicationVersion",
+          "type": "dict",
+          "description": "The  ApplicationVersionDescription of the application version.",
+          "nested_items": [
+            {
+              "name": "ApplicationVersionArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the application version.",
+              "nested_items": []
+            },
+            {
+              "name": "ApplicationName",
+              "type": "string",
+              "description": "The name of the application to which the application version belongs.",
+              "nested_items": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "description": "The description of the application version.",
+              "nested_items": []
+            },
+            {
+              "name": "VersionLabel",
+              "type": "string",
+              "description": "A unique identifier for the application version.",
+              "nested_items": []
+            },
+            {
+              "name": "SourceBuildInformation",
+              "type": "dict",
+              "description": "If the version's source code was retrieved from AWS CodeCommit, the location of the source code for the application version.",
+              "nested_items": [
+                {
+                  "name": "SourceType",
+                  "type": "string",
+                  "description": "The type of repository.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Git.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Zip.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SourceRepository",
+                  "type": "string",
+                  "description": "Location where the repository is stored.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CodeCommit.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "S3",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SourceLocation",
+                  "type": "string",
+                  "description": "The location of the source code, as a formatted string, depending on the value of SourceRepository.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For CodeCommit, the format is the repository name and commit ID, separated by a forward slash. For example, my-git-repo/265cfa0cf6af46153527f55d6503ec030551f57a.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "For S3, the format is the S3 bucket name and object key, separated by a forward slash. For example, my-s3-bucket/Folders/my-source-file.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "BuildArn",
+              "type": "string",
+              "description": "Reference to the artifact from the AWS CodeBuild build.",
+              "nested_items": []
+            },
+            {
+              "name": "SourceBundle",
+              "type": "dict",
+              "description": "The storage location of the application version's source bundle in Amazon S3.",
+              "nested_items": [
+                {
+                  "name": "S3Bucket",
+                  "type": "string",
+                  "description": "The Amazon S3 bucket where the data is located.",
+                  "nested_items": []
+                },
+                {
+                  "name": "S3Key",
+                  "type": "string",
+                  "description": "The Amazon S3 key where the data is located.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "DateCreated",
+              "type": "datetime",
+              "description": "The creation date of the application version.",
+              "nested_items": []
+            },
+            {
+              "name": "DateUpdated",
+              "type": "datetime",
+              "description": "The last modified date of the application version.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The processing status of the application version. Reflects the state of the application version during its creation. Many of the values are only applicable if you specified True for the Process parameter of the CreateApplicationVersion action. The following list describes the possible values.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Unprocessed --- Application version wasn't pre-processed or validated. Elastic Beanstalk will validate configuration files during deployment of the application version to an environment.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Processing --- Elastic Beanstalk is currently processing the application version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Building --- Application version is currently undergoing an AWS CodeBuild build.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Processed --- Elastic Beanstalk was successfully pre-processed and validated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Failed --- Either the AWS CodeBuild build failed or configuration files didn't pass validation. This application version isn't usable.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

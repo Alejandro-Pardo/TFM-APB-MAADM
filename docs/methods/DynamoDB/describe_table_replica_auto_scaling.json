@@ -1,0 +1,497 @@
+{
+  "method_name": "describe_table_replica_auto_scaling",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb/client/describe_table_replica_auto_scaling.html",
+  "description": "Describes auto scaling settings across replicas of the global table at once.",
+  "parameters": [
+    {
+      "name": "TableName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "TableAutoScalingDescription",
+          "type": "dict",
+          "description": "Represents the auto scaling properties of the table.",
+          "nested_items": [
+            {
+              "name": "TableName",
+              "type": "string",
+              "description": "The name of the table.",
+              "nested_items": []
+            },
+            {
+              "name": "TableStatus",
+              "type": "string",
+              "description": "The current state of the table:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATING - The table is being created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "UPDATING - The table is being updated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETING - The table is being deleted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ACTIVE - The table is ready for use.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Replicas",
+              "type": "list",
+              "description": "Represents replicas of the global table.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "RegionName",
+                      "type": "string",
+                      "description": "The Region where the replica exists.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "GlobalSecondaryIndexes",
+                      "type": "list",
+                      "description": "Replica-specific global secondary index auto scaling settings.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "IndexName",
+                              "type": "string",
+                              "description": "The name of the global secondary index.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "IndexStatus",
+                              "type": "string",
+                              "description": "The current state of the replica global secondary index:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "CREATING - The index is being created.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "UPDATING - The table/index configuration is being updated. The table/index remains available for data operations when UPDATING.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "DELETING - The index is being deleted.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ACTIVE - The index is ready for use.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ProvisionedReadCapacityAutoScalingSettings",
+                              "type": "dict",
+                              "description": "Represents the auto scaling settings for a global table or global secondary index.",
+                              "nested_items": [
+                                {
+                                  "name": "MinimumUnits",
+                                  "type": "integer",
+                                  "description": "The minimum capacity units that a global table or global secondary index should be scaled down to.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "MaximumUnits",
+                                  "type": "integer",
+                                  "description": "The maximum capacity units that a global table or global secondary index should be scaled up to.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "AutoScalingDisabled",
+                                  "type": "boolean",
+                                  "description": "Disabled auto scaling for this global table or global secondary index.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "AutoScalingRoleArn",
+                                  "type": "string",
+                                  "description": "Role ARN used for configuring the auto scaling policy.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ScalingPolicies",
+                                  "type": "list",
+                                  "description": "Information about the scaling policies.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "PolicyName",
+                                          "type": "string",
+                                          "description": "The name of the scaling policy.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "TargetTrackingScalingPolicyConfiguration",
+                                          "type": "dict",
+                                          "description": "Represents a target tracking scaling policy configuration.",
+                                          "nested_items": [
+                                            {
+                                              "name": "DisableScaleIn",
+                                              "type": "boolean",
+                                              "description": "Indicates whether scale in by the target tracking policy is disabled. If the value is true, scale in is disabled and the target tracking policy won't remove capacity from the scalable resource. Otherwise, scale in is enabled and the target tracking policy can remove capacity from the scalable resource. The default value is false.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "ScaleInCooldown",
+                                              "type": "integer",
+                                              "description": "The amount of time, in seconds, after a scale in activity completes before another scale in activity can start. The cooldown period is used to block subsequent scale in requests until it has expired. You should scale in conservatively to protect your application's availability. However, if another alarm triggers a scale out policy during the cooldown period after a scale-in, application auto scaling scales out your scalable target immediately.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "ScaleOutCooldown",
+                                              "type": "integer",
+                                              "description": "The amount of time, in seconds, after a scale out activity completes before another scale out activity can start. While the cooldown period is in effect, the capacity that has been added by the previous scale out event that initiated the cooldown is calculated as part of the desired capacity for the next scale out. You should continuously (but not excessively) scale out.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "TargetValue",
+                                              "type": "float",
+                                              "description": "The target value for the metric. The range is 8.515920e-109 to 1.174271e+108 (Base 10) or 2e-360 to 2e360 (Base 2).",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ProvisionedWriteCapacityAutoScalingSettings",
+                              "type": "dict",
+                              "description": "Represents the auto scaling settings for a global table or global secondary index.",
+                              "nested_items": [
+                                {
+                                  "name": "MinimumUnits",
+                                  "type": "integer",
+                                  "description": "The minimum capacity units that a global table or global secondary index should be scaled down to.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "MaximumUnits",
+                                  "type": "integer",
+                                  "description": "The maximum capacity units that a global table or global secondary index should be scaled up to.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "AutoScalingDisabled",
+                                  "type": "boolean",
+                                  "description": "Disabled auto scaling for this global table or global secondary index.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "AutoScalingRoleArn",
+                                  "type": "string",
+                                  "description": "Role ARN used for configuring the auto scaling policy.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ScalingPolicies",
+                                  "type": "list",
+                                  "description": "Information about the scaling policies.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "PolicyName",
+                                          "type": "string",
+                                          "description": "The name of the scaling policy.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "TargetTrackingScalingPolicyConfiguration",
+                                          "type": "dict",
+                                          "description": "Represents a target tracking scaling policy configuration.",
+                                          "nested_items": [
+                                            {
+                                              "name": "DisableScaleIn",
+                                              "type": "boolean",
+                                              "description": "Indicates whether scale in by the target tracking policy is disabled. If the value is true, scale in is disabled and the target tracking policy won't remove capacity from the scalable resource. Otherwise, scale in is enabled and the target tracking policy can remove capacity from the scalable resource. The default value is false.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "ScaleInCooldown",
+                                              "type": "integer",
+                                              "description": "The amount of time, in seconds, after a scale in activity completes before another scale in activity can start. The cooldown period is used to block subsequent scale in requests until it has expired. You should scale in conservatively to protect your application's availability. However, if another alarm triggers a scale out policy during the cooldown period after a scale-in, application auto scaling scales out your scalable target immediately.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "ScaleOutCooldown",
+                                              "type": "integer",
+                                              "description": "The amount of time, in seconds, after a scale out activity completes before another scale out activity can start. While the cooldown period is in effect, the capacity that has been added by the previous scale out event that initiated the cooldown is calculated as part of the desired capacity for the next scale out. You should continuously (but not excessively) scale out.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "TargetValue",
+                                              "type": "float",
+                                              "description": "The target value for the metric. The range is 8.515920e-109 to 1.174271e+108 (Base 10) or 2e-360 to 2e360 (Base 2).",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReplicaProvisionedReadCapacityAutoScalingSettings",
+                      "type": "dict",
+                      "description": "Represents the auto scaling settings for a global table or global secondary index.",
+                      "nested_items": [
+                        {
+                          "name": "MinimumUnits",
+                          "type": "integer",
+                          "description": "The minimum capacity units that a global table or global secondary index should be scaled down to.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaximumUnits",
+                          "type": "integer",
+                          "description": "The maximum capacity units that a global table or global secondary index should be scaled up to.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AutoScalingDisabled",
+                          "type": "boolean",
+                          "description": "Disabled auto scaling for this global table or global secondary index.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AutoScalingRoleArn",
+                          "type": "string",
+                          "description": "Role ARN used for configuring the auto scaling policy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ScalingPolicies",
+                          "type": "list",
+                          "description": "Information about the scaling policies.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "PolicyName",
+                                  "type": "string",
+                                  "description": "The name of the scaling policy.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "TargetTrackingScalingPolicyConfiguration",
+                                  "type": "dict",
+                                  "description": "Represents a target tracking scaling policy configuration.",
+                                  "nested_items": [
+                                    {
+                                      "name": "DisableScaleIn",
+                                      "type": "boolean",
+                                      "description": "Indicates whether scale in by the target tracking policy is disabled. If the value is true, scale in is disabled and the target tracking policy won't remove capacity from the scalable resource. Otherwise, scale in is enabled and the target tracking policy can remove capacity from the scalable resource. The default value is false.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "ScaleInCooldown",
+                                      "type": "integer",
+                                      "description": "The amount of time, in seconds, after a scale in activity completes before another scale in activity can start. The cooldown period is used to block subsequent scale in requests until it has expired. You should scale in conservatively to protect your application's availability. However, if another alarm triggers a scale out policy during the cooldown period after a scale-in, application auto scaling scales out your scalable target immediately.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "ScaleOutCooldown",
+                                      "type": "integer",
+                                      "description": "The amount of time, in seconds, after a scale out activity completes before another scale out activity can start. While the cooldown period is in effect, the capacity that has been added by the previous scale out event that initiated the cooldown is calculated as part of the desired capacity for the next scale out. You should continuously (but not excessively) scale out.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "TargetValue",
+                                      "type": "float",
+                                      "description": "The target value for the metric. The range is 8.515920e-109 to 1.174271e+108 (Base 10) or 2e-360 to 2e360 (Base 2).",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReplicaProvisionedWriteCapacityAutoScalingSettings",
+                      "type": "dict",
+                      "description": "Represents the auto scaling settings for a global table or global secondary index.",
+                      "nested_items": [
+                        {
+                          "name": "MinimumUnits",
+                          "type": "integer",
+                          "description": "The minimum capacity units that a global table or global secondary index should be scaled down to.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MaximumUnits",
+                          "type": "integer",
+                          "description": "The maximum capacity units that a global table or global secondary index should be scaled up to.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AutoScalingDisabled",
+                          "type": "boolean",
+                          "description": "Disabled auto scaling for this global table or global secondary index.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AutoScalingRoleArn",
+                          "type": "string",
+                          "description": "Role ARN used for configuring the auto scaling policy.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ScalingPolicies",
+                          "type": "list",
+                          "description": "Information about the scaling policies.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "PolicyName",
+                                  "type": "string",
+                                  "description": "The name of the scaling policy.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "TargetTrackingScalingPolicyConfiguration",
+                                  "type": "dict",
+                                  "description": "Represents a target tracking scaling policy configuration.",
+                                  "nested_items": [
+                                    {
+                                      "name": "DisableScaleIn",
+                                      "type": "boolean",
+                                      "description": "Indicates whether scale in by the target tracking policy is disabled. If the value is true, scale in is disabled and the target tracking policy won't remove capacity from the scalable resource. Otherwise, scale in is enabled and the target tracking policy can remove capacity from the scalable resource. The default value is false.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "ScaleInCooldown",
+                                      "type": "integer",
+                                      "description": "The amount of time, in seconds, after a scale in activity completes before another scale in activity can start. The cooldown period is used to block subsequent scale in requests until it has expired. You should scale in conservatively to protect your application's availability. However, if another alarm triggers a scale out policy during the cooldown period after a scale-in, application auto scaling scales out your scalable target immediately.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "ScaleOutCooldown",
+                                      "type": "integer",
+                                      "description": "The amount of time, in seconds, after a scale out activity completes before another scale out activity can start. While the cooldown period is in effect, the capacity that has been added by the previous scale out event that initiated the cooldown is calculated as part of the desired capacity for the next scale out. You should continuously (but not excessively) scale out.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "TargetValue",
+                                      "type": "float",
+                                      "description": "The target value for the metric. The range is 8.515920e-109 to 1.174271e+108 (Base 10) or 2e-360 to 2e360 (Base 2).",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ReplicaStatus",
+                      "type": "string",
+                      "description": "The current state of the replica:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CREATING - The replica is being created.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "UPDATING - The replica is being updated.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "DELETING - The replica is being deleted.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ACTIVE - The replica is ready for use.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

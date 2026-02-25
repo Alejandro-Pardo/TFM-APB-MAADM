@@ -1,0 +1,223 @@
+{
+  "method_name": "start_export_task",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rds/client/start_export_task.html",
+  "description": "Starts an export of DB snapshot or DB cluster data to Amazon S3. The provided IAM role must have access to the S3 bucket. You can't export snapshot data from RDS Custom DB instances. For more information, see Supported Regions and DB engines for exporting snapshots to S3 in Amazon RDS. For more information on exporting DB snapshot data, see Exporting DB snapshot data to Amazon S3 in the Amazon RDS User Guide or Exporting DB cluster snapshot data to Amazon S3 in the Amazon Aurora User Guide. For more information on exporting DB cluster data, see Exporting DB cluster data to Amazon S3 in the Amazon Aurora User Guide.",
+  "parameters": [
+    {
+      "name": "ExportTaskIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the export task. This ID isn't an identifier for the Amazon S3 bucket where the data is to be exported.",
+      "nested_params": []
+    },
+    {
+      "name": "SourceArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the snapshot or cluster to export to Amazon S3.",
+      "nested_params": []
+    },
+    {
+      "name": "S3BucketName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Amazon S3 bucket to export the snapshot or cluster data to.",
+      "nested_params": []
+    },
+    {
+      "name": "IamRoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The name of the IAM role to use for writing to the Amazon S3 bucket when exporting a snapshot or cluster. In the IAM policy attached to your IAM role, include the following required actions to allow the transfer of files from Amazon RDS or Amazon Aurora to an S3 bucket: s3:PutObject* s3:GetObject* s3:ListBucket s3:DeleteObject* s3:GetBucketLocation In the policy, include the resources to identify the S3 bucket and objects in the bucket. The following list of resources shows the Amazon Resource Name (ARN) format for accessing S3: arn:aws:s3:::your-s3-bucket arn:aws:s3:::your-s3-bucket/*",
+      "nested_params": []
+    },
+    {
+      "name": "KmsKeyId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the Amazon Web Services KMS key to use to encrypt the data exported to Amazon S3. The Amazon Web Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for the KMS key. The caller of this operation must be authorized to run the following operations. These can be set in the Amazon Web Services KMS key policy: kms:CreateGrant kms:DescribeKey.",
+      "nested_params": []
+    },
+    {
+      "name": "S3Prefix",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ExportOnly",
+      "type": "list",
+      "required": false,
+      "description": "The data to be exported from the snapshot or cluster. If this parameter isn't provided, all of the data is exported. Valid Values: database - Export all the data from a specified database. database.table table-name - Export a table of the snapshot or cluster. This format is valid only for RDS for MySQL, RDS for MariaDB, and Aurora MySQL. database.schema schema-name - Export a database schema of the snapshot or cluster. This format is valid only for RDS for PostgreSQL and Aurora PostgreSQL. database.schema.table table-name - Export a table of the database schema. (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ExportTaskIdentifier",
+          "type": "string",
+          "description": "A unique identifier for the snapshot or cluster export task. This ID isn't an identifier for the Amazon S3 bucket where the data is exported.",
+          "nested_items": []
+        },
+        {
+          "name": "SourceArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the snapshot or cluster exported to Amazon S3.",
+          "nested_items": []
+        },
+        {
+          "name": "ExportOnly",
+          "type": "list",
+          "description": "The data exported from the snapshot or cluster.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "database - Export all the data from a specified database.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "database.table table-name - Export a table of the snapshot or cluster. This format is valid only for RDS for MySQL, RDS for MariaDB, and Aurora MySQL.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "database.schema schema-name - Export a database schema of the snapshot or cluster. This format is valid only for RDS for PostgreSQL and Aurora PostgreSQL.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "database.schema.table table-name - Export a table of the database schema. This format is valid only for RDS for PostgreSQL and Aurora PostgreSQL.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "SnapshotTime",
+          "type": "datetime",
+          "description": "The time when the snapshot was created.",
+          "nested_items": []
+        },
+        {
+          "name": "TaskStartTime",
+          "type": "datetime",
+          "description": "The time when the snapshot or cluster export task started.",
+          "nested_items": []
+        },
+        {
+          "name": "TaskEndTime",
+          "type": "datetime",
+          "description": "The time when the snapshot or cluster export task ended.",
+          "nested_items": []
+        },
+        {
+          "name": "S3Bucket",
+          "type": "string",
+          "description": "The Amazon S3 bucket where the snapshot or cluster is exported to.",
+          "nested_items": []
+        },
+        {
+          "name": "S3Prefix",
+          "type": "string",
+          "description": "The Amazon S3 bucket prefix that is the file name and path of the exported data.",
+          "nested_items": []
+        },
+        {
+          "name": "IamRoleArn",
+          "type": "string",
+          "description": "The name of the IAM role that is used to write to Amazon S3 when exporting a snapshot or cluster.",
+          "nested_items": []
+        },
+        {
+          "name": "KmsKeyId",
+          "type": "string",
+          "description": "The key identifier of the Amazon Web Services KMS key that is used to encrypt the data when it's exported to Amazon S3. The KMS key identifier is its key ARN, key ID, alias ARN, or alias name. The IAM role used for the export must have encryption and decryption permissions to use this KMS key.",
+          "nested_items": []
+        },
+        {
+          "name": "Status",
+          "type": "string",
+          "description": "The progress status of the export task. The status can be one of the following:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "CANCELED.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "CANCELING.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "COMPLETE.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "FAILED.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "IN_PROGRESS.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "STARTING.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "PercentProgress",
+          "type": "integer",
+          "description": "The progress of the snapshot or cluster export task as a percentage.",
+          "nested_items": []
+        },
+        {
+          "name": "TotalExtractedDataInGB",
+          "type": "integer",
+          "description": "The total amount of data exported, in gigabytes.",
+          "nested_items": []
+        },
+        {
+          "name": "FailureCause",
+          "type": "string",
+          "description": "The reason the export failed, if it failed.",
+          "nested_items": []
+        },
+        {
+          "name": "WarningMessage",
+          "type": "string",
+          "description": "A warning about the snapshot or cluster export task.",
+          "nested_items": []
+        },
+        {
+          "name": "SourceType",
+          "type": "string",
+          "description": "The type of source for the export.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

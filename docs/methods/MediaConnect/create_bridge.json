@@ -1,0 +1,601 @@
+{
+  "method_name": "create_bridge",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/mediaconnect/client/create_bridge.html",
+  "description": "Creates a new bridge. The request must include one source.",
+  "parameters": [
+    {
+      "name": "EgressGatewayBridge",
+      "type": "dict",
+      "required": true,
+      "description": "An egress bridge is a cloud-to-ground bridge. The content comes from an existing MediaConnect flow and is delivered to your premises. The maximum expected bitrate (in bps) of the egress bridge.",
+      "nested_params": [
+        {
+          "name": "MaxBitrate",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum expected bitrate (in bps) of the egress bridge.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "IngressGatewayBridge",
+      "type": "dict",
+      "required": true,
+      "description": "An ingress bridge is a ground-to-cloud bridge. The content originates at your premises and is delivered to the cloud. The maximum expected bitrate (in bps) of the ingress bridge. The maximum number of expected outputs on the ingress bridge.",
+      "nested_params": [
+        {
+          "name": "MaxBitrate",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum expected bitrate (in bps) of the ingress bridge.",
+          "nested_params": []
+        },
+        {
+          "name": "MaxOutputs",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of expected outputs on the ingress bridge.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the bridge. This name can not be modified after the bridge is created.",
+      "nested_params": []
+    },
+    {
+      "name": "Outputs",
+      "type": "list",
+      "required": true,
+      "description": "The outputs that you want to add to this bridge. (dict) --- Add outputs to the specified bridge. NetworkOutput (dict) --- The network output of the bridge. A network output is delivered to your premises. The network output IP Address. The network output name. This name is used to reference the output and must be unique among outputs in this bridge. The network output's gateway network name. The network output port. The network output protocol. The network output TTL.",
+      "nested_params": [
+        {
+          "name": "NetworkOutput",
+          "type": "dict",
+          "required": false,
+          "description": "The network output of the bridge. A network output is delivered to your premises.",
+          "nested_params": [
+            {
+              "name": "IpAddress",
+              "type": "string",
+              "required": false,
+              "description": "The network output IP Address.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The network output name. This name is used to reference the output and must be unique among outputs in this bridge.",
+              "nested_params": []
+            },
+            {
+              "name": "NetworkName",
+              "type": "string",
+              "required": false,
+              "description": "The network output's gateway network name.",
+              "nested_params": []
+            },
+            {
+              "name": "Port",
+              "type": "integer",
+              "required": false,
+              "description": "The network output port.",
+              "nested_params": []
+            },
+            {
+              "name": "Protocol",
+              "type": "string",
+              "required": false,
+              "description": "The network output protocol.",
+              "nested_params": []
+            },
+            {
+              "name": "Ttl",
+              "type": "integer",
+              "required": false,
+              "description": "The network output TTL.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PlacementArn",
+      "type": "string",
+      "required": true,
+      "description": "The bridge placement Amazon Resource Number (ARN).",
+      "nested_params": []
+    },
+    {
+      "name": "SourceFailoverConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The settings for source failover. FailoverMode (string) --- The type of failover you choose for this flow. MERGE combines the source streams into a single stream, allowing graceful recovery from any single-source loss. FAILOVER allows switching between different streams. RecoveryWindow (integer) --- Search window time to look for dash-7 packets. SourcePriority (dict) --- The priority you want to assign to a source. You can have a primary stream and a backup stream or two equally prioritized streams. PrimarySource (string) --- The name of the source you choose as the primary source for this flow. State (string) --- The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources.",
+      "nested_params": [
+        {
+          "name": "FailoverMode",
+          "type": "string",
+          "required": false,
+          "description": "The type of failover you choose for this flow. MERGE combines the source streams into a single stream, allowing graceful recovery from any single-source loss. FAILOVER allows switching between different streams.",
+          "nested_params": []
+        },
+        {
+          "name": "RecoveryWindow",
+          "type": "integer",
+          "required": false,
+          "description": "Search window time to look for dash-7 packets.",
+          "nested_params": []
+        },
+        {
+          "name": "SourcePriority",
+          "type": "dict",
+          "required": false,
+          "description": "The priority you want to assign to a source. You can have a primary stream and a backup stream or two equally prioritized streams.",
+          "nested_params": [
+            {
+              "name": "PrimarySource",
+              "type": "string",
+              "required": false,
+              "description": "The name of the source you choose as the primary source for this flow.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "State",
+          "type": "string",
+          "required": false,
+          "description": "The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Sources",
+      "type": "list",
+      "required": true,
+      "description": "The sources that you want to add to this bridge. (dict) --- Add an output to a bridge. FlowSource (dict) --- The source of the flow. The Amazon Resource Number (ARN) of the flow to use as a source of this bridge. FlowVpcInterfaceAttachment (dict) --- The name of the VPC interface attachment to use for this source. VpcInterfaceName (string) --- The name of the VPC interface to use for this resource. The name of the flow source. This name is used to reference the source and must be unique among sources in this bridge. NetworkSource (dict) --- The source of the network. The network source multicast IP. MulticastSourceSettings (dict) --- The settings related to the multicast source. MulticastSourceIp (string) --- The IP address of the source for source-specific multicast (SSM). The name of the network source. The network source's gateway network name. The network source port. The network source protocol.",
+      "nested_params": [
+        {
+          "name": "FlowSource",
+          "type": "dict",
+          "required": false,
+          "description": "The source of the flow.",
+          "nested_params": [
+            {
+              "name": "FlowArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Number (ARN) of the flow to use as a source of this bridge.",
+              "nested_params": []
+            },
+            {
+              "name": "FlowVpcInterfaceAttachment",
+              "type": "dict",
+              "required": false,
+              "description": "The name of the VPC interface attachment to use for this source.",
+              "nested_params": [
+                {
+                  "name": "VpcInterfaceName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the VPC interface to use for this resource.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the flow source. This name is used to reference the source and must be unique among sources in this bridge.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "NetworkSource",
+          "type": "dict",
+          "required": false,
+          "description": "The source of the network.",
+          "nested_params": [
+            {
+              "name": "MulticastIp",
+              "type": "string",
+              "required": false,
+              "description": "The network source multicast IP.",
+              "nested_params": []
+            },
+            {
+              "name": "MulticastSourceSettings",
+              "type": "dict",
+              "required": false,
+              "description": "The settings related to the multicast source.",
+              "nested_params": [
+                {
+                  "name": "MulticastSourceIp",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IP address of the source for source-specific multicast (SSM).",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the network source. This name is used to reference the source and must be unique among sources in this bridge.",
+              "nested_params": []
+            },
+            {
+              "name": "NetworkName",
+              "type": "string",
+              "required": false,
+              "description": "The network source's gateway network name.",
+              "nested_params": []
+            },
+            {
+              "name": "Port",
+              "type": "integer",
+              "required": false,
+              "description": "The network source port.",
+              "nested_params": []
+            },
+            {
+              "name": "Protocol",
+              "type": "string",
+              "required": false,
+              "description": "The network source protocol.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "BridgeArn",
+              "type": "string",
+              "description": "The Amazon Resource Number (ARN) of the bridge.",
+              "nested_items": []
+            },
+            {
+              "name": "BridgeMessages",
+              "type": "list",
+              "description": "Messages with details about the bridge.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Code",
+                      "type": "string",
+                      "description": "The error code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Message",
+                      "type": "string",
+                      "description": "The specific error message that MediaConnect returns to help you understand the reason that the request did not succeed.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ResourceName",
+                      "type": "string",
+                      "description": "The name of the resource.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "BridgeState",
+              "type": "string",
+              "description": "The state of the bridge.",
+              "nested_items": []
+            },
+            {
+              "name": "EgressGatewayBridge",
+              "type": "dict",
+              "description": "An egress bridge is a cloud-to-ground bridge. The content comes from an existing MediaConnect flow and is delivered to your premises.",
+              "nested_items": [
+                {
+                  "name": "InstanceId",
+                  "type": "string",
+                  "description": "The ID of the instance running this bridge.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxBitrate",
+                  "type": "integer",
+                  "description": "The maximum expected bitrate (in bps) of the egress bridge.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "IngressGatewayBridge",
+              "type": "dict",
+              "description": "An ingress bridge is a ground-to-cloud bridge. The content originates at your premises and is delivered to the cloud.",
+              "nested_items": [
+                {
+                  "name": "InstanceId",
+                  "type": "string",
+                  "description": "The ID of the instance running this bridge.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxBitrate",
+                  "type": "integer",
+                  "description": "The maximum expected bitrate (in bps) of the ingress bridge.",
+                  "nested_items": []
+                },
+                {
+                  "name": "MaxOutputs",
+                  "type": "integer",
+                  "description": "The maximum number of outputs on the ingress bridge.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "The name of the bridge.",
+              "nested_items": []
+            },
+            {
+              "name": "Outputs",
+              "type": "list",
+              "description": "The outputs on this bridge.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "FlowOutput",
+                      "type": "dict",
+                      "description": "The output of the associated flow.",
+                      "nested_items": [
+                        {
+                          "name": "FlowArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Number (ARN) of the cloud flow.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "FlowSourceArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Number (ARN) of the flow source.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of the bridge's output.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NetworkOutput",
+                      "type": "dict",
+                      "description": "The network output for the bridge.",
+                      "nested_items": [
+                        {
+                          "name": "IpAddress",
+                          "type": "string",
+                          "description": "The network output IP address.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The network output name.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NetworkName",
+                          "type": "string",
+                          "description": "The network output's gateway network name.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Port",
+                          "type": "integer",
+                          "description": "The network output's port.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Protocol",
+                          "type": "string",
+                          "description": "The network output protocol.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Ttl",
+                          "type": "integer",
+                          "description": "The network output TTL.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "PlacementArn",
+              "type": "string",
+              "description": "The placement Amazon Resource Number (ARN) of the bridge.",
+              "nested_items": []
+            },
+            {
+              "name": "SourceFailoverConfig",
+              "type": "dict",
+              "description": "The settings for source failover.",
+              "nested_items": [
+                {
+                  "name": "FailoverMode",
+                  "type": "string",
+                  "description": "The type of failover you choose for this flow. MERGE combines the source streams into a single stream, allowing graceful recovery from any single-source loss. FAILOVER allows switching between different streams.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RecoveryWindow",
+                  "type": "integer",
+                  "description": "Search window time to look for dash-7 packets.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SourcePriority",
+                  "type": "dict",
+                  "description": "The priority you want to assign to a source. You can have a primary stream and a backup stream or two equally prioritized streams.",
+                  "nested_items": [
+                    {
+                      "name": "PrimarySource",
+                      "type": "string",
+                      "description": "The name of the source you choose as the primary source for this flow.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "State",
+                  "type": "string",
+                  "description": "The state of source failover on the flow. If the state is inactive, the flow can have only one source. If the state is active, the flow can have one or two sources.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Sources",
+              "type": "list",
+              "description": "The sources on this bridge.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "FlowSource",
+                      "type": "dict",
+                      "description": "The source of the associated flow.",
+                      "nested_items": [
+                        {
+                          "name": "FlowArn",
+                          "type": "string",
+                          "description": "The ARN of the cloud flow used as a source of this bridge.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "FlowVpcInterfaceAttachment",
+                          "type": "dict",
+                          "description": "The name of the VPC interface attachment to use for this source.",
+                          "nested_items": [
+                            {
+                              "name": "VpcInterfaceName",
+                              "type": "string",
+                              "description": "The name of the VPC interface to use for this resource.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of the flow source.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "OutputArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Number (ARN) of the output.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "NetworkSource",
+                      "type": "dict",
+                      "description": "The network source for the bridge.",
+                      "nested_items": [
+                        {
+                          "name": "MulticastIp",
+                          "type": "string",
+                          "description": "The network source multicast IP.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MulticastSourceSettings",
+                          "type": "dict",
+                          "description": "The settings related to the multicast source.",
+                          "nested_items": [
+                            {
+                              "name": "MulticastSourceIp",
+                              "type": "string",
+                              "description": "The IP address of the source for source-specific multicast (SSM).",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Name",
+                          "type": "string",
+                          "description": "The name of the network source.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "NetworkName",
+                          "type": "string",
+                          "description": "The network source's gateway network name.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Port",
+                          "type": "integer",
+                          "description": "The network source port.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Protocol",
+                          "type": "string",
+                          "description": "The network source protocol.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

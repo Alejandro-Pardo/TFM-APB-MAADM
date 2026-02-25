@@ -1,0 +1,472 @@
+{
+  "method_name": "analyze_id",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract/client/analyze_id.html",
+  "description": "Analyzes identity documents for relevant information. This information is extracted and returned as IdentityDocumentFields, which records both the normalized field and value of the extracted text. Unlike other Amazon Textract operations, AnalyzeID doesn't return any Geometry data.",
+  "parameters": [
+    {
+      "name": "DocumentPages",
+      "type": "list",
+      "required": true,
+      "description": "The document being passed to AnalyzeID. (dict) --- The input document, either as bytes or as an S3 object. You pass image bytes to an Amazon Textract API operation by using the Bytes property. For example, you would use the Bytes property to pass a document loaded from a local file system. Image bytes passed by using the Bytes property must be base64 encoded. Your code might not need to encode document file bytes if you're using an AWS SDK to call Amazon Textract API operations. You pass images stored in an S3 bucket to an Amazon Textract API operation by using the S3Object property. Documents stored in an S3 bucket don't need to be base64 encoded. The AWS Region for the S3 bucket that contains the S3 object must match the AWS Region that you use for Amazon Textract operations. If you use the AWS CLI to call Amazon Textract operations, passing image bytes using the Bytes property isn't supported. You must first upload the document to an Amazon S3 bucket, and then call the operation using the S3Object property. For Amazon Textract to process an S3 object, the user must have permission to access the S3 object. Bytes (bytes) --- A blob of base64-encoded document bytes. The maximum size of a document that's provided in a blob of bytes is 5 MB. The document bytes must be in PNG or JPEG format. If you're using an AWS SDK to call Amazon Textract, you might not need to base64-encode image bytes passed using the Bytes field. S3Object (dict) --- Identifies an S3 object as the document source. The maximum size of a document that's stored in an S3 bucket is 5 MB. Bucket (string) --- The name of the S3 bucket. Note that the # character is not valid in the file name. Name (string) --- The file name of the input document. Image files may be in PDF, TIFF, JPEG, or PNG format. Version (string) --- If the bucket has versioning enabled, you can specify the object version.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "IdentityDocuments",
+          "type": "list",
+          "description": "The list of documents processed by AnalyzeID. Includes a number denoting their place in the list and the response structure for the document.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "DocumentIndex",
+                  "type": "integer",
+                  "description": "Denotes the placement of a document in the IdentityDocument list. The first document is marked 1, the second 2 and so on.",
+                  "nested_items": []
+                },
+                {
+                  "name": "IdentityDocumentFields",
+                  "type": "list",
+                  "description": "The structure used to record information extracted from identity documents. Contains both normalized field and value of the extracted text.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Text",
+                              "type": "string",
+                              "description": "Text of either the normalized field or value associated with it.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "NormalizedValue",
+                              "type": "dict",
+                              "description": "Only returned for dates, returns the type of value detected and the date written in a more machine readable way.",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The value of the date, written as Year-Month-DayTHour:Minute:Second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ValueType",
+                                  "type": "string",
+                                  "description": "The normalized type of the value detected. In this case, DATE.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "The confidence score of the detected text.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ValueDetection",
+                          "type": "dict",
+                          "description": "Used to contain the information detected by an AnalyzeID operation.",
+                          "nested_items": [
+                            {
+                              "name": "Text",
+                              "type": "string",
+                              "description": "Text of either the normalized field or value associated with it.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "NormalizedValue",
+                              "type": "dict",
+                              "description": "Only returned for dates, returns the type of value detected and the date written in a more machine readable way.",
+                              "nested_items": [
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "description": "The value of the date, written as Year-Month-DayTHour:Minute:Second.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ValueType",
+                                  "type": "string",
+                                  "description": "The normalized type of the value detected. In this case, DATE.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "The confidence score of the detected text.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Blocks",
+                  "type": "list",
+                  "description": "Individual word recognition, as returned by document detection.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "BlockType",
+                          "type": "string",
+                          "description": "The type of text item that's recognized. In operations for text detection, the following types are returned:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PAGE - Contains a list of the LINE Block objects that are detected on a document page.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "WORD - A word detected on a document page. A word is one or more ISO basic Latin script characters that aren't separated by spaces.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "LINE - A string of space-delimited, contiguous words that are detected on a document page.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Confidence",
+                          "type": "float",
+                          "description": "The confidence score that Amazon Textract has in the accuracy of the recognized text and the accuracy of the geometry points around the recognized text.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Text",
+                          "type": "string",
+                          "description": "The word or line of text that's recognized by Amazon Textract.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TextType",
+                          "type": "string",
+                          "description": "The kind of text that Amazon Textract has detected. Can check for handwritten text and printed text.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RowIndex",
+                          "type": "integer",
+                          "description": "The row in which a table cell is located. The first row position is 1. RowIndex isn't returned by DetectDocumentText and GetDocumentTextDetection.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ColumnIndex",
+                          "type": "integer",
+                          "description": "The column in which a table cell appears. The first column position is 1. ColumnIndex isn't returned by DetectDocumentText and GetDocumentTextDetection.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RowSpan",
+                          "type": "integer",
+                          "description": "The number of rows that a table cell spans. RowSpan isn't returned by DetectDocumentText and GetDocumentTextDetection.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ColumnSpan",
+                          "type": "integer",
+                          "description": "The number of columns that a table cell spans. ColumnSpan isn't returned by DetectDocumentText and GetDocumentTextDetection.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "BoundingBox",
+                              "type": "dict",
+                              "description": "An axis-aligned coarse representation of the location of the recognized item on the document page.",
+                              "nested_items": [
+                                {
+                                  "name": "Width",
+                                  "type": "float",
+                                  "description": "The width of the bounding box as a ratio of the overall document page width.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Height",
+                                  "type": "float",
+                                  "description": "The height of the bounding box as a ratio of the overall document page height.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Left",
+                                  "type": "float",
+                                  "description": "The left coordinate of the bounding box as a ratio of overall document page width.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Top",
+                                  "type": "float",
+                                  "description": "The top coordinate of the bounding box as a ratio of overall document page height.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Polygon",
+                              "type": "list",
+                              "description": "Within the bounding box, a fine-grained polygon around the recognized item.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "X",
+                                      "type": "float",
+                                      "description": "The value of the X coordinate for a point on a Polygon.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Y",
+                                      "type": "float",
+                                      "description": "The value of the Y coordinate for a point on a Polygon.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "RotationAngle",
+                              "type": "float",
+                              "description": "Provides a numerical value corresponding to the rotation of the text.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Id",
+                          "type": "string",
+                          "description": "The identifier for the recognized text. The identifier is only unique for a single operation.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Relationships",
+                          "type": "list",
+                          "description": "A list of relationship objects that describe how blocks are related to each other. For example, a LINE block object contains a CHILD relationship type with the WORD blocks that make up the line of text. There aren't Relationship objects in the list for relationships that don't exist, such as when the current block has no child blocks.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Type",
+                                  "type": "string",
+                                  "description": "The type of relationship between the blocks in the IDs array and the current block. The following list describes the relationship types that can be returned.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "VALUE - A list that contains the ID of the VALUE block that's associated with the KEY of a key-value pair.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "CHILD - A list of IDs that identify blocks found within the current block object. For example, WORD blocks have a CHILD relationship to the LINE block type.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "MERGED_CELL - A list of IDs that identify each of the MERGED_CELL block types in a table.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "ANSWER - A list that contains the ID of the QUERY_RESULT block that's associated with the corresponding QUERY block.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "TABLE - A list of IDs that identify associated TABLE block types.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "TABLE_TITLE - A list that contains the ID for the TABLE_TITLE block type in a table.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "",
+                                      "type": "",
+                                      "description": "TABLE_FOOTER - A list of IDs that identify the TABLE_FOOTER block types in a table.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Ids",
+                                  "type": "list",
+                                  "description": "An array of IDs for related blocks. You can get the type of the relationship from the Type element.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "EntityTypes",
+                          "type": "list",
+                          "description": "The type of entity.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "KEY - An identifier for a field on the document.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "VALUE - The field text.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "SelectionStatus",
+                          "type": "string",
+                          "description": "The selection status of a selection element, such as an option button or check box.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Page",
+                          "type": "integer",
+                          "description": "The page on which a block was detected. Page is returned by synchronous and asynchronous operations. Page values greater than 1 are only returned for multipage documents that are in PDF or TIFF format. A scanned image (JPEG/PNG) provided to an asynchronous operation, even if it contains multiple document pages, is considered a single-page document. This means that for scanned images the value of Page is always 1.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Text",
+                              "type": "string",
+                              "description": "Question that Amazon Textract will apply to the document. An example would be 'What is the customer's SSN?'",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Alias",
+                              "type": "string",
+                              "description": "Alias attached to the query, for ease of location.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Pages",
+                              "type": "list",
+                              "description": "Pages is a parameter that the user inputs to specify which pages to apply a query to. The following is a list of rules for using this parameter.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "If a page is not specified, it is set to [\"1\"] by default.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "The following characters are allowed in the parameter's string: 0 1 2 3 4 5 6 7 8 9 - *. No whitespace is allowed.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "When using * to indicate all pages, it must be the only element in the list.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "You can use page intervals, such as ['1-3', '1-1', '4-*']. Where * indicates last page of document.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Specified pages must be greater than 0 and less than or equal to the number of pages in the document.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DocumentMetadata",
+          "type": "dict",
+          "description": "Information about the input document.",
+          "nested_items": [
+            {
+              "name": "Pages",
+              "type": "integer",
+              "description": "The number of pages that are detected in the document.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "AnalyzeIDModelVersion",
+          "type": "string",
+          "description": "The version of the AnalyzeIdentity API being used to process documents.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

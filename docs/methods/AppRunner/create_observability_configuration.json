@@ -1,0 +1,122 @@
+{
+  "method_name": "create_observability_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/apprunner/client/create_observability_configuration.html",
+  "description": "Create an App Runner observability configuration resource. App Runner requires this resource when you create or update App Runner services and you want to enable non-default observability features. You can share an observability configuration across multiple services. Create multiple revisions of a configuration by calling this action multiple times using the same ObservabilityConfigurationName. The call returns incremental ObservabilityConfigurationRevision values. When you create a service and configure an observability configuration resource, the service uses the latest active revision of the observability configuration by default. You can optionally configure the service to use a specific revision. The observability configuration resource is designed to configure multiple features (currently one feature, tracing). This action takes optional parameters that describe the configuration of these features (currently one parameter, TraceConfiguration). If you don't specify a feature parameter, App Runner doesn't enable the feature.",
+  "parameters": [
+    {
+      "name": "ObservabilityConfigurationName",
+      "type": "string",
+      "required": true,
+      "description": "A name for the observability configuration. When you use it for the first time in an Amazon Web Services Region, App Runner creates revision number 1 of this name. When you use the same name in subsequent calls, App Runner creates incremental revisions of the configuration.",
+      "nested_params": []
+    },
+    {
+      "name": "TraceConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The configuration of the tracing feature within this observability configuration. If you don't specify it, App Runner doesn't enable tracing. The implementation provider chosen for tracing App Runner services.",
+      "nested_params": [
+        {
+          "name": "Vendor",
+          "type": "string",
+          "required": false,
+          "description": "The implementation provider chosen for tracing App Runner services.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": false,
+      "description": "A list of metadata items that you can associate with your observability configuration resource. A tag is a key-value pair. (dict) --- Describes a tag that is applied to an App Runner resource. A tag is a metadata item consisting of a key-value pair. Key (string) --- The key of the tag. Value (string) --- The value of the tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the tag.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ObservabilityConfiguration",
+          "type": "dict",
+          "description": "A description of the App Runner observability configuration that's created by this request.",
+          "nested_items": [
+            {
+              "name": "ObservabilityConfigurationArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of this observability configuration.",
+              "nested_items": []
+            },
+            {
+              "name": "ObservabilityConfigurationName",
+              "type": "string",
+              "description": "The customer-provided observability configuration name. It can be used in multiple revisions of a configuration.",
+              "nested_items": []
+            },
+            {
+              "name": "TraceConfiguration",
+              "type": "dict",
+              "description": "The configuration of the tracing feature within this observability configuration. If not specified, tracing isn't enabled.",
+              "nested_items": [
+                {
+                  "name": "Vendor",
+                  "type": "string",
+                  "description": "The implementation provider chosen for tracing App Runner services.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ObservabilityConfigurationRevision",
+              "type": "integer",
+              "description": "The revision of this observability configuration. It's unique among all the active configurations ( \"Status\": \"ACTIVE\") that share the same ObservabilityConfigurationName.",
+              "nested_items": []
+            },
+            {
+              "name": "Latest",
+              "type": "boolean",
+              "description": "It's set to true for the configuration with the highest Revision among all configurations that share the same ObservabilityConfigurationName. It's set to false otherwise.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The current state of the observability configuration. If the status of a configuration revision is INACTIVE, it was deleted and can't be used. Inactive configuration revisions are permanently removed some time after they are deleted.",
+              "nested_items": []
+            },
+            {
+              "name": "CreatedAt",
+              "type": "datetime",
+              "description": "The time when the observability configuration was created. It's in Unix time stamp format.",
+              "nested_items": []
+            },
+            {
+              "name": "DeletedAt",
+              "type": "datetime",
+              "description": "The time when the observability configuration was deleted. It's in Unix time stamp format.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

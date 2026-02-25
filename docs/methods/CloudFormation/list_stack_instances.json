@@ -1,0 +1,279 @@
+{
+  "method_name": "list_stack_instances",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/list_stack_instances.html",
+  "description": "Returns summary information about stack instances that are associated with the specified stack set. You can filter for stack instances that are associated with a specific Amazon Web Services account name or Region, or that have a specific status.",
+  "parameters": [
+    {
+      "name": "StackSetName",
+      "type": "string",
+      "required": true,
+      "description": "The name or unique ID of the stack set that you want to list stack instances for.",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Filters",
+      "type": "list",
+      "required": false,
+      "description": "The filter to apply to stack instances (dict) --- The filter to apply to stack instances Name (string) --- The type of filter to apply. Values (string) --- The status to filter by.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The type of filter to apply.",
+          "nested_params": []
+        },
+        {
+          "name": "Values",
+          "type": "string",
+          "required": false,
+          "description": "The status to filter by.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "StackInstanceAccount",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StackInstanceRegion",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CallAs",
+      "type": "string",
+      "required": false,
+      "description": "[Service-managed permissions] Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. By default, SELF is specified. Use SELF for stack sets with self-managed permissions. If you are signed in to the management account, specify SELF. If you are signed in to a delegated administrator account, specify DELEGATED_ADMIN. Your Amazon Web Services account must be registered as a delegated administrator in the management account. For more information, see Register a delegated administrator in the CloudFormation User Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Summaries",
+          "type": "list",
+          "description": "A list of StackInstanceSummary structures that contain information about the specified stack instances.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "StackSetId",
+                  "type": "string",
+                  "description": "The name or unique ID of the stack set that the stack instance is associated with.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Region",
+                  "type": "string",
+                  "description": "The name of the Amazon Web Services Region that the stack instance is associated with.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Account",
+                  "type": "string",
+                  "description": "[Self-managed permissions] The name of the Amazon Web Services account that the stack instance is associated with.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StackId",
+                  "type": "string",
+                  "description": "The ID of the stack instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The status of the stack instance, in terms of its synchronization with its associated stack set.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "INOPERABLE: A DeleteStackInstances operation has failed and left the stack in an unstable state. Stacks in this state are excluded from further UpdateStackSet operations. You might need to perform a DeleteStackInstances operation, with RetainStacks set to true, to delete the stack instance, and then delete the stack manually. INOPERABLE can be returned here when the cause is a failed import. If it's due to a failed import, the operation can be retried once the failures are fixed. To see if this is due to a failed import, call the  DescribeStackInstance API operation, look at the DetailedStatus member returned in the StackInstanceSummary member.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "OUTDATED: The stack isn't currently up to date with the stack set because:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The associated stack failed during a CreateStackSet or UpdateStackSet operation.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The stack was part of a CreateStackSet or UpdateStackSet operation that failed or was stopped before the stack was created or updated.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CURRENT: The stack is currently up to date with the stack set.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StatusReason",
+                  "type": "string",
+                  "description": "The explanation for the specific status code assigned to this stack instance.",
+                  "nested_items": []
+                },
+                {
+                  "name": "StackInstanceStatus",
+                  "type": "dict",
+                  "description": "The detailed status of the stack instance.",
+                  "nested_items": [
+                    {
+                      "name": "DetailedStatus",
+                      "type": "string",
+                      "description": "CANCELLED: The operation in the specified account and Region has been canceled. This is either because a user has stopped the stack set operation, or because the failure tolerance of the stack set operation has been exceeded.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "CANCELLED: The operation in the specified account and Region has been canceled. This is either because a user has stopped the stack set operation, or because the failure tolerance of the stack set operation has been exceeded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "FAILED: The operation in the specified account and Region failed. If the stack set operation fails in enough accounts within a Region, the failure tolerance for the stack set operation as a whole might be exceeded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "FAILED_IMPORT: The import of the stack instance in the specified account and Region failed and left the stack in an unstable state. Once the issues causing the failure are fixed, the import operation can be retried. If enough stack set operations fail in enough accounts within a Region, the failure tolerance for the stack set operation as a whole might be exceeded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "INOPERABLE: A DeleteStackInstances operation has failed and left the stack in an unstable state. Stacks in this state are excluded from further UpdateStackSet operations. You might need to perform a DeleteStackInstances operation, with RetainStacks set to true, to delete the stack instance, and then delete the stack manually.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "PENDING: The operation in the specified account and Region has yet to start.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "RUNNING: The operation in the specified account and Region is currently in progress.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SKIPPED_SUSPENDED_ACCOUNT: The operation in the specified account and Region has been skipped because the account was suspended at the time of the operation.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SUCCEEDED: The operation in the specified account and Region completed successfully.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "OrganizationalUnitId",
+                  "type": "string",
+                  "description": "[Service-managed permissions] The organization root ID or organizational unit (OU) IDs that you specified for DeploymentTargets.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DriftStatus",
+                  "type": "string",
+                  "description": "Status of the stack instance's actual configuration compared to the expected template and parameter configuration of the stack set to which it belongs.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DRIFTED: The stack differs from the expected template and parameter configuration of the stack set to which it belongs. A stack instance is considered to have drifted if one or more of the resources in the associated stack have drifted.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "NOT_CHECKED: CloudFormation hasn't checked if the stack instance differs from its expected stack set configuration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "IN_SYNC: The stack instance's actual configuration matches its expected stack set configuration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "UNKNOWN: This value is reserved for future use.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "LastDriftCheckTimestamp",
+                  "type": "datetime",
+                  "description": "Most recent time when CloudFormation performed a drift detection operation on the stack instance. This value will be NULL for any stack instance on which drift detection hasn't yet been performed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastOperationId",
+                  "type": "string",
+                  "description": "The last unique ID of a StackSet operation performed on a stack instance.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the request doesn't return all the remaining results, NextToken is set to a token. To retrieve the next set of results, call ListStackInstances again and assign that token to the request object's NextToken parameter. If the request returns all results, NextToken is set to null.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

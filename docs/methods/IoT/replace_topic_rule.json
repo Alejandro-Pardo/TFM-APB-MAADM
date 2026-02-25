@@ -1,0 +1,2287 @@
+{
+  "method_name": "replace_topic_rule",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iot/client/replace_topic_rule.html",
+  "description": "Replaces the rule. You must specify all parameters for the new rule. Creating rules is an administrator-level action. Any user who has permission to create rules will be able to access data processed by the rule. Requires permission to access the ReplaceTopicRule action.",
+  "parameters": [
+    {
+      "name": "ruleName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the rule.",
+      "nested_params": []
+    },
+    {
+      "name": "topicRulePayload",
+      "type": "dict",
+      "required": true,
+      "description": "The rule payload. The SQL statement used to query the topic. For more information, see IoT SQL Reference in the IoT Developer Guide. description (string) --- The description of the rule. The actions associated with the rule. (dict) --- Describes the actions associated with a rule. dynamoDB (dict) --- Write to a DynamoDB table. The name of the DynamoDB table. The ARN of the IAM role that grants access to the DynamoDB table. operation (string) --- The type of operation to be performed. This follows the substitution template, so it can be ${operation}, but the substitution must result in one of the following: INSERT, UPDATE, or DELETE. The hash key name. The hash key value. hashKeyType (string) --- The hash key type. Valid values are 'STRING' or 'NUMBER' rangeKeyField (string) --- The range key name. rangeKeyValue (string) --- The range key value. rangeKeyType (string) --- The range key type. Valid values are 'STRING' or 'NUMBER' payloadField (string) --- The action payload. This name can be customized. dynamoDBv2 (dict) --- Write to a DynamoDB table. This is a new version of the DynamoDB action. It allows you to write each attribute in an MQTT message payload into a separate DynamoDB column. Specifies the DynamoDB table to which the message data will be written. For example: { \"dynamoDBv2\": { \"roleArn\": \"aws:iam:12341251:my-role\" \"putItem\": { \"tableName\": \"my-table\" } } } Each attribute in the message payload will be written to a separate column in the DynamoDB database. The table where the message data will be written. lambda (dict) --- Invoke a Lambda function. The ARN of the Lambda function. sns (dict) --- Publish to an Amazon SNS topic. The ARN of the SNS topic. The ARN of the IAM role that grants access. messageFormat (string) --- (Optional) The message format of the message to publish. Accepted values are 'JSON' and 'RAW'. The default value of the attribute is 'RAW'. SNS uses this setting to determine if the payload should be parsed and relevant platform-specific bits of the payload should be extracted. To read more about SNS message formats, see https://docs.aws.amazon.com/sns/latest/dg/json-formats.html refer to their official documentation. sqs (dict) --- Publish to an Amazon SQS queue. The URL of the Amazon SQS queue. useBase64 (boolean) --- Specifies whether to use Base64 encoding. kinesis (dict) --- Write data to an Amazon Kinesis stream. The ARN of the IAM role that grants access to the Amazon Kinesis stream. The name of the Amazon Kinesis stream. partitionKey (string) --- The partition key. republish (dict) --- Publish to another MQTT topic. The name of the MQTT topic. qos (integer) --- The Quality of Service (QoS) level to use when republishing messages. The default value is 0. headers (dict) --- MQTT Version 5.0 headers information. For more information, see MQTT from the Amazon Web Services IoT Core Developer Guide. payloadFormatIndicator (string) --- An Enum string value that indicates whether the payload is formatted as UTF-8. Valid values are UNSPECIFIED_BYTES and UTF8_DATA. For more information, see Payload Format Indicator from the MQTT Version 5.0 specification. Supports substitution templates. contentType (string) --- A UTF-8 encoded string that describes the content of the publishing message. For more information, see Content Type from the MQTT Version 5.0 specification. responseTopic (string) --- A UTF-8 encoded string that's used as the topic name for a response message. The response topic is used to describe the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters. For more information, see Response Topic from the MQTT Version 5.0 specification. correlationData (string) --- The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. For more information, see Correlation Data from the MQTT Version 5.0 specification. messageExpiry (string) --- A user-defined integer value that will persist a message at the message broker for a specified amount of time to ensure that the message will expire if it's no longer relevant to the subscriber. The value of messageExpiry represents the number of seconds before it expires. For more information about the limits of messageExpiry, see Amazon Web Services IoT Core message broker and protocol limits and quotas from the Amazon Web Services Reference Guide. userProperties (list) --- An array of key-value pairs that you define in the MQTT5 header. (dict) --- A key-value pair that you define in the header. Both the key and the value are either literal strings or valid substitution templates. A key to be specified in UserProperty. A value to be specified in UserProperty. s3 (dict) --- Write to an Amazon S3 bucket. The Amazon S3 bucket. The object key. For more information, see Actions, resources, and condition keys for Amazon S3. cannedAcl (string) --- The Amazon S3 canned ACL that controls access to the object identified by the object key. For more information, see S3 canned ACLs. firehose (dict) --- Write to an Amazon Kinesis Firehose stream. The IAM role that grants access to the Amazon Kinesis Firehose stream. The delivery stream name. separator (string) --- A character separator that will be used to separate records written to the Firehose stream. Valid values are: --\u0098n' (newline), --\u0098t' (tab), --\u0098rn' (Windows newline), --\u0098,' (comma). batchMode (boolean) --- Whether to deliver the Kinesis Data Firehose stream as a batch by using PutRecordBatch. The default value is false. When batchMode is true and the rule's SQL statement evaluates to an Array, each Array element forms one record in the PutRecordBatch request. The resulting array can't have more than 500 records. cloudwatchMetric (dict) --- Capture a CloudWatch metric. The IAM role that allows access to the CloudWatch metric. The CloudWatch metric namespace name. The CloudWatch metric name. The CloudWatch metric value. The metric unit supported by CloudWatch. metricTimestamp (string) --- An optional Unix timestamp. cloudwatchAlarm (dict) --- Change the state of a CloudWatch alarm. The IAM role that allows access to the CloudWatch alarm. The CloudWatch alarm name. The reason for the alarm change. The value of the alarm state. Acceptable values are: OK, ALARM, INSUFFICIENT_DATA. cloudwatchLogs (dict) --- Send data to CloudWatch Logs. The IAM role that allows access to the CloudWatch log. The CloudWatch log group to which the action sends data. batchMode (boolean) --- Indicates whether batches of log records will be extracted and uploaded into CloudWatch. Values include true or false (default). elasticsearch (dict) --- Write data to an Amazon OpenSearch Service domain. The IAM role ARN that has access to OpenSearch. The endpoint of your OpenSearch domain. The index where you want to store your data. The type of document you are storing. The unique identifier for the document you are storing. salesforce (dict) --- Send a message to a Salesforce IoT Cloud Input Stream. The token used to authenticate access to the Salesforce IoT Cloud Input Stream. The token is available from the Salesforce IoT Cloud platform after creation of the Input Stream. The URL exposed by the Salesforce IoT Cloud Input Stream. The URL is available from the Salesforce IoT Cloud platform after creation of the Input Stream. iotAnalytics (dict) --- Sends message data to an IoT Analytics channel. channelArn (string) --- (deprecated) The ARN of the IoT Analytics channel to which message data will be sent. channelName (string) --- The name of the IoT Analytics channel to which message data will be sent. batchMode (boolean) --- Whether to process the action as a batch. When batchMode is true and the rule SQL statement evaluates to an Array, each Array element is delivered as a separate message when passed by BatchPutMessage to the IoT Analytics channel. The resulting array can't have more than 100 messages. roleArn (string) --- The ARN of the role which has a policy that grants IoT Analytics permission to send message data via IoT Analytics (iotanalytics:BatchPutMessage). iotEvents (dict) --- Sends an input to an IoT Events detector. The name of the IoT Events input. messageId (string) --- The ID of the message. The default messageId is a new UUID value. When batchMode is true, you can't specify a messageId---a new UUID value will be assigned. Assign a value to this property to ensure that only one input (message) with a given messageId will be processed by an IoT Events detector. batchMode (boolean) --- Whether to process the event actions as a batch. When batchMode is true, you can't specify a messageId. When batchMode is true and the rule SQL statement evaluates to an Array, each Array element is treated as a separate message when it's sent to IoT Events by calling BatchPutMessage. The resulting array can't have more than 10 messages. The ARN of the role that grants IoT permission to send an input to an IoT Events detector. ('Action':'iotevents:BatchPutMessage'). iotSiteWise (dict) --- Sends data from the MQTT message that triggered the rule to IoT SiteWise asset properties. A list of asset property value entries. (dict) --- An asset property value entry containing the following information. entryId (string) --- Optional. A unique identifier for this entry that you can define to better track which message caused an error in case of failure. Accepts substitution templates. Defaults to a new UUID. assetId (string) --- The ID of the IoT SiteWise asset. You must specify either a propertyAlias or both an aliasId and a propertyId. propertyId (string) --- The ID of the asset's property. propertyAlias (string) --- The name of the property alias associated with your asset property. A list of property values to insert that each contain timestamp, quality, and value (TQV) information. The value of the asset property. stringValue (string) --- Optional. The string value of the value entry. integerValue (string) --- Optional. A string that contains the integer value of the value entry. doubleValue (string) --- Optional. A string that contains the double value of the value entry. booleanValue (string) --- Optional. A string that contains the boolean value ( true or false) of the value entry. The asset property value timestamp. A string that contains the time in seconds since epoch. offsetInNanos (string) --- Optional. A string that contains the nanosecond time offset. quality (string) --- Optional. A string that describes the quality of the value. Must be GOOD, BAD, or UNCERTAIN. The ARN of the role that grants IoT permission to send an asset property value to IoT SiteWise. ( \"Action\": \"iotsitewise:BatchPutAssetPropertyValue\"). The trust policy can restrict access to specific asset hierarchy paths. stepFunctions (dict) --- Starts execution of a Step Functions state machine. executionNamePrefix (string) --- (Optional) A name will be given to the state machine execution consisting of this prefix followed by a UUID. Step Functions automatically creates a unique name for each state machine execution if one is not provided. The name of the Step Functions state machine whose execution will be started. The ARN of the role that grants IoT permission to start execution of a state machine ('Action':'states:StartExecution'). timestream (dict) --- The Timestream rule action writes attributes (measures) from an MQTT message into an Amazon Timestream table. For more information, see the Timestream topic rule action documentation. The ARN of the role that grants permission to write to the Amazon Timestream database table. The name of an Amazon Timestream database. The name of the database table into which to write the measure records. Metadata attributes of the time series that are written in each measure record. (dict) --- Metadata attributes of the time series that are written in each measure record. The metadata dimension name. This is the name of the column in the Amazon Timestream database table record. Dimensions cannot be named: measure_name, measure_value, or time. These names are reserved. Dimension names cannot start with ts_ or measure_value and they cannot contain the colon ( :) character. The value to write in this column of the database record. timestamp (dict) --- Specifies an application-defined value to replace the default value assigned to the Timestream record's timestamp in the time column. You can use this property to specify the value and the precision of the Timestream record's timestamp. You can specify a value from the message payload or a value computed by a substitution template. If omitted, the topic rule action assigns the timestamp, in milliseconds, at the time it processed the rule. An expression that returns a long epoch time value. The precision of the timestamp value that results from the expression described in value. Valid values: SECONDS | MILLISECONDS | MICROSECONDS | NANOSECONDS. The default is MILLISECONDS. http (dict) --- Send data to an HTTPS endpoint. The endpoint URL. If substitution templates are used in the URL, you must also specify a confirmationUrl. If this is a new destination, a new TopicRuleDestination is created if possible. confirmationUrl (string) --- The URL to which IoT sends a confirmation message. The value of the confirmation URL must be a prefix of the endpoint URL. If you do not specify a confirmation URL IoT uses the endpoint URL as the confirmation URL. If you use substitution templates in the confirmationUrl, you must create and enable topic rule destinations that match each possible value of the substitution template before traffic is allowed to your endpoint URL. headers (list) --- The HTTP headers to send with the message data. (dict) --- The HTTP action header. The HTTP header key. The HTTP header value. Substitution templates are supported. auth (dict) --- The authentication method to use when sending data to an HTTPS endpoint. sigv4 (dict) --- Use Sig V4 authorization. For more information, see Signature Version 4 Signing Process. The signing region. The service name to use while signing with Sig V4. The ARN of the signing role. kafka (dict) --- Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon MSK) or self-managed Apache Kafka cluster. The ARN of Kafka action's VPC TopicRuleDestination. The Kafka topic for messages to be sent to the Kafka broker. key (string) --- The Kafka message key. partition (string) --- The Kafka message partition. Properties of the Apache Kafka producer client. (string) --- (string) --- headers (list) --- The list of Kafka headers that you specify. (dict) --- Specifies a Kafka header using key-value pairs when you create a Rule's Kafka Action. You can use these headers to route data from IoT clients to downstream Kafka clusters without modifying your message payload. For more information about Rule's Kafka action, see Apache Kafka. The key of the Kafka header. The value of the Kafka header. openSearch (dict) --- Write data to an Amazon OpenSearch Service domain. The OpenSearch index where you want to store your data. location (dict) --- The Amazon Location Service rule action sends device location updates from an MQTT message to an Amazon Location tracker resource. The IAM role that grants permission to write to the Amazon Location resource. The name of the tracker resource in Amazon Location in which the location is updated. The unique ID of the device providing the location data. timestamp (dict) --- The time that the location data was sampled. The default value is the time the MQTT message was processed. unit (string) --- The precision of the timestamp value that results from the expression described in value. A string that evaluates to a double value that represents the latitude of the device's location. A string that evaluates to a double value that represents the longitude of the device's location. ruleDisabled (boolean) --- Specifies whether the rule is disabled. awsIotSqlVersion (string) --- The version of the SQL rules engine to use when evaluating the rule. errorAction (dict) --- The action to take when an error occurs. A string that evaluates to a double value that represents the longitude of the device's location.",
+      "nested_params": [
+        {
+          "name": "sql",
+          "type": "string",
+          "required": false,
+          "description": "The SQL statement used to query the topic. For more information, see IoT SQL Reference in the IoT Developer Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "The description of the rule.",
+          "nested_params": []
+        },
+        {
+          "name": "actions",
+          "type": "list",
+          "required": false,
+          "description": "The actions associated with the rule.",
+          "nested_params": [
+            {
+              "name": "dynamoDB",
+              "type": "dict",
+              "required": false,
+              "description": "Write to a DynamoDB table.",
+              "nested_params": [
+                {
+                  "name": "tableName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the DynamoDB table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access to the DynamoDB table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "operation",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of operation to be performed. This follows the substitution template, so it can be ${operation}, but the substitution must result in one of the following: INSERT, UPDATE, or DELETE.",
+                  "nested_params": []
+                },
+                {
+                  "name": "hashKeyField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash key name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "hashKeyValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash key value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "hashKeyType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash key type. Valid values are 'STRING' or 'NUMBER'",
+                  "nested_params": []
+                },
+                {
+                  "name": "rangeKeyField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The range key name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "rangeKeyValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The range key value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "rangeKeyType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The range key type. Valid values are 'STRING' or 'NUMBER'",
+                  "nested_params": []
+                },
+                {
+                  "name": "payloadField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The action payload. This name can be customized.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "dynamoDBv2",
+              "type": "dict",
+              "required": false,
+              "description": "Write to a DynamoDB table. This is a new version of the DynamoDB action. It allows you to write each attribute in an MQTT message payload into a separate DynamoDB column.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access to the DynamoDB table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "putItem",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies the DynamoDB table to which the message data will be written. For example: { \"dynamoDBv2\": { \"roleArn\": \"aws:iam:12341251:my-role\" \"putItem\": { \"tableName\": \"my-table\" } } } Each attribute in the message payload will be written to a separate column in the DynamoDB database.",
+                  "nested_params": [
+                    {
+                      "name": "tableName",
+                      "type": "string",
+                      "required": false,
+                      "description": "The table where the message data will be written.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "lambda",
+              "type": "dict",
+              "required": false,
+              "description": "Invoke a Lambda function.",
+              "nested_params": [
+                {
+                  "name": "functionArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the Lambda function.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "sns",
+              "type": "dict",
+              "required": false,
+              "description": "Publish to an Amazon SNS topic.",
+              "nested_params": [
+                {
+                  "name": "targetArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the SNS topic.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "messageFormat",
+                  "type": "string",
+                  "required": false,
+                  "description": "(Optional) The message format of the message to publish. Accepted values are 'JSON' and 'RAW'. The default value of the attribute is 'RAW'. SNS uses this setting to determine if the payload should be parsed and relevant platform-specific bits of the payload should be extracted. To read more about SNS message formats, see https://docs.aws.amazon.com/sns/latest/dg/json-formats.html refer to their official documentation.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "sqs",
+              "type": "dict",
+              "required": false,
+              "description": "Publish to an Amazon SQS queue.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "queueUrl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL of the Amazon SQS queue.",
+                  "nested_params": []
+                },
+                {
+                  "name": "useBase64",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Specifies whether to use Base64 encoding.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "kinesis",
+              "type": "dict",
+              "required": false,
+              "description": "Write data to an Amazon Kinesis stream.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access to the Amazon Kinesis stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "streamName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Amazon Kinesis stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "partitionKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "The partition key.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "republish",
+              "type": "dict",
+              "required": false,
+              "description": "Publish to another MQTT topic.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "topic",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the MQTT topic.",
+                  "nested_params": []
+                },
+                {
+                  "name": "qos",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The Quality of Service (QoS) level to use when republishing messages. The default value is 0.",
+                  "nested_params": []
+                },
+                {
+                  "name": "headers",
+                  "type": "dict",
+                  "required": false,
+                  "description": "MQTT Version 5.0 headers information. For more information, see MQTT from the Amazon Web Services IoT Core Developer Guide.",
+                  "nested_params": [
+                    {
+                      "name": "payloadFormatIndicator",
+                      "type": "string",
+                      "required": false,
+                      "description": "An Enum string value that indicates whether the payload is formatted as UTF-8. Valid values are UNSPECIFIED_BYTES and UTF8_DATA. For more information, see Payload Format Indicator from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "contentType",
+                      "type": "string",
+                      "required": false,
+                      "description": "A UTF-8 encoded string that describes the content of the publishing message. For more information, see Content Type from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "responseTopic",
+                      "type": "string",
+                      "required": false,
+                      "description": "A UTF-8 encoded string that's used as the topic name for a response message. The response topic is used to describe the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters. For more information, see Response Topic from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "correlationData",
+                      "type": "string",
+                      "required": false,
+                      "description": "The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. For more information, see Correlation Data from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "messageExpiry",
+                      "type": "string",
+                      "required": false,
+                      "description": "A user-defined integer value that will persist a message at the message broker for a specified amount of time to ensure that the message will expire if it's no longer relevant to the subscriber. The value of messageExpiry represents the number of seconds before it expires. For more information about the limits of messageExpiry, see Amazon Web Services IoT Core message broker and protocol limits and quotas from the Amazon Web Services Reference Guide. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "userProperties",
+                      "type": "list",
+                      "required": false,
+                      "description": "An array of key-value pairs that you define in the MQTT5 header.",
+                      "nested_params": [
+                        {
+                          "name": "key",
+                          "type": "string",
+                          "required": false,
+                          "description": "A key to be specified in UserProperty.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "string",
+                          "required": false,
+                          "description": "A value to be specified in UserProperty.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "s3",
+              "type": "dict",
+              "required": false,
+              "description": "Write to an Amazon S3 bucket.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "bucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon S3 bucket.",
+                  "nested_params": []
+                },
+                {
+                  "name": "key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The object key. For more information, see Actions, resources, and condition keys for Amazon S3.",
+                  "nested_params": []
+                },
+                {
+                  "name": "cannedAcl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon S3 canned ACL that controls access to the object identified by the object key. For more information, see S3 canned ACLs.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "firehose",
+              "type": "dict",
+              "required": false,
+              "description": "Write to an Amazon Kinesis Firehose stream.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that grants access to the Amazon Kinesis Firehose stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "deliveryStreamName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The delivery stream name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "separator",
+                  "type": "string",
+                  "required": false,
+                  "description": "A character separator that will be used to separate records written to the Firehose stream. Valid values are: --\u0098n' (newline), --\u0098t' (tab), --\u0098rn' (Windows newline), --\u0098,' (comma).",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Whether to deliver the Kinesis Data Firehose stream as a batch by using PutRecordBatch. The default value is false. When batchMode is true and the rule's SQL statement evaluates to an Array, each Array element forms one record in the PutRecordBatch request. The resulting array can't have more than 500 records.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cloudwatchMetric",
+              "type": "dict",
+              "required": false,
+              "description": "Capture a CloudWatch metric.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that allows access to the CloudWatch metric.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricNamespace",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch metric namespace name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch metric name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch metric value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricUnit",
+                  "type": "string",
+                  "required": false,
+                  "description": "The metric unit supported by CloudWatch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricTimestamp",
+                  "type": "string",
+                  "required": false,
+                  "description": "An optional Unix timestamp.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cloudwatchAlarm",
+              "type": "dict",
+              "required": false,
+              "description": "Change the state of a CloudWatch alarm.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that allows access to the CloudWatch alarm.",
+                  "nested_params": []
+                },
+                {
+                  "name": "alarmName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch alarm name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stateReason",
+                  "type": "string",
+                  "required": false,
+                  "description": "The reason for the alarm change.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stateValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value of the alarm state. Acceptable values are: OK, ALARM, INSUFFICIENT_DATA.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cloudwatchLogs",
+              "type": "dict",
+              "required": false,
+              "description": "Send data to CloudWatch Logs.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that allows access to the CloudWatch log.",
+                  "nested_params": []
+                },
+                {
+                  "name": "logGroupName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch log group to which the action sends data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Indicates whether batches of log records will be extracted and uploaded into CloudWatch. Values include true or false (default).",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "elasticsearch",
+              "type": "dict",
+              "required": false,
+              "description": "Write data to an Amazon OpenSearch Service domain.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role ARN that has access to OpenSearch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "endpoint",
+                  "type": "string",
+                  "required": false,
+                  "description": "The endpoint of your OpenSearch domain.",
+                  "nested_params": []
+                },
+                {
+                  "name": "index",
+                  "type": "string",
+                  "required": false,
+                  "description": "The index where you want to store your data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of document you are storing.",
+                  "nested_params": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier for the document you are storing.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "salesforce",
+              "type": "dict",
+              "required": false,
+              "description": "Send a message to a Salesforce IoT Cloud Input Stream.",
+              "nested_params": [
+                {
+                  "name": "token",
+                  "type": "string",
+                  "required": false,
+                  "description": "The token used to authenticate access to the Salesforce IoT Cloud Input Stream. The token is available from the Salesforce IoT Cloud platform after creation of the Input Stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "url",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL exposed by the Salesforce IoT Cloud Input Stream. The URL is available from the Salesforce IoT Cloud platform after creation of the Input Stream.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "iotAnalytics",
+              "type": "dict",
+              "required": false,
+              "description": "Sends message data to an IoT Analytics channel.",
+              "nested_params": [
+                {
+                  "name": "channelArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "(deprecated) The ARN of the IoT Analytics channel to which message data will be sent.",
+                  "nested_params": []
+                },
+                {
+                  "name": "channelName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the IoT Analytics channel to which message data will be sent.",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Whether to process the action as a batch. The default value is false. When batchMode is true and the rule SQL statement evaluates to an Array, each Array element is delivered as a separate message when passed by BatchPutMessage to the IoT Analytics channel. The resulting array can't have more than 100 messages.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role which has a policy that grants IoT Analytics permission to send message data via IoT Analytics (iotanalytics:BatchPutMessage).",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "iotEvents",
+              "type": "dict",
+              "required": false,
+              "description": "Sends an input to an IoT Events detector.",
+              "nested_params": [
+                {
+                  "name": "inputName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the IoT Events input.",
+                  "nested_params": []
+                },
+                {
+                  "name": "messageId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ID of the message. The default messageId is a new UUID value. When batchMode is true, you can't specify a messageId---a new UUID value will be assigned. Assign a value to this property to ensure that only one input (message) with a given messageId will be processed by an IoT Events detector.",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Whether to process the event actions as a batch. The default value is false. When batchMode is true, you can't specify a messageId. When batchMode is true and the rule SQL statement evaluates to an Array, each Array element is treated as a separate message when it's sent to IoT Events by calling BatchPutMessage. The resulting array can't have more than 10 messages.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants IoT permission to send an input to an IoT Events detector. ('Action':'iotevents:BatchPutMessage').",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "iotSiteWise",
+              "type": "dict",
+              "required": false,
+              "description": "Sends data from the MQTT message that triggered the rule to IoT SiteWise asset properties.",
+              "nested_params": [
+                {
+                  "name": "putAssetPropertyValueEntries",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of asset property value entries.",
+                  "nested_params": [
+                    {
+                      "name": "entryId",
+                      "type": "string",
+                      "required": false,
+                      "description": "Optional. A unique identifier for this entry that you can define to better track which message caused an error in case of failure. Accepts substitution templates. Defaults to a new UUID.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "assetId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The ID of the IoT SiteWise asset. You must specify either a propertyAlias or both an aliasId and a propertyId. Accepts substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "propertyId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The ID of the asset's property. You must specify either a propertyAlias or both an aliasId and a propertyId. Accepts substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "propertyAlias",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the property alias associated with your asset property. You must specify either a propertyAlias or both an aliasId and a propertyId. Accepts substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "propertyValues",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of property values to insert that each contain timestamp, quality, and value (TQV) information.",
+                      "nested_params": [
+                        {
+                          "name": "value",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The value of the asset property.",
+                          "nested_params": [
+                            {
+                              "name": "stringValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. The string value of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "integerValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the integer value of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "doubleValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the double value of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "booleanValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the boolean value ( true or false) of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "timestamp",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The asset property value timestamp.",
+                          "nested_params": [
+                            {
+                              "name": "timeInSeconds",
+                              "type": "string",
+                              "required": false,
+                              "description": "A string that contains the time in seconds since epoch. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "offsetInNanos",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the nanosecond time offset. Accepts substitution templates.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "quality",
+                          "type": "string",
+                          "required": false,
+                          "description": "Optional. A string that describes the quality of the value. Accepts substitution templates. Must be GOOD, BAD, or UNCERTAIN.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants IoT permission to send an asset property value to IoT SiteWise. ( \"Action\": \"iotsitewise:BatchPutAssetPropertyValue\"). The trust policy can restrict access to specific asset hierarchy paths.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "stepFunctions",
+              "type": "dict",
+              "required": false,
+              "description": "Starts execution of a Step Functions state machine.",
+              "nested_params": [
+                {
+                  "name": "executionNamePrefix",
+                  "type": "string",
+                  "required": false,
+                  "description": "(Optional) A name will be given to the state machine execution consisting of this prefix followed by a UUID. Step Functions automatically creates a unique name for each state machine execution if one is not provided.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stateMachineName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Step Functions state machine whose execution will be started.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants IoT permission to start execution of a state machine ('Action':'states:StartExecution').",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "timestream",
+              "type": "dict",
+              "required": false,
+              "description": "The Timestream rule action writes attributes (measures) from an MQTT message into an Amazon Timestream table. For more information, see the Timestream topic rule action documentation.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants permission to write to the Amazon Timestream database table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "databaseName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of an Amazon Timestream database.",
+                  "nested_params": []
+                },
+                {
+                  "name": "tableName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the database table into which to write the measure records.",
+                  "nested_params": []
+                },
+                {
+                  "name": "dimensions",
+                  "type": "list",
+                  "required": false,
+                  "description": "Metadata attributes of the time series that are written in each measure record.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The metadata dimension name. This is the name of the column in the Amazon Timestream database table record. Dimensions cannot be named: measure_name, measure_value, or time. These names are reserved. Dimension names cannot start with ts_ or measure_value and they cannot contain the colon ( :) character.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value to write in this column of the database record.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "timestamp",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies an application-defined value to replace the default value assigned to the Timestream record's timestamp in the time column. You can use this property to specify the value and the precision of the Timestream record's timestamp. You can specify a value from the message payload or a value computed by a substitution template. If omitted, the topic rule action assigns the timestamp, in milliseconds, at the time it processed the rule.",
+                  "nested_params": [
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "An expression that returns a long epoch time value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "The precision of the timestamp value that results from the expression described in value. Valid values: SECONDS | MILLISECONDS | MICROSECONDS | NANOSECONDS. The default is MILLISECONDS.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "http",
+              "type": "dict",
+              "required": false,
+              "description": "Send data to an HTTPS endpoint.",
+              "nested_params": [
+                {
+                  "name": "url",
+                  "type": "string",
+                  "required": false,
+                  "description": "The endpoint URL. If substitution templates are used in the URL, you must also specify a confirmationUrl. If this is a new destination, a new TopicRuleDestination is created if possible.",
+                  "nested_params": []
+                },
+                {
+                  "name": "confirmationUrl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL to which IoT sends a confirmation message. The value of the confirmation URL must be a prefix of the endpoint URL. If you do not specify a confirmation URL IoT uses the endpoint URL as the confirmation URL. If you use substitution templates in the confirmationUrl, you must create and enable topic rule destinations that match each possible value of the substitution template before traffic is allowed to your endpoint URL.",
+                  "nested_params": []
+                },
+                {
+                  "name": "headers",
+                  "type": "list",
+                  "required": false,
+                  "description": "The HTTP headers to send with the message data.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The HTTP header key.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The HTTP header value. Substitution templates are supported.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "auth",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The authentication method to use when sending data to an HTTPS endpoint.",
+                  "nested_params": [
+                    {
+                      "name": "sigv4",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Use Sig V4 authorization. For more information, see Signature Version 4 Signing Process.",
+                      "nested_params": [
+                        {
+                          "name": "signingRegion",
+                          "type": "string",
+                          "required": false,
+                          "description": "The signing region.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "serviceName",
+                          "type": "string",
+                          "required": false,
+                          "description": "The service name to use while signing with Sig V4.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "roleArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The ARN of the signing role.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "kafka",
+              "type": "dict",
+              "required": false,
+              "description": "Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon MSK) or self-managed Apache Kafka cluster.",
+              "nested_params": [
+                {
+                  "name": "destinationArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of Kafka action's VPC TopicRuleDestination.",
+                  "nested_params": []
+                },
+                {
+                  "name": "topic",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Kafka topic for messages to be sent to the Kafka broker.",
+                  "nested_params": []
+                },
+                {
+                  "name": "key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Kafka message key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "partition",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Kafka message partition.",
+                  "nested_params": []
+                },
+                {
+                  "name": "clientProperties",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Properties of the Apache Kafka producer client.",
+                  "nested_params": []
+                },
+                {
+                  "name": "headers",
+                  "type": "list",
+                  "required": false,
+                  "description": "The list of Kafka headers that you specify.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The key of the Kafka header.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value of the Kafka header.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "openSearch",
+              "type": "dict",
+              "required": false,
+              "description": "Write data to an Amazon OpenSearch Service domain.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role ARN that has access to OpenSearch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "endpoint",
+                  "type": "string",
+                  "required": false,
+                  "description": "The endpoint of your OpenSearch domain.",
+                  "nested_params": []
+                },
+                {
+                  "name": "index",
+                  "type": "string",
+                  "required": false,
+                  "description": "The OpenSearch index where you want to store your data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of document you are storing.",
+                  "nested_params": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier for the document you are storing.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "location",
+              "type": "dict",
+              "required": false,
+              "description": "The Amazon Location Service rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that grants permission to write to the Amazon Location resource.",
+                  "nested_params": []
+                },
+                {
+                  "name": "trackerName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the tracker resource in Amazon Location in which the location is updated.",
+                  "nested_params": []
+                },
+                {
+                  "name": "deviceId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique ID of the device providing the location data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "timestamp",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The time that the location data was sampled. The default value is the time the MQTT message was processed.",
+                  "nested_params": [
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "An expression that returns a long epoch time value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "The precision of the timestamp value that results from the expression described in value. Valid values: SECONDS | MILLISECONDS | MICROSECONDS | NANOSECONDS. The default is MILLISECONDS.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "latitude",
+                  "type": "string",
+                  "required": false,
+                  "description": "A string that evaluates to a double value that represents the latitude of the device's location.",
+                  "nested_params": []
+                },
+                {
+                  "name": "longitude",
+                  "type": "string",
+                  "required": false,
+                  "description": "A string that evaluates to a double value that represents the longitude of the device's location.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ruleDisabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether the rule is disabled.",
+          "nested_params": []
+        },
+        {
+          "name": "awsIotSqlVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of the SQL rules engine to use when evaluating the rule.",
+          "nested_params": []
+        },
+        {
+          "name": "errorAction",
+          "type": "dict",
+          "required": false,
+          "description": "The action to take when an error occurs.",
+          "nested_params": [
+            {
+              "name": "dynamoDB",
+              "type": "dict",
+              "required": false,
+              "description": "Write to a DynamoDB table.",
+              "nested_params": [
+                {
+                  "name": "tableName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the DynamoDB table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access to the DynamoDB table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "operation",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of operation to be performed. This follows the substitution template, so it can be ${operation}, but the substitution must result in one of the following: INSERT, UPDATE, or DELETE.",
+                  "nested_params": []
+                },
+                {
+                  "name": "hashKeyField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash key name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "hashKeyValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash key value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "hashKeyType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The hash key type. Valid values are 'STRING' or 'NUMBER'",
+                  "nested_params": []
+                },
+                {
+                  "name": "rangeKeyField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The range key name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "rangeKeyValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The range key value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "rangeKeyType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The range key type. Valid values are 'STRING' or 'NUMBER'",
+                  "nested_params": []
+                },
+                {
+                  "name": "payloadField",
+                  "type": "string",
+                  "required": false,
+                  "description": "The action payload. This name can be customized.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "dynamoDBv2",
+              "type": "dict",
+              "required": false,
+              "description": "Write to a DynamoDB table. This is a new version of the DynamoDB action. It allows you to write each attribute in an MQTT message payload into a separate DynamoDB column.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access to the DynamoDB table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "putItem",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies the DynamoDB table to which the message data will be written. For example: { \"dynamoDBv2\": { \"roleArn\": \"aws:iam:12341251:my-role\" \"putItem\": { \"tableName\": \"my-table\" } } } Each attribute in the message payload will be written to a separate column in the DynamoDB database.",
+                  "nested_params": [
+                    {
+                      "name": "tableName",
+                      "type": "string",
+                      "required": false,
+                      "description": "The table where the message data will be written.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "lambda",
+              "type": "dict",
+              "required": false,
+              "description": "Invoke a Lambda function.",
+              "nested_params": [
+                {
+                  "name": "functionArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the Lambda function.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "sns",
+              "type": "dict",
+              "required": false,
+              "description": "Publish to an Amazon SNS topic.",
+              "nested_params": [
+                {
+                  "name": "targetArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the SNS topic.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "messageFormat",
+                  "type": "string",
+                  "required": false,
+                  "description": "(Optional) The message format of the message to publish. Accepted values are 'JSON' and 'RAW'. The default value of the attribute is 'RAW'. SNS uses this setting to determine if the payload should be parsed and relevant platform-specific bits of the payload should be extracted. To read more about SNS message formats, see https://docs.aws.amazon.com/sns/latest/dg/json-formats.html refer to their official documentation.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "sqs",
+              "type": "dict",
+              "required": false,
+              "description": "Publish to an Amazon SQS queue.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "queueUrl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL of the Amazon SQS queue.",
+                  "nested_params": []
+                },
+                {
+                  "name": "useBase64",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Specifies whether to use Base64 encoding.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "kinesis",
+              "type": "dict",
+              "required": false,
+              "description": "Write data to an Amazon Kinesis stream.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access to the Amazon Kinesis stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "streamName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Amazon Kinesis stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "partitionKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "The partition key.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "republish",
+              "type": "dict",
+              "required": false,
+              "description": "Publish to another MQTT topic.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "topic",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the MQTT topic.",
+                  "nested_params": []
+                },
+                {
+                  "name": "qos",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The Quality of Service (QoS) level to use when republishing messages. The default value is 0.",
+                  "nested_params": []
+                },
+                {
+                  "name": "headers",
+                  "type": "dict",
+                  "required": false,
+                  "description": "MQTT Version 5.0 headers information. For more information, see MQTT from the Amazon Web Services IoT Core Developer Guide.",
+                  "nested_params": [
+                    {
+                      "name": "payloadFormatIndicator",
+                      "type": "string",
+                      "required": false,
+                      "description": "An Enum string value that indicates whether the payload is formatted as UTF-8. Valid values are UNSPECIFIED_BYTES and UTF8_DATA. For more information, see Payload Format Indicator from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "contentType",
+                      "type": "string",
+                      "required": false,
+                      "description": "A UTF-8 encoded string that describes the content of the publishing message. For more information, see Content Type from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "responseTopic",
+                      "type": "string",
+                      "required": false,
+                      "description": "A UTF-8 encoded string that's used as the topic name for a response message. The response topic is used to describe the topic which the receiver should publish to as part of the request-response flow. The topic must not contain wildcard characters. For more information, see Response Topic from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "correlationData",
+                      "type": "string",
+                      "required": false,
+                      "description": "The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. For more information, see Correlation Data from the MQTT Version 5.0 specification. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "messageExpiry",
+                      "type": "string",
+                      "required": false,
+                      "description": "A user-defined integer value that will persist a message at the message broker for a specified amount of time to ensure that the message will expire if it's no longer relevant to the subscriber. The value of messageExpiry represents the number of seconds before it expires. For more information about the limits of messageExpiry, see Amazon Web Services IoT Core message broker and protocol limits and quotas from the Amazon Web Services Reference Guide. Supports substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "userProperties",
+                      "type": "list",
+                      "required": false,
+                      "description": "An array of key-value pairs that you define in the MQTT5 header.",
+                      "nested_params": [
+                        {
+                          "name": "key",
+                          "type": "string",
+                          "required": false,
+                          "description": "A key to be specified in UserProperty.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "value",
+                          "type": "string",
+                          "required": false,
+                          "description": "A value to be specified in UserProperty.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "s3",
+              "type": "dict",
+              "required": false,
+              "description": "Write to an Amazon S3 bucket.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the IAM role that grants access.",
+                  "nested_params": []
+                },
+                {
+                  "name": "bucketName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon S3 bucket.",
+                  "nested_params": []
+                },
+                {
+                  "name": "key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The object key. For more information, see Actions, resources, and condition keys for Amazon S3.",
+                  "nested_params": []
+                },
+                {
+                  "name": "cannedAcl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon S3 canned ACL that controls access to the object identified by the object key. For more information, see S3 canned ACLs.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "firehose",
+              "type": "dict",
+              "required": false,
+              "description": "Write to an Amazon Kinesis Firehose stream.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that grants access to the Amazon Kinesis Firehose stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "deliveryStreamName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The delivery stream name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "separator",
+                  "type": "string",
+                  "required": false,
+                  "description": "A character separator that will be used to separate records written to the Firehose stream. Valid values are: --\u0098n' (newline), --\u0098t' (tab), --\u0098rn' (Windows newline), --\u0098,' (comma).",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Whether to deliver the Kinesis Data Firehose stream as a batch by using PutRecordBatch. The default value is false. When batchMode is true and the rule's SQL statement evaluates to an Array, each Array element forms one record in the PutRecordBatch request. The resulting array can't have more than 500 records.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cloudwatchMetric",
+              "type": "dict",
+              "required": false,
+              "description": "Capture a CloudWatch metric.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that allows access to the CloudWatch metric.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricNamespace",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch metric namespace name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch metric name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch metric value.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricUnit",
+                  "type": "string",
+                  "required": false,
+                  "description": "The metric unit supported by CloudWatch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricTimestamp",
+                  "type": "string",
+                  "required": false,
+                  "description": "An optional Unix timestamp.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cloudwatchAlarm",
+              "type": "dict",
+              "required": false,
+              "description": "Change the state of a CloudWatch alarm.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that allows access to the CloudWatch alarm.",
+                  "nested_params": []
+                },
+                {
+                  "name": "alarmName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch alarm name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stateReason",
+                  "type": "string",
+                  "required": false,
+                  "description": "The reason for the alarm change.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stateValue",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value of the alarm state. Acceptable values are: OK, ALARM, INSUFFICIENT_DATA.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "cloudwatchLogs",
+              "type": "dict",
+              "required": false,
+              "description": "Send data to CloudWatch Logs.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that allows access to the CloudWatch log.",
+                  "nested_params": []
+                },
+                {
+                  "name": "logGroupName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The CloudWatch log group to which the action sends data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Indicates whether batches of log records will be extracted and uploaded into CloudWatch. Values include true or false (default).",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "elasticsearch",
+              "type": "dict",
+              "required": false,
+              "description": "Write data to an Amazon OpenSearch Service domain.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role ARN that has access to OpenSearch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "endpoint",
+                  "type": "string",
+                  "required": false,
+                  "description": "The endpoint of your OpenSearch domain.",
+                  "nested_params": []
+                },
+                {
+                  "name": "index",
+                  "type": "string",
+                  "required": false,
+                  "description": "The index where you want to store your data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of document you are storing.",
+                  "nested_params": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier for the document you are storing.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "salesforce",
+              "type": "dict",
+              "required": false,
+              "description": "Send a message to a Salesforce IoT Cloud Input Stream.",
+              "nested_params": [
+                {
+                  "name": "token",
+                  "type": "string",
+                  "required": false,
+                  "description": "The token used to authenticate access to the Salesforce IoT Cloud Input Stream. The token is available from the Salesforce IoT Cloud platform after creation of the Input Stream.",
+                  "nested_params": []
+                },
+                {
+                  "name": "url",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL exposed by the Salesforce IoT Cloud Input Stream. The URL is available from the Salesforce IoT Cloud platform after creation of the Input Stream.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "iotAnalytics",
+              "type": "dict",
+              "required": false,
+              "description": "Sends message data to an IoT Analytics channel.",
+              "nested_params": [
+                {
+                  "name": "channelArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "(deprecated) The ARN of the IoT Analytics channel to which message data will be sent.",
+                  "nested_params": []
+                },
+                {
+                  "name": "channelName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the IoT Analytics channel to which message data will be sent.",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Whether to process the action as a batch. The default value is false. When batchMode is true and the rule SQL statement evaluates to an Array, each Array element is delivered as a separate message when passed by BatchPutMessage to the IoT Analytics channel. The resulting array can't have more than 100 messages.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role which has a policy that grants IoT Analytics permission to send message data via IoT Analytics (iotanalytics:BatchPutMessage).",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "iotEvents",
+              "type": "dict",
+              "required": false,
+              "description": "Sends an input to an IoT Events detector.",
+              "nested_params": [
+                {
+                  "name": "inputName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the IoT Events input.",
+                  "nested_params": []
+                },
+                {
+                  "name": "messageId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ID of the message. The default messageId is a new UUID value. When batchMode is true, you can't specify a messageId---a new UUID value will be assigned. Assign a value to this property to ensure that only one input (message) with a given messageId will be processed by an IoT Events detector.",
+                  "nested_params": []
+                },
+                {
+                  "name": "batchMode",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Whether to process the event actions as a batch. The default value is false. When batchMode is true, you can't specify a messageId. When batchMode is true and the rule SQL statement evaluates to an Array, each Array element is treated as a separate message when it's sent to IoT Events by calling BatchPutMessage. The resulting array can't have more than 10 messages.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants IoT permission to send an input to an IoT Events detector. ('Action':'iotevents:BatchPutMessage').",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "iotSiteWise",
+              "type": "dict",
+              "required": false,
+              "description": "Sends data from the MQTT message that triggered the rule to IoT SiteWise asset properties.",
+              "nested_params": [
+                {
+                  "name": "putAssetPropertyValueEntries",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of asset property value entries.",
+                  "nested_params": [
+                    {
+                      "name": "entryId",
+                      "type": "string",
+                      "required": false,
+                      "description": "Optional. A unique identifier for this entry that you can define to better track which message caused an error in case of failure. Accepts substitution templates. Defaults to a new UUID.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "assetId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The ID of the IoT SiteWise asset. You must specify either a propertyAlias or both an aliasId and a propertyId. Accepts substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "propertyId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The ID of the asset's property. You must specify either a propertyAlias or both an aliasId and a propertyId. Accepts substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "propertyAlias",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the property alias associated with your asset property. You must specify either a propertyAlias or both an aliasId and a propertyId. Accepts substitution templates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "propertyValues",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of property values to insert that each contain timestamp, quality, and value (TQV) information.",
+                      "nested_params": [
+                        {
+                          "name": "value",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The value of the asset property.",
+                          "nested_params": [
+                            {
+                              "name": "stringValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. The string value of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "integerValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the integer value of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "doubleValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the double value of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "booleanValue",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the boolean value ( true or false) of the value entry. Accepts substitution templates.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "timestamp",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The asset property value timestamp.",
+                          "nested_params": [
+                            {
+                              "name": "timeInSeconds",
+                              "type": "string",
+                              "required": false,
+                              "description": "A string that contains the time in seconds since epoch. Accepts substitution templates.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "offsetInNanos",
+                              "type": "string",
+                              "required": false,
+                              "description": "Optional. A string that contains the nanosecond time offset. Accepts substitution templates.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "quality",
+                          "type": "string",
+                          "required": false,
+                          "description": "Optional. A string that describes the quality of the value. Accepts substitution templates. Must be GOOD, BAD, or UNCERTAIN.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants IoT permission to send an asset property value to IoT SiteWise. ( \"Action\": \"iotsitewise:BatchPutAssetPropertyValue\"). The trust policy can restrict access to specific asset hierarchy paths.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "stepFunctions",
+              "type": "dict",
+              "required": false,
+              "description": "Starts execution of a Step Functions state machine.",
+              "nested_params": [
+                {
+                  "name": "executionNamePrefix",
+                  "type": "string",
+                  "required": false,
+                  "description": "(Optional) A name will be given to the state machine execution consisting of this prefix followed by a UUID. Step Functions automatically creates a unique name for each state machine execution if one is not provided.",
+                  "nested_params": []
+                },
+                {
+                  "name": "stateMachineName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the Step Functions state machine whose execution will be started.",
+                  "nested_params": []
+                },
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants IoT permission to start execution of a state machine ('Action':'states:StartExecution').",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "timestream",
+              "type": "dict",
+              "required": false,
+              "description": "The Timestream rule action writes attributes (measures) from an MQTT message into an Amazon Timestream table. For more information, see the Timestream topic rule action documentation.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the role that grants permission to write to the Amazon Timestream database table.",
+                  "nested_params": []
+                },
+                {
+                  "name": "databaseName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of an Amazon Timestream database.",
+                  "nested_params": []
+                },
+                {
+                  "name": "tableName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the database table into which to write the measure records.",
+                  "nested_params": []
+                },
+                {
+                  "name": "dimensions",
+                  "type": "list",
+                  "required": false,
+                  "description": "Metadata attributes of the time series that are written in each measure record.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The metadata dimension name. This is the name of the column in the Amazon Timestream database table record. Dimensions cannot be named: measure_name, measure_value, or time. These names are reserved. Dimension names cannot start with ts_ or measure_value and they cannot contain the colon ( :) character.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value to write in this column of the database record.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "timestamp",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies an application-defined value to replace the default value assigned to the Timestream record's timestamp in the time column. You can use this property to specify the value and the precision of the Timestream record's timestamp. You can specify a value from the message payload or a value computed by a substitution template. If omitted, the topic rule action assigns the timestamp, in milliseconds, at the time it processed the rule.",
+                  "nested_params": [
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "An expression that returns a long epoch time value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "The precision of the timestamp value that results from the expression described in value. Valid values: SECONDS | MILLISECONDS | MICROSECONDS | NANOSECONDS. The default is MILLISECONDS.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "http",
+              "type": "dict",
+              "required": false,
+              "description": "Send data to an HTTPS endpoint.",
+              "nested_params": [
+                {
+                  "name": "url",
+                  "type": "string",
+                  "required": false,
+                  "description": "The endpoint URL. If substitution templates are used in the URL, you must also specify a confirmationUrl. If this is a new destination, a new TopicRuleDestination is created if possible.",
+                  "nested_params": []
+                },
+                {
+                  "name": "confirmationUrl",
+                  "type": "string",
+                  "required": false,
+                  "description": "The URL to which IoT sends a confirmation message. The value of the confirmation URL must be a prefix of the endpoint URL. If you do not specify a confirmation URL IoT uses the endpoint URL as the confirmation URL. If you use substitution templates in the confirmationUrl, you must create and enable topic rule destinations that match each possible value of the substitution template before traffic is allowed to your endpoint URL.",
+                  "nested_params": []
+                },
+                {
+                  "name": "headers",
+                  "type": "list",
+                  "required": false,
+                  "description": "The HTTP headers to send with the message data.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The HTTP header key.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The HTTP header value. Substitution templates are supported.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "auth",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The authentication method to use when sending data to an HTTPS endpoint.",
+                  "nested_params": [
+                    {
+                      "name": "sigv4",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Use Sig V4 authorization. For more information, see Signature Version 4 Signing Process.",
+                      "nested_params": [
+                        {
+                          "name": "signingRegion",
+                          "type": "string",
+                          "required": false,
+                          "description": "The signing region.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "serviceName",
+                          "type": "string",
+                          "required": false,
+                          "description": "The service name to use while signing with Sig V4.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "roleArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The ARN of the signing role.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "kafka",
+              "type": "dict",
+              "required": false,
+              "description": "Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon MSK) or self-managed Apache Kafka cluster.",
+              "nested_params": [
+                {
+                  "name": "destinationArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of Kafka action's VPC TopicRuleDestination.",
+                  "nested_params": []
+                },
+                {
+                  "name": "topic",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Kafka topic for messages to be sent to the Kafka broker.",
+                  "nested_params": []
+                },
+                {
+                  "name": "key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Kafka message key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "partition",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Kafka message partition.",
+                  "nested_params": []
+                },
+                {
+                  "name": "clientProperties",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Properties of the Apache Kafka producer client.",
+                  "nested_params": []
+                },
+                {
+                  "name": "headers",
+                  "type": "list",
+                  "required": false,
+                  "description": "The list of Kafka headers that you specify.",
+                  "nested_params": [
+                    {
+                      "name": "key",
+                      "type": "string",
+                      "required": false,
+                      "description": "The key of the Kafka header.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "The value of the Kafka header.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "openSearch",
+              "type": "dict",
+              "required": false,
+              "description": "Write data to an Amazon OpenSearch Service domain.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role ARN that has access to OpenSearch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "endpoint",
+                  "type": "string",
+                  "required": false,
+                  "description": "The endpoint of your OpenSearch domain.",
+                  "nested_params": []
+                },
+                {
+                  "name": "index",
+                  "type": "string",
+                  "required": false,
+                  "description": "The OpenSearch index where you want to store your data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of document you are storing.",
+                  "nested_params": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier for the document you are storing.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "location",
+              "type": "dict",
+              "required": false,
+              "description": "The Amazon Location Service rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.",
+              "nested_params": [
+                {
+                  "name": "roleArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The IAM role that grants permission to write to the Amazon Location resource.",
+                  "nested_params": []
+                },
+                {
+                  "name": "trackerName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the tracker resource in Amazon Location in which the location is updated.",
+                  "nested_params": []
+                },
+                {
+                  "name": "deviceId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique ID of the device providing the location data.",
+                  "nested_params": []
+                },
+                {
+                  "name": "timestamp",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The time that the location data was sampled. The default value is the time the MQTT message was processed.",
+                  "nested_params": [
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "required": false,
+                      "description": "An expression that returns a long epoch time value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "unit",
+                      "type": "string",
+                      "required": false,
+                      "description": "The precision of the timestamp value that results from the expression described in value. Valid values: SECONDS | MILLISECONDS | MICROSECONDS | NANOSECONDS. The default is MILLISECONDS.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "latitude",
+                  "type": "string",
+                  "required": false,
+                  "description": "A string that evaluates to a double value that represents the latitude of the device's location.",
+                  "nested_params": []
+                },
+                {
+                  "name": "longitude",
+                  "type": "string",
+                  "required": false,
+                  "description": "A string that evaluates to a double value that represents the longitude of the device's location.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

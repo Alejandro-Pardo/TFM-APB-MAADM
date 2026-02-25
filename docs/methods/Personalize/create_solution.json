@@ -1,0 +1,380 @@
+{
+  "method_name": "create_solution",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/personalize/client/create_solution.html",
+  "description": "Creates the configuration for training a model (creating a solution version). This configuration includes the recipe to use for model training and optional training configuration, such as columns to use in training and feature transformation parameters. For more information about configuring a solution, see Creating and configuring a solution. By default, new solutions use automatic training to create solution versions every 7 days. You can change the training frequency. Automatic solution version creation starts within one hour after the solution is ACTIVE. If you manually create a solution version within the hour, the solution skips the first automatic training. For more information, see Configuring automatic training. To turn off automatic training, set performAutoTraining to false. If you turn off automatic training, you must manually create a solution version by calling the CreateSolutionVersion operation. After training starts, you can get the solution version's Amazon Resource Name (ARN) with the ListSolutionVersions API operation. To get its status, use the DescribeSolutionVersion. After training completes you can evaluate model accuracy by calling GetSolutionMetrics. When you are satisfied with the solution version, you deploy it using CreateCampaign. The campaign provides recommendations to a client through the GetRecommendations API. A solution can be in one of the following states: To get the status of the solution, call DescribeSolution. If you use manual training, the status must be ACTIVE before you call CreateSolutionVersion.",
+  "parameters": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name for the solution.",
+      "nested_params": []
+    },
+    {
+      "name": "performHPO",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether to perform hyperparameter optimization (HPO) on the specified or selected recipe. The default is false. When performing AutoML, this parameter is always true and you should not set it to false.",
+      "nested_params": []
+    },
+    {
+      "name": "performAutoML",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether to perform automated machine learning (AutoML). The default is false. For this case, you must specify recipeArn. When set to true, Amazon Personalize analyzes your training data and selects the optimal USER_PERSONALIZATION recipe and hyperparameters. In this case, you must omit recipeArn. Amazon Personalize determines the optimal recipe by running tests with different values for the hyperparameters. AutoML lengthens the training process as compared to selecting a specific recipe.",
+      "nested_params": []
+    },
+    {
+      "name": "performAutoTraining",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether the solution uses automatic training to create new solution versions (trained models). The default is True and the solution automatically creates new solution versions every 7 days. You can change the training frequency by specifying a schedulingExpression in the AutoTrainingConfig as part of solution configuration. For more information about automatic training, see Configuring automatic training. Automatic solution version creation starts within one hour after the solution is ACTIVE. If you manually create a solution version within the hour, the solution skips the first automatic training. After training starts, you can get the solution version's Amazon Resource Name (ARN) with the ListSolutionVersions API operation. To get its status, use the DescribeSolutionVersion.",
+      "nested_params": []
+    },
+    {
+      "name": "recipeArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "datasetGroupArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the dataset group that provides the training data.",
+      "nested_params": []
+    },
+    {
+      "name": "eventType",
+      "type": "string",
+      "required": false,
+      "description": "When your have multiple event types (using an EVENT_TYPE schema field), this parameter specifies which event type (for example, --\u0098click' or --\u0098like') is used for training the model. If you do not provide an eventType, Amazon Personalize will use all interactions for training with equal weight regardless of type.",
+      "nested_params": []
+    },
+    {
+      "name": "solutionConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The configuration properties for the solution. When performAutoML is set to true, Amazon Personalize only evaluates the autoMLConfig section of the solution configuration. eventValueThreshold (string) --- Only events with a value greater than or equal to this threshold are used for training a model. hpoConfig (dict) --- Describes the properties for hyperparameter optimization (HPO). hpoObjective (dict) --- The metric to optimize during HPO. type (string) --- The type of the metric. Valid values are Maximize and Minimize. metricName (string) --- The name of the metric. metricRegex (string) --- A regular expression for finding the metric in the training job logs. hpoResourceConfig (dict) --- Describes the resource configuration for HPO. maxNumberOfTrainingJobs (string) --- The maximum number of training jobs when you create a solution version. The maximum value for maxNumberOfTrainingJobs is 40. maxParallelTrainingJobs (string) --- The maximum number of parallel training jobs when you create a solution version. The maximum value for maxParallelTrainingJobs is 10. algorithmHyperParameterRanges (dict) --- The hyperparameters and their allowable ranges. integerHyperParameterRanges (list) --- The integer-valued hyperparameters and their ranges. (dict) --- Provides the name and range of an integer-valued hyperparameter. name (string) --- The name of the hyperparameter. minValue (integer) --- The minimum allowable value for the hyperparameter. maxValue (integer) --- The maximum allowable value for the hyperparameter. continuousHyperParameterRanges (list) --- The continuous hyperparameters and their ranges. (dict) --- Provides the name and range of a continuous hyperparameter. minValue (float) --- The minimum allowable value for the hyperparameter. maxValue (float) --- The maximum allowable value for the hyperparameter. categoricalHyperParameterRanges (list) --- The categorical hyperparameters and their ranges. (dict) --- Provides the name and range of a categorical hyperparameter. values (list) --- A list of the categories for the hyperparameter. (string) --- algorithmHyperParameters (dict) --- Lists the algorithm hyperparameters and their values. (string) --- (string) --- featureTransformationParameters (dict) --- Lists the feature transformation parameters. (string) --- (string) --- autoMLConfig (dict) --- The AutoMLConfig object containing a list of recipes to search when AutoML is performed. metricName (string) --- The metric to optimize. recipeList (list) --- The list of candidate recipes. (string) --- eventsConfig (dict) --- Describes the configuration of an event, which includes a list of event parameters. You can specify up to 10 event parameters. Events are used in solution creation. eventParametersList (list) --- A list of event parameters, which includes event types and their event value thresholds and weights. (dict) --- Describes the parameters of events, which are used in solution creation. eventType (string) --- The name of the event type to be considered for solution creation. eventValueThreshold (float) --- The threshold of the event type. Only events with a value greater or equal to this threshold will be considered for solution creation. weight (float) --- The weight of the event type. A higher weight means higher importance of the event type for the created solution. optimizationObjective (dict) --- Describes the additional objective for the solution, such as maximizing streaming minutes or increasing revenue. For more information see Optimizing a solution. itemAttribute (string) --- The numerical metadata column in an Items dataset related to the optimization objective. For example, VIDEO_LENGTH (to maximize streaming minutes), or PRICE (to maximize revenue). objectiveSensitivity (string) --- Specifies how Amazon Personalize balances the importance of your optimization objective versus relevance. trainingDataConfig (dict) --- Specifies the training data configuration to use when creating a custom solution version (trained model). excludedDatasetColumns (dict) --- Specifies the columns to exclude from training. Each key is a dataset type, and each value is a list of columns. Exclude columns to control what data Amazon Personalize uses to generate recommendations. For example, you might have a column that you want to use only to filter recommendations. You can exclude this column from training and Amazon Personalize considers it only when filtering. (string) --- (list) --- (string) --- autoTrainingConfig (dict) --- Specifies the automatic training configuration to use. schedulingExpression (string) --- Specifies how often to automatically train new solution versions. Specify a rate expression in rate(value unit) format. For value, specify a number between 1 and 30. For unit, specify day or days. For example, to automatically create a new solution version every 5 days, specify rate(5 days). The default is every 7 days. For more information about auto training, see Creating and configuring a solution.",
+      "nested_params": [
+        {
+          "name": "eventValueThreshold",
+          "type": "string",
+          "required": false,
+          "description": "Only events with a value greater than or equal to this threshold are used for training a model.",
+          "nested_params": []
+        },
+        {
+          "name": "hpoConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the properties for hyperparameter optimization (HPO).",
+          "nested_params": [
+            {
+              "name": "hpoObjective",
+              "type": "dict",
+              "required": false,
+              "description": "The metric to optimize during HPO.",
+              "nested_params": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of the metric. Valid values are Maximize and Minimize.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the metric.",
+                  "nested_params": []
+                },
+                {
+                  "name": "metricRegex",
+                  "type": "string",
+                  "required": false,
+                  "description": "A regular expression for finding the metric in the training job logs.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "hpoResourceConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Describes the resource configuration for HPO.",
+              "nested_params": [
+                {
+                  "name": "maxNumberOfTrainingJobs",
+                  "type": "string",
+                  "required": false,
+                  "description": "The maximum number of training jobs when you create a solution version. The maximum value for maxNumberOfTrainingJobs is 40.",
+                  "nested_params": []
+                },
+                {
+                  "name": "maxParallelTrainingJobs",
+                  "type": "string",
+                  "required": false,
+                  "description": "The maximum number of parallel training jobs when you create a solution version. The maximum value for maxParallelTrainingJobs is 10.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "algorithmHyperParameterRanges",
+              "type": "dict",
+              "required": false,
+              "description": "The hyperparameters and their allowable ranges.",
+              "nested_params": [
+                {
+                  "name": "integerHyperParameterRanges",
+                  "type": "list",
+                  "required": false,
+                  "description": "The integer-valued hyperparameters and their ranges.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the hyperparameter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "minValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The minimum allowable value for the hyperparameter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "maxValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The maximum allowable value for the hyperparameter.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "continuousHyperParameterRanges",
+                  "type": "list",
+                  "required": false,
+                  "description": "The continuous hyperparameters and their ranges.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the hyperparameter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "minValue",
+                      "type": "float",
+                      "required": false,
+                      "description": "The minimum allowable value for the hyperparameter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "maxValue",
+                      "type": "float",
+                      "required": false,
+                      "description": "The maximum allowable value for the hyperparameter.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "categoricalHyperParameterRanges",
+                  "type": "list",
+                  "required": false,
+                  "description": "The categorical hyperparameters and their ranges.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name of the hyperparameter.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "values",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of the categories for the hyperparameter.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "algorithmHyperParameters",
+          "type": "dict",
+          "required": false,
+          "description": "Lists the algorithm hyperparameters and their values.",
+          "nested_params": []
+        },
+        {
+          "name": "featureTransformationParameters",
+          "type": "dict",
+          "required": false,
+          "description": "Lists the feature transformation parameters.",
+          "nested_params": []
+        },
+        {
+          "name": "autoMLConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The AutoMLConfig object containing a list of recipes to search when AutoML is performed.",
+          "nested_params": [
+            {
+              "name": "metricName",
+              "type": "string",
+              "required": false,
+              "description": "The metric to optimize.",
+              "nested_params": []
+            },
+            {
+              "name": "recipeList",
+              "type": "list",
+              "required": false,
+              "description": "The list of candidate recipes.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "eventsConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the configuration of an event, which includes a list of event parameters. You can specify up to 10 event parameters. Events are used in solution creation.",
+          "nested_params": [
+            {
+              "name": "eventParametersList",
+              "type": "list",
+              "required": false,
+              "description": "A list of event parameters, which includes event types and their event value thresholds and weights.",
+              "nested_params": [
+                {
+                  "name": "eventType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the event type to be considered for solution creation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "eventValueThreshold",
+                  "type": "float",
+                  "required": false,
+                  "description": "The threshold of the event type. Only events with a value greater or equal to this threshold will be considered for solution creation.",
+                  "nested_params": []
+                },
+                {
+                  "name": "weight",
+                  "type": "float",
+                  "required": false,
+                  "description": "The weight of the event type. A higher weight means higher importance of the event type for the created solution.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "optimizationObjective",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the additional objective for the solution, such as maximizing streaming minutes or increasing revenue. For more information see Optimizing a solution.",
+          "nested_params": [
+            {
+              "name": "itemAttribute",
+              "type": "string",
+              "required": false,
+              "description": "The numerical metadata column in an Items dataset related to the optimization objective. For example, VIDEO_LENGTH (to maximize streaming minutes), or PRICE (to maximize revenue).",
+              "nested_params": []
+            },
+            {
+              "name": "objectiveSensitivity",
+              "type": "string",
+              "required": false,
+              "description": "Specifies how Amazon Personalize balances the importance of your optimization objective versus relevance.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "trainingDataConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the training data configuration to use when creating a custom solution version (trained model).",
+          "nested_params": [
+            {
+              "name": "excludedDatasetColumns",
+              "type": "dict",
+              "required": false,
+              "description": "Specifies the columns to exclude from training. Each key is a dataset type, and each value is a list of columns. Exclude columns to control what data Amazon Personalize uses to generate recommendations. For example, you might have a column that you want to use only to filter recommendations. You can exclude this column from training and Amazon Personalize considers it only when filtering.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "autoTrainingConfig",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the automatic training configuration to use.",
+          "nested_params": [
+            {
+              "name": "schedulingExpression",
+              "type": "string",
+              "required": false,
+              "description": "Specifies how often to automatically train new solution versions. Specify a rate expression in rate(value unit) format. For value, specify a number between 1 and 30. For unit, specify day or days. For example, to automatically create a new solution version every 5 days, specify rate(5 days). The default is every 7 days. For more information about auto training, see Creating and configuring a solution.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "list",
+      "required": true,
+      "description": "A list of tags to apply to the solution. (dict) --- The optional metadata that you apply to resources to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define. For more information see Tagging Amazon Personalize resources. One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values. The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+      "nested_params": [
+        {
+          "name": "tagKey",
+          "type": "string",
+          "required": false,
+          "description": "One part of a key-value pair that makes up a tag. A key is a general label that acts like a category for more specific tag values.",
+          "nested_params": []
+        },
+        {
+          "name": "tagValue",
+          "type": "string",
+          "required": false,
+          "description": "The optional part of a key-value pair that makes up a tag. A value acts as a descriptor within a tag category (key).",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "solutionArn",
+          "type": "string",
+          "description": "The ARN of the solution.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

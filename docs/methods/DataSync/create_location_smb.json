@@ -1,0 +1,136 @@
+{
+  "method_name": "create_location_smb",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/datasync/client/create_location_smb.html",
+  "description": "Creates a transfer location for a Server Message Block (SMB) file server. DataSync can use this location as a source or destination for transferring data. Before you begin, make sure that you understand how DataSync accesses SMB file servers. For more information, see Providing DataSync access to SMB file servers.",
+  "parameters": [
+    {
+      "name": "Subdirectory",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the name of the share exported by your SMB file server where DataSync will read or write data. You can include a subdirectory in the share path (for example, /path/to/subdirectory). Make sure that other SMB clients in your network can also mount this path. To copy all data in the subdirectory, DataSync must be able to mount the SMB share and access all of its data. For more information, see Providing DataSync access to SMB file servers.",
+      "nested_params": []
+    },
+    {
+      "name": "ServerHostname",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the domain name or IP address of the SMB file server that your DataSync agent connects to. Remember the following when configuring this parameter: You can't specify an IP version 6 (IPv6) address. If you're using Kerberos authentication, you must specify a domain name.",
+      "nested_params": []
+    },
+    {
+      "name": "User",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the user that can mount and access the files, folders, and file metadata in your SMB file server. This parameter applies only if AuthenticationType is set to NTLM. For information about choosing a user with the right level of access for your transfer, see Providing DataSync access to SMB file servers.",
+      "nested_params": []
+    },
+    {
+      "name": "Domain",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the Windows domain name that your SMB file server belongs to. This parameter applies only if AuthenticationType is set to NTLM. If you have multiple domains in your environment, configuring this parameter makes sure that DataSync connects to the right file server.",
+      "nested_params": []
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AgentArns",
+      "type": "list",
+      "required": true,
+      "description": "Specifies the DataSync agent (or agents) that can connect to your SMB file server. You specify an agent by using its Amazon Resource Name (ARN). (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "MountOptions",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies the version of the SMB protocol that DataSync uses to access your SMB file server. Version (string) --- By default, DataSync automatically chooses an SMB protocol version based on negotiation with your SMB file server. You also can configure DataSync to use a specific SMB version, but we recommend doing this only if DataSync has trouble negotiating with the SMB file server automatically. These are the following options for configuring the SMB version: AUTOMATIC (default): DataSync and the SMB file server negotiate the highest version of SMB that they mutually support between 2.1 and 3.1.1. This is the recommended option. If you instead choose a specific version that your file server doesn't support, you may get an Operation Not Supported error. SMB3: Restricts the protocol negotiation to only SMB version 3.0.2. SMB2: Restricts the protocol negotiation to only SMB version 2.1. SMB2_0: Restricts the protocol negotiation to only SMB version 2.0. SMB1: Restricts the protocol negotiation to only SMB version 1.0.",
+      "nested_params": [
+        {
+          "name": "Version",
+          "type": "string",
+          "required": false,
+          "description": "By default, DataSync automatically chooses an SMB protocol version based on negotiation with your SMB file server. You also can configure DataSync to use a specific SMB version, but we recommend doing this only if DataSync has trouble negotiating with the SMB file server automatically. These are the following options for configuring the SMB version:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Specifies labels that help you categorize, filter, and search for your Amazon Web Services resources. We recommend creating at least a name tag for your location. (dict) --- A key-value pair representing a single tag that's been applied to an Amazon Web Services resource. The key for an Amazon Web Services resource tag. Value (string) --- The value for an Amazon Web Services resource tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key for an Amazon Web Services resource tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value for an Amazon Web Services resource tag.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AuthenticationType",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the authentication protocol that DataSync uses to connect to your SMB file server. DataSync supports NTLM (default) and KERBEROS authentication. For more information, see Providing DataSync access to SMB file servers.",
+      "nested_params": []
+    },
+    {
+      "name": "DnsIpAddresses",
+      "type": "list",
+      "required": false,
+      "description": "Specifies the IPv4 addresses for the DNS servers that your SMB file server belongs to. This parameter applies only if AuthenticationType is set to KERBEROS. If you have multiple domains in your environment, configuring this parameter makes sure that DataSync connects to the right SMB file server. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "KerberosPrincipal",
+      "type": "string",
+      "required": false,
+      "description": "Specifies a Kerberos prinicpal, which is an identity in your Kerberos realm that has permission to access the files, folders, and file metadata in your SMB file server. A Kerberos principal might look like HOST/kerberosuser@MYDOMAIN.ORG. Principal names are case sensitive. Your DataSync task execution will fail if the principal that you specify for this parameter doesn't exactly match the principal that you use to create the keytab file.",
+      "nested_params": []
+    },
+    {
+      "name": "KerberosKeytab",
+      "type": "bytes",
+      "required": false,
+      "description": "Specifies your Kerberos key table (keytab) file, which includes mappings between your Kerberos principal and encryption keys. The file must be base64 encoded. If you're using the CLI, the encoding is done for you. To avoid task execution errors, make sure that the Kerberos principal that you use to create the keytab file matches exactly what you specify for KerberosPrincipal.",
+      "nested_params": []
+    },
+    {
+      "name": "KerberosKrb5Conf",
+      "type": "bytes",
+      "required": false,
+      "description": "Specifies a Kerberos configuration file ( krb5.conf) that defines your Kerberos realm configuration. The file must be base64 encoded. If you're using the CLI, the encoding is done for you.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "LocationArn",
+          "type": "string",
+          "description": "The ARN of the SMB location that you created.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "method_name": "put_bucket_website",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/put_bucket_website.html",
+  "description": "Sets the configuration of the website that is specified in the website subresource. To configure a bucket as a website, you can add this subresource on the bucket with website configuration information such as the file name of the index document and any redirect rules. For more information, see Hosting Websites on Amazon S3. This PUT action requires the S3:PutBucketWebsite permission. By default, only the bucket owner can configure the website attached to a bucket; however, bucket owners can allow other users to set the website configuration by writing a bucket policy that grants them the S3:PutBucketWebsite permission. To redirect all website requests sent to the bucket's website endpoint, you add a website configuration with the following elements. Because all requests are sent to another website, you don't need to provide index document name for the bucket. If you want granular control over redirects, you can use the following elements to add routing rules that describe conditions for redirecting requests and information about the redirect destination. In this case, the website configuration must provide an index document for the bucket, because some requests might not be redirected. Amazon S3 has a limitation of 50 routing rules per website configuration. If you require more than 50 routing rules, you can use object redirect. For more information, see Configuring an Object Redirect in the Amazon S3 User Guide. The maximum request length is limited to 128 KB.",
+  "parameters": [
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "The bucket name.",
+      "nested_params": []
+    },
+    {
+      "name": "ChecksumAlgorithm",
+      "type": "string",
+      "required": false,
+      "description": "Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding x-amz-checksum or x-amz-trailer header sent. Otherwise, Amazon S3 fails the request with the HTTP status code 400 Bad Request. For more information, see Checking object integrity in the Amazon S3 User Guide. If you provide an individual checksum, Amazon S3 ignores any provided ChecksumAlgorithm parameter.",
+      "nested_params": []
+    },
+    {
+      "name": "WebsiteConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Container for the request. ErrorDocument (dict) --- The name of the error document for the website. The object key name to use when a 4XX class error occurs. IndexDocument (dict) --- The name of the index document for the website. A suffix that is appended to a request that is for a directory on the website endpoint. (For example, if the suffix is index.html and you make a request to samplebucket/images/, the data that is returned will be for the object with the key name images/index.html.) The suffix must not be empty and must not include a slash character. RedirectAllRequestsTo (dict) --- The redirect behavior for every request to this bucket's website endpoint. Name of the host where requests are redirected. Protocol (string) --- Protocol to use when redirecting requests. The default is the protocol that is used in the original request. RoutingRules (list) --- Rules that define when a redirect is applied and the redirect behavior. (dict) --- Specifies the redirect behavior and when a redirect is applied. For more information about routing rules, see Configuring advanced conditional redirects in the Amazon S3 User Guide. Condition (dict) --- A container for describing a condition that must be met for the specified redirect to apply. For example, 1. If request is for pages in the /docs folder, redirect to the /documents folder. 2. If request results in HTTP error 4xx, redirect request to another host where you might process the error. HttpErrorCodeReturnedEquals (string) --- The HTTP error code when the redirect is applied. In the event of an error, if the error code equals this value, then the specified redirect is applied. Required when parent element Condition is specified and sibling KeyPrefixEquals is not specified. If both are specified, then both must be true for the redirect to be applied. KeyPrefixEquals (string) --- The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied. Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can specify a different error code to return. HostName (string) --- The host name to use in the redirect request. HttpRedirectCode (string) --- The HTTP redirect code to use on the response. Not required if one of the siblings is present. ReplaceKeyPrefixWith (string) --- The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with KeyPrefixEquals set to docs/ and in the Redirect set ReplaceKeyPrefixWith to /documents. Can be present only if ReplaceKeyWith is not provided. ReplaceKeyWith (string) --- The specific object key to use in the redirect request. For example, redirect request to error.html. Can be present only if ReplaceKeyPrefixWith is not provided.",
+      "nested_params": [
+        {
+          "name": "ErrorDocument",
+          "type": "dict",
+          "required": false,
+          "description": "The name of the error document for the website.",
+          "nested_params": [
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The object key name to use when a 4XX class error occurs.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IndexDocument",
+          "type": "dict",
+          "required": false,
+          "description": "The name of the index document for the website.",
+          "nested_params": [
+            {
+              "name": "Suffix",
+              "type": "string",
+              "required": false,
+              "description": "A suffix that is appended to a request that is for a directory on the website endpoint. (For example, if the suffix is index.html and you make a request to samplebucket/images/, the data that is returned will be for the object with the key name images/index.html.) The suffix must not be empty and must not include a slash character.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "RedirectAllRequestsTo",
+          "type": "dict",
+          "required": false,
+          "description": "The redirect behavior for every request to this bucket's website endpoint.",
+          "nested_params": [
+            {
+              "name": "HostName",
+              "type": "string",
+              "required": false,
+              "description": "Name of the host where requests are redirected.",
+              "nested_params": []
+            },
+            {
+              "name": "Protocol",
+              "type": "string",
+              "required": false,
+              "description": "Protocol to use when redirecting requests. The default is the protocol that is used in the original request.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "RoutingRules",
+          "type": "list",
+          "required": false,
+          "description": "Rules that define when a redirect is applied and the redirect behavior.",
+          "nested_params": [
+            {
+              "name": "Condition",
+              "type": "dict",
+              "required": false,
+              "description": "A container for describing a condition that must be met for the specified redirect to apply. For example, 1. If request is for pages in the /docs folder, redirect to the /documents folder. 2. If request results in HTTP error 4xx, redirect request to another host where you might process the error.",
+              "nested_params": [
+                {
+                  "name": "HttpErrorCodeReturnedEquals",
+                  "type": "string",
+                  "required": false,
+                  "description": "The HTTP error code when the redirect is applied. In the event of an error, if the error code equals this value, then the specified redirect is applied. Required when parent element Condition is specified and sibling KeyPrefixEquals is not specified. If both are specified, then both must be true for the redirect to be applied.",
+                  "nested_params": []
+                },
+                {
+                  "name": "KeyPrefixEquals",
+                  "type": "string",
+                  "required": false,
+                  "description": "The object key name prefix when the redirect is applied. For example, to redirect requests for ExamplePage.html, the key prefix will be ExamplePage.html. To redirect request for all pages with the prefix docs/, the key prefix will be /docs, which identifies all objects in the docs/ folder. Required when the parent element Condition is specified and sibling HttpErrorCodeReturnedEquals is not specified. If both conditions are specified, both must be true for the redirect to be applied.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Redirect",
+              "type": "dict",
+              "required": false,
+              "description": "Container for redirect information. You can redirect requests to another host, to another page, or with another protocol. In the event of an error, you can specify a different error code to return.",
+              "nested_params": [
+                {
+                  "name": "HostName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The host name to use in the redirect request.",
+                  "nested_params": []
+                },
+                {
+                  "name": "HttpRedirectCode",
+                  "type": "string",
+                  "required": false,
+                  "description": "The HTTP redirect code to use on the response. Not required if one of the siblings is present.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Protocol",
+                  "type": "string",
+                  "required": false,
+                  "description": "Protocol to use when redirecting requests. The default is the protocol that is used in the original request.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ReplaceKeyPrefixWith",
+                  "type": "string",
+                  "required": false,
+                  "description": "The object key prefix to use in the redirect request. For example, to redirect requests for all pages with prefix docs/ (objects in the docs/ folder) to documents/, you can set a condition block with KeyPrefixEquals set to docs/ and in the Redirect set ReplaceKeyPrefixWith to /documents. Not required if one of the siblings is present. Can be present only if ReplaceKeyWith is not provided.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ReplaceKeyWith",
+                  "type": "string",
+                  "required": false,
+                  "description": "The specific object key to use in the redirect request. For example, redirect request to error.html. Not required if one of the siblings is present. Can be present only if ReplaceKeyPrefixWith is not provided.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ExpectedBucketOwner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

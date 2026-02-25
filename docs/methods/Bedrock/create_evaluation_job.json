@@ -1,0 +1,1452 @@
+{
+  "method_name": "create_evaluation_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/bedrock/client/create_evaluation_job.html",
+  "description": "Creates an evaluation job.",
+  "parameters": [
+    {
+      "name": "jobName",
+      "type": "string",
+      "required": true,
+      "description": "A name for the evaluation job. Names must unique with your Amazon Web Services account, and your account's Amazon Web Services region.",
+      "nested_params": []
+    },
+    {
+      "name": "jobDescription",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "clientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see Ensuring idempotency. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "roleArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of an IAM service role that Amazon Bedrock can assume to perform tasks on your behalf. To learn more about the required permissions, see Required permissions for model evaluations.",
+      "nested_params": []
+    },
+    {
+      "name": "customerEncryptionKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "jobTags",
+      "type": "list",
+      "required": true,
+      "description": "Tags to attach to the model evaluation job. (dict) --- Definition of the key/value pair for a tag. Key for the tag. Value for the tag.",
+      "nested_params": [
+        {
+          "name": "key",
+          "type": "string",
+          "required": false,
+          "description": "Key for the tag.",
+          "nested_params": []
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "Value for the tag.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "applicationType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "evaluationConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Contains the configuration details of either an automated or human-based evaluation job. automated (dict) --- Contains the configuration details of an automated evaluation job that computes metrics. Configuration details of the prompt datasets and metrics you want to use for your evaluation job. (dict) --- Defines the prompt datasets, built-in metric names and custom metric names, and the task type. The the type of task you want to evaluate for your evaluation job. This applies only to model evaluation jobs and is ignored for knowledge base evaluation jobs. Specifies the prompt dataset. Used to specify supported built-in prompt datasets. Valid values are Builtin.Bold, Builtin.BoolQ, Builtin.NaturalQuestions, Builtin.Gigaword, Builtin.RealToxicityPrompts, Builtin.TriviaQA, Builtin.T-Rex, Builtin.WomensEcommerceClothingReviews and Builtin.Wikitext2. datasetLocation (dict) --- For custom prompt datasets, you must specify the location in Amazon S3 where the prompt dataset is saved. s3Uri (string) --- The S3 URI of the S3 bucket specified in the job. The names of the metrics you want to use for your evaluation job. For knowledge base evaluation jobs that evaluate retrieval only, valid values are ' Builtin.ContextRelevance', ' Builtin.ContextCoverage'. For knowledge base evaluation jobs that evaluate retrieval with response generation, valid values are ' Builtin.Correctness', ' Builtin.Completeness', ' Builtin.Helpfulness', ' Builtin.LogicalCoherence', ' Builtin.Faithfulness', ' Builtin.Harmfulness', ' Builtin.Stereotyping', ' Builtin.Refusal'. For automated model evaluation jobs, valid values are ' Builtin.Accuracy', ' Builtin.Robustness', and ' Builtin.Toxicity'. In model evaluation jobs that use a LLM as judge you can specify ' Builtin.Correctness', ' Builtin.Completeness\", ' Builtin.Faithfulness\", ' Builtin.Helpfulness', ' Builtin.Coherence', ' Builtin.Relevance', ' Builtin.FollowingInstructions', ' Builtin.ProfessionalStyleAndTone', You can also specify the following responsible AI related metrics only for model evaluation job that use a LLM as judge ' Builtin.Harmfulness', ' Builtin.Stereotyping', and ' Builtin.Refusal'. For human-based model evaluation jobs, the list of strings must match the name parameter specified in HumanEvaluationCustomMetric. (string) --- evaluatorModelConfig (dict) --- Contains the evaluator model configuration details. EvaluatorModelConfig is required for evaluation jobs that use a knowledge base or in model evaluation job that use a model as judge. This model computes all evaluation related metrics. bedrockEvaluatorModels (list) --- The evaluator model used in knowledge base evaluation job or in model evaluation job that use a model as judge. (dict) --- The evaluator model used in knowledge base evaluation job or in model evaluation job that use a model as judge. The Amazon Resource Name (ARN) of the evaluator model used used in knowledge base evaluation job or in model evaluation job that use a model as judge. customMetricConfig (dict) --- Defines the configuration of custom metrics to be used in an evaluation job. Defines a list of custom metrics to be used in an Amazon Bedrock evaluation job. (dict) --- An array item definining a single custom metric for use in an Amazon Bedrock evaluation job. customMetricDefinition (dict) --- The definition of a custom metric for use in an Amazon Bedrock evaluation job. The name for a custom metric. Names must be unique in your Amazon Web Services region. The prompt for a custom metric that instructs the evaluator model how to rate the model or RAG source under evaluation. ratingScale (list) --- Defines the rating scale to be used for a custom metric. We recommend that you always define a ratings scale when creating a custom metric. If you don't define a scale, Amazon Bedrock won't be able to visually display the results of the evaluation in the console or calculate average values of numerical scores. For more information on specifying a rating scale, see Specifying an output schema (rating scale). (dict) --- Defines the value and corresponding definition for one rating in a custom metric rating scale. Defines the definition for one rating in a custom metric rating scale. Defines the value for one rating in a custom metric rating scale. stringValue (string) --- A string representing the value for a rating in a custom metric rating scale. floatValue (float) --- A floating point number representing the value for a rating in a custom metric rating scale. Configuration of the evaluator model you want to use to evaluate custom metrics in an Amazon Bedrock evaluation job. Defines the model you want to evaluate custom metrics in an Amazon Bedrock evaluation job. (dict) --- Defines the model you want to evaluate custom metrics in an Amazon Bedrock evaluation job. The Amazon Resource Name (ARN) of the evaluator model for custom metrics. For a list of supported evaluator models, see Evaluate model performance using another LLM as a judge and Evaluate the performance of RAG sources using Amazon Bedrock evaluations. human (dict) --- Contains the configuration details of an evaluation job that uses human workers. humanWorkflowConfig (dict) --- The parameters of the human workflow. The Amazon Resource Number (ARN) for the flow definition instructions (string) --- Instructions for the flow definition customMetrics (list) --- A HumanEvaluationCustomMetric object. It contains the names the metrics, how the metrics are to be evaluated, an optional description. (dict) --- In a model evaluation job that uses human workers you must define the name of the metric, and how you want that metric rated ratingMethod, and an optional description of the metric. The name of the metric. Your human evaluators will see this name in the evaluation UI. description (string) --- An optional description of the metric. Use this parameter to provide more details about the metric. Choose how you want your human workers to evaluation your model. Valid values for rating methods are ThumbsUpDown, IndividualLikertScale, ComparisonLikertScale, ComparisonChoice, and ComparisonRank Use to specify the metrics, task, and prompt dataset to be used in your model evaluation job. (string) ---",
+      "nested_params": [
+        {
+          "name": "automated",
+          "type": "dict",
+          "required": false,
+          "description": "Contains the configuration details of an automated evaluation job that computes metrics.",
+          "nested_params": [
+            {
+              "name": "datasetMetricConfigs",
+              "type": "list",
+              "required": false,
+              "description": "Configuration details of the prompt datasets and metrics you want to use for your evaluation job.",
+              "nested_params": [
+                {
+                  "name": "taskType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The the type of task you want to evaluate for your evaluation job. This applies only to model evaluation jobs and is ignored for knowledge base evaluation jobs.",
+                  "nested_params": []
+                },
+                {
+                  "name": "dataset",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies the prompt dataset.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "Used to specify supported built-in prompt datasets. Valid values are Builtin.Bold, Builtin.BoolQ, Builtin.NaturalQuestions, Builtin.Gigaword, Builtin.RealToxicityPrompts, Builtin.TriviaQA, Builtin.T-Rex, Builtin.WomensEcommerceClothingReviews and Builtin.Wikitext2.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "datasetLocation",
+                      "type": "dict",
+                      "required": false,
+                      "description": "For custom prompt datasets, you must specify the location in Amazon S3 where the prompt dataset is saved.",
+                      "nested_params": [
+                        {
+                          "name": "s3Uri",
+                          "type": "string",
+                          "required": false,
+                          "description": "The S3 URI of the S3 bucket specified in the job.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "metricNames",
+                  "type": "list",
+                  "required": false,
+                  "description": "The names of the metrics you want to use for your evaluation job. For knowledge base evaluation jobs that evaluate retrieval only, valid values are ' Builtin.ContextRelevance', ' Builtin.ContextCoverage'. For knowledge base evaluation jobs that evaluate retrieval with response generation, valid values are ' Builtin.Correctness', ' Builtin.Completeness', ' Builtin.Helpfulness', ' Builtin.LogicalCoherence', ' Builtin.Faithfulness', ' Builtin.Harmfulness', ' Builtin.Stereotyping', ' Builtin.Refusal'. For automated model evaluation jobs, valid values are ' Builtin.Accuracy', ' Builtin.Robustness', and ' Builtin.Toxicity'. In model evaluation jobs that use a LLM as judge you can specify ' Builtin.Correctness', ' Builtin.Completeness\", ' Builtin.Faithfulness\", ' Builtin.Helpfulness', ' Builtin.Coherence', ' Builtin.Relevance', ' Builtin.FollowingInstructions', ' Builtin.ProfessionalStyleAndTone', You can also specify the following responsible AI related metrics only for model evaluation job that use a LLM as judge ' Builtin.Harmfulness', ' Builtin.Stereotyping', and ' Builtin.Refusal'. For human-based model evaluation jobs, the list of strings must match the name parameter specified in HumanEvaluationCustomMetric.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "evaluatorModelConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Contains the evaluator model configuration details. EvaluatorModelConfig is required for evaluation jobs that use a knowledge base or in model evaluation job that use a model as judge. This model computes all evaluation related metrics.",
+              "nested_params": [
+                {
+                  "name": "bedrockEvaluatorModels",
+                  "type": "list",
+                  "required": false,
+                  "description": "The evaluator model used in knowledge base evaluation job or in model evaluation job that use a model as judge. This model computes all evaluation related metrics.",
+                  "nested_params": [
+                    {
+                      "name": "modelIdentifier",
+                      "type": "string",
+                      "required": false,
+                      "description": "The Amazon Resource Name (ARN) of the evaluator model used used in knowledge base evaluation job or in model evaluation job that use a model as judge.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "customMetricConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Defines the configuration of custom metrics to be used in an evaluation job.",
+              "nested_params": [
+                {
+                  "name": "customMetrics",
+                  "type": "list",
+                  "required": false,
+                  "description": "Defines a list of custom metrics to be used in an Amazon Bedrock evaluation job.",
+                  "nested_params": [
+                    {
+                      "name": "customMetricDefinition",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The definition of a custom metric for use in an Amazon Bedrock evaluation job.",
+                      "nested_params": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "required": false,
+                          "description": "The name for a custom metric. Names must be unique in your Amazon Web Services region.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "instructions",
+                          "type": "string",
+                          "required": false,
+                          "description": "The prompt for a custom metric that instructs the evaluator model how to rate the model or RAG source under evaluation.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "ratingScale",
+                          "type": "list",
+                          "required": false,
+                          "description": "Defines the rating scale to be used for a custom metric. We recommend that you always define a ratings scale when creating a custom metric. If you don't define a scale, Amazon Bedrock won't be able to visually display the results of the evaluation in the console or calculate average values of numerical scores. For more information on specifying a rating scale, see Specifying an output schema (rating scale).",
+                          "nested_params": [
+                            {
+                              "name": "definition",
+                              "type": "string",
+                              "required": false,
+                              "description": "Defines the definition for one rating in a custom metric rating scale.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "value",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Defines the value for one rating in a custom metric rating scale.",
+                              "nested_params": [
+                                {
+                                  "name": "stringValue",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "A string representing the value for a rating in a custom metric rating scale.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "floatValue",
+                                  "type": "float",
+                                  "required": false,
+                                  "description": "A floating point number representing the value for a rating in a custom metric rating scale.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "evaluatorModelConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Configuration of the evaluator model you want to use to evaluate custom metrics in an Amazon Bedrock evaluation job.",
+                  "nested_params": [
+                    {
+                      "name": "bedrockEvaluatorModels",
+                      "type": "list",
+                      "required": false,
+                      "description": "Defines the model you want to evaluate custom metrics in an Amazon Bedrock evaluation job.",
+                      "nested_params": [
+                        {
+                          "name": "modelIdentifier",
+                          "type": "string",
+                          "required": false,
+                          "description": "The Amazon Resource Name (ARN) of the evaluator model for custom metrics. For a list of supported evaluator models, see Evaluate model performance using another LLM as a judge and Evaluate the performance of RAG sources using Amazon Bedrock evaluations.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "human",
+          "type": "dict",
+          "required": false,
+          "description": "Contains the configuration details of an evaluation job that uses human workers.",
+          "nested_params": [
+            {
+              "name": "humanWorkflowConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters of the human workflow.",
+              "nested_params": [
+                {
+                  "name": "flowDefinitionArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Number (ARN) for the flow definition.",
+                  "nested_params": []
+                },
+                {
+                  "name": "instructions",
+                  "type": "string",
+                  "required": false,
+                  "description": "Instructions for the flow definition.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "customMetrics",
+              "type": "list",
+              "required": false,
+              "description": "A HumanEvaluationCustomMetric object. It contains the names the metrics, how the metrics are to be evaluated, an optional description.",
+              "nested_params": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the metric. Your human evaluators will see this name in the evaluation UI.",
+                  "nested_params": []
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "required": false,
+                  "description": "An optional description of the metric. Use this parameter to provide more details about the metric.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ratingMethod",
+                  "type": "string",
+                  "required": false,
+                  "description": "Choose how you want your human workers to evaluation your model. Valid values for rating methods are ThumbsUpDown, IndividualLikertScale, ComparisonLikertScale, ComparisonChoice, and ComparisonRank.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "datasetMetricConfigs",
+              "type": "list",
+              "required": false,
+              "description": "Use to specify the metrics, task, and prompt dataset to be used in your model evaluation job.",
+              "nested_params": [
+                {
+                  "name": "taskType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The the type of task you want to evaluate for your evaluation job. This applies only to model evaluation jobs and is ignored for knowledge base evaluation jobs.",
+                  "nested_params": []
+                },
+                {
+                  "name": "dataset",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies the prompt dataset.",
+                  "nested_params": [
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "required": false,
+                      "description": "Used to specify supported built-in prompt datasets. Valid values are Builtin.Bold, Builtin.BoolQ, Builtin.NaturalQuestions, Builtin.Gigaword, Builtin.RealToxicityPrompts, Builtin.TriviaQA, Builtin.T-Rex, Builtin.WomensEcommerceClothingReviews and Builtin.Wikitext2.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "datasetLocation",
+                      "type": "dict",
+                      "required": false,
+                      "description": "For custom prompt datasets, you must specify the location in Amazon S3 where the prompt dataset is saved.",
+                      "nested_params": [
+                        {
+                          "name": "s3Uri",
+                          "type": "string",
+                          "required": false,
+                          "description": "The S3 URI of the S3 bucket specified in the job.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "metricNames",
+                  "type": "list",
+                  "required": false,
+                  "description": "The names of the metrics you want to use for your evaluation job. For knowledge base evaluation jobs that evaluate retrieval only, valid values are ' Builtin.ContextRelevance', ' Builtin.ContextCoverage'. For knowledge base evaluation jobs that evaluate retrieval with response generation, valid values are ' Builtin.Correctness', ' Builtin.Completeness', ' Builtin.Helpfulness', ' Builtin.LogicalCoherence', ' Builtin.Faithfulness', ' Builtin.Harmfulness', ' Builtin.Stereotyping', ' Builtin.Refusal'. For automated model evaluation jobs, valid values are ' Builtin.Accuracy', ' Builtin.Robustness', and ' Builtin.Toxicity'. In model evaluation jobs that use a LLM as judge you can specify ' Builtin.Correctness', ' Builtin.Completeness\", ' Builtin.Faithfulness\", ' Builtin.Helpfulness', ' Builtin.Coherence', ' Builtin.Relevance', ' Builtin.FollowingInstructions', ' Builtin.ProfessionalStyleAndTone', You can also specify the following responsible AI related metrics only for model evaluation job that use a LLM as judge ' Builtin.Harmfulness', ' Builtin.Stereotyping', and ' Builtin.Refusal'. For human-based model evaluation jobs, the list of strings must match the name parameter specified in HumanEvaluationCustomMetric.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "inferenceConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Contains the configuration details of the inference model for the evaluation job. For model evaluation jobs, automated jobs support a single model or inference profile, and jobs that use human workers support two models or inference profiles. models (list) --- Specifies the inference models. (dict) --- Defines the models used in the model evaluation job. bedrockModel (dict) --- Defines the Amazon Bedrock model or inference profile and inference parameters you want used. The ARN of the Amazon Bedrock model or inference profile specified. inferenceParams (string) --- Each Amazon Bedrock support different inference parameters that change how the model behaves during inference. performanceConfig (dict) --- Specifies performance settings for the model or inference profile. latency (string) --- Specifies whether to use the latency-optimized or standard version of a model or inference profile. precomputedInferenceSource (dict) --- Defines the model used to generate inference response data for a model evaluation job where you provide your own inference response data. A label that identifies a model used in a model evaluation job where you provide your own inference response data. ragConfigs (list) --- Contains the configuration details of the inference for a knowledge base evaluation job, including either the retrieval only configuration or the retrieval with response generation configuration. (dict) --- Contains configuration details for retrieval of information and response generation. knowledgeBaseConfig (dict) --- Contains configuration details for knowledge base retrieval and response generation. retrieveConfig (dict) --- Contains configuration details for retrieving information from a knowledge base. The unique identifier of the knowledge base. Contains configuration details for knowledge base retrieval. Contains configuration details for returning the results from the vector search. numberOfResults (integer) --- The number of text chunks to retrieve; the number of results to return. overrideSearchType (string) --- By default, Amazon Bedrock decides a search strategy for you. If you're using an Amazon OpenSearch Serverless vector store that contains a filterable text field, you can specify whether to query the knowledge base with a HYBRID search using both vector embeddings and raw text, or SEMANTIC search using only vector embeddings. For other vector store configurations, only SEMANTIC search is available. filter (dict) --- Specifies the filters to use on the metadata fields in the knowledge base data sources before returning results. equals (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value matches the value in this object. The following example would return data sources with an animal attribute whose value is --\u0098cat': \"equals\": { \"key\": \"animal\", \"value\": \"cat\" } The name of metadata attribute/field, which must match the name in your data source/document metadata. The value of the metadata attribute/field. notEquals (dict) --- Knowledge base data sources that contain a metadata attribute whose name matches the key and whose value doesn't match the value in this object are returned. The following example would return data sources that don't contain an animal attribute whose value is --\u0098cat': \"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" } The name of metadata attribute/field, which must match the name in your data source/document metadata. greaterThan (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than the value in this object. The following example would return data sources with an year attribute whose value is greater than --\u00981989': \"greaterThan\": { \"key\": \"year\", \"value\": 1989 } The name of metadata attribute/field, which must match the name in your data source/document metadata. greaterThanOrEquals (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than or equal to the value in this object. The following example would return data sources with an year attribute whose value is greater than or equal to --\u00981989': \"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 } The name of metadata attribute/field, which must match the name in your data source/document metadata. lessThan (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than the value in this object. The following example would return data sources with an year attribute whose value is less than to --\u00981989': \"lessThan\": { \"key\": \"year\", \"value\": 1989 } The name of metadata attribute/field, which must match the name in your data source/document metadata. lessThanOrEquals (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than or equal to the value in this object. The following example would return data sources with an year attribute whose value is less than or equal to --\u00981989': \"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 } The name of metadata attribute/field, which must match the name in your data source/document metadata. in (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object. The following example would return data sources with an animal attribute that is either --\u0098cat' or --\u0098dog': \"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] } The name of metadata attribute/field, which must match the name in your data source/document metadata. notIn (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object. The following example would return data sources whose animal attribute is neither --\u0098cat' nor --\u0098dog': \"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] } The name of metadata attribute/field, which must match the name in your data source/document metadata. startsWith (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores. The following example would return data sources with an animal attribute starts with --\u0098ca' (for example, --\u0098cat' or --\u0098camel'). \"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" } The name of metadata attribute/field, which must match the name in your data source/document metadata. listContains (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members. The following example would return data sources with an animals attribute that is a list containing a cat member (for example, [\"dog\", \"cat\"]): \"listContains\": { \"key\": \"animals\", \"value\": \"cat\" } The name of metadata attribute/field, which must match the name in your data source/document metadata. stringContains (dict) --- Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following: A string that contains the value as a substring. The following example would return data sources with an animal attribute that contains the substring at (for example, --\u0098cat'): \"stringContains\": { \"key\": \"animal\", \"value\": \"at\" } A list with a member that contains the value as a substring. The following example would return data sources with an animals attribute that is a list containing a member that contains the substring at (for example, [\"dog\", \"cat\"]): \"stringContains\": { \"key\": \"animals\", \"value\": \"at\" } The name of metadata attribute/field, which must match the name in your data source/document metadata. andAll (list) --- Knowledge base data sources are returned if their metadata attributes fulfill all the filter conditions inside this list. (dict) --- Specifies the filters to use on the metadata attributes/fields in the knowledge base data sources before returning results. orAll (list) --- Knowledge base data sources are returned if their metadata attributes fulfill at least one of the filter conditions inside this list. retrieveAndGenerateConfig (dict) --- Contains configuration details for retrieving information from a knowledge base and generating responses. The type of resource that contains your data for retrieving information and generating responses. If you choose to use EXTERNAL_SOURCES, then currently only Claude 3 Sonnet models for knowledge bases are supported. knowledgeBaseConfiguration (dict) --- Contains configuration details for the knowledge base retrieval and response generation. The Amazon Resource Name (ARN) of the foundation model or inference profile used to generate responses. retrievalConfiguration (dict) --- Contains configuration details for retrieving text chunks. generationConfiguration (dict) --- Contains configurations details for response generation based on retrieved text chunks. promptTemplate (dict) --- Contains the template for the prompt that's sent to the model for response generation. textPromptTemplate (string) --- The template for the prompt that's sent to the model for response generation. You can include prompt placeholders, which become replaced before the prompt is sent to the model to provide instructions and context to the model. In addition, you can include XML tags to delineate meaningful sections of the prompt template. For more information, see Knowledge base prompt template and Use XML tags with Anthropic Claude models. guardrailConfiguration (dict) --- Contains configuration details for the guardrail. The unique identifier for the guardrail. The version of the guardrail. kbInferenceConfig (dict) --- Contains configuration details for inference for knowledge base retrieval and response generation. textInferenceConfig (dict) --- Contains configuration details for text generation using a language model via the RetrieveAndGenerate function. temperature (float) --- Controls the random-ness of text generated by the language model, influencing how much the model sticks to the most predictable next words versus exploring more surprising options. A lower temperature value (e.g. 0.2 or 0.3) makes model outputs more deterministic or predictable, while a higher temperature (e.g. 0.8 or 0.9) makes the outputs more creative or unpredictable. topP (float) --- A probability distribution threshold which controls what the model considers for the set of possible next tokens. The model will only consider the top p% of the probability distribution when generating the next token. maxTokens (integer) --- The maximum number of tokens to generate in the output text. Do not use the minimum of 0 or the maximum of 65536. The limit values described here are arbitrary values, for actual values consult the limits defined by your specific model. stopSequences (list) --- A list of sequences of characters that, if generated, will cause the model to stop generating further tokens. Do not use a minimum length of 1 or a maximum length of 1000. (string) --- additionalModelRequestFields (dict) --- Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows you to provide custom model parameters specific to the language model being used. (string) --- (document) --- orchestrationConfiguration (dict) --- Contains configuration details for the model to process the prompt prior to retrieval and response generation. Contains configuration details for transforming the prompt. The type of transformation to apply to the prompt. externalSourcesConfiguration (dict) --- The configuration for the external source wrapper object in the retrieveAndGenerate function. The document for the external source wrapper object in the retrieveAndGenerate function. (dict) --- The unique external source of the content contained in the wrapper object. The source type of the external source wrapper object. s3Location (dict) --- The S3 location of the external source wrapper object. The S3 URI location for the wrapper object of the document. byteContent (dict) --- The identifier, content type, and data of the external source wrapper object. The file name of the document contained in the wrapper object. The MIME type of the document contained in the wrapper object. The byte value of the file to upload, encoded as a Base-64 string. promptTemplate (dict) --- Contains the template for the prompt for the external source wrapper object. guardrailConfiguration (dict) --- Configuration details for the guardrail. kbInferenceConfig (dict) --- Configuration details for inference when using RetrieveAndGenerate to generate responses while using an external source. (string) --- additionalModelRequestFields (dict) --- Additional model parameters and their corresponding values not included in the text inference configuration for an external source. Takes in custom model parameters specific to the language model being used. (string) --- (document) --- precomputedRagSourceConfig (dict) --- Contains configuration details about the RAG source used to generate inference response data for a Knowledge Base evaluation job. retrieveSourceConfig (dict) --- A summary of a RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data. A label that identifies the RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data. retrieveAndGenerateSourceConfig (dict) --- A summary of a RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data. A label that identifies the RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data.",
+      "nested_params": [
+        {
+          "name": "models",
+          "type": "list",
+          "required": false,
+          "description": "Specifies the inference models.",
+          "nested_params": [
+            {
+              "name": "bedrockModel",
+              "type": "dict",
+              "required": false,
+              "description": "Defines the Amazon Bedrock model or inference profile and inference parameters you want used.",
+              "nested_params": [
+                {
+                  "name": "modelIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the Amazon Bedrock model or inference profile specified.",
+                  "nested_params": []
+                },
+                {
+                  "name": "inferenceParams",
+                  "type": "string",
+                  "required": false,
+                  "description": "Each Amazon Bedrock support different inference parameters that change how the model behaves during inference.",
+                  "nested_params": []
+                },
+                {
+                  "name": "performanceConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Specifies performance settings for the model or inference profile.",
+                  "nested_params": [
+                    {
+                      "name": "latency",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies whether to use the latency-optimized or standard version of a model or inference profile.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "precomputedInferenceSource",
+              "type": "dict",
+              "required": false,
+              "description": "Defines the model used to generate inference response data for a model evaluation job where you provide your own inference response data.",
+              "nested_params": [
+                {
+                  "name": "inferenceSourceIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "A label that identifies a model used in a model evaluation job where you provide your own inference response data.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ragConfigs",
+          "type": "list",
+          "required": false,
+          "description": "Contains the configuration details of the inference for a knowledge base evaluation job, including either the retrieval only configuration or the retrieval with response generation configuration.",
+          "nested_params": [
+            {
+              "name": "knowledgeBaseConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Contains configuration details for knowledge base retrieval and response generation.",
+              "nested_params": [
+                {
+                  "name": "retrieveConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Contains configuration details for retrieving information from a knowledge base.",
+                  "nested_params": [
+                    {
+                      "name": "knowledgeBaseId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The unique identifier of the knowledge base.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "knowledgeBaseRetrievalConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Contains configuration details for knowledge base retrieval.",
+                      "nested_params": [
+                        {
+                          "name": "vectorSearchConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Contains configuration details for returning the results from the vector search.",
+                          "nested_params": [
+                            {
+                              "name": "numberOfResults",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The number of text chunks to retrieve; the number of results to return.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "overrideSearchType",
+                              "type": "string",
+                              "required": false,
+                              "description": "By default, Amazon Bedrock decides a search strategy for you. If you're using an Amazon OpenSearch Serverless vector store that contains a filterable text field, you can specify whether to query the knowledge base with a HYBRID search using both vector embeddings and raw text, or SEMANTIC search using only vector embeddings. For other vector store configurations, only SEMANTIC search is available.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "filter",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Specifies the filters to use on the metadata fields in the knowledge base data sources before returning results.",
+                              "nested_params": [
+                                {
+                                  "name": "equals",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value matches the value in this object. The following example would return data sources with an animal attribute whose value is --\u0098cat': \"equals\": { \"key\": \"animal\", \"value\": \"cat\" }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "notEquals",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources that contain a metadata attribute whose name matches the key and whose value doesn't match the value in this object are returned. The following example would return data sources that don't contain an animal attribute whose value is --\u0098cat': \"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "greaterThan",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than the value in this object. The following example would return data sources with an year attribute whose value is greater than --\u00981989': \"greaterThan\": { \"key\": \"year\", \"value\": 1989 }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "greaterThanOrEquals",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than or equal to the value in this object. The following example would return data sources with an year attribute whose value is greater than or equal to --\u00981989': \"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "lessThan",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than the value in this object. The following example would return data sources with an year attribute whose value is less than to --\u00981989': \"lessThan\": { \"key\": \"year\", \"value\": 1989 }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "lessThanOrEquals",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than or equal to the value in this object. The following example would return data sources with an year attribute whose value is less than or equal to --\u00981989': \"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "in",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object. The following example would return data sources with an animal attribute that is either --\u0098cat' or --\u0098dog': \"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "notIn",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object. The following example would return data sources whose animal attribute is neither --\u0098cat' nor --\u0098dog': \"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "startsWith",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores. The following example would return data sources with an animal attribute starts with --\u0098ca' (for example, --\u0098cat' or --\u0098camel'). \"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "listContains",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members. The following example would return data sources with an animals attribute that is a list containing a cat member (for example, [\"dog\", \"cat\"]): \"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "stringContains",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following: A string that contains the value as a substring. The following example would return data sources with an animal attribute that contains the substring at (for example, --\u0098cat'): \"stringContains\": { \"key\": \"animal\", \"value\": \"at\" } A list with a member that contains the value as a substring. The following example would return data sources with an animals attribute that is a list containing a member that contains the substring at (for example, [\"dog\", \"cat\"]): \"stringContains\": { \"key\": \"animals\", \"value\": \"at\" }",
+                                  "nested_params": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": false,
+                                      "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "value",
+                                      "type": "document",
+                                      "required": true,
+                                      "description": "The value of the metadata attribute/field.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "andAll",
+                                  "type": "list",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if their metadata attributes fulfill all the filter conditions inside this list.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "orAll",
+                                  "type": "list",
+                                  "required": false,
+                                  "description": "Knowledge base data sources are returned if their metadata attributes fulfill at least one of the filter conditions inside this list.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "retrieveAndGenerateConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Contains configuration details for retrieving information from a knowledge base and generating responses.",
+                  "nested_params": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "required": false,
+                      "description": "The type of resource that contains your data for retrieving information and generating responses. If you choose to use EXTERNAL_SOURCES, then currently only Claude 3 Sonnet models for knowledge bases are supported.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "knowledgeBaseConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Contains configuration details for the knowledge base retrieval and response generation.",
+                      "nested_params": [
+                        {
+                          "name": "knowledgeBaseId",
+                          "type": "string",
+                          "required": false,
+                          "description": "The unique identifier of the knowledge base.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "modelArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The Amazon Resource Name (ARN) of the foundation model or inference profile used to generate responses.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "retrievalConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Contains configuration details for retrieving text chunks.",
+                          "nested_params": [
+                            {
+                              "name": "vectorSearchConfiguration",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains configuration details for returning the results from the vector search.",
+                              "nested_params": [
+                                {
+                                  "name": "numberOfResults",
+                                  "type": "integer",
+                                  "required": false,
+                                  "description": "The number of text chunks to retrieve; the number of results to return.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "overrideSearchType",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "By default, Amazon Bedrock decides a search strategy for you. If you're using an Amazon OpenSearch Serverless vector store that contains a filterable text field, you can specify whether to query the knowledge base with a HYBRID search using both vector embeddings and raw text, or SEMANTIC search using only vector embeddings. For other vector store configurations, only SEMANTIC search is available.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "filter",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Specifies the filters to use on the metadata fields in the knowledge base data sources before returning results.",
+                                  "nested_params": [
+                                    {
+                                      "name": "equals",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value matches the value in this object. The following example would return data sources with an animal attribute whose value is --\u0098cat': \"equals\": { \"key\": \"animal\", \"value\": \"cat\" }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "notEquals",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources that contain a metadata attribute whose name matches the key and whose value doesn't match the value in this object are returned. The following example would return data sources that don't contain an animal attribute whose value is --\u0098cat': \"notEquals\": { \"key\": \"animal\", \"value\": \"cat\" }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "greaterThan",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than the value in this object. The following example would return data sources with an year attribute whose value is greater than --\u00981989': \"greaterThan\": { \"key\": \"year\", \"value\": 1989 }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "greaterThanOrEquals",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is greater than or equal to the value in this object. The following example would return data sources with an year attribute whose value is greater than or equal to --\u00981989': \"greaterThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "lessThan",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than the value in this object. The following example would return data sources with an year attribute whose value is less than to --\u00981989': \"lessThan\": { \"key\": \"year\", \"value\": 1989 }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "lessThanOrEquals",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is less than or equal to the value in this object. The following example would return data sources with an year attribute whose value is less than or equal to --\u00981989': \"lessThanOrEquals\": { \"key\": \"year\", \"value\": 1989 }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "in",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is in the list specified in the value in this object. The following example would return data sources with an animal attribute that is either --\u0098cat' or --\u0098dog': \"in\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "notIn",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value isn't in the list specified in the value in this object. The following example would return data sources whose animal attribute is neither --\u0098cat' nor --\u0098dog': \"notIn\": { \"key\": \"animal\", \"value\": [\"cat\", \"dog\"] }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "startsWith",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value starts with the value in this object. This filter is currently only supported for Amazon OpenSearch Serverless vector stores. The following example would return data sources with an animal attribute starts with --\u0098ca' (for example, --\u0098cat' or --\u0098camel'). \"startsWith\": { \"key\": \"animal\", \"value\": \"ca\" }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "listContains",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is a list that contains the value as one of its members. The following example would return data sources with an animals attribute that is a list containing a cat member (for example, [\"dog\", \"cat\"]): \"listContains\": { \"key\": \"animals\", \"value\": \"cat\" }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "stringContains",
+                                      "type": "dict",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if they contain a metadata attribute whose name matches the key and whose value is one of the following: A string that contains the value as a substring. The following example would return data sources with an animal attribute that contains the substring at (for example, --\u0098cat'): \"stringContains\": { \"key\": \"animal\", \"value\": \"at\" } A list with a member that contains the value as a substring. The following example would return data sources with an animals attribute that is a list containing a member that contains the substring at (for example, [\"dog\", \"cat\"]): \"stringContains\": { \"key\": \"animals\", \"value\": \"at\" }",
+                                      "nested_params": [
+                                        {
+                                          "name": "key",
+                                          "type": "string",
+                                          "required": false,
+                                          "description": "The name of metadata attribute/field, which must match the name in your data source/document metadata.",
+                                          "nested_params": []
+                                        },
+                                        {
+                                          "name": "value",
+                                          "type": "document",
+                                          "required": true,
+                                          "description": "The value of the metadata attribute/field.",
+                                          "nested_params": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "andAll",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if their metadata attributes fulfill all the filter conditions inside this list.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "orAll",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "Knowledge base data sources are returned if their metadata attributes fulfill at least one of the filter conditions inside this list.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "generationConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Contains configurations details for response generation based on retrieved text chunks.",
+                          "nested_params": [
+                            {
+                              "name": "promptTemplate",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains the template for the prompt that's sent to the model for response generation.",
+                              "nested_params": [
+                                {
+                                  "name": "textPromptTemplate",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The template for the prompt that's sent to the model for response generation. You can include prompt placeholders, which become replaced before the prompt is sent to the model to provide instructions and context to the model. In addition, you can include XML tags to delineate meaningful sections of the prompt template. For more information, see Knowledge base prompt template and Use XML tags with Anthropic Claude models.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "guardrailConfiguration",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains configuration details for the guardrail.",
+                              "nested_params": [
+                                {
+                                  "name": "guardrailId",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The unique identifier for the guardrail.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "guardrailVersion",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The version of the guardrail.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "kbInferenceConfig",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains configuration details for inference for knowledge base retrieval and response generation.",
+                              "nested_params": [
+                                {
+                                  "name": "textInferenceConfig",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Contains configuration details for text generation using a language model via the RetrieveAndGenerate function.",
+                                  "nested_params": [
+                                    {
+                                      "name": "temperature",
+                                      "type": "float",
+                                      "required": false,
+                                      "description": "Controls the random-ness of text generated by the language model, influencing how much the model sticks to the most predictable next words versus exploring more surprising options. A lower temperature value (e.g. 0.2 or 0.3) makes model outputs more deterministic or predictable, while a higher temperature (e.g. 0.8 or 0.9) makes the outputs more creative or unpredictable.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "topP",
+                                      "type": "float",
+                                      "required": false,
+                                      "description": "A probability distribution threshold which controls what the model considers for the set of possible next tokens. The model will only consider the top p% of the probability distribution when generating the next token.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "maxTokens",
+                                      "type": "integer",
+                                      "required": false,
+                                      "description": "The maximum number of tokens to generate in the output text. Do not use the minimum of 0 or the maximum of 65536. The limit values described here are arbitrary values, for actual values consult the limits defined by your specific model.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "stopSequences",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "A list of sequences of characters that, if generated, will cause the model to stop generating further tokens. Do not use a minimum length of 1 or a maximum length of 1000. The limit values described here are arbitrary values, for actual values consult the limits defined by your specific model.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "additionalModelRequestFields",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows you to provide custom model parameters specific to the language model being used.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "orchestrationConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Contains configuration details for the model to process the prompt prior to retrieval and response generation.",
+                          "nested_params": [
+                            {
+                              "name": "queryTransformationConfiguration",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains configuration details for transforming the prompt.",
+                              "nested_params": [
+                                {
+                                  "name": "type",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The type of transformation to apply to the prompt.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "externalSourcesConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The configuration for the external source wrapper object in the retrieveAndGenerate function.",
+                      "nested_params": [
+                        {
+                          "name": "modelArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The Amazon Resource Name (ARN) of the foundation model or inference profile used to generate responses.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "sources",
+                          "type": "list",
+                          "required": false,
+                          "description": "The document for the external source wrapper object in the retrieveAndGenerate function.",
+                          "nested_params": [
+                            {
+                              "name": "sourceType",
+                              "type": "string",
+                              "required": false,
+                              "description": "The source type of the external source wrapper object.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "s3Location",
+                              "type": "dict",
+                              "required": false,
+                              "description": "The S3 location of the external source wrapper object.",
+                              "nested_params": [
+                                {
+                                  "name": "uri",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The S3 URI location for the wrapper object of the document.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "byteContent",
+                              "type": "dict",
+                              "required": false,
+                              "description": "The identifier, content type, and data of the external source wrapper object.",
+                              "nested_params": [
+                                {
+                                  "name": "identifier",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The file name of the document contained in the wrapper object.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "contentType",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The MIME type of the document contained in the wrapper object.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "data",
+                                  "type": "bytes",
+                                  "required": false,
+                                  "description": "The byte value of the file to upload, encoded as a Base-64 string.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "generationConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "Contains configurations details for response generation based on retrieved text chunks.",
+                          "nested_params": [
+                            {
+                              "name": "promptTemplate",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Contains the template for the prompt for the external source wrapper object.",
+                              "nested_params": [
+                                {
+                                  "name": "textPromptTemplate",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The template for the prompt that's sent to the model for response generation. You can include prompt placeholders, which become replaced before the prompt is sent to the model to provide instructions and context to the model. In addition, you can include XML tags to delineate meaningful sections of the prompt template. For more information, see Knowledge base prompt template and Use XML tags with Anthropic Claude models.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "guardrailConfiguration",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Configuration details for the guardrail.",
+                              "nested_params": [
+                                {
+                                  "name": "guardrailId",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The unique identifier for the guardrail.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "guardrailVersion",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The version of the guardrail.",
+                                  "nested_params": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "kbInferenceConfig",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Configuration details for inference when using RetrieveAndGenerate to generate responses while using an external source.",
+                              "nested_params": [
+                                {
+                                  "name": "textInferenceConfig",
+                                  "type": "dict",
+                                  "required": false,
+                                  "description": "Contains configuration details for text generation using a language model via the RetrieveAndGenerate function.",
+                                  "nested_params": [
+                                    {
+                                      "name": "temperature",
+                                      "type": "float",
+                                      "required": false,
+                                      "description": "Controls the random-ness of text generated by the language model, influencing how much the model sticks to the most predictable next words versus exploring more surprising options. A lower temperature value (e.g. 0.2 or 0.3) makes model outputs more deterministic or predictable, while a higher temperature (e.g. 0.8 or 0.9) makes the outputs more creative or unpredictable.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "topP",
+                                      "type": "float",
+                                      "required": false,
+                                      "description": "A probability distribution threshold which controls what the model considers for the set of possible next tokens. The model will only consider the top p% of the probability distribution when generating the next token.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "maxTokens",
+                                      "type": "integer",
+                                      "required": false,
+                                      "description": "The maximum number of tokens to generate in the output text. Do not use the minimum of 0 or the maximum of 65536. The limit values described here are arbitrary values, for actual values consult the limits defined by your specific model.",
+                                      "nested_params": []
+                                    },
+                                    {
+                                      "name": "stopSequences",
+                                      "type": "list",
+                                      "required": false,
+                                      "description": "A list of sequences of characters that, if generated, will cause the model to stop generating further tokens. Do not use a minimum length of 1 or a maximum length of 1000. The limit values described here are arbitrary values, for actual values consult the limits defined by your specific model.",
+                                      "nested_params": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "additionalModelRequestFields",
+                              "type": "dict",
+                              "required": false,
+                              "description": "Additional model parameters and their corresponding values not included in the text inference configuration for an external source. Takes in custom model parameters specific to the language model being used.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "precomputedRagSourceConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Contains configuration details about the RAG source used to generate inference response data for a Knowledge Base evaluation job.",
+              "nested_params": [
+                {
+                  "name": "retrieveSourceConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A summary of a RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data.",
+                  "nested_params": [
+                    {
+                      "name": "ragSourceIdentifier",
+                      "type": "string",
+                      "required": false,
+                      "description": "A label that identifies the RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "retrieveAndGenerateSourceConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A summary of a RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data.",
+                  "nested_params": [
+                    {
+                      "name": "ragSourceIdentifier",
+                      "type": "string",
+                      "required": false,
+                      "description": "A label that identifies the RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "outputDataConfig",
+      "type": "dict",
+      "required": true,
+      "description": "Contains the configuration details of the Amazon S3 bucket for storing the results of the evaluation job. The Amazon S3 URI where the results of the evaluation job are saved.",
+      "nested_params": [
+        {
+          "name": "s3Uri",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon S3 URI where the results of the evaluation job are saved.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "jobArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the evaluation job.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

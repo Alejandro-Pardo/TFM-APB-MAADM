@@ -1,0 +1,201 @@
+{
+  "method_name": "get_accuracy_metrics",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/forecast/client/get_accuracy_metrics.html",
+  "description": "Provides metrics on the accuracy of the models that were trained by the  CreatePredictor operation. Use metrics to see how well the model performed and to decide whether to use the predictor to generate a forecast. For more information, see Predictor Metrics. This operation generates metrics for each backtest window that was evaluated. The number of backtest windows ( NumberOfBacktestWindows) is specified using the  EvaluationParameters object, which is optionally included in the CreatePredictor request. If NumberOfBacktestWindows isn't specified, the number defaults to one. The parameters of the filling method determine which items contribute to the metrics. If you want all items to contribute, specify zero. If you want only those items that have complete data in the range being evaluated to contribute, specify nan. For more information, see  FeaturizationMethod.",
+  "parameters": [
+    {
+      "name": "PredictorArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the predictor to get metrics for.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "PredictorEvaluationResults",
+          "type": "list",
+          "description": "An array of results from evaluating the predictor.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "AlgorithmArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the algorithm that was evaluated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TestWindows",
+                  "type": "list",
+                  "description": "The array of test windows used for evaluating the algorithm. The NumberOfBacktestWindows from the  EvaluationParameters object determines the number of windows in the array.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "TestWindowStart",
+                          "type": "datetime",
+                          "description": "The timestamp that defines the start of the window.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "TestWindowEnd",
+                          "type": "datetime",
+                          "description": "The timestamp that defines the end of the window.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ItemCount",
+                          "type": "integer",
+                          "description": "The number of data points within the window.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EvaluationType",
+                          "type": "string",
+                          "description": "The type of evaluation.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "SUMMARY - The average metrics across all windows.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "COMPUTED - The metrics for the specified window.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "RMSE",
+                              "type": "float",
+                              "description": "The root-mean-square error (RMSE).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "WeightedQuantileLosses",
+                              "type": "list",
+                              "description": "An array of weighted quantile losses. Quantiles divide a probability distribution into regions of equal probability. The distribution in this case is the loss function.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "Quantile",
+                                      "type": "float",
+                                      "description": "The quantile. Quantiles divide a probability distribution into regions of equal probability. For example, if the distribution was divided into 5 regions of equal probability, the quantiles would be 0.2, 0.4, 0.6, and 0.8.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "LossValue",
+                                      "type": "float",
+                                      "description": "The difference between the predicted value and the actual value over the quantile, weighted (normalized) by dividing by the sum over all quantiles.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ErrorMetrics",
+                              "type": "list",
+                              "description": "Provides detailed error metrics for each forecast type. Metrics include root-mean square-error (RMSE), mean absolute percentage error (MAPE), mean absolute scaled error (MASE), and weighted average percentage error (WAPE).",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "ForecastType",
+                                      "type": "string",
+                                      "description": "The Forecast type used to compute WAPE, MAPE, MASE, and RMSE.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "WAPE",
+                                      "type": "float",
+                                      "description": "The weighted absolute percentage error (WAPE).",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "RMSE",
+                                      "type": "float",
+                                      "description": "The root-mean-square error (RMSE).",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "MASE",
+                                      "type": "float",
+                                      "description": "The Mean Absolute Scaled Error (MASE)",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "MAPE",
+                                      "type": "float",
+                                      "description": "The Mean Absolute Percentage Error (MAPE)",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "AverageWeightedQuantileLoss",
+                              "type": "float",
+                              "description": "The average value of all weighted quantile losses.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "IsAutoPredictor",
+          "type": "boolean",
+          "description": "Whether the predictor was created with  CreateAutoPredictor.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLOverrideStrategy",
+          "type": "string",
+          "description": "The AutoML strategy used to train the predictor. Unless LatencyOptimized is specified, the AutoML strategy optimizes predictor accuracy.",
+          "nested_items": []
+        },
+        {
+          "name": "OptimizationMetric",
+          "type": "string",
+          "description": "The accuracy metric used to optimize the predictor.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

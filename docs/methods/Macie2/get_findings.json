@@ -1,0 +1,1731 @@
+{
+  "method_name": "get_findings",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/macie2/client/get_findings.html",
+  "description": "Retrieves the details of one or more findings.",
+  "parameters": [
+    {
+      "name": "findingIds",
+      "type": "list",
+      "required": true,
+      "description": "An array of strings that lists the unique identifiers for the findings to retrieve. You can specify as many as 50 unique identifiers in this array. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "sortCriteria",
+      "type": "dict",
+      "required": false,
+      "description": "The criteria for sorting the results of the request. attributeName (string) --- The name of the property to sort the results by. Valid values are: count, createdAt, policyDetails.action.apiCallDetails.firstSeen, policyDetails.action.apiCallDetails.lastSeen, resourcesAffected, severity.score, type, and updatedAt. orderBy (string) --- The sort order to apply to the results, based on the value for the property specified by the attributeName property. Valid values are: ASC, sort the results in ascending order; and, DESC, sort the results in descending order.",
+      "nested_params": [
+        {
+          "name": "attributeName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the property to sort the results by. Valid values are: count, createdAt, policyDetails.action.apiCallDetails.firstSeen, policyDetails.action.apiCallDetails.lastSeen, resourcesAffected, severity.score, type, and updatedAt.",
+          "nested_params": []
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "required": false,
+          "description": "The sort order to apply to the results, based on the value for the property specified by the attributeName property. Valid values are: ASC, sort the results in ascending order; and, DESC, sort the results in descending order.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "findings",
+          "type": "list",
+          "description": "An array of objects, one for each finding that matches the criteria specified in the request.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "accountId",
+                  "type": "string",
+                  "description": "The unique identifier for the Amazon Web Services account that the finding applies to. This is typically the account that owns the affected resource.",
+                  "nested_items": []
+                },
+                {
+                  "name": "archived",
+                  "type": "boolean",
+                  "description": "Specifies whether the finding is archived (suppressed).",
+                  "nested_items": []
+                },
+                {
+                  "name": "category",
+                  "type": "string",
+                  "description": "The category of the finding. Possible values are: CLASSIFICATION, for a sensitive data finding; and, POLICY, for a policy finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "classificationDetails",
+                  "type": "dict",
+                  "description": "The details of a sensitive data finding. This value is null for a policy finding.",
+                  "nested_items": [
+                    {
+                      "name": "detailedResultsLocation",
+                      "type": "string",
+                      "description": "The path to the folder or file in Amazon S3 that contains the corresponding sensitive data discovery result for the finding. If a finding applies to a large archive or compressed file, this value is the path to a folder. Otherwise, this value is the path to a file.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "jobArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the classification job that produced the finding. This value is null if the origin of the finding (originType) is AUTOMATED_SENSITIVE_DATA_DISCOVERY.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "jobId",
+                      "type": "string",
+                      "description": "The unique identifier for the classification job that produced the finding. This value is null if the origin of the finding (originType) is AUTOMATED_SENSITIVE_DATA_DISCOVERY.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "originType",
+                      "type": "string",
+                      "description": "Specifies how Amazon Macie found the sensitive data that produced the finding. Possible values are: SENSITIVE_DATA_DISCOVERY_JOB, for a classification job; and, AUTOMATED_SENSITIVE_DATA_DISCOVERY, for automated sensitive data discovery.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "additionalOccurrences",
+                          "type": "boolean",
+                          "description": "Specifies whether Amazon Macie detected additional occurrences of sensitive data in the S3 object. A finding includes location data for a maximum of 15 occurrences of sensitive data.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "customDataIdentifiers",
+                          "type": "dict",
+                          "description": "The custom data identifiers that detected the sensitive data and the number of occurrences of the data that they detected.",
+                          "nested_items": [
+                            {
+                              "name": "detections",
+                              "type": "list",
+                              "description": "The custom data identifiers that detected the data, and the number of occurrences of the data that each identifier detected.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "arn",
+                                      "type": "string",
+                                      "description": "The unique identifier for the custom data identifier.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "count",
+                                      "type": "integer",
+                                      "description": "The total number of occurrences of the sensitive data that the custom data identifier detected.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "name",
+                                      "type": "string",
+                                      "description": "The name of the custom data identifier.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "occurrences",
+                                      "type": "dict",
+                                      "description": "The location of 1-15 occurrences of the sensitive data that the custom data identifier detected. A finding includes location data for a maximum of 15 occurrences of sensitive data.",
+                                      "nested_items": [
+                                        {
+                                          "name": "cells",
+                                          "type": "list",
+                                          "description": "An array of objects, one for each occurrence of sensitive data in a Microsoft Excel workbook, CSV file, or TSV file. This value is null for all other types of files.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "cellReference",
+                                                  "type": "string",
+                                                  "description": "The location of the cell, as an absolute cell reference, that contains the sensitive data, for example Sheet2!C5 for cell C5 on Sheet2 in a Microsoft Excel workbook. This value is null for CSV and TSV files.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "column",
+                                                  "type": "integer",
+                                                  "description": "The column number of the column that contains the sensitive data. For a Microsoft Excel workbook, this value correlates to the alphabetical character(s) for a column identifier, for example: 1 for column A, 2 for column B, and so on.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "columnName",
+                                                  "type": "string",
+                                                  "description": "The name of the column that contains the sensitive data, if available.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "row",
+                                                  "type": "integer",
+                                                  "description": "The row number of the row that contains the sensitive data.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "lineRanges",
+                                          "type": "list",
+                                          "description": "An array of objects, one for each occurrence of sensitive data in an email message or a non-binary text file such as an HTML, TXT, or XML file. Each Range object specifies a line or inclusive range of lines that contains the sensitive data, and the position of the data on the specified line or lines.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "end",
+                                                  "type": "integer",
+                                                  "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "start",
+                                                  "type": "integer",
+                                                  "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "startColumn",
+                                                  "type": "integer",
+                                                  "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "offsetRanges",
+                                          "type": "list",
+                                          "description": "Reserved for future use.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "end",
+                                                  "type": "integer",
+                                                  "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "start",
+                                                  "type": "integer",
+                                                  "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "startColumn",
+                                                  "type": "integer",
+                                                  "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "pages",
+                                          "type": "list",
+                                          "description": "An array of objects, one for each occurrence of sensitive data in an Adobe Portable Document Format file. This value is null for all other types of files.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "lineRange",
+                                                  "type": "dict",
+                                                  "description": "Reserved for future use.",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "end",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "start",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "startColumn",
+                                                      "type": "integer",
+                                                      "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "name": "offsetRange",
+                                                  "type": "dict",
+                                                  "description": "Reserved for future use.",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "end",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "start",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "startColumn",
+                                                      "type": "integer",
+                                                      "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "name": "pageNumber",
+                                                  "type": "integer",
+                                                  "description": "The page number of the page that contains the sensitive data.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "records",
+                                          "type": "list",
+                                          "description": "An array of objects, one for each occurrence of sensitive data in an Apache Avro object container, Apache Parquet file, JSON file, or JSON Lines file. This value is null for all other types of files.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "jsonPath",
+                                                  "type": "string",
+                                                  "description": "The path, as a JSONPath expression, to the sensitive data. For an Avro object container or Parquet file, this is the path to the field in the record (recordIndex) that contains the data. For a JSON or JSON Lines file, this is the path to the field or array that contains the data. If the data is a value in an array, the path also indicates which value contains the data.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "recordIndex",
+                                                  "type": "integer",
+                                                  "description": "For an Avro object container or Parquet file, the record index, starting from 0, for the record that contains the sensitive data. For a JSON Lines file, the line index, starting from 0, for the line that contains the sensitive data. This value is always 0 for JSON files.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "totalCount",
+                              "type": "integer",
+                              "description": "The total number of occurrences of the data that was detected by the custom data identifiers and produced the finding.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "mimeType",
+                          "type": "string",
+                          "description": "The type of content, as a MIME type, that the finding applies to. For example, application/gzip, for a GNU Gzip compressed archive file, or application/pdf, for an Adobe Portable Document Format file.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "sensitiveData",
+                          "type": "list",
+                          "description": "The category, types, and number of occurrences of the sensitive data that produced the finding.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "category",
+                                  "type": "string",
+                                  "description": "The category of sensitive data that was detected. For example: CREDENTIALS, for credentials data such as private keys or Amazon Web Services secret access keys; FINANCIAL_INFORMATION, for financial data such as credit card numbers; or, PERSONAL_INFORMATION, for personal health information, such as health insurance identification numbers, or personally identifiable information, such as passport numbers.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "detections",
+                                  "type": "list",
+                                  "description": "An array of objects, one for each type of sensitive data that was detected. Each object reports the number of occurrences of a specific type of sensitive data that was detected, and the location of up to 15 of those occurrences.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "count",
+                                          "type": "integer",
+                                          "description": "The total number of occurrences of the type of sensitive data that was detected.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "occurrences",
+                                          "type": "dict",
+                                          "description": "The location of 1-15 occurrences of the sensitive data that was detected. A finding includes location data for a maximum of 15 occurrences of sensitive data.",
+                                          "nested_items": [
+                                            {
+                                              "name": "cells",
+                                              "type": "list",
+                                              "description": "An array of objects, one for each occurrence of sensitive data in a Microsoft Excel workbook, CSV file, or TSV file. This value is null for all other types of files.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "",
+                                                  "type": "dict",
+                                                  "description": "",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "cellReference",
+                                                      "type": "string",
+                                                      "description": "The location of the cell, as an absolute cell reference, that contains the sensitive data, for example Sheet2!C5 for cell C5 on Sheet2 in a Microsoft Excel workbook. This value is null for CSV and TSV files.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "column",
+                                                      "type": "integer",
+                                                      "description": "The column number of the column that contains the sensitive data. For a Microsoft Excel workbook, this value correlates to the alphabetical character(s) for a column identifier, for example: 1 for column A, 2 for column B, and so on.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "columnName",
+                                                      "type": "string",
+                                                      "description": "The name of the column that contains the sensitive data, if available.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "row",
+                                                      "type": "integer",
+                                                      "description": "The row number of the row that contains the sensitive data.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "lineRanges",
+                                              "type": "list",
+                                              "description": "An array of objects, one for each occurrence of sensitive data in an email message or a non-binary text file such as an HTML, TXT, or XML file. Each Range object specifies a line or inclusive range of lines that contains the sensitive data, and the position of the data on the specified line or lines.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "",
+                                                  "type": "dict",
+                                                  "description": "",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "end",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "start",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "startColumn",
+                                                      "type": "integer",
+                                                      "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "offsetRanges",
+                                              "type": "list",
+                                              "description": "Reserved for future use.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "",
+                                                  "type": "dict",
+                                                  "description": "",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "end",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "start",
+                                                      "type": "integer",
+                                                      "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "startColumn",
+                                                      "type": "integer",
+                                                      "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "pages",
+                                              "type": "list",
+                                              "description": "An array of objects, one for each occurrence of sensitive data in an Adobe Portable Document Format file. This value is null for all other types of files.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "",
+                                                  "type": "dict",
+                                                  "description": "",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "lineRange",
+                                                      "type": "dict",
+                                                      "description": "Reserved for future use.",
+                                                      "nested_items": [
+                                                        {
+                                                          "name": "end",
+                                                          "type": "integer",
+                                                          "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                          "nested_items": []
+                                                        },
+                                                        {
+                                                          "name": "start",
+                                                          "type": "integer",
+                                                          "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                          "nested_items": []
+                                                        },
+                                                        {
+                                                          "name": "startColumn",
+                                                          "type": "integer",
+                                                          "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                          "nested_items": []
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "name": "offsetRange",
+                                                      "type": "dict",
+                                                      "description": "Reserved for future use.",
+                                                      "nested_items": [
+                                                        {
+                                                          "name": "end",
+                                                          "type": "integer",
+                                                          "description": "The number of lines from the beginning of the file to the end of the sensitive data.",
+                                                          "nested_items": []
+                                                        },
+                                                        {
+                                                          "name": "start",
+                                                          "type": "integer",
+                                                          "description": "The number of lines from the beginning of the file to the beginning of the sensitive data.",
+                                                          "nested_items": []
+                                                        },
+                                                        {
+                                                          "name": "startColumn",
+                                                          "type": "integer",
+                                                          "description": "The number of characters, with spaces and starting from 1, from the beginning of the first line that contains the sensitive data (start) to the beginning of the sensitive data.",
+                                                          "nested_items": []
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "name": "pageNumber",
+                                                      "type": "integer",
+                                                      "description": "The page number of the page that contains the sensitive data.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "name": "records",
+                                              "type": "list",
+                                              "description": "An array of objects, one for each occurrence of sensitive data in an Apache Avro object container, Apache Parquet file, JSON file, or JSON Lines file. This value is null for all other types of files.",
+                                              "nested_items": [
+                                                {
+                                                  "name": "",
+                                                  "type": "dict",
+                                                  "description": "",
+                                                  "nested_items": [
+                                                    {
+                                                      "name": "jsonPath",
+                                                      "type": "string",
+                                                      "description": "The path, as a JSONPath expression, to the sensitive data. For an Avro object container or Parquet file, this is the path to the field in the record (recordIndex) that contains the data. For a JSON or JSON Lines file, this is the path to the field or array that contains the data. If the data is a value in an array, the path also indicates which value contains the data.",
+                                                      "nested_items": []
+                                                    },
+                                                    {
+                                                      "name": "recordIndex",
+                                                      "type": "integer",
+                                                      "description": "For an Avro object container or Parquet file, the record index, starting from 0, for the record that contains the sensitive data. For a JSON Lines file, the line index, starting from 0, for the line that contains the sensitive data. This value is always 0 for JSON files.",
+                                                      "nested_items": []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "name": "type",
+                                          "type": "string",
+                                          "description": "The type of sensitive data that was detected. For example, AWS_CREDENTIALS, PHONE_NUMBER, or ADDRESS.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "totalCount",
+                                  "type": "integer",
+                                  "description": "The total number of occurrences of the sensitive data that was detected.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sizeClassified",
+                          "type": "integer",
+                          "description": "The total size, in bytes, of the data that the finding applies to.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "code",
+                              "type": "string",
+                              "description": "The status of the finding. Possible values are:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "COMPLETE - Amazon Macie successfully completed its analysis of the S3 object that the finding applies to.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "PARTIAL - Macie analyzed only a subset of the data in the S3 object that the finding applies to. For example, the object is an archive file that contains files in an unsupported format.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "SKIPPED - Macie wasn't able to analyze the S3 object that the finding applies to. For example, the object is a file that uses an unsupported format.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "reason",
+                              "type": "string",
+                              "description": "A brief description of the status of the finding. This value is null if the status (code) of the finding is COMPLETE.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "classificationDetails.detailedResultsLocation",
+                                  "description": "ARCHIVE_CONTAINS_UNPROCESSED_FILES - The object is an archive file and Macie extracted and analyzed only some or none of the files in the archive. To determine which files Macie analyzed, if any, refer to the corresponding sensitive data discovery result for the finding (classificationDetails.detailedResultsLocation).",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ARCHIVE_EXCEEDS_SIZE_LIMIT - The object is an archive file whose total storage size exceeds the size quota for this type of archive.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ARCHIVE_NESTING_LEVEL_OVER_LIMIT - The object is an archive file whose nested depth exceeds the quota for the maximum number of nested levels that Macie analyzes for this type of archive.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ARCHIVE_TOTAL_BYTES_EXTRACTED_OVER_LIMIT - The object is an archive file that exceeds the quota for the maximum amount of data that Macie extracts and analyzes for this type of archive.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ARCHIVE_TOTAL_DOCUMENTS_PROCESSED_OVER_LIMIT - The object is an archive file that contains more than the maximum number of files that Macie extracts and analyzes for this type of archive.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "FILE_EXCEEDS_SIZE_LIMIT - The storage size of the object exceeds the size quota for this type of file.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "INVALID_ENCRYPTION - The object is encrypted using server-side encryption but Macie isn't allowed to use the key. Macie can't decrypt and analyze the object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "INVALID_KMS_KEY - The object is encrypted with an KMS key that was disabled or is being deleted. Macie can't decrypt and analyze the object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "INVALID_OBJECT_STATE - The object doesn't use a supported Amazon S3 storage class.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "JSON_NESTING_LEVEL_OVER_LIMIT - The object contains JSON data and the nested depth of the data exceeds the quota for the number of nested levels that Macie analyzes for this type of file.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "MALFORMED_FILE - The object is a malformed or corrupted file. An error occurred when Macie attempted to detect the file's type or extract data from the file.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "MALFORMED_OR_FILE_SIZE_EXCEEDS_LIMIT - The object is a Microsoft Office file that is malformed or exceeds the size quota for this type of file. If the file is malformed, an error occurred when Macie attempted to extract data from the file.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "NO_SUCH_BUCKET_AVAILABLE - The object was in a bucket that was deleted shortly before or when Macie attempted to analyze the object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "OBJECT_VERSION_MISMATCH - The object was changed while Macie was analyzing it.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "OOXML_UNCOMPRESSED_RATIO_EXCEEDS_LIMIT - The object is an Office Open XML file whose compression ratio exceeds the compression quota for this type of file.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "OOXML_UNCOMPRESSED_SIZE_EXCEEDS_LIMIT - The object is an Office Open XML file that exceeds the size quota for this type of file.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "PERMISSION_DENIED - Macie isn't allowed to access the object. The object's permissions settings prevent Macie from analyzing the object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "SOURCE_OBJECT_NO_LONGER_AVAILABLE - The object was deleted shortly before or when Macie attempted to analyze it.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "TIME_CUT_OFF_REACHED - Macie started analyzing the object but additional analysis would exceed the time quota for analyzing an object.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "UNABLE_TO_PARSE_FILE - The object is a file that contains structured data and an error occurred when Macie attempted to parse the data.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "UNSUPPORTED_FILE_TYPE_EXCEPTION - The object is a file that uses an unsupported file or storage format.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "count",
+                  "type": "integer",
+                  "description": "The total number of occurrences of the finding. For sensitive data findings, this value is always 1. All sensitive data findings are considered unique.",
+                  "nested_items": []
+                },
+                {
+                  "name": "createdAt",
+                  "type": "datetime",
+                  "description": "The date and time, in UTC and extended ISO 8601 format, when Amazon Macie created the finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "description": "The description of the finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The unique identifier for the finding. This is a random string that Amazon Macie generates and assigns to a finding when it creates the finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "partition",
+                  "type": "string",
+                  "description": "The Amazon Web Services partition that Amazon Macie created the finding in.",
+                  "nested_items": []
+                },
+                {
+                  "name": "policyDetails",
+                  "type": "dict",
+                  "description": "The details of a policy finding. This value is null for a sensitive data finding.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "actionType",
+                          "type": "string",
+                          "description": "The type of action that occurred for the affected resource. This value is typically AWS_API_CALL, which indicates that an entity invoked an API operation for the resource.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "apiCallDetails",
+                          "type": "dict",
+                          "description": "The invocation details of the API operation that an entity invoked for the affected resource, if the value for the actionType property is AWS_API_CALL.",
+                          "nested_items": [
+                            {
+                              "name": "api",
+                              "type": "string",
+                              "description": "The name of the operation that was invoked most recently and produced the finding.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "apiServiceName",
+                              "type": "string",
+                              "description": "The URL of the Amazon Web Services service that provides the operation, for example: s3.amazonaws.com.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "firstSeen",
+                              "type": "datetime",
+                              "description": "The first date and time, in UTC and extended ISO 8601 format, when any operation was invoked and produced the finding.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "lastSeen",
+                              "type": "datetime",
+                              "description": "The most recent date and time, in UTC and extended ISO 8601 format, when the specified operation (api) was invoked and produced the finding.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "domainDetails",
+                          "type": "dict",
+                          "description": "The domain name of the device that the entity used to perform the action on the affected resource.",
+                          "nested_items": [
+                            {
+                              "name": "domainName",
+                              "type": "string",
+                              "description": "The name of the domain.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ipAddressDetails",
+                          "type": "dict",
+                          "description": "The IP address and related details about the device that the entity used to perform the action on the affected resource. The details can include information such as the owner and geographic location of the IP address.",
+                          "nested_items": [
+                            {
+                              "name": "ipAddressV4",
+                              "type": "string",
+                              "description": "The Internet Protocol version 4 (IPv4) address of the device.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The name of the city.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ipCountry",
+                              "type": "dict",
+                              "description": "The country that the IP address originated from.",
+                              "nested_items": [
+                                {
+                                  "name": "code",
+                                  "type": "string",
+                                  "description": "The two-character code, in ISO 3166-1 alpha-2 format, for the country that the IP address originated from. For example, US for the United States.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The name of the country that the IP address originated from.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ipGeoLocation",
+                              "type": "dict",
+                              "description": "The geographic coordinates of the location that the IP address originated from.",
+                              "nested_items": [
+                                {
+                                  "name": "lat",
+                                  "type": "float",
+                                  "description": "The latitude coordinate of the location, rounded to four decimal places.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "lon",
+                                  "type": "float",
+                                  "description": "The longitude coordinate of the location, rounded to four decimal places.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "asn",
+                                  "type": "string",
+                                  "description": "The autonomous system number (ASN) for the autonomous system that included the IP address.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "asnOrg",
+                                  "type": "string",
+                                  "description": "The organization identifier that's associated with the autonomous system number (ASN) for the autonomous system that included the IP address.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "isp",
+                                  "type": "string",
+                                  "description": "The name of the internet service provider (ISP) that owned the IP address.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "org",
+                                  "type": "string",
+                                  "description": "The name of the organization that owned the IP address.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "userIdentity",
+                          "type": "dict",
+                          "description": "The type and other characteristics of the entity that performed the action on the affected resource. This value is null if the action was performed by an anonymous (unauthenticated) entity.",
+                          "nested_items": [
+                            {
+                              "name": "assumedRole",
+                              "type": "dict",
+                              "description": "If the action was performed with temporary security credentials that were obtained using the AssumeRole operation of the Security Token Service (STS) API, the identifiers, session context, and other details about the identity.",
+                              "nested_items": [
+                                {
+                                  "name": "accessKeyId",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services access key ID that identifies the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "accountId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the Amazon Web Services account that owns the entity that was used to get the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "arn",
+                                  "type": "string",
+                                  "description": "The Amazon Resource Name (ARN) of the entity that was used to get the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "principalId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the entity that was used to get the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "sessionContext",
+                                  "type": "dict",
+                                  "description": "The details of the session that was created for the credentials, including the entity that issued the session.",
+                                  "nested_items": [
+                                    {
+                                      "name": "attributes",
+                                      "type": "dict",
+                                      "description": "The date and time when the credentials were issued, and whether the credentials were authenticated with a multi-factor authentication (MFA) device.",
+                                      "nested_items": [
+                                        {
+                                          "name": "creationDate",
+                                          "type": "datetime",
+                                          "description": "The date and time, in UTC and ISO 8601 format, when the credentials were issued.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "mfaAuthenticated",
+                                          "type": "boolean",
+                                          "description": "Specifies whether the credentials were authenticated with a multi-factor authentication (MFA) device.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "sessionIssuer",
+                                      "type": "dict",
+                                      "description": "The source and type of credentials that were issued to the entity.",
+                                      "nested_items": [
+                                        {
+                                          "name": "accountId",
+                                          "type": "string",
+                                          "description": "The unique identifier for the Amazon Web Services account that owns the entity that was used to get the credentials.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "arn",
+                                          "type": "string",
+                                          "description": "The Amazon Resource Name (ARN) of the source account, Identity and Access Management (IAM) user, or role that was used to get the credentials.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "principalId",
+                                          "type": "string",
+                                          "description": "The unique identifier for the entity that was used to get the credentials.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "type",
+                                          "type": "string",
+                                          "description": "The source of the temporary security credentials, such as Root, IAMUser, or Role.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "userName",
+                                          "type": "string",
+                                          "description": "The name or alias of the user or role that issued the session. This value is null if the credentials were obtained from a root account that doesn't have an alias.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "awsAccount",
+                              "type": "dict",
+                              "description": "If the action was performed using the credentials for another Amazon Web Services account, the details of that account.",
+                              "nested_items": [
+                                {
+                                  "name": "accountId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the Amazon Web Services account.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "principalId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the entity that performed the action.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "awsService",
+                              "type": "dict",
+                              "description": "If the action was performed by an Amazon Web Services account that belongs to an Amazon Web Services service, the name of the service.",
+                              "nested_items": [
+                                {
+                                  "name": "invokedBy",
+                                  "type": "string",
+                                  "description": "The name of the Amazon Web Service that performed the action.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "federatedUser",
+                              "type": "dict",
+                              "description": "If the action was performed with temporary security credentials that were obtained using the GetFederationToken operation of the Security Token Service (STS) API, the identifiers, session context, and other details about the identity.",
+                              "nested_items": [
+                                {
+                                  "name": "accessKeyId",
+                                  "type": "string",
+                                  "description": "The Amazon Web Services access key ID that identifies the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "accountId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the Amazon Web Services account that owns the entity that was used to get the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "arn",
+                                  "type": "string",
+                                  "description": "The Amazon Resource Name (ARN) of the entity that was used to get the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "principalId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the entity that was used to get the credentials.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "sessionContext",
+                                  "type": "dict",
+                                  "description": "The details of the session that was created for the credentials, including the entity that issued the session.",
+                                  "nested_items": [
+                                    {
+                                      "name": "attributes",
+                                      "type": "dict",
+                                      "description": "The date and time when the credentials were issued, and whether the credentials were authenticated with a multi-factor authentication (MFA) device.",
+                                      "nested_items": [
+                                        {
+                                          "name": "creationDate",
+                                          "type": "datetime",
+                                          "description": "The date and time, in UTC and ISO 8601 format, when the credentials were issued.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "mfaAuthenticated",
+                                          "type": "boolean",
+                                          "description": "Specifies whether the credentials were authenticated with a multi-factor authentication (MFA) device.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "sessionIssuer",
+                                      "type": "dict",
+                                      "description": "The source and type of credentials that were issued to the entity.",
+                                      "nested_items": [
+                                        {
+                                          "name": "accountId",
+                                          "type": "string",
+                                          "description": "The unique identifier for the Amazon Web Services account that owns the entity that was used to get the credentials.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "arn",
+                                          "type": "string",
+                                          "description": "The Amazon Resource Name (ARN) of the source account, Identity and Access Management (IAM) user, or role that was used to get the credentials.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "principalId",
+                                          "type": "string",
+                                          "description": "The unique identifier for the entity that was used to get the credentials.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "type",
+                                          "type": "string",
+                                          "description": "The source of the temporary security credentials, such as Root, IAMUser, or Role.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "userName",
+                                          "type": "string",
+                                          "description": "The name or alias of the user or role that issued the session. This value is null if the credentials were obtained from a root account that doesn't have an alias.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "accountId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the Amazon Web Services account that's associated with the IAM user who performed the action.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "arn",
+                                  "type": "string",
+                                  "description": "The Amazon Resource Name (ARN) of the principal that performed the action. The last section of the ARN contains the name of the user who performed the action.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "principalId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the IAM user who performed the action.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "userName",
+                                  "type": "string",
+                                  "description": "The username of the IAM user who performed the action.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "accountId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the Amazon Web Services account.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "arn",
+                                  "type": "string",
+                                  "description": "The Amazon Resource Name (ARN) of the principal that performed the action. The last section of the ARN contains the name of the user or role that performed the action.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "principalId",
+                                  "type": "string",
+                                  "description": "The unique identifier for the entity that performed the action.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "type",
+                              "type": "string",
+                              "description": "The type of entity that performed the action.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "region",
+                  "type": "string",
+                  "description": "The Amazon Web Services Region that Amazon Macie created the finding in.",
+                  "nested_items": []
+                },
+                {
+                  "name": "resourcesAffected",
+                  "type": "dict",
+                  "description": "The resources that the finding applies to.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "allowsUnencryptedObjectUploads",
+                          "type": "string",
+                          "description": "Specifies whether the bucket policy for the bucket requires server-side encryption of objects when objects are added to the bucket. Possible values are:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "FALSE - The bucket policy requires server-side encryption of new objects. PutObject requests must include a valid server-side encryption header.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "TRUE - The bucket doesn't have a bucket policy or it has a bucket policy that doesn't require server-side encryption of new objects. If a bucket policy exists, it doesn't require PutObject requests to include a valid server-side encryption header.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "UNKNOWN - Amazon Macie can't determine whether the bucket policy requires server-side encryption of new objects.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "arn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the bucket.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "createdAt",
+                          "type": "datetime",
+                          "description": "The date and time, in UTC and extended ISO 8601 format, when the bucket was created. This value can also indicate when changes such as edits to the bucket's policy were most recently made to the bucket, relative to when the finding was created or last updated.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "defaultServerSideEncryption",
+                          "type": "dict",
+                          "description": "The default server-side encryption settings for the bucket.",
+                          "nested_items": [
+                            {
+                              "name": "encryptionType",
+                              "type": "string",
+                              "description": "The server-side encryption algorithm that's used when storing data in the bucket or object. If default encryption settings aren't configured for the bucket or the object isn't encrypted using server-side encryption, this value is NONE.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "kmsMasterKeyId",
+                              "type": "string",
+                              "description": "The Amazon Resource Name (ARN) or unique identifier (key ID) for the KMS key that's used to encrypt data in the bucket or the object. This value is null if an KMS key isn't used to encrypt the data.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the bucket.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "displayName",
+                              "type": "string",
+                              "description": "The display name of the account that owns the bucket.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "id",
+                              "type": "string",
+                              "description": "The canonical user ID for the account that owns the bucket.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "publicAccess",
+                          "type": "dict",
+                          "description": "The permissions settings that determine whether the bucket is publicly accessible.",
+                          "nested_items": [
+                            {
+                              "name": "effectivePermission",
+                              "type": "string",
+                              "description": "Specifies whether the bucket is publicly accessible due to the combination of permissions settings that apply to the bucket. Possible values are:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "NOT_PUBLIC - The bucket isn't publicly accessible.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "PUBLIC - The bucket is publicly accessible.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "UNKNOWN - Amazon Macie can't determine whether the bucket is publicly accessible.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "permissionConfiguration",
+                              "type": "dict",
+                              "description": "The account-level and bucket-level permissions settings for the bucket.",
+                              "nested_items": [
+                                {
+                                  "name": "accountLevelPermissions",
+                                  "type": "dict",
+                                  "description": "The account-level permissions settings that apply to the bucket.",
+                                  "nested_items": [
+                                    {
+                                      "name": "blockPublicAccess",
+                                      "type": "dict",
+                                      "description": "The block public access settings for the Amazon Web Services account that owns the bucket.",
+                                      "nested_items": [
+                                        {
+                                          "name": "blockPublicAcls",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 blocks public access control lists (ACLs) for the bucket and objects in the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "blockPublicPolicy",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 blocks public bucket policies for the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "ignorePublicAcls",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 ignores public ACLs for the bucket and objects in the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "restrictPublicBuckets",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 restricts public bucket policies for the bucket.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "bucketLevelPermissions",
+                                  "type": "dict",
+                                  "description": "The bucket-level permissions settings for the bucket.",
+                                  "nested_items": [
+                                    {
+                                      "name": "accessControlList",
+                                      "type": "dict",
+                                      "description": "The permissions settings of the access control list (ACL) for the bucket. This value is null if an ACL hasn't been defined for the bucket.",
+                                      "nested_items": [
+                                        {
+                                          "name": "allowsPublicReadAccess",
+                                          "type": "boolean",
+                                          "description": "Specifies whether the ACL grants the general public with read access permissions for the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "allowsPublicWriteAccess",
+                                          "type": "boolean",
+                                          "description": "Specifies whether the ACL grants the general public with write access permissions for the bucket.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "blockPublicAccess",
+                                      "type": "dict",
+                                      "description": "The block public access settings for the bucket.",
+                                      "nested_items": [
+                                        {
+                                          "name": "blockPublicAcls",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 blocks public access control lists (ACLs) for the bucket and objects in the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "blockPublicPolicy",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 blocks public bucket policies for the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "ignorePublicAcls",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 ignores public ACLs for the bucket and objects in the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "restrictPublicBuckets",
+                                          "type": "boolean",
+                                          "description": "Specifies whether Amazon S3 restricts public bucket policies for the bucket.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "bucketPolicy",
+                                      "type": "dict",
+                                      "description": "The permissions settings of the bucket policy for the bucket. This value is null if a bucket policy hasn't been defined for the bucket.",
+                                      "nested_items": [
+                                        {
+                                          "name": "allowsPublicReadAccess",
+                                          "type": "boolean",
+                                          "description": "Specifies whether the bucket policy allows the general public to have read access to the bucket.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "allowsPublicWriteAccess",
+                                          "type": "boolean",
+                                          "description": "Specifies whether the bucket policy allows the general public to have write access to the bucket.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "tags",
+                          "type": "list",
+                          "description": "The tags that are associated with the bucket.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "One part of a key-value pair that comprises a tag. A tag key is a general label that acts as a category for more specific tag values.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "string",
+                                  "description": "One part of a key-value pair that comprises a tag. A tag value acts as a descriptor for a tag key. A tag value can be an empty string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "bucketArn",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the bucket that contains the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "eTag",
+                          "type": "string",
+                          "description": "The entity tag (ETag) that identifies the affected version of the object. If the object was overwritten or changed after Amazon Macie produced the finding, this value might be different from the current ETag for the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "extension",
+                          "type": "string",
+                          "description": "The file name extension of the object. If the object doesn't have a file name extension, this value is ''.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "key",
+                          "type": "string",
+                          "description": "The full name (key) of the object, including the object's prefix if applicable.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "lastModified",
+                          "type": "datetime",
+                          "description": "The date and time, in UTC and extended ISO 8601 format, when the object was last modified.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "path",
+                          "type": "string",
+                          "description": "The full path to the affected object, including the name of the affected bucket and the object's name (key).",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "publicAccess",
+                          "type": "boolean",
+                          "description": "Specifies whether the object is publicly accessible due to the combination of permissions settings that apply to the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "serverSideEncryption",
+                          "type": "dict",
+                          "description": "The type of server-side encryption that was used to encrypt the object.",
+                          "nested_items": [
+                            {
+                              "name": "encryptionType",
+                              "type": "string",
+                              "description": "The server-side encryption algorithm that's used when storing data in the bucket or object. If default encryption settings aren't configured for the bucket or the object isn't encrypted using server-side encryption, this value is NONE.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "kmsMasterKeyId",
+                              "type": "string",
+                              "description": "The Amazon Resource Name (ARN) or unique identifier (key ID) for the KMS key that's used to encrypt data in the bucket or the object. This value is null if an KMS key isn't used to encrypt the data.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "size",
+                          "type": "integer",
+                          "description": "The total storage size, in bytes, of the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "storageClass",
+                          "type": "string",
+                          "description": "The storage class of the object.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "tags",
+                          "type": "list",
+                          "description": "The tags that are associated with the object.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "description": "One part of a key-value pair that comprises a tag. A tag key is a general label that acts as a category for more specific tag values.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "value",
+                                  "type": "string",
+                                  "description": "One part of a key-value pair that comprises a tag. A tag value acts as a descriptor for a tag key. A tag value can be an empty string.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "versionId",
+                          "type": "string",
+                          "description": "The identifier for the affected version of the object.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "sample",
+                  "type": "boolean",
+                  "description": "Specifies whether the finding is a sample finding. A sample finding is a finding that uses example data to demonstrate what a finding might contain.",
+                  "nested_items": []
+                },
+                {
+                  "name": "schemaVersion",
+                  "type": "string",
+                  "description": "The version of the schema that was used to define the data structures in the finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "description",
+                      "type": "string",
+                      "description": "The qualitative representation of the finding's severity, ranging from Low (least severe) to High (most severe).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "score",
+                      "type": "integer",
+                      "description": "The numerical representation of the finding's severity, ranging from 1 (least severe) to 3 (most severe).",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "title",
+                  "type": "string",
+                  "description": "The brief description of the finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "type",
+                  "type": "string",
+                  "description": "The type of the finding.",
+                  "nested_items": []
+                },
+                {
+                  "name": "updatedAt",
+                  "type": "datetime",
+                  "description": "The date and time, in UTC and extended ISO 8601 format, when Amazon Macie last updated the finding. For sensitive data findings, this value is the same as the value for the createdAt property. All sensitive data findings are considered new.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

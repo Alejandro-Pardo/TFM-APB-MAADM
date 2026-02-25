@@ -1,0 +1,64 @@
+{
+  "method_name": "create_state_machine_alias",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/stepfunctions/client/create_state_machine_alias.html",
+  "description": "Creates an alias for a state machine that points to one or two versions of the same state machine. You can set your application to call  StartExecution with an alias and update the version the alias uses without changing the client's code. You can also map an alias to split  StartExecution requests between two versions of a state machine. To do this, add a second RoutingConfig object in the routingConfiguration parameter. You must also specify the percentage of execution run requests each version should receive in both RoutingConfig objects. Step Functions randomly chooses which version runs a given execution based on the percentage you specify. To create an alias that points to a single version, specify a single RoutingConfig object with a weight set to 100. You can create up to 100 aliases for each state machine. You must delete unused aliases using the  DeleteStateMachineAlias API action. CreateStateMachineAlias is an idempotent API. Step Functions bases the idempotency check on the stateMachineArn, description, name, and routingConfiguration parameters. Requests that contain the same values for these parameters return a successful idempotent response without creating a duplicate resource.",
+  "parameters": [
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the state machine alias. To avoid conflict with version ARNs, don't use an integer in the name of the alias.",
+      "nested_params": []
+    },
+    {
+      "name": "routingConfiguration",
+      "type": "list",
+      "required": true,
+      "description": "The routing configuration of a state machine alias. The routing configuration shifts execution traffic between two state machine versions. routingConfiguration contains an array of RoutingConfig objects that specify up to two state machine versions. Step Functions then randomly choses which version to run an execution with based on the weight assigned to each RoutingConfig. (dict) --- Contains details about the routing configuration of a state machine alias. In a routing configuration, you define an array of objects that specify up to two state machine versions. You also specify the percentage of traffic to be routed to each version. The Amazon Resource Name (ARN) that identifies one or two state machine versions defined in the routing configuration. If you specify the ARN of a second version, it must belong to the same state machine as the first version. The percentage of traffic you want to route to a state machine version. The sum of the weights in the routing configuration must be equal to 100.",
+      "nested_params": [
+        {
+          "name": "stateMachineVersionArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) that identifies one or two state machine versions defined in the routing configuration. If you specify the ARN of a second version, it must belong to the same state machine as the first version.",
+          "nested_params": []
+        },
+        {
+          "name": "weight",
+          "type": "integer",
+          "required": false,
+          "description": "The percentage of traffic you want to route to a state machine version. The sum of the weights in the routing configuration must be equal to 100.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "stateMachineAliasArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) that identifies the created state machine alias.",
+          "nested_items": []
+        },
+        {
+          "name": "creationDate",
+          "type": "datetime",
+          "description": "The date the state machine alias was created.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

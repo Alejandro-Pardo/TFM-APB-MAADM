@@ -1,0 +1,900 @@
+{
+  "method_name": "update_service",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/apprunner/client/update_service.html",
+  "description": "Update an App Runner service. You can update the source configuration and instance configuration of the service. You can also update the ARN of the auto scaling configuration resource that's associated with the service. However, you can't change the name or the encryption configuration of the service. These can be set only when you create the service. To update the tags applied to your service, use the separate actions  TagResource and  UntagResource. This is an asynchronous operation. On a successful call, you can use the returned OperationId and the  ListOperations call to track the operation's progress.",
+  "parameters": [
+    {
+      "name": "ServiceArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of the App Runner service that you want to update.",
+      "nested_params": []
+    },
+    {
+      "name": "SourceConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The source configuration to apply to the App Runner service. You can change the configuration of the code or image repository that the service uses. However, you can't switch from code to image or the other way around. This means that you must provide the same structure member of SourceConfiguration that you originally included when you created the service. Specifically, you can include either CodeRepository or ImageRepository. To update the source configuration, set the values to members of the structure that you include. CodeRepository (dict) --- The description of a source code repository. You must provide either this member or ImageRepository (but not both). The location of the repository that contains the source code. The version that should be used within the source code repository. The type of version identifier. For a git-based repository, branches represent versions. A source code version. For a git-based repository, a branch name maps to a specific version. App Runner uses the most recent commit to the branch. CodeConfiguration (dict) --- Configuration for building and running the service from a source code repository. The source of the App Runner configuration. Values are interpreted as follows: REPOSITORY --- App Runner reads configuration values from the apprunner.yaml file in the source code repository and ignores CodeConfigurationValues. API --- App Runner uses configuration values provided in CodeConfigurationValues and ignores the apprunner.yaml file in the source code repository. CodeConfigurationValues (dict) --- The basic configuration for building and running the App Runner service. Use it to quickly launch an App Runner service without providing a apprunner.yaml file in the source code repository (or ignoring the file if it exists). A runtime environment type for building and running an App Runner service. It represents a programming language runtime. BuildCommand (string) --- The command App Runner runs to build your application. StartCommand (string) --- The command App Runner runs to start your application. Port (string) --- The port that your application listens to in the container. Default: 8080 RuntimeEnvironmentVariables (dict) --- The environment variables that are available to your running App Runner service. An array of key-value pairs. (string) --- (string) --- RuntimeEnvironmentSecrets (dict) --- An array of key-value pairs representing the secrets and parameters that get referenced to your service as an environment variable. The supported values are either the full Amazon Resource Name (ARN) of the Secrets Manager secret or the full ARN of the parameter in the Amazon Web Services Systems Manager Parameter Store. (string) --- (string) --- SourceDirectory (string) --- The path of the directory that stores source code and configuration files. The build and start commands also execute from here. The path is absolute from root and, if not specified, defaults to the repository root. ImageRepository (dict) --- The description of a source image repository. You must provide either this member or CodeRepository (but not both). The identifier of an image. For an image in Amazon Elastic Container Registry (Amazon ECR), this is an image name. For the image name format, see Pulling an image in the Amazon ECR User Guide. ImageConfiguration (dict) --- Configuration for running the identified image. RuntimeEnvironmentVariables (dict) --- Environment variables that are available to your running App Runner service. (string) --- (string) --- StartCommand (string) --- An optional command that App Runner runs to start the application in the source image. If specified, this command overrides the Docker image's default start command. Default: 8080 RuntimeEnvironmentSecrets (dict) --- An array of key-value pairs representing the secrets and parameters that get referenced to your service as an environment variable. (string) --- (string) --- The type of the image repository. This reflects the repository provider and whether the repository is private or public. AutoDeploymentsEnabled (boolean) --- If true, continuous integration from the source repository is enabled for the App Runner service. Each repository change (including any source code commit or new image version) starts a deployment. Default: App Runner sets to false for a source image that uses an ECR Public repository or an ECR repository that's in an Amazon Web Services account other than the one that the service is in. App Runner sets to true in all other cases (which currently include a source code repository or a source image using a same-account ECR repository). AuthenticationConfiguration (dict) --- Describes the resources that are needed to authenticate access to some source repositories. ConnectionArn (string) --- The Amazon Resource Name (ARN) of the App Runner connection that enables the App Runner service to connect to a source repository. It's required for GitHub code repositories. AccessRoleArn (string) --- The Amazon Resource Name (ARN) of the IAM role that grants the App Runner service access to a source repository. It's required for ECR image repositories (but not for ECR Public repositories).",
+      "nested_params": [
+        {
+          "name": "CodeRepository",
+          "type": "dict",
+          "required": false,
+          "description": "The description of a source code repository. You must provide either this member or ImageRepository (but not both).",
+          "nested_params": [
+            {
+              "name": "RepositoryUrl",
+              "type": "string",
+              "required": false,
+              "description": "The location of the repository that contains the source code.",
+              "nested_params": []
+            },
+            {
+              "name": "SourceCodeVersion",
+              "type": "dict",
+              "required": false,
+              "description": "The version that should be used within the source code repository.",
+              "nested_params": [
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of version identifier. For a git-based repository, branches represent versions.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "A source code version. For a git-based repository, a branch name maps to a specific version. App Runner uses the most recent commit to the branch.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "CodeConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration for building and running the service from a source code repository.",
+              "nested_params": [
+                {
+                  "name": "ConfigurationSource",
+                  "type": "string",
+                  "required": false,
+                  "description": "The source of the App Runner configuration. Values are interpreted as follows:",
+                  "nested_params": []
+                },
+                {
+                  "name": "CodeConfigurationValues",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The basic configuration for building and running the App Runner service. Use it to quickly launch an App Runner service without providing a apprunner.yaml file in the source code repository (or ignoring the file if it exists).",
+                  "nested_params": [
+                    {
+                      "name": "Runtime",
+                      "type": "string",
+                      "required": false,
+                      "description": "A runtime environment type for building and running an App Runner service. It represents a programming language runtime.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "BuildCommand",
+                      "type": "string",
+                      "required": false,
+                      "description": "The command App Runner runs to build your application.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StartCommand",
+                      "type": "string",
+                      "required": false,
+                      "description": "The command App Runner runs to start your application.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "string",
+                      "required": false,
+                      "description": "The port that your application listens to in the container. Default: 8080",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "RuntimeEnvironmentVariables",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The environment variables that are available to your running App Runner service. An array of key-value pairs.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "RuntimeEnvironmentSecrets",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An array of key-value pairs representing the secrets and parameters that get referenced to your service as an environment variable. The supported values are either the full Amazon Resource Name (ARN) of the Secrets Manager secret or the full ARN of the parameter in the Amazon Web Services Systems Manager Parameter Store.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "SourceDirectory",
+              "type": "string",
+              "required": false,
+              "description": "The path of the directory that stores source code and configuration files. The build and start commands also execute from here. The path is absolute from root and, if not specified, defaults to the repository root.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "ImageRepository",
+          "type": "dict",
+          "required": false,
+          "description": "The description of a source image repository. You must provide either this member or CodeRepository (but not both).",
+          "nested_params": [
+            {
+              "name": "ImageIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The identifier of an image. For an image in Amazon Elastic Container Registry (Amazon ECR), this is an image name. For the image name format, see Pulling an image in the Amazon ECR User Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "ImageConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration for running the identified image.",
+              "nested_params": [
+                {
+                  "name": "RuntimeEnvironmentVariables",
+                  "type": "dict",
+                  "required": false,
+                  "description": "Environment variables that are available to your running App Runner service. An array of key-value pairs.",
+                  "nested_params": []
+                },
+                {
+                  "name": "StartCommand",
+                  "type": "string",
+                  "required": false,
+                  "description": "An optional command that App Runner runs to start the application in the source image. If specified, this command overrides the Docker image's default start command.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Port",
+                  "type": "string",
+                  "required": false,
+                  "description": "The port that your application listens to in the container. Default: 8080",
+                  "nested_params": []
+                },
+                {
+                  "name": "RuntimeEnvironmentSecrets",
+                  "type": "dict",
+                  "required": false,
+                  "description": "An array of key-value pairs representing the secrets and parameters that get referenced to your service as an environment variable. The supported values are either the full Amazon Resource Name (ARN) of the Secrets Manager secret or the full ARN of the parameter in the Amazon Web Services Systems Manager Parameter Store.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "ImageRepositoryType",
+              "type": "string",
+              "required": false,
+              "description": "The type of the image repository. This reflects the repository provider and whether the repository is private or public.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AutoDeploymentsEnabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, continuous integration from the source repository is enabled for the App Runner service. Each repository change (including any source code commit or new image version) starts a deployment. Default: App Runner sets to false for a source image that uses an ECR Public repository or an ECR repository that's in an Amazon Web Services account other than the one that the service is in. App Runner sets to true in all other cases (which currently include a source code repository or a source image using a same-account ECR repository).",
+          "nested_params": []
+        },
+        {
+          "name": "AuthenticationConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Describes the resources that are needed to authenticate access to some source repositories.",
+          "nested_params": [
+            {
+              "name": "ConnectionArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the App Runner connection that enables the App Runner service to connect to a source repository. It's required for GitHub code repositories.",
+              "nested_params": []
+            },
+            {
+              "name": "AccessRoleArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the IAM role that grants the App Runner service access to a source repository. It's required for ECR image repositories (but not for ECR Public repositories).",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "InstanceConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "The runtime configuration to apply to instances (scaling units) of your service. Cpu (string) --- The number of CPU units reserved for each instance of your App Runner service. Default: 1 vCPU Memory (string) --- The amount of memory, in MB or GB, reserved for each instance of your App Runner service. Default: 2 GB InstanceRoleArn (string) --- The Amazon Resource Name (ARN) of an IAM role that provides permissions to your App Runner service. These are permissions that your code needs when it calls any Amazon Web Services APIs.",
+      "nested_params": [
+        {
+          "name": "Cpu",
+          "type": "string",
+          "required": false,
+          "description": "The number of CPU units reserved for each instance of your App Runner service. Default: 1 vCPU.",
+          "nested_params": []
+        },
+        {
+          "name": "Memory",
+          "type": "string",
+          "required": false,
+          "description": "The amount of memory, in MB or GB, reserved for each instance of your App Runner service. Default: 2 GB.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceRoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of an IAM role that provides permissions to your App Runner service. These are permissions that your code needs when it calls any Amazon Web Services APIs.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AutoScalingConfigurationArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "HealthCheckConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "The settings for the health check that App Runner performs to monitor the health of the App Runner service. Protocol (string) --- The IP protocol that App Runner uses to perform health checks for your service. If you set Protocol to HTTP, App Runner sends health check requests to the HTTP path specified by Path. Default: TCP Path (string) --- The URL that health check requests are sent to. Path is only applicable when you set Protocol to HTTP. Default: \"/\" Interval (integer) --- The time interval, in seconds, between health checks. Default: 5 Timeout (integer) --- The time, in seconds, to wait for a health check response before deciding it failed. Default: 2 HealthyThreshold (integer) --- The number of consecutive checks that must succeed before App Runner decides that the service is healthy. Default: 1 UnhealthyThreshold (integer) --- The number of consecutive checks that must fail before App Runner decides that the service is unhealthy. Default: 5",
+      "nested_params": [
+        {
+          "name": "Protocol",
+          "type": "string",
+          "required": false,
+          "description": "The IP protocol that App Runner uses to perform health checks for your service. If you set Protocol to HTTP, App Runner sends health check requests to the HTTP path specified by Path. Default: TCP.",
+          "nested_params": []
+        },
+        {
+          "name": "Path",
+          "type": "string",
+          "required": false,
+          "description": "The URL that health check requests are sent to. Path is only applicable when you set Protocol to HTTP. Default: \"/\"",
+          "nested_params": []
+        },
+        {
+          "name": "Interval",
+          "type": "integer",
+          "required": false,
+          "description": "The time interval, in seconds, between health checks. Default: 5",
+          "nested_params": []
+        },
+        {
+          "name": "Timeout",
+          "type": "integer",
+          "required": false,
+          "description": "The time, in seconds, to wait for a health check response before deciding it failed. Default: 2",
+          "nested_params": []
+        },
+        {
+          "name": "HealthyThreshold",
+          "type": "integer",
+          "required": false,
+          "description": "The number of consecutive checks that must succeed before App Runner decides that the service is healthy. Default: 1",
+          "nested_params": []
+        },
+        {
+          "name": "UnhealthyThreshold",
+          "type": "integer",
+          "required": false,
+          "description": "The number of consecutive checks that must fail before App Runner decides that the service is unhealthy. Default: 5",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "NetworkConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "Configuration settings related to network traffic of the web application that the App Runner service runs. EgressConfiguration (dict) --- Network configuration settings for outbound message traffic. EgressType (string) --- The type of egress configuration. Set to DEFAULT for access to resources hosted on public networks. Set to VPC to associate your service to a custom VPC specified by VpcConnectorArn. VpcConnectorArn (string) --- The Amazon Resource Name (ARN) of the App Runner VPC connector that you want to associate with your App Runner service. Only valid when EgressType = VPC. IngressConfiguration (dict) --- Network configuration settings for inbound message traffic. IsPubliclyAccessible (boolean) --- Specifies whether your App Runner service is publicly accessible. To make the service publicly accessible set it to True. To make the service privately accessible, from only within an Amazon VPC set it to False. IpAddressType (string) --- App Runner provides you with the option to choose between Internet Protocol version 4 (IPv4) and dual stack (IPv4 and IPv6) for your incoming public network configuration. This is an optional parameter. If you do not specify an IpAddressType, it defaults to select IPv4.",
+      "nested_params": [
+        {
+          "name": "EgressConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Network configuration settings for outbound message traffic.",
+          "nested_params": [
+            {
+              "name": "EgressType",
+              "type": "string",
+              "required": false,
+              "description": "The type of egress configuration. Set to DEFAULT for access to resources hosted on public networks. Set to VPC to associate your service to a custom VPC specified by VpcConnectorArn.",
+              "nested_params": []
+            },
+            {
+              "name": "VpcConnectorArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the App Runner VPC connector that you want to associate with your App Runner service. Only valid when EgressType = VPC.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IngressConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Network configuration settings for inbound message traffic.",
+          "nested_params": [
+            {
+              "name": "IsPubliclyAccessible",
+              "type": "boolean",
+              "required": false,
+              "description": "Specifies whether your App Runner service is publicly accessible. To make the service publicly accessible set it to True. To make the service privately accessible, from only within an Amazon VPC set it to False.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "IpAddressType",
+          "type": "string",
+          "required": false,
+          "description": "App Runner provides you with the option to choose between Internet Protocol version 4 (IPv4) and dual stack (IPv4 and IPv6) for your incoming public network configuration. This is an optional parameter. If you do not specify an IpAddressType, it defaults to select IPv4.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ObservabilityConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The observability configuration of your service. When true, an observability configuration resource is associated with the service, and an ObservabilityConfigurationArn is specified. ObservabilityConfigurationArn (string) --- The Amazon Resource Name (ARN) of the observability configuration that is associated with the service. Specified only when ObservabilityEnabled is true. Specify an ARN with a name and a revision number to associate that revision. For example: arn:aws:apprunner:us-east-1:123456789012:observabilityconfiguration/xray-tracing/3 Specify just the name to associate the latest revision. For example: arn:aws:apprunner:us-east-1:123456789012:observabilityconfiguration/xray-tracing.",
+      "nested_params": [
+        {
+          "name": "ObservabilityEnabled",
+          "type": "boolean",
+          "required": false,
+          "description": "When true, an observability configuration resource is associated with the service, and an ObservabilityConfigurationArn is specified.",
+          "nested_params": []
+        },
+        {
+          "name": "ObservabilityConfigurationArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of the observability configuration that is associated with the service. Specified only when ObservabilityEnabled is true. Specify an ARN with a name and a revision number to associate that revision. For example: arn:aws:apprunner:us-east-1:123456789012:observabilityconfiguration/xray-tracing/3 Specify just the name to associate the latest revision. For example: arn:aws:apprunner:us-east-1:123456789012:observabilityconfiguration/xray-tracing.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "ServiceName",
+              "type": "string",
+              "description": "The customer-provided service name.",
+              "nested_items": []
+            },
+            {
+              "name": "ServiceId",
+              "type": "string",
+              "description": "An ID that App Runner generated for this service. It's unique within the Amazon Web Services Region.",
+              "nested_items": []
+            },
+            {
+              "name": "ServiceArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of this service.",
+              "nested_items": []
+            },
+            {
+              "name": "ServiceUrl",
+              "type": "string",
+              "description": "A subdomain URL that App Runner generated for this service. You can use this URL to access your service web application.",
+              "nested_items": []
+            },
+            {
+              "name": "CreatedAt",
+              "type": "datetime",
+              "description": "The time when the App Runner service was created. It's in the Unix time stamp format.",
+              "nested_items": []
+            },
+            {
+              "name": "UpdatedAt",
+              "type": "datetime",
+              "description": "The time when the App Runner service was last updated at. It's in the Unix time stamp format.",
+              "nested_items": []
+            },
+            {
+              "name": "DeletedAt",
+              "type": "datetime",
+              "description": "The time when the App Runner service was deleted. It's in the Unix time stamp format.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The current state of the App Runner service. These particular values mean the following.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CREATE_FAILED --- The service failed to create. The failed service isn't usable, and still counts towards your service quota. To troubleshoot this failure, read the failure events and logs, change any parameters that need to be fixed, and rebuild your service using UpdateService.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DELETE_FAILED --- The service failed to delete and can't be successfully recovered. Retry the service deletion call to ensure that all related resources are removed.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SourceConfiguration",
+              "type": "dict",
+              "description": "The source deployed to the App Runner service. It can be a code or an image repository.",
+              "nested_items": [
+                {
+                  "name": "CodeRepository",
+                  "type": "dict",
+                  "description": "The description of a source code repository.",
+                  "nested_items": [
+                    {
+                      "name": "RepositoryUrl",
+                      "type": "string",
+                      "description": "The location of the repository that contains the source code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SourceCodeVersion",
+                      "type": "dict",
+                      "description": "The version that should be used within the source code repository.",
+                      "nested_items": [
+                        {
+                          "name": "Type",
+                          "type": "string",
+                          "description": "The type of version identifier.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Value",
+                          "type": "string",
+                          "description": "A source code version.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CodeConfiguration",
+                      "type": "dict",
+                      "description": "Configuration for building and running the service from a source code repository.",
+                      "nested_items": [
+                        {
+                          "name": "ConfigurationSource",
+                          "type": "string",
+                          "description": "The source of the App Runner configuration. Values are interpreted as follows:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "REPOSITORY --- App Runner reads configuration values from the apprunner.yaml file in the source code repository and ignores CodeConfigurationValues.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "API --- App Runner uses configuration values provided in CodeConfigurationValues and ignores the apprunner.yaml file in the source code repository.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "CodeConfigurationValues",
+                          "type": "dict",
+                          "description": "The basic configuration for building and running the App Runner service. Use it to quickly launch an App Runner service without providing a apprunner.yaml file in the source code repository (or ignoring the file if it exists).",
+                          "nested_items": [
+                            {
+                              "name": "Runtime",
+                              "type": "string",
+                              "description": "A runtime environment type for building and running an App Runner service. It represents a programming language runtime.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "BuildCommand",
+                              "type": "string",
+                              "description": "The command App Runner runs to build your application.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "StartCommand",
+                              "type": "string",
+                              "description": "The command App Runner runs to start your application.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Port",
+                              "type": "string",
+                              "description": "The port that your application listens to in the container.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "RuntimeEnvironmentVariables",
+                              "type": "dict",
+                              "description": "The environment variables that are available to your running App Runner service. An array of key-value pairs.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "RuntimeEnvironmentSecrets",
+                              "type": "dict",
+                              "description": "An array of key-value pairs representing the secrets and parameters that get referenced to your service as an environment variable. The supported values are either the full Amazon Resource Name (ARN) of the Secrets Manager secret or the full ARN of the parameter in the Amazon Web Services Systems Manager Parameter Store.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "SourceDirectory",
+                      "type": "string",
+                      "description": "The path of the directory that stores source code and configuration files. The build and start commands also execute from here. The path is absolute from root and, if not specified, defaults to the repository root.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ImageRepository",
+                  "type": "dict",
+                  "description": "The description of a source image repository.",
+                  "nested_items": [
+                    {
+                      "name": "ImageIdentifier",
+                      "type": "string",
+                      "description": "The identifier of an image.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ImageConfiguration",
+                      "type": "dict",
+                      "description": "Configuration for running the identified image.",
+                      "nested_items": [
+                        {
+                          "name": "RuntimeEnvironmentVariables",
+                          "type": "dict",
+                          "description": "Environment variables that are available to your running App Runner service. An array of key-value pairs.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StartCommand",
+                          "type": "string",
+                          "description": "An optional command that App Runner runs to start the application in the source image. If specified, this command overrides the Docker image's default start command.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Port",
+                          "type": "string",
+                          "description": "The port that your application listens to in the container.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RuntimeEnvironmentSecrets",
+                          "type": "dict",
+                          "description": "An array of key-value pairs representing the secrets and parameters that get referenced to your service as an environment variable. The supported values are either the full Amazon Resource Name (ARN) of the Secrets Manager secret or the full ARN of the parameter in the Amazon Web Services Systems Manager Parameter Store.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ImageRepositoryType",
+                      "type": "string",
+                      "description": "The type of the image repository. This reflects the repository provider and whether the repository is private or public.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AutoDeploymentsEnabled",
+                  "type": "boolean",
+                  "description": "If true, continuous integration from the source repository is enabled for the App Runner service. Each repository change (including any source code commit or new image version) starts a deployment.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AuthenticationConfiguration",
+                  "type": "dict",
+                  "description": "Describes the resources that are needed to authenticate access to some source repositories.",
+                  "nested_items": [
+                    {
+                      "name": "ConnectionArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the App Runner connection that enables the App Runner service to connect to a source repository. It's required for GitHub code repositories.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AccessRoleArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the IAM role that grants the App Runner service access to a source repository. It's required for ECR image repositories (but not for ECR Public repositories).",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "InstanceConfiguration",
+              "type": "dict",
+              "description": "The runtime configuration of instances (scaling units) of this service.",
+              "nested_items": [
+                {
+                  "name": "Cpu",
+                  "type": "string",
+                  "description": "The number of CPU units reserved for each instance of your App Runner service.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Memory",
+                  "type": "string",
+                  "description": "The amount of memory, in MB or GB, reserved for each instance of your App Runner service.",
+                  "nested_items": []
+                },
+                {
+                  "name": "InstanceRoleArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of an IAM role that provides permissions to your App Runner service. These are permissions that your code needs when it calls any Amazon Web Services APIs.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "EncryptionConfiguration",
+              "type": "dict",
+              "description": "The encryption key that App Runner uses to encrypt the service logs and the copy of the source repository that App Runner maintains for the service. It can be either a customer-provided encryption key or an Amazon Web Services managed key.",
+              "nested_items": [
+                {
+                  "name": "KmsKey",
+                  "type": "string",
+                  "description": "The ARN of the KMS key that's used for encryption.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "HealthCheckConfiguration",
+              "type": "dict",
+              "description": "The settings for the health check that App Runner performs to monitor the health of this service.",
+              "nested_items": [
+                {
+                  "name": "Protocol",
+                  "type": "string",
+                  "description": "The IP protocol that App Runner uses to perform health checks for your service.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Path",
+                  "type": "string",
+                  "description": "The URL that health check requests are sent to.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Interval",
+                  "type": "integer",
+                  "description": "The time interval, in seconds, between health checks.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Timeout",
+                  "type": "integer",
+                  "description": "The time, in seconds, to wait for a health check response before deciding it failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HealthyThreshold",
+                  "type": "integer",
+                  "description": "The number of consecutive checks that must succeed before App Runner decides that the service is healthy.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UnhealthyThreshold",
+                  "type": "integer",
+                  "description": "The number of consecutive checks that must fail before App Runner decides that the service is unhealthy.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "AutoScalingConfigurationSummary",
+              "type": "dict",
+              "description": "Summary information for the App Runner automatic scaling configuration resource that's associated with this service.",
+              "nested_items": [
+                {
+                  "name": "AutoScalingConfigurationArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of this auto scaling configuration.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AutoScalingConfigurationName",
+                  "type": "string",
+                  "description": "The customer-provided auto scaling configuration name. It can be used in multiple revisions of a configuration.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AutoScalingConfigurationRevision",
+                  "type": "integer",
+                  "description": "The revision of this auto scaling configuration. It's unique among all the active configurations ( \"Status\": \"ACTIVE\") with the same AutoScalingConfigurationName.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The current state of the auto scaling configuration. If the status of a configuration revision is INACTIVE, it was deleted and can't be used. Inactive configuration revisions are permanently removed some time after they are deleted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "CreatedAt",
+                  "type": "datetime",
+                  "description": "The time when the auto scaling configuration was created. It's in Unix time stamp format.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HasAssociatedService",
+                  "type": "boolean",
+                  "description": "Indicates if this auto scaling configuration has an App Runner service associated with it. A value of true indicates one or more services are associated. A value of false indicates no services are associated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "IsDefault",
+                  "type": "boolean",
+                  "description": "Indicates if this auto scaling configuration should be used as the default for a new App Runner service that does not have an auto scaling configuration ARN specified during creation. Each account can have only one default AutoScalingConfiguration per region. The default AutoScalingConfiguration can be any revision under the same AutoScalingConfigurationName.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "NetworkConfiguration",
+              "type": "dict",
+              "description": "Configuration settings related to network traffic of the web application that this service runs.",
+              "nested_items": [
+                {
+                  "name": "EgressConfiguration",
+                  "type": "dict",
+                  "description": "Network configuration settings for outbound message traffic.",
+                  "nested_items": [
+                    {
+                      "name": "EgressType",
+                      "type": "string",
+                      "description": "The type of egress configuration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "VpcConnectorArn",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the App Runner VPC connector that you want to associate with your App Runner service. Only valid when EgressType = VPC.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "IngressConfiguration",
+                  "type": "dict",
+                  "description": "Network configuration settings for inbound message traffic.",
+                  "nested_items": [
+                    {
+                      "name": "IsPubliclyAccessible",
+                      "type": "boolean",
+                      "description": "Specifies whether your App Runner service is publicly accessible. To make the service publicly accessible set it to True. To make the service privately accessible, from only within an Amazon VPC set it to False.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "IpAddressType",
+                  "type": "string",
+                  "description": "App Runner provides you with the option to choose between Internet Protocol version 4 (IPv4) and dual stack (IPv4 and IPv6) for your incoming public network configuration. This is an optional parameter. If you do not specify an IpAddressType, it defaults to select IPv4.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "ObservabilityConfiguration",
+              "type": "dict",
+              "description": "The observability configuration of this service.",
+              "nested_items": [
+                {
+                  "name": "ObservabilityEnabled",
+                  "type": "boolean",
+                  "description": "When true, an observability configuration resource is associated with the service, and an ObservabilityConfigurationArn is specified.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ObservabilityConfigurationArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the observability configuration that is associated with the service. Specified only when ObservabilityEnabled is true.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "OperationId",
+          "type": "string",
+          "description": "The unique ID of the asynchronous operation that this request started. You can use it combined with the  ListOperations call to track the operation's progress.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "method_name": "get_bucket_replication",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3control/client/get_bucket_replication.html",
+  "description": "Returns the replication configuration of an S3 on Outposts bucket. For more information about S3 on Outposts, see Using Amazon S3 on Outposts in the Amazon S3 User Guide. For information about S3 replication on Outposts configuration, see Replicating objects for S3 on Outposts in the Amazon S3 User Guide. This action requires permissions for the s3-outposts:GetReplicationConfiguration action. The Outposts bucket owner has this permission by default and can grant it to others. For more information about permissions, see Setting up IAM with S3 on Outposts and Managing access to S3 on Outposts bucket in the Amazon S3 User Guide. All Amazon S3 on Outposts REST API requests for this action require an additional parameter of x-amz-outpost-id to be passed with the request. In addition, you must use an S3 on Outposts endpoint hostname prefix instead of s3-control. For an example of the request syntax for Amazon S3 on Outposts that uses the S3 on Outposts endpoint hostname prefix and the x-amz-outpost-id derived by using the access point ARN, see the Examples section. If you include the Filter element in a replication configuration, you must also include the DeleteMarkerReplication, Status, and Priority elements. The response also returns those elements. For information about S3 on Outposts replication failure reasons, see Replication failure reasons in the Amazon S3 User Guide. The following operations are related to GetBucketReplication:",
+  "parameters": [
+    {
+      "name": "AccountId",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Web Services account ID of the Outposts bucket.",
+      "nested_params": []
+    },
+    {
+      "name": "Bucket",
+      "type": "string",
+      "required": true,
+      "description": "Specifies the bucket to get the replication information for. For using this parameter with Amazon S3 on Outposts with the REST API, you must specify the name and the x-amz-outpost-id as well. For using this parameter with S3 on Outposts with the Amazon Web Services SDK and CLI, you must specify the ARN of the bucket accessed in the format arn:aws:s3-outposts:<Region>:<account-id>:outpost/<outpost-id>/bucket/<my-bucket-name>. For example, to access the bucket reports through Outpost my-outpost owned by account 123456789012 in Region us-west-2, use the URL encoding of arn:aws:s3-outposts:us-west-2:123456789012:outpost/my-outpost/bucket/reports. The value must be URL encoded.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ReplicationConfiguration",
+          "type": "dict",
+          "description": "A container for one or more replication rules. A replication configuration must have at least one rule and you can add up to 100 rules. The maximum size of a replication configuration is 128 KB.",
+          "nested_items": [
+            {
+              "name": "Role",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that S3 on Outposts assumes when replicating objects. For information about S3 replication on Outposts configuration, see Setting up replication in the Amazon S3 User Guide.",
+              "nested_items": []
+            },
+            {
+              "name": "Rules",
+              "type": "list",
+              "description": "A container for one or more replication rules. A replication configuration must have at least one rule and can contain an array of 100 rules at the most.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "ID",
+                      "type": "string",
+                      "description": "A unique identifier for the rule. The maximum value is 255 characters.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Priority",
+                      "type": "integer",
+                      "description": "The priority indicates which rule has precedence whenever two or more replication rules conflict. S3 on Outposts attempts to replicate objects according to all replication rules. However, if there are two or more rules with the same destination Outposts bucket, then objects will be replicated according to the rule with the highest priority. The higher the number, the higher the priority.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Prefix",
+                      "type": "string",
+                      "description": "An object key name prefix that identifies the object or objects to which the rule applies. The maximum prefix length is 1,024 characters. To include all objects in an Outposts bucket, specify an empty string.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Prefix",
+                          "type": "string",
+                          "description": "An object key name prefix that identifies the subset of objects that the rule applies to.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Key",
+                              "type": "string",
+                              "description": "Key of the tag.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Value",
+                              "type": "string",
+                              "description": "Value of the tag.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "If you specify both a Prefix and a Tag filter, wrap these filters in an And element.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "If you specify a filter based on multiple tags, wrap the Tag elements in an And element.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "Specifies whether the rule is enabled.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SourceSelectionCriteria",
+                      "type": "dict",
+                      "description": "A container that describes additional filters for identifying the source Outposts objects that you want to replicate. You can choose to enable or disable the replication of these objects.",
+                      "nested_items": [
+                        {
+                          "name": "SseKmsEncryptedObjects",
+                          "type": "dict",
+                          "description": "A filter that you can use to select Amazon S3 objects that are encrypted with server-side encryption by using Key Management Service (KMS) keys. If you include SourceSelectionCriteria in the replication configuration, this element is required.",
+                          "nested_items": [
+                            {
+                              "name": "Status",
+                              "type": "string",
+                              "description": "Specifies whether Amazon S3 replicates objects that are created with server-side encryption by using an KMS key stored in Key Management Service.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ReplicaModifications",
+                          "type": "dict",
+                          "description": "A filter that you can use to specify whether replica modification sync is enabled. S3 on Outposts replica modification sync can help you keep object metadata synchronized between replicas and source objects. By default, S3 on Outposts replicates metadata from the source objects to the replicas only. When replica modification sync is enabled, S3 on Outposts replicates metadata changes made to the replica copies back to the source object, making the replication bidirectional.",
+                          "nested_items": [
+                            {
+                              "name": "Status",
+                              "type": "string",
+                              "description": "Specifies whether S3 on Outposts replicates modifications to object metadata on replicas.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ExistingObjectReplication",
+                      "type": "dict",
+                      "description": "An optional configuration to replicate existing source bucket objects.",
+                      "nested_items": [
+                        {
+                          "name": "Status",
+                          "type": "string",
+                          "description": "Specifies whether Amazon S3 replicates existing source bucket objects.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Destination",
+                      "type": "dict",
+                      "description": "A container for information about the replication destination and its configurations.",
+                      "nested_items": [
+                        {
+                          "name": "Account",
+                          "type": "string",
+                          "description": "The destination bucket owner's account ID.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Bucket",
+                          "type": "string",
+                          "description": "The Amazon Resource Name (ARN) of the access point for the destination bucket where you want S3 on Outposts to store the replication results.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ReplicationTime",
+                          "type": "dict",
+                          "description": "A container that specifies S3 Replication Time Control (S3 RTC) settings, including whether S3 RTC is enabled and the time when all objects and operations on objects must be replicated. Must be specified together with a Metrics block.",
+                          "nested_items": [
+                            {
+                              "name": "Status",
+                              "type": "string",
+                              "description": "Specifies whether S3 Replication Time Control (S3 RTC) is enabled.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Minutes",
+                                  "type": "integer",
+                                  "description": "Contains an integer that specifies the time period in minutes.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "AccessControlTranslation",
+                          "type": "dict",
+                          "description": "Specify this property only in a cross-account scenario (where the source and destination bucket owners are not the same), and you want to change replica ownership to the Amazon Web Services account that owns the destination bucket. If this property is not specified in the replication configuration, the replicas are owned by same Amazon Web Services account that owns the source object.",
+                          "nested_items": [
+                            {
+                              "name": "Owner",
+                              "type": "string",
+                              "description": "Specifies the replica ownership.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "EncryptionConfiguration",
+                          "type": "dict",
+                          "description": "A container that provides information about encryption. If SourceSelectionCriteria is specified, you must specify this element.",
+                          "nested_items": [
+                            {
+                              "name": "ReplicaKmsKeyID",
+                              "type": "string",
+                              "description": "Specifies the ID of the customer managed KMS key that's stored in Key Management Service (KMS) for the destination bucket. This ID is either the Amazon Resource Name (ARN) for the KMS key or the alias ARN for the KMS key. Amazon S3 uses this KMS key to encrypt replica objects. Amazon S3 supports only symmetric encryption KMS keys. For more information, see Symmetric encryption KMS keys in the Amazon Web Services Key Management Service Developer Guide.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Status",
+                              "type": "string",
+                              "description": "Specifies whether replication metrics are enabled.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "EventThreshold",
+                              "type": "dict",
+                              "description": "A container that specifies the time threshold for emitting the s3:Replication:OperationMissedThreshold event.",
+                              "nested_items": [
+                                {
+                                  "name": "Minutes",
+                                  "type": "integer",
+                                  "description": "Contains an integer that specifies the time period in minutes.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "StorageClass",
+                          "type": "string",
+                          "description": "The storage class to use when replicating objects. All objects stored on S3 on Outposts are stored in the OUTPOSTS storage class. S3 on Outposts uses the OUTPOSTS storage class to create the object replicas.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "DeleteMarkerReplication",
+                      "type": "dict",
+                      "description": "Specifies whether S3 on Outposts replicates delete markers. If you specify a Filter element in your replication configuration, you must also include a DeleteMarkerReplication element. If your Filter includes a Tag element, the DeleteMarkerReplication element's Status child element must be set to Disabled, because S3 on Outposts doesn't support replicating delete markers for tag-based rules.",
+                      "nested_items": [
+                        {
+                          "name": "Status",
+                          "type": "string",
+                          "description": "Indicates whether to replicate delete markers.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Bucket",
+                      "type": "string",
+                      "description": "The Amazon Resource Name (ARN) of the access point for the source Outposts bucket that you want S3 on Outposts to replicate the objects from.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

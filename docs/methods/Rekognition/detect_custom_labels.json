@@ -1,0 +1,171 @@
+{
+  "method_name": "detect_custom_labels",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/detect_custom_labels.html",
+  "description": "Detects custom labels in a supplied image by using an Amazon Rekognition Custom Labels model. You specify which version of a model version to use by using the ProjectVersionArn input parameter. You pass the input image as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. If you use the AWS CLI to call Amazon Rekognition operations, passing image bytes is not supported. The image must be either a PNG or JPEG formatted file. For each object that the model version detects on an image, the API returns a ( CustomLabel) object in an array ( CustomLabels). Each CustomLabel object provides the label name ( Name), the level of confidence that the image contains the object ( Confidence), and object location information, if it exists, for the label on the image ( Geometry). To filter labels that are returned, specify a value for MinConfidence. DetectCustomLabelsLabels only returns labels with a confidence that's higher than the specified value. The value of MinConfidence maps to the assumed threshold values created during training. For more information, see Assumed threshold in the Amazon Rekognition Custom Labels Developer Guide. Amazon Rekognition Custom Labels metrics expresses an assumed threshold as a floating point value between 0-1. The range of MinConfidence normalizes the threshold value to a percentage value (0-100). Confidence responses from DetectCustomLabels are also returned as a percentage. You can use MinConfidence to change the precision and recall or your model. For more information, see Analyzing an image in the Amazon Rekognition Custom Labels Developer Guide. If you don't specify a value for MinConfidence, DetectCustomLabels returns labels based on the assumed threshold of each label. This is a stateless API operation. That is, the operation does not persist any data. This operation requires permissions to perform the rekognition:DetectCustomLabels action. For more information, see Analyzing an image in the Amazon Rekognition Custom Labels Developer Guide.",
+  "parameters": [
+    {
+      "name": "ProjectVersionArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the model version that you want to use. Only models associated with Custom Labels projects accepted by the operation. If a provided ARN refers to a model version associated with a project for a different feature type, then an InvalidParameterException is returned.",
+      "nested_params": []
+    },
+    {
+      "name": "Image",
+      "type": "dict",
+      "required": true,
+      "description": "Provides the input image either as bytes or an S3 object. You pass image bytes to an Amazon Rekognition API operation by using the Bytes property. For example, you would use the Bytes property to pass an image loaded from a local file system. Image bytes passed by using the Bytes property must be base64-encoded. Your code may not need to encode image bytes if you are using an AWS SDK to call Amazon Rekognition API operations. For more information, see Analyzing an Image Loaded from a Local File System in the Amazon Rekognition Developer Guide. You pass images stored in an S3 bucket to an Amazon Rekognition API operation by using the S3Object property. Images stored in an S3 bucket do not need to be base64-encoded. The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations. If you use the AWS CLI to call Amazon Rekognition operations, passing image bytes using the Bytes property is not supported. You must first upload the image to an Amazon S3 bucket and then call the operation using the S3Object property. For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see How Amazon Rekognition works with IAM in the Amazon Rekognition Developer Guide. Bytes (bytes) --- Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB. S3Object (dict) --- Identifies an S3 object as the image source. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "Bytes",
+          "type": "bytes",
+          "required": false,
+          "description": "Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "Identifies an S3 object as the image source.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "S3 object key name.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket is versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MinConfidence",
+      "type": "float",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "CustomLabels",
+          "type": "list",
+          "description": "An array of custom labels detected in the input image.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "The name of the custom label.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Confidence",
+                  "type": "float",
+                  "description": "The confidence that the model has in the detection of the custom label. The range is 0-100. A higher value indicates a higher confidence.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "BoundingBox",
+                      "type": "dict",
+                      "description": "An axis-aligned coarse representation of the detected item's location on the image.",
+                      "nested_items": [
+                        {
+                          "name": "Width",
+                          "type": "float",
+                          "description": "Width of the bounding box as a ratio of the overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Height",
+                          "type": "float",
+                          "description": "Height of the bounding box as a ratio of the overall image height.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Left",
+                          "type": "float",
+                          "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Top",
+                          "type": "float",
+                          "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Polygon",
+                      "type": "list",
+                      "description": "Within the bounding box, a fine-grained polygon around the detected item.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "X",
+                              "type": "float",
+                              "description": "The value of the X coordinate for a point on a Polygon.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Y",
+                              "type": "float",
+                              "description": "The value of the Y coordinate for a point on a Polygon.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

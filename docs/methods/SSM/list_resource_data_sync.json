@@ -1,0 +1,232 @@
+{
+  "method_name": "list_resource_data_sync",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm/client/list_resource_data_sync.html",
+  "description": "Lists your resource data sync configurations. Includes information about the last time a sync attempted to start, the last sync status, and the last time a sync successfully completed. The number of sync configurations might be too large to return using a single call to ListResourceDataSync. You can limit the number of sync configurations returned by using the MaxResults parameter. To determine whether there are more sync configurations to list, check the value of NextToken in the output. If there are more sync configurations to list, you can request them by specifying the NextToken returned in the call to the parameter of a subsequent call.",
+  "parameters": [
+    {
+      "name": "SyncType",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ResourceDataSyncItems",
+          "type": "list",
+          "description": "A list of your current resource data sync configurations and their statuses.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "SyncName",
+                  "type": "string",
+                  "description": "The name of the resource data sync.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SyncType",
+                  "type": "string",
+                  "description": "The type of resource data sync. If SyncType is SyncToDestination, then the resource data sync synchronizes data to an S3 bucket. If the SyncType is SyncFromSource then the resource data sync synchronizes data from Organizations or from multiple Amazon Web Services Regions.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SyncSource",
+                  "type": "dict",
+                  "description": "Information about the source where the data was synchronized.",
+                  "nested_items": [
+                    {
+                      "name": "SourceType",
+                      "type": "string",
+                      "description": "The type of data source for the resource data sync. SourceType is either AwsOrganizations (if an organization is present in Organizations) or singleAccountMultiRegions.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AwsOrganizationsSource",
+                      "type": "dict",
+                      "description": "The field name in SyncSource for the ResourceDataSyncAwsOrganizationsSource type.",
+                      "nested_items": [
+                        {
+                          "name": "OrganizationSourceType",
+                          "type": "string",
+                          "description": "If an Amazon Web Services organization is present, this is either OrganizationalUnits or EntireOrganization. For OrganizationalUnits, the data is aggregated from a set of organization units. For EntireOrganization, the data is aggregated from the entire Amazon Web Services organization.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "OrganizationalUnits",
+                          "type": "list",
+                          "description": "The Organizations organization units included in the sync.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "OrganizationalUnitId",
+                                  "type": "string",
+                                  "description": "The Organizations unit ID data source for the sync.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "SourceRegions",
+                      "type": "list",
+                      "description": "The SyncSource Amazon Web Services Regions included in the resource data sync.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "IncludeFutureRegions",
+                      "type": "boolean",
+                      "description": "Whether to automatically synchronize and aggregate data from new Amazon Web Services Regions when those Regions come online.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "State",
+                      "type": "string",
+                      "description": "The data type name for including resource data sync state. There are four sync states:",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "EnableAllOpsDataSources",
+                      "type": "boolean",
+                      "description": "When you create a resource data sync, if you choose one of the Organizations options, then Systems Manager automatically enables all OpsData sources in the selected Amazon Web Services Regions for all Amazon Web Services accounts in your organization (or in the selected organization units). For more information, see Setting up Systems Manager Explorer to display data from multiple accounts and Regions in the Amazon Web Services Systems Manager User Guide.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "S3Destination",
+                  "type": "dict",
+                  "description": "Configuration information for the target S3 bucket.",
+                  "nested_items": [
+                    {
+                      "name": "BucketName",
+                      "type": "string",
+                      "description": "The name of the S3 bucket where the aggregated data is stored.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Prefix",
+                      "type": "string",
+                      "description": "An Amazon S3 prefix for the bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SyncFormat",
+                      "type": "string",
+                      "description": "A supported sync format. The following format is currently supported: JsonSerDe.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Region",
+                      "type": "string",
+                      "description": "The Amazon Web Services Region with the S3 bucket targeted by the resource data sync.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AWSKMSKeyARN",
+                      "type": "string",
+                      "description": "The ARN of an encryption key for a destination in Amazon S3. Must belong to the same Region as the destination S3 bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DestinationDataSharing",
+                      "type": "dict",
+                      "description": "Enables destination data sharing. By default, this field is null.",
+                      "nested_items": [
+                        {
+                          "name": "DestinationDataSharingType",
+                          "type": "string",
+                          "description": "The sharing data type. Only Organization is supported.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "LastSyncTime",
+                  "type": "datetime",
+                  "description": "The last time the configuration attempted to sync (UTC).",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastSuccessfulSyncTime",
+                  "type": "datetime",
+                  "description": "The last time the sync operations returned a status of SUCCESSFUL (UTC).",
+                  "nested_items": []
+                },
+                {
+                  "name": "SyncLastModifiedTime",
+                  "type": "datetime",
+                  "description": "The date and time the resource data sync was changed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastStatus",
+                  "type": "string",
+                  "description": "The status reported by the last sync.",
+                  "nested_items": []
+                },
+                {
+                  "name": "SyncCreatedTime",
+                  "type": "datetime",
+                  "description": "The date and time the configuration was created (UTC).",
+                  "nested_items": []
+                },
+                {
+                  "name": "LastSyncStatusMessage",
+                  "type": "string",
+                  "description": "The status message details reported by the last sync.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "The token for the next set of items to return. Use this token to get the next set of results.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

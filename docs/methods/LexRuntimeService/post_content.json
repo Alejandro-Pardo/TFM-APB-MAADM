@@ -1,0 +1,249 @@
+{
+  "method_name": "post_content",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lex-runtime/client/post_content.html",
+  "description": "Sends user input (text or speech) to Amazon Lex. Clients use this API to send text and audio requests to Amazon Lex at runtime. Amazon Lex interprets the user input using the machine learning model that it built for the bot. The PostContent operation supports audio input at 8kHz and 16kHz. You can use 8kHz audio to achieve higher speech recognition accuracy in telephone audio applications. In response, Amazon Lex returns the next message to convey to the user. Consider the following example messages: Not all Amazon Lex messages require a response from the user. For example, conclusion statements do not require a response. Some messages require only a yes or no response. In addition to the message, Amazon Lex provides additional context about the message in the response that you can use to enhance client behavior, such as displaying the appropriate client user interface. Consider the following examples: In addition, Amazon Lex also returns your application-specific sessionAttributes. For more information, see Managing Conversation Context.",
+  "parameters": [
+    {
+      "name": "botName",
+      "type": "string",
+      "required": true,
+      "description": "Name of the Amazon Lex bot.",
+      "nested_params": []
+    },
+    {
+      "name": "botAlias",
+      "type": "string",
+      "required": true,
+      "description": "Alias of the Amazon Lex bot.",
+      "nested_params": []
+    },
+    {
+      "name": "userId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the client application user. Amazon Lex uses this to identify a user's conversation with your bot. At runtime, each request must contain the userID field. To decide the user ID to use for your application, consider the following factors. The userID field must not contain any personally identifiable information of the user, for example, name, personal identification numbers, or other end user personal information. If you want a user to start a conversation on one device and continue on another device, use a user-specific identifier. If you want the same user to be able to have two independent conversations on two different devices, choose a device-specific identifier. A user can't have two independent conversations with two different versions of the same bot. For example, a user can't have a conversation with the PROD and BETA versions of the same bot. If you anticipate that a user will need to have conversation with two different versions, for example, while testing, include the bot alias in the user ID to separate the two conversations.",
+      "nested_params": []
+    },
+    {
+      "name": "sessionAttributes",
+      "type": "JSON serializable",
+      "required": false,
+      "description": "You pass this value as the x-amz-lex-session-attributes HTTP header. Application-specific information passed between Amazon Lex and a client application. The value must be a JSON serialized and base64 encoded map with string keys and values. The total size of the sessionAttributes and requestAttributes headers is limited to 12 KB. For more information, see Setting Session Attributes.",
+      "nested_params": []
+    },
+    {
+      "name": "requestAttributes",
+      "type": "JSON serializable",
+      "required": false,
+      "description": "You pass this value as the x-amz-lex-request-attributes HTTP header. Request-specific information passed between Amazon Lex and a client application. The value must be a JSON serialized and base64 encoded map with string keys and values. The total size of the requestAttributes and sessionAttributes headers is limited to 12 KB. The namespace x-amz-lex: is reserved for special attributes. Don't create any request attributes with the prefix x-amz-lex:. For more information, see Setting Request Attributes.",
+      "nested_params": []
+    },
+    {
+      "name": "contentType",
+      "type": "string",
+      "required": true,
+      "description": "You pass this value as the Content-Type HTTP header. Indicates the audio format or text. The header value must start with one of the following prefixes: PCM format, audio data must be in little-endian byte order. audio/l16; rate=16000; channels=1 audio/x-l16; sample-rate=16000; channel-count=1 audio/lpcm; sample-rate=8000; sample-size-bits=16; channel-count=1; is-big-endian=false Opus format audio/x-cbr-opus-with-preamble; preamble-size=0; bit-rate=256000; frame-size-milliseconds=4 Text format text/plain; charset=utf-8",
+      "nested_params": []
+    },
+    {
+      "name": "accept",
+      "type": "string",
+      "required": false,
+      "description": "You pass this value as the Accept HTTP header. The message Amazon Lex returns in the response can be either text or speech based on the Accept HTTP header value in the request. If the value is text/plain; charset=utf-8, Amazon Lex returns text in the response. If the value begins with audio/, Amazon Lex returns speech in the response. Amazon Lex uses Amazon Polly to generate the speech (using the configuration you specified in the Accept header). For example, if you specify audio/mpeg as the value, Amazon Lex returns speech in the MPEG format. If the value is audio/pcm, the speech returned is audio/pcm in 16-bit, little endian format. The following are the accepted values: audio/mpeg audio/ogg audio/pcm text/plain; charset=utf-8 audio/* (defaults to mpeg)",
+      "nested_params": []
+    },
+    {
+      "name": "inputStream",
+      "type": "bytes or seekable file-like object",
+      "required": true,
+      "description": "User input in PCM or Opus audio format or text format as described in the Content-Type HTTP header. You can stream audio data to Amazon Lex or you can create a local buffer that captures all of the audio data before sending. In general, you get better performance if you stream audio data rather than buffering the data locally.",
+      "nested_params": []
+    },
+    {
+      "name": "activeContexts",
+      "type": "JSON serializable",
+      "required": false,
+      "description": "A list of contexts active for the request. A context can be activated when a previous intent is fulfilled, or by including the context in the request, If you don't specify a list of contexts, Amazon Lex will use the current list of contexts for the session. If you specify an empty list, all contexts for the session are cleared.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "contentType",
+          "type": "string",
+          "description": "Content type as specified in the Accept HTTP header in the request.",
+          "nested_items": []
+        },
+        {
+          "name": "intentName",
+          "type": "string",
+          "description": "Current user intent that Amazon Lex is aware of.",
+          "nested_items": []
+        },
+        {
+          "name": "nluIntentConfidence",
+          "type": "JSON serializable",
+          "description": "Provides a score that indicates how confident Amazon Lex is that the returned intent is the one that matches the user's intent. The score is between 0.0 and 1.0.",
+          "nested_items": []
+        },
+        {
+          "name": "alternativeIntents",
+          "type": "JSON serializable",
+          "description": "One to four alternative intents that may be applicable to the user's intent.",
+          "nested_items": []
+        },
+        {
+          "name": "slots",
+          "type": "JSON serializable",
+          "description": "Map of zero or more intent slots (name/value pairs) Amazon Lex detected from the user input during the conversation. The field is base-64 encoded.",
+          "nested_items": []
+        },
+        {
+          "name": "sessionAttributes",
+          "type": "JSON serializable",
+          "description": "Map of key/value pairs representing the session-specific context information.",
+          "nested_items": []
+        },
+        {
+          "name": "sentimentResponse",
+          "type": "string",
+          "description": "The sentiment expressed in an utterance.",
+          "nested_items": []
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "You can only use this field in the de-DE, en-AU, en-GB, en-US, es-419, es-ES, es-US, fr-CA, fr-FR, and it-IT locales. In all other locales, the message field is null. You should use the encodedMessage field instead.",
+          "nested_items": []
+        },
+        {
+          "name": "encodedMessage",
+          "type": "string",
+          "description": "The message to convey to the user. The message can come from the bot's configuration or from a Lambda function.",
+          "nested_items": []
+        },
+        {
+          "name": "messageFormat",
+          "type": "string",
+          "description": "The format of the response message. One of the following values:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "PlainText - The message contains plain UTF-8 text.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "CustomPayload - The message is a custom format for the client.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "SSML - The message contains text formatted for voice output.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Composite - The message contains an escaped JSON object containing one or more messages from the groups that messages were assigned to when the intent was created.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "dialogState",
+          "type": "string",
+          "description": "Identifies the current state of the user interaction. Amazon Lex returns one of the following values as dialogState. The client can optionally use this information to customize the user interface.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "\u00e2\u0080\u009cI want to order a pizza\u00e2\u0080\u009d",
+              "description": "ElicitIntent - Amazon Lex wants to elicit the user's intent. Consider the following examples: For example, a user might utter an intent ('I want to order a pizza'). If Amazon Lex cannot infer the user intent from this utterance, it will return this dialog state.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "in these examples, update the crust type slot or change the intent from OrderPizza to OrderDrink",
+              "description": "ConfirmIntent - Amazon Lex is expecting a 'yes' or 'no' response. For example, Amazon Lex wants user confirmation before fulfilling an intent. Instead of a simple 'yes' or 'no' response, a user might respond with additional information. For example, 'yes, but make it a thick crust pizza' or 'no, I want to order a drink.' Amazon Lex can process such additional information (in these examples, update the crust type slot or change the intent from OrderPizza to OrderDrink).",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "e.g., \u00e2\u0080\u009cmedium\u00e2\u0080\u009d",
+              "description": "ElicitSlot - Amazon Lex is expecting the value of a slot for the current intent. For example, suppose that in the response Amazon Lex sends this message: 'What size pizza would you like?'. A user might reply with the slot value (e.g., 'medium'). The user might also provide additional information in the response (e.g., 'medium thick crust pizza'). Amazon Lex can process such additional information appropriately.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "Fulfilled - Conveys that the Lambda function has successfully fulfilled the intent.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "ReadyForFulfillment - Conveys that the client has to fulfill the request.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "you can configure how many times Amazon Lex can prompt a user for specific information",
+              "description": "Failed - Conveys that the conversation with the user failed. This can happen for various reasons, including that the user does not provide an appropriate response to prompts from the service (you can configure how many times Amazon Lex can prompt a user for specific information), or if the Lambda function fails to fulfill the intent.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "slotToElicit",
+          "type": "string",
+          "description": "If the dialogState value is ElicitSlot, returns the name of the slot for which Amazon Lex is eliciting a value.",
+          "nested_items": []
+        },
+        {
+          "name": "inputTranscript",
+          "type": "string",
+          "description": "The text used to process the request.",
+          "nested_items": []
+        },
+        {
+          "name": "encodedInputTranscript",
+          "type": "string",
+          "description": "The text used to process the request.",
+          "nested_items": []
+        },
+        {
+          "name": "audioStream",
+          "type": "StreamingBody",
+          "description": "The prompt (or statement) to convey to the user. This is based on the bot configuration and context. For example, if Amazon Lex did not understand the user intent, it sends the clarificationPrompt configured for the bot. If the intent requires confirmation before taking the fulfillment action, it sends the confirmationPrompt. Another example: Suppose that the Lambda function successfully fulfilled the intent, and sent a message to convey to the user. Then Amazon Lex sends that message in the response.",
+          "nested_items": []
+        },
+        {
+          "name": "botVersion",
+          "type": "string",
+          "description": "The version of the bot that responded to the conversation. You can use this information to help determine if one version of a bot is performing better than another version.",
+          "nested_items": []
+        },
+        {
+          "name": "sessionId",
+          "type": "string",
+          "description": "The unique identifier for the session.",
+          "nested_items": []
+        },
+        {
+          "name": "activeContexts",
+          "type": "JSON serializable",
+          "description": "A list of active contexts for the session. A context can be set when an intent is fulfilled or by calling the PostContent, PostText, or PutSession operation.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

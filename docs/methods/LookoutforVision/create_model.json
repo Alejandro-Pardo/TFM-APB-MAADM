@@ -1,0 +1,164 @@
+{
+  "method_name": "create_model",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lookoutvision/client/create_model.html",
+  "description": "Creates a new version of a model within an an Amazon Lookout for Vision project. CreateModel is an asynchronous operation in which Amazon Lookout for Vision trains, tests, and evaluates a new version of a model. To get the current status, check the Status field returned in the response from  DescribeModel. If the project has a single dataset, Amazon Lookout for Vision internally splits the dataset to create a training and a test dataset. If the project has a training and a test dataset, Lookout for Vision uses the respective datasets to train and test the model. After training completes, the evaluation metrics are stored at the location specified in OutputConfig. This operation requires permissions to perform the lookoutvision:CreateModel operation. If you want to tag your model, you also require permission to the lookoutvision:TagResource operation.",
+  "parameters": [
+    {
+      "name": "ProjectName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the project in which you want to create a model version.",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "ClientToken is an idempotency token that ensures a call to CreateModel completes only once. You choose the value to pass. For example, An issue might prevent you from getting a response from CreateModel. In this case, safely retry your call to CreateModel by using the same ClientToken parameter value. If you don't supply a value for ClientToken, the AWS SDK you are using inserts a value for you. This prevents retries after a network error from starting multiple training jobs. You'll need to provide your own value for other use cases. An error occurs if the other input parameters are not the same as in the first request. Using a different value for ClientToken is considered a new call to CreateModel. An idempotency token is active for 8 hours. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "OutputConfig",
+      "type": "dict",
+      "required": true,
+      "description": "The location where Amazon Lookout for Vision saves the training results. The S3 location for the output. The S3 bucket that contains the training or model packaging job output. If you are training a model, the bucket must in your AWS account. If you use an S3 bucket for a model packaging job, the S3 bucket must be in the same AWS Region and AWS account in which you use AWS IoT Greengrass. Prefix (string) --- The path of the folder, within the S3 bucket, that contains the output.",
+      "nested_params": [
+        {
+          "name": "S3Location",
+          "type": "dict",
+          "required": false,
+          "description": "The S3 location for the output.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The S3 bucket that contains the training or model packaging job output. If you are training a model, the bucket must in your AWS account. If you use an S3 bucket for a model packaging job, the S3 bucket must be in the same AWS Region and AWS account in which you use AWS IoT Greengrass.",
+              "nested_params": []
+            },
+            {
+              "name": "Prefix",
+              "type": "string",
+              "required": false,
+              "description": "The path of the folder, within the S3 bucket, that contains the output.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "A set of tags (key-value pairs) that you want to attach to the model. (dict) --- A key and value pair that is attached to the specified Amazon Lookout for Vision model. The key of the tag that is attached to the specified model. The value of the tag that is attached to the specified model.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key of the tag that is attached to the specified model.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the tag that is attached to the specified model.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ModelMetadata",
+          "type": "dict",
+          "description": "The response from a call to CreateModel.",
+          "nested_items": [
+            {
+              "name": "CreationTimestamp",
+              "type": "datetime",
+              "description": "The unix timestamp for the date and time that the model was created.",
+              "nested_items": []
+            },
+            {
+              "name": "ModelVersion",
+              "type": "string",
+              "description": "The version of the model.",
+              "nested_items": []
+            },
+            {
+              "name": "ModelArn",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of the model.",
+              "nested_items": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "description": "The description for the model.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The status of the model.",
+              "nested_items": []
+            },
+            {
+              "name": "StatusMessage",
+              "type": "string",
+              "description": "The status message for the model.",
+              "nested_items": []
+            },
+            {
+              "name": "Performance",
+              "type": "dict",
+              "description": "Performance metrics for the model. Not available until training has successfully completed.",
+              "nested_items": [
+                {
+                  "name": "F1Score",
+                  "type": "float",
+                  "description": "The overall F1 score metric for the trained model.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Recall",
+                  "type": "float",
+                  "description": "The overall recall metric value for the trained model.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Precision",
+                  "type": "float",
+                  "description": "The overall precision metric value for the trained model.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

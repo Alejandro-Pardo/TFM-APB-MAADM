@@ -1,0 +1,157 @@
+{
+  "method_name": "describe_db_proxy_target_groups",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rds/client/describe_db_proxy_target_groups.html",
+  "description": "Returns information about DB proxy target groups, represented by DBProxyTargetGroup data structures.",
+  "parameters": [
+    {
+      "name": "DBProxyName",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the DBProxy associated with the target group.",
+      "nested_params": []
+    },
+    {
+      "name": "TargetGroupName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Filters",
+      "type": "list",
+      "required": true,
+      "description": "This parameter is not currently supported. (dict) --- A filter name and value pair that is used to return a more specific list of results from a describe operation. Filters can be used to match a set of resources by specific criteria, such as IDs. The filters supported by a describe operation are documented with the describe operation. The following actions can be filtered: DescribeDBClusterBacktracks DescribeDBClusterEndpoints DescribeDBClusters DescribeDBInstances DescribeDBRecommendations DescribeDBShardGroups DescribePendingMaintenanceActions The name of the filter. Filter names are case-sensitive. One or more filter values. Filter values are case-sensitive. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Marker",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxRecords",
+      "type": "integer",
+      "required": false,
+      "description": "The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a pagination token called a marker is included in the response so that the remaining results can be retrieved. Default: 100 Constraints: Minimum 20, maximum 100.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "TargetGroups",
+          "type": "list",
+          "description": "An arbitrary number of DBProxyTargetGroup objects, containing details of the corresponding target groups.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "DBProxyName",
+                  "type": "string",
+                  "description": "The identifier for the RDS proxy associated with this target group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetGroupName",
+                  "type": "string",
+                  "description": "The identifier for the target group. This name must be unique for all target groups owned by your Amazon Web Services account in the specified Amazon Web Services Region.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TargetGroupArn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) representing the target group.",
+                  "nested_items": []
+                },
+                {
+                  "name": "IsDefault",
+                  "type": "boolean",
+                  "description": "Indicates whether this target group is the first one used for connection requests by the associated proxy. Because each proxy is currently associated with a single target group, currently this setting is always true.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The current status of this target group. A status of available means the target group is correctly associated with a database. Other values indicate that you must wait for the target group to be ready, or take some action to resolve an issue.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ConnectionPoolConfig",
+                  "type": "dict",
+                  "description": "The settings that determine the size and behavior of the connection pool for the target group.",
+                  "nested_items": [
+                    {
+                      "name": "MaxConnectionsPercent",
+                      "type": "integer",
+                      "description": "The maximum size of the connection pool for each target in a target group. The value is expressed as a percentage of the max_connections setting for the RDS DB instance or Aurora DB cluster used by the target group.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxIdleConnectionsPercent",
+                      "type": "integer",
+                      "description": "Controls how actively the proxy closes idle database connections in the connection pool. The value is expressed as a percentage of the max_connections setting for the RDS DB instance or Aurora DB cluster used by the target group. With a high value, the proxy leaves a high percentage of idle database connections open. A low value causes the proxy to close more idle connections and return them to the database.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ConnectionBorrowTimeout",
+                      "type": "integer",
+                      "description": "The number of seconds for a proxy to wait for a connection to become available in the connection pool. Only applies when the proxy has opened its maximum number of connections and all connections are busy with client sessions.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "SessionPinningFilters",
+                      "type": "list",
+                      "description": "Each item in the list represents a class of SQL operations that normally cause all later statements in a session using a proxy to be pinned to the same underlying database connection. Including an item in the list exempts that class of SQL operations from the pinning behavior. This setting is only supported for MySQL engine family databases. Currently, the only allowed value is EXCLUDE_VARIABLE_SETS.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "InitQuery",
+                      "type": "string",
+                      "description": "One or more SQL statements for the proxy to run when opening each new database connection. The setting is typically used with SET statements to make sure that each connection has identical settings. The query added here must be valid. For including multiple variables in a single SET statement, use a comma separator. This is an optional field.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CreatedDate",
+                  "type": "datetime",
+                  "description": "The date and time when the target group was first created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UpdatedDate",
+                  "type": "datetime",
+                  "description": "The date and time when the target group was last updated.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Marker",
+          "type": "string",
+          "description": "An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

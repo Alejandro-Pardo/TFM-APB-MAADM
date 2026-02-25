@@ -1,0 +1,211 @@
+{
+  "method_name": "list_stack_set_operation_results",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/list_stack_set_operation_results.html",
+  "description": "Returns summary information about the results of a stack set operation.",
+  "parameters": [
+    {
+      "name": "StackSetName",
+      "type": "string",
+      "required": true,
+      "description": "The name or unique ID of the stack set that you want to get operation results for.",
+      "nested_params": []
+    },
+    {
+      "name": "OperationId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the stack set operation.",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CallAs",
+      "type": "string",
+      "required": false,
+      "description": "[Service-managed permissions] Specifies whether you are acting as an account administrator in the organization's management account or as a delegated administrator in a member account. By default, SELF is specified. Use SELF for stack sets with self-managed permissions. If you are signed in to the management account, specify SELF. If you are signed in to a delegated administrator account, specify DELEGATED_ADMIN. Your Amazon Web Services account must be registered as a delegated administrator in the management account. For more information, see Register a delegated administrator in the CloudFormation User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "Filters",
+      "type": "list",
+      "required": false,
+      "description": "The filter to apply to operation results. (dict) --- The status that operation results are filtered by. Name (string) --- The type of filter to apply. Values (string) --- The value to filter by.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The type of filter to apply.",
+          "nested_params": []
+        },
+        {
+          "name": "Values",
+          "type": "string",
+          "required": false,
+          "description": "The value to filter by.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Summaries",
+          "type": "list",
+          "description": "A list of StackSetOperationResultSummary structures that contain information about the specified operation results, for accounts and Amazon Web Services Regions that are included in the operation.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Account",
+                  "type": "string",
+                  "description": "[Self-managed permissions] The name of the Amazon Web Services account for this operation result.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Region",
+                  "type": "string",
+                  "description": "The name of the Amazon Web Services Region for this operation result.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Status",
+                  "type": "string",
+                  "description": "The result status of the stack set operation for the given account in the given Region.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "CANCELLED: The operation in the specified account and Region has been canceled. This is either because a user has stopped the stack set operation, or because the failure tolerance of the stack set operation has been exceeded.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "FAILED: The operation in the specified account and Region failed. If the stack set operation fails in enough accounts within a Region, the failure tolerance for the stack set operation as a whole might be exceeded.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RUNNING: The operation in the specified account and Region is currently in progress.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PENDING: The operation in the specified account and Region has yet to start.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SUCCEEDED: The operation in the specified account and Region completed successfully.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StatusReason",
+                  "type": "string",
+                  "description": "The reason for the assigned result status.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AccountGateResult",
+                  "type": "dict",
+                  "description": "The results of the account gate function CloudFormation invokes, if present, before proceeding with stack set operations in an account.",
+                  "nested_items": [
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "The status of the account gate function.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SUCCEEDED: The account gate function has determined that the account and Region passes any requirements for a stack set operation to occur. CloudFormation proceeds with the stack operation in that account and Region.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "FAILED: The account gate function has determined that the account and Region doesn't meet the requirements for a stack set operation to occur. CloudFormation cancels the stack set operation in that account and Region, and sets the stack set operation result status for that account and Region to FAILED.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "SKIPPED: CloudFormation has skipped calling the account gate function for this account and Region, for one of the following reasons:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "An account gate function hasn't been specified for the account and Region. CloudFormation proceeds with the stack set operation in this account and Region.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "The AWSCloudFormationStackSetExecutionRole of the stack set administration account lacks permissions to invoke the function. CloudFormation proceeds with the stack set operation in this account and Region.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Either no action is necessary, or no action is possible, on the stack. CloudFormation skips the stack set operation in this account and Region.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "StatusReason",
+                      "type": "string",
+                      "description": "The reason for the account gate status assigned to this account and Region for the stack set operation.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OrganizationalUnitId",
+                  "type": "string",
+                  "description": "[Service-managed permissions] The organization root ID or organizational unit (OU) IDs that you specified for DeploymentTargets.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the request doesn't return all results, NextToken is set to a token. To retrieve the next set of results, call ListOperationResults again and assign that token to the request object's NextToken parameter. If there are no remaining results, NextToken is set to null.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

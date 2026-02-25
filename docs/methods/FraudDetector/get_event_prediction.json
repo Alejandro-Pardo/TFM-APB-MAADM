@@ -1,0 +1,253 @@
+{
+  "method_name": "get_event_prediction",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/frauddetector/client/get_event_prediction.html",
+  "description": "Evaluates an event against a detector version. If a version ID is not provided, the detector's ( ACTIVE) version is used.",
+  "parameters": [
+    {
+      "name": "detectorId",
+      "type": "string",
+      "required": true,
+      "description": "The detector ID.",
+      "nested_params": []
+    },
+    {
+      "name": "detectorVersionId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "eventId",
+      "type": "string",
+      "required": true,
+      "description": "The unique ID used to identify the event.",
+      "nested_params": []
+    },
+    {
+      "name": "eventTypeName",
+      "type": "string",
+      "required": true,
+      "description": "The event type associated with the detector specified for the prediction.",
+      "nested_params": []
+    },
+    {
+      "name": "entities",
+      "type": "list",
+      "required": true,
+      "description": "The entity type (associated with the detector's event type) and specific entity ID representing who performed the event. If an entity id is not available, use 'UNKNOWN.' (dict) --- The entity details. The entity type. The entity ID. If you do not know the entityId, you can pass unknown, which is areserved string literal.",
+      "nested_params": [
+        {
+          "name": "entityType",
+          "type": "string",
+          "required": false,
+          "description": "The entity type.",
+          "nested_params": []
+        },
+        {
+          "name": "entityId",
+          "type": "string",
+          "required": false,
+          "description": "The entity ID. If you do not know the entityId, you can pass unknown, which is areserved string literal.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "eventTimestamp",
+      "type": "string",
+      "required": true,
+      "description": "Timestamp that defines when the event under evaluation occurred. The timestamp must be specified using ISO 8601 standard in UTC.",
+      "nested_params": []
+    },
+    {
+      "name": "eventVariables",
+      "type": "dict",
+      "required": true,
+      "description": "Names of the event type's variables you defined in Amazon Fraud Detector to represent data elements and their corresponding values for the event you are sending for evaluation. To ensure most accurate fraud prediction and to simplify your data preparation, Amazon Fraud Detector will replace all missing variables or values as follows: If a null value is provided explicitly for a variable or if a variable is missing, model will replace the null value or the missing variable (no variable name in the eventVariables map) with calculated default mean/medians for numeric variables and with special values for categorical variables. If a null value is provided explicitly for a variable, the model and rules will use 'null' as the value. If a variable is not provided (no variable name in the eventVariables map), model and rules will use the default value that is provided for the variable. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "externalModelEndpointDataBlobs",
+      "type": "dict",
+      "required": false,
+      "description": "The Amazon SageMaker model endpoint input data blobs. (string) --- (dict) --- A pre-formed Amazon SageMaker model input you can include if your detector version includes an imported Amazon SageMaker model endpoint with pass-through input configuration. byteBuffer (bytes) --- The byte buffer of the Amazon SageMaker model endpoint input data blob. contentType (string) --- The content type of the Amazon SageMaker model endpoint input data blob.",
+      "nested_params": [
+        {
+          "name": "byteBuffer",
+          "type": "bytes",
+          "required": false,
+          "description": "The byte buffer of the Amazon SageMaker model endpoint input data blob.",
+          "nested_params": []
+        },
+        {
+          "name": "contentType",
+          "type": "string",
+          "required": false,
+          "description": "The content type of the Amazon SageMaker model endpoint input data blob.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "modelScores",
+          "type": "list",
+          "description": "The model scores. Amazon Fraud Detector generates model scores between 0 and 1000, where 0 is low fraud risk and 1000 is high fraud risk. Model scores are directly related to the false positive rate (FPR). For example, a score of 600 corresponds to an estimated 10% false positive rate whereas a score of 900 corresponds to an estimated 2% false positive rate.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "modelVersion",
+                  "type": "dict",
+                  "description": "The model version.",
+                  "nested_items": [
+                    {
+                      "name": "modelId",
+                      "type": "string",
+                      "description": "The model ID.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "modelType",
+                      "type": "string",
+                      "description": "The model type.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "modelVersionNumber",
+                      "type": "string",
+                      "description": "The model version number.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "arn",
+                      "type": "string",
+                      "description": "The model version ARN.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "float",
+                          "description": "(float) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ruleResults",
+          "type": "list",
+          "description": "The results from the rules.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ruleId",
+                  "type": "string",
+                  "description": "The rule ID that was matched, based on the rule execution mode.",
+                  "nested_items": []
+                },
+                {
+                  "name": "outcomes",
+                  "type": "list",
+                  "description": "The outcomes of the matched rule, based on the rule execution mode.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "externalModelOutputs",
+          "type": "list",
+          "description": "The model scores for Amazon SageMaker models.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "externalModel",
+                  "type": "dict",
+                  "description": "The Amazon SageMaker model.",
+                  "nested_items": [
+                    {
+                      "name": "modelEndpoint",
+                      "type": "string",
+                      "description": "The endpoint of the Amazon SageMaker model.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "modelSource",
+                      "type": "string",
+                      "description": "The source of the model.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "method_name": "put_principal_mapping",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kendra/client/put_principal_mapping.html",
+  "description": "Maps users to their groups so that you only need to provide the user ID when you issue the query. You can also map sub groups to groups. For example, the group 'Company Intellectual Property Teams' includes sub groups 'Research' and 'Engineering'. These sub groups include their own list of users or people who work in these teams. Only users who work in research and engineering, and therefore belong in the intellectual property group, can see top-secret company documents in their search results. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. For more information, see Filtering on user context. If more than five PUT actions for a group are currently processing, a validation exception is thrown.",
+  "parameters": [
+    {
+      "name": "IndexId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the index you want to map users to their groups.",
+      "nested_params": []
+    },
+    {
+      "name": "DataSourceId",
+      "type": "string",
+      "required": false,
+      "description": "The identifier of the data source you want to map users to their groups. This is useful if a group is tied to multiple data sources, but you only want the group to access documents of a certain data source. For example, the groups 'Research', 'Engineering', and 'Sales and Marketing' are all tied to the company's documents stored in the data sources Confluence and Salesforce. However, 'Sales and Marketing' team only needs access to customer-related documents stored in Salesforce.",
+      "nested_params": []
+    },
+    {
+      "name": "GroupId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the group you want to map its users to.",
+      "nested_params": []
+    },
+    {
+      "name": "GroupMembers",
+      "type": "dict",
+      "required": true,
+      "description": "The list that contains your users that belong the same group. This can include sub groups that belong to a group. For example, the group 'Company A' includes the user 'CEO' and the sub groups 'Research', 'Engineering', and 'Sales and Marketing'. If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. Your sub groups can contain more than 1000 users, but the list of sub groups that belong to a group (and/or users) must be no more than 1000. MemberGroups (list) --- A list of users that belong to a group. This can also include sub groups. For example, the sub groups 'Research', 'Engineering', and 'Sales and Marketing' all belong to the group 'Company A'. (dict) --- The sub groups that belong to a group. The identifier of the sub group you want to map to a group. DataSourceId (string) --- The identifier of the data source for the sub group you want to map to a group. MemberUsers (list) --- A list of users that belong to a group. For example, a list of interns all belong to the 'Interns' group. (dict) --- The users that belong to a group. The identifier of the user you want to map to a group. S3PathforGroupMembers (dict) --- If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. You can download this example S3 file that uses the correct format for listing group members. Note, dataSourceId is optional. The value of type for a group is always GROUP and for a user it is always USER. The name of the S3 bucket that contains the file. The name of the file.",
+      "nested_params": [
+        {
+          "name": "MemberGroups",
+          "type": "list",
+          "required": false,
+          "description": "A list of users that belong to a group. This can also include sub groups. For example, the sub groups 'Research', 'Engineering', and 'Sales and Marketing' all belong to the group 'Company A'.",
+          "nested_params": [
+            {
+              "name": "GroupId",
+              "type": "string",
+              "required": false,
+              "description": "The identifier of the sub group you want to map to a group.",
+              "nested_params": []
+            },
+            {
+              "name": "DataSourceId",
+              "type": "string",
+              "required": false,
+              "description": "The identifier of the data source for the sub group you want to map to a group.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "MemberUsers",
+          "type": "list",
+          "required": false,
+          "description": "A list of users that belong to a group. For example, a list of interns all belong to the 'Interns' group.",
+          "nested_params": [
+            {
+              "name": "UserId",
+              "type": "string",
+              "required": false,
+              "description": "The identifier of the user you want to map to a group.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "S3PathforGroupMembers",
+          "type": "dict",
+          "required": false,
+          "description": "If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. Your sub groups can contain more than 1000 users, but the list of sub groups that belong to a group (and/or users) must be no more than 1000. You can download this example S3 file that uses the correct format for listing group members. Note, dataSourceId is optional. The value of type for a group is always GROUP and for a user it is always USER.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The name of the S3 bucket that contains the file.",
+              "nested_params": []
+            },
+            {
+              "name": "Key",
+              "type": "string",
+              "required": false,
+              "description": "The name of the file.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OrderingId",
+      "type": "integer",
+      "required": false,
+      "description": "The timestamp identifier you specify to ensure Amazon Kendra doesn't override the latest PUT action with previous actions. The highest number ID, which is the ordering ID, is the latest action you want to process and apply on top of other actions with lower number IDs. This prevents previous actions with lower number IDs from possibly overriding the latest action. The ordering ID can be the Unix time of the last update you made to a group members list. You would then provide this list when calling PutPrincipalMapping. This ensures your PUT action for that updated group with the latest members list doesn't get overwritten by earlier PUT actions for the same group which are yet to be processed. The default ordering ID is the current Unix time in milliseconds that the action was received by Amazon Kendra.",
+      "nested_params": []
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group. For more information, see IAM roles for Amazon Kendra.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "type": null
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "method_name": "describe_analysis_schemes",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudsearch/client/describe_analysis_schemes.html",
+  "description": "Gets the analysis schemes configured for a domain. An analysis scheme defines language-specific text processing options for a text field. Can be limited to specific analysis schemes by name. By default, shows all analysis schemes and includes any pending changes to the configuration. Set the Deployed option to true to show the active configuration and exclude pending changes. For more information, see Configuring Analysis Schemes in the Amazon CloudSearch Developer Guide.",
+  "parameters": [
+    {
+      "name": "DomainName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the domain you want to describe.",
+      "nested_params": []
+    },
+    {
+      "name": "AnalysisSchemeNames",
+      "type": "list",
+      "required": false,
+      "description": "The analysis schemes you want to describe. (string) --- Names must begin with a letter and can contain the following characters: a-z (lowercase), 0-9, and _ (underscore).",
+      "nested_params": []
+    },
+    {
+      "name": "Deployed",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "AnalysisSchemes",
+          "type": "list",
+          "description": "The analysis scheme descriptions.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "AnalysisSchemeName",
+                      "type": "string",
+                      "description": "Names must begin with a letter and can contain the following characters: a-z (lowercase), 0-9, and _ (underscore).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AnalysisSchemeLanguage",
+                      "type": "string",
+                      "description": "An IETF RFC 4646 language code or mul for multiple languages.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AnalysisOptions",
+                      "type": "dict",
+                      "description": "Synonyms, stopwords, and stemming options for an analysis scheme. Includes tokenization dictionary for Japanese.",
+                      "nested_items": [
+                        {
+                          "name": "Synonyms",
+                          "type": "string",
+                          "description": "A JSON object that defines synonym groups and aliases. A synonym group is an array of arrays, where each sub-array is a group of terms where each term in the group is considered a synonym of every other term in the group. The aliases value is an object that contains a collection of string:value pairs where the string specifies a term and the array of values specifies each of the aliases for that term. An alias is considered a synonym of the specified term, but the term is not considered a synonym of the alias. For more information about specifying synonyms, see Synonyms in the Amazon CloudSearch Developer Guide.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Stopwords",
+                          "type": "string",
+                          "description": "A JSON array of terms to ignore during indexing and searching. For example, [\"a\", \"an\", \"the\", \"of\"]. The stopwords dictionary must explicitly list each word you want to ignore. Wildcards and regular expressions are not supported.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "StemmingDictionary",
+                          "type": "string",
+                          "description": "A JSON object that contains a collection of string:value pairs that each map a term to its stem. For example, {\"term1\": \"stem1\", \"term2\": \"stem2\", \"term3\": \"stem3\"}. The stemming dictionary is applied in addition to any algorithmic stemming. This enables you to override the results of the algorithmic stemming to correct specific cases of overstemming or understemming. The maximum size of a stemming dictionary is 500 KB.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "JapaneseTokenizationDictionary",
+                          "type": "string",
+                          "description": "A JSON array that contains a collection of terms, tokens, readings and part of speech for Japanese Tokenizaiton. The Japanese tokenization dictionary enables you to override the default tokenization for selected terms. This is only valid for Japanese language fields.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AlgorithmicStemming",
+                          "type": "string",
+                          "description": "The level of algorithmic stemming to perform: none, minimal, light, or full. The available levels vary depending on the language. For more information, see Language Specific Text Processing Settings in the Amazon CloudSearch Developer Guide.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "CreationDate",
+                      "type": "datetime",
+                      "description": "A timestamp for when this option was created.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UpdateDate",
+                      "type": "datetime",
+                      "description": "A timestamp for when this option was last updated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UpdateVersion",
+                      "type": "integer",
+                      "description": "A unique integer that indicates when this option was last updated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "State",
+                      "type": "string",
+                      "description": "The state of processing a change to an option. Possible values:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "RequiresIndexDocuments: the option's latest value will not be deployed until  IndexDocuments has been called and indexing is complete.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Processing: the option's latest value is in the process of being activated.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Active: the option's latest value is completely deployed.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "FailedToValidate: the option value is not compatible with the domain's data and cannot be used to index the data. You must either modify the option value or update or remove the incompatible documents.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "PendingDeletion",
+                      "type": "boolean",
+                      "description": "Indicates that the option will be deleted once processing is complete.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

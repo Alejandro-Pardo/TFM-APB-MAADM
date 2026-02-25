@@ -1,0 +1,250 @@
+{
+  "method_name": "get_identity_resolution_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/customer-profiles/client/get_identity_resolution_job.html",
+  "description": "Returns information about an Identity Resolution Job in a specific domain. Identity Resolution Jobs are set up using the Amazon Connect admin console. For more information, see Use Identity Resolution to consolidate similar profiles.",
+  "parameters": [
+    {
+      "name": "DomainName",
+      "type": "string",
+      "required": true,
+      "description": "The unique name of the domain.",
+      "nested_params": []
+    },
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "The unique identifier of the Identity Resolution Job.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "DomainName",
+          "type": "string",
+          "description": "The unique name of the domain.",
+          "nested_items": []
+        },
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "The unique identifier of the Identity Resolution Job.",
+          "nested_items": []
+        },
+        {
+          "name": "Status",
+          "type": "string",
+          "description": "The status of the Identity Resolution Job.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "PENDING: The Identity Resolution Job is scheduled but has not started yet. If you turn off the Identity Resolution feature in your domain, jobs in the PENDING state are deleted.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "PREPROCESSING: The Identity Resolution Job is loading your data.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "FIND_MATCHING: The Identity Resolution Job is using the machine learning model to identify profiles that belong to the same matching group.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "MERGING: The Identity Resolution Job is merging duplicate profiles.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "COMPLETED: The Identity Resolution Job completed successfully.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "PARTIAL_SUCCESS: There's a system error and not all of the data is merged. The Identity Resolution Job writes a message indicating the source of the problem.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "FAILED: The Identity Resolution Job did not merge any data. It writes a message indicating the source of the problem.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Message",
+          "type": "string",
+          "description": "The error messages that are generated when the Identity Resolution Job runs.",
+          "nested_items": []
+        },
+        {
+          "name": "JobStartTime",
+          "type": "datetime",
+          "description": "The timestamp of when the Identity Resolution Job was started or will be started.",
+          "nested_items": []
+        },
+        {
+          "name": "JobEndTime",
+          "type": "datetime",
+          "description": "The timestamp of when the Identity Resolution Job was completed.",
+          "nested_items": []
+        },
+        {
+          "name": "LastUpdatedAt",
+          "type": "datetime",
+          "description": "The timestamp of when the Identity Resolution Job was most recently edited.",
+          "nested_items": []
+        },
+        {
+          "name": "JobExpirationTime",
+          "type": "datetime",
+          "description": "The timestamp of when the Identity Resolution Job will expire.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMerging",
+          "type": "dict",
+          "description": "Configuration settings for how to perform the auto-merging of profiles.",
+          "nested_items": [
+            {
+              "name": "Enabled",
+              "type": "boolean",
+              "description": "The flag that enables the auto-merging of duplicate profiles.",
+              "nested_items": []
+            },
+            {
+              "name": "Consolidation",
+              "type": "dict",
+              "description": "A list of matching attributes that represent matching criteria. If two profiles meet at least one of the requirements in the matching attributes list, they will be merged.",
+              "nested_items": [
+                {
+                  "name": "MatchingAttributesList",
+                  "type": "list",
+                  "description": "A list of matching criteria.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "list",
+                      "description": "(list) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ConflictResolution",
+              "type": "dict",
+              "description": "How the auto-merging process should resolve conflicts between different profiles. For example, if Profile A and Profile B have the same FirstName and LastName (and that is the matching criteria), which EmailAddress should be used?",
+              "nested_items": [
+                {
+                  "name": "ConflictResolvingModel",
+                  "type": "string",
+                  "description": "How the auto-merging process should resolve conflicts between different profiles.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "RECENCY: Uses the data that was most recently updated.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "SOURCE: Uses the data from a specific source. For example, if a company has been aquired or two departments have merged, data from the specified source is used. If two duplicate profiles are from the same source, then RECENCY is used again.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SourceName",
+                  "type": "string",
+                  "description": "The ObjectType name that is used to resolve profile merging conflicts when choosing SOURCE as the ConflictResolvingModel.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "MinAllowedConfidenceScoreForMerging",
+              "type": "float",
+              "description": "A number between 0 and 1 that represents the minimum confidence score required for profiles within a matching group to be merged during the auto-merge process. A higher score means higher similarity required to merge profiles.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ExportingLocation",
+          "type": "dict",
+          "description": "The S3 location where the Identity Resolution Job writes result files.",
+          "nested_items": [
+            {
+              "name": "S3Exporting",
+              "type": "dict",
+              "description": "Information about the S3 location where Identity Resolution Jobs write result files.",
+              "nested_items": [
+                {
+                  "name": "S3BucketName",
+                  "type": "string",
+                  "description": "The name of the S3 bucket name where Identity Resolution Jobs write result files.",
+                  "nested_items": []
+                },
+                {
+                  "name": "S3KeyName",
+                  "type": "string",
+                  "description": "The S3 key name of the location where Identity Resolution Jobs write result files.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "NumberOfProfilesReviewed",
+              "type": "integer",
+              "description": "The number of profiles reviewed.",
+              "nested_items": []
+            },
+            {
+              "name": "NumberOfMatchesFound",
+              "type": "integer",
+              "description": "The number of matches found.",
+              "nested_items": []
+            },
+            {
+              "name": "NumberOfMergesDone",
+              "type": "integer",
+              "description": "The number of merges completed.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

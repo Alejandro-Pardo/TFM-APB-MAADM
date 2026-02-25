@@ -1,0 +1,109 @@
+{
+  "method_name": "get_media",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis-video-media/client/get_media.html",
+  "description": "Use this API to retrieve media content from a Kinesis video stream. In the request, you identify the stream name or stream Amazon Resource Name (ARN), and the starting chunk. Kinesis Video Streams then returns a stream of chunks in order by fragment number. When you put media data (fragments) on a stream, Kinesis Video Streams stores each incoming fragment and related metadata in what is called a 'chunk.' For more information, see PutMedia. The GetMedia API returns a stream of these chunks starting from the chunk that you specify in the request. The following limits apply when using the GetMedia API:",
+  "parameters": [
+    {
+      "name": "StreamName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StreamARN",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "StartSelector",
+      "type": "dict",
+      "required": true,
+      "description": "Identifies the starting chunk to get from the specified stream. Identifies the fragment on the Kinesis video stream where you want to start getting the data from. NOW - Start with the latest chunk on the stream. EARLIEST - Start with earliest available chunk on the stream. FRAGMENT_NUMBER - Start with the chunk after a specific fragment. You must also specify the AfterFragmentNumber parameter. PRODUCER_TIMESTAMP or SERVER_TIMESTAMP - Start with the chunk containing a fragment with the specified producer or server timestamp. You specify the timestamp by adding StartTimestamp. CONTINUATION_TOKEN - Read using the specified continuation token. AfterFragmentNumber (string) --- Specifies the fragment number from where you want the GetMedia API to start returning the fragments. StartTimestamp (datetime) --- A timestamp value. This value is required if you choose the PRODUCER_TIMESTAMP or the SERVER_TIMESTAMP as the startSelectorType. The GetMedia API then starts with the chunk containing the fragment that has the specified timestamp. ContinuationToken (string) --- Continuation token that Kinesis Video Streams returned in the previous GetMedia response. The GetMedia API then starts with the chunk identified by the continuation token.",
+      "nested_params": [
+        {
+          "name": "StartSelectorType",
+          "type": "string",
+          "required": false,
+          "description": "Identifies the fragment on the Kinesis video stream where you want to start getting the data from.",
+          "nested_params": []
+        },
+        {
+          "name": "AfterFragmentNumber",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the fragment number from where you want the GetMedia API to start returning the fragments.",
+          "nested_params": []
+        },
+        {
+          "name": "StartTimestamp",
+          "type": "datetime",
+          "required": false,
+          "description": "A timestamp value. This value is required if you choose the PRODUCER_TIMESTAMP or the SERVER_TIMESTAMP as the startSelectorType. The GetMedia API then starts with the chunk containing the fragment that has the specified timestamp.",
+          "nested_params": []
+        },
+        {
+          "name": "ContinuationToken",
+          "type": "string",
+          "required": false,
+          "description": "Continuation token that Kinesis Video Streams returned in the previous GetMedia response. The GetMedia API then starts with the chunk identified by the continuation token.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ContentType",
+          "type": "string",
+          "description": "The content type of the requested media.",
+          "nested_items": []
+        },
+        {
+          "name": "Payload",
+          "type": "StreamingBody",
+          "description": "The payload Kinesis Video Streams returns is a sequence of chunks from the specified stream. For information about the chunks, see . The chunks that Kinesis Video Streams returns in the GetMedia call also include the following additional Matroska (MKV) tags:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "UTF-8 string",
+              "description": "In the event your GetMedia call terminates, you can use this continuation token in your next request to get the next chunk where the last request terminated.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "UTF-8 string",
+              "description": "Client applications can use this tag value to determine how far behind the chunk returned in the response is from the latest chunk on the stream.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "AWS_KINESISVIDEO_FRAGMENT_NUMBER - Fragment number returned in the chunk.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "AWS_KINESISVIDEO_SERVER_TIMESTAMP - Server timestamp of the fragment.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "AWS_KINESISVIDEO_PRODUCER_TIMESTAMP - Producer timestamp of the fragment.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

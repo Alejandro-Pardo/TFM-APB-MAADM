@@ -1,0 +1,564 @@
+{
+  "method_name": "describe_backup",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb/client/describe_backup.html",
+  "description": "Describes an existing backup of a table. You can call DescribeBackup at a maximum rate of 10 times per second.",
+  "parameters": [
+    {
+      "name": "BackupArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) associated with the backup.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "BackupDescription",
+          "type": "dict",
+          "description": "Contains the description of the backup created for the table.",
+          "nested_items": [
+            {
+              "name": "BackupDetails",
+              "type": "dict",
+              "description": "Contains the details of the backup created for the table.",
+              "nested_items": [
+                {
+                  "name": "BackupArn",
+                  "type": "string",
+                  "description": "ARN associated with the backup.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupName",
+                  "type": "string",
+                  "description": "Name of the requested backup.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupSizeBytes",
+                  "type": "integer",
+                  "description": "Size of the backup in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupStatus",
+                  "type": "string",
+                  "description": "Backup can be in one of the following states: CREATING, ACTIVE, DELETED.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupType",
+                  "type": "string",
+                  "description": "BackupType:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "USER - You create and manage these using the on-demand backup feature.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "at no additional cost",
+                      "description": "SYSTEM - If you delete a table with point-in-time recovery enabled, a SYSTEM backup is automatically created and is retained for 35 days (at no additional cost). System backups allow you to restore the deleted table to the state it was in just before the point of deletion.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "AWS_BACKUP - On-demand backup created by you from Backup service.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BackupCreationDateTime",
+                  "type": "datetime",
+                  "description": "Time at which the backup was created. This is the request time of the backup.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BackupExpiryDateTime",
+                  "type": "datetime",
+                  "description": "Time at which the automatic on-demand backup created by DynamoDB will expire. This SYSTEM on-demand backup expires automatically 35 days after its creation.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SourceTableDetails",
+              "type": "dict",
+              "description": "Contains the details of the table when the backup was created.",
+              "nested_items": [
+                {
+                  "name": "TableName",
+                  "type": "string",
+                  "description": "The name of the table for which the backup was created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TableId",
+                  "type": "string",
+                  "description": "Unique identifier for the table for which the backup was created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TableArn",
+                  "type": "string",
+                  "description": "ARN of the table for which backup was created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TableSizeBytes",
+                  "type": "integer",
+                  "description": "Size of the table in bytes. Note that this is an approximate value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "KeySchema",
+                  "type": "list",
+                  "description": "Schema of the table.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "AttributeName",
+                          "type": "string",
+                          "description": "The name of a key attribute.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "KeyType",
+                          "type": "string",
+                          "description": "The role that this key attribute will assume:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "HASH - partition key.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "RANGE - sort key.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TableCreationDateTime",
+                  "type": "datetime",
+                  "description": "Time when the source table was created.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ProvisionedThroughput",
+                  "type": "dict",
+                  "description": "Read IOPs and Write IOPS on the table when the backup was created.",
+                  "nested_items": [
+                    {
+                      "name": "ReadCapacityUnits",
+                      "type": "integer",
+                      "description": "The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "WriteCapacityUnits",
+                      "type": "integer",
+                      "description": "The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OnDemandThroughput",
+                  "type": "dict",
+                  "description": "Sets the maximum number of read and write units for the specified on-demand table. If you use this parameter, you must specify MaxReadRequestUnits, MaxWriteRequestUnits, or both.",
+                  "nested_items": [
+                    {
+                      "name": "MaxReadRequestUnits",
+                      "type": "integer",
+                      "description": "Maximum number of read request units for the specified table.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "MaxWriteRequestUnits",
+                      "type": "integer",
+                      "description": "Maximum number of write request units for the specified table.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ItemCount",
+                  "type": "integer",
+                  "description": "Number of items in the table. Note that this is an approximate value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "BillingMode",
+                  "type": "string",
+                  "description": "Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PROVISIONED - Sets the read/write capacity mode to PROVISIONED. We recommend using PROVISIONED for predictable workloads.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "PAY_PER_REQUEST - Sets the read/write capacity mode to PAY_PER_REQUEST. We recommend using PAY_PER_REQUEST for unpredictable workloads.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "SourceTableFeatureDetails",
+              "type": "dict",
+              "description": "Contains the details of the features enabled on the table when the backup was created. For example, LSIs, GSIs, streams, TTL.",
+              "nested_items": [
+                {
+                  "name": "LocalSecondaryIndexes",
+                  "type": "list",
+                  "description": "Represents the LSI properties for the table when the backup was created. It includes the IndexName, KeySchema and Projection for the LSIs on the table at the time of backup.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "IndexName",
+                          "type": "string",
+                          "description": "Represents the name of the local secondary index.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "KeySchema",
+                          "type": "list",
+                          "description": "The complete key schema for a local secondary index, which consists of one or more pairs of attribute names and key types:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "HASH - partition key.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "RANGE - sort key.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Projection",
+                          "type": "dict",
+                          "description": "Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.",
+                          "nested_items": [
+                            {
+                              "name": "ProjectionType",
+                              "type": "string",
+                              "description": "The set of attributes that are projected into the index:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "KEYS_ONLY - Only the index and primary keys are projected into the index.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "INCLUDE - In addition to the attributes described in KEYS_ONLY, the secondary index will include other non-key attributes that you specify.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ALL - All of the table attributes are projected into the index.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "NonKeyAttributes",
+                              "type": "list",
+                              "description": "Represents the non-key attribute names which will be projected into the index.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "GlobalSecondaryIndexes",
+                  "type": "list",
+                  "description": "Represents the GSI properties for the table when the backup was created. It includes the IndexName, KeySchema, Projection, and ProvisionedThroughput for the GSIs on the table at the time of backup.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "IndexName",
+                          "type": "string",
+                          "description": "The name of the global secondary index.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "KeySchema",
+                          "type": "list",
+                          "description": "The complete key schema for a global secondary index, which consists of one or more pairs of attribute names and key types:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "HASH - partition key.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "RANGE - sort key.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Projection",
+                          "type": "dict",
+                          "description": "Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.",
+                          "nested_items": [
+                            {
+                              "name": "ProjectionType",
+                              "type": "string",
+                              "description": "The set of attributes that are projected into the index:",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "KEYS_ONLY - Only the index and primary keys are projected into the index.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "INCLUDE - In addition to the attributes described in KEYS_ONLY, the secondary index will include other non-key attributes that you specify.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "ALL - All of the table attributes are projected into the index.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "NonKeyAttributes",
+                              "type": "list",
+                              "description": "Represents the non-key attribute names which will be projected into the index.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "ProvisionedThroughput",
+                          "type": "dict",
+                          "description": "Represents the provisioned throughput settings for the specified global secondary index.",
+                          "nested_items": [
+                            {
+                              "name": "ReadCapacityUnits",
+                              "type": "integer",
+                              "description": "The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "WriteCapacityUnits",
+                              "type": "integer",
+                              "description": "The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException. For more information, see Specifying Read and Write Requirements in the Amazon DynamoDB Developer Guide.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "OnDemandThroughput",
+                          "type": "dict",
+                          "description": "Sets the maximum number of read and write units for the specified on-demand table. If you use this parameter, you must specify MaxReadRequestUnits, MaxWriteRequestUnits, or both.",
+                          "nested_items": [
+                            {
+                              "name": "MaxReadRequestUnits",
+                              "type": "integer",
+                              "description": "Maximum number of read request units for the specified table.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "MaxWriteRequestUnits",
+                              "type": "integer",
+                              "description": "Maximum number of write request units for the specified table.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "StreamDescription",
+                  "type": "dict",
+                  "description": "Stream settings on the table when the backup was created.",
+                  "nested_items": [
+                    {
+                      "name": "StreamEnabled",
+                      "type": "boolean",
+                      "description": "Indicates whether DynamoDB Streams is enabled (true) or disabled (false) on the table.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "StreamViewType",
+                      "type": "string",
+                      "description": "When an item in the table is modified, StreamViewType determines what information is written to the stream for this table. Valid values for StreamViewType are:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "KEYS_ONLY - Only the key attributes of the modified item are written to the stream.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NEW_IMAGE - The entire item, as it appears after it was modified, is written to the stream.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "OLD_IMAGE - The entire item, as it appeared before it was modified, is written to the stream.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "NEW_AND_OLD_IMAGES - Both the new and the old item images of the item are written to the stream.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TimeToLiveDescription",
+                  "type": "dict",
+                  "description": "Time to Live settings on the table when the backup was created.",
+                  "nested_items": [
+                    {
+                      "name": "TimeToLiveStatus",
+                      "type": "string",
+                      "description": "The TTL status for the table.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AttributeName",
+                      "type": "string",
+                      "description": "The name of the TTL attribute for items in the table.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SSEDescription",
+                  "type": "dict",
+                  "description": "The description of the server-side encryption status on the table when the backup was created.",
+                  "nested_items": [
+                    {
+                      "name": "Status",
+                      "type": "string",
+                      "description": "Represents the current state of server-side encryption. The only supported values are:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "ENABLED - Server-side encryption is enabled.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "UPDATING - Server-side encryption is being updated.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "SSEType",
+                      "type": "string",
+                      "description": "Server-side encryption type. The only supported value is:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "KMS charges apply",
+                          "description": "KMS - Server-side encryption that uses Key Management Service. The key is stored in your account and is managed by KMS (KMS charges apply).",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "KMSMasterKeyArn",
+                      "type": "string",
+                      "description": "The KMS key ARN used for the KMS encryption.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "InaccessibleEncryptionDateTime",
+                      "type": "datetime",
+                      "description": "Indicates the time, in UNIX epoch date format, when DynamoDB detected that the table's KMS key was inaccessible. This attribute will automatically be cleared when DynamoDB detects that the table's KMS key is accessible again. DynamoDB will initiate the table archival process when table's KMS key remains inaccessible for more than seven days from this date.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

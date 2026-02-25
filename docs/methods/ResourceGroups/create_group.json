@@ -1,0 +1,377 @@
+{
+  "method_name": "create_group",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/resource-groups/client/create_group.html",
+  "description": "Creates a resource group with the specified name and description. You can optionally include either a resource query or a service configuration. For more information about constructing a resource query, see Build queries and groups in Resource Groups in the Resource Groups User Guide. For more information about service-linked groups and service configurations, see Service configurations for Resource Groups. To run this command, you must have the following permissions:",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the group, which is the identifier of the group in other operations. You can't change the name of a resource group after you create it. A resource group name can consist of letters, numbers, hyphens, periods, and underscores. The name cannot start with AWS, aws, or any other possible capitalization; these are reserved. A resource group name must be unique within each Amazon Web Services Region in your Amazon Web Services account.",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceQuery",
+      "type": "dict",
+      "required": true,
+      "description": "The resource query that determines which Amazon Web Services resources are members of this group. For more information about resource queries, see Create a tag-based group in Resource Groups. The type of the query to perform. This can have one of two values: CLOUDFORMATION_STACK_1_0: Specifies that you want the group to contain the members of an CloudFormation stack. The Query contains a StackIdentifier element with an Amazon resource name (ARN) for a CloudFormation stack. TAG_FILTERS_1_0: Specifies that you want the group to include resource that have tags that match the query. The query that defines a group or a search. The contents depends on the value of the Type element. ResourceTypeFilters --- Applies to all ResourceQuery objects of either Type. This element contains one of the following two items: The value AWS::AllSupported. This causes the ResourceQuery to match resources of any resource type that also match the query. A list (a JSON array) of resource type identifiers that limit the query to only resources of the specified types. For the complete list of resource types that you can use in the array value for ResourceTypeFilters, see Resources you can use with Resource Groups and Tag Editor in the Resource Groups User Guide. Example: \"ResourceTypeFilters\": [\"AWS::AllSupported\"] or \"ResourceTypeFilters\": [\"AWS::EC2::Instance\", \"AWS::S3::Bucket\"] TagFilters --- applicable only if Type = TAG_FILTERS_1_0. The Query contains a JSON string that represents a collection of simple tag filters. The JSON string uses a syntax similar to the GetResources operation, but uses only the ResourceTypeFilters and TagFilters fields. If you specify more than one tag key, only resources that match all tag keys, and at least one value of each specified tag key, are returned in your query. If you specify more than one value for a tag key, a resource matches the filter if it has a tag key value that matches any of the specified values. For example, consider the following sample query for resources that have two tags, Stage and Version, with two values each: [{\"Stage\":[\"Test\",\"Deploy\"]},{\"Version\":[\"1\",\"2\"]}] The results of this resource query could include the following. An Amazon EC2 instance that has the following two tags: {\"Stage\":\"Deploy\"}, and {\"Version\":\"2\"} An S3 bucket that has the following two tags: {\"Stage\":\"Test\"}, and {\"Version\":\"1\"} The resource query results would not include the following items in the results, however. An Amazon EC2 instance that has only the following tag: {\"Stage\":\"Deploy\"}. The instance does not have all of the tag keys specified in the filter, so it is excluded from the results. An RDS database that has the following two tags: {\"Stage\":\"Archived\"} and {\"Version\":\"4\"} The database has all of the tag keys, but none of those keys has an associated value that matches at least one of the specified values in the filter. Example: \"TagFilters\": [ { \"Key\": \"Stage\", \"Values\": [ \"Gamma\", \"Beta\" ] } StackIdentifier --- applicable only if Type = CLOUDFORMATION_STACK_1_0. The value of this parameter is the Amazon Resource Name (ARN) of the CloudFormation stack whose resources you want included in the group.",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The type of the query to perform. This can have one of two values:",
+          "nested_params": []
+        },
+        {
+          "name": "Query",
+          "type": "string",
+          "required": false,
+          "description": "The query that defines a group or a search. The contents depends on the value of the Type element.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Tags",
+      "type": "dict",
+      "required": false,
+      "description": "The tags to add to the group. A tag is key-value pair string. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Configuration",
+      "type": "list",
+      "required": true,
+      "description": "A configuration associates the resource group with an Amazon Web Services service and specifies how the service can interact with the resources in the group. A configuration is an array of  GroupConfigurationItem elements. For details about the syntax of service configurations, see Service configurations for Resource Groups. (dict) --- An item in a group configuration. A group service configuration can have one or more items. For details about group service configuration syntax, see Service configurations for resource groups. Specifies the type of group configuration item. Each item must have a unique value for type. For the list of types that you can specify for a configuration item, see Supported resource types and parameters. Parameters (list) --- A collection of parameters for this group configuration item. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters. (dict) --- A parameter for a group configuration item. The name of the group configuration parameter. Values (list) --- The value or values to be used for the specified parameter. For the list of values you can use with each parameter, see Supported resource types and parameters. (string) ---",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "Specifies the type of group configuration item. Each item must have a unique value for type. For the list of types that you can specify for a configuration item, see Supported resource types and parameters.",
+          "nested_params": []
+        },
+        {
+          "name": "Parameters",
+          "type": "list",
+          "required": false,
+          "description": "A collection of parameters for this group configuration item. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the group configuration parameter. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters.",
+              "nested_params": []
+            },
+            {
+              "name": "Values",
+              "type": "list",
+              "required": false,
+              "description": "The value or values to be used for the specified parameter. For the list of values you can use with each parameter, see Supported resource types and parameters.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Criticality",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Owner",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "GroupArn",
+              "type": "string",
+              "description": "The Amazon resource name (ARN) of the resource group.",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "The name of the resource group.",
+              "nested_items": []
+            },
+            {
+              "name": "Description",
+              "type": "string",
+              "description": "The description of the resource group.",
+              "nested_items": []
+            },
+            {
+              "name": "Criticality",
+              "type": "integer",
+              "description": "The critical rank of the application group on a scale of 1 to 10, with a rank of 1 being the most critical, and a rank of 10 being least critical.",
+              "nested_items": []
+            },
+            {
+              "name": "Owner",
+              "type": "string",
+              "description": "A name, email address or other identifier for the person or group who is considered as the owner of this application group within your organization.",
+              "nested_items": []
+            },
+            {
+              "name": "DisplayName",
+              "type": "string",
+              "description": "The name of the application group, which you can change at any time.",
+              "nested_items": []
+            },
+            {
+              "name": "ApplicationTag",
+              "type": "dict",
+              "description": "A tag that defines the application group membership. This tag is only supported for application groups.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ResourceQuery",
+          "type": "dict",
+          "description": "The resource query associated with the group. For more information about resource queries, see Create a tag-based group in Resource Groups.",
+          "nested_items": [
+            {
+              "name": "Type",
+              "type": "string",
+              "description": "The type of the query to perform. This can have one of two values:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "ARN",
+                  "description": "CLOUDFORMATION_STACK_1_0: Specifies that you want the group to contain the members of an CloudFormation stack. The Query contains a StackIdentifier element with an Amazon resource name (ARN) for a CloudFormation stack.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TAG_FILTERS_1_0: Specifies that you want the group to include resource that have tags that match the query.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Query",
+              "type": "string",
+              "description": "The query that defines a group or a search. The contents depends on the value of the Type element.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "a JSON array",
+                  "description": "ResourceTypeFilters --- Applies to all ResourceQuery objects of either Type. This element contains one of the following two items:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "The value AWS::AllSupported. This causes the ResourceQuery to match resources of any resource type that also match the query.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "a JSON array",
+                      "description": "A list (a JSON array) of resource type identifiers that limit the query to only resources of the specified types. For the complete list of resource types that you can use in the array value for ResourceTypeFilters, see Resources you can use with Resource Groups and Tag Editor in the Resource Groups User Guide.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "GroupConfiguration",
+          "type": "dict",
+          "description": "The service configuration associated with the resource group. For details about the syntax of a service configuration, see Service configurations for Resource Groups.",
+          "nested_items": [
+            {
+              "name": "Configuration",
+              "type": "list",
+              "description": "The configuration currently associated with the group and in effect.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "Specifies the type of group configuration item. Each item must have a unique value for type. For the list of types that you can specify for a configuration item, see Supported resource types and parameters.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Parameters",
+                      "type": "list",
+                      "description": "A collection of parameters for this group configuration item. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the group configuration parameter. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Values",
+                              "type": "list",
+                              "description": "The value or values to be used for the specified parameter. For the list of values you can use with each parameter, see Supported resource types and parameters.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ProposedConfiguration",
+              "type": "list",
+              "description": "If present, the new configuration that is in the process of being applied to the group.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "Specifies the type of group configuration item. Each item must have a unique value for type. For the list of types that you can specify for a configuration item, see Supported resource types and parameters.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Parameters",
+                      "type": "list",
+                      "description": "A collection of parameters for this group configuration item. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the group configuration parameter. For the list of parameters that you can use with each configuration item type, see Supported resource types and parameters.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Values",
+                              "type": "list",
+                              "description": "The value or values to be used for the specified parameter. For the list of values you can use with each parameter, see Supported resource types and parameters.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "The current status of an attempt to update the group configuration.",
+              "nested_items": []
+            },
+            {
+              "name": "FailureReason",
+              "type": "string",
+              "description": "If present, the reason why a request to update the group configuration failed.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

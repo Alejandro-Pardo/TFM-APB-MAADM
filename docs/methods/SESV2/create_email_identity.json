@@ -1,0 +1,335 @@
+{
+  "method_name": "create_email_identity",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sesv2/client/create_email_identity.html",
+  "description": "Starts the process of verifying an email identity. An identity is an email address or domain that you use when you send email. Before you can use an identity to send email, you first have to verify it. By verifying an identity, you demonstrate that you're the owner of the identity, and that you've given Amazon SES API v2 permission to send email from the identity. When you verify an email address, Amazon SES sends an email to the address. Your email address is verified as soon as you follow the link in the verification email. When you verify a domain without specifying the DkimSigningAttributes object, this operation provides a set of DKIM tokens. You can convert these tokens into CNAME records, which you then add to the DNS configuration for your domain. Your domain is verified when Amazon SES detects these records in the DNS configuration for your domain. This verification method is known as Easy DKIM. Alternatively, you can perform the verification process by providing your own public-private key pair. This verification method is known as Bring Your Own DKIM (BYODKIM). To use BYODKIM, your call to the CreateEmailIdentity operation has to include the DkimSigningAttributes object. When you specify this object, you provide a selector (a component of the DNS record name that identifies the public key to use for DKIM authentication) and a private key. When you verify a domain, this operation provides a set of DKIM tokens, which you can convert into CNAME tokens. You add these CNAME tokens to the DNS configuration for your domain. Your domain is verified when Amazon SES detects these records in the DNS configuration for your domain. For some DNS providers, it can take 72 hours or more to complete the domain verification process. Additionally, you can associate an existing configuration set with the email identity that you're verifying.",
+  "parameters": [
+    {
+      "name": "EmailIdentity",
+      "type": "string",
+      "required": true,
+      "description": "The email address or domain to verify.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "An array of objects that define the tags (keys and values) to associate with the email identity. (dict) --- An object that defines the tags that are associated with a resource. A\u00c2\u00a0tag\u00c2\u00a0is a label that you optionally define and associate with a resource. Tags can help you categorize and manage resources in different ways, such as by purpose, owner, environment, or other criteria. A resource can have as many as 50 tags. Each tag consists of a required\u00c2\u00a0tag key\u00c2\u00a0and an associated\u00c2\u00a0tag value, both of which you define. A tag key is a general label that acts as a category for a more specific tag value. A tag value acts as a descriptor within a tag key. A tag key can contain as many as 128 characters. A tag value can contain as many as 256 characters. The characters can be Unicode letters, digits, white space, or one of the following symbols: _ . : / = + -. The following additional restrictions apply to tags: Tag keys and values are case sensitive. For each associated resource, each tag key must be unique and it can have only one value. The\u00c2\u00a0 aws:\u00c2\u00a0prefix is reserved for use by Amazon Web Services; you can't use it in any tag keys or values that you define. In addition, you can't edit or remove tag keys or values that use this prefix. Tags that use this prefix don't count against the limit of 50 tags per resource. You can associate tags with public or shared resources, but the tags are available only for your Amazon Web Services account, not any other accounts that share the resource. In addition, the tags are available only for resources that are located in the specified Amazon Web Services Region for your Amazon Web Services account. One part of a key-value pair that defines a tag. The maximum length of a tag key is 128 characters. The minimum length is 1 character. The optional part of a key-value pair that defines a tag. The maximum length of a tag value is 256 characters. The minimum length is 0 characters. If you don't want a resource to have a specific tag value, don't specify a value for this parameter. If you don't specify a value, Amazon SES sets the value to an empty string.",
+      "nested_params": []
+    },
+    {
+      "name": "DkimSigningAttributes",
+      "type": "dict",
+      "required": false,
+      "description": "If your request includes this object, Amazon SES configures the identity to use Bring Your Own DKIM (BYODKIM) for DKIM authentication purposes, or, configures the key length to be used for Easy DKIM. You can only specify this object if the email identity is a domain, as opposed to an address. DomainSigningSelector (string) --- [Bring Your Own DKIM] A string that's used to identify a public key in the DNS configuration for a domain. DomainSigningPrivateKey (string) --- [Bring Your Own DKIM] A private key that's used to generate a DKIM signature. The private key must use 1024 or 2048-bit RSA encryption, and must be encoded using base64 encoding. NextSigningKeyLength (string) --- [Easy DKIM] The key length of the future DKIM key pair to be generated. This can be changed at most once per day. DomainSigningAttributesOrigin (string) --- The attribute to use for configuring DKIM for the identity depends on the operation: For PutEmailIdentityDkimSigningAttributes: None of the values are allowed - use the SigningAttributesOrigin parameter instead For CreateEmailIdentity when replicating a parent identity's DKIM configuration: Allowed values: All values except AWS_SES and EXTERNAL AWS_SES --- Configure DKIM for the identity by using Easy DKIM. EXTERNAL --- Configure DKIM for the identity by using Bring Your Own DKIM (BYODKIM). AWS_SES_AF_SOUTH_1 --- Configure DKIM for the identity by replicating from a parent identity in Africa (Cape Town) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_NORTH_1 --- Configure DKIM for the identity by replicating from a parent identity in Europe (Stockholm) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_SOUTH_1 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Mumbai) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_SOUTH_2 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Hyderabad) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_WEST_3 --- Configure DKIM for the identity by replicating from a parent identity in Europe (Paris) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_WEST_2 --- Configure DKIM for the identity by replicating from a parent identity in Europe (London) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_SOUTH_1 --- Configure DKIM for the identity by replicating from a parent identity in Europe (Milan) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_WEST_1 --- Configure DKIM for the identity by replicating from a parent identity in Europe (Ireland) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_NORTHEAST_3 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Osaka) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_NORTHEAST_2 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Seoul) region using Deterministic Easy-DKIM (DEED). AWS_SES_ME_CENTRAL_1 --- Configure DKIM for the identity by replicating from a parent identity in Middle East (UAE) region using Deterministic Easy-DKIM (DEED). AWS_SES_ME_SOUTH_1 --- Configure DKIM for the identity by replicating from a parent identity in Middle East (Bahrain) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_NORTHEAST_1 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Tokyo) region using Deterministic Easy-DKIM (DEED). AWS_SES_IL_CENTRAL_1 --- Configure DKIM for the identity by replicating from a parent identity in Israel (Tel Aviv) region using Deterministic Easy-DKIM (DEED). AWS_SES_SA_EAST_1 --- Configure DKIM for the identity by replicating from a parent identity in South America (S\u00c3\u00a3o Paulo) region using Deterministic Easy-DKIM (DEED). AWS_SES_CA_CENTRAL_1 --- Configure DKIM for the identity by replicating from a parent identity in Canada (Central) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_SOUTHEAST_1 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Singapore) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_SOUTHEAST_2 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Sydney) region using Deterministic Easy-DKIM (DEED). AWS_SES_AP_SOUTHEAST_3 --- Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Jakarta) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_CENTRAL_1 --- Configure DKIM for the identity by replicating from a parent identity in Europe (Frankfurt) region using Deterministic Easy-DKIM (DEED). AWS_SES_EU_CENTRAL_2 --- Configure DKIM for the identity by replicating from a parent identity in Europe (Zurich) region using Deterministic Easy-DKIM (DEED). AWS_SES_US_EAST_1 --- Configure DKIM for the identity by replicating from a parent identity in US East (N. Virginia) region using Deterministic Easy-DKIM (DEED). AWS_SES_US_EAST_2 --- Configure DKIM for the identity by replicating from a parent identity in US East (Ohio) region using Deterministic Easy-DKIM (DEED). AWS_SES_US_WEST_1 --- Configure DKIM for the identity by replicating from a parent identity in US West (N. California) region using Deterministic Easy-DKIM (DEED). AWS_SES_US_WEST_2 --- Configure DKIM for the identity by replicating from a parent identity in US West (Oregon) region using Deterministic Easy-DKIM (DEED).",
+      "nested_params": [
+        {
+          "name": "DomainSigningSelector",
+          "type": "string",
+          "required": false,
+          "description": "[Bring Your Own DKIM] A string that's used to identify a public key in the DNS configuration for a domain.",
+          "nested_params": []
+        },
+        {
+          "name": "DomainSigningPrivateKey",
+          "type": "string",
+          "required": false,
+          "description": "[Bring Your Own DKIM] A private key that's used to generate a DKIM signature. The private key must use 1024 or 2048-bit RSA encryption, and must be encoded using base64 encoding.",
+          "nested_params": []
+        },
+        {
+          "name": "NextSigningKeyLength",
+          "type": "string",
+          "required": false,
+          "description": "[Easy DKIM] The key length of the future DKIM key pair to be generated. This can be changed at most once per day.",
+          "nested_params": []
+        },
+        {
+          "name": "DomainSigningAttributesOrigin",
+          "type": "string",
+          "required": false,
+          "description": "The attribute to use for configuring DKIM for the identity depends on the operation:",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ConfigurationSetName",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "IdentityType",
+          "type": "string",
+          "description": "The email identity type. Note: the MANAGED_DOMAIN identity type is not supported.",
+          "nested_items": []
+        },
+        {
+          "name": "VerifiedForSendingStatus",
+          "type": "boolean",
+          "description": "Specifies whether or not the identity is verified. You can only send email from verified email addresses or domains. For more information about verifying identities, see the Amazon Pinpoint User Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "DkimAttributes",
+          "type": "dict",
+          "description": "An object that contains information about the DKIM attributes for the identity.",
+          "nested_items": [
+            {
+              "name": "SigningEnabled",
+              "type": "boolean",
+              "description": "If the value is true, then the messages that you send from the identity are signed using DKIM. If the value is false, then the messages that you send from the identity aren't DKIM-signed.",
+              "nested_items": []
+            },
+            {
+              "name": "Status",
+              "type": "string",
+              "description": "Describes whether or not Amazon SES has successfully located the DKIM records in the DNS records for the domain. The status can be one of the following:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "PENDING --- The verification process was initiated, but Amazon SES hasn't yet detected the DKIM records in the DNS configuration for the domain.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SUCCESS --- The verification process completed successfully.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FAILED --- The verification process failed. This typically occurs when Amazon SES fails to find the DKIM records in the DNS configuration of the domain.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TEMPORARY_FAILURE --- A temporary issue is preventing Amazon SES from determining the DKIM authentication status of the domain.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "NOT_STARTED --- The DKIM verification process hasn't been initiated for the domain.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Tokens",
+              "type": "list",
+              "description": "If you used Easy DKIM to configure DKIM authentication for the domain, then this object contains a set of unique strings that you use to create a set of CNAME records that you add to the DNS configuration for your domain. When Amazon SES detects these records in the DNS configuration for your domain, the DKIM authentication process is complete.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "SigningAttributesOrigin",
+              "type": "string",
+              "description": "A string that indicates how DKIM was configured for the identity. These are the possible values:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "AWS_SES --- Indicates that DKIM was configured for the identity by using Easy DKIM.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "BYODKIM",
+                  "description": "EXTERNAL --- Indicates that DKIM was configured for the identity by using Bring Your Own DKIM (BYODKIM).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Cape Town",
+                  "description": "AWS_SES_AF_SOUTH_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Africa (Cape Town) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Stockholm",
+                  "description": "AWS_SES_EU_NORTH_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Stockholm) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Mumbai",
+                  "description": "AWS_SES_AP_SOUTH_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Mumbai) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Hyderabad",
+                  "description": "AWS_SES_AP_SOUTH_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Hyderabad) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Paris",
+                  "description": "AWS_SES_EU_WEST_3 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Paris) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "London",
+                  "description": "AWS_SES_EU_WEST_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (London) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Milan",
+                  "description": "AWS_SES_EU_SOUTH_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Milan) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Ireland",
+                  "description": "AWS_SES_EU_WEST_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Ireland) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Osaka",
+                  "description": "AWS_SES_AP_NORTHEAST_3 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Osaka) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Seoul",
+                  "description": "AWS_SES_AP_NORTHEAST_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Seoul) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "UAE",
+                  "description": "AWS_SES_ME_CENTRAL_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Middle East (UAE) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Bahrain",
+                  "description": "AWS_SES_ME_SOUTH_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Middle East (Bahrain) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Tokyo",
+                  "description": "AWS_SES_AP_NORTHEAST_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Tokyo) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Tel Aviv",
+                  "description": "AWS_SES_IL_CENTRAL_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Israel (Tel Aviv) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "S\u00c3\u00a3o Paulo",
+                  "description": "AWS_SES_SA_EAST_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in South America (S\u00c3\u00a3o Paulo) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Central",
+                  "description": "AWS_SES_CA_CENTRAL_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Canada (Central) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Singapore",
+                  "description": "AWS_SES_AP_SOUTHEAST_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Singapore) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Sydney",
+                  "description": "AWS_SES_AP_SOUTHEAST_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Sydney) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Jakarta",
+                  "description": "AWS_SES_AP_SOUTHEAST_3 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Jakarta) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Frankfurt",
+                  "description": "AWS_SES_EU_CENTRAL_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Frankfurt) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Zurich",
+                  "description": "AWS_SES_EU_CENTRAL_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Zurich) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "N. Virginia",
+                  "description": "AWS_SES_US_EAST_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US East (N. Virginia) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Ohio",
+                  "description": "AWS_SES_US_EAST_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US East (Ohio) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "N. California",
+                  "description": "AWS_SES_US_WEST_1 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US West (N. California) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "Oregon",
+                  "description": "AWS_SES_US_WEST_2 --- Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US West (Oregon) region using Deterministic Easy-DKIM (DEED).",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "NextSigningKeyLength",
+              "type": "string",
+              "description": "[Easy DKIM] The key length of the future DKIM key pair to be generated. This can be changed at most once per day.",
+              "nested_items": []
+            },
+            {
+              "name": "CurrentSigningKeyLength",
+              "type": "string",
+              "description": "[Easy DKIM] The key length of the DKIM key pair in use.",
+              "nested_items": []
+            },
+            {
+              "name": "LastKeyGenerationTimestamp",
+              "type": "datetime",
+              "description": "[Easy DKIM] The last time a key pair was generated for this identity.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

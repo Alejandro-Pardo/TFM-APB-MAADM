@@ -1,0 +1,1351 @@
+{
+  "method_name": "run_job_flow",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/emr/client/run_job_flow.html",
+  "description": "RunJobFlow creates and starts running a new cluster (job flow). The cluster runs the steps specified. After the steps complete, the cluster stops and the HDFS partition is lost. To prevent loss of data, configure the last step of the job flow to store results in Amazon S3. If the  JobFlowInstancesConfig KeepJobFlowAliveWhenNoSteps parameter is set to TRUE, the cluster transitions to the WAITING state rather than shutting down after the steps have completed. For additional protection, you can set the  JobFlowInstancesConfig TerminationProtected parameter to TRUE to lock the cluster and prevent it from being terminated by API call, user intervention, or in the event of a job flow error. A maximum of 256 steps are allowed in each job flow. If your cluster is long-running (such as a Hive data warehouse) or complex, you may require more than 256 steps to process your data. You can bypass the 256-step limitation in various ways, including using the SSH shell to connect to the master node and submitting queries directly to the software running on the master node, such as Hive and Hadoop. For long-running clusters, we recommend that you periodically store your results.",
+  "parameters": [
+    {
+      "name": "Name",
+      "type": "string",
+      "required": true,
+      "description": "The name of the job flow.",
+      "nested_params": []
+    },
+    {
+      "name": "LogUri",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "LogEncryptionKmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AdditionalInfo",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AmiVersion",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ReleaseLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Instances",
+      "type": "dict",
+      "required": true,
+      "description": "A specification of the number and type of Amazon EC2 instances. MasterInstanceType (string) --- The Amazon EC2 instance type of the master node. SlaveInstanceType (string) --- The Amazon EC2 instance type of the core and task nodes. InstanceCount (integer) --- The number of Amazon EC2 instances in the cluster. InstanceGroups (list) --- Configuration for the instance groups in a cluster. (dict) --- Configuration defining a new instance group. Name (string) --- Friendly name given to the instance group. Market (string) --- Market type of the Amazon EC2 instances used to create a cluster node. The role of the instance group in the cluster. BidPrice (string) --- If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify OnDemandPrice to set the amount equal to the On-Demand price, or specify an amount in USD. The Amazon EC2 instance type for all instances in the instance group. Target number of instances for the instance group. Configurations (list) --- The list of configurations supplied for an Amazon EMR cluster instance group. You can specify a separate configuration for each instance group (master, core, and task). (dict) --- An optional configuration specification to be used when provisioning cluster instances, which can include configurations for applications and software bundled with Amazon EMR. A configuration consists of a classification, properties, and optional nested configurations. A classification refers to an application-specific configuration file. Properties are the settings you want to change in that file. For more information, see Configuring Applications. Classification (string) --- The classification within a configuration. Configurations (list) --- A list of additional configurations to apply within a configuration object. Properties (dict) --- A set of properties specified within a configuration classification. (string) --- (string) --- EbsConfiguration (dict) --- EBS configurations that will be attached to each Amazon EC2 instance in the instance group. EbsBlockDeviceConfigs (list) --- An array of Amazon EBS volume specifications attached to a cluster instance. (dict) --- Configuration of requested EBS block device associated with the instance group with count of volumes that are associated to every instance. EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster. The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard. Iops (integer) --- The number of I/O operations per second (IOPS) that the volume supports. The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10. Throughput (integer) --- The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes. VolumesPerInstance (integer) --- Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group EbsOptimized (boolean) --- Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance. AutoScalingPolicy (dict) --- An automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. The automatic scaling policy defines how an instance group dynamically adds and terminates Amazon EC2 instances in response to the value of a CloudWatch metric. See  PutAutoScalingPolicy. The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits. The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary. The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary. The scale-in and scale-out rules that comprise the automatic scaling policy. (dict) --- A scale-in or scale-out rule that defines scaling activity, including the CloudWatch metric alarm that triggers activity, how Amazon EC2 instances are added or removed, and the periodicity of adjustments. The automatic scaling policy for an instance group can comprise one or more automatic scaling rules. The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy. Description (string) --- A friendly, more verbose description of the automatic scaling rule. The conditions that trigger an automatic scaling activity. Market (string) --- Not available for instance groups. Instance groups use the market type specified for the group. The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment. AdjustmentType (string) --- The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer. The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity. CoolDown (integer) --- The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0. The CloudWatch alarm definition that determines when automatic scaling activity is triggered. The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins. Determines how the metric specified by MetricName is compared to the value specified by Threshold. EvaluationPeriods (integer) --- The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1. The name of the CloudWatch metric that is watched to determine an alarm condition. Namespace (string) --- The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce. The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300. Statistic (string) --- The statistic to apply to the metric associated with the alarm. The default is AVERAGE. The value against which the specified statistic is compared. Unit (string) --- The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric. Dimensions (list) --- A CloudWatch metric dimension. (dict) --- A CloudWatch dimension, which is specified using a Key (known as a Name in CloudWatch), Value pair. By default, Amazon EMR uses one dimension whose Key is JobFlowID and Value is a variable representing the cluster ID, which is ${emr.clusterId}. This enables the rule to bootstrap when the cluster ID becomes available. Key (string) --- The dimension name. Value (string) --- The dimension value. CustomAmiId (string) --- The custom AMI ID to use for the provisioned instance group. InstanceFleets (list) --- Describes the Amazon EC2 instances and instance configurations for clusters that use the instance fleet configuration. (dict) --- The configuration that defines an instance fleet. Name (string) --- The friendly name of the instance fleet. The node type that the instance fleet hosts. Valid values are MASTER, CORE, and TASK. TargetOnDemandCapacity (integer) --- The target capacity of On-Demand units for the instance fleet, which determines how many On-Demand Instances to provision. When the instance fleet launches, Amazon EMR tries to provision On-Demand Instances as specified by  InstanceTypeConfig. Each instance configuration has a specified WeightedCapacity. When an On-Demand Instance is provisioned, the WeightedCapacity units count toward the target capacity. Amazon EMR provisions instances until the target capacity is totally fulfilled, even if this results in an overage. For example, if there are 2 units remaining to fulfill capacity, and Amazon EMR can only provision an instance with a WeightedCapacity of 5 units, the instance is provisioned, and the target capacity is exceeded by 3 units. TargetSpotCapacity (integer) --- The target capacity of Spot units for the instance fleet, which determines how many Spot Instances to provision. When the instance fleet launches, Amazon EMR tries to provision Spot Instances as specified by  InstanceTypeConfig. When a Spot Instance is provisioned, the WeightedCapacity units count toward the target capacity. InstanceTypeConfigs (list) --- The instance type configurations that define the Amazon EC2 instances in the instance fleet. (dict) --- An instance type configuration for each instance type in an instance fleet, which determines the Amazon EC2 instances Amazon EMR attempts to provision to fulfill On-Demand and Spot target capacities. When you use an allocation strategy, you can include a maximum of 30 instance type configurations for a fleet. For more information about how to use an allocation strategy, see Configure Instance Fleets. Without an allocation strategy, you may specify a maximum of five instance type configurations for a fleet. An Amazon EC2 instance type, such as m3.xlarge. WeightedCapacity (integer) --- The number of units that a provisioned instance of this type provides toward fulfilling the target capacities defined in  InstanceFleetConfig. This value is 1 for a master instance fleet, and must be 1 or greater for core and task instance fleets. Defaults to 1 if not specified. BidPrice (string) --- The bid price for each Amazon EC2 Spot Instance type as defined by InstanceType. Expressed in USD. If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%. BidPriceAsPercentageOfOnDemandPrice (float) --- The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by InstanceType. Expressed as a number (for example, 20 specifies 20%). EbsConfiguration (dict) --- The configuration of Amazon Elastic Block Store (Amazon EBS) attached to each instance as defined by InstanceType. Configurations (list) --- A configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software that run on the cluster. (string) --- (string) --- CustomAmiId (string) --- The custom AMI ID to use for the instance type. Priority (float) --- The priority at which Amazon EMR launches the Amazon EC2 instances with this instance type. Priority starts at 0, which is the highest priority. Amazon EMR considers the highest priority first. LaunchSpecifications (dict) --- The launch specification for the instance fleet. SpotSpecification (dict) --- The launch specification for Spot instances in the fleet, which determines the allocation strategy, defined duration, and provisioning timeout behavior. The Spot provisioning timeout period in minutes. If Spot Instances are not provisioned within this time period, the TimeOutAction is taken. Minimum value is 5 and maximum value is 1440. The timeout applies only during initial provisioning, when the cluster is first created. The action to take when TargetSpotCapacity has not been fulfilled when the TimeoutDurationMinutes has expired; that is, when all Spot Instances could not be provisioned within the Spot provisioning timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND. SWITCH_TO_ON_DEMAND specifies that if no Spot Instances are available, On-Demand Instances should be provisioned to fulfill any remaining Spot capacity. BlockDurationMinutes (integer) --- The defined duration for Spot Instances (also known as Spot blocks) in minutes. When specified, the Spot Instance does not terminate before the defined duration expires, and defined duration pricing for Spot Instances applies. Valid values are 60, 120, 180, 240, 300, or 360. The duration period starts as soon as a Spot Instance receives its instance ID. At the end of the duration, Amazon EC2 marks the Spot Instance for termination and provides a Spot Instance termination notice, which gives the instance a two-minute warning before it terminates. AllocationStrategy (string) --- Specifies one of the following strategies to launch Spot Instance fleets: capacity-optimized, price-capacity-optimized, lowest-price, or diversified, and capacity-optimized-prioritized. For more information on the provisioning strategies, see Allocation strategies for Spot Instances in the Amazon EC2 User Guide for Linux Instances. OnDemandSpecification (dict) --- The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy and capacity reservation options. Specifies the strategy to use in launching On-Demand instance fleets. Available options are lowest-price and prioritized. lowest-price specifies to launch the instances with the lowest price first, and prioritized specifies that Amazon EMR should launch the instances with the highest priority first. The default is lowest-price. CapacityReservationOptions (dict) --- The launch specification for On-Demand instances in the instance fleet, which determines the allocation strategy. UsageStrategy (string) --- Indicates whether to use unused Capacity Reservations for fulfilling On-Demand capacity. If you specify use-capacity-reservations-first, the fleet uses unused Capacity Reservations to fulfill On-Demand capacity up to the target On-Demand capacity. If multiple instance pools have unused Capacity Reservations, the On-Demand allocation strategy ( lowest-price) is applied. If the number of unused Capacity Reservations is less than the On-Demand target capacity, the remaining On-Demand target capacity is launched according to the On-Demand allocation strategy ( lowest-price). If you do not specify a value, the fleet fulfills the On-Demand capacity according to the chosen On-Demand allocation strategy. CapacityReservationPreference (string) --- Indicates the instance's Capacity Reservation preferences. Possible preferences include: open - The instance can run in any open Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). none - The instance avoids running in a Capacity Reservation even if one is available. The instance runs as an On-Demand Instance. CapacityReservationResourceGroupArn (string) --- The ARN of the Capacity Reservation resource group in which to run the instance. ResizeSpecifications (dict) --- The resize specification for the instance fleet. SpotResizeSpecification (dict) --- The resize specification for Spot Instances in the instance fleet, which contains the allocation strategy and the resize timeout period. TimeoutDurationMinutes (integer) --- Spot resize timeout in minutes. If Spot Instances are not provisioned within this time, the resize workflow will stop provisioning of Spot instances. Minimum value is 5 minutes and maximum value is 10,080 minutes (7 days). The timeout applies to all resize workflows on the Instance Fleet. The resize could be triggered by Amazon EMR Managed Scaling or by the customer (via Amazon EMR Console, Amazon EMR CLI modify-instance-fleet or Amazon EMR SDK ModifyInstanceFleet API) or by Amazon EMR due to Amazon EC2 Spot Reclamation. AllocationStrategy (string) --- Specifies the allocation strategy to use to launch Spot instances during a resize. If you run Amazon EMR releases 6.9.0 or higher, the default is price-capacity-optimized. If you run Amazon EMR releases 6.8.0 or lower, the default is capacity-optimized. OnDemandResizeSpecification (dict) --- The resize specification for On-Demand Instances in the instance fleet, which contains the allocation strategy, capacity reservation options, and the resize timeout period. TimeoutDurationMinutes (integer) --- On-Demand resize timeout in minutes. If On-Demand Instances are not provisioned within this time, the resize workflow stops. The minimum value is 5 minutes, and the maximum value is 10,080 minutes (7 days). AllocationStrategy (string) --- Specifies the allocation strategy to use to launch On-Demand instances during a resize. CapacityReservationOptions (dict) --- Describes the strategy for using unused Capacity Reservations for fulfilling On-Demand capacity. Context (string) --- Reserved. Ec2KeyName (string) --- The name of the Amazon EC2 key pair that can be used to connect to the master node using SSH as the user called 'hadoop.' Placement (dict) --- The Availability Zone in which the cluster runs. AvailabilityZone (string) --- The Amazon EC2 Availability Zone for the cluster. AvailabilityZone is used for uniform instance groups, while AvailabilityZones (plural) is used for instance fleets. AvailabilityZones (list) --- When multiple Availability Zones are specified, Amazon EMR evaluates them and launches instances in the optimal Availability Zone. AvailabilityZones is used for instance fleets, while AvailabilityZone (singular) is used for uniform instance groups. (string) --- KeepJobFlowAliveWhenNoSteps (boolean) --- Specifies whether the cluster should remain available after completing all steps. Defaults to false. For more information about configuring cluster termination, see Control Cluster Termination in the EMR Management Guide. TerminationProtected (boolean) --- Specifies whether to lock the cluster to prevent the Amazon EC2 instances from being terminated by API call, user intervention, or in the event of a job-flow error. UnhealthyNodeReplacement (boolean) --- Indicates whether Amazon EMR should gracefully replace core nodes that have degraded within the cluster. HadoopVersion (string) --- Applies only to Amazon EMR release versions earlier than 4.0. The Hadoop version for the cluster. Valid inputs are '0.18' (no longer maintained), '0.20' (no longer maintained), '0.20.205' (no longer maintained), '1.0.3', '2.2.0', or '2.4.0'. If you do not set this value, the default of 0.18 is used, unless the AmiVersion parameter is set in the RunJobFlow call, in which case the default version of Hadoop for that AMI version is used. Ec2SubnetId (string) --- Applies to clusters that use the uniform instance group configuration. To launch the cluster in Amazon Virtual Private Cloud (Amazon VPC), set this parameter to the identifier of the Amazon VPC subnet where you want the cluster to launch. If you do not specify this value and your account supports EC2-Classic, the cluster launches in EC2-Classic. Ec2SubnetIds (list) --- Applies to clusters that use the instance fleet configuration. When multiple Amazon EC2 subnet IDs are specified, Amazon EMR evaluates them and launches instances in the optimal subnet. (string) --- EmrManagedMasterSecurityGroup (string) --- The identifier of the Amazon EC2 security group for the master node. If you specify EmrManagedMasterSecurityGroup, you must also specify EmrManagedSlaveSecurityGroup. EmrManagedSlaveSecurityGroup (string) --- The identifier of the Amazon EC2 security group for the core and task nodes. If you specify EmrManagedSlaveSecurityGroup, you must also specify EmrManagedMasterSecurityGroup. ServiceAccessSecurityGroup (string) --- The identifier of the Amazon EC2 security group for the Amazon EMR service to access clusters in VPC private subnets. AdditionalMasterSecurityGroups (list) --- A list of additional Amazon EC2 security group IDs for the master node. (string) --- AdditionalSlaveSecurityGroups (list) --- A list of additional Amazon EC2 security group IDs for the core and task nodes. (string) ---",
+      "nested_params": [
+        {
+          "name": "MasterInstanceType",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon EC2 instance type of the master node.",
+          "nested_params": []
+        },
+        {
+          "name": "SlaveInstanceType",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon EC2 instance type of the core and task nodes.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceCount",
+          "type": "integer",
+          "required": false,
+          "description": "The number of Amazon EC2 instances in the cluster.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceGroups",
+          "type": "list",
+          "required": false,
+          "description": "Configuration for the instance groups in a cluster.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "Friendly name given to the instance group.",
+              "nested_params": []
+            },
+            {
+              "name": "Market",
+              "type": "string",
+              "required": false,
+              "description": "Market type of the Amazon EC2 instances used to create a cluster node.",
+              "nested_params": []
+            },
+            {
+              "name": "InstanceRole",
+              "type": "string",
+              "required": false,
+              "description": "The role of the instance group in the cluster.",
+              "nested_params": []
+            },
+            {
+              "name": "BidPrice",
+              "type": "string",
+              "required": false,
+              "description": "If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify OnDemandPrice to set the amount equal to the On-Demand price, or specify an amount in USD.",
+              "nested_params": []
+            },
+            {
+              "name": "InstanceType",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon EC2 instance type for all instances in the instance group.",
+              "nested_params": []
+            },
+            {
+              "name": "InstanceCount",
+              "type": "integer",
+              "required": false,
+              "description": "Target number of instances for the instance group.",
+              "nested_params": []
+            },
+            {
+              "name": "Configurations",
+              "type": "list",
+              "required": false,
+              "description": "The list of configurations supplied for an Amazon EMR cluster instance group. You can specify a separate configuration for each instance group (master, core, and task).",
+              "nested_params": [
+                {
+                  "name": "Classification",
+                  "type": "string",
+                  "required": false,
+                  "description": "The classification within a configuration.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Configurations",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of additional configurations to apply within a configuration object.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Properties",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A set of properties specified within a configuration classification.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "EbsConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "EBS configurations that will be attached to each Amazon EC2 instance in the instance group.",
+              "nested_params": [
+                {
+                  "name": "EbsBlockDeviceConfigs",
+                  "type": "list",
+                  "required": false,
+                  "description": "An array of Amazon EBS volume specifications attached to a cluster instance.",
+                  "nested_params": [
+                    {
+                      "name": "VolumeSpecification",
+                      "type": "dict",
+                      "required": false,
+                      "description": "EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster.",
+                      "nested_params": [
+                        {
+                          "name": "VolumeType",
+                          "type": "string",
+                          "required": false,
+                          "description": "The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Iops",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The number of I/O operations per second (IOPS) that the volume supports.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "SizeInGB",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Throughput",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "VolumesPerInstance",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "EbsOptimized",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "AutoScalingPolicy",
+              "type": "dict",
+              "required": false,
+              "description": "An automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. The automatic scaling policy defines how an instance group dynamically adds and terminates Amazon EC2 instances in response to the value of a CloudWatch metric. See  PutAutoScalingPolicy.",
+              "nested_params": [
+                {
+                  "name": "Constraints",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits.",
+                  "nested_params": [
+                    {
+                      "name": "MinCapacity",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "MaxCapacity",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Rules",
+                  "type": "list",
+                  "required": false,
+                  "description": "The scale-in and scale-out rules that comprise the automatic scaling policy.",
+                  "nested_params": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "required": false,
+                      "description": "The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Description",
+                      "type": "string",
+                      "required": false,
+                      "description": "A friendly, more verbose description of the automatic scaling rule.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Action",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The conditions that trigger an automatic scaling activity.",
+                      "nested_params": [
+                        {
+                          "name": "Market",
+                          "type": "string",
+                          "required": false,
+                          "description": "Not available for instance groups. Instance groups use the market type specified for the group.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "SimpleScalingPolicyConfiguration",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment.",
+                          "nested_params": [
+                            {
+                              "name": "AdjustmentType",
+                              "type": "string",
+                              "required": false,
+                              "description": "The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "ScalingAdjustment",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "CoolDown",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Trigger",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The CloudWatch alarm definition that determines when automatic scaling activity is triggered.",
+                      "nested_params": [
+                        {
+                          "name": "CloudWatchAlarmDefinition",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins.",
+                          "nested_params": [
+                            {
+                              "name": "ComparisonOperator",
+                              "type": "string",
+                              "required": false,
+                              "description": "Determines how the metric specified by MetricName is compared to the value specified by Threshold.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "EvaluationPeriods",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "MetricName",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name of the CloudWatch metric that is watched to determine an alarm condition.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Namespace",
+                              "type": "string",
+                              "required": false,
+                              "description": "The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Period",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Statistic",
+                              "type": "string",
+                              "required": false,
+                              "description": "The statistic to apply to the metric associated with the alarm. The default is AVERAGE.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Threshold",
+                              "type": "float",
+                              "required": false,
+                              "description": "The value against which the specified statistic is compared.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Unit",
+                              "type": "string",
+                              "required": false,
+                              "description": "The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Dimensions",
+                              "type": "list",
+                              "required": false,
+                              "description": "A CloudWatch metric dimension.",
+                              "nested_params": [
+                                {
+                                  "name": "Key",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The dimension name.",
+                                  "nested_params": []
+                                },
+                                {
+                                  "name": "Value",
+                                  "type": "string",
+                                  "required": false,
+                                  "description": "The dimension value.",
+                                  "nested_params": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CustomAmiId",
+              "type": "string",
+              "required": false,
+              "description": "The custom AMI ID to use for the provisioned instance group.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "InstanceFleets",
+          "type": "list",
+          "required": false,
+          "description": "Describes the Amazon EC2 instances and instance configurations for clusters that use the instance fleet configuration.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The friendly name of the instance fleet.",
+              "nested_params": []
+            },
+            {
+              "name": "InstanceFleetType",
+              "type": "string",
+              "required": false,
+              "description": "The node type that the instance fleet hosts. Valid values are MASTER, CORE, and TASK.",
+              "nested_params": []
+            },
+            {
+              "name": "TargetOnDemandCapacity",
+              "type": "integer",
+              "required": false,
+              "description": "The target capacity of On-Demand units for the instance fleet, which determines how many On-Demand Instances to provision. When the instance fleet launches, Amazon EMR tries to provision On-Demand Instances as specified by  InstanceTypeConfig. Each instance configuration has a specified WeightedCapacity. When an On-Demand Instance is provisioned, the WeightedCapacity units count toward the target capacity. Amazon EMR provisions instances until the target capacity is totally fulfilled, even if this results in an overage. For example, if there are 2 units remaining to fulfill capacity, and Amazon EMR can only provision an instance with a WeightedCapacity of 5 units, the instance is provisioned, and the target capacity is exceeded by 3 units.",
+              "nested_params": []
+            },
+            {
+              "name": "TargetSpotCapacity",
+              "type": "integer",
+              "required": false,
+              "description": "The target capacity of Spot units for the instance fleet, which determines how many Spot Instances to provision. When the instance fleet launches, Amazon EMR tries to provision Spot Instances as specified by  InstanceTypeConfig. Each instance configuration has a specified WeightedCapacity. When a Spot Instance is provisioned, the WeightedCapacity units count toward the target capacity. Amazon EMR provisions instances until the target capacity is totally fulfilled, even if this results in an overage. For example, if there are 2 units remaining to fulfill capacity, and Amazon EMR can only provision an instance with a WeightedCapacity of 5 units, the instance is provisioned, and the target capacity is exceeded by 3 units.",
+              "nested_params": []
+            },
+            {
+              "name": "InstanceTypeConfigs",
+              "type": "list",
+              "required": false,
+              "description": "The instance type configurations that define the Amazon EC2 instances in the instance fleet.",
+              "nested_params": [
+                {
+                  "name": "InstanceType",
+                  "type": "string",
+                  "required": false,
+                  "description": "An Amazon EC2 instance type, such as m3.xlarge.",
+                  "nested_params": []
+                },
+                {
+                  "name": "WeightedCapacity",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The number of units that a provisioned instance of this type provides toward fulfilling the target capacities defined in  InstanceFleetConfig. This value is 1 for a master instance fleet, and must be 1 or greater for core and task instance fleets. Defaults to 1 if not specified.",
+                  "nested_params": []
+                },
+                {
+                  "name": "BidPrice",
+                  "type": "string",
+                  "required": false,
+                  "description": "The bid price for each Amazon EC2 Spot Instance type as defined by InstanceType. Expressed in USD. If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%.",
+                  "nested_params": []
+                },
+                {
+                  "name": "BidPriceAsPercentageOfOnDemandPrice",
+                  "type": "float",
+                  "required": false,
+                  "description": "The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by InstanceType. Expressed as a number (for example, 20 specifies 20%). If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%.",
+                  "nested_params": []
+                },
+                {
+                  "name": "EbsConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The configuration of Amazon Elastic Block Store (Amazon EBS) attached to each instance as defined by InstanceType.",
+                  "nested_params": [
+                    {
+                      "name": "EbsBlockDeviceConfigs",
+                      "type": "list",
+                      "required": false,
+                      "description": "An array of Amazon EBS volume specifications attached to a cluster instance.",
+                      "nested_params": [
+                        {
+                          "name": "VolumeSpecification",
+                          "type": "dict",
+                          "required": false,
+                          "description": "EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster.",
+                          "nested_params": [
+                            {
+                              "name": "VolumeType",
+                              "type": "string",
+                              "required": false,
+                              "description": "The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Iops",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The number of I/O operations per second (IOPS) that the volume supports.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "SizeInGB",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Throughput",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "VolumesPerInstance",
+                          "type": "integer",
+                          "required": false,
+                          "description": "Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "EbsOptimized",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Configurations",
+                  "type": "list",
+                  "required": false,
+                  "description": "A configuration classification that applies when provisioning cluster instances, which can include configurations for applications and software that run on the cluster.",
+                  "nested_params": [
+                    {
+                      "name": "Classification",
+                      "type": "string",
+                      "required": false,
+                      "description": "The classification within a configuration.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Configurations",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of additional configurations to apply within a configuration object.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Properties",
+                      "type": "dict",
+                      "required": false,
+                      "description": "A set of properties specified within a configuration classification.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "CustomAmiId",
+                  "type": "string",
+                  "required": false,
+                  "description": "The custom AMI ID to use for the instance type.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Priority",
+                  "type": "float",
+                  "required": false,
+                  "description": "The priority at which Amazon EMR launches the Amazon EC2 instances with this instance type. Priority starts at 0, which is the highest priority. Amazon EMR considers the highest priority first.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "LaunchSpecifications",
+              "type": "dict",
+              "required": false,
+              "description": "The launch specification for the instance fleet.",
+              "nested_params": [
+                {
+                  "name": "SpotSpecification",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The launch specification for Spot instances in the fleet, which determines the allocation strategy, defined duration, and provisioning timeout behavior.",
+                  "nested_params": [
+                    {
+                      "name": "TimeoutDurationMinutes",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The Spot provisioning timeout period in minutes. If Spot Instances are not provisioned within this time period, the TimeOutAction is taken. Minimum value is 5 and maximum value is 1440. The timeout applies only during initial provisioning, when the cluster is first created.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "TimeoutAction",
+                      "type": "string",
+                      "required": false,
+                      "description": "The action to take when TargetSpotCapacity has not been fulfilled when the TimeoutDurationMinutes has expired; that is, when all Spot Instances could not be provisioned within the Spot provisioning timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND. SWITCH_TO_ON_DEMAND specifies that if no Spot Instances are available, On-Demand Instances should be provisioned to fulfill any remaining Spot capacity.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "BlockDurationMinutes",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The defined duration for Spot Instances (also known as Spot blocks) in minutes. When specified, the Spot Instance does not terminate before the defined duration expires, and defined duration pricing for Spot Instances applies. Valid values are 60, 120, 180, 240, 300, or 360. The duration period starts as soon as a Spot Instance receives its instance ID. At the end of the duration, Amazon EC2 marks the Spot Instance for termination and provides a Spot Instance termination notice, which gives the instance a two-minute warning before it terminates.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AllocationStrategy",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies one of the following strategies to launch Spot Instance fleets: capacity-optimized, price-capacity-optimized, lowest-price, or diversified, and capacity-optimized-prioritized. For more information on the provisioning strategies, see Allocation strategies for Spot Instances in the Amazon EC2 User Guide for Linux Instances.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OnDemandSpecification",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy and capacity reservation options.",
+                  "nested_params": [
+                    {
+                      "name": "AllocationStrategy",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the strategy to use in launching On-Demand instance fleets. Available options are lowest-price and prioritized. lowest-price specifies to launch the instances with the lowest price first, and prioritized specifies that Amazon EMR should launch the instances with the highest priority first. The default is lowest-price.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CapacityReservationOptions",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The launch specification for On-Demand instances in the instance fleet, which determines the allocation strategy.",
+                      "nested_params": [
+                        {
+                          "name": "UsageStrategy",
+                          "type": "string",
+                          "required": false,
+                          "description": "Indicates whether to use unused Capacity Reservations for fulfilling On-Demand capacity. If you specify use-capacity-reservations-first, the fleet uses unused Capacity Reservations to fulfill On-Demand capacity up to the target On-Demand capacity. If multiple instance pools have unused Capacity Reservations, the On-Demand allocation strategy ( lowest-price) is applied. If the number of unused Capacity Reservations is less than the On-Demand target capacity, the remaining On-Demand target capacity is launched according to the On-Demand allocation strategy ( lowest-price). If you do not specify a value, the fleet fulfills the On-Demand capacity according to the chosen On-Demand allocation strategy.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CapacityReservationPreference",
+                          "type": "string",
+                          "required": false,
+                          "description": "Indicates the instance's Capacity Reservation preferences. Possible preferences include:",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CapacityReservationResourceGroupArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The ARN of the Capacity Reservation resource group in which to run the instance.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ResizeSpecifications",
+              "type": "dict",
+              "required": false,
+              "description": "The resize specification for the instance fleet.",
+              "nested_params": [
+                {
+                  "name": "SpotResizeSpecification",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The resize specification for Spot Instances in the instance fleet, which contains the allocation strategy and the resize timeout period.",
+                  "nested_params": [
+                    {
+                      "name": "TimeoutDurationMinutes",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Spot resize timeout in minutes. If Spot Instances are not provisioned within this time, the resize workflow will stop provisioning of Spot instances. Minimum value is 5 minutes and maximum value is 10,080 minutes (7 days). The timeout applies to all resize workflows on the Instance Fleet. The resize could be triggered by Amazon EMR Managed Scaling or by the customer (via Amazon EMR Console, Amazon EMR CLI modify-instance-fleet or Amazon EMR SDK ModifyInstanceFleet API) or by Amazon EMR due to Amazon EC2 Spot Reclamation.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AllocationStrategy",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the allocation strategy to use to launch Spot instances during a resize. If you run Amazon EMR releases 6.9.0 or higher, the default is price-capacity-optimized. If you run Amazon EMR releases 6.8.0 or lower, the default is capacity-optimized.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OnDemandResizeSpecification",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The resize specification for On-Demand Instances in the instance fleet, which contains the allocation strategy, capacity reservation options, and the resize timeout period.",
+                  "nested_params": [
+                    {
+                      "name": "TimeoutDurationMinutes",
+                      "type": "integer",
+                      "required": false,
+                      "description": "On-Demand resize timeout in minutes. If On-Demand Instances are not provisioned within this time, the resize workflow stops. The minimum value is 5 minutes, and the maximum value is 10,080 minutes (7 days). The timeout applies to all resize workflows on the Instance Fleet. The resize could be triggered by Amazon EMR Managed Scaling or by the customer (via Amazon EMR Console, Amazon EMR CLI modify-instance-fleet or Amazon EMR SDK ModifyInstanceFleet API) or by Amazon EMR due to Amazon EC2 Spot Reclamation.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AllocationStrategy",
+                      "type": "string",
+                      "required": false,
+                      "description": "Specifies the allocation strategy to use to launch On-Demand instances during a resize. The default is lowest-price.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "CapacityReservationOptions",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Describes the strategy for using unused Capacity Reservations for fulfilling On-Demand capacity.",
+                      "nested_params": [
+                        {
+                          "name": "UsageStrategy",
+                          "type": "string",
+                          "required": false,
+                          "description": "Indicates whether to use unused Capacity Reservations for fulfilling On-Demand capacity. If you specify use-capacity-reservations-first, the fleet uses unused Capacity Reservations to fulfill On-Demand capacity up to the target On-Demand capacity. If multiple instance pools have unused Capacity Reservations, the On-Demand allocation strategy ( lowest-price) is applied. If the number of unused Capacity Reservations is less than the On-Demand target capacity, the remaining On-Demand target capacity is launched according to the On-Demand allocation strategy ( lowest-price). If you do not specify a value, the fleet fulfills the On-Demand capacity according to the chosen On-Demand allocation strategy.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CapacityReservationPreference",
+                          "type": "string",
+                          "required": false,
+                          "description": "Indicates the instance's Capacity Reservation preferences. Possible preferences include:",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CapacityReservationResourceGroupArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "The ARN of the Capacity Reservation resource group in which to run the instance.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Context",
+              "type": "string",
+              "required": false,
+              "description": "Reserved.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Ec2KeyName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the Amazon EC2 key pair that can be used to connect to the master node using SSH as the user called 'hadoop.'",
+          "nested_params": []
+        },
+        {
+          "name": "Placement",
+          "type": "dict",
+          "required": false,
+          "description": "The Availability Zone in which the cluster runs.",
+          "nested_params": [
+            {
+              "name": "AvailabilityZone",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon EC2 Availability Zone for the cluster. AvailabilityZone is used for uniform instance groups, while AvailabilityZones (plural) is used for instance fleets.",
+              "nested_params": []
+            },
+            {
+              "name": "AvailabilityZones",
+              "type": "list",
+              "required": false,
+              "description": "When multiple Availability Zones are specified, Amazon EMR evaluates them and launches instances in the optimal Availability Zone. AvailabilityZones is used for instance fleets, while AvailabilityZone (singular) is used for uniform instance groups.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "KeepJobFlowAliveWhenNoSteps",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether the cluster should remain available after completing all steps. Defaults to false. For more information about configuring cluster termination, see Control Cluster Termination in the EMR Management Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "TerminationProtected",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether to lock the cluster to prevent the Amazon EC2 instances from being terminated by API call, user intervention, or in the event of a job-flow error.",
+          "nested_params": []
+        },
+        {
+          "name": "UnhealthyNodeReplacement",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether Amazon EMR should gracefully replace core nodes that have degraded within the cluster.",
+          "nested_params": []
+        },
+        {
+          "name": "HadoopVersion",
+          "type": "string",
+          "required": false,
+          "description": "Applies only to Amazon EMR release versions earlier than 4.0. The Hadoop version for the cluster. Valid inputs are '0.18' (no longer maintained), '0.20' (no longer maintained), '0.20.205' (no longer maintained), '1.0.3', '2.2.0', or '2.4.0'. If you do not set this value, the default of 0.18 is used, unless the AmiVersion parameter is set in the RunJobFlow call, in which case the default version of Hadoop for that AMI version is used.",
+          "nested_params": []
+        },
+        {
+          "name": "Ec2SubnetId",
+          "type": "string",
+          "required": false,
+          "description": "Applies to clusters that use the uniform instance group configuration. To launch the cluster in Amazon Virtual Private Cloud (Amazon VPC), set this parameter to the identifier of the Amazon VPC subnet where you want the cluster to launch. If you do not specify this value and your account supports EC2-Classic, the cluster launches in EC2-Classic.",
+          "nested_params": []
+        },
+        {
+          "name": "Ec2SubnetIds",
+          "type": "list",
+          "required": false,
+          "description": "Applies to clusters that use the instance fleet configuration. When multiple Amazon EC2 subnet IDs are specified, Amazon EMR evaluates them and launches instances in the optimal subnet.",
+          "nested_params": []
+        },
+        {
+          "name": "EmrManagedMasterSecurityGroup",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the Amazon EC2 security group for the master node. If you specify EmrManagedMasterSecurityGroup, you must also specify EmrManagedSlaveSecurityGroup.",
+          "nested_params": []
+        },
+        {
+          "name": "EmrManagedSlaveSecurityGroup",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the Amazon EC2 security group for the core and task nodes. If you specify EmrManagedSlaveSecurityGroup, you must also specify EmrManagedMasterSecurityGroup.",
+          "nested_params": []
+        },
+        {
+          "name": "ServiceAccessSecurityGroup",
+          "type": "string",
+          "required": false,
+          "description": "The identifier of the Amazon EC2 security group for the Amazon EMR service to access clusters in VPC private subnets.",
+          "nested_params": []
+        },
+        {
+          "name": "AdditionalMasterSecurityGroups",
+          "type": "list",
+          "required": false,
+          "description": "A list of additional Amazon EC2 security group IDs for the master node.",
+          "nested_params": []
+        },
+        {
+          "name": "AdditionalSlaveSecurityGroups",
+          "type": "list",
+          "required": false,
+          "description": "A list of additional Amazon EC2 security group IDs for the core and task nodes.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Steps",
+      "type": "list",
+      "required": true,
+      "description": "A list of steps to run. (dict) --- Specification for a cluster (job flow) step. The name of the step. ActionOnFailure (string) --- The action to take when the step fails. Use one of the following values: TERMINATE_CLUSTER - Shuts down the cluster. CANCEL_AND_WAIT - Cancels any pending steps and returns the cluster to the WAITING state. CONTINUE - Continues to the next step in the queue. TERMINATE_JOB_FLOW - Shuts down the cluster. TERMINATE_JOB_FLOW is provided for backward compatibility. We recommend using TERMINATE_CLUSTER instead. If a cluster's StepConcurrencyLevel is greater than 1, do not use AddJobFlowSteps to submit a step with this parameter set to CANCEL_AND_WAIT or TERMINATE_CLUSTER. The step is not submitted and the action fails with a message that the ActionOnFailure setting is not valid. If you change a cluster's StepConcurrencyLevel to be greater than 1 while a step is running, the ActionOnFailure parameter may not behave as you expect. In this case, for a step that fails with this parameter set to CANCEL_AND_WAIT, pending steps and the running step are not canceled; for a step that fails with this parameter set to TERMINATE_CLUSTER, the cluster does not terminate. The JAR file used for the step. Properties (list) --- A list of Java properties that are set when the step runs. You can use these properties to pass key-value pairs to your main function. (dict) --- A key-value pair. Key (string) --- The unique identifier of a key-value pair. Value (string) --- The value part of the identified key. A path to a JAR file run during the step. MainClass (string) --- The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file. Args (list) --- A list of command line arguments passed to the JAR file's main function when executed. (string) ---",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the step.",
+          "nested_params": []
+        },
+        {
+          "name": "ActionOnFailure",
+          "type": "string",
+          "required": false,
+          "description": "The action to take when the step fails. Use one of the following values:",
+          "nested_params": []
+        },
+        {
+          "name": "HadoopJarStep",
+          "type": "dict",
+          "required": false,
+          "description": "The JAR file used for the step.",
+          "nested_params": [
+            {
+              "name": "Properties",
+              "type": "list",
+              "required": false,
+              "description": "A list of Java properties that are set when the step runs. You can use these properties to pass key-value pairs to your main function.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "The unique identifier of a key-value pair.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "The value part of the identified key.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Jar",
+              "type": "string",
+              "required": false,
+              "description": "A path to a JAR file run during the step.",
+              "nested_params": []
+            },
+            {
+              "name": "MainClass",
+              "type": "string",
+              "required": false,
+              "description": "The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.",
+              "nested_params": []
+            },
+            {
+              "name": "Args",
+              "type": "list",
+              "required": false,
+              "description": "A list of command line arguments passed to the JAR file's main function when executed.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BootstrapActions",
+      "type": "list",
+      "required": true,
+      "description": "A list of bootstrap actions to run before Hadoop starts on the cluster nodes. (dict) --- Configuration of a bootstrap action. The name of the bootstrap action. The script run by the bootstrap action. Location in Amazon S3 of the script to run during a bootstrap action. Args (list) --- A list of command line arguments to pass to the bootstrap action script. (string) ---",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the bootstrap action.",
+          "nested_params": []
+        },
+        {
+          "name": "ScriptBootstrapAction",
+          "type": "dict",
+          "required": false,
+          "description": "The script run by the bootstrap action.",
+          "nested_params": [
+            {
+              "name": "Path",
+              "type": "string",
+              "required": false,
+              "description": "Location in Amazon S3 of the script to run during a bootstrap action.",
+              "nested_params": []
+            },
+            {
+              "name": "Args",
+              "type": "list",
+              "required": false,
+              "description": "A list of command line arguments to pass to the bootstrap action script.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SupportedProducts",
+      "type": "list",
+      "required": false,
+      "description": "A list of strings that indicates third-party software to use. For more information, see the Amazon EMR Developer Guide. Currently supported values are: 'mapr-m3' - launch the job flow using MapR M3 Edition. 'mapr-m5' - launch the job flow using MapR M5 Edition. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "NewSupportedProducts",
+      "type": "list",
+      "required": false,
+      "description": "A list of strings that indicates third-party software to use with the job flow that accepts a user argument list. Amazon EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action arguments. For more information, see 'Launch a Job Flow on the MapR Distribution for Hadoop' in the Amazon EMR Developer Guide. Supported values are: 'mapr-m3' - launch the cluster using MapR M3 Edition. 'mapr-m5' - launch the cluster using MapR M5 Edition. 'mapr' with the user arguments specifying '---edition,m3' or '---edition,m5' - launch the job flow using MapR M3 or M5 Edition respectively. 'mapr-m7' - launch the cluster using MapR M7 Edition. 'hunk' - launch the cluster with the Hunk Big Data Analytics Platform. 'hue'- launch the cluster with Hue installed. 'spark' - launch the cluster with Apache Spark installed. 'ganglia' - launch the cluster with the Ganglia Monitoring System installed. (dict) --- The list of supported product configurations that allow user-supplied arguments. Amazon EMR accepts these arguments and forwards them to the corresponding installation script as bootstrap action arguments. Name (string) --- The name of the product configuration. Args (list) --- The list of user-supplied arguments. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Applications",
+      "type": "list",
+      "required": false,
+      "description": "Applies to Amazon EMR releases 4.0 and later. A case-insensitive list of applications for Amazon EMR to install and configure when launching the cluster. For a list of applications available for each Amazon EMR release version, see the Amazon EMRRelease Guide. (dict) --- With Amazon EMR release version 4.0 and later, the only accepted parameter is the application name. To pass arguments to applications, you use configuration classifications specified using configuration JSON objects. For more information, see Configuring Applications. With earlier Amazon EMR releases, the application is any Amazon or third-party software that you can add to the cluster. This structure contains a list of strings that indicates the software to use with the cluster and accepts a user argument list. Amazon EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action argument. Name (string) --- The name of the application. Version (string) --- The version of the application. Args (list) --- Arguments for Amazon EMR to pass to the application. (string) --- AdditionalInfo (dict) --- This option is for advanced users only. This is meta information about third-party applications that third-party vendors use for testing purposes. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the application.",
+          "nested_params": []
+        },
+        {
+          "name": "Version",
+          "type": "string",
+          "required": false,
+          "description": "The version of the application.",
+          "nested_params": []
+        },
+        {
+          "name": "Args",
+          "type": "list",
+          "required": false,
+          "description": "Arguments for Amazon EMR to pass to the application.",
+          "nested_params": []
+        },
+        {
+          "name": "AdditionalInfo",
+          "type": "dict",
+          "required": false,
+          "description": "This option is for advanced users only. This is meta information about third-party applications that third-party vendors use for testing purposes.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Configurations",
+      "type": "list",
+      "required": false,
+      "description": "For Amazon EMR releases 4.0 and later. The list of configurations supplied for the Amazon EMR cluster that you are creating. (dict) --- An optional configuration specification to be used when provisioning cluster instances, which can include configurations for applications and software bundled with Amazon EMR. A configuration consists of a classification, properties, and optional nested configurations. A classification refers to an application-specific configuration file. Properties are the settings you want to change in that file. For more information, see Configuring Applications. Classification (string) --- The classification within a configuration. Configurations (list) --- A list of additional configurations to apply within a configuration object. Properties (dict) --- A set of properties specified within a configuration classification. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "Classification",
+          "type": "string",
+          "required": false,
+          "description": "The classification within a configuration.",
+          "nested_params": []
+        },
+        {
+          "name": "Configurations",
+          "type": "list",
+          "required": false,
+          "description": "A list of additional configurations to apply within a configuration object.",
+          "nested_params": []
+        },
+        {
+          "name": "Properties",
+          "type": "dict",
+          "required": false,
+          "description": "A set of properties specified within a configuration classification.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "VisibleToAllUsers",
+      "type": "boolean",
+      "required": false,
+      "description": "Set this value to true so that IAM principals in the Amazon Web Services account associated with the cluster can perform Amazon EMR actions on the cluster that their IAM policies allow. This value defaults to true for clusters created using the Amazon EMR API or the CLI create-cluster command. When set to false, only the IAM principal that created the cluster and the Amazon Web Services account root user can perform Amazon EMR actions for the cluster, regardless of the IAM permissions policies attached to other IAM principals. For more information, see Understanding the Amazon EMR cluster VisibleToAllUsers setting in the Amazon EMR Management Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "JobFlowRole",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ServiceRole",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": false,
+      "description": "A list of tags to associate with a cluster and propagate to Amazon EC2 instances. (dict) --- A key-value pair containing user-defined metadata that you can associate with an Amazon EMR resource. Tags make it easier to associate clusters in various ways, such as grouping clusters to track your Amazon EMR resource allocation costs. For more information, see Tag Clusters. Key (string) --- A user-defined key, which is the minimum required information for a valid tag. For more information, see Tag. Value (string) --- A user-defined value, which is optional in a tag. For more information, see Tag Clusters.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "A user-defined key, which is the minimum required information for a valid tag. For more information, see Tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "A user-defined value, which is optional in a tag. For more information, see Tag Clusters.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "SecurityConfiguration",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AutoScalingRole",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ScaleDownBehavior",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "CustomAmiId",
+      "type": "string",
+      "required": false,
+      "description": "Available only in Amazon EMR releases 5.7.0 and later. The ID of a custom Amazon EBS-backed Linux AMI. If specified, Amazon EMR uses this AMI when it launches cluster Amazon EC2 instances. For more information about custom AMIs in Amazon EMR, see Using a Custom AMI in the Amazon EMR Management Guide. If omitted, the cluster uses the base Linux AMI for the ReleaseLabel specified. For Amazon EMR releases 2.x and 3.x, use AmiVersion instead. For information about creating a custom AMI, see Creating an Amazon EBS-Backed Linux AMI in the Amazon Elastic Compute Cloud User Guide for Linux Instances. For information about finding an AMI ID, see Finding a Linux AMI.",
+      "nested_params": []
+    },
+    {
+      "name": "EbsRootVolumeSize",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "RepoUpgradeOnBoot",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "KerberosAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "Attributes for Kerberos configuration when Kerberos authentication is enabled using a security configuration. For more information see Use Kerberos Authentication in the Amazon EMR Management Guide. The name of the Kerberos realm to which all nodes in a cluster belong. For example, EC2.INTERNAL. The password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster. CrossRealmTrustPrincipalPassword (string) --- Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms. ADDomainJoinUser (string) --- Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain. ADDomainJoinPassword (string) --- The Active Directory password for ADDomainJoinUser.",
+      "nested_params": [
+        {
+          "name": "Realm",
+          "type": "string",
+          "required": false,
+          "description": "The name of the Kerberos realm to which all nodes in a cluster belong. For example, EC2.INTERNAL.",
+          "nested_params": []
+        },
+        {
+          "name": "KdcAdminPassword",
+          "type": "string",
+          "required": false,
+          "description": "The password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster.",
+          "nested_params": []
+        },
+        {
+          "name": "CrossRealmTrustPrincipalPassword",
+          "type": "string",
+          "required": false,
+          "description": "Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms.",
+          "nested_params": []
+        },
+        {
+          "name": "ADDomainJoinUser",
+          "type": "string",
+          "required": false,
+          "description": "Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain.",
+          "nested_params": []
+        },
+        {
+          "name": "ADDomainJoinPassword",
+          "type": "string",
+          "required": false,
+          "description": "The Active Directory password for ADDomainJoinUser.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "StepConcurrencyLevel",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ManagedScalingPolicy",
+      "type": "dict",
+      "required": true,
+      "description": "The specified managed scaling policy for an Amazon EMR cluster. ComputeLimits (dict) --- The Amazon EC2 unit limits for a managed scaling policy. The managed scaling activity of a cluster is not allowed to go above or below these limits. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration. The unit type used for specifying a managed scaling policy. The lower boundary of Amazon EC2 units. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The upper boundary of Amazon EC2 units. MaximumOnDemandCapacityUnits (integer) --- The upper boundary of On-Demand Amazon EC2 units. The On-Demand units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between On-Demand and Spot Instances. MaximumCoreCapacityUnits (integer) --- The upper boundary of Amazon EC2 units for core node type in a cluster. The core units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between core and task nodes. UtilizationPerformanceIndex (integer) --- An integer value that represents an advanced scaling strategy. Setting a higher value optimizes for performance. Setting a lower value optimizes for resource conservation. Setting the value to 50 balances performance and resource conservation. Possible values are 1, 25, 50, 75, and 100. ScalingStrategy (string) --- Determines whether a custom scaling utilization performance index can be set. Possible values include ADVANCED or DEFAULT.",
+      "nested_params": [
+        {
+          "name": "ComputeLimits",
+          "type": "dict",
+          "required": false,
+          "description": "The Amazon EC2 unit limits for a managed scaling policy. The managed scaling activity of a cluster is not allowed to go above or below these limits. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration.",
+          "nested_params": [
+            {
+              "name": "UnitType",
+              "type": "string",
+              "required": false,
+              "description": "The unit type used for specifying a managed scaling policy.",
+              "nested_params": []
+            },
+            {
+              "name": "MinimumCapacityUnits",
+              "type": "integer",
+              "required": false,
+              "description": "The lower boundary of Amazon EC2 units. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration.",
+              "nested_params": []
+            },
+            {
+              "name": "MaximumCapacityUnits",
+              "type": "integer",
+              "required": false,
+              "description": "The upper boundary of Amazon EC2 units. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. Managed scaling activities are not allowed beyond this boundary. The limit only applies to the core and task nodes. The master node cannot be scaled after initial configuration.",
+              "nested_params": []
+            },
+            {
+              "name": "MaximumOnDemandCapacityUnits",
+              "type": "integer",
+              "required": false,
+              "description": "The upper boundary of On-Demand Amazon EC2 units. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. The On-Demand units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between On-Demand and Spot Instances.",
+              "nested_params": []
+            },
+            {
+              "name": "MaximumCoreCapacityUnits",
+              "type": "integer",
+              "required": false,
+              "description": "The upper boundary of Amazon EC2 units for core node type in a cluster. It is measured through vCPU cores or instances for instance groups and measured through units for instance fleets. The core units are not allowed to scale beyond this boundary. The parameter is used to split capacity allocation between core and task nodes.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "UtilizationPerformanceIndex",
+          "type": "integer",
+          "required": false,
+          "description": "An integer value that represents an advanced scaling strategy. Setting a higher value optimizes for performance. Setting a lower value optimizes for resource conservation. Setting the value to 50 balances performance and resource conservation. Possible values are 1, 25, 50, 75, and 100.",
+          "nested_params": []
+        },
+        {
+          "name": "ScalingStrategy",
+          "type": "string",
+          "required": false,
+          "description": "Determines whether a custom scaling utilization performance index can be set. Possible values include ADVANCED or DEFAULT.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "PlacementGroupConfigs",
+      "type": "list",
+      "required": true,
+      "description": "The specified placement group configuration for an Amazon EMR cluster. (dict) --- Placement group configuration for an Amazon EMR cluster. The configuration specifies the placement strategy that can be applied to instance roles during cluster creation. To use this configuration, consider attaching managed policy AmazonElasticMapReducePlacementGroupPolicy to the Amazon EMR role. Role of the instance in the cluster. Starting with Amazon EMR release 5.23.0, the only supported instance role is MASTER. PlacementStrategy (string) --- Amazon EC2 Placement Group strategy associated with instance role. Starting with Amazon EMR release 5.23.0, the only supported placement strategy is SPREAD for the MASTER instance role.",
+      "nested_params": [
+        {
+          "name": "InstanceRole",
+          "type": "string",
+          "required": false,
+          "description": "Role of the instance in the cluster. Starting with Amazon EMR release 5.23.0, the only supported instance role is MASTER.",
+          "nested_params": []
+        },
+        {
+          "name": "PlacementStrategy",
+          "type": "string",
+          "required": false,
+          "description": "Amazon EC2 Placement Group strategy associated with instance role. Starting with Amazon EMR release 5.23.0, the only supported placement strategy is SPREAD for the MASTER instance role.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "AutoTerminationPolicy",
+      "type": "dict",
+      "required": false,
+      "description": "An auto-termination policy for an Amazon EMR cluster. An auto-termination policy defines the amount of idle time in seconds after which a cluster automatically terminates. For alternative cluster termination options, see Control cluster termination. IdleTimeout (integer) --- Specifies the amount of idle time in seconds after which the cluster automatically terminates. You can specify a minimum of 60 seconds and a maximum of 604800 seconds (seven days).",
+      "nested_params": [
+        {
+          "name": "IdleTimeout",
+          "type": "integer",
+          "required": false,
+          "description": "Specifies the amount of idle time in seconds after which the cluster automatically terminates. You can specify a minimum of 60 seconds and a maximum of 604800 seconds (seven days).",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OSReleaseLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "EbsRootVolumeIops",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "EbsRootVolumeThroughput",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobFlowId",
+          "type": "string",
+          "description": "A unique identifier for the job flow.",
+          "nested_items": []
+        },
+        {
+          "name": "ClusterArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the cluster.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

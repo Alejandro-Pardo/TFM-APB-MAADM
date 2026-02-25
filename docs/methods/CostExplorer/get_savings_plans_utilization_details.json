@@ -1,0 +1,295 @@
+{
+  "method_name": "get_savings_plans_utilization_details",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ce/client/get_savings_plans_utilization_details.html",
+  "description": "Retrieves attribute data along with aggregate utilization and savings data for a given time period. This doesn't support granular or grouped data (daily/monthly) in response. You can't retrieve data by dates in a single response similar to GetSavingsPlanUtilization, but you have the option to make multiple calls to GetSavingsPlanUtilizationDetails by providing individual dates. You can use GetDimensionValues in SAVINGS_PLANS to determine the possible dimension values.",
+  "parameters": [
+    {
+      "name": "TimePeriod",
+      "type": "dict",
+      "required": true,
+      "description": "The time period that you want the usage and costs for. The Start date must be within 13 months. The End date must be after the Start date, and before the current date. Future dates can't be used as an End date. The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error. The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+      "nested_params": [
+        {
+          "name": "Start",
+          "type": "string",
+          "required": false,
+          "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+          "nested_params": []
+        },
+        {
+          "name": "End",
+          "type": "string",
+          "required": false,
+          "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Filter",
+      "type": "dict",
+      "required": false,
+      "description": "Filters Savings Plans utilization coverage data for active Savings Plans dimensions. You can filter data with the following dimensions: LINKED_ACCOUNT SAVINGS_PLAN_ARN REGION PAYMENT_OPTION INSTANCE_TYPE_FAMILY GetSavingsPlansUtilizationDetails uses the same Expression object as the other operations, but only AND is supported among each dimension. Or (list) --- Return results that match either Dimension object. (dict) --- Use Expression to filter in various Cost Explorer APIs. Not all Expression types are supported in each API. Refer to the documentation for each specific API to see what is supported. There are two patterns: Simple dimension values. There are three types of simple dimension values: CostCategories, Tags, and Dimensions. Specify the CostCategories field to define a filter that acts on Cost Categories. Specify the Tags field to define a filter that acts on Cost Allocation Tags. Specify the Dimensions field to define a filter that acts on the DimensionValues. For each filter type, you can set the dimension name and values for the filters that you plan to use. For example, you can filter for REGION==us-east-1 OR REGION==us-west-1. For GetRightsizingRecommendation, the Region is a full name (for example, REGION==US East (N. Virginia). The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] } } As shown in the previous example, lists of dimension values are combined with OR when applying the filter. You can also set different match options to further control how the filter behaves. Not all APIs support match options. For example, you can filter for linked account names that start with 'a'. The corresponding Expression for this example is as follows: { \"Dimensions\": { \"Key\": \"LINKED_ACCOUNT_NAME\", \"MatchOptions\": [ \"STARTS_WITH\" ], \"Values\": [ \"a\" ] } } Compound Expression types with logical operations. You can use multiple Expression types and the logical operators AND/OR/NOT to create a list of one or more Expression objects. By doing this, you can filter by more advanced options. For example, you can filter by ((REGION == us-east-1 OR REGION == us-west-1) OR (TAG.Type == Type1)) AND (USAGE_TYPE != DataTransfer). The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } And (list) --- Return results that match both Dimension objects. The corresponding Expression for this example is as follows: { \"And\": [ {\"Or\": [ {\"Dimensions\": { \"Key\": \"REGION\", \"Values\": [ \"us-east-1\", \"us-west-1\" ] }}, {\"Tags\": { \"Key\": \"TagName\", \"Values\": [\"Value1\"] } } ]}, {\"Not\": {\"Dimensions\": { \"Key\": \"USAGE_TYPE\", \"Values\": [\"DataTransfer\"] }}} ] } Not (dict) --- Return results that don't match a Dimension object. Dimensions (dict) --- The specific Dimension to use for Expression. Key (string) --- The names of the metadata types that you can use to filter and group your results. For example, AZ returns a list of Availability Zones. Not all dimensions are supported in each API. LINKED_ACCOUNT_NAME and SERVICE_CODE can only be used in CostCategoryRule. ANOMALY_TOTAL_IMPACT_ABSOLUTE and ANOMALY_TOTAL_IMPACT_PERCENTAGE can only be used in AnomalySubscriptions. Values (list) --- The metadata values that you can use to filter and group your results. You can use GetDimensionValues to find specific values. (string) --- MatchOptions (list) --- The match options that you can use to filter your results. MatchOptions is only applicable for actions related to Cost Category and Anomaly Subscriptions. The default values for MatchOptions are EQUALS and CASE_SENSITIVE. (string) --- Tags (dict) --- The specific Tag to use for Expression. Key (string) --- The key for the tag. Values (list) --- The specific value of the tag. MatchOptions is only applicable for actions related to Cost Category. (string) --- CostCategories (dict) --- The filter that's based on CostCategory values. Key (string) --- The unique name of the Cost Category. Values (list) --- The specific value of the Cost Category. MatchOptions is only applicable for actions related to cost category. The default values for MatchOptions is EQUALS and CASE_SENSITIVE. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "DataType",
+      "type": "list",
+      "required": false,
+      "description": "The data type. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SortBy",
+      "type": "dict",
+      "required": true,
+      "description": "The value that you want to sort the data by. The following values are supported for Key: UtilizationPercentage TotalCommitment UsedCommitment UnusedCommitment NetSavings AmortizedRecurringCommitment AmortizedUpfrontCommitment The supported values for SortOrder are ASCENDING and DESCENDING. The key that's used to sort the data. SortOrder (string) --- The order that's used to sort the data.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SavingsPlansUtilizationDetails",
+          "type": "list",
+          "description": "Retrieves a single daily or monthly Savings Plans utilization rate and details for your account.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "SavingsPlanArn",
+                  "type": "string",
+                  "description": "The unique Amazon Resource Name (ARN) for a particular Savings Plan.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Attributes",
+                  "type": "dict",
+                  "description": "The attribute that applies to a specific Dimension.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Utilization",
+                  "type": "dict",
+                  "description": "A ratio of your effectiveness of using existing Savings Plans to apply to workloads that are Savings Plans eligible.",
+                  "nested_items": [
+                    {
+                      "name": "TotalCommitment",
+                      "type": "string",
+                      "description": "The total amount of Savings Plans commitment that's been purchased in an account (or set of accounts).",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UsedCommitment",
+                      "type": "string",
+                      "description": "The amount of your Savings Plans commitment that was consumed from Savings Plans eligible usage in a specific period.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UnusedCommitment",
+                      "type": "string",
+                      "description": "The amount of your Savings Plans commitment that wasn't consumed from Savings Plans eligible usage in a specific period.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "UtilizationPercentage",
+                      "type": "string",
+                      "description": "The amount of UsedCommitment divided by the TotalCommitment for your Savings Plans.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "NetSavings",
+                      "type": "string",
+                      "description": "The savings amount that you're accumulating for the usage that's covered by a Savings Plans, when compared to the On-Demand equivalent of the same usage.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OnDemandCostEquivalent",
+                      "type": "string",
+                      "description": "How much the amount that the usage would have cost if it was accrued at the On-Demand rate.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AmortizedCommitment",
+                  "type": "dict",
+                  "description": "The total amortized commitment for a Savings Plans. Includes the sum of the upfront and recurring Savings Plans fees.",
+                  "nested_items": [
+                    {
+                      "name": "AmortizedRecurringCommitment",
+                      "type": "string",
+                      "description": "The amortized amount of your Savings Plans commitment that was purchased with either a Partial or a NoUpfront.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "AmortizedUpfrontCommitment",
+                      "type": "string",
+                      "description": "The amortized amount of your Savings Plans commitment that was purchased with an Upfront or PartialUpfront Savings Plans.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TotalAmortizedCommitment",
+                      "type": "string",
+                      "description": "The total amortized amount of your Savings Plans commitment, regardless of your Savings Plans purchase method.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "Utilization",
+              "type": "dict",
+              "description": "A ratio of your effectiveness of using existing Savings Plans to apply to workloads that are Savings Plans eligible.",
+              "nested_items": [
+                {
+                  "name": "TotalCommitment",
+                  "type": "string",
+                  "description": "The total amount of Savings Plans commitment that's been purchased in an account (or set of accounts).",
+                  "nested_items": []
+                },
+                {
+                  "name": "UsedCommitment",
+                  "type": "string",
+                  "description": "The amount of your Savings Plans commitment that was consumed from Savings Plans eligible usage in a specific period.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UnusedCommitment",
+                  "type": "string",
+                  "description": "The amount of your Savings Plans commitment that wasn't consumed from Savings Plans eligible usage in a specific period.",
+                  "nested_items": []
+                },
+                {
+                  "name": "UtilizationPercentage",
+                  "type": "string",
+                  "description": "The amount of UsedCommitment divided by the TotalCommitment for your Savings Plans.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "NetSavings",
+                  "type": "string",
+                  "description": "The savings amount that you're accumulating for the usage that's covered by a Savings Plans, when compared to the On-Demand equivalent of the same usage.",
+                  "nested_items": []
+                },
+                {
+                  "name": "OnDemandCostEquivalent",
+                  "type": "string",
+                  "description": "How much the amount that the usage would have cost if it was accrued at the On-Demand rate.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "AmortizedCommitment",
+              "type": "dict",
+              "description": "The total amortized commitment for a Savings Plans. This includes the sum of the upfront and recurring Savings Plans fees.",
+              "nested_items": [
+                {
+                  "name": "AmortizedRecurringCommitment",
+                  "type": "string",
+                  "description": "The amortized amount of your Savings Plans commitment that was purchased with either a Partial or a NoUpfront.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AmortizedUpfrontCommitment",
+                  "type": "string",
+                  "description": "The amortized amount of your Savings Plans commitment that was purchased with an Upfront or PartialUpfront Savings Plans.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TotalAmortizedCommitment",
+                  "type": "string",
+                  "description": "The total amortized amount of your Savings Plans commitment, regardless of your Savings Plans purchase method.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TimePeriod",
+          "type": "dict",
+          "description": "The time period of the request.",
+          "nested_items": [
+            {
+              "name": "Start",
+              "type": "string",
+              "description": "The beginning of the time period. The start date is inclusive. For example, if start is 2017-01-01, Amazon Web Services retrieves cost and usage data starting at 2017-01-01 up to the end date. The start date must be equal to or no later than the current date to avoid a validation error.",
+              "nested_items": []
+            },
+            {
+              "name": "End",
+              "type": "string",
+              "description": "The end of the time period. The end date is exclusive. For example, if end is 2017-05-01, Amazon Web Services retrieves cost and usage data from the start date up to, but not including, 2017-05-01.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

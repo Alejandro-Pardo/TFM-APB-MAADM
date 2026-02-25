@@ -1,0 +1,411 @@
+{
+  "method_name": "get_label_detection",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/get_label_detection.html",
+  "description": "Gets the label detection results of a Amazon Rekognition Video analysis started by  StartLabelDetection. The label detection operation is started by a call to  StartLabelDetection which returns a job identifier ( JobId). When the label detection operation finishes, Amazon Rekognition publishes a completion status to the Amazon Simple Notification Service topic registered in the initial call to StartlabelDetection. To get the results of the label detection operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If so, call  GetLabelDetection and pass the job identifier ( JobId) from the initial call to StartLabelDetection. GetLabelDetection returns an array of detected labels ( Labels) sorted by the time the labels were detected. You can also sort by the label name by specifying NAME for the SortBy input parameter. If there is no NAME specified, the default sort is by timestamp. You can select how results are aggregated by using the AggregateBy input parameter. The default aggregation method is TIMESTAMPS. You can also aggregate by SEGMENTS, which aggregates all instances of labels detected in a given segment. The returned Labels array may include the following attributes: Timestamp and Bounding box information are returned for detected Instances, only if aggregation is done by TIMESTAMPS. If aggregating by SEGMENTS, information about detected instances isn't returned. The version of the label model used for the detection is also returned. Note DominantColors isn't returned for Instances, although it is shown as part of the response in the sample seen below. Use MaxResults parameter to limit the number of labels returned. If there are more results than specified in MaxResults, the value of NextToken in the operation response contains a pagination token for getting the next set of results. To get the next page of results, call GetlabelDetection and populate the NextToken request parameter with the token value returned from the previous call to GetLabelDetection. If you are retrieving results while using the Amazon Simple Notification Service, note that you will receive an 'ERROR' notification if the job encounters an issue.",
+  "parameters": [
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "Job identifier for the label detection operation for which you want results returned. You get the job identifer from an initial call to StartlabelDetection.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SortBy",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "AggregateBy",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobStatus",
+          "type": "string",
+          "description": "The current status of the label detection job.",
+          "nested_items": []
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "If the job fails, StatusMessage provides a descriptive error message.",
+          "nested_items": []
+        },
+        {
+          "name": "VideoMetadata",
+          "type": "dict",
+          "description": "Information about a video that Amazon Rekognition Video analyzed. Videometadata is returned in every page of paginated responses from a Amazon Rekognition video operation.",
+          "nested_items": [
+            {
+              "name": "Codec",
+              "type": "string",
+              "description": "Type of compression used in the analyzed video.",
+              "nested_items": []
+            },
+            {
+              "name": "DurationMillis",
+              "type": "integer",
+              "description": "Length of the video in milliseconds.",
+              "nested_items": []
+            },
+            {
+              "name": "Format",
+              "type": "string",
+              "description": "Format of the analyzed video. Possible values are MP4, MOV and AVI.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameRate",
+              "type": "float",
+              "description": "Number of frames per second in the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameHeight",
+              "type": "integer",
+              "description": "Vertical pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameWidth",
+              "type": "integer",
+              "description": "Horizontal pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "ColorRange",
+              "type": "string",
+              "description": "A description of the range of luminance values in a video, either LIMITED (16 to 235) or FULL (0 to 255).",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the response is truncated, Amazon Rekognition Video returns this token that you can use in the subsequent request to retrieve the next set of labels.",
+          "nested_items": []
+        },
+        {
+          "name": "Labels",
+          "type": "list",
+          "description": "An array of labels detected in the video. Each element contains the detected label and the time, in milliseconds from the start of the video, that the label was detected.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Timestamp",
+                  "type": "integer",
+                  "description": "Time, in milliseconds from the start of the video, that the label was detected. Note that Timestamp is not guaranteed to be accurate to the individual frame where the label first appears.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "description": "The name (label) of the object or scene.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Confidence",
+                      "type": "float",
+                      "description": "Level of confidence.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Instances",
+                      "type": "list",
+                      "description": "If Label represents an object, Instances contains the bounding boxes for each instance of the detected object. Bounding boxes are returned for common object labels such as people, cars, furniture, apparel or pets.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "BoundingBox",
+                              "type": "dict",
+                              "description": "The position of the label instance on the image.",
+                              "nested_items": [
+                                {
+                                  "name": "Width",
+                                  "type": "float",
+                                  "description": "Width of the bounding box as a ratio of the overall image width.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Height",
+                                  "type": "float",
+                                  "description": "Height of the bounding box as a ratio of the overall image height.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Left",
+                                  "type": "float",
+                                  "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Top",
+                                  "type": "float",
+                                  "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "The confidence that Amazon Rekognition has in the accuracy of the bounding box.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "DominantColors",
+                              "type": "list",
+                              "description": "The dominant colors found in an individual instance of a label.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "Red",
+                                      "type": "integer",
+                                      "description": "The Red RGB value for a dominant color.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Blue",
+                                      "type": "integer",
+                                      "description": "The Blue RGB value for a dominant color.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Green",
+                                      "type": "integer",
+                                      "description": "The Green RGB value for a dominant color.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "HexCode",
+                                      "type": "string",
+                                      "description": "The Hex code equivalent of the RGB values for a dominant color.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "CSSColor",
+                                      "type": "string",
+                                      "description": "The CSS color name of a dominant color.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "SimplifiedColor",
+                                      "type": "string",
+                                      "description": "One of 12 simplified color names applied to a dominant color.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "PixelPercent",
+                                      "type": "float",
+                                      "description": "The percentage of image pixels that have a given dominant color.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Parents",
+                      "type": "list",
+                      "description": "The parent labels for a label. The response includes all ancestor labels.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of the parent label.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Aliases",
+                      "type": "list",
+                      "description": "A list of potential aliases for a given label.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of an alias for a given label.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Categories",
+                      "type": "list",
+                      "description": "A list of the categories associated with a given label.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "The name of a category that applies to a given label.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "StartTimestampMillis",
+                  "type": "integer",
+                  "description": "The time in milliseconds defining the start of the timeline segment containing a continuously detected label.",
+                  "nested_items": []
+                },
+                {
+                  "name": "EndTimestampMillis",
+                  "type": "integer",
+                  "description": "The time in milliseconds defining the end of the timeline segment containing a continuously detected label.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DurationMillis",
+                  "type": "integer",
+                  "description": "The time duration of a segment in milliseconds, I.e. time elapsed from StartTimestampMillis to EndTimestampMillis.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "LabelModelVersion",
+          "type": "string",
+          "description": "Version number of the label detection model that was used to detect labels.",
+          "nested_items": []
+        },
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "Job identifier for the label detection operation for which you want to obtain results. The job identifer is returned by an initial call to StartLabelDetection.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "description": "Name of the S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "S3 object key name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "If the bucket is versioning enabled, you can specify the object version.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobTag",
+          "type": "string",
+          "description": "A job identifier specified in the call to StartLabelDetection and returned in the job completion notification sent to your Amazon Simple Notification Service topic.",
+          "nested_items": []
+        },
+        {
+          "name": "GetRequestMetadata",
+          "type": "dict",
+          "description": "Information about the paramters used when getting a response. Includes information on aggregation and sorting methods.",
+          "nested_items": [
+            {
+              "name": "SortBy",
+              "type": "string",
+              "description": "The sorting method chosen for a GetLabelDetection request.",
+              "nested_items": []
+            },
+            {
+              "name": "AggregateBy",
+              "type": "string",
+              "description": "The aggregation method chosen for a GetLabelDetection request.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+{
+  "method_name": "describe_transform_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker/client/describe_transform_job.html",
+  "description": "Returns information about a transform job.",
+  "parameters": [
+    {
+      "name": "TransformJobName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the transform job that you want to view details of.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "TransformJobName",
+          "type": "string",
+          "description": "The name of the transform job.",
+          "nested_items": []
+        },
+        {
+          "name": "TransformJobArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the transform job.",
+          "nested_items": []
+        },
+        {
+          "name": "TransformJobStatus",
+          "type": "string",
+          "description": "The status of the transform job. If the transform job failed, the reason is returned in the FailureReason field.",
+          "nested_items": []
+        },
+        {
+          "name": "FailureReason",
+          "type": "string",
+          "description": "If the transform job failed, FailureReason describes why it failed. A transform job creates a log file, which includes error messages, and stores it as an Amazon S3 object. For more information, see Log Amazon SageMaker Events with Amazon CloudWatch.",
+          "nested_items": []
+        },
+        {
+          "name": "ModelName",
+          "type": "string",
+          "description": "The name of the model used in the transform job.",
+          "nested_items": []
+        },
+        {
+          "name": "MaxConcurrentTransforms",
+          "type": "integer",
+          "description": "The maximum number of parallel requests on each instance node that can be launched in a transform job. The default value is 1.",
+          "nested_items": []
+        },
+        {
+          "name": "ModelClientConfig",
+          "type": "dict",
+          "description": "The timeout and maximum number of retries for processing a transform job invocation.",
+          "nested_items": [
+            {
+              "name": "InvocationsTimeoutInSeconds",
+              "type": "integer",
+              "description": "The timeout value in seconds for an invocation request. The default value is 600.",
+              "nested_items": []
+            },
+            {
+              "name": "InvocationsMaxRetries",
+              "type": "integer",
+              "description": "The maximum number of retries when invocation requests are failing. The default value is 3.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "MaxPayloadInMB",
+          "type": "integer",
+          "description": "The maximum payload size, in MB, used in the transform job.",
+          "nested_items": []
+        },
+        {
+          "name": "BatchStrategy",
+          "type": "string",
+          "description": "Specifies the number of records to include in a mini-batch for an HTTP inference request. A record  is a single unit of input data that inference can be made on. For example, a single line in a CSV file is a record.",
+          "nested_items": []
+        },
+        {
+          "name": "Environment",
+          "type": "dict",
+          "description": "The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TransformInput",
+          "type": "dict",
+          "description": "Describes the dataset to be transformed and the Amazon S3 location where it is stored.",
+          "nested_items": [
+            {
+              "name": "DataSource",
+              "type": "dict",
+              "description": "Describes the location of the channel data, which is, the S3 location of the input data that the model can consume.",
+              "nested_items": [
+                {
+                  "name": "S3DataSource",
+                  "type": "dict",
+                  "description": "The S3 location of the data source that is associated with a channel.",
+                  "nested_items": [
+                    {
+                      "name": "S3DataType",
+                      "type": "string",
+                      "description": "If you choose S3Prefix, S3Uri identifies a key name prefix. Amazon SageMaker uses all objects with the specified key name prefix for batch transform.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "S3Uri",
+                      "type": "string",
+                      "description": "Depending on the value specified for the S3DataType, identifies either a key name prefix or a manifest. For example:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "A key name prefix might look like this: s3://bucketname/exampleprefix/.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "A manifest might look like this: s3://bucketname/example.manifest The manifest is an S3 object which is a JSON file with the following format: [ {\"prefix\": \"s3://customer_bucket/some/prefix/\"}, \"relative/path/to/custdata-1\", \"relative/path/custdata-2\", ... \"relative/path/custdata-N\" ] The preceding JSON matches the following S3Uris: s3://customer_bucket/some/prefix/relative/path/to/custdata-1 s3://customer_bucket/some/prefix/relative/path/custdata-2 ... s3://customer_bucket/some/prefix/relative/path/custdata-N The complete set of S3Uris in this manifest constitutes the input data for the channel for this datasource. The object that each S3Uris points to must be readable by the IAM role that Amazon SageMaker uses to perform tasks on your behalf.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ContentType",
+              "type": "string",
+              "description": "The multipurpose internet mail extension (MIME) type of the data. Amazon SageMaker uses the MIME type with each http call to transfer data to the transform job.",
+              "nested_items": []
+            },
+            {
+              "name": "CompressionType",
+              "type": "string",
+              "description": "If your transform data is compressed, specify the compression type. Amazon SageMaker automatically decompresses the data for the transform job accordingly. The default value is None.",
+              "nested_items": []
+            },
+            {
+              "name": "SplitType",
+              "type": "string",
+              "description": "The method to use to split the transform job's data files into smaller batches. Splitting is necessary when the total size of each object is too large to fit in a single request. You can also use data splitting to improve performance by processing multiple concurrent mini-batches. The default value for SplitType is None, which indicates that input data files are not split, and request payloads contain the entire contents of an input object. Set the value of this parameter to Line to split records on a newline character boundary. SplitType also supports a number of record-oriented binary data formats. Currently, the supported record formats are:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "RecordIO.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TFRecord.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TransformOutput",
+          "type": "dict",
+          "description": "Identifies the Amazon S3 location where you want Amazon SageMaker to save the results from the transform job.",
+          "nested_items": [
+            {
+              "name": "S3OutputPath",
+              "type": "string",
+              "description": "The Amazon S3 path where you want Amazon SageMaker to store the results of the transform job. For example, s3://bucket-name/key-name-prefix.",
+              "nested_items": []
+            },
+            {
+              "name": "Accept",
+              "type": "string",
+              "description": "The MIME type used to specify the output data. Amazon SageMaker uses the MIME type with each http call to transfer data from the transform job.",
+              "nested_items": []
+            },
+            {
+              "name": "AssembleWith",
+              "type": "string",
+              "description": "Defines how to assemble the results of the transform job as a single S3 object. Choose a format that is most convenient to you. To concatenate the results in binary format, specify None. To add a newline character at the end of every transformed record, specify Line.",
+              "nested_items": []
+            },
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "The Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt the model artifacts at rest using Amazon S3 server-side encryption. The KmsKeyId can be any of the following formats:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Key ARN: arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Alias name: alias/ExampleAlias.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Alias name ARN: arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DataCaptureConfig",
+          "type": "dict",
+          "description": "Configuration to control how SageMaker captures inference data.",
+          "nested_items": [
+            {
+              "name": "DestinationS3Uri",
+              "type": "string",
+              "description": "The Amazon S3 location being used to capture the data.",
+              "nested_items": []
+            },
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "The Amazon Resource Name (ARN) of a Amazon Web Services Key Management Service key that SageMaker uses to encrypt data on the storage volume attached to the ML compute instance that hosts the batch transform job.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Key ARN: arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Alias name: alias/ExampleAlias.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Alias name ARN: arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "GenerateInferenceId",
+              "type": "boolean",
+              "description": "Flag that indicates whether to append inference id to the output.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "TransformResources",
+          "type": "dict",
+          "description": "Describes the resources, including ML instance types and ML instance count, to use for the transform job.",
+          "nested_items": [
+            {
+              "name": "InstanceType",
+              "type": "string",
+              "description": "The ML compute instance type for the transform job. If you are using built-in algorithms to transform moderately sized datasets, we recommend using ml.m4.xlarge or ``ml.m5.large``instance types.",
+              "nested_items": []
+            },
+            {
+              "name": "InstanceCount",
+              "type": "integer",
+              "description": "The number of ML compute instances to use in the transform job. The default value is 1, and the maximum is 100. For distributed transform jobs, specify a value greater than 1.",
+              "nested_items": []
+            },
+            {
+              "name": "VolumeKmsKeyId",
+              "type": "string",
+              "description": "The Amazon Web Services Key Management Service (Amazon Web Services KMS) key that Amazon SageMaker uses to encrypt model data on the storage volume attached to the ML compute instance(s) that run the batch transform job.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Key ARN: arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Alias name: alias/ExampleAlias.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Alias name ARN: arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "TransformAmiVersion",
+              "type": "string",
+              "description": "Specifies an option from a collection of preconfigured Amazon Machine Image (AMI) images. Each image is configured by Amazon Web Services with a set of software and driver versions.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Accelerator: GPU.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "NVIDIA driver version: 470",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Accelerator: GPU.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "NVIDIA driver version: 535",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CreationTime",
+          "type": "datetime",
+          "description": "A timestamp that shows when the transform Job was created.",
+          "nested_items": []
+        },
+        {
+          "name": "TransformStartTime",
+          "type": "datetime",
+          "description": "Indicates when the transform job starts on ML instances. You are billed for the time interval between this time and the value of TransformEndTime.",
+          "nested_items": []
+        },
+        {
+          "name": "TransformEndTime",
+          "type": "datetime",
+          "description": "Indicates when the transform job has been completed, or has stopped or failed. You are billed for the time interval between this time and the value of TransformStartTime.",
+          "nested_items": []
+        },
+        {
+          "name": "LabelingJobArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the Amazon SageMaker Ground Truth labeling job that created the transform or training job.",
+          "nested_items": []
+        },
+        {
+          "name": "AutoMLJobArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the AutoML transform job.",
+          "nested_items": []
+        },
+        {
+          "name": "DataProcessing",
+          "type": "dict",
+          "description": "The data structure used to specify the data to be used for inference in a batch transform job and to associate the data that is relevant to the prediction results in the output. The input filter provided allows you to exclude input data that is not needed for inference in a batch transform job. The output filter provided allows you to include input data relevant to interpreting the predictions in the output from the job. For more information, see Associate Prediction Results with their Corresponding Input Records.",
+          "nested_items": [
+            {
+              "name": "InputFilter",
+              "type": "string",
+              "description": "A JSONPath expression used to select a portion of the input data to pass to the algorithm. Use the InputFilter parameter to exclude fields, such as an ID column, from the input. If you want SageMaker to pass the entire input dataset to the algorithm, accept the default value $.",
+              "nested_items": []
+            },
+            {
+              "name": "OutputFilter",
+              "type": "string",
+              "description": "A JSONPath expression used to select a portion of the joined dataset to save in the output file for a batch transform job. If you want SageMaker to store the entire input dataset in the output file, leave the default value, $. If you specify indexes that aren't within the dimension size of the joined dataset, you get an error.",
+              "nested_items": []
+            },
+            {
+              "name": "JoinSource",
+              "type": "string",
+              "description": "Specifies the source of the data to join with the transformed data. The valid values are None and Input. The default value is None, which specifies not to join the input with the transformed data. If you want the batch transform job to join the original input data with the transformed data, set JoinSource to Input. You can specify OutputFilter as an additional filter to select a portion of the joined dataset and store it in the output file.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ExperimentConfig",
+          "type": "dict",
+          "description": "Associates a SageMaker job as a trial component with an experiment and trial. Specified when you call the following APIs:",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "",
+              "description": "CreateProcessingJob.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "CreateTrainingJob.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "",
+              "description": "CreateTransformJob.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

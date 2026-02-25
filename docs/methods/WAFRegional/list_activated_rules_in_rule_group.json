@@ -1,0 +1,145 @@
+{
+  "method_name": "list_activated_rules_in_rule_group",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/waf-regional/client/list_activated_rules_in_rule_group.html",
+  "description": "Returns an array of  ActivatedRule objects.",
+  "parameters": [
+    {
+      "name": "RuleGroupId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextMarker",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Limit",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "NextMarker",
+          "type": "string",
+          "description": "If you have more ActivatedRules than the number that you specified for Limit in the request, the response includes a NextMarker value. To list more ActivatedRules, submit another ListActivatedRulesInRuleGroup request, and specify the NextMarker value from the response in the NextMarker value in the next request.",
+          "nested_items": []
+        },
+        {
+          "name": "ActivatedRules",
+          "type": "list",
+          "description": "An array of ActivatedRules objects.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Priority",
+                  "type": "integer",
+                  "description": "Specifies the order in which the Rules in a WebACL are evaluated. Rules with a lower value for Priority are evaluated before Rules with a higher value. The value must be a unique integer. If you add multiple Rules to a WebACL, the values don't need to be consecutive.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RuleId",
+                  "type": "string",
+                  "description": "The RuleId for a Rule. You use RuleId to get more information about a Rule (see  GetRule), update a Rule (see  UpdateRule), insert a Rule into a WebACL or delete a one from a WebACL (see  UpdateWebACL), or delete a Rule from AWS WAF (see  DeleteRule).",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ALLOW: CloudFront responds with the requested object.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "Forbidden",
+                      "description": "BLOCK: CloudFront responds with an HTTP 403 (Forbidden) status code.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "COUNT: AWS WAF increments a counter of requests that match the conditions in the rule and then continues to inspect the web request based on the remaining rules in the web ACL.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OverrideAction",
+                  "type": "dict",
+                  "description": "Use the OverrideAction to test your RuleGroup.",
+                  "nested_items": [
+                    {
+                      "name": "Type",
+                      "type": "string",
+                      "description": "COUNT overrides the action specified by the individual rule within a RuleGroup . If set to NONE, the rule's action will take place.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "The rule type, either REGULAR, as defined by  Rule, RATE_BASED, as defined by  RateBasedRule, or GROUP, as defined by  RuleGroup. The default is REGULAR. Although this field is optional, be aware that if you try to add a RATE_BASED rule to a web ACL without setting the type, the  UpdateWebACL request will fail because the request tries to add a REGULAR rule with the specified ID, which does not exist.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ExcludedRules",
+                  "type": "list",
+                  "description": "An array of rules to exclude from a rule group. This is applicable only when the ActivatedRule refers to a RuleGroup.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Use the AWS WAF logs to identify the IDs of the rules that you want to exclude. For more information about the logs, see Logging Web ACL Traffic Information.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "Submit an  UpdateWebACL request that has two actions:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The first action deletes the existing rule group from the web ACL. That is, in the  UpdateWebACL request, the first Updates:Action should be DELETE and Updates:ActivatedRule:RuleId should be the rule group that contains the rules that you want to exclude.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "The second action inserts the same rule group back in, but specifying the rules to exclude. That is, the second Updates:Action should be INSERT, Updates:ActivatedRule:RuleId should be the rule group that you just removed, and ExcludedRules should contain the rules that you want to exclude.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

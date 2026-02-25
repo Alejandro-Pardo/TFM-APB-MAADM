@@ -1,0 +1,390 @@
+{
+  "method_name": "add_instance_groups",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/emr/client/add_instance_groups.html",
+  "description": "Adds one or more instance groups to a running cluster.",
+  "parameters": [
+    {
+      "name": "InstanceGroups",
+      "type": "list",
+      "required": true,
+      "description": "Instance groups to add. (dict) --- Configuration defining a new instance group. Name (string) --- Friendly name given to the instance group. Market (string) --- Market type of the Amazon EC2 instances used to create a cluster node. The role of the instance group in the cluster. BidPrice (string) --- If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify OnDemandPrice to set the amount equal to the On-Demand price, or specify an amount in USD. The Amazon EC2 instance type for all instances in the instance group. Target number of instances for the instance group. Configurations (list) --- The list of configurations supplied for an Amazon EMR cluster instance group. You can specify a separate configuration for each instance group (master, core, and task). (dict) --- An optional configuration specification to be used when provisioning cluster instances, which can include configurations for applications and software bundled with Amazon EMR. A configuration consists of a classification, properties, and optional nested configurations. A classification refers to an application-specific configuration file. Properties are the settings you want to change in that file. For more information, see Configuring Applications. Classification (string) --- The classification within a configuration. Configurations (list) --- A list of additional configurations to apply within a configuration object. Properties (dict) --- A set of properties specified within a configuration classification. (string) --- (string) --- EbsConfiguration (dict) --- EBS configurations that will be attached to each Amazon EC2 instance in the instance group. EbsBlockDeviceConfigs (list) --- An array of Amazon EBS volume specifications attached to a cluster instance. (dict) --- Configuration of requested EBS block device associated with the instance group with count of volumes that are associated to every instance. EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster. The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard. Iops (integer) --- The number of I/O operations per second (IOPS) that the volume supports. The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10. Throughput (integer) --- The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes. VolumesPerInstance (integer) --- Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group EbsOptimized (boolean) --- Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance. AutoScalingPolicy (dict) --- An automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. The automatic scaling policy defines how an instance group dynamically adds and terminates Amazon EC2 instances in response to the value of a CloudWatch metric. See  PutAutoScalingPolicy. The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits. The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary. The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary. The scale-in and scale-out rules that comprise the automatic scaling policy. (dict) --- A scale-in or scale-out rule that defines scaling activity, including the CloudWatch metric alarm that triggers activity, how Amazon EC2 instances are added or removed, and the periodicity of adjustments. The automatic scaling policy for an instance group can comprise one or more automatic scaling rules. The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy. Description (string) --- A friendly, more verbose description of the automatic scaling rule. The conditions that trigger an automatic scaling activity. Market (string) --- Not available for instance groups. Instance groups use the market type specified for the group. The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment. AdjustmentType (string) --- The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer. The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity. CoolDown (integer) --- The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0. The CloudWatch alarm definition that determines when automatic scaling activity is triggered. The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins. Determines how the metric specified by MetricName is compared to the value specified by Threshold. EvaluationPeriods (integer) --- The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1. The name of the CloudWatch metric that is watched to determine an alarm condition. Namespace (string) --- The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce. The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300. Statistic (string) --- The statistic to apply to the metric associated with the alarm. The default is AVERAGE. The value against which the specified statistic is compared. Unit (string) --- The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric. Dimensions (list) --- A CloudWatch metric dimension. (dict) --- A CloudWatch dimension, which is specified using a Key (known as a Name in CloudWatch), Value pair. By default, Amazon EMR uses one dimension whose Key is JobFlowID and Value is a variable representing the cluster ID, which is ${emr.clusterId}. This enables the rule to bootstrap when the cluster ID becomes available. Key (string) --- The dimension name. Value (string) --- The dimension value. CustomAmiId (string) --- The custom AMI ID to use for the provisioned instance group.",
+      "nested_params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "Friendly name given to the instance group.",
+          "nested_params": []
+        },
+        {
+          "name": "Market",
+          "type": "string",
+          "required": false,
+          "description": "Market type of the Amazon EC2 instances used to create a cluster node.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceRole",
+          "type": "string",
+          "required": false,
+          "description": "The role of the instance group in the cluster.",
+          "nested_params": []
+        },
+        {
+          "name": "BidPrice",
+          "type": "string",
+          "required": false,
+          "description": "If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify OnDemandPrice to set the amount equal to the On-Demand price, or specify an amount in USD.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceType",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon EC2 instance type for all instances in the instance group.",
+          "nested_params": []
+        },
+        {
+          "name": "InstanceCount",
+          "type": "integer",
+          "required": false,
+          "description": "Target number of instances for the instance group.",
+          "nested_params": []
+        },
+        {
+          "name": "Configurations",
+          "type": "list",
+          "required": false,
+          "description": "The list of configurations supplied for an Amazon EMR cluster instance group. You can specify a separate configuration for each instance group (master, core, and task).",
+          "nested_params": [
+            {
+              "name": "Classification",
+              "type": "string",
+              "required": false,
+              "description": "The classification within a configuration.",
+              "nested_params": []
+            },
+            {
+              "name": "Configurations",
+              "type": "list",
+              "required": false,
+              "description": "A list of additional configurations to apply within a configuration object.",
+              "nested_params": []
+            },
+            {
+              "name": "Properties",
+              "type": "dict",
+              "required": false,
+              "description": "A set of properties specified within a configuration classification.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "EbsConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "EBS configurations that will be attached to each Amazon EC2 instance in the instance group.",
+          "nested_params": [
+            {
+              "name": "EbsBlockDeviceConfigs",
+              "type": "list",
+              "required": false,
+              "description": "An array of Amazon EBS volume specifications attached to a cluster instance.",
+              "nested_params": [
+                {
+                  "name": "VolumeSpecification",
+                  "type": "dict",
+                  "required": false,
+                  "description": "EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster.",
+                  "nested_params": [
+                    {
+                      "name": "VolumeType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The volume type. Volume types supported are gp3, gp2, io1, st1, sc1, and standard.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Iops",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The number of I/O operations per second (IOPS) that the volume supports.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "SizeInGB",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The volume size, in gibibytes (GiB). This can be a number from 1 - 1024. If the volume type is EBS-optimized, the minimum value is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Throughput",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The throughput, in mebibyte per second (MiB/s). This optional parameter can be a number from 125 - 1000 and is valid only for gp3 volumes.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "VolumesPerInstance",
+                  "type": "integer",
+                  "required": false,
+                  "description": "Number of EBS volumes with a specific volume configuration that are associated with every instance in the instance group.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "EbsOptimized",
+              "type": "boolean",
+              "required": false,
+              "description": "Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "AutoScalingPolicy",
+          "type": "dict",
+          "required": false,
+          "description": "An automatic scaling policy for a core instance group or task instance group in an Amazon EMR cluster. The automatic scaling policy defines how an instance group dynamically adds and terminates Amazon EC2 instances in response to the value of a CloudWatch metric. See  PutAutoScalingPolicy.",
+          "nested_params": [
+            {
+              "name": "Constraints",
+              "type": "dict",
+              "required": false,
+              "description": "The upper and lower Amazon EC2 instance limits for an automatic scaling policy. Automatic scaling activity will not cause an instance group to grow above or below these limits.",
+              "nested_params": [
+                {
+                  "name": "MinCapacity",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The lower boundary of Amazon EC2 instances in an instance group below which scaling activities are not allowed to shrink. Scale-in activities will not terminate instances below this boundary.",
+                  "nested_params": []
+                },
+                {
+                  "name": "MaxCapacity",
+                  "type": "integer",
+                  "required": false,
+                  "description": "The upper boundary of Amazon EC2 instances in an instance group beyond which scaling activities are not allowed to grow. Scale-out activities will not add instances beyond this boundary.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Rules",
+              "type": "list",
+              "required": false,
+              "description": "The scale-in and scale-out rules that comprise the automatic scaling policy.",
+              "nested_params": [
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name used to identify an automatic scaling rule. Rule names must be unique within a scaling policy.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Description",
+                  "type": "string",
+                  "required": false,
+                  "description": "A friendly, more verbose description of the automatic scaling rule.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Action",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The conditions that trigger an automatic scaling activity.",
+                  "nested_params": [
+                    {
+                      "name": "Market",
+                      "type": "string",
+                      "required": false,
+                      "description": "Not available for instance groups. Instance groups use the market type specified for the group.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "SimpleScalingPolicyConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The type of adjustment the automatic scaling activity makes when triggered, and the periodicity of the adjustment.",
+                      "nested_params": [
+                        {
+                          "name": "AdjustmentType",
+                          "type": "string",
+                          "required": false,
+                          "description": "The way in which Amazon EC2 instances are added (if ScalingAdjustment is a positive number) or terminated (if ScalingAdjustment is a negative number) each time the scaling activity is triggered. CHANGE_IN_CAPACITY is the default. CHANGE_IN_CAPACITY indicates that the Amazon EC2 instance count increments or decrements by ScalingAdjustment, which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates the instance count increments or decrements by the percentage specified by ScalingAdjustment, which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY indicates the scaling activity results in an instance group with the number of Amazon EC2 instances specified by ScalingAdjustment, which should be expressed as a positive integer.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "ScalingAdjustment",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The amount by which to scale in or scale out, based on the specified AdjustmentType. A positive value adds to the instance group's Amazon EC2 instance count while a negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY, the number should only be a positive integer. If AdjustmentType is set to PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "CoolDown",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Trigger",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The CloudWatch alarm definition that determines when automatic scaling activity is triggered.",
+                  "nested_params": [
+                    {
+                      "name": "CloudWatchAlarmDefinition",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The definition of a CloudWatch metric alarm. When the defined alarm conditions are met along with other trigger parameters, scaling activity begins.",
+                      "nested_params": [
+                        {
+                          "name": "ComparisonOperator",
+                          "type": "string",
+                          "required": false,
+                          "description": "Determines how the metric specified by MetricName is compared to the value specified by Threshold.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "EvaluationPeriods",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The number of periods, in five-minute increments, during which the alarm condition must exist before the alarm triggers automatic scaling activity. The default value is 1.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "MetricName",
+                          "type": "string",
+                          "required": false,
+                          "description": "The name of the CloudWatch metric that is watched to determine an alarm condition.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Namespace",
+                          "type": "string",
+                          "required": false,
+                          "description": "The namespace for the CloudWatch metric. The default is AWS/ElasticMapReduce.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Period",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The period, in seconds, over which the statistic is applied. CloudWatch metrics for Amazon EMR are emitted every five minutes (300 seconds), so if you specify a CloudWatch metric, specify 300.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Statistic",
+                          "type": "string",
+                          "required": false,
+                          "description": "The statistic to apply to the metric associated with the alarm. The default is AVERAGE.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Threshold",
+                          "type": "float",
+                          "required": false,
+                          "description": "The value against which the specified statistic is compared.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Unit",
+                          "type": "string",
+                          "required": false,
+                          "description": "The unit of measure associated with the CloudWatch metric being watched. The value specified for Unit must correspond to the units specified in the CloudWatch metric.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Dimensions",
+                          "type": "list",
+                          "required": false,
+                          "description": "A CloudWatch metric dimension.",
+                          "nested_params": [
+                            {
+                              "name": "Key",
+                              "type": "string",
+                              "required": false,
+                              "description": "The dimension name.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Value",
+                              "type": "string",
+                              "required": false,
+                              "description": "The dimension value.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CustomAmiId",
+          "type": "string",
+          "required": false,
+          "description": "The custom AMI ID to use for the provisioned instance group.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "JobFlowId",
+      "type": "string",
+      "required": true,
+      "description": "Job flow in which to add the instance groups.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobFlowId",
+          "type": "string",
+          "description": "The job flow ID in which the instance groups are added.",
+          "nested_items": []
+        },
+        {
+          "name": "InstanceGroupIds",
+          "type": "list",
+          "description": "Instance group IDs of the newly created instance groups.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "ClusterArn",
+          "type": "string",
+          "description": "The Amazon Resource Name of the cluster.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

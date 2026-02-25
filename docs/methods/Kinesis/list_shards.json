@@ -1,0 +1,163 @@
+{
+  "method_name": "list_shards",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis/client/list_shards.html",
+  "description": "Lists the shards in a stream and provides information about each shard. This operation has a limit of 1000 transactions per second per data stream. This action does not list expired shards. For information about expired shards, see Data Routing, Data Persistence, and Shard State after a Reshard.",
+  "parameters": [
+    {
+      "name": "StreamName",
+      "type": "string",
+      "required": false,
+      "description": "The name of the data stream whose shards you want to list. You cannot specify this parameter if you specify the NextToken parameter.",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "When the number of shards in the data stream is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of shards in the data stream, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListShards to list the next set of shards. Don't specify StreamName or StreamCreationTimestamp if you specify NextToken because the latter unambiguously identifies the stream. You can optionally specify a value for the MaxResults parameter when you specify NextToken. If you specify a MaxResults value that is less than the number of shards that the operation returns if you don't specify MaxResults, the response will contain a new NextToken value. You can use the new NextToken value in a subsequent call to the ListShards operation.",
+      "nested_params": []
+    },
+    {
+      "name": "ExclusiveStartShardId",
+      "type": "string",
+      "required": false,
+      "description": "Specify this parameter to indicate that you want to list the shards starting with the shard whose ID immediately follows ExclusiveStartShardId. If you don't specify this parameter, the default behavior is for ListShards to list the shards starting with the first one in the stream. You cannot specify this parameter if you specify NextToken.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "The maximum number of shards to return in a single call to ListShards. The maximum number of shards to return in a single call. The default value is 1000. If you specify a value greater than 1000, at most 1000 results are returned. When the number of shards to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListShards to list the next set of shards.",
+      "nested_params": []
+    },
+    {
+      "name": "StreamCreationTimestamp",
+      "type": "datetime",
+      "required": false,
+      "description": "Specify this input parameter to distinguish data streams that have the same name. For example, if you create a data stream and then delete it, and you later create another data stream with the same name, you can use this input parameter to specify which of the two streams you want to list the shards for. You cannot specify this parameter if you specify the NextToken parameter.",
+      "nested_params": []
+    },
+    {
+      "name": "ShardFilter",
+      "type": "dict",
+      "required": true,
+      "description": "Enables you to filter out the response of the ListShards API. You can only specify one filter at a time. If you use the ShardFilter parameter when invoking the ListShards API, the Type is the required property and must be specified. If you specify the AT_TRIM_HORIZON, FROM_TRIM_HORIZON, or AT_LATEST types, you do not need to specify either the ShardId or the Timestamp optional properties. If you specify the AFTER_SHARD_ID type, you must also provide the value for the optional ShardId property. The ShardId property is identical in fuctionality to the ExclusiveStartShardId parameter of the ListShards API. When ShardId property is specified, the response includes the shards starting with the shard whose ID immediately follows the ShardId that you provided. If you specify the AT_TIMESTAMP or FROM_TIMESTAMP_ID type, you must also provide the value for the optional Timestamp property. If you specify the AT_TIMESTAMP type, then all shards that were open at the provided timestamp are returned. If you specify the FROM_TIMESTAMP type, then all shards starting from the provided timestamp to TIP are returned. The shard type specified in the ShardFilter parameter. This is a required property of the ShardFilter parameter. You can specify the following valid values: AFTER_SHARD_ID - the response includes all the shards, starting with the shard whose ID immediately follows the ShardId that you provided. AT_TRIM_HORIZON - the response includes all the shards that were open at TRIM_HORIZON. FROM_TRIM_HORIZON - (default), the response includes all the shards within the retention period of the data stream (trim to tip). AT_LATEST - the response includes only the currently open shards of the data stream. AT_TIMESTAMP - the response includes all shards whose start timestamp is less than or equal to the given timestamp and end timestamp is greater than or equal to the given timestamp or still open. FROM_TIMESTAMP - the response incldues all closed shards whose end timestamp is greater than or equal to the given timestamp and also all open shards. Corrected to TRIM_HORIZON of the data stream if FROM_TIMESTAMP is less than the TRIM_HORIZON value. ShardId (string) --- The exclusive start shardID speified in the ShardFilter parameter. This property can only be used if the AFTER_SHARD_ID shard type is specified. Timestamp (datetime) --- The timestamps specified in the ShardFilter parameter. A timestamp is a Unix epoch date with precision in milliseconds. For example, 2016-04-04T19:58:46.480-00:00 or 1459799926.480. This property can only be used if FROM_TIMESTAMP or AT_TIMESTAMP shard types are specified.",
+      "nested_params": [
+        {
+          "name": "Type",
+          "type": "string",
+          "required": false,
+          "description": "The shard type specified in the ShardFilter parameter. This is a required property of the ShardFilter parameter. You can specify the following valid values:",
+          "nested_params": []
+        },
+        {
+          "name": "ShardId",
+          "type": "string",
+          "required": false,
+          "description": "The exclusive start shardID speified in the ShardFilter parameter. This property can only be used if the AFTER_SHARD_ID shard type is specified.",
+          "nested_params": []
+        },
+        {
+          "name": "Timestamp",
+          "type": "datetime",
+          "required": false,
+          "description": "The timestamps specified in the ShardFilter parameter. A timestamp is a Unix epoch date with precision in milliseconds. For example, 2016-04-04T19:58:46.480-00:00 or 1459799926.480. This property can only be used if FROM_TIMESTAMP or AT_TIMESTAMP shard types are specified.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "StreamARN",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Shards",
+          "type": "list",
+          "description": "An array of JSON objects. Each object represents one shard and specifies the IDs of the shard, the shard's parent, and the shard that's adjacent to the shard's parent. Each object also contains the starting and ending hash keys and the starting and ending sequence numbers for the shard.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "ShardId",
+                  "type": "string",
+                  "description": "The unique identifier of the shard within the stream.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ParentShardId",
+                  "type": "string",
+                  "description": "The shard ID of the shard's parent.",
+                  "nested_items": []
+                },
+                {
+                  "name": "AdjacentParentShardId",
+                  "type": "string",
+                  "description": "The shard ID of the shard adjacent to the shard's parent.",
+                  "nested_items": []
+                },
+                {
+                  "name": "HashKeyRange",
+                  "type": "dict",
+                  "description": "The range of possible hash key values for the shard, which is a set of ordered contiguous positive integers.",
+                  "nested_items": [
+                    {
+                      "name": "StartingHashKey",
+                      "type": "string",
+                      "description": "The starting hash key of the hash key range.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "EndingHashKey",
+                      "type": "string",
+                      "description": "The ending hash key of the hash key range.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SequenceNumberRange",
+                  "type": "dict",
+                  "description": "The range of possible sequence numbers for the shard.",
+                  "nested_items": [
+                    {
+                      "name": "StartingSequenceNumber",
+                      "type": "string",
+                      "description": "The starting sequence number for the range.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "EndingSequenceNumber",
+                      "type": "string",
+                      "description": "The ending sequence number for the range. Shards that are in the OPEN state have an ending sequence number of null.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "When the number of shards in the data stream is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of shards in the data stream, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListShards to list the next set of shards. For more information about the use of this pagination token when calling the ListShards operation, see  ListShardsInput$NextToken.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

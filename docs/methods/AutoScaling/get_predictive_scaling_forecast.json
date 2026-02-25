@@ -1,0 +1,559 @@
+{
+  "method_name": "get_predictive_scaling_forecast",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/autoscaling/client/get_predictive_scaling_forecast.html",
+  "description": "Retrieves the forecast data for a predictive scaling policy. Load forecasts are predictions of the hourly load values using historical load data from CloudWatch and an analysis of historical trends. Capacity forecasts are represented as predicted values for the minimum capacity that is needed on an hourly basis, based on the hourly load forecast. A minimum of 24 hours of data is required to create the initial forecasts. However, having a full 14 days of historical data results in more accurate forecasts. For more information, see Predictive scaling for Amazon EC2 Auto Scaling in the Amazon EC2 Auto Scaling User Guide.",
+  "parameters": [
+    {
+      "name": "AutoScalingGroupName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the Auto Scaling group.",
+      "nested_params": []
+    },
+    {
+      "name": "PolicyName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the policy.",
+      "nested_params": []
+    },
+    {
+      "name": "StartTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The inclusive start time of the time range for the forecast data to get. At most, the date and time can be one year before the current date and time.",
+      "nested_params": []
+    },
+    {
+      "name": "EndTime",
+      "type": "datetime",
+      "required": true,
+      "description": "The exclusive end time of the time range for the forecast data to get. The maximum time duration between the start and end time is 30 days. Although this parameter can accept a date and time that is more than two days in the future, the availability of forecast data has limits. Amazon EC2 Auto Scaling only issues forecasts for periods of two days in advance.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "LoadForecast",
+          "type": "list",
+          "description": "The load forecast.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Timestamps",
+                  "type": "list",
+                  "description": "The timestamps for the data points, in UTC format.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "datetime",
+                      "description": "(datetime) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "Values",
+                  "type": "list",
+                  "description": "The values of the data points.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "float",
+                      "description": "(float) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MetricSpecification",
+                  "type": "dict",
+                  "description": "The metric specification for the load forecast.",
+                  "nested_items": [
+                    {
+                      "name": "TargetValue",
+                      "type": "float",
+                      "description": "Specifies the target utilization.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "PredefinedMetricPairSpecification",
+                      "type": "dict",
+                      "description": "The predefined metric pair specification from which Amazon EC2 Auto Scaling determines the appropriate scaling metric and load metric to use.",
+                      "nested_items": [
+                        {
+                          "name": "PredefinedMetricType",
+                          "type": "string",
+                          "description": "Indicates which metrics to use. There are two different types of metrics for each metric type: one is a load metric and one is a scaling metric. For example, if the metric type is ASGCPUUtilization, the Auto Scaling group's total CPU metric is used as the load metric, and the average CPU metric is used for the scaling metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ResourceLabel",
+                          "type": "string",
+                          "description": "A label that uniquely identifies a specific Application Load Balancer target group from which to determine the total and average request count served by your Auto Scaling group. You can't specify a resource label unless the target group is attached to the Auto Scaling group.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "app/<load-balancer-name>/<load-balancer-id> is the final portion of the load balancer ARN.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "targetgroup/<target-group-name>/<target-group-id> is the final portion of the target group ARN.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "PredefinedScalingMetricSpecification",
+                      "type": "dict",
+                      "description": "The predefined scaling metric specification.",
+                      "nested_items": [
+                        {
+                          "name": "PredefinedMetricType",
+                          "type": "string",
+                          "description": "The metric type.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ResourceLabel",
+                          "type": "string",
+                          "description": "A label that uniquely identifies a specific Application Load Balancer target group from which to determine the average request count served by your Auto Scaling group. You can't specify a resource label unless the target group is attached to the Auto Scaling group.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "app/<load-balancer-name>/<load-balancer-id> is the final portion of the load balancer ARN.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "targetgroup/<target-group-name>/<target-group-id> is the final portion of the target group ARN.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "PredefinedLoadMetricSpecification",
+                      "type": "dict",
+                      "description": "The predefined load metric specification.",
+                      "nested_items": [
+                        {
+                          "name": "PredefinedMetricType",
+                          "type": "string",
+                          "description": "The metric type.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ResourceLabel",
+                          "type": "string",
+                          "description": "A label that uniquely identifies a specific Application Load Balancer target group from which to determine the request count served by your Auto Scaling group. You can't specify a resource label unless the target group is attached to the Auto Scaling group.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "app/<load-balancer-name>/<load-balancer-id> is the final portion of the load balancer ARN.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "targetgroup/<target-group-name>/<target-group-id> is the final portion of the target group ARN.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CustomizedScalingMetricSpecification",
+                      "type": "dict",
+                      "description": "The customized scaling metric specification.",
+                      "nested_items": [
+                        {
+                          "name": "MetricDataQueries",
+                          "type": "list",
+                          "description": "One or more metric data queries to provide the data points for a scaling metric. Use multiple metric data queries only if you are performing a math expression on returned data.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Id",
+                                  "type": "string",
+                                  "description": "A short name that identifies the object's results in the response. This name must be unique among all MetricDataQuery objects specified for a single scaling policy. If you are performing math expressions on this set of data, this name represents that data and can serve as a variable in the mathematical expression. The valid characters are letters, numbers, and underscores. The first character must be a lowercase letter.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Expression",
+                                  "type": "string",
+                                  "description": "The math expression to perform on the returned data, if this object is performing a math expression. This expression can use the Id of the other metrics to refer to those metrics, and can also use the Id of other expressions to use the result of those expressions.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "MetricStat",
+                                  "type": "dict",
+                                  "description": "Information about the metric data to return.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "Namespace",
+                                          "type": "string",
+                                          "description": "The namespace of the metric. For more information, see the table in Amazon Web Services services that publish CloudWatch metrics in the Amazon CloudWatch User Guide.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "MetricName",
+                                          "type": "string",
+                                          "description": "The name of the metric.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "Dimensions",
+                                          "type": "list",
+                                          "description": "The dimensions for the metric. For the list of available dimensions, see the Amazon Web Services documentation available from the table in Amazon Web Services services that publish CloudWatch metrics in the Amazon CloudWatch User Guide.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "Name",
+                                                  "type": "string",
+                                                  "description": "The name of the dimension.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "Value",
+                                                  "type": "string",
+                                                  "description": "The value of the dimension.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "Stat",
+                                      "type": "string",
+                                      "description": "The statistic to return. It can include any CloudWatch statistic or extended statistic. For a list of valid values, see the table in Statistics in the Amazon CloudWatch User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Unit",
+                                      "type": "string",
+                                      "description": "The unit to use for the returned data points. For a complete list of the units that CloudWatch supports, see the MetricDatum data type in the Amazon CloudWatch API Reference.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Label",
+                                  "type": "string",
+                                  "description": "A human-readable label for this metric or expression. This is especially useful if this is a math expression, so that you know what the value represents.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ReturnData",
+                                  "type": "boolean",
+                                  "description": "Indicates whether to return the timestamps and raw data values of this metric.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CustomizedLoadMetricSpecification",
+                      "type": "dict",
+                      "description": "The customized load metric specification.",
+                      "nested_items": [
+                        {
+                          "name": "MetricDataQueries",
+                          "type": "list",
+                          "description": "One or more metric data queries to provide the data points for a load metric. Use multiple metric data queries only if you are performing a math expression on returned data.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Id",
+                                  "type": "string",
+                                  "description": "A short name that identifies the object's results in the response. This name must be unique among all MetricDataQuery objects specified for a single scaling policy. If you are performing math expressions on this set of data, this name represents that data and can serve as a variable in the mathematical expression. The valid characters are letters, numbers, and underscores. The first character must be a lowercase letter.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Expression",
+                                  "type": "string",
+                                  "description": "The math expression to perform on the returned data, if this object is performing a math expression. This expression can use the Id of the other metrics to refer to those metrics, and can also use the Id of other expressions to use the result of those expressions.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "MetricStat",
+                                  "type": "dict",
+                                  "description": "Information about the metric data to return.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "Namespace",
+                                          "type": "string",
+                                          "description": "The namespace of the metric. For more information, see the table in Amazon Web Services services that publish CloudWatch metrics in the Amazon CloudWatch User Guide.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "MetricName",
+                                          "type": "string",
+                                          "description": "The name of the metric.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "Dimensions",
+                                          "type": "list",
+                                          "description": "The dimensions for the metric. For the list of available dimensions, see the Amazon Web Services documentation available from the table in Amazon Web Services services that publish CloudWatch metrics in the Amazon CloudWatch User Guide.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "Name",
+                                                  "type": "string",
+                                                  "description": "The name of the dimension.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "Value",
+                                                  "type": "string",
+                                                  "description": "The value of the dimension.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "Stat",
+                                      "type": "string",
+                                      "description": "The statistic to return. It can include any CloudWatch statistic or extended statistic. For a list of valid values, see the table in Statistics in the Amazon CloudWatch User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Unit",
+                                      "type": "string",
+                                      "description": "The unit to use for the returned data points. For a complete list of the units that CloudWatch supports, see the MetricDatum data type in the Amazon CloudWatch API Reference.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Label",
+                                  "type": "string",
+                                  "description": "A human-readable label for this metric or expression. This is especially useful if this is a math expression, so that you know what the value represents.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ReturnData",
+                                  "type": "boolean",
+                                  "description": "Indicates whether to return the timestamps and raw data values of this metric.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CustomizedCapacityMetricSpecification",
+                      "type": "dict",
+                      "description": "The customized capacity metric specification.",
+                      "nested_items": [
+                        {
+                          "name": "MetricDataQueries",
+                          "type": "list",
+                          "description": "One or more metric data queries to provide the data points for a capacity metric. Use multiple metric data queries only if you are performing a math expression on returned data.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Id",
+                                  "type": "string",
+                                  "description": "A short name that identifies the object's results in the response. This name must be unique among all MetricDataQuery objects specified for a single scaling policy. If you are performing math expressions on this set of data, this name represents that data and can serve as a variable in the mathematical expression. The valid characters are letters, numbers, and underscores. The first character must be a lowercase letter.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Expression",
+                                  "type": "string",
+                                  "description": "The math expression to perform on the returned data, if this object is performing a math expression. This expression can use the Id of the other metrics to refer to those metrics, and can also use the Id of other expressions to use the result of those expressions.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "MetricStat",
+                                  "type": "dict",
+                                  "description": "Information about the metric data to return.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "Namespace",
+                                          "type": "string",
+                                          "description": "The namespace of the metric. For more information, see the table in Amazon Web Services services that publish CloudWatch metrics in the Amazon CloudWatch User Guide.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "MetricName",
+                                          "type": "string",
+                                          "description": "The name of the metric.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "Dimensions",
+                                          "type": "list",
+                                          "description": "The dimensions for the metric. For the list of available dimensions, see the Amazon Web Services documentation available from the table in Amazon Web Services services that publish CloudWatch metrics in the Amazon CloudWatch User Guide.",
+                                          "nested_items": [
+                                            {
+                                              "name": "",
+                                              "type": "dict",
+                                              "description": "",
+                                              "nested_items": [
+                                                {
+                                                  "name": "Name",
+                                                  "type": "string",
+                                                  "description": "The name of the dimension.",
+                                                  "nested_items": []
+                                                },
+                                                {
+                                                  "name": "Value",
+                                                  "type": "string",
+                                                  "description": "The value of the dimension.",
+                                                  "nested_items": []
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "name": "Stat",
+                                      "type": "string",
+                                      "description": "The statistic to return. It can include any CloudWatch statistic or extended statistic. For a list of valid values, see the table in Statistics in the Amazon CloudWatch User Guide.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "Unit",
+                                      "type": "string",
+                                      "description": "The unit to use for the returned data points. For a complete list of the units that CloudWatch supports, see the MetricDatum data type in the Amazon CloudWatch API Reference.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "Label",
+                                  "type": "string",
+                                  "description": "A human-readable label for this metric or expression. This is especially useful if this is a math expression, so that you know what the value represents.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "ReturnData",
+                                  "type": "boolean",
+                                  "description": "Indicates whether to return the timestamps and raw data values of this metric.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CapacityForecast",
+          "type": "dict",
+          "description": "The capacity forecast.",
+          "nested_items": [
+            {
+              "name": "Timestamps",
+              "type": "list",
+              "description": "The timestamps for the data points, in UTC format.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "datetime",
+                  "description": "(datetime) ---",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "Values",
+              "type": "list",
+              "description": "The values of the data points.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "float",
+                  "description": "(float) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UpdateTime",
+          "type": "datetime",
+          "description": "The time the forecast was made.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

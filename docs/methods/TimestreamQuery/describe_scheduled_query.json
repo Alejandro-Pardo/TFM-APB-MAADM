@@ -1,0 +1,699 @@
+{
+  "method_name": "describe_scheduled_query",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/timestream-query/client/describe_scheduled_query.html",
+  "description": "Provides detailed information about a scheduled query.",
+  "parameters": [
+    {
+      "name": "ScheduledQueryArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the scheduled query.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "ScheduledQuery",
+          "type": "dict",
+          "description": "The scheduled query.",
+          "nested_items": [
+            {
+              "name": "Arn",
+              "type": "string",
+              "description": "Scheduled query ARN.",
+              "nested_items": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "description": "Name of the scheduled query.",
+              "nested_items": []
+            },
+            {
+              "name": "QueryString",
+              "type": "string",
+              "description": "The query to be run.",
+              "nested_items": []
+            },
+            {
+              "name": "CreationTime",
+              "type": "datetime",
+              "description": "Creation time of the scheduled query.",
+              "nested_items": []
+            },
+            {
+              "name": "State",
+              "type": "string",
+              "description": "State of the scheduled query.",
+              "nested_items": []
+            },
+            {
+              "name": "PreviousInvocationTime",
+              "type": "datetime",
+              "description": "Last time the query was run.",
+              "nested_items": []
+            },
+            {
+              "name": "NextInvocationTime",
+              "type": "datetime",
+              "description": "The next time the scheduled query is scheduled to run.",
+              "nested_items": []
+            },
+            {
+              "name": "ScheduleConfiguration",
+              "type": "dict",
+              "description": "Schedule configuration.",
+              "nested_items": [
+                {
+                  "name": "ScheduleExpression",
+                  "type": "string",
+                  "description": "An expression that denotes when to trigger the scheduled query run. This can be a cron expression or a rate expression.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "NotificationConfiguration",
+              "type": "dict",
+              "description": "Notification configuration.",
+              "nested_items": [
+                {
+                  "name": "SnsConfiguration",
+                  "type": "dict",
+                  "description": "Details about the Amazon Simple Notification Service (SNS) configuration. This field is visible only when SNS Topic is provided when updating the account settings.",
+                  "nested_items": [
+                    {
+                      "name": "TopicArn",
+                      "type": "string",
+                      "description": "SNS topic ARN that the scheduled query status notifications will be sent to.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TargetConfiguration",
+              "type": "dict",
+              "description": "Scheduled query target store configuration.",
+              "nested_items": [
+                {
+                  "name": "TimestreamConfiguration",
+                  "type": "dict",
+                  "description": "Configuration needed to write data into the Timestream database and table.",
+                  "nested_items": [
+                    {
+                      "name": "DatabaseName",
+                      "type": "string",
+                      "description": "Name of Timestream database to which the query result will be written.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TableName",
+                      "type": "string",
+                      "description": "Name of Timestream table that the query result will be written to. The table should be within the same database that is provided in Timestream configuration.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TimeColumn",
+                      "type": "string",
+                      "description": "Column from query result that should be used as the time column in destination table. Column type for this should be TIMESTAMP.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DimensionMappings",
+                      "type": "list",
+                      "description": "This is to allow mapping column(s) from the query result to the dimension in the destination table.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Name",
+                              "type": "string",
+                              "description": "Column name from query result.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "DimensionValueType",
+                              "type": "string",
+                              "description": "Type for the dimension.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "MultiMeasureMappings",
+                      "type": "dict",
+                      "description": "Multi-measure mappings.",
+                      "nested_items": [
+                        {
+                          "name": "TargetMultiMeasureName",
+                          "type": "string",
+                          "description": "The name of the target multi-measure name in the derived table. This input is required when measureNameColumn is not provided. If MeasureNameColumn is provided, then value from that column will be used as multi-measure name.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "MultiMeasureAttributeMappings",
+                          "type": "list",
+                          "description": "Required. Attribute mappings to be used for mapping query results to ingest data for multi-measure attributes.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "SourceColumn",
+                                  "type": "string",
+                                  "description": "Source column from where the attribute value is to be read.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "TargetMultiMeasureAttributeName",
+                                  "type": "string",
+                                  "description": "Custom name to be used for attribute name in derived table. If not provided, source column name would be used.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "MeasureValueType",
+                                  "type": "string",
+                                  "description": "Type of the attribute to be read from the source column.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "MixedMeasureMappings",
+                      "type": "list",
+                      "description": "Specifies how to map measures to multi-measure records.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "MeasureName",
+                              "type": "string",
+                              "description": "Refers to the value of measure_name in a result row. This field is required if MeasureNameColumn is provided.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "SourceColumn",
+                              "type": "string",
+                              "description": "This field refers to the source column from which measure-value is to be read for result materialization.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "TargetMeasureName",
+                              "type": "string",
+                              "description": "Target measure name to be used. If not provided, the target measure name by default would be measure-name if provided, or sourceColumn otherwise.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "MeasureValueType",
+                              "type": "string",
+                              "description": "Type of the value that is to be read from sourceColumn. If the mapping is for MULTI, use MeasureValueType.MULTI.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "MultiMeasureAttributeMappings",
+                              "type": "list",
+                              "description": "Required when measureValueType is MULTI. Attribute mappings for MULTI value measures.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "SourceColumn",
+                                      "type": "string",
+                                      "description": "Source column from where the attribute value is to be read.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "TargetMultiMeasureAttributeName",
+                                      "type": "string",
+                                      "description": "Custom name to be used for attribute name in derived table. If not provided, source column name would be used.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "MeasureValueType",
+                                      "type": "string",
+                                      "description": "Type of the attribute to be read from the source column.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "MeasureNameColumn",
+                      "type": "string",
+                      "description": "Name of the measure column.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ScheduledQueryExecutionRoleArn",
+              "type": "string",
+              "description": "IAM role that Timestream uses to run the schedule query.",
+              "nested_items": []
+            },
+            {
+              "name": "KmsKeyId",
+              "type": "string",
+              "description": "A customer provided KMS key used to encrypt the scheduled query resource.",
+              "nested_items": []
+            },
+            {
+              "name": "ErrorReportConfiguration",
+              "type": "dict",
+              "description": "Error-reporting configuration for the scheduled query.",
+              "nested_items": [
+                {
+                  "name": "S3Configuration",
+                  "type": "dict",
+                  "description": "The S3 configuration for the error reports.",
+                  "nested_items": [
+                    {
+                      "name": "BucketName",
+                      "type": "string",
+                      "description": "Name of the S3 bucket under which error reports will be created.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ObjectKeyPrefix",
+                      "type": "string",
+                      "description": "Prefix for the error report key. Timestream by default adds the following prefix to the error report path.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "EncryptionOption",
+                      "type": "string",
+                      "description": "Encryption at rest options for the error reports. If no encryption option is specified, Timestream will choose SSE_S3 as default.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LastRunSummary",
+              "type": "dict",
+              "description": "Runtime summary for the last scheduled query run.",
+              "nested_items": [
+                {
+                  "name": "InvocationTime",
+                  "type": "datetime",
+                  "description": "InvocationTime for this run. This is the time at which the query is scheduled to run. Parameter @scheduled_runtime can be used in the query to get the value.",
+                  "nested_items": []
+                },
+                {
+                  "name": "TriggerTime",
+                  "type": "datetime",
+                  "description": "The actual time when the query was run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "RunStatus",
+                  "type": "string",
+                  "description": "The status of a scheduled query run.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ExecutionStats",
+                  "type": "dict",
+                  "description": "Runtime statistics for a scheduled run.",
+                  "nested_items": [
+                    {
+                      "name": "ExecutionTimeInMillis",
+                      "type": "integer",
+                      "description": "Total time, measured in milliseconds, that was needed for the scheduled query run to complete.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DataWrites",
+                      "type": "integer",
+                      "description": "Data writes metered for records ingested in a single scheduled query run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BytesMetered",
+                      "type": "integer",
+                      "description": "Bytes metered for a single scheduled query run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "CumulativeBytesScanned",
+                      "type": "integer",
+                      "description": "Bytes scanned for a single scheduled query run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RecordsIngested",
+                      "type": "integer",
+                      "description": "The number of records ingested for a single scheduled query run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "QueryResultRows",
+                      "type": "integer",
+                      "description": "Number of rows present in the output from running a query before ingestion to destination data source.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "QueryInsightsResponse",
+                  "type": "dict",
+                  "description": "Provides various insights and metrics related to the run summary of the scheduled query.",
+                  "nested_items": [
+                    {
+                      "name": "QuerySpatialCoverage",
+                      "type": "dict",
+                      "description": "Provides insights into the spatial coverage of the query, including the table with sub-optimal (max) spatial pruning. This information can help you identify areas for improvement in your partitioning strategy to enhance spatial pruning.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Value --- The maximum ratio of spatial coverage.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "ARN",
+                              "description": "TableArn --- The Amazon Resource Name (ARN) of the table with sub-optimal spatial pruning.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "PartitionKey --- The partition key used for partitioning, which can be a default measure_name or a CDPK.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "QueryTemporalRange",
+                      "type": "dict",
+                      "description": "Provides insights into the temporal range of the query, including the table with the largest (max) time range. Following are some of the potential options for optimizing time-based pruning:",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Add missing time-predicates.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Remove functions around the time predicates.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "",
+                          "description": "Add time predicates to all the sub-queries.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "QueryTableCount",
+                      "type": "integer",
+                      "description": "Indicates the number of tables in the query.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OutputRows",
+                      "type": "integer",
+                      "description": "Indicates the total number of rows returned as part of the query result set. You can use this data to validate if the number of rows in the result set have changed as part of the query tuning exercise.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "OutputBytes",
+                      "type": "integer",
+                      "description": "Indicates the size of query result set in bytes. You can use this data to validate if the result set has changed as part of the query tuning exercise.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ErrorReportLocation",
+                  "type": "dict",
+                  "description": "S3 location for error report.",
+                  "nested_items": [
+                    {
+                      "name": "S3ReportLocation",
+                      "type": "dict",
+                      "description": "The S3 location where error reports are written.",
+                      "nested_items": [
+                        {
+                          "name": "BucketName",
+                          "type": "string",
+                          "description": "S3 bucket name.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "ObjectKey",
+                          "type": "string",
+                          "description": "S3 key.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "FailureReason",
+                  "type": "string",
+                  "description": "Error message for the scheduled query in case of failure. You might have to look at the error report to get more detailed error reasons.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "RecentlyFailedRuns",
+              "type": "list",
+              "description": "Runtime summary for the last five failed scheduled query runs.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "InvocationTime",
+                      "type": "datetime",
+                      "description": "InvocationTime for this run. This is the time at which the query is scheduled to run. Parameter @scheduled_runtime can be used in the query to get the value.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "TriggerTime",
+                      "type": "datetime",
+                      "description": "The actual time when the query was run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "RunStatus",
+                      "type": "string",
+                      "description": "The status of a scheduled query run.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "ExecutionStats",
+                      "type": "dict",
+                      "description": "Runtime statistics for a scheduled run.",
+                      "nested_items": [
+                        {
+                          "name": "ExecutionTimeInMillis",
+                          "type": "integer",
+                          "description": "Total time, measured in milliseconds, that was needed for the scheduled query run to complete.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "DataWrites",
+                          "type": "integer",
+                          "description": "Data writes metered for records ingested in a single scheduled query run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "BytesMetered",
+                          "type": "integer",
+                          "description": "Bytes metered for a single scheduled query run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "CumulativeBytesScanned",
+                          "type": "integer",
+                          "description": "Bytes scanned for a single scheduled query run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "RecordsIngested",
+                          "type": "integer",
+                          "description": "The number of records ingested for a single scheduled query run.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "QueryResultRows",
+                          "type": "integer",
+                          "description": "Number of rows present in the output from running a query before ingestion to destination data source.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "QueryInsightsResponse",
+                      "type": "dict",
+                      "description": "Provides various insights and metrics related to the run summary of the scheduled query.",
+                      "nested_items": [
+                        {
+                          "name": "QuerySpatialCoverage",
+                          "type": "dict",
+                          "description": "Provides insights into the spatial coverage of the query, including the table with sub-optimal (max) spatial pruning. This information can help you identify areas for improvement in your partitioning strategy to enhance spatial pruning.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "Value --- The maximum ratio of spatial coverage.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "ARN",
+                                  "description": "TableArn --- The Amazon Resource Name (ARN) of the table with sub-optimal spatial pruning.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "",
+                                  "type": "",
+                                  "description": "PartitionKey --- The partition key used for partitioning, which can be a default measure_name or a CDPK.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "QueryTemporalRange",
+                          "type": "dict",
+                          "description": "Provides insights into the temporal range of the query, including the table with the largest (max) time range. Following are some of the potential options for optimizing time-based pruning:",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Add missing time-predicates.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Remove functions around the time predicates.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "",
+                              "type": "",
+                              "description": "Add time predicates to all the sub-queries.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "QueryTableCount",
+                          "type": "integer",
+                          "description": "Indicates the number of tables in the query.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "OutputRows",
+                          "type": "integer",
+                          "description": "Indicates the total number of rows returned as part of the query result set. You can use this data to validate if the number of rows in the result set have changed as part of the query tuning exercise.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "OutputBytes",
+                          "type": "integer",
+                          "description": "Indicates the size of query result set in bytes. You can use this data to validate if the result set has changed as part of the query tuning exercise.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ErrorReportLocation",
+                      "type": "dict",
+                      "description": "S3 location for error report.",
+                      "nested_items": [
+                        {
+                          "name": "S3ReportLocation",
+                          "type": "dict",
+                          "description": "The S3 location where error reports are written.",
+                          "nested_items": [
+                            {
+                              "name": "BucketName",
+                              "type": "string",
+                              "description": "S3 bucket name.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ObjectKey",
+                              "type": "string",
+                              "description": "S3 key.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "FailureReason",
+                      "type": "string",
+                      "description": "Error message for the scheduled query in case of failure. You might have to look at the error report to get more detailed error reasons.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

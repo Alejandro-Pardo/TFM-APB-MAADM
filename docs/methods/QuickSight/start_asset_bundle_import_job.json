@@ -1,0 +1,1870 @@
+{
+  "method_name": "start_asset_bundle_import_job",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/quicksight/client/start_asset_bundle_import_job.html",
+  "description": "Starts an Asset Bundle import job. An Asset Bundle import job imports specified Amazon QuickSight assets into an Amazon QuickSight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon QuickSight account. Each Amazon QuickSight account can run up to 5 import jobs concurrently. The API caller must have the necessary \"create\", \"describe\", and \"update\" permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.",
+  "parameters": [
+    {
+      "name": "AwsAccountId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the Amazon Web Services account to import assets into.",
+      "nested_params": []
+    },
+    {
+      "name": "AssetBundleImportJobId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the job. This ID is unique while the job is running. After the job is completed, you can reuse this ID for another job.",
+      "nested_params": []
+    },
+    {
+      "name": "AssetBundleImportSource",
+      "type": "dict",
+      "required": true,
+      "description": "The source of the asset bundle zip file that contains the data that you want to import. The file must be in QUICKSIGHT_JSON format. Body (bytes) --- The bytes of the base64 encoded asset bundle import zip file. This file can't exceed 20 MB. If the size of the file that you want to upload is more than 20 MB, add the file to your Amazon S3 bucket and use S3Uri of the file for this operation. If you are calling the API operations from the Amazon Web Services SDK for Java, JavaScript, Python, or PHP, the SDK encodes base64 automatically to allow the direct setting of the zip file's bytes. If you are using an SDK for a different language or receiving related errors, try to base64 encode your data. S3Uri (string) --- The Amazon S3 URI for an asset bundle import file that exists in an Amazon S3 bucket that the caller has read access to. The file must be a zip format file and can't exceed 1 GB.",
+      "nested_params": [
+        {
+          "name": "Body",
+          "type": "bytes",
+          "required": false,
+          "description": "The bytes of the base64 encoded asset bundle import zip file. This file can't exceed 20 MB. If the size of the file that you want to upload is more than 20 MB, add the file to your Amazon S3 bucket and use S3Uri of the file for this operation. If you are calling the API operations from the Amazon Web Services SDK for Java, JavaScript, Python, or PHP, the SDK encodes base64 automatically to allow the direct setting of the zip file's bytes. If you are using an SDK for a different language or receiving related errors, try to base64 encode your data.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Uri",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon S3 URI for an asset bundle import file that exists in an Amazon S3 bucket that the caller has read access to. The file must be a zip format file and can't exceed 1 GB.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "OverrideParameters",
+      "type": "dict",
+      "required": true,
+      "description": "Optional overrides that are applied to the resource configuration before import. ResourceIdOverrideConfiguration (dict) --- An optional structure that configures resource ID overrides to be applied within the import job. PrefixForAllResources (string) --- An option to request a CloudFormation variable for a prefix to be prepended to each resource's ID before import. The prefix is only added to the asset IDs and does not change the name of the asset. VPCConnections (list) --- A list of overrides for any VPCConnection resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single VPC connection that is imported. The ID of the VPC Connection to apply overrides to. Name (string) --- A new name for the VPC connection. SubnetIds (list) --- A list of new subnet IDs for the VPC connection you are importing. This field is required if you are importing the VPC connection from another Amazon Web Services account or Region. (string) --- SecurityGroupIds (list) --- A new security group ID for the VPC connection you are importing. (string) --- DnsResolvers (list) --- An optional override of DNS resolvers to be used by the VPC connection. (string) --- RoleArn (string) --- An optional override of the role ARN to be used by the VPC connection. RefreshSchedules (list) --- A list of overrides for any RefreshSchedule resources that are present in the asset bundle that is imported. (dict) --- A list of overrides for a specific RefreshsSchedule resource that is present in the asset bundle that is imported. A partial identifier for the specific RefreshSchedule resource that is being overridden. This structure is used together with the ScheduleID structure. A partial identifier for the specific RefreshSchedule resource being overridden. This structure is used together with the DataSetId structure. StartAfterDateTime (datetime) --- An override for the StartAfterDateTime of a RefreshSchedule. Make sure that the StartAfterDateTime is set to a time that takes place in the future. DataSources (list) --- A list of overrides for any DataSource resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single data source that is being imported. The ID of the data source to apply overrides to. Name (string) --- A new name for the data source. DataSourceParameters (dict) --- The parameters that Amazon QuickSight uses to connect to your underlying data source. This is a variant type structure. For this structure to be valid, only one of the attributes can be non-null. AmazonElasticsearchParameters (dict) --- The parameters for OpenSearch. The OpenSearch domain. AthenaParameters (dict) --- The parameters for Amazon Athena. WorkGroup (string) --- The workgroup that Amazon Athena uses. RoleArn (string) --- Use the RoleArn structure to override an account-wide role for a specific Athena data source. For example, say an account administrator has turned off all Athena access with an account-wide role. The administrator can then use RoleArn to bypass the account-wide role and allow Athena access for the single Athena data source that is specified in the structure, even if the account-wide role forbidding Athena access is still active. IdentityCenterConfiguration (dict) --- An optional parameter that configures IAM Identity Center authentication to grant Amazon QuickSight access to your workgroup. This parameter can only be specified if your Amazon QuickSight account is configured with IAM Identity Center. EnableIdentityPropagation (boolean) --- A Boolean option that controls whether Trusted Identity Propagation should be used. AuroraParameters (dict) --- The parameters for Amazon Aurora MySQL. Host. Port. Database. AuroraPostgreSqlParameters (dict) --- The parameters for Amazon Aurora. The Amazon Aurora PostgreSQL-Compatible host to connect to. The port that Amazon Aurora PostgreSQL is listening on. The Amazon Aurora PostgreSQL database to connect to. AwsIotAnalyticsParameters (dict) --- The parameters for IoT Analytics. Dataset name. JiraParameters (dict) --- The parameters for Jira. The base URL of the Jira site. MariaDbParameters (dict) --- The parameters for MariaDB. MySqlParameters (dict) --- The parameters for MySQL. OracleParameters (dict) --- The parameters for Oracle. An Oracle host. The port. The database. UseServiceName (boolean) --- A Boolean value that indicates whether the Database uses a service name or an SID. If this value is left blank, the default value is SID. If this value is set to false, the value is SID. PostgreSqlParameters (dict) --- The parameters for PostgreSQL. PrestoParameters (dict) --- The parameters for Presto. Catalog. RdsParameters (dict) --- The parameters for Amazon RDS. Instance ID. RedshiftParameters (dict) --- The parameters for Amazon Redshift. Host (string) --- Host. This field can be blank if ClusterId is provided. Port (integer) --- Port. This field can be blank if the ClusterId is provided. ClusterId (string) --- Cluster ID. This field can be blank if the Host and Port are provided. IAMParameters (dict) --- An optional parameter that uses IAM authentication to grant Amazon QuickSight access to your cluster. This parameter can be used instead of DataSourceCredentials. Use the RoleArn structure to allow Amazon QuickSight to call redshift:GetClusterCredentials on your cluster. The calling principal must have iam:PassRole access to pass the role to Amazon QuickSight. The role's trust policy must allow the Amazon QuickSight service principal to assume the role. DatabaseUser (string) --- The user whose permissions and group memberships will be used by Amazon QuickSight to access the cluster. If this user already exists in your database, Amazon QuickSight is granted the same permissions that the user has. If the user doesn't exist, set the value of AutoCreateDatabaseUser to True to create a new user with PUBLIC permissions. DatabaseGroups (list) --- A list of groups whose permissions will be granted to Amazon QuickSight to access the cluster. These permissions are combined with the permissions granted to Amazon QuickSight by the DatabaseUser. If you choose to include this parameter, the RoleArn must grant access to redshift:JoinGroup. (string) --- AutoCreateDatabaseUser (boolean) --- Automatically creates a database user. If your database doesn't have a DatabaseUser, set this parameter to True. If there is no DatabaseUser, Amazon QuickSight can't connect to your cluster. The RoleArn that you use for this operation must grant access to redshift:CreateClusterUser to successfully create the user. IdentityCenterConfiguration (dict) --- An optional parameter that configures IAM Identity Center authentication to grant Amazon QuickSight access to your cluster. S3Parameters (dict) --- The parameters for S3. Location of the Amazon S3 manifest file. This is NULL if the manifest file was uploaded into Amazon QuickSight. Amazon S3 bucket. Amazon S3 key that identifies an object. RoleArn (string) --- Use the RoleArn structure to override an account-wide role for a specific S3 data source. For example, say an account administrator has turned off all S3 access with an account-wide role. The administrator can then use RoleArn to bypass the account-wide role and allow S3 access for the single S3 data source that is specified in the structure, even if the account-wide role forbidding S3 access is still active. ServiceNowParameters (dict) --- The parameters for ServiceNow. URL of the base site. SnowflakeParameters (dict) --- The parameters for Snowflake. Warehouse. AuthenticationType (string) --- The authentication type that you want to use for your connection. This parameter accepts OAuth and non-OAuth authentication types. DatabaseAccessControlRole (string) --- The database access control role. OAuthParameters (dict) --- An object that contains information needed to create a data source connection between an Amazon QuickSight account and Snowflake. The token endpoint URL of the identity provider. OAuthScope (string) --- The OAuth scope. IdentityProviderVpcConnectionProperties (dict) --- VPC connection properties. The Amazon Resource Name (ARN) for the VPC connection. IdentityProviderResourceUri (string) --- The resource uri of the identity provider. SparkParameters (dict) --- The parameters for Spark. SqlServerParameters (dict) --- The parameters for SQL Server. TeradataParameters (dict) --- The parameters for Teradata. TwitterParameters (dict) --- The parameters for Twitter. Twitter query string. Maximum number of rows to query Twitter. AmazonOpenSearchParameters (dict) --- The parameters for OpenSearch. ExasolParameters (dict) --- The parameters for Exasol. The hostname or IP address of the Exasol data source. The port for the Exasol data source. DatabricksParameters (dict) --- The parameters that are required to connect to a Databricks data source. The host name of the Databricks data source. The port for the Databricks data source. The HTTP path of the Databricks data source. StarburstParameters (dict) --- The parameters that are required to connect to a Starburst data source. The host name of the Starburst data source. The port for the Starburst data source. The catalog name for the Starburst data source. ProductType (string) --- The product type for the Starburst data source. OAuthParameters (dict) --- An object that contains information needed to create a data source connection between an Amazon QuickSight account and Starburst. TrinoParameters (dict) --- The parameters that are required to connect to a Trino data source. The host name of the Trino data source. The port for the Trino data source. The catalog name for the Trino data source. BigQueryParameters (dict) --- The parameters that are required to connect to a Google BigQuery data source. The Google Cloud Platform project ID where your datasource was created. DataSetRegion (string) --- The storage location where you create a Google BigQuery data source. VpcConnectionProperties (dict) --- VPC connection properties. SslProperties (dict) --- Secure Socket Layer (SSL) properties that apply when Amazon QuickSight connects to your underlying data source. DisableSsl (boolean) --- A Boolean option to control whether SSL should be disabled. Credentials (dict) --- An optional structure that provides the credentials to be used to create the imported data source. CredentialPair (dict) --- A username and password credential pair to be used to create the imported data source. Keep this field blank if you are using a Secrets Manager secret to provide credentials. The username for the data source connection. The password for the data source connection. SecretArn (string) --- The ARN of the Secrets Manager secret that's used to create the imported data source. Keep this field blank, unless you are using a secret in place of a credential pair. DataSets (list) --- A list of overrides for any DataSet resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single dataset that is being imported. The ID of the dataset to apply overrides to. Name (string) --- A new name for the dataset. DataSetRefreshProperties (dict) --- The refresh properties of a dataset. RefreshConfiguration (dict) --- The refresh configuration for a dataset. The incremental refresh for the dataset. The lookback window setup for an incremental refresh configuration. The name of the lookback window column. The lookback window column size. The size unit that is used for the lookback window column. Valid values for this structure are HOUR, DAY, and WEEK. FailureConfiguration (dict) --- The failure configuration for a dataset. EmailAlert (dict) --- The email alert configuration for a dataset refresh failure. AlertStatus (string) --- The status value that determines if email alerts are sent. Themes (list) --- A list of overrides for any Theme resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single theme that is imported. The ID of the theme to apply overrides to. Name (string) --- A new name for the theme. Analyses (list) --- A list of overrides for any Analysis resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single analysis that is being imported. The ID of the analysis that you ant to apply overrides to. Name (string) --- A new name for the analysis. Dashboards (list) --- A list of overrides for any Dashboard resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single dashboard that is being imported. The ID of the dashboard that you want to apply overrides to. Name (string) --- A new name for the dashboard. Folders (list) --- A list of overrides for any Folder resources that are present in the asset bundle that is imported. (dict) --- The override parameters for a single folder that is being imported. The ID of the folder that you want to apply overrides to. Name (string) --- A new name for the folder. ParentFolderArn (string) --- A new parent folder arn. This change can only be applied if the import creates a brand new folder. Existing folders cannot be moved.",
+      "nested_params": [
+        {
+          "name": "ResourceIdOverrideConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "An optional structure that configures resource ID overrides to be applied within the import job.",
+          "nested_params": [
+            {
+              "name": "PrefixForAllResources",
+              "type": "string",
+              "required": false,
+              "description": "An option to request a CloudFormation variable for a prefix to be prepended to each resource's ID before import. The prefix is only added to the asset IDs and does not change the name of the asset.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "VPCConnections",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any VPCConnection resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "VPCConnectionId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the VPC Connection to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the VPC connection.",
+              "nested_params": []
+            },
+            {
+              "name": "SubnetIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of new subnet IDs for the VPC connection you are importing. This field is required if you are importing the VPC connection from another Amazon Web Services account or Region.",
+              "nested_params": []
+            },
+            {
+              "name": "SecurityGroupIds",
+              "type": "list",
+              "required": false,
+              "description": "A new security group ID for the VPC connection you are importing. This field is required if you are importing the VPC connection from another Amazon Web Services account or Region.",
+              "nested_params": []
+            },
+            {
+              "name": "DnsResolvers",
+              "type": "list",
+              "required": false,
+              "description": "An optional override of DNS resolvers to be used by the VPC connection.",
+              "nested_params": []
+            },
+            {
+              "name": "RoleArn",
+              "type": "string",
+              "required": false,
+              "description": "An optional override of the role ARN to be used by the VPC connection.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "RefreshSchedules",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any RefreshSchedule resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSetId",
+              "type": "string",
+              "required": false,
+              "description": "A partial identifier for the specific RefreshSchedule resource that is being overridden. This structure is used together with the ScheduleID structure.",
+              "nested_params": []
+            },
+            {
+              "name": "ScheduleId",
+              "type": "string",
+              "required": false,
+              "description": "A partial identifier for the specific RefreshSchedule resource being overridden. This structure is used together with the DataSetId structure.",
+              "nested_params": []
+            },
+            {
+              "name": "StartAfterDateTime",
+              "type": "datetime",
+              "required": false,
+              "description": "An override for the StartAfterDateTime of a RefreshSchedule. Make sure that the StartAfterDateTime is set to a time that takes place in the future.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "DataSources",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any DataSource resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSourceId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the data source to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the data source.",
+              "nested_params": []
+            },
+            {
+              "name": "DataSourceParameters",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters that Amazon QuickSight uses to connect to your underlying data source. This is a variant type structure. For this structure to be valid, only one of the attributes can be non-null.",
+              "nested_params": [
+                {
+                  "name": "AmazonElasticsearchParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for OpenSearch.",
+                  "nested_params": [
+                    {
+                      "name": "Domain",
+                      "type": "string",
+                      "required": false,
+                      "description": "The OpenSearch domain.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AthenaParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Amazon Athena.",
+                  "nested_params": [
+                    {
+                      "name": "WorkGroup",
+                      "type": "string",
+                      "required": false,
+                      "description": "The workgroup that Amazon Athena uses.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "RoleArn",
+                      "type": "string",
+                      "required": false,
+                      "description": "Use the RoleArn structure to override an account-wide role for a specific Athena data source. For example, say an account administrator has turned off all Athena access with an account-wide role. The administrator can then use RoleArn to bypass the account-wide role and allow Athena access for the single Athena data source that is specified in the structure, even if the account-wide role forbidding Athena access is still active.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "IdentityCenterConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An optional parameter that configures IAM Identity Center authentication to grant Amazon QuickSight access to your workgroup. This parameter can only be specified if your Amazon QuickSight account is configured with IAM Identity Center.",
+                      "nested_params": [
+                        {
+                          "name": "EnableIdentityPropagation",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "A Boolean option that controls whether Trusted Identity Propagation should be used.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "AuroraParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Amazon Aurora MySQL.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AuroraPostgreSqlParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Amazon Aurora.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "The Amazon Aurora PostgreSQL-Compatible host to connect to.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The port that Amazon Aurora PostgreSQL is listening on.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "The Amazon Aurora PostgreSQL database to connect to.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AwsIotAnalyticsParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for IoT Analytics.",
+                  "nested_params": [
+                    {
+                      "name": "DataSetName",
+                      "type": "string",
+                      "required": false,
+                      "description": "Dataset name.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "JiraParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Jira.",
+                  "nested_params": [
+                    {
+                      "name": "SiteBaseUrl",
+                      "type": "string",
+                      "required": false,
+                      "description": "The base URL of the Jira site.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MariaDbParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for MariaDB.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "MySqlParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for MySQL.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "OracleParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Oracle.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "An Oracle host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "The database.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "UseServiceName",
+                      "type": "boolean",
+                      "required": false,
+                      "description": "A Boolean value that indicates whether the Database uses a service name or an SID. If this value is left blank, the default value is SID. If this value is set to false, the value is SID.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "PostgreSqlParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for PostgreSQL.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "PrestoParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Presto.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Catalog",
+                      "type": "string",
+                      "required": false,
+                      "description": "Catalog.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "RdsParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Amazon RDS.",
+                  "nested_params": [
+                    {
+                      "name": "InstanceId",
+                      "type": "string",
+                      "required": false,
+                      "description": "Instance ID.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "RedshiftParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Amazon Redshift.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host. This field can be blank if ClusterId is provided.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port. This field can be blank if the ClusterId is provided.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ClusterId",
+                      "type": "string",
+                      "required": false,
+                      "description": "Cluster ID. This field can be blank if the Host and Port are provided.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "IAMParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An optional parameter that uses IAM authentication to grant Amazon QuickSight access to your cluster. This parameter can be used instead of DataSourceCredentials.",
+                      "nested_params": [
+                        {
+                          "name": "RoleArn",
+                          "type": "string",
+                          "required": false,
+                          "description": "Use the RoleArn structure to allow Amazon QuickSight to call redshift:GetClusterCredentials on your cluster. The calling principal must have iam:PassRole access to pass the role to Amazon QuickSight. The role's trust policy must allow the Amazon QuickSight service principal to assume the role.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "DatabaseUser",
+                          "type": "string",
+                          "required": false,
+                          "description": "The user whose permissions and group memberships will be used by Amazon QuickSight to access the cluster. If this user already exists in your database, Amazon QuickSight is granted the same permissions that the user has. If the user doesn't exist, set the value of AutoCreateDatabaseUser to True to create a new user with PUBLIC permissions.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "DatabaseGroups",
+                          "type": "list",
+                          "required": false,
+                          "description": "A list of groups whose permissions will be granted to Amazon QuickSight to access the cluster. These permissions are combined with the permissions granted to Amazon QuickSight by the DatabaseUser. If you choose to include this parameter, the RoleArn must grant access to redshift:JoinGroup.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "AutoCreateDatabaseUser",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "Automatically creates a database user. If your database doesn't have a DatabaseUser, set this parameter to True. If there is no DatabaseUser, Amazon QuickSight can't connect to your cluster. The RoleArn that you use for this operation must grant access to redshift:CreateClusterUser to successfully create the user.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "IdentityCenterConfiguration",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An optional parameter that configures IAM Identity Center authentication to grant Amazon QuickSight access to your cluster. This parameter can only be specified if your Amazon QuickSight account is configured with IAM Identity Center.",
+                      "nested_params": [
+                        {
+                          "name": "EnableIdentityPropagation",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "A Boolean option that controls whether Trusted Identity Propagation should be used.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "S3Parameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for S3.",
+                  "nested_params": [
+                    {
+                      "name": "ManifestFileLocation",
+                      "type": "dict",
+                      "required": false,
+                      "description": "Location of the Amazon S3 manifest file. This is NULL if the manifest file was uploaded into Amazon QuickSight.",
+                      "nested_params": [
+                        {
+                          "name": "Bucket",
+                          "type": "string",
+                          "required": false,
+                          "description": "Amazon S3 bucket.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "Key",
+                          "type": "string",
+                          "required": false,
+                          "description": "Amazon S3 key that identifies an object.",
+                          "nested_params": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "RoleArn",
+                      "type": "string",
+                      "required": false,
+                      "description": "Use the RoleArn structure to override an account-wide role for a specific S3 data source. For example, say an account administrator has turned off all S3 access with an account-wide role. The administrator can then use RoleArn to bypass the account-wide role and allow S3 access for the single S3 data source that is specified in the structure, even if the account-wide role forbidding S3 access is still active.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ServiceNowParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for ServiceNow.",
+                  "nested_params": [
+                    {
+                      "name": "SiteBaseUrl",
+                      "type": "string",
+                      "required": false,
+                      "description": "URL of the base site.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SnowflakeParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Snowflake.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Warehouse",
+                      "type": "string",
+                      "required": false,
+                      "description": "Warehouse.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AuthenticationType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The authentication type that you want to use for your connection. This parameter accepts OAuth and non-OAuth authentication types.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DatabaseAccessControlRole",
+                      "type": "string",
+                      "required": false,
+                      "description": "The database access control role.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "OAuthParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that contains information needed to create a data source connection between an Amazon QuickSight account and Snowflake.",
+                      "nested_params": [
+                        {
+                          "name": "TokenProviderUrl",
+                          "type": "string",
+                          "required": false,
+                          "description": "The token endpoint URL of the identity provider.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "OAuthScope",
+                          "type": "string",
+                          "required": false,
+                          "description": "The OAuth scope.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "IdentityProviderVpcConnectionProperties",
+                          "type": "dict",
+                          "required": false,
+                          "description": "VPC connection properties.",
+                          "nested_params": [
+                            {
+                              "name": "VpcConnectionArn",
+                              "type": "string",
+                              "required": false,
+                              "description": "The Amazon Resource Name (ARN) for the VPC connection.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "IdentityProviderResourceUri",
+                          "type": "string",
+                          "required": false,
+                          "description": "The resource uri of the identity provider.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "SparkParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Spark.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SqlServerParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for SQL Server.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "TeradataParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Teradata.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "Host.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Port.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Database",
+                      "type": "string",
+                      "required": false,
+                      "description": "Database.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "TwitterParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Twitter.",
+                  "nested_params": [
+                    {
+                      "name": "Query",
+                      "type": "string",
+                      "required": false,
+                      "description": "Twitter query string.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "MaxRows",
+                      "type": "integer",
+                      "required": false,
+                      "description": "Maximum number of rows to query Twitter.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "AmazonOpenSearchParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for OpenSearch.",
+                  "nested_params": [
+                    {
+                      "name": "Domain",
+                      "type": "string",
+                      "required": false,
+                      "description": "The OpenSearch domain.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "ExasolParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters for Exasol.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "The hostname or IP address of the Exasol data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The port for the Exasol data source.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "DatabricksParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters that are required to connect to a Databricks data source.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "The host name of the Databricks data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The port for the Databricks data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "SqlEndpointPath",
+                      "type": "string",
+                      "required": false,
+                      "description": "The HTTP path of the Databricks data source.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "StarburstParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters that are required to connect to a Starburst data source.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "The host name of the Starburst data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The port for the Starburst data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Catalog",
+                      "type": "string",
+                      "required": false,
+                      "description": "The catalog name for the Starburst data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "ProductType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The product type for the Starburst data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DatabaseAccessControlRole",
+                      "type": "string",
+                      "required": false,
+                      "description": "The database access control role.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "AuthenticationType",
+                      "type": "string",
+                      "required": false,
+                      "description": "The authentication type that you want to use for your connection. This parameter accepts OAuth and non-OAuth authentication types.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "OAuthParameters",
+                      "type": "dict",
+                      "required": false,
+                      "description": "An object that contains information needed to create a data source connection between an Amazon QuickSight account and Starburst.",
+                      "nested_params": [
+                        {
+                          "name": "TokenProviderUrl",
+                          "type": "string",
+                          "required": false,
+                          "description": "The token endpoint URL of the identity provider.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "OAuthScope",
+                          "type": "string",
+                          "required": false,
+                          "description": "The OAuth scope.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "IdentityProviderVpcConnectionProperties",
+                          "type": "dict",
+                          "required": false,
+                          "description": "VPC connection properties.",
+                          "nested_params": [
+                            {
+                              "name": "VpcConnectionArn",
+                              "type": "string",
+                              "required": false,
+                              "description": "The Amazon Resource Name (ARN) for the VPC connection.",
+                              "nested_params": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "IdentityProviderResourceUri",
+                          "type": "string",
+                          "required": false,
+                          "description": "The resource uri of the identity provider.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "TrinoParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters that are required to connect to a Trino data source.",
+                  "nested_params": [
+                    {
+                      "name": "Host",
+                      "type": "string",
+                      "required": false,
+                      "description": "The host name of the Trino data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Port",
+                      "type": "integer",
+                      "required": false,
+                      "description": "The port for the Trino data source.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Catalog",
+                      "type": "string",
+                      "required": false,
+                      "description": "The catalog name for the Trino data source.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BigQueryParameters",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The parameters that are required to connect to a Google BigQuery data source.",
+                  "nested_params": [
+                    {
+                      "name": "ProjectId",
+                      "type": "string",
+                      "required": false,
+                      "description": "The Google Cloud Platform project ID where your datasource was created.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DataSetRegion",
+                      "type": "string",
+                      "required": false,
+                      "description": "The storage location where you create a Google BigQuery data source.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VpcConnectionProperties",
+              "type": "dict",
+              "required": false,
+              "description": "VPC connection properties.",
+              "nested_params": [
+                {
+                  "name": "VpcConnectionArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The Amazon Resource Name (ARN) for the VPC connection.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "SslProperties",
+              "type": "dict",
+              "required": false,
+              "description": "Secure Socket Layer (SSL) properties that apply when Amazon QuickSight connects to your underlying data source.",
+              "nested_params": [
+                {
+                  "name": "DisableSsl",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "A Boolean option to control whether SSL should be disabled.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Credentials",
+              "type": "dict",
+              "required": false,
+              "description": "An optional structure that provides the credentials to be used to create the imported data source.",
+              "nested_params": [
+                {
+                  "name": "CredentialPair",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A username and password credential pair to be used to create the imported data source. Keep this field blank if you are using a Secrets Manager secret to provide credentials.",
+                  "nested_params": [
+                    {
+                      "name": "Username",
+                      "type": "string",
+                      "required": false,
+                      "description": "The username for the data source connection.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Password",
+                      "type": "string",
+                      "required": false,
+                      "description": "The password for the data source connection.",
+                      "nested_params": []
+                    }
+                  ]
+                },
+                {
+                  "name": "SecretArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "The ARN of the Secrets Manager secret that's used to create the imported data source. Keep this field blank, unless you are using a secret in place of a credential pair.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DataSets",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any DataSet resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSetId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the dataset to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the dataset.",
+              "nested_params": []
+            },
+            {
+              "name": "DataSetRefreshProperties",
+              "type": "dict",
+              "required": false,
+              "description": "The refresh properties of a dataset.",
+              "nested_params": [
+                {
+                  "name": "RefreshConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The refresh configuration for a dataset.",
+                  "nested_params": [
+                    {
+                      "name": "IncrementalRefresh",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The incremental refresh for the dataset.",
+                      "nested_params": [
+                        {
+                          "name": "LookbackWindow",
+                          "type": "dict",
+                          "required": false,
+                          "description": "The lookback window setup for an incremental refresh configuration.",
+                          "nested_params": [
+                            {
+                              "name": "ColumnName",
+                              "type": "string",
+                              "required": false,
+                              "description": "The name of the lookback window column.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "Size",
+                              "type": "integer",
+                              "required": false,
+                              "description": "The lookback window column size.",
+                              "nested_params": []
+                            },
+                            {
+                              "name": "SizeUnit",
+                              "type": "string",
+                              "required": false,
+                              "description": "The size unit that is used for the lookback window column. Valid values for this structure are HOUR, DAY, and WEEK.",
+                              "nested_params": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "FailureConfiguration",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The failure configuration for a dataset.",
+                  "nested_params": [
+                    {
+                      "name": "EmailAlert",
+                      "type": "dict",
+                      "required": false,
+                      "description": "The email alert configuration for a dataset refresh failure.",
+                      "nested_params": [
+                        {
+                          "name": "AlertStatus",
+                          "type": "string",
+                          "required": false,
+                          "description": "The status value that determines if email alerts are sent.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Themes",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any Theme resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "ThemeId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the theme to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the theme.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Analyses",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any Analysis resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "AnalysisId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the analysis that you ant to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the analysis.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Dashboards",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any Dashboard resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DashboardId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the dashboard that you want to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the dashboard.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Folders",
+          "type": "list",
+          "required": false,
+          "description": "A list of overrides for any Folder resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "FolderId",
+              "type": "string",
+              "required": false,
+              "description": "The ID of the folder that you want to apply overrides to.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "A new name for the folder.",
+              "nested_params": []
+            },
+            {
+              "name": "ParentFolderArn",
+              "type": "string",
+              "required": false,
+              "description": "A new parent folder arn. This change can only be applied if the import creates a brand new folder. Existing folders cannot be moved.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FailureAction",
+      "type": "string",
+      "required": false,
+      "description": "The failure action for the import job. If you choose ROLLBACK, failed import jobs will attempt to undo any asset changes caused by the failed job. If you choose DO_NOTHING, failed import jobs will not attempt to roll back any asset changes caused by the failed job, possibly keeping the Amazon QuickSight account in an inconsistent state.",
+      "nested_params": []
+    },
+    {
+      "name": "OverridePermissions",
+      "type": "dict",
+      "required": true,
+      "description": "Optional permission overrides that are applied to the resource configuration before import. DataSources (list) --- A list of permissions overrides for any DataSource resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of permissions to be applied to a list of data source IDs. A list of data source IDs that you want to apply overrides to. You can use * to override all data sources in this asset bundle. (string) --- A list of permissions for the data source that you want to apply overrides to. A list of principals to grant permissions on. (string) --- A list of IAM actions to grant permissions on. (string) --- DataSets (list) --- A list of permissions overrides for any DataSet resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of permissions to be applied to a list of dataset IDs. A list of dataset IDs that you want to apply overrides to. You can use * to override all datasets in this asset bundle. (string) --- A list of permissions for the datasets that you want to apply overrides to. (string) --- Themes (list) --- A list of permissions overrides for any Theme resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of permissions to be applied to a list of theme IDs. A list of theme IDs that you want to apply overrides to. You can use * to override all themes in this asset bundle. (string) --- A list of permissions for the themes that you want to apply overrides to. (string) --- Analyses (list) --- A list of permissions overrides for any Analysis resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of permissions to be applied to a list of analysis IDs. A list of analysis IDs that you want to apply overrides to. You can use * to override all analyses in this asset bundle. (string) --- A list of permissions for the analyses that you want to apply overrides to. (string) --- Dashboards (list) --- A list of permissions overrides for any Dashboard resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of permissions to be applied to a list of dashboard IDs. A list of dashboard IDs that you want to apply overrides to. You can use * to override all dashboards in this asset bundle. (string) --- Permissions (dict) --- A list of permissions for the dashboards that you want to apply overrides to. (string) --- LinkSharingConfiguration (dict) --- A structure that contains the link sharing configurations that you want to apply overrides to. Permissions (dict) --- A list of link sharing permissions for the dashboards that you want to apply overrides to. (string) --- Folders (list) --- A list of permissions for the folders that you want to apply overrides to. (dict) --- An object that contains a list of permissions to be applied to a list of folder IDs. A list of folder IDs that you want to apply overrides to. You can use * to override all folders in this asset bundle. (string) --- Permissions (dict) --- A structure that contains the permissions for the resource that you want to override in an asset bundle import job. (string) ---",
+      "nested_params": [
+        {
+          "name": "DataSources",
+          "type": "list",
+          "required": false,
+          "description": "A list of permissions overrides for any DataSource resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSourceIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of data source IDs that you want to apply overrides to. You can use * to override all data sources in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Permissions",
+              "type": "dict",
+              "required": false,
+              "description": "A list of permissions for the data source that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of principals to grant permissions on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Actions",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of IAM actions to grant permissions on.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DataSets",
+          "type": "list",
+          "required": false,
+          "description": "A list of permissions overrides for any DataSet resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSetIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of dataset IDs that you want to apply overrides to. You can use * to override all datasets in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Permissions",
+              "type": "dict",
+              "required": false,
+              "description": "A list of permissions for the datasets that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of principals to grant permissions on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Actions",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of IAM actions to grant permissions on.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Themes",
+          "type": "list",
+          "required": false,
+          "description": "A list of permissions overrides for any Theme resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "ThemeIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of theme IDs that you want to apply overrides to. You can use * to override all themes in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Permissions",
+              "type": "dict",
+              "required": false,
+              "description": "A list of permissions for the themes that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of principals to grant permissions on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Actions",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of IAM actions to grant permissions on.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Analyses",
+          "type": "list",
+          "required": false,
+          "description": "A list of permissions overrides for any Analysis resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "AnalysisIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of analysis IDs that you want to apply overrides to. You can use * to override all analyses in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Permissions",
+              "type": "dict",
+              "required": false,
+              "description": "A list of permissions for the analyses that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of principals to grant permissions on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Actions",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of IAM actions to grant permissions on.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dashboards",
+          "type": "list",
+          "required": false,
+          "description": "A list of permissions overrides for any Dashboard resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DashboardIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of dashboard IDs that you want to apply overrides to. You can use * to override all dashboards in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Permissions",
+              "type": "dict",
+              "required": false,
+              "description": "A list of permissions for the dashboards that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of principals to grant permissions on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Actions",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of IAM actions to grant permissions on.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "LinkSharingConfiguration",
+              "type": "dict",
+              "required": false,
+              "description": "A structure that contains the link sharing configurations that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Permissions",
+                  "type": "dict",
+                  "required": false,
+                  "description": "A list of link sharing permissions for the dashboards that you want to apply overrides to.",
+                  "nested_params": [
+                    {
+                      "name": "Principals",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of principals to grant permissions on.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "Actions",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of IAM actions to grant permissions on.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Folders",
+          "type": "list",
+          "required": false,
+          "description": "A list of permissions for the folders that you want to apply overrides to.",
+          "nested_params": [
+            {
+              "name": "FolderIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of folder IDs that you want to apply overrides to. You can use * to override all folders in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Permissions",
+              "type": "dict",
+              "required": false,
+              "description": "A structure that contains the permissions for the resource that you want to override in an asset bundle import job.",
+              "nested_params": [
+                {
+                  "name": "Principals",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of principals to grant permissions on.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Actions",
+                  "type": "list",
+                  "required": false,
+                  "description": "A list of IAM actions to grant permissions on.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OverrideTags",
+      "type": "dict",
+      "required": true,
+      "description": "Optional tag overrides that are applied to the resource configuration before import. VPCConnections (list) --- A list of tag overrides for any VPCConnection resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of VPC connection IDs. A list of VPC connection IDs that you want to apply overrides to. You can use * to override all VPC connections in this asset bundle. (string) --- A list of tags for the VPC connections that you want to apply overrides to. (dict) --- The key or keys of the key-value pairs for the resource tag or tags assigned to the resource. Tag key. Tag value. DataSources (list) --- A list of tag overrides for any DataSource resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of data source IDs. A list of data source IDs that you want to apply overrides to. You can use * to override all data sources in this asset bundle. (string) --- A list of tags for the data source that you want to apply overrides to. DataSets (list) --- A list of tag overrides for any DataSet resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of dataset IDs. A list of dataset IDs that you want to apply overrides to. You can use * to override all datasets in this asset bundle. (string) --- A list of tags for the datasets that you want to apply overrides to. Themes (list) --- A list of tag overrides for any Theme resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of theme IDs. A list of theme IDs that you want to apply overrides to. You can use * to override all themes in this asset bundle. (string) --- A list of tags for the themes that you want to apply overrides to. Analyses (list) --- A list of tag overrides for any Analysis resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of analysis IDs. A list of analysis IDs that you want to apply overrides to. You can use * to override all analyses in this asset bundle. (string) --- A list of tags for the analyses that you want to apply overrides to. Dashboards (list) --- A list of tag overrides for any Dashboard resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of dashboard IDs. A list of dashboard IDs that you want to apply overrides to. You can use * to override all dashboards in this asset bundle. (string) --- A list of tags for the dashboards that you want to apply overrides to. Folders (list) --- A list of tag overrides for any Folder resources that are present in the asset bundle that is imported. (dict) --- An object that contains a list of tags to be assigned to a list of folder IDs. A list of folder IDs that you want to apply overrides to. You can use * to override all folders in this asset bundle. (string) --- A list of tags for the folders that you want to apply overrides to. Tag value.",
+      "nested_params": [
+        {
+          "name": "VPCConnections",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any VPCConnection resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "VPCConnectionIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of VPC connection IDs that you want to apply overrides to. You can use * to override all VPC connections in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the VPC connections that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DataSources",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any DataSource resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSourceIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of data source IDs that you want to apply overrides to. You can use * to override all data sources in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the data source that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "DataSets",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any DataSet resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DataSetIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of dataset IDs that you want to apply overrides to. You can use * to override all datasets in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the datasets that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Themes",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any Theme resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "ThemeIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of theme IDs that you want to apply overrides to. You can use * to override all themes in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the themes that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Analyses",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any Analysis resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "AnalysisIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of analysis IDs that you want to apply overrides to. You can use * to override all analyses in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the analyses that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Dashboards",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any Dashboard resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "DashboardIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of dashboard IDs that you want to apply overrides to. You can use * to override all dashboards in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the dashboards that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Folders",
+          "type": "list",
+          "required": false,
+          "description": "A list of tag overrides for any Folder resources that are present in the asset bundle that is imported.",
+          "nested_params": [
+            {
+              "name": "FolderIds",
+              "type": "list",
+              "required": false,
+              "description": "A list of folder IDs that you want to apply overrides to. You can use * to override all folders in this asset bundle.",
+              "nested_params": []
+            },
+            {
+              "name": "Tags",
+              "type": "list",
+              "required": false,
+              "description": "A list of tags for the folders that you want to apply overrides to.",
+              "nested_params": [
+                {
+                  "name": "Key",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag key.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Value",
+                  "type": "string",
+                  "required": false,
+                  "description": "Tag value.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OverrideValidationStrategy",
+      "type": "dict",
+      "required": false,
+      "description": "An optional validation strategy override for all analyses and dashboards that is applied to the resource configuration before import. StrictModeForAllResources (boolean) --- A Boolean value that indicates whether to import all analyses and dashboards under strict or lenient mode.",
+      "nested_params": [
+        {
+          "name": "StrictModeForAllResources",
+          "type": "boolean",
+          "required": false,
+          "description": "A Boolean value that indicates whether to import all analyses and dashboards under strict or lenient mode.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) for the import job.",
+          "nested_items": []
+        },
+        {
+          "name": "AssetBundleImportJobId",
+          "type": "string",
+          "description": "The ID of the job. This ID is unique while the job is running. After the job is completed, you can reuse this ID for another job.",
+          "nested_items": []
+        },
+        {
+          "name": "RequestId",
+          "type": "string",
+          "description": "The Amazon Web Services response ID for this operation.",
+          "nested_items": []
+        },
+        {
+          "name": "Status",
+          "type": "integer",
+          "description": "The HTTP status of the response.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

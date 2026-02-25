@@ -1,0 +1,437 @@
+{
+  "method_name": "poll_for_decision_task",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/swf/client/poll_for_decision_task.html",
+  "description": "Used by deciders to get a  DecisionTask from the specified decision taskList. A decision task may be returned for any open workflow execution that is using the specified task list. The task includes a paginated view of the history of the workflow execution. The decider should use the workflow type and the history to determine how to properly handle the task. This action initiates a long poll, where the service holds the HTTP connection open and responds as soon a task becomes available. If no decision task is available in the specified task list before the timeout of 60 seconds expires, an empty result is returned. An empty result, in this context, means that a DecisionTask is returned, but that the value of taskToken is an empty string. You can use IAM policies to control this action's access to Amazon SWF resources as follows: If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's cause parameter is set to OPERATION_NOT_PERMITTED. For details and example IAM policies, see Using IAM to Manage Access to Amazon SWF Workflows in the Amazon SWF Developer Guide.",
+  "parameters": [
+    {
+      "name": "domain",
+      "type": "string",
+      "required": true,
+      "description": "The name of the domain containing the task lists to poll.",
+      "nested_params": []
+    },
+    {
+      "name": "taskList",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the task list to poll for decision tasks. The specified string must not contain a : (colon), / (slash), | (vertical bar), or any control characters ( \\u0000-\\u001f | \\u007f-\\u009f). Also, it must not be the literal string arn. The name of the task list.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the task list.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "identity",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "nextPageToken",
+      "type": "string",
+      "required": false,
+      "description": "If NextPageToken is returned there are more results available. The value of NextPageToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return a 400 error: ' Specified token has exceeded its maximum lifetime'. The configured maximumPageSize determines how many results can be returned in a single call.",
+      "nested_params": []
+    },
+    {
+      "name": "maximumPageSize",
+      "type": "integer",
+      "required": false,
+      "description": "The maximum number of results that are returned per call. Use nextPageToken to obtain further pages of results. This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.",
+      "nested_params": []
+    },
+    {
+      "name": "reverseOrder",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "startAtPreviousStartedEvent",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "taskToken",
+          "type": "string",
+          "description": "The opaque string used as a handle on the task. This token is used by workers to communicate progress and response information back to the system about the task.",
+          "nested_items": []
+        },
+        {
+          "name": "startedEventId",
+          "type": "integer",
+          "description": "The ID of the DecisionTaskStarted event recorded in the history.",
+          "nested_items": []
+        },
+        {
+          "name": "workflowExecution",
+          "type": "dict",
+          "description": "The workflow execution for which this decision task was created.",
+          "nested_items": [
+            {
+              "name": "workflowId",
+              "type": "string",
+              "description": "The user defined identifier associated with the workflow execution.",
+              "nested_items": []
+            },
+            {
+              "name": "runId",
+              "type": "string",
+              "description": "A system-generated unique identifier for the workflow execution.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "workflowType",
+          "type": "dict",
+          "description": "The type of the workflow execution for which this decision task was created.",
+          "nested_items": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the workflow type.",
+              "nested_items": []
+            },
+            {
+              "name": "version",
+              "type": "string",
+              "description": "The version of the workflow type.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "events",
+          "type": "list",
+          "description": "A paginated list of history events of the workflow execution. The decider uses this during the processing of the decision task.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskCancelRequested --- A RequestCancelActivityTask decision was received by the system.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskCanceled --- The activity task was successfully canceled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskCompleted --- An activity worker successfully completed an activity task by calling  RespondActivityTaskCompleted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskFailed --- An activity worker failed an activity task by calling  RespondActivityTaskFailed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskScheduled --- An activity task was scheduled for execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskStarted --- The scheduled activity task was dispatched to a worker.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ActivityTaskTimedOut --- The activity task timed out.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CancelTimerFailed --- Failed to process CancelTimer decision. This happens when the decision isn't configured properly, for example no timer exists with the specified timer Id.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CancelWorkflowExecutionFailed --- A request to cancel a workflow execution failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ChildWorkflowExecutionCanceled --- A child workflow execution, started by this workflow execution, was canceled and closed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ChildWorkflowExecutionCompleted --- A child workflow execution, started by this workflow execution, completed successfully and was closed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ChildWorkflowExecutionFailed --- A child workflow execution, started by this workflow execution, failed to complete successfully and was closed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ChildWorkflowExecutionStarted --- A child workflow execution was successfully started.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ChildWorkflowExecutionTerminated --- A child workflow execution, started by this workflow execution, was terminated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ChildWorkflowExecutionTimedOut --- A child workflow execution, started by this workflow execution, timed out and was closed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "CompleteWorkflowExecutionFailed --- The workflow execution failed to complete.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ContinueAsNewWorkflowExecutionFailed --- The workflow execution failed to complete after being continued as a new workflow execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DecisionTaskCompleted --- The decider successfully completed a decision task by calling  RespondDecisionTaskCompleted.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DecisionTaskScheduled --- A decision task was scheduled for the workflow execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DecisionTaskStarted --- The decision task was dispatched to a decider.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "DecisionTaskTimedOut --- The decision task timed out.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ExternalWorkflowExecutionCancelRequested --- Request to cancel an external workflow execution was successfully delivered to the target execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ExternalWorkflowExecutionSignaled --- A signal, requested by this workflow execution, was successfully delivered to the target external workflow execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "FailWorkflowExecutionFailed --- A request to mark a workflow execution as failed, itself failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "MarkerRecorded --- A marker was recorded in the workflow history as the result of a RecordMarker decision.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "RecordMarkerFailed --- A RecordMarker decision was returned as failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "RequestCancelActivityTaskFailed --- Failed to process RequestCancelActivityTask decision. This happens when the decision isn't configured properly.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "RequestCancelExternalWorkflowExecutionFailed --- Request to cancel an external workflow execution failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "RequestCancelExternalWorkflowExecutionInitiated --- A request was made to request the cancellation of an external workflow execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "ScheduleActivityTaskFailed --- Failed to process ScheduleActivityTask decision. This happens when the decision isn't configured properly, for example the activity type specified isn't registered.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SignalExternalWorkflowExecutionFailed --- The request to signal an external workflow execution failed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "SignalExternalWorkflowExecutionInitiated --- A request to signal an external workflow was made.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "StartActivityTaskFailed --- A scheduled activity task failed to start.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "StartChildWorkflowExecutionFailed --- Failed to process StartChildWorkflowExecution decision. This happens when the decision isn't configured properly, for example the workflow type specified isn't registered.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "StartChildWorkflowExecutionInitiated --- A request was made to start a child workflow execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "StartTimerFailed --- Failed to process StartTimer decision. This happens when the decision isn't configured properly, for example a timer already exists with the specified timer Id.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TimerCanceled --- A timer, previously started for this workflow execution, was successfully canceled.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TimerFired --- A timer, previously started for this workflow execution, fired.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "TimerStarted --- A timer was started for the workflow execution due to a StartTimer decision.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionCancelRequested --- A request to cancel this workflow execution was made.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionCanceled --- The workflow execution was successfully canceled and closed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionCompleted --- The workflow execution was closed due to successful completion.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionContinuedAsNew --- The workflow execution was closed and a new execution of the same type was created with the same workflowId.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionFailed --- The workflow execution closed due to a failure.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionSignaled --- An external signal was received for the workflow execution.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionStarted --- The workflow execution was started.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionTerminated --- The workflow execution was terminated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "WorkflowExecutionTimedOut --- The workflow execution was closed because a time out was exceeded.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nextPageToken",
+          "type": "string",
+          "description": "If a NextPageToken was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in nextPageToken. Keep all other arguments unchanged.",
+          "nested_items": []
+        },
+        {
+          "name": "previousStartedEventId",
+          "type": "integer",
+          "description": "The ID of the DecisionTaskStarted event of the previous decision task of this workflow execution that was processed by the decider. This can be used to determine the events in the history new since the last decision task received by the decider.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

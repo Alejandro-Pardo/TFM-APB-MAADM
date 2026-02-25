@@ -1,0 +1,207 @@
+{
+  "method_name": "create_inference_scheduler",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lookoutequipment/client/create_inference_scheduler.html",
+  "description": "Creates a scheduled inference. Scheduling an inference is setting up a continuous real-time inference plan to analyze new measurement data. When setting up the schedule, you provide an S3 bucket location for the input data, assign it a delimiter between separate entries in the data, set an offset delay if desired, and set the frequency of inferencing. You must also provide an S3 bucket location for the output data.",
+  "parameters": [
+    {
+      "name": "ModelName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the previously trained machine learning model being used to create the inference scheduler.",
+      "nested_params": []
+    },
+    {
+      "name": "InferenceSchedulerName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the inference scheduler being created.",
+      "nested_params": []
+    },
+    {
+      "name": "DataDelayOffsetInMinutes",
+      "type": "integer",
+      "required": false,
+      "description": "The interval (in minutes) of planned delay at the start of each inference segment. For example, if inference is set to run every ten minutes, the delay is set to five minutes and the time is 09:08. The inference scheduler will wake up at the configured interval (which, without a delay configured, would be 09:10) plus the additional five minute delay time (so 09:15) to check your Amazon S3 bucket. The delay provides a buffer for you to upload data at the same frequency, so that you don't have to stop and restart the scheduler when uploading new data. For more information, see Understanding the inference process.",
+      "nested_params": []
+    },
+    {
+      "name": "DataUploadFrequency",
+      "type": "string",
+      "required": true,
+      "description": "How often data is uploaded to the source Amazon S3 bucket for the input data. The value chosen is the length of time between data uploads. For instance, if you select 5 minutes, Amazon Lookout for Equipment will upload the real-time data to the source bucket once every 5 minutes. This frequency also determines how often Amazon Lookout for Equipment runs inference on your data. For more information, see Understanding the inference process.",
+      "nested_params": []
+    },
+    {
+      "name": "DataInputConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies configuration information for the input data for the inference scheduler, including delimiter, format, and dataset location. S3InputConfiguration (dict) --- Specifies configuration information for the input data for the inference, including Amazon S3 location of input data. The bucket containing the input dataset for the inference. Prefix (string) --- The prefix for the S3 bucket used for the input data for the inference. InputTimeZoneOffset (string) --- Indicates the difference between your time zone and Coordinated Universal Time (UTC). InferenceInputNameConfiguration (dict) --- Specifies configuration information for the input data for the inference, including timestamp format and delimiter. TimestampFormat (string) --- The format of the timestamp, whether Epoch time, or standard, with or without hyphens (-). ComponentTimestampDelimiter (string) --- Indicates the delimiter character used between items in the data.",
+      "nested_params": [
+        {
+          "name": "S3InputConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies configuration information for the input data for the inference, including Amazon S3 location of input data.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The bucket containing the input dataset for the inference.",
+              "nested_params": []
+            },
+            {
+              "name": "Prefix",
+              "type": "string",
+              "required": false,
+              "description": "The prefix for the S3 bucket used for the input data for the inference.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "InputTimeZoneOffset",
+          "type": "string",
+          "required": false,
+          "description": "Indicates the difference between your time zone and Coordinated Universal Time (UTC).",
+          "nested_params": []
+        },
+        {
+          "name": "InferenceInputNameConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies configuration information for the input data for the inference, including timestamp format and delimiter.",
+          "nested_params": [
+            {
+              "name": "TimestampFormat",
+              "type": "string",
+              "required": false,
+              "description": "The format of the timestamp, whether Epoch time, or standard, with or without hyphens (-).",
+              "nested_params": []
+            },
+            {
+              "name": "ComponentTimestampDelimiter",
+              "type": "string",
+              "required": false,
+              "description": "Indicates the delimiter character used between items in the data.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DataOutputConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies configuration information for the output results for the inference scheduler, including the S3 location for the output. Specifies configuration information for the output results from for the inference, output S3 location. The bucket containing the output results from the inference Prefix (string) --- The prefix for the S3 bucket used for the output results from the inference. KmsKeyId (string) --- The ID number for the KMS key key used to encrypt the inference output.",
+      "nested_params": [
+        {
+          "name": "S3OutputConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies configuration information for the output results from for the inference, output S3 location.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The bucket containing the output results from the inference.",
+              "nested_params": []
+            },
+            {
+              "name": "Prefix",
+              "type": "string",
+              "required": false,
+              "description": "The prefix for the S3 bucket used for the output results from the inference.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "KmsKeyId",
+          "type": "string",
+          "required": false,
+          "description": "The ID number for the KMS key key used to encrypt the inference output.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": true,
+      "description": "The Amazon Resource Name (ARN) of a role with permission to access the data source being used for the inference.",
+      "nested_params": []
+    },
+    {
+      "name": "ServerSideKmsKeyId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": true,
+      "description": "A unique identifier for the request. If you do not set the client request token, Amazon Lookout for Equipment generates one. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Any tags associated with the inference scheduler. (dict) --- A tag is a key-value pair that can be added to a resource as metadata. The key for the specified tag. The value for the specified tag.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "The key for the specified tag.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "The value for the specified tag.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "InferenceSchedulerArn",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the inference scheduler being created.",
+          "nested_items": []
+        },
+        {
+          "name": "InferenceSchedulerName",
+          "type": "string",
+          "description": "The name of inference scheduler being created.",
+          "nested_items": []
+        },
+        {
+          "name": "Status",
+          "type": "string",
+          "description": "Indicates the status of the CreateInferenceScheduler operation.",
+          "nested_items": []
+        },
+        {
+          "name": "ModelQuality",
+          "type": "string",
+          "description": "Provides a quality assessment for a model that uses labels. If Lookout for Equipment determines that the model quality is poor based on training metrics, the value is POOR_QUALITY_DETECTED. Otherwise, the value is QUALITY_THRESHOLD_MET.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

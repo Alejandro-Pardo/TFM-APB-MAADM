@@ -1,0 +1,316 @@
+{
+  "method_name": "calculate_route_matrix",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/location/client/calculate_route_matrix.html",
+  "description": "Calculates a route matrix given the following required parameters: DeparturePositions and DestinationPositions. CalculateRouteMatrix calculates routes and returns the travel time and travel distance from each departure position to each destination position in the request. For example, given departure positions A and B, and destination positions X and Y, CalculateRouteMatrix will return time and distance for routes from A to X, A to Y, B to X, and B to Y (in that order). The number of results returned (and routes calculated) will be the number of DeparturePositions times the number of DestinationPositions. Requires that you first create a route calculator resource. By default, a request that doesn't specify a departure time uses the best time of day to travel with the best traffic conditions when calculating routes. Additional options include:",
+  "parameters": [
+    {
+      "name": "CalculatorName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the route calculator resource that you want to use to calculate the route matrix.",
+      "nested_params": []
+    },
+    {
+      "name": "DeparturePositions",
+      "type": "list",
+      "required": true,
+      "description": "The list of departure (origin) positions for the route matrix. An array of points, each of which is itself a 2-value array defined in WGS 84 format: [longitude, latitude]. For example, [-123.115, 49.285]. Valid Values: [-180 to 180,-90 to 90] (list) --- (float) ---",
+      "nested_params": []
+    },
+    {
+      "name": "DestinationPositions",
+      "type": "list",
+      "required": true,
+      "description": "The list of destination positions for the route matrix. An array of points, each of which is itself a 2-value array defined in WGS 84 format: [longitude, latitude]. For example, [-122.339, 47.615] Valid Values: [-180 to 180,-90 to 90] (list) --- (float) ---",
+      "nested_params": []
+    },
+    {
+      "name": "TravelMode",
+      "type": "string",
+      "required": false,
+      "description": "Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility. The TravelMode you specify also determines how you specify route preferences: If traveling by Car use the CarModeOptions parameter. If traveling by Truck use the TruckModeOptions parameter. Default Value: Car.",
+      "nested_params": []
+    },
+    {
+      "name": "DepartureTime",
+      "type": "datetime",
+      "required": false,
+      "description": "Specifies the desired time of departure. Uses the given time to calculate the route matrix. You can't set both DepartureTime and DepartNow. If neither is set, the best time of day to travel with the best traffic conditions is used to calculate the route matrix. In ISO 8601 format: YYYY-MM-DDThh:mm:ss.sssZ. For example, 2020---07-2T12:15:20.000Z+01:00",
+      "nested_params": []
+    },
+    {
+      "name": "DepartNow",
+      "type": "boolean",
+      "required": false,
+      "description": "Sets the time of departure as the current time. Uses the current time to calculate the route matrix. You can't set both DepartureTime and DepartNow. If neither is set, the best time of day to travel with the best traffic conditions is used to calculate the route matrix. Default Value: false Valid Values: false | true.",
+      "nested_params": []
+    },
+    {
+      "name": "DistanceUnit",
+      "type": "string",
+      "required": false,
+      "description": "Set the unit system to specify the distance. Default Value: Kilometers.",
+      "nested_params": []
+    },
+    {
+      "name": "CarModeOptions",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies route preferences when traveling by Car, such as avoiding routes that use ferries or tolls. Requirements: TravelMode must be specified as Car. AvoidFerries (boolean) --- Avoids ferries when calculating routes. Default Value: false Valid Values: false | true AvoidTolls (boolean) --- Avoids tolls when calculating routes. Default Value: false Valid Values: false | true.",
+      "nested_params": [
+        {
+          "name": "AvoidFerries",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoids ferries when calculating routes. Default Value: false Valid Values: false | true.",
+          "nested_params": []
+        },
+        {
+          "name": "AvoidTolls",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoids tolls when calculating routes. Default Value: false Valid Values: false | true.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TruckModeOptions",
+      "type": "dict",
+      "required": false,
+      "description": "Specifies route preferences when traveling by Truck, such as avoiding routes that use ferries or tolls, and truck specifications to consider when choosing an optimal road. Requirements: TravelMode must be specified as Truck. AvoidFerries (boolean) --- Avoids ferries when calculating routes. Default Value: false Valid Values: false | true AvoidTolls (boolean) --- Avoids tolls when calculating routes. Default Value: false Valid Values: false | true Dimensions (dict) --- Specifies the truck's dimension specifications including length, height, width, and unit of measurement. Used to avoid roads that can't support the truck's dimensions. Length (float) --- The length of the truck. For example, 15.5. Height (float) --- The height of the truck. For example, 4.5. Width (float) --- The width of the truck. Unit (string) --- Specifies the unit of measurement for the truck dimensions. Default Value: Meters Weight (dict) --- Specifies the truck's weight specifications including total weight and unit of measurement. Used to avoid roads that can't support the truck's weight. Total (float) --- The total weight of the truck. For example, 3500. Unit (string) --- The unit of measurement to use for the truck weight. Default Value: Kilograms.",
+      "nested_params": [
+        {
+          "name": "AvoidFerries",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoids ferries when calculating routes. Default Value: false Valid Values: false | true.",
+          "nested_params": []
+        },
+        {
+          "name": "AvoidTolls",
+          "type": "boolean",
+          "required": false,
+          "description": "Avoids tolls when calculating routes. Default Value: false Valid Values: false | true.",
+          "nested_params": []
+        },
+        {
+          "name": "Dimensions",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the truck's dimension specifications including length, height, width, and unit of measurement. Used to avoid roads that can't support the truck's dimensions.",
+          "nested_params": [
+            {
+              "name": "Length",
+              "type": "float",
+              "required": false,
+              "description": "The length of the truck.",
+              "nested_params": []
+            },
+            {
+              "name": "Height",
+              "type": "float",
+              "required": false,
+              "description": "The height of the truck.",
+              "nested_params": []
+            },
+            {
+              "name": "Width",
+              "type": "float",
+              "required": false,
+              "description": "The width of the truck.",
+              "nested_params": []
+            },
+            {
+              "name": "Unit",
+              "type": "string",
+              "required": false,
+              "description": "Specifies the unit of measurement for the truck dimensions. Default Value: Meters.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Weight",
+          "type": "dict",
+          "required": false,
+          "description": "Specifies the truck's weight specifications including total weight and unit of measurement. Used to avoid roads that can't support the truck's weight.",
+          "nested_params": [
+            {
+              "name": "Total",
+              "type": "float",
+              "required": false,
+              "description": "The total weight of the truck.",
+              "nested_params": []
+            },
+            {
+              "name": "Unit",
+              "type": "string",
+              "required": false,
+              "description": "The unit of measurement to use for the truck weight. Default Value: Kilograms.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Key",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "RouteMatrix",
+          "type": "list",
+          "description": "The calculated route matrix containing the results for all pairs of DeparturePositions to DestinationPositions. Each row corresponds to one entry in DeparturePositions. Each entry in the row corresponds to the route from that entry in DeparturePositions to an entry in DestinationPositions.",
+          "nested_items": [
+            {
+              "name": "Distance",
+              "type": "list",
+              "description": "(list) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Distance",
+                      "type": "float",
+                      "description": "The total distance of travel for the route.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "DurationSeconds",
+                      "type": "float",
+                      "description": "The expected duration of travel for the route.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Code",
+                          "type": "string",
+                          "description": "The type of error which occurred for the route calculation.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Message",
+                          "type": "string",
+                          "description": "A message about the error that occurred for the route calculation.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SnappedDeparturePositions",
+          "type": "list",
+          "description": "For routes calculated using an Esri route calculator resource, departure positions are snapped to the closest road. For Esri route calculator resources, this returns the list of departure/origin positions used for calculation of the RouteMatrix.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "list",
+              "description": "(list) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "float",
+                  "description": "(float) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SnappedDestinationPositions",
+          "type": "list",
+          "description": "The list of destination positions for the route matrix used for calculation of the RouteMatrix.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "list",
+              "description": "(list) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "float",
+                  "description": "(float) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "DataSource",
+              "type": "string",
+              "description": "The data provider of traffic and road network data used to calculate the routes. Indicates one of the available providers:",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Esri.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Grab.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "",
+                  "description": "Here.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "RouteCount",
+              "type": "integer",
+              "description": "The count of cells in the route matrix. Equal to the number of DeparturePositions multiplied by the number of DestinationPositions.",
+              "nested_items": []
+            },
+            {
+              "name": "ErrorCount",
+              "type": "integer",
+              "description": "The count of error results in the route matrix. If this number is 0, all routes were calculated successfully.",
+              "nested_items": []
+            },
+            {
+              "name": "DistanceUnit",
+              "type": "string",
+              "description": "The unit of measurement for route distances.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

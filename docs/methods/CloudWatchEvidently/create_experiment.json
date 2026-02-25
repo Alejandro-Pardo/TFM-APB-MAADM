@@ -1,0 +1,448 @@
+{
+  "method_name": "create_experiment",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/evidently/client/create_experiment.html",
+  "description": "Creates an Evidently experiment. Before you create an experiment, you must create the feature to use for the experiment. An experiment helps you make feature design decisions based on evidence and data. An experiment can test as many as five variations at once. Evidently collects experiment data and analyzes it by statistical methods, and provides clear recommendations about which variations perform better. You can optionally specify a segment to have the experiment consider only certain audience types in the experiment, such as using only user sessions from a certain location or who use a certain internet browser. Don't use this operation to update an existing experiment. Instead, use UpdateExperiment.",
+  "parameters": [
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "metricGoals",
+      "type": "list",
+      "required": true,
+      "description": "An array of structures that defines the metrics used for the experiment, and whether a higher or lower value for each metric is the goal. (dict) --- Use this structure to tell Evidently whether higher or lower values are desired for a metric that is used in an experiment. desiredChange (string) --- INCREASE means that a variation with a higher number for this metric is performing better. DECREASE means that a variation with a lower number for this metric is performing better. A structure that contains details about the metric. The entity, such as a user or session, that does an action that causes a metric value to be recorded. An example is userDetails.userID. eventPattern (string) --- The EventBridge event pattern that defines how the metric is recorded. For more information about EventBridge event patterns, see Amazon EventBridge event patterns. A name for the metric. unitLabel (string) --- A label for the units that the metric is measuring. The value that is tracked to produce the metric.",
+      "nested_params": [
+        {
+          "name": "desiredChange",
+          "type": "string",
+          "required": false,
+          "description": "INCREASE means that a variation with a higher number for this metric is performing better. DECREASE means that a variation with a lower number for this metric is performing better.",
+          "nested_params": []
+        },
+        {
+          "name": "metricDefinition",
+          "type": "dict",
+          "required": false,
+          "description": "A structure that contains details about the metric.",
+          "nested_params": [
+            {
+              "name": "entityIdKey",
+              "type": "string",
+              "required": false,
+              "description": "The entity, such as a user or session, that does an action that causes a metric value to be recorded. An example is userDetails.userID.",
+              "nested_params": []
+            },
+            {
+              "name": "eventPattern",
+              "type": "string",
+              "required": false,
+              "description": "The EventBridge event pattern that defines how the metric is recorded. For more information about EventBridge event patterns, see Amazon EventBridge event patterns.",
+              "nested_params": []
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "A name for the metric.",
+              "nested_params": []
+            },
+            {
+              "name": "unitLabel",
+              "type": "string",
+              "required": false,
+              "description": "A label for the units that the metric is measuring.",
+              "nested_params": []
+            },
+            {
+              "name": "valueKey",
+              "type": "string",
+              "required": false,
+              "description": "The value that is tracked to produce the metric.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "A name for the new experiment.",
+      "nested_params": []
+    },
+    {
+      "name": "onlineAbConfig",
+      "type": "dict",
+      "required": false,
+      "description": "A structure that contains the configuration of which variation to use as the 'control' version. tThe 'control' version is used for comparison with other variations. This structure also specifies how much experiment traffic is allocated to each variation. controlTreatmentName (string) --- The name of the variation that is to be the default variation that the other variations are compared to. treatmentWeights (dict) --- A set of key-value pairs. The keys are variation names, and the values are the portion of experiment traffic to be assigned to that variation. Specify the traffic portion in thousandths of a percent, so 20,000 for a variation would allocate 20% of the experiment traffic to that variation. (string) --- (integer) ---",
+      "nested_params": [
+        {
+          "name": "controlTreatmentName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the variation that is to be the default variation that the other variations are compared to.",
+          "nested_params": []
+        },
+        {
+          "name": "treatmentWeights",
+          "type": "dict",
+          "required": false,
+          "description": "A set of key-value pairs. The keys are variation names, and the values are the portion of experiment traffic to be assigned to that variation. Specify the traffic portion in thousandths of a percent, so 20,000 for a variation would allocate 20% of the experiment traffic to that variation.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "project",
+      "type": "string",
+      "required": true,
+      "description": "The name or ARN of the project that you want to create the new experiment in.",
+      "nested_params": []
+    },
+    {
+      "name": "randomizationSalt",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "samplingRate",
+      "type": "integer",
+      "required": false,
+      "description": "The portion of the available audience that you want to allocate to this experiment, in thousandths of a percent. The available audience is the total audience minus the audience that you have allocated to overrides or current launches of this feature. This is represented in thousandths of a percent. For example, specify 10,000 to allocate 10% of the available audience.",
+      "nested_params": []
+    },
+    {
+      "name": "segment",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "Assigns one or more tags (key-value pairs) to the experiment. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters. You can associate as many as 50 tags with an experiment. For more information, see Tagging Amazon Web Services resources. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "treatments",
+      "type": "list",
+      "required": true,
+      "description": "An array of structures that describe the configuration of each feature variation used in the experiment. (dict) --- A structure that defines one treatment in an experiment. A treatment is a variation of the feature that you are including in the experiment. description (string) --- A description for this treatment. The feature that this experiment is testing. A name for this treatment. The name of the variation to use as this treatment in the experiment.",
+      "nested_params": [
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "A description for this treatment.",
+          "nested_params": []
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "required": false,
+          "description": "The feature that this experiment is testing.",
+          "nested_params": []
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "A name for this treatment.",
+          "nested_params": []
+        },
+        {
+          "name": "variation",
+          "type": "string",
+          "required": false,
+          "description": "The name of the variation to use as this treatment in the experiment.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "experiment",
+          "type": "dict",
+          "description": "A structure containing the configuration details of the experiment that you created.",
+          "nested_items": [
+            {
+              "name": "arn",
+              "type": "string",
+              "description": "The ARN of the experiment.",
+              "nested_items": []
+            },
+            {
+              "name": "createdTime",
+              "type": "datetime",
+              "description": "The date and time that the experiment is first created.",
+              "nested_items": []
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "description": "A description of the experiment.",
+              "nested_items": []
+            },
+            {
+              "name": "execution",
+              "type": "dict",
+              "description": "A structure that contains the date and time that the experiment started and ended.",
+              "nested_items": [
+                {
+                  "name": "endedTime",
+                  "type": "datetime",
+                  "description": "The date and time that the experiment ended.",
+                  "nested_items": []
+                },
+                {
+                  "name": "startedTime",
+                  "type": "datetime",
+                  "description": "The date and time that the experiment started.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "lastUpdatedTime",
+              "type": "datetime",
+              "description": "The date and time that the experiment was most recently updated.",
+              "nested_items": []
+            },
+            {
+              "name": "metricGoals",
+              "type": "list",
+              "description": "An array of structures that defines the metrics used for the experiment, and whether a higher or lower value for each metric is the goal.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "desiredChange",
+                      "type": "string",
+                      "description": "INCREASE means that a variation with a higher number for this metric is performing better.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "metricDefinition",
+                      "type": "dict",
+                      "description": "A structure that contains details about the metric.",
+                      "nested_items": [
+                        {
+                          "name": "entityIdKey",
+                          "type": "string",
+                          "description": "The entity, such as a user or session, that does an action that causes a metric value to be recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "eventPattern",
+                          "type": "string",
+                          "description": "The EventBridge event pattern that defines how the metric is recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the metric.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "unitLabel",
+                          "type": "string",
+                          "description": "The label for the units that the metric is measuring.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "valueKey",
+                          "type": "string",
+                          "description": "The value that is tracked to produce the metric.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the experiment.",
+              "nested_items": []
+            },
+            {
+              "name": "onlineAbDefinition",
+              "type": "dict",
+              "description": "A structure that contains the configuration of which variation to use as the 'control' version. The 'control' version is used for comparison with other variations. This structure also specifies how much experiment traffic is allocated to each variation.",
+              "nested_items": [
+                {
+                  "name": "controlTreatmentName",
+                  "type": "string",
+                  "description": "The name of the variation that is the default variation that the other variations are compared to.",
+                  "nested_items": []
+                },
+                {
+                  "name": "treatmentWeights",
+                  "type": "dict",
+                  "description": "A set of key-value pairs. The keys are variation names, and the values are the portion of experiment traffic to be assigned to that variation. The traffic portion is specified in thousandths of a percent, so 20,000 for a variation would allocate 20% of the experiment traffic to that variation.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "integer",
+                          "description": "(integer) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "project",
+              "type": "string",
+              "description": "The name or ARN of the project that contains this experiment.",
+              "nested_items": []
+            },
+            {
+              "name": "randomizationSalt",
+              "type": "string",
+              "description": "This value is used when Evidently assigns a particular user session to the experiment. It helps create a randomization ID to determine which variation the user session is served. This randomization ID is a combination of the entity ID and randomizationSalt.",
+              "nested_items": []
+            },
+            {
+              "name": "samplingRate",
+              "type": "integer",
+              "description": "In thousandths of a percent, the amount of the available audience that is allocated to this experiment. The available audience is the total audience minus the audience that you have allocated to overrides or current launches of this feature.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "analysisCompleteTime",
+                  "type": "datetime",
+                  "description": "The time and date that Evidently completed the analysis of the experiment.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "segment",
+              "type": "string",
+              "description": "The audience segment being used for the experiment, if a segment is being used.",
+              "nested_items": []
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The current state of the experiment.",
+              "nested_items": []
+            },
+            {
+              "name": "statusReason",
+              "type": "string",
+              "description": "If the experiment was stopped, this is the string that was entered by the person who stopped the experiment, to explain why it was stopped.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "treatments",
+              "type": "list",
+              "description": "An array of structures that describe the configuration of each feature variation used in the experiment.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "description",
+                      "type": "string",
+                      "description": "The description of the treatment.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "featureVariations",
+                      "type": "dict",
+                      "description": "The feature variation used for this treatment. This is a key-value pair. The key is the feature name, and the value is the variation name.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "type": "string",
+                      "description": "The name of this treatment.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of this experiment. Currently, this value must be aws.experiment.onlineab.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

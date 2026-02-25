@@ -1,0 +1,107 @@
+{
+  "method_name": "poll_for_activity_task",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/swf/client/poll_for_activity_task.html",
+  "description": "Used by workers to get an  ActivityTask from the specified activity taskList. This initiates a long poll, where the service holds the HTTP connection open and responds as soon as a task becomes available. The maximum time the service holds on to the request before responding is 60 seconds. If no task is available within 60 seconds, the poll returns an empty result. An empty result, in this context, means that an ActivityTask is returned, but that the value of taskToken is an empty string. If a task is returned, the worker should use its type to identify and process it correctly. You can use IAM policies to control this action's access to Amazon SWF resources as follows: If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's cause parameter is set to OPERATION_NOT_PERMITTED. For details and example IAM policies, see Using IAM to Manage Access to Amazon SWF Workflows in the Amazon SWF Developer Guide.",
+  "parameters": [
+    {
+      "name": "domain",
+      "type": "string",
+      "required": true,
+      "description": "The name of the domain that contains the task lists being polled.",
+      "nested_params": []
+    },
+    {
+      "name": "taskList",
+      "type": "dict",
+      "required": true,
+      "description": "Specifies the task list to poll for activity tasks. The specified string must not start or end with whitespace. It must not contain a : (colon), / (slash), | (vertical bar), or any control characters ( \\u0000-\\u001f | \\u007f-\\u009f). Also, it must not be the literal string arn. The name of the task list.",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the task list.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "identity",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "taskToken",
+          "type": "string",
+          "description": "The opaque string used as a handle on the task. This token is used by workers to communicate progress and response information back to the system about the task.",
+          "nested_items": []
+        },
+        {
+          "name": "activityId",
+          "type": "string",
+          "description": "The unique ID of the task.",
+          "nested_items": []
+        },
+        {
+          "name": "startedEventId",
+          "type": "integer",
+          "description": "The ID of the ActivityTaskStarted event recorded in the history.",
+          "nested_items": []
+        },
+        {
+          "name": "workflowExecution",
+          "type": "dict",
+          "description": "The workflow execution that started this activity task.",
+          "nested_items": [
+            {
+              "name": "workflowId",
+              "type": "string",
+              "description": "The user defined identifier associated with the workflow execution.",
+              "nested_items": []
+            },
+            {
+              "name": "runId",
+              "type": "string",
+              "description": "A system-generated unique identifier for the workflow execution.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "activityType",
+          "type": "dict",
+          "description": "The type of this activity task.",
+          "nested_items": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of this activity.",
+              "nested_items": []
+            },
+            {
+              "name": "version",
+              "type": "string",
+              "description": "The version of this activity.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "input",
+          "type": "string",
+          "description": "The inputs provided when the activity task was scheduled. The form of the input is user defined and should be meaningful to the activity implementation.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

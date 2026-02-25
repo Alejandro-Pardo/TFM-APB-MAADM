@@ -1,0 +1,383 @@
+{
+  "method_name": "register_task_with_maintenance_window",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm/client/register_task_with_maintenance_window.html",
+  "description": "Adds a new task to a maintenance window.",
+  "parameters": [
+    {
+      "name": "WindowId",
+      "type": "string",
+      "required": true,
+      "description": "The ID of the maintenance window the task should be added to.",
+      "nested_params": []
+    },
+    {
+      "name": "Targets",
+      "type": "list",
+      "required": false,
+      "description": "The targets (either managed nodes or maintenance window targets). Specify managed nodes using the following format: Key=InstanceIds,Values=<instance-id-1>,<instance-id-2> Specify maintenance window targets using the following format: Key=WindowTargetIds,Values=<window-target-id-1>,<window-target-id-2> (dict) --- An array of search criteria that targets managed nodes using a key-value pair that you specify. Supported formats include the following. Key=tag-key,Values=tag-value-1,tag-value-2 Key=tag:tag-key,Values=tag-value Key=ResourceGroup,Values=resource-group-name Key=ParameterValues,Values=value-1,value-2,value-3 To target all instances in the Amazon Web Services Region: Key=AWS::EC2::Instance,Values=* Key=InstanceIds,Values=* Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 Key=resource-groups:Name,Values=resource-group-name Additionally, Maintenance Windows support targeting resource types: Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2 Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3 Key=tag:tag-key,Values=tag-value-1,tag-value-2 To target all instances in the Amazon Web Services Region: Key=InstanceIds,Values=* For more information about how to send commands that target managed nodes using Key,Value parameters, see Targeting multiple managed nodes in the Amazon Web Services Systems Manager User Guide. Key (string) --- User-defined criteria for sending commands that target managed nodes that meet the criteria. Values (list) --- User-defined criteria that maps to Key. For example, if you specified tag:ServerRole, you could specify value:WebServer to run a command on instances that include EC2 tags of ServerRole,WebServer. Depending on the type of target, the maximum number of values for a key might be lower than the global maximum of 50. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "TaskArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN of the task to run.",
+      "nested_params": []
+    },
+    {
+      "name": "ServiceRoleArn",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run RegisterTaskWithMaintenanceWindow. However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see Setting up Maintenance Windows in the in the Amazon Web Services Systems Manager User Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "TaskType",
+      "type": "string",
+      "required": true,
+      "description": "The type of task being registered.",
+      "nested_params": []
+    },
+    {
+      "name": "TaskParameters",
+      "type": "dict",
+      "required": false,
+      "description": "The parameters that should be passed to the task when it is run. (string) --- (dict) --- Defines the values for a task parameter. Values (list) --- This field contains an array of 0 or more strings, each 1 to 255 characters in length. (string) ---",
+      "nested_params": [
+        {
+          "name": "Values",
+          "type": "list",
+          "required": false,
+          "description": "This field contains an array of 0 or more strings, each 1 to 255 characters in length.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "TaskInvocationParameters",
+      "type": "dict",
+      "required": false,
+      "description": "The parameters that the task should use during execution. Populate only the fields that match the task type. All other fields should be empty. RunCommand (dict) --- The parameters for a RUN_COMMAND task type. Comment (string) --- Information about the commands to run. CloudWatchOutputConfig (dict) --- Configuration options for sending command output to Amazon CloudWatch Logs. CloudWatchLogGroupName (string) --- The name of the CloudWatch Logs log group where you want to send command output. If you don't specify a group name, Amazon Web Services Systems Manager automatically creates a log group for you. The log group uses the following naming format: aws/ssm/SystemsManagerDocumentName CloudWatchOutputEnabled (boolean) --- Enables Systems Manager to send command output to CloudWatch Logs. DocumentHash (string) --- The SHA-256 or SHA-1 hash created by the system when the document was created. SHA-1 hashes have been deprecated. DocumentHashType (string) --- SHA-256 or SHA-1. DocumentVersion (string) --- The Amazon Web Services Systems Manager document (SSM document) version to use in the request. You can specify $DEFAULT, $LATEST, or a specific version number. If you run commands by using the Amazon Web Services CLI, then you must escape the first two options by using a backslash. If you specify a version number, then you don't need to use the backslash. For example: --document-version \"\\$DEFAULT\" --document-version \"\\$LATEST\" --document-version \"3\" NotificationConfig (dict) --- Configurations for sending notifications about command status changes on a per-managed node basis. NotificationArn (string) --- An Amazon Resource Name (ARN) for an Amazon Simple Notification Service (Amazon SNS) topic. Run Command pushes notifications about command status changes to this topic. NotificationEvents (list) --- The different events for which you can receive notifications. To learn more about these events, see Monitoring Systems Manager status changes using Amazon SNS notifications in the Amazon Web Services Systems Manager User Guide. (string) --- NotificationType (string) --- The type of notification. Command: Receive notification when the status of a command changes. Invocation: For commands sent to multiple managed nodes, receive notification on a per-node basis when the status of a command changes. OutputS3BucketName (string) --- The name of the Amazon Simple Storage Service (Amazon S3) bucket. OutputS3KeyPrefix (string) --- The S3 bucket subfolder. Parameters (dict) --- The parameters for the RUN_COMMAND task execution. (string) --- (list) --- (string) --- ServiceRoleArn (string) --- The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run RegisterTaskWithMaintenanceWindow. However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see Setting up Maintenance Windows in the in the Amazon Web Services Systems Manager User Guide. TimeoutSeconds (integer) --- If this time is reached and the command hasn't already started running, it doesn't run. Automation (dict) --- The parameters for an AUTOMATION task type. DocumentVersion (string) --- The version of an Automation runbook to use during task execution. Parameters (dict) --- The parameters for the AUTOMATION task. For information about specifying and updating task parameters, see  RegisterTaskWithMaintenanceWindow and  UpdateMaintenanceWindowTask. (string) --- (list) --- (string) --- StepFunctions (dict) --- The parameters for a STEP_FUNCTIONS task type. Input (string) --- The inputs for the STEP_FUNCTIONS task. Name (string) --- The name of the STEP_FUNCTIONS task. Lambda (dict) --- The parameters for a LAMBDA task type. ClientContext (string) --- Pass client-specific information to the Lambda function that you are invoking. You can then process the client information in your Lambda function as you choose through the context variable. Qualifier (string) --- (Optional) Specify an Lambda function version or alias name. If you specify a function version, the operation uses the qualified function Amazon Resource Name (ARN) to invoke a specific Lambda function. If you specify an alias name, the operation uses the alias ARN to invoke the Lambda function version to which the alias points. Payload (bytes) --- JSON to provide to your Lambda function as input.",
+      "nested_params": [
+        {
+          "name": "RunCommand",
+          "type": "dict",
+          "required": false,
+          "description": "The parameters for a RUN_COMMAND task type.",
+          "nested_params": [
+            {
+              "name": "Comment",
+              "type": "string",
+              "required": false,
+              "description": "Information about the commands to run.",
+              "nested_params": []
+            },
+            {
+              "name": "CloudWatchOutputConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration options for sending command output to Amazon CloudWatch Logs.",
+              "nested_params": [
+                {
+                  "name": "CloudWatchLogGroupName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the CloudWatch Logs log group where you want to send command output. If you don't specify a group name, Amazon Web Services Systems Manager automatically creates a log group for you. The log group uses the following naming format: aws/ssm/SystemsManagerDocumentName.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CloudWatchOutputEnabled",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Enables Systems Manager to send command output to CloudWatch Logs.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "DocumentHash",
+              "type": "string",
+              "required": false,
+              "description": "The SHA-256 or SHA-1 hash created by the system when the document was created. SHA-1 hashes have been deprecated.",
+              "nested_params": []
+            },
+            {
+              "name": "DocumentHashType",
+              "type": "string",
+              "required": false,
+              "description": "SHA-256 or SHA-1. SHA-1 hashes have been deprecated.",
+              "nested_params": []
+            },
+            {
+              "name": "DocumentVersion",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Web Services Systems Manager document (SSM document) version to use in the request. You can specify $DEFAULT, $LATEST, or a specific version number. If you run commands by using the Amazon Web Services CLI, then you must escape the first two options by using a backslash. If you specify a version number, then you don't need to use the backslash. For example: --document-version \"\\$DEFAULT\" --document-version \"\\$LATEST\" --document-version \"3\"",
+              "nested_params": []
+            },
+            {
+              "name": "NotificationConfig",
+              "type": "dict",
+              "required": false,
+              "description": "Configurations for sending notifications about command status changes on a per-managed node basis.",
+              "nested_params": [
+                {
+                  "name": "NotificationArn",
+                  "type": "string",
+                  "required": false,
+                  "description": "An Amazon Resource Name (ARN) for an Amazon Simple Notification Service (Amazon SNS) topic. Run Command pushes notifications about command status changes to this topic.",
+                  "nested_params": []
+                },
+                {
+                  "name": "NotificationEvents",
+                  "type": "list",
+                  "required": false,
+                  "description": "The different events for which you can receive notifications. To learn more about these events, see Monitoring Systems Manager status changes using Amazon SNS notifications in the Amazon Web Services Systems Manager User Guide.",
+                  "nested_params": []
+                },
+                {
+                  "name": "NotificationType",
+                  "type": "string",
+                  "required": false,
+                  "description": "The type of notification.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "OutputS3BucketName",
+              "type": "string",
+              "required": false,
+              "description": "The name of the Amazon Simple Storage Service (Amazon S3) bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "OutputS3KeyPrefix",
+              "type": "string",
+              "required": false,
+              "description": "The S3 bucket subfolder.",
+              "nested_params": []
+            },
+            {
+              "name": "Parameters",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters for the RUN_COMMAND task execution.",
+              "nested_params": []
+            },
+            {
+              "name": "ServiceRoleArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run RegisterTaskWithMaintenanceWindow. However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see Setting up Maintenance Windows in the in the Amazon Web Services Systems Manager User Guide.",
+              "nested_params": []
+            },
+            {
+              "name": "TimeoutSeconds",
+              "type": "integer",
+              "required": false,
+              "description": "If this time is reached and the command hasn't already started running, it doesn't run.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Automation",
+          "type": "dict",
+          "required": false,
+          "description": "The parameters for an AUTOMATION task type.",
+          "nested_params": [
+            {
+              "name": "DocumentVersion",
+              "type": "string",
+              "required": false,
+              "description": "The version of an Automation runbook to use during task execution.",
+              "nested_params": []
+            },
+            {
+              "name": "Parameters",
+              "type": "dict",
+              "required": false,
+              "description": "The parameters for the AUTOMATION task. For information about specifying and updating task parameters, see  RegisterTaskWithMaintenanceWindow and  UpdateMaintenanceWindowTask.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "StepFunctions",
+          "type": "dict",
+          "required": false,
+          "description": "The parameters for a STEP_FUNCTIONS task type.",
+          "nested_params": [
+            {
+              "name": "Input",
+              "type": "string",
+              "required": false,
+              "description": "The inputs for the STEP_FUNCTIONS task.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the STEP_FUNCTIONS task.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Lambda",
+          "type": "dict",
+          "required": false,
+          "description": "The parameters for a LAMBDA task type.",
+          "nested_params": [
+            {
+              "name": "ClientContext",
+              "type": "string",
+              "required": false,
+              "description": "Pass client-specific information to the Lambda function that you are invoking. You can then process the client information in your Lambda function as you choose through the context variable.",
+              "nested_params": []
+            },
+            {
+              "name": "Qualifier",
+              "type": "string",
+              "required": false,
+              "description": "(Optional) Specify an Lambda function version or alias name. If you specify a function version, the operation uses the qualified function Amazon Resource Name (ARN) to invoke a specific Lambda function. If you specify an alias name, the operation uses the alias ARN to invoke the Lambda function version to which the alias points.",
+              "nested_params": []
+            },
+            {
+              "name": "Payload",
+              "type": "bytes",
+              "required": false,
+              "description": "JSON to provide to your Lambda function as input.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Priority",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "MaxConcurrency",
+      "type": "string",
+      "required": false,
+      "description": "The maximum number of targets this task can be run for, in parallel.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxErrors",
+      "type": "string",
+      "required": false,
+      "description": "The maximum number of errors allowed before this task stops being scheduled.",
+      "nested_params": []
+    },
+    {
+      "name": "LoggingInfo",
+      "type": "dict",
+      "required": true,
+      "description": "A structure containing information about an Amazon Simple Storage Service (Amazon S3) bucket to write managed node-level logs to. The name of an S3 bucket where execution logs are stored. S3KeyPrefix (string) --- (Optional) The S3 bucket subfolder. The Amazon Web Services Region where the S3 bucket is located.",
+      "nested_params": [
+        {
+          "name": "S3BucketName",
+          "type": "string",
+          "required": false,
+          "description": "The name of an S3 bucket where execution logs are stored.",
+          "nested_params": []
+        },
+        {
+          "name": "S3KeyPrefix",
+          "type": "string",
+          "required": false,
+          "description": "(Optional) The S3 bucket subfolder.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Region",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Web Services Region where the S3 bucket is located.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "User-provided idempotency token. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "CutoffBehavior",
+      "type": "string",
+      "required": false,
+      "description": "Indicates whether tasks should continue to run after the cutoff time specified in the maintenance windows is reached. CONTINUE_TASK: When the cutoff time is reached, any tasks that are running continue. The default value. CANCEL_TASK: For Automation, Lambda, Step Functions tasks: When the cutoff time is reached, any task invocations that are already running continue, but no new task invocations are started. For Run Command tasks: When the cutoff time is reached, the system sends a  CancelCommand operation that attempts to cancel the command associated with the task. However, there is no guarantee that the command will be terminated and the underlying process stopped. The status for tasks that are not completed is TIMED_OUT.",
+      "nested_params": []
+    },
+    {
+      "name": "AlarmConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The CloudWatch alarm you want to apply to your maintenance window task. IgnorePollAlarmFailure (boolean) --- When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false. The name of the CloudWatch alarm specified in the configuration. (dict) --- A CloudWatch alarm you apply to an automation or command. The name of your CloudWatch alarm.",
+      "nested_params": [
+        {
+          "name": "IgnorePollAlarmFailure",
+          "type": "boolean",
+          "required": false,
+          "description": "When this value is true, your automation or command continues to run in cases where we can't retrieve alarm status information from CloudWatch. In cases where we successfully retrieve an alarm status of OK or INSUFFICIENT_DATA, the automation or command continues to run, regardless of this value. Default is false.",
+          "nested_params": []
+        },
+        {
+          "name": "Alarms",
+          "type": "list",
+          "required": false,
+          "description": "The name of the CloudWatch alarm specified in the configuration.",
+          "nested_params": [
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "The name of your CloudWatch alarm.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "WindowTaskId",
+          "type": "string",
+          "description": "The ID of the task in the maintenance window.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

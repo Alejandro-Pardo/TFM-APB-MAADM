@@ -1,0 +1,117 @@
+{
+  "method_name": "put_audit_events",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudtrail-data/client/put_audit_events.html",
+  "description": "Ingests your application events into CloudTrail Lake. A required parameter, auditEvents, accepts the JSON records (also called payload) of events that you want CloudTrail to ingest. You can add up to 100 of these events (or up to 1 MB) per PutAuditEvents request.",
+  "parameters": [
+    {
+      "name": "auditEvents",
+      "type": "list",
+      "required": true,
+      "description": "The JSON payload of events that you want to ingest. You can also point to the JSON event payload in a file. (dict) --- An event from a source outside of Amazon Web Services that you want CloudTrail to log. The content of an audit event that comes from the event, such as userIdentity, userAgent, and eventSource. eventDataChecksum (string) --- A checksum is a base64-SHA256 algorithm that helps you verify that CloudTrail receives the event that matches with the checksum. Calculate the checksum by running a command like the following: printf %s $eventdata | openssl dgst -binary -sha256 | base64 The original event ID from the source event.",
+      "nested_params": [
+        {
+          "name": "eventData",
+          "type": "string",
+          "required": false,
+          "description": "The content of an audit event that comes from the event, such as userIdentity, userAgent, and eventSource.",
+          "nested_params": []
+        },
+        {
+          "name": "eventDataChecksum",
+          "type": "string",
+          "required": false,
+          "description": "A checksum is a base64-SHA256 algorithm that helps you verify that CloudTrail receives the event that matches with the checksum. Calculate the checksum by running a command like the following: printf %s $eventdata | openssl dgst -binary -sha256 | base64",
+          "nested_params": []
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The original event ID from the source event.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "channelArn",
+      "type": "string",
+      "required": true,
+      "description": "The ARN or ID (the ARN suffix) of a channel.",
+      "nested_params": []
+    },
+    {
+      "name": "externalId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "failed",
+          "type": "list",
+          "description": "Lists events in the provided event payload that could not be ingested into CloudTrail, and includes the error code and error message returned for events that could not be ingested.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "errorCode",
+                  "type": "string",
+                  "description": "The error code for events that could not be ingested by CloudTrail. Possible error codes include: FieldTooLong, FieldNotFound, InvalidChecksum, InvalidData, InvalidRecipient, InvalidEventSource, AccountNotSubscribed, Throttling, and InternalFailure.",
+                  "nested_items": []
+                },
+                {
+                  "name": "errorMessage",
+                  "type": "string",
+                  "description": "The message that describes the error for events that could not be ingested by CloudTrail.",
+                  "nested_items": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The original event ID from the source event that could not be ingested by CloudTrail.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "successful",
+          "type": "list",
+          "description": "Lists events in the provided event payload that were successfully ingested into CloudTrail.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "eventID",
+                  "type": "string",
+                  "description": "The event ID assigned by CloudTrail.",
+                  "nested_items": []
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "description": "The original event ID from the source event.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

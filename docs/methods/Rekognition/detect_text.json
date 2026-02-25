@@ -1,0 +1,277 @@
+{
+  "method_name": "detect_text",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/detect_text.html",
+  "description": "Detects text in the input image and converts it into machine-readable text. Pass the input image as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. If you use the AWS CLI to call Amazon Rekognition operations, you must pass it as a reference to an image in an Amazon S3 bucket. For the AWS CLI, passing image bytes is not supported. The image must be either a .png or .jpeg formatted file. The DetectText operation returns text in an array of  TextDetection elements, TextDetections. Each TextDetection element provides information about a single word or line of text that was detected in the image. A word is one or more script characters that are not separated by spaces. DetectText can detect up to 100 words in an image. A line is a string of equally spaced words. A line isn't necessarily a complete sentence. For example, a driver's license number is detected as a line. A line ends when there is no aligned text after it. Also, a line ends when there is a large gap between words, relative to the length of the words. This means, depending on the gap between words, Amazon Rekognition may detect multiple lines in text aligned in the same direction. Periods don't represent the end of a line. If a sentence spans multiple lines, the DetectText operation returns multiple lines. To determine whether a TextDetection element is a line of text or a word, use the TextDetection object Type field. To be detected, text must be within +/- 90 degrees orientation of the horizontal axis. For more information, see Detecting text in the Amazon Rekognition Developer Guide.",
+  "parameters": [
+    {
+      "name": "Image",
+      "type": "dict",
+      "required": true,
+      "description": "The input image as base64-encoded bytes or an Amazon S3 object. If you use the AWS CLI to call Amazon Rekognition operations, you can't pass image bytes. If you are using an AWS SDK to call Amazon Rekognition, you might not need to base64-encode image bytes passed using the Bytes field. For more information, see Images in the Amazon Rekognition developer guide. Bytes (bytes) --- Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB. S3Object (dict) --- Identifies an S3 object as the image source. Bucket (string) --- Name of the S3 bucket. Name (string) --- S3 object key name. Version (string) --- If the bucket is versioning enabled, you can specify the object version.",
+      "nested_params": [
+        {
+          "name": "Bytes",
+          "type": "bytes",
+          "required": false,
+          "description": "Blob of image bytes up to 5 MBs. Note that the maximum image size you can pass to DetectCustomLabels is 4MB.",
+          "nested_params": []
+        },
+        {
+          "name": "S3Object",
+          "type": "dict",
+          "required": false,
+          "description": "Identifies an S3 object as the image source.",
+          "nested_params": [
+            {
+              "name": "Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Name of the S3 bucket.",
+              "nested_params": []
+            },
+            {
+              "name": "Name",
+              "type": "string",
+              "required": false,
+              "description": "S3 object key name.",
+              "nested_params": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "required": false,
+              "description": "If the bucket is versioning enabled, you can specify the object version.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Filters",
+      "type": "dict",
+      "required": false,
+      "description": "Optional parameters that let you set the criteria that the text must meet to be included in your response. WordFilter (dict) --- A set of parameters that allow you to filter out certain results from your returned results. MinConfidence (float) --- Sets the confidence of word detection. Words with detection confidence below this will be excluded from the result. Values should be between 0 and 100. The default MinConfidence is 80. MinBoundingBoxHeight (float) --- Sets the minimum height of the word bounding box. Words with bounding box heights lesser than this value will be excluded from the result. Value is relative to the video frame height. MinBoundingBoxWidth (float) --- Sets the minimum width of the word bounding box. Words with bounding boxes widths lesser than this value will be excluded from the result. Value is relative to the video frame width. RegionsOfInterest (list) --- A Filter focusing on a certain area of the image. Uses a BoundingBox object to set the region of the image. (dict) --- Specifies a location within the frame that Rekognition checks for objects of interest such as text, labels, or faces. It uses a BoundingBox or Polygon to set a region of the screen. A word, face, or label is included in the region if it is more than half in that region. If there is more than one region, the word, face, or label is compared with all regions of the screen. Any object of interest that is more than half in a region is kept in the results. BoundingBox (dict) --- The box representing a region of interest on screen. Width (float) --- Width of the bounding box as a ratio of the overall image width. Height (float) --- Height of the bounding box as a ratio of the overall image height. Left (float) --- Left coordinate of the bounding box as a ratio of overall image width. Top (float) --- Top coordinate of the bounding box as a ratio of overall image height. Polygon (list) --- Specifies a shape made up of up to 10 Point objects to define a region of interest. (dict) --- The X and Y coordinates of a point on an image or video frame. The X and Y values are ratios of the overall image size or video resolution. For example, if an input image is 700x200 and the values are X=0.5 and Y=0.25, then the point is at the (350,50) pixel coordinate on the image. An array of Point objects makes up a Polygon. A Polygon is returned by  DetectText and by  DetectCustomLabels Polygon represents a fine-grained polygon around a detected item. For more information, see Geometry in the Amazon Rekognition Developer Guide. X (float) --- The value of the X coordinate for a point on a Polygon. Y (float) --- The value of the Y coordinate for a point on a Polygon.",
+      "nested_params": [
+        {
+          "name": "WordFilter",
+          "type": "dict",
+          "required": false,
+          "description": "A set of parameters that allow you to filter out certain results from your returned results.",
+          "nested_params": [
+            {
+              "name": "MinConfidence",
+              "type": "float",
+              "required": false,
+              "description": "Sets the confidence of word detection. Words with detection confidence below this will be excluded from the result. Values should be between 0 and 100. The default MinConfidence is 80.",
+              "nested_params": []
+            },
+            {
+              "name": "MinBoundingBoxHeight",
+              "type": "float",
+              "required": false,
+              "description": "Sets the minimum height of the word bounding box. Words with bounding box heights lesser than this value will be excluded from the result. Value is relative to the video frame height.",
+              "nested_params": []
+            },
+            {
+              "name": "MinBoundingBoxWidth",
+              "type": "float",
+              "required": false,
+              "description": "Sets the minimum width of the word bounding box. Words with bounding boxes widths lesser than this value will be excluded from the result. Value is relative to the video frame width.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "RegionsOfInterest",
+          "type": "list",
+          "required": false,
+          "description": "A Filter focusing on a certain area of the image. Uses a BoundingBox object to set the region of the image.",
+          "nested_params": [
+            {
+              "name": "BoundingBox",
+              "type": "dict",
+              "required": false,
+              "description": "The box representing a region of interest on screen.",
+              "nested_params": [
+                {
+                  "name": "Width",
+                  "type": "float",
+                  "required": false,
+                  "description": "Width of the bounding box as a ratio of the overall image width.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Height",
+                  "type": "float",
+                  "required": false,
+                  "description": "Height of the bounding box as a ratio of the overall image height.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Left",
+                  "type": "float",
+                  "required": false,
+                  "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Top",
+                  "type": "float",
+                  "required": false,
+                  "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "Polygon",
+              "type": "list",
+              "required": false,
+              "description": "Specifies a shape made up of up to 10 Point objects to define a region of interest.",
+              "nested_params": [
+                {
+                  "name": "X",
+                  "type": "float",
+                  "required": false,
+                  "description": "The value of the X coordinate for a point on a Polygon.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Y",
+                  "type": "float",
+                  "required": false,
+                  "description": "The value of the Y coordinate for a point on a Polygon.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "TextDetections",
+          "type": "list",
+          "description": "An array of text that was detected in the input image.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "DetectedText",
+                  "type": "string",
+                  "description": "The word or line of text recognized by Amazon Rekognition.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Type",
+                  "type": "string",
+                  "description": "The type of text that was detected.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Id",
+                  "type": "integer",
+                  "description": "The identifier for the detected text. The identifier is only unique for a single call to DetectText.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ParentId",
+                  "type": "integer",
+                  "description": "The Parent identifier for the detected text identified by the value of ID. If the type of detected text is LINE, the value of ParentId is Null.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Confidence",
+                  "type": "float",
+                  "description": "The confidence that Amazon Rekognition has in the accuracy of the detected text and the accuracy of the geometry points around the detected text.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "BoundingBox",
+                      "type": "dict",
+                      "description": "An axis-aligned coarse representation of the detected item's location on the image.",
+                      "nested_items": [
+                        {
+                          "name": "Width",
+                          "type": "float",
+                          "description": "Width of the bounding box as a ratio of the overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Height",
+                          "type": "float",
+                          "description": "Height of the bounding box as a ratio of the overall image height.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Left",
+                          "type": "float",
+                          "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Top",
+                          "type": "float",
+                          "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Polygon",
+                      "type": "list",
+                      "description": "Within the bounding box, a fine-grained polygon around the detected item.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "X",
+                              "type": "float",
+                              "description": "The value of the X coordinate for a point on a Polygon.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Y",
+                              "type": "float",
+                              "description": "The value of the Y coordinate for a point on a Polygon.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TextModelVersion",
+          "type": "string",
+          "description": "The model version used to detect text.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

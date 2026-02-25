@@ -1,0 +1,2101 @@
+{
+  "method_name": "start_simulation_job_batch",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/robomaker/client/start_simulation_job_batch.html",
+  "description": "Starts a new simulation job batch. The batch is defined using one or more SimulationJobRequest objects.",
+  "parameters": [
+    {
+      "name": "clientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    },
+    {
+      "name": "batchPolicy",
+      "type": "dict",
+      "required": false,
+      "description": "The batch policy. timeoutInSeconds (integer) --- The amount of time, in seconds, to wait for the batch to complete. If a batch times out, and there are pending requests that were failing due to an internal failure (like InternalServiceError), they will be moved to the failed list and the batch status will be Failed. If the pending requests were failing for any other reason, the failed pending requests will be moved to the failed list and the batch status will be TimedOut. maxConcurrency (integer) --- The number of active simulation jobs create as part of the batch that can be in an active state at the same time. Active states include: Pending, Preparing, Running, Restarting, RunningFailed and Terminating. All other states are terminal states.",
+      "nested_params": [
+        {
+          "name": "timeoutInSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The amount of time, in seconds, to wait for the batch to complete. If a batch times out, and there are pending requests that were failing due to an internal failure (like InternalServiceError), they will be moved to the failed list and the batch status will be Failed. If the pending requests were failing for any other reason, the failed pending requests will be moved to the failed list and the batch status will be TimedOut.",
+          "nested_params": []
+        },
+        {
+          "name": "maxConcurrency",
+          "type": "integer",
+          "required": false,
+          "description": "The number of active simulation jobs create as part of the batch that can be in an active state at the same time. Active states include: Pending, Preparing, Running, Restarting, RunningFailed and Terminating. All other states are terminal states.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "createSimulationJobRequests",
+      "type": "list",
+      "required": true,
+      "description": "A list of simulation job requests to create in the batch. (dict) --- Information about a simulation job request. outputLocation (dict) --- The output location. s3Bucket (string) --- The S3 bucket for output. s3Prefix (string) --- The S3 folder in the s3Bucket where output files will be placed. loggingConfig (dict) --- The logging configuration. recordAllRosTopics (boolean) --- A boolean indicating whether to record all ROS topics. The maximum simulation job duration in seconds. The value must be 8 days (691,200 seconds) or less. iamRole (string) --- The IAM role name that allows the simulation instance to call the AWS APIs that are specified in its associated policies on your behalf. This is how credentials are passed in to your simulation job. failureBehavior (string) --- The failure behavior the simulation job. Continue Leaves the host running for its maximum timeout duration after a 4XX error code. Fail Stop the simulation job and terminate the instance. useDefaultApplications (boolean) --- A Boolean indicating whether to use default applications in the simulation job. Default applications include Gazebo, rqt, rviz and terminal access. robotApplications (list) --- The robot applications to use in the simulation job. (dict) --- Application configuration information for a robot. The application information for the robot application. applicationVersion (string) --- The version of the robot application. The launch configuration for the robot application. packageName (string) --- The package name. launchFile (string) --- The launch file name. environmentVariables (dict) --- The environment variables for the application launch. (string) --- (string) --- portForwardingConfig (dict) --- The port forwarding configuration. portMappings (list) --- The port mappings for the configuration. (dict) --- An object representing a port mapping. The port number on the simulation job instance to use as a remote connection point. The port number on the application. enableOnPublicIp (boolean) --- A Boolean indicating whether to enable this port mapping on public IP. streamUI (boolean) --- Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface. command (list) --- If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image. If you've specified SimulationRuntime as the value for your SimulationSoftwareSuite, you can use this field to specify a list of commands for your container image. (string) --- uploadConfigurations (list) --- The upload configurations for the robot application. (dict) --- Provides upload configuration information. Files are uploaded from the simulation job to a location you specify. A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path. For example, if your simulation output location is s3://amzn-s3-demo-bucket and your upload configuration name is robot-test, your files will be uploaded to s3://amzn-s3-demo-bucket/<simid>/<runid>/robot-test. Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library. Specifies when to upload the files: UPLOAD_ON_TERMINATE Matching files are uploaded once the simulation enters the TERMINATING state. Matching files are not uploaded until all of your code (including tools) have stopped. If there is a problem uploading a file, the upload is retried. If problems persist, no further upload attempts will be made. UPLOAD_ROLLING_AUTO_REMOVE Matching files are uploaded as they are created. They are deleted after they are uploaded. The specified path is checked every 5 seconds. A final check is made when all of your code (including tools) have stopped. useDefaultUploadConfigurations (boolean) --- A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded. If you set this value, you must specify an outputLocation. tools (list) --- Information about tools configured for the robot application. (dict) --- Information about a tool. Tools are used in a simulation job. streamUI (boolean) --- Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. The default is False. The name of the tool. Command-line arguments for the tool. It must include the tool executable name. streamOutputToCloudWatch (boolean) --- Boolean indicating whether logs will be recorded in CloudWatch for the tool. exitBehavior (string) --- Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART. useDefaultTools (boolean) --- A Boolean indicating whether to use default robot application tools. The default tools are rviz, rqt, terminal and rosbag record. simulationApplications (list) --- The simulation applications to use in the simulation job. (dict) --- Information about a simulation application configuration. The application information for the simulation application. applicationVersion (string) --- The version of the simulation application. The launch configuration for the simulation application. (string) --- uploadConfigurations (list) --- Information about upload configurations for the simulation application. worldConfigs (list) --- A list of world configurations. (dict) --- Configuration information for a world. world (string) --- The world generated by Simulation WorldForge. tools (list) --- Information about tools configured for the simulation application. useDefaultTools (boolean) --- A Boolean indicating whether to use default simulation application tools. dataSources (list) --- Specify data sources to mount read-only files from S3 into your simulation. These files are available under /opt/robomaker/datasources/data_source_name. (dict) --- Information about a data source. The name of the data source. The S3 bucket where the data files are located. The list of S3 keys identifying the data source files. (string) --- type (string) --- The data type for the data source that you're using for your container image or simulation job. You can use this field to specify whether your data source is an Archive, an Amazon S3 prefix, or a file. If you don't specify a field, the default value is File. destination (string) --- The location where your files are mounted in the container image. If you've specified the type of the data source as an Archive, you must provide an Amazon S3 object key to your archive. The object key must point to either a .zip or .tar.gz file. If you've specified the type of the data source as a Prefix, you provide the Amazon S3 prefix that points to the files that you are using for your data source. If you've specified the type of the data source as a File, you provide the Amazon S3 path to the file that you're using as your data source. vpcConfig (dict) --- If your simulation job accesses resources in a VPC, you provide this parameter identifying the list of security group IDs and subnet IDs. These must belong to the same VPC. You must provide at least one security group and two subnet IDs. A list of one or more subnet IDs in your VPC. (string) --- securityGroups (list) --- A list of one or more security groups IDs in your VPC. (string) --- assignPublicIp (boolean) --- A boolean indicating whether to assign a public IP address. compute (dict) --- Compute information for the simulation job simulationUnitLimit (integer) --- The simulation unit limit. Your simulation is allocated CPU and memory proportional to the supplied simulation unit limit. A simulation unit is 1 vcpu and 2GB of memory. You are only billed for the SU utilization you consume up to the maximum value provided. The default is 15. computeType (string) --- Compute type information for the simulation job. gpuUnitLimit (integer) --- Compute GPU unit limit for the simulation job. It is the same as the number of GPUs allocated to the SimulationJob. tags (dict) --- A map that contains tag keys and tag values that are attached to the simulation job request. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "outputLocation",
+          "type": "dict",
+          "required": false,
+          "description": "The output location.",
+          "nested_params": [
+            {
+              "name": "s3Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The S3 bucket for output.",
+              "nested_params": []
+            },
+            {
+              "name": "s3Prefix",
+              "type": "string",
+              "required": false,
+              "description": "The S3 folder in the s3Bucket where output files will be placed.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "loggingConfig",
+          "type": "dict",
+          "required": false,
+          "description": "The logging configuration.",
+          "nested_params": [
+            {
+              "name": "recordAllRosTopics",
+              "type": "boolean",
+              "required": false,
+              "description": "A boolean indicating whether to record all ROS topics.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "maxJobDurationInSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum simulation job duration in seconds. The value must be 8 days (691,200 seconds) or less.",
+          "nested_params": []
+        },
+        {
+          "name": "iamRole",
+          "type": "string",
+          "required": false,
+          "description": "The IAM role name that allows the simulation instance to call the AWS APIs that are specified in its associated policies on your behalf. This is how credentials are passed in to your simulation job.",
+          "nested_params": []
+        },
+        {
+          "name": "failureBehavior",
+          "type": "string",
+          "required": false,
+          "description": "The failure behavior the simulation job. Leaves the host running for its maximum timeout duration after a 4XX error code. Stop the simulation job and terminate the instance.",
+          "nested_params": []
+        },
+        {
+          "name": "useDefaultApplications",
+          "type": "boolean",
+          "required": false,
+          "description": "A Boolean indicating whether to use default applications in the simulation job. Default applications include Gazebo, rqt, rviz and terminal access.",
+          "nested_params": []
+        },
+        {
+          "name": "robotApplications",
+          "type": "list",
+          "required": false,
+          "description": "The robot applications to use in the simulation job.",
+          "nested_params": [
+            {
+              "name": "application",
+              "type": "string",
+              "required": false,
+              "description": "The application information for the robot application.",
+              "nested_params": []
+            },
+            {
+              "name": "applicationVersion",
+              "type": "string",
+              "required": false,
+              "description": "The version of the robot application.",
+              "nested_params": []
+            },
+            {
+              "name": "launchConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The launch configuration for the robot application.",
+              "nested_params": [
+                {
+                  "name": "packageName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The package name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "launchFile",
+                  "type": "string",
+                  "required": false,
+                  "description": "The launch file name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "environmentVariables",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The environment variables for the application launch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "portForwardingConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The port forwarding configuration.",
+                  "nested_params": [
+                    {
+                      "name": "portMappings",
+                      "type": "list",
+                      "required": false,
+                      "description": "The port mappings for the configuration.",
+                      "nested_params": [
+                        {
+                          "name": "jobPort",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The port number on the simulation job instance to use as a remote connection point.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "applicationPort",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The port number on the application.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "enableOnPublicIp",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "A Boolean indicating whether to enable this port mapping on public IP.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "streamUI",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface.",
+                  "nested_params": []
+                },
+                {
+                  "name": "command",
+                  "type": "list",
+                  "required": false,
+                  "description": "If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image. If you've specified SimulationRuntime as the value for your SimulationSoftwareSuite, you can use this field to specify a list of commands for your container image.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "uploadConfigurations",
+              "type": "list",
+              "required": false,
+              "description": "The upload configurations for the robot application.",
+              "nested_params": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false,
+                  "description": "A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path. For example, if your simulation output location is s3://amzn-s3-demo-bucket and your upload configuration name is robot-test, your files will be uploaded to s3://amzn-s3-demo-bucket/<simid>/<runid>/robot-test.",
+                  "nested_params": []
+                },
+                {
+                  "name": "path",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library.",
+                  "nested_params": []
+                },
+                {
+                  "name": "uploadBehavior",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies when to upload the files: Matching files are uploaded once the simulation enters the TERMINATING state. Matching files are not uploaded until all of your code (including tools) have stopped. If there is a problem uploading a file, the upload is retried. If problems persist, no further upload attempts will be made. Matching files are uploaded as they are created. They are deleted after they are uploaded. The specified path is checked every 5 seconds. A final check is made when all of your code (including tools) have stopped.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "useDefaultUploadConfigurations",
+              "type": "boolean",
+              "required": false,
+              "description": "A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded. If you set this value, you must specify an outputLocation.",
+              "nested_params": []
+            },
+            {
+              "name": "tools",
+              "type": "list",
+              "required": false,
+              "description": "Information about tools configured for the robot application.",
+              "nested_params": [
+                {
+                  "name": "streamUI",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. It must have a graphical user interface. The default is False.",
+                  "nested_params": []
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the tool.",
+                  "nested_params": []
+                },
+                {
+                  "name": "command",
+                  "type": "string",
+                  "required": false,
+                  "description": "Command-line arguments for the tool. It must include the tool executable name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "streamOutputToCloudWatch",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Boolean indicating whether logs will be recorded in CloudWatch for the tool. The default is False.",
+                  "nested_params": []
+                },
+                {
+                  "name": "exitBehavior",
+                  "type": "string",
+                  "required": false,
+                  "description": "Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "useDefaultTools",
+              "type": "boolean",
+              "required": false,
+              "description": "A Boolean indicating whether to use default robot application tools. The default tools are rviz, rqt, terminal and rosbag record. The default is False.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "simulationApplications",
+          "type": "list",
+          "required": false,
+          "description": "The simulation applications to use in the simulation job.",
+          "nested_params": [
+            {
+              "name": "application",
+              "type": "string",
+              "required": false,
+              "description": "The application information for the simulation application.",
+              "nested_params": []
+            },
+            {
+              "name": "applicationVersion",
+              "type": "string",
+              "required": false,
+              "description": "The version of the simulation application.",
+              "nested_params": []
+            },
+            {
+              "name": "launchConfig",
+              "type": "dict",
+              "required": false,
+              "description": "The launch configuration for the simulation application.",
+              "nested_params": [
+                {
+                  "name": "packageName",
+                  "type": "string",
+                  "required": false,
+                  "description": "The package name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "launchFile",
+                  "type": "string",
+                  "required": false,
+                  "description": "The launch file name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "environmentVariables",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The environment variables for the application launch.",
+                  "nested_params": []
+                },
+                {
+                  "name": "portForwardingConfig",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The port forwarding configuration.",
+                  "nested_params": [
+                    {
+                      "name": "portMappings",
+                      "type": "list",
+                      "required": false,
+                      "description": "The port mappings for the configuration.",
+                      "nested_params": [
+                        {
+                          "name": "jobPort",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The port number on the simulation job instance to use as a remote connection point.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "applicationPort",
+                          "type": "integer",
+                          "required": false,
+                          "description": "The port number on the application.",
+                          "nested_params": []
+                        },
+                        {
+                          "name": "enableOnPublicIp",
+                          "type": "boolean",
+                          "required": false,
+                          "description": "A Boolean indicating whether to enable this port mapping on public IP.",
+                          "nested_params": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "streamUI",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface.",
+                  "nested_params": []
+                },
+                {
+                  "name": "command",
+                  "type": "list",
+                  "required": false,
+                  "description": "If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image. If you've specified SimulationRuntime as the value for your SimulationSoftwareSuite, you can use this field to specify a list of commands for your container image.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "uploadConfigurations",
+              "type": "list",
+              "required": false,
+              "description": "Information about upload configurations for the simulation application.",
+              "nested_params": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false,
+                  "description": "A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path. For example, if your simulation output location is s3://amzn-s3-demo-bucket and your upload configuration name is robot-test, your files will be uploaded to s3://amzn-s3-demo-bucket/<simid>/<runid>/robot-test.",
+                  "nested_params": []
+                },
+                {
+                  "name": "path",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library.",
+                  "nested_params": []
+                },
+                {
+                  "name": "uploadBehavior",
+                  "type": "string",
+                  "required": false,
+                  "description": "Specifies when to upload the files: Matching files are uploaded once the simulation enters the TERMINATING state. Matching files are not uploaded until all of your code (including tools) have stopped. If there is a problem uploading a file, the upload is retried. If problems persist, no further upload attempts will be made. Matching files are uploaded as they are created. They are deleted after they are uploaded. The specified path is checked every 5 seconds. A final check is made when all of your code (including tools) have stopped.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "worldConfigs",
+              "type": "list",
+              "required": false,
+              "description": "A list of world configurations.",
+              "nested_params": [
+                {
+                  "name": "world",
+                  "type": "string",
+                  "required": false,
+                  "description": "The world generated by Simulation WorldForge.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "useDefaultUploadConfigurations",
+              "type": "boolean",
+              "required": false,
+              "description": "A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded. If you set this value, you must specify an outputLocation.",
+              "nested_params": []
+            },
+            {
+              "name": "tools",
+              "type": "list",
+              "required": false,
+              "description": "Information about tools configured for the simulation application.",
+              "nested_params": [
+                {
+                  "name": "streamUI",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. It must have a graphical user interface. The default is False.",
+                  "nested_params": []
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "required": false,
+                  "description": "The name of the tool.",
+                  "nested_params": []
+                },
+                {
+                  "name": "command",
+                  "type": "string",
+                  "required": false,
+                  "description": "Command-line arguments for the tool. It must include the tool executable name.",
+                  "nested_params": []
+                },
+                {
+                  "name": "streamOutputToCloudWatch",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "Boolean indicating whether logs will be recorded in CloudWatch for the tool. The default is False.",
+                  "nested_params": []
+                },
+                {
+                  "name": "exitBehavior",
+                  "type": "string",
+                  "required": false,
+                  "description": "Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART.",
+                  "nested_params": []
+                }
+              ]
+            },
+            {
+              "name": "useDefaultTools",
+              "type": "boolean",
+              "required": false,
+              "description": "A Boolean indicating whether to use default simulation application tools. The default tools are rviz, rqt, terminal and rosbag record. The default is False.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "dataSources",
+          "type": "list",
+          "required": false,
+          "description": "Specify data sources to mount read-only files from S3 into your simulation. These files are available under /opt/robomaker/datasources/data_source_name.",
+          "nested_params": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "description": "The name of the data source.",
+              "nested_params": []
+            },
+            {
+              "name": "s3Bucket",
+              "type": "string",
+              "required": false,
+              "description": "The S3 bucket where the data files are located.",
+              "nested_params": []
+            },
+            {
+              "name": "s3Keys",
+              "type": "list",
+              "required": false,
+              "description": "The list of S3 keys identifying the data source files.",
+              "nested_params": []
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "required": false,
+              "description": "The data type for the data source that you're using for your container image or simulation job. You can use this field to specify whether your data source is an Archive, an Amazon S3 prefix, or a file. If you don't specify a field, the default value is File.",
+              "nested_params": []
+            },
+            {
+              "name": "destination",
+              "type": "string",
+              "required": false,
+              "description": "The location where your files are mounted in the container image. If you've specified the type of the data source as an Archive, you must provide an Amazon S3 object key to your archive. The object key must point to either a .zip or .tar.gz file. If you've specified the type of the data source as a Prefix, you provide the Amazon S3 prefix that points to the files that you are using for your data source. If you've specified the type of the data source as a File, you provide the Amazon S3 path to the file that you're using as your data source.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "vpcConfig",
+          "type": "dict",
+          "required": false,
+          "description": "If your simulation job accesses resources in a VPC, you provide this parameter identifying the list of security group IDs and subnet IDs. These must belong to the same VPC. You must provide at least one security group and two subnet IDs.",
+          "nested_params": [
+            {
+              "name": "subnets",
+              "type": "list",
+              "required": false,
+              "description": "A list of one or more subnet IDs in your VPC.",
+              "nested_params": []
+            },
+            {
+              "name": "securityGroups",
+              "type": "list",
+              "required": false,
+              "description": "A list of one or more security groups IDs in your VPC.",
+              "nested_params": []
+            },
+            {
+              "name": "assignPublicIp",
+              "type": "boolean",
+              "required": false,
+              "description": "A boolean indicating whether to assign a public IP address.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "compute",
+          "type": "dict",
+          "required": false,
+          "description": "Compute information for the simulation job.",
+          "nested_params": [
+            {
+              "name": "simulationUnitLimit",
+              "type": "integer",
+              "required": false,
+              "description": "The simulation unit limit. Your simulation is allocated CPU and memory proportional to the supplied simulation unit limit. A simulation unit is 1 vcpu and 2GB of memory. You are only billed for the SU utilization you consume up to the maximum value provided. The default is 15.",
+              "nested_params": []
+            },
+            {
+              "name": "computeType",
+              "type": "string",
+              "required": false,
+              "description": "Compute type information for the simulation job.",
+              "nested_params": []
+            },
+            {
+              "name": "gpuUnitLimit",
+              "type": "integer",
+              "required": false,
+              "description": "Compute GPU unit limit for the simulation job. It is the same as the number of GPUs allocated to the SimulationJob.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "tags",
+          "type": "dict",
+          "required": false,
+          "description": "A map that contains tag keys and tag values that are attached to the simulation job request.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "A map that contains tag keys and tag values that are attached to the deployment job batch. (string) --- (string) ---",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "arn",
+          "type": "string",
+          "description": "The Amazon Resource Name (arn) of the batch.",
+          "nested_items": []
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "The status of the simulation job batch.",
+          "nested_items": []
+        },
+        {
+          "name": "createdAt",
+          "type": "datetime",
+          "description": "The time, in milliseconds since the epoch, when the simulation job batch was created.",
+          "nested_items": []
+        },
+        {
+          "name": "clientRequestToken",
+          "type": "string",
+          "description": "Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.",
+          "nested_items": []
+        },
+        {
+          "name": "batchPolicy",
+          "type": "dict",
+          "description": "The batch policy.",
+          "nested_items": [
+            {
+              "name": "timeoutInSeconds",
+              "type": "integer",
+              "description": "The amount of time, in seconds, to wait for the batch to complete.",
+              "nested_items": []
+            },
+            {
+              "name": "maxConcurrency",
+              "type": "integer",
+              "description": "The number of active simulation jobs create as part of the batch that can be in an active state at the same time.",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "failureCode",
+          "type": "string",
+          "description": "The failure code if the simulation job batch failed.",
+          "nested_items": []
+        },
+        {
+          "name": "failureReason",
+          "type": "string",
+          "description": "The reason the simulation job batch failed.",
+          "nested_items": []
+        },
+        {
+          "name": "failedRequests",
+          "type": "list",
+          "description": "A list of failed simulation job requests. The request failed to be created into a simulation job. Failed requests do not have a simulation job ID.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "outputLocation",
+                      "type": "dict",
+                      "description": "The output location.",
+                      "nested_items": [
+                        {
+                          "name": "s3Bucket",
+                          "type": "string",
+                          "description": "The S3 bucket for output.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "s3Prefix",
+                          "type": "string",
+                          "description": "The S3 folder in the s3Bucket where output files will be placed.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "loggingConfig",
+                      "type": "dict",
+                      "description": "The logging configuration.",
+                      "nested_items": [
+                        {
+                          "name": "recordAllRosTopics",
+                          "type": "boolean",
+                          "description": "A boolean indicating whether to record all ROS topics.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "maxJobDurationInSeconds",
+                      "type": "integer",
+                      "description": "The maximum simulation job duration in seconds. The value must be 8 days (691,200 seconds) or less.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "iamRole",
+                      "type": "string",
+                      "description": "The IAM role name that allows the simulation instance to call the AWS APIs that are specified in its associated policies on your behalf. This is how credentials are passed in to your simulation job.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "failureBehavior",
+                      "type": "string",
+                      "description": "The failure behavior the simulation job.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "useDefaultApplications",
+                      "type": "boolean",
+                      "description": "A Boolean indicating whether to use default applications in the simulation job. Default applications include Gazebo, rqt, rviz and terminal access.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "robotApplications",
+                      "type": "list",
+                      "description": "The robot applications to use in the simulation job.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "application",
+                              "type": "string",
+                              "description": "The application information for the robot application.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "applicationVersion",
+                              "type": "string",
+                              "description": "The version of the robot application.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "launchConfig",
+                              "type": "dict",
+                              "description": "The launch configuration for the robot application.",
+                              "nested_items": [
+                                {
+                                  "name": "packageName",
+                                  "type": "string",
+                                  "description": "The package name.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "launchFile",
+                                  "type": "string",
+                                  "description": "The launch file name.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "environmentVariables",
+                                  "type": "dict",
+                                  "description": "The environment variables for the application launch.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "string",
+                                          "description": "(string) ---",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "portForwardingConfig",
+                                  "type": "dict",
+                                  "description": "The port forwarding configuration.",
+                                  "nested_items": [
+                                    {
+                                      "name": "portMappings",
+                                      "type": "list",
+                                      "description": "The port mappings for the configuration.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "jobPort",
+                                              "type": "integer",
+                                              "description": "The port number on the simulation job instance to use as a remote connection point.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "applicationPort",
+                                              "type": "integer",
+                                              "description": "The port number on the application.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "enableOnPublicIp",
+                                              "type": "boolean",
+                                              "description": "A Boolean indicating whether to enable this port mapping on public IP.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "streamUI",
+                                  "type": "boolean",
+                                  "description": "Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "command",
+                                  "type": "list",
+                                  "description": "If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "uploadConfigurations",
+                              "type": "list",
+                              "description": "The upload configurations for the robot application.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "name",
+                                      "type": "string",
+                                      "description": "A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "path",
+                                      "type": "string",
+                                      "description": "Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "uploadBehavior",
+                                      "type": "string",
+                                      "description": "Specifies when to upload the files:",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "useDefaultUploadConfigurations",
+                              "type": "boolean",
+                              "description": "A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "tools",
+                              "type": "list",
+                              "description": "Information about tools configured for the robot application.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "streamUI",
+                                      "type": "boolean",
+                                      "description": "Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. It must have a graphical user interface. The default is False.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "name",
+                                      "type": "string",
+                                      "description": "The name of the tool.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "command",
+                                      "type": "string",
+                                      "description": "Command-line arguments for the tool. It must include the tool executable name.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "streamOutputToCloudWatch",
+                                      "type": "boolean",
+                                      "description": "Boolean indicating whether logs will be recorded in CloudWatch for the tool. The default is False.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "exitBehavior",
+                                      "type": "string",
+                                      "description": "Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "useDefaultTools",
+                              "type": "boolean",
+                              "description": "A Boolean indicating whether to use default robot application tools. The default tools are rviz, rqt, terminal and rosbag record. The default is False.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "simulationApplications",
+                      "type": "list",
+                      "description": "The simulation applications to use in the simulation job.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "application",
+                              "type": "string",
+                              "description": "The application information for the simulation application.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "applicationVersion",
+                              "type": "string",
+                              "description": "The version of the simulation application.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "launchConfig",
+                              "type": "dict",
+                              "description": "The launch configuration for the simulation application.",
+                              "nested_items": [
+                                {
+                                  "name": "packageName",
+                                  "type": "string",
+                                  "description": "The package name.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "launchFile",
+                                  "type": "string",
+                                  "description": "The launch file name.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "environmentVariables",
+                                  "type": "dict",
+                                  "description": "The environment variables for the application launch.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "string",
+                                          "description": "(string) ---",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "portForwardingConfig",
+                                  "type": "dict",
+                                  "description": "The port forwarding configuration.",
+                                  "nested_items": [
+                                    {
+                                      "name": "portMappings",
+                                      "type": "list",
+                                      "description": "The port mappings for the configuration.",
+                                      "nested_items": [
+                                        {
+                                          "name": "",
+                                          "type": "dict",
+                                          "description": "",
+                                          "nested_items": [
+                                            {
+                                              "name": "jobPort",
+                                              "type": "integer",
+                                              "description": "The port number on the simulation job instance to use as a remote connection point.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "applicationPort",
+                                              "type": "integer",
+                                              "description": "The port number on the application.",
+                                              "nested_items": []
+                                            },
+                                            {
+                                              "name": "enableOnPublicIp",
+                                              "type": "boolean",
+                                              "description": "A Boolean indicating whether to enable this port mapping on public IP.",
+                                              "nested_items": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "streamUI",
+                                  "type": "boolean",
+                                  "description": "Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "command",
+                                  "type": "list",
+                                  "description": "If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "uploadConfigurations",
+                              "type": "list",
+                              "description": "Information about upload configurations for the simulation application.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "name",
+                                      "type": "string",
+                                      "description": "A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "path",
+                                      "type": "string",
+                                      "description": "Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "uploadBehavior",
+                                      "type": "string",
+                                      "description": "Specifies when to upload the files:",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "worldConfigs",
+                              "type": "list",
+                              "description": "A list of world configurations.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "world",
+                                      "type": "string",
+                                      "description": "The world generated by Simulation WorldForge.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "useDefaultUploadConfigurations",
+                              "type": "boolean",
+                              "description": "A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "tools",
+                              "type": "list",
+                              "description": "Information about tools configured for the simulation application.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "dict",
+                                  "description": "",
+                                  "nested_items": [
+                                    {
+                                      "name": "streamUI",
+                                      "type": "boolean",
+                                      "description": "Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. It must have a graphical user interface. The default is False.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "name",
+                                      "type": "string",
+                                      "description": "The name of the tool.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "command",
+                                      "type": "string",
+                                      "description": "Command-line arguments for the tool. It must include the tool executable name.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "streamOutputToCloudWatch",
+                                      "type": "boolean",
+                                      "description": "Boolean indicating whether logs will be recorded in CloudWatch for the tool. The default is False.",
+                                      "nested_items": []
+                                    },
+                                    {
+                                      "name": "exitBehavior",
+                                      "type": "string",
+                                      "description": "Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART.",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "useDefaultTools",
+                              "type": "boolean",
+                              "description": "A Boolean indicating whether to use default simulation application tools. The default tools are rviz, rqt, terminal and rosbag record. The default is False.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "dataSources",
+                      "type": "list",
+                      "description": "Specify data sources to mount read-only files from S3 into your simulation. These files are available under /opt/robomaker/datasources/data_source_name.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "name",
+                              "type": "string",
+                              "description": "The name of the data source.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "s3Bucket",
+                              "type": "string",
+                              "description": "The S3 bucket where the data files are located.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "s3Keys",
+                              "type": "list",
+                              "description": "The list of S3 keys identifying the data source files.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "type",
+                              "type": "string",
+                              "description": "The data type for the data source that you're using for your container image or simulation job. You can use this field to specify whether your data source is an Archive, an Amazon S3 prefix, or a file.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "destination",
+                              "type": "string",
+                              "description": "The location where your files are mounted in the container image.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "vpcConfig",
+                      "type": "dict",
+                      "description": "If your simulation job accesses resources in a VPC, you provide this parameter identifying the list of security group IDs and subnet IDs. These must belong to the same VPC. You must provide at least one security group and two subnet IDs.",
+                      "nested_items": [
+                        {
+                          "name": "subnets",
+                          "type": "list",
+                          "description": "A list of one or more subnet IDs in your VPC.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "securityGroups",
+                          "type": "list",
+                          "description": "A list of one or more security groups IDs in your VPC.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "assignPublicIp",
+                          "type": "boolean",
+                          "description": "A boolean indicating whether to assign a public IP address.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "simulationUnitLimit",
+                          "type": "integer",
+                          "description": "The simulation unit limit. Your simulation is allocated CPU and memory proportional to the supplied simulation unit limit. A simulation unit is 1 vcpu and 2GB of memory. You are only billed for the SU utilization you consume up to the maximum value provided. The default is 15.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "computeType",
+                          "type": "string",
+                          "description": "Compute type information for the simulation job.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "gpuUnitLimit",
+                          "type": "integer",
+                          "description": "Compute GPU unit limit for the simulation job. It is the same as the number of GPUs allocated to the SimulationJob.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "failureReason",
+                  "type": "string",
+                  "description": "The failure reason of the simulation job request.",
+                  "nested_items": []
+                },
+                {
+                  "name": "failureCode",
+                  "type": "string",
+                  "description": "The failure code.",
+                  "nested_items": []
+                },
+                {
+                  "name": "failedAt",
+                  "type": "datetime",
+                  "description": "The time, in milliseconds since the epoch, when the simulation job batch failed.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "pendingRequests",
+          "type": "list",
+          "description": "A list of pending simulation job requests. These requests have not yet been created into simulation jobs.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "outputLocation",
+                  "type": "dict",
+                  "description": "The output location.",
+                  "nested_items": [
+                    {
+                      "name": "s3Bucket",
+                      "type": "string",
+                      "description": "The S3 bucket for output.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "s3Prefix",
+                      "type": "string",
+                      "description": "The S3 folder in the s3Bucket where output files will be placed.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "loggingConfig",
+                  "type": "dict",
+                  "description": "The logging configuration.",
+                  "nested_items": [
+                    {
+                      "name": "recordAllRosTopics",
+                      "type": "boolean",
+                      "description": "A boolean indicating whether to record all ROS topics.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "maxJobDurationInSeconds",
+                  "type": "integer",
+                  "description": "The maximum simulation job duration in seconds. The value must be 8 days (691,200 seconds) or less.",
+                  "nested_items": []
+                },
+                {
+                  "name": "iamRole",
+                  "type": "string",
+                  "description": "The IAM role name that allows the simulation instance to call the AWS APIs that are specified in its associated policies on your behalf. This is how credentials are passed in to your simulation job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "failureBehavior",
+                  "type": "string",
+                  "description": "The failure behavior the simulation job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "useDefaultApplications",
+                  "type": "boolean",
+                  "description": "A Boolean indicating whether to use default applications in the simulation job. Default applications include Gazebo, rqt, rviz and terminal access.",
+                  "nested_items": []
+                },
+                {
+                  "name": "robotApplications",
+                  "type": "list",
+                  "description": "The robot applications to use in the simulation job.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "application",
+                          "type": "string",
+                          "description": "The application information for the robot application.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "applicationVersion",
+                          "type": "string",
+                          "description": "The version of the robot application.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "launchConfig",
+                          "type": "dict",
+                          "description": "The launch configuration for the robot application.",
+                          "nested_items": [
+                            {
+                              "name": "packageName",
+                              "type": "string",
+                              "description": "The package name.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "launchFile",
+                              "type": "string",
+                              "description": "The launch file name.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "environmentVariables",
+                              "type": "dict",
+                              "description": "The environment variables for the application launch.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "portForwardingConfig",
+                              "type": "dict",
+                              "description": "The port forwarding configuration.",
+                              "nested_items": [
+                                {
+                                  "name": "portMappings",
+                                  "type": "list",
+                                  "description": "The port mappings for the configuration.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "jobPort",
+                                          "type": "integer",
+                                          "description": "The port number on the simulation job instance to use as a remote connection point.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "applicationPort",
+                                          "type": "integer",
+                                          "description": "The port number on the application.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "enableOnPublicIp",
+                                          "type": "boolean",
+                                          "description": "A Boolean indicating whether to enable this port mapping on public IP.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "streamUI",
+                              "type": "boolean",
+                              "description": "Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "command",
+                              "type": "list",
+                              "description": "If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "uploadConfigurations",
+                          "type": "list",
+                          "description": "The upload configurations for the robot application.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "path",
+                                  "type": "string",
+                                  "description": "Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "uploadBehavior",
+                                  "type": "string",
+                                  "description": "Specifies when to upload the files:",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "useDefaultUploadConfigurations",
+                          "type": "boolean",
+                          "description": "A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "tools",
+                          "type": "list",
+                          "description": "Information about tools configured for the robot application.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "streamUI",
+                                  "type": "boolean",
+                                  "description": "Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. It must have a graphical user interface. The default is False.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The name of the tool.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "command",
+                                  "type": "string",
+                                  "description": "Command-line arguments for the tool. It must include the tool executable name.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "streamOutputToCloudWatch",
+                                  "type": "boolean",
+                                  "description": "Boolean indicating whether logs will be recorded in CloudWatch for the tool. The default is False.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "exitBehavior",
+                                  "type": "string",
+                                  "description": "Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "useDefaultTools",
+                          "type": "boolean",
+                          "description": "A Boolean indicating whether to use default robot application tools. The default tools are rviz, rqt, terminal and rosbag record. The default is False.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "simulationApplications",
+                  "type": "list",
+                  "description": "The simulation applications to use in the simulation job.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "application",
+                          "type": "string",
+                          "description": "The application information for the simulation application.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "applicationVersion",
+                          "type": "string",
+                          "description": "The version of the simulation application.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "launchConfig",
+                          "type": "dict",
+                          "description": "The launch configuration for the simulation application.",
+                          "nested_items": [
+                            {
+                              "name": "packageName",
+                              "type": "string",
+                              "description": "The package name.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "launchFile",
+                              "type": "string",
+                              "description": "The launch file name.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "environmentVariables",
+                              "type": "dict",
+                              "description": "The environment variables for the application launch.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "string",
+                                      "description": "(string) ---",
+                                      "nested_items": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "portForwardingConfig",
+                              "type": "dict",
+                              "description": "The port forwarding configuration.",
+                              "nested_items": [
+                                {
+                                  "name": "portMappings",
+                                  "type": "list",
+                                  "description": "The port mappings for the configuration.",
+                                  "nested_items": [
+                                    {
+                                      "name": "",
+                                      "type": "dict",
+                                      "description": "",
+                                      "nested_items": [
+                                        {
+                                          "name": "jobPort",
+                                          "type": "integer",
+                                          "description": "The port number on the simulation job instance to use as a remote connection point.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "applicationPort",
+                                          "type": "integer",
+                                          "description": "The port number on the application.",
+                                          "nested_items": []
+                                        },
+                                        {
+                                          "name": "enableOnPublicIp",
+                                          "type": "boolean",
+                                          "description": "A Boolean indicating whether to enable this port mapping on public IP.",
+                                          "nested_items": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "streamUI",
+                              "type": "boolean",
+                              "description": "Boolean indicating whether a streaming session will be configured for the application. If True, AWS RoboMaker will configure a connection so you can interact with your application as it is running in the simulation. You must configure and launch the component. It must have a graphical user interface.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "command",
+                              "type": "list",
+                              "description": "If you've specified General as the value for your RobotSoftwareSuite, you can use this field to specify a list of commands for your container image.",
+                              "nested_items": [
+                                {
+                                  "name": "",
+                                  "type": "string",
+                                  "description": "(string) ---",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "uploadConfigurations",
+                          "type": "list",
+                          "description": "Information about upload configurations for the simulation application.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "path",
+                                  "type": "string",
+                                  "description": "Specifies the path of the file(s) to upload. Standard Unix glob matching rules are accepted, with the addition of ** as a super asterisk. For example, specifying /var/log/**.log causes all .log files in the /var/log directory tree to be collected. For more examples, see Glob Library.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "uploadBehavior",
+                                  "type": "string",
+                                  "description": "Specifies when to upload the files:",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "worldConfigs",
+                          "type": "list",
+                          "description": "A list of world configurations.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "world",
+                                  "type": "string",
+                                  "description": "The world generated by Simulation WorldForge.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "useDefaultUploadConfigurations",
+                          "type": "boolean",
+                          "description": "A Boolean indicating whether to use default upload configurations. By default, .ros and .gazebo files are uploaded when the application terminates and all ROS topics will be recorded.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "tools",
+                          "type": "list",
+                          "description": "Information about tools configured for the simulation application.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "streamUI",
+                                  "type": "boolean",
+                                  "description": "Boolean indicating whether a streaming session will be configured for the tool. If True, AWS RoboMaker will configure a connection so you can interact with the tool as it is running in the simulation. It must have a graphical user interface. The default is False.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "name",
+                                  "type": "string",
+                                  "description": "The name of the tool.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "command",
+                                  "type": "string",
+                                  "description": "Command-line arguments for the tool. It must include the tool executable name.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "streamOutputToCloudWatch",
+                                  "type": "boolean",
+                                  "description": "Boolean indicating whether logs will be recorded in CloudWatch for the tool. The default is False.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "exitBehavior",
+                                  "type": "string",
+                                  "description": "Exit behavior determines what happens when your tool quits running. RESTART will cause your tool to be restarted. FAIL will cause your job to exit. The default is RESTART.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "useDefaultTools",
+                          "type": "boolean",
+                          "description": "A Boolean indicating whether to use default simulation application tools. The default tools are rviz, rqt, terminal and rosbag record. The default is False.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "dataSources",
+                  "type": "list",
+                  "description": "Specify data sources to mount read-only files from S3 into your simulation. These files are available under /opt/robomaker/datasources/data_source_name.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "name",
+                          "type": "string",
+                          "description": "The name of the data source.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "s3Bucket",
+                          "type": "string",
+                          "description": "The S3 bucket where the data files are located.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "s3Keys",
+                          "type": "list",
+                          "description": "The list of S3 keys identifying the data source files.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "string",
+                              "description": "(string) ---",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "description": "The data type for the data source that you're using for your container image or simulation job. You can use this field to specify whether your data source is an Archive, an Amazon S3 prefix, or a file.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "destination",
+                          "type": "string",
+                          "description": "The location where your files are mounted in the container image.",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "vpcConfig",
+                  "type": "dict",
+                  "description": "If your simulation job accesses resources in a VPC, you provide this parameter identifying the list of security group IDs and subnet IDs. These must belong to the same VPC. You must provide at least one security group and two subnet IDs.",
+                  "nested_items": [
+                    {
+                      "name": "subnets",
+                      "type": "list",
+                      "description": "A list of one or more subnet IDs in your VPC.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "securityGroups",
+                      "type": "list",
+                      "description": "A list of one or more security groups IDs in your VPC.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "assignPublicIp",
+                      "type": "boolean",
+                      "description": "A boolean indicating whether to assign a public IP address.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "simulationUnitLimit",
+                      "type": "integer",
+                      "description": "The simulation unit limit. Your simulation is allocated CPU and memory proportional to the supplied simulation unit limit. A simulation unit is 1 vcpu and 2GB of memory. You are only billed for the SU utilization you consume up to the maximum value provided. The default is 15.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "computeType",
+                      "type": "string",
+                      "description": "Compute type information for the simulation job.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "gpuUnitLimit",
+                      "type": "integer",
+                      "description": "Compute GPU unit limit for the simulation job. It is the same as the number of GPUs allocated to the SimulationJob.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "createdRequests",
+          "type": "list",
+          "description": "A list of created simulation job request summaries.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "arn",
+                  "type": "string",
+                  "description": "The Amazon Resource Name (ARN) of the simulation job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "lastUpdatedAt",
+                  "type": "datetime",
+                  "description": "The time, in milliseconds since the epoch, when the simulation job was last updated.",
+                  "nested_items": []
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "description": "The name of the simulation job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "status",
+                  "type": "string",
+                  "description": "The status of the simulation job.",
+                  "nested_items": []
+                },
+                {
+                  "name": "simulationApplicationNames",
+                  "type": "list",
+                  "description": "A list of simulation job simulation application names.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "robotApplicationNames",
+                  "type": "list",
+                  "description": "A list of simulation job robot application names.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "dataSourceNames",
+                  "type": "list",
+                  "description": "The names of the data sources.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "computeType",
+                  "type": "string",
+                  "description": "The compute type for the simulation job summary.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "string",
+              "description": "(string) ---",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

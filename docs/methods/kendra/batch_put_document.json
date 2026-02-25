@@ -1,0 +1,381 @@
+{
+  "method_name": "batch_put_document",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kendra/client/batch_put_document.html",
+  "description": "Adds one or more documents to an index. The BatchPutDocument API enables you to ingest inline documents or a set of documents stored in an Amazon S3 bucket. Use this API to ingest your text and unstructured text into an index, add custom attributes to the documents, and to attach an access control list to the documents added to the index. The documents are indexed asynchronously. You can see the progress of the batch using Amazon Web Services CloudWatch. Any error messages related to processing the batch are sent to your Amazon Web Services CloudWatch log. You can also use the BatchGetDocumentStatus API to monitor the progress of indexing your documents. For an example of ingesting inline documents using Python and Java SDKs, see Adding files directly to an index.",
+  "parameters": [
+    {
+      "name": "IndexId",
+      "type": "string",
+      "required": true,
+      "description": "The identifier of the index to add the documents to. You need to create the index first using the CreateIndex API.",
+      "nested_params": []
+    },
+    {
+      "name": "RoleArn",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Documents",
+      "type": "list",
+      "required": true,
+      "description": "One or more documents to add to the index. Documents have the following file size limits. 50 MB total size for any file 5 MB extracted text for any file For more information, see Quotas. (dict) --- A document in an index. A identifier of the document in the index. Note, each document ID must be unique per index. You cannot create a data source to index your documents with their unique IDs and then use the BatchPutDocument API to index the same documents, or vice versa. You can delete a data source and then use the BatchPutDocument API to index the same documents, or vice versa. Title (string) --- The title of the document. Blob (bytes) --- The contents of the document. Documents passed to the Blob parameter must be base64 encoded. Your code might not need to encode the document file bytes if you're using an Amazon Web Services SDK to call Amazon Kendra APIs. If you are calling the Amazon Kendra endpoint directly using REST, you must base64 encode the contents before sending. S3Path (dict) --- Information required to find a specific file in an Amazon S3 bucket. The name of the S3 bucket that contains the file. The name of the file. Attributes (list) --- Custom attributes to apply to the document. Use the custom attributes to provide additional information for searching, to provide facets for refining searches, and to provide additional information in the query response. For example, --\u0098DataSourceId' and --\u0098DataSourceSyncJobId' are custom attributes that provide information on the synchronization of documents running on a data source. Note, --\u0098DataSourceSyncJobId' could be an optional custom attribute as Amazon Kendra will use the ID of a running sync job. (dict) --- A document attribute or metadata field. To create custom document attributes, see Custom attributes. The identifier for the attribute. The value of the attribute. StringValue (string) --- A string, such as 'department'. StringListValue (list) --- A list of strings. The default maximum length or number of strings is 10. (string) --- LongValue (integer) --- A long integer value. DateValue (datetime) --- A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time. AccessControlList (list) --- Information on principals (users and/or groups) and which documents they should have access to. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. (dict) --- Provides user and group information for user context filtering. The name of the user or group. The type of principal. Whether to allow or deny document access to the principal. DataSourceId (string) --- The identifier of the data source the principal should access documents from. HierarchicalAccessControlList (list) --- The list of principal lists that define the hierarchy for which documents users should have access to. (dict) --- Information to define the hierarchy for which documents users should have access to. A list of principal lists that define the hierarchy for which documents users should have access to. Each hierarchical list specifies which user or group has allow or deny access for each document. ContentType (string) --- The file type of the document in the Blob field. If you want to index snippets or subsets of HTML documents instead of the entirety of the HTML documents, you must add the HTML start and closing tags ( <HTML>content</HTML>) around the content. AccessControlConfigurationId (string) --- The identifier of the access control configuration that you want to apply to the document.",
+      "nested_params": []
+    },
+    {
+      "name": "CustomDocumentEnrichmentConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "Configuration information for altering your document metadata and content during the document ingestion process when you use the BatchPutDocument API. For more information on how to create, modify and delete document metadata, or make other content alterations when you ingest documents into Amazon Kendra, see Customizing document metadata during the ingestion process. InlineConfigurations (list) --- Configuration information to alter document attributes or metadata fields and content when ingesting documents into Amazon Kendra. (dict) --- Provides the configuration information for applying basic logic to alter document metadata and content when ingesting documents into Amazon Kendra. To apply advanced logic, to go beyond what you can do with basic logic, see HookConfiguration. For more information, see Customizing document metadata during the ingestion process. Condition (dict) --- Configuration of the condition used for the target document attribute or metadata field when ingesting documents into Amazon Kendra. The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Kendra currently does not support _document_body as an attribute key used for the condition. The condition operator. For example, you can use --\u0098Contains' to partially match a string. ConditionOnValue (dict) --- The value used by the operator. For example, you can specify the value --\u0098financial' for strings in the --\u0098Source_URI' field that partially match or contain this value. StringValue (string) --- A string, such as 'department'. StringListValue (list) --- A list of strings. The default maximum length or number of strings is 10. (string) --- LongValue (integer) --- A long integer value. DateValue (datetime) --- A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time. Target (dict) --- Configuration of the target document attribute or metadata field when ingesting documents into Amazon Kendra. You can also include a value. TargetDocumentAttributeKey (string) --- The identifier of the target document attribute or metadata field. For example, --\u0098Department' could be an identifier for the target attribute or metadata field that includes the department names associated with the documents. TargetDocumentAttributeValueDeletion (boolean) --- TRUE to delete the existing target value for your specified target attribute key. You cannot create a target value and set this to TRUE. To create a target value ( TargetDocumentAttributeValue), set this to FALSE. TargetDocumentAttributeValue (dict) --- The target value you want to create for the target attribute. For example, --\u0098Finance' could be the target value for the target attribute key --\u0098Department'. DocumentContentDeletion (boolean) --- TRUE to delete content if the condition used for the target attribute is met. PreExtractionHookConfiguration (dict) --- Configuration information for invoking a Lambda function in Lambda on the original or raw documents before extracting their metadata and text. You can use a Lambda function to apply advanced logic for creating, modifying, or deleting document metadata and content. For more information, see Advanced data manipulation. InvocationCondition (dict) --- The condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Kendra should invoke a function that inserts the current date-time. The Amazon Resource Name (ARN) of an IAM role with permission to run a Lambda function during ingestion. For more information, see an IAM roles for Amazon Kendra. Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions. PostExtractionHookConfiguration (dict) --- Configuration information for invoking a Lambda function in Lambda on the structured documents with their metadata and text extracted. RoleArn (string) --- The Amazon Resource Name (ARN) of an IAM role with permission to run PreExtractionHookConfiguration and PostExtractionHookConfiguration for altering document metadata and content during the document ingestion process. For more information, see an IAM roles for Amazon Kendra.",
+      "nested_params": [
+        {
+          "name": "InlineConfigurations",
+          "type": "list",
+          "required": false,
+          "description": "Configuration information to alter document attributes or metadata fields and content when ingesting documents into Amazon Kendra.",
+          "nested_params": [
+            {
+              "name": "Condition",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration of the condition used for the target document attribute or metadata field when ingesting documents into Amazon Kendra.",
+              "nested_params": [
+                {
+                  "name": "ConditionDocumentAttributeKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Kendra currently does not support _document_body as an attribute key used for the condition.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Operator",
+                  "type": "string",
+                  "required": false,
+                  "description": "The condition operator. For example, you can use --\u0098Contains' to partially match a string.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ConditionOnValue",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value used by the operator. For example, you can specify the value --\u0098financial' for strings in the --\u0098Source_URI' field that partially match or contain this value.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Target",
+              "type": "dict",
+              "required": false,
+              "description": "Configuration of the target document attribute or metadata field when ingesting documents into Amazon Kendra. You can also include a value.",
+              "nested_params": [
+                {
+                  "name": "TargetDocumentAttributeKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of the target document attribute or metadata field. For example, --\u0098Department' could be an identifier for the target attribute or metadata field that includes the department names associated with the documents.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TargetDocumentAttributeValueDeletion",
+                  "type": "boolean",
+                  "required": false,
+                  "description": "TRUE to delete the existing target value for your specified target attribute key. You cannot create a target value and set this to TRUE. To create a target value ( TargetDocumentAttributeValue), set this to FALSE.",
+                  "nested_params": []
+                },
+                {
+                  "name": "TargetDocumentAttributeValue",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The target value you want to create for the target attribute. For example, --\u0098Finance' could be the target value for the target attribute key --\u0098Department'.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "DocumentContentDeletion",
+              "type": "boolean",
+              "required": false,
+              "description": "TRUE to delete content if the condition used for the target attribute is met.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "PreExtractionHookConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information for invoking a Lambda function in Lambda on the original or raw documents before extracting their metadata and text. You can use a Lambda function to apply advanced logic for creating, modifying, or deleting document metadata and content. For more information, see Advanced data manipulation.",
+          "nested_params": [
+            {
+              "name": "InvocationCondition",
+              "type": "dict",
+              "required": false,
+              "description": "The condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Kendra should invoke a function that inserts the current date-time.",
+              "nested_params": [
+                {
+                  "name": "ConditionDocumentAttributeKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Kendra currently does not support _document_body as an attribute key used for the condition.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Operator",
+                  "type": "string",
+                  "required": false,
+                  "description": "The condition operator. For example, you can use --\u0098Contains' to partially match a string.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ConditionOnValue",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value used by the operator. For example, you can specify the value --\u0098financial' for strings in the --\u0098Source_URI' field that partially match or contain this value.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LambdaArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of an IAM role with permission to run a Lambda function during ingestion. For more information, see an IAM roles for Amazon Kendra.",
+              "nested_params": []
+            },
+            {
+              "name": "S3Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "PostExtractionHookConfiguration",
+          "type": "dict",
+          "required": false,
+          "description": "Configuration information for invoking a Lambda function in Lambda on the structured documents with their metadata and text extracted. You can use a Lambda function to apply advanced logic for creating, modifying, or deleting document metadata and content. For more information, see Advanced data manipulation.",
+          "nested_params": [
+            {
+              "name": "InvocationCondition",
+              "type": "dict",
+              "required": false,
+              "description": "The condition used for when a Lambda function should be invoked. For example, you can specify a condition that if there are empty date-time values, then Amazon Kendra should invoke a function that inserts the current date-time.",
+              "nested_params": [
+                {
+                  "name": "ConditionDocumentAttributeKey",
+                  "type": "string",
+                  "required": false,
+                  "description": "The identifier of the document attribute used for the condition. For example, --\u0098Source_URI' could be an identifier for the attribute or metadata field that contains source URIs associated with the documents. Amazon Kendra currently does not support _document_body as an attribute key used for the condition.",
+                  "nested_params": []
+                },
+                {
+                  "name": "Operator",
+                  "type": "string",
+                  "required": false,
+                  "description": "The condition operator. For example, you can use --\u0098Contains' to partially match a string.",
+                  "nested_params": []
+                },
+                {
+                  "name": "ConditionOnValue",
+                  "type": "dict",
+                  "required": false,
+                  "description": "The value used by the operator. For example, you can specify the value --\u0098financial' for strings in the --\u0098Source_URI' field that partially match or contain this value.",
+                  "nested_params": [
+                    {
+                      "name": "StringValue",
+                      "type": "string",
+                      "required": false,
+                      "description": "A string, such as 'department'.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "StringListValue",
+                      "type": "list",
+                      "required": false,
+                      "description": "A list of strings. The default maximum length or number of strings is 10.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "LongValue",
+                      "type": "integer",
+                      "required": false,
+                      "description": "A long integer value.",
+                      "nested_params": []
+                    },
+                    {
+                      "name": "DateValue",
+                      "type": "datetime",
+                      "required": false,
+                      "description": "A date expressed as an ISO 8601 string. It is important for the time zone to be included in the ISO 8601 date-time format. For example, 2012-03-25T12:30:10+01:00 is the ISO 8601 date-time format for March 25th 2012 at 12:30PM (plus 10 seconds) in Central European Time.",
+                      "nested_params": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "LambdaArn",
+              "type": "string",
+              "required": false,
+              "description": "The Amazon Resource Name (ARN) of an IAM role with permission to run a Lambda function during ingestion. For more information, see an IAM roles for Amazon Kendra.",
+              "nested_params": []
+            },
+            {
+              "name": "S3Bucket",
+              "type": "string",
+              "required": false,
+              "description": "Stores the original, raw documents or the structured, parsed documents before and after altering them. For more information, see Data contracts for Lambda functions.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "RoleArn",
+          "type": "string",
+          "required": false,
+          "description": "The Amazon Resource Name (ARN) of an IAM role with permission to run PreExtractionHookConfiguration and PostExtractionHookConfiguration for altering document metadata and content during the document ingestion process. For more information, see an IAM roles for Amazon Kendra.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "FailedDocuments",
+          "type": "list",
+          "description": "A list of documents that were not added to the index because the document failed a validation check. Each document contains an error message that indicates why the document couldn't be added to the index.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Id",
+                  "type": "string",
+                  "description": "The identifier of the document.",
+                  "nested_items": []
+                },
+                {
+                  "name": "DataSourceId",
+                  "type": "string",
+                  "description": "The identifier of the data source connector that the failed document belongs to.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorCode",
+                  "type": "string",
+                  "description": "The type of error that caused the document to fail to be indexed.",
+                  "nested_items": []
+                },
+                {
+                  "name": "ErrorMessage",
+                  "type": "string",
+                  "description": "A description of the reason why the document could not be indexed.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "method_name": "create_recording_configuration",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ivs/client/create_recording_configuration.html",
+  "description": "Creates a new recording configuration, used to enable recording to Amazon S3. Known issue: In the us-east-1 region, if you use the Amazon Web Services CLI to create a recording configuration, it returns success even if the S3 bucket is in a different region. In this case, the state of the recording configuration is CREATE_FAILED (instead of ACTIVE). (In other regions, the CLI correctly returns failure if the bucket is in a different region.) Workaround: Ensure that your S3 bucket is in the same region as the recording configuration. If you create a recording configuration in a different region as your S3 bucket, delete that recording configuration and create a new one with an S3 bucket from the correct region.",
+  "parameters": [
+    {
+      "name": "destinationConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "A complex type that contains a destination configuration for where recorded video will be stored. s3 (dict) --- An S3 destination configuration where recorded videos will be stored. Location (S3 bucket name) where recorded videos will be stored.",
+      "nested_params": [
+        {
+          "name": "s3",
+          "type": "dict",
+          "required": false,
+          "description": "An S3 destination configuration where recorded videos will be stored.",
+          "nested_params": [
+            {
+              "name": "bucketName",
+              "type": "string",
+              "required": false,
+              "description": "where recorded videos will be stored.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "recordingReconnectWindowSeconds",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "renditionConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "Object that describes which renditions should be recorded for a stream. renditionSelection (string) --- Indicates which set of renditions are recorded for a stream. For BASIC channels, the CUSTOM value has no effect. If CUSTOM is specified, a set of renditions must be specified in the renditions field. Default: ALL. renditions (list) --- Indicates which renditions are recorded for a stream, if renditionSelection is CUSTOM; otherwise, this field is irrelevant. The selected renditions are recorded if they are available during the stream. If a selected rendition is unavailable, the best available rendition is recorded. For details on the resolution dimensions of each rendition, see Auto-Record to Amazon S3. (string) ---",
+      "nested_params": [
+        {
+          "name": "renditionSelection",
+          "type": "string",
+          "required": false,
+          "description": "Indicates which set of renditions are recorded for a stream. For BASIC channels, the CUSTOM value has no effect. If CUSTOM is specified, a set of renditions must be specified in the renditions field. Default: ALL.",
+          "nested_params": []
+        },
+        {
+          "name": "renditions",
+          "type": "list",
+          "required": false,
+          "description": "Indicates which renditions are recorded for a stream, if renditionSelection is CUSTOM; otherwise, this field is irrelevant. The selected renditions are recorded if they are available during the stream. If a selected rendition is unavailable, the best available rendition is recorded. For details on the resolution dimensions of each rendition, see Auto-Record to Amazon S3.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "type": "dict",
+      "required": false,
+      "description": "Array of 1-50 maps, each of the form string:string (key:value). See Best practices and strategies in Tagging Amazon Web Services Resources and Tag Editor for details, including restrictions that apply to tags and 'Tag naming limits and requirements'; Amazon IVS has no service-specific constraints beyond what is documented there. (string) --- (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "thumbnailConfiguration",
+      "type": "dict",
+      "required": false,
+      "description": "A complex type that allows you to enable/disable the recording of thumbnails for a live session and modify the interval at which thumbnails are generated for the live session. recordingMode (string) --- Thumbnail recording mode. Default: INTERVAL. resolution (string) --- Indicates the desired resolution of recorded thumbnails. Thumbnails are recorded at the selected resolution if the corresponding rendition is available during the stream; otherwise, they are recorded at source resolution. For more information about resolution values and their corresponding height and width dimensions, see Auto-Record to Amazon S3. Default: Null (source resolution is returned). storage (list) --- Indicates the format in which thumbnails are recorded. SEQUENTIAL records all generated thumbnails in a serial manner, to the media/thumbnails directory. LATEST saves the latest thumbnail in media/latest_thumbnail/thumb.jpg and overwrites it at the interval specified by targetIntervalSeconds. You can enable both SEQUENTIAL and LATEST. Default: SEQUENTIAL. (string) --- targetIntervalSeconds (integer) --- The targeted thumbnail-generation interval in seconds. This is configurable (and required) only if recordingMode is INTERVAL. Default: 60. Important: For the BASIC channel type, or the STANDARD channel type with multitrack input, setting a value for targetIntervalSeconds does not guarantee that thumbnails are generated at the specified interval. For thumbnails to be generated at the targetIntervalSeconds interval, the IDR/Keyframe value for the input video must be less than the targetIntervalSeconds value. See Amazon IVS Streaming Configuration for information on setting IDR/Keyframe to the recommended value in video-encoder settings.",
+      "nested_params": [
+        {
+          "name": "recordingMode",
+          "type": "string",
+          "required": false,
+          "description": "Thumbnail recording mode. Default: INTERVAL.",
+          "nested_params": []
+        },
+        {
+          "name": "resolution",
+          "type": "string",
+          "required": false,
+          "description": "Indicates the desired resolution of recorded thumbnails. Thumbnails are recorded at the selected resolution if the corresponding rendition is available during the stream; otherwise, they are recorded at source resolution. For more information about resolution values and their corresponding height and width dimensions, see Auto-Record to Amazon S3. Default: Null (source resolution is returned).",
+          "nested_params": []
+        },
+        {
+          "name": "storage",
+          "type": "list",
+          "required": false,
+          "description": "Indicates the format in which thumbnails are recorded. SEQUENTIAL records all generated thumbnails in a serial manner, to the media/thumbnails directory. LATEST saves the latest thumbnail in media/latest_thumbnail/thumb.jpg and overwrites it at the interval specified by targetIntervalSeconds. You can enable both SEQUENTIAL and LATEST. Default: SEQUENTIAL.",
+          "nested_params": []
+        },
+        {
+          "name": "targetIntervalSeconds",
+          "type": "integer",
+          "required": false,
+          "description": "The targeted thumbnail-generation interval in seconds. This is configurable (and required) only if recordingMode is INTERVAL. Default: 60.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "recordingConfiguration",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "arn",
+              "type": "string",
+              "description": "Recording-configuration ARN.",
+              "nested_items": []
+            },
+            {
+              "name": "destinationConfiguration",
+              "type": "dict",
+              "description": "A complex type that contains information about where recorded video will be stored.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "bucketName",
+                      "type": "string",
+                      "description": "where recorded videos will be stored.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "Recording-configuration name. The value does not need to be unique.",
+              "nested_items": []
+            },
+            {
+              "name": "recordingReconnectWindowSeconds",
+              "type": "integer",
+              "description": "If a broadcast disconnects and then reconnects within the specified interval, the multiple streams will be considered a single broadcast and merged together. Default: 0.",
+              "nested_items": []
+            },
+            {
+              "name": "renditionConfiguration",
+              "type": "dict",
+              "description": "Object that describes which renditions should be recorded for a stream.",
+              "nested_items": [
+                {
+                  "name": "renditionSelection",
+                  "type": "string",
+                  "description": "Indicates which set of renditions are recorded for a stream. For BASIC channels, the CUSTOM value has no effect. If CUSTOM is specified, a set of renditions must be specified in the renditions field. Default: ALL.",
+                  "nested_items": []
+                },
+                {
+                  "name": "renditions",
+                  "type": "list",
+                  "description": "Indicates which renditions are recorded for a stream, if renditionSelection is CUSTOM; otherwise, this field is irrelevant. The selected renditions are recorded if they are available during the stream. If a selected rendition is unavailable, the best available rendition is recorded. For details on the resolution dimensions of each rendition, see Auto-Record to Amazon S3.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "state",
+              "type": "string",
+              "description": "Indicates the current state of the recording configuration. When the state is ACTIVE, the configuration is ready for recording a channel stream.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "string",
+                  "description": "(string) ---",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "thumbnailConfiguration",
+              "type": "dict",
+              "description": "A complex type that allows you to enable/disable the recording of thumbnails for a live session and modify the interval at which thumbnails are generated for the live session.",
+              "nested_items": [
+                {
+                  "name": "recordingMode",
+                  "type": "string",
+                  "description": "Thumbnail recording mode. Default: INTERVAL.",
+                  "nested_items": []
+                },
+                {
+                  "name": "resolution",
+                  "type": "string",
+                  "description": "Indicates the desired resolution of recorded thumbnails. Thumbnails are recorded at the selected resolution if the corresponding rendition is available during the stream; otherwise, they are recorded at source resolution. For more information about resolution values and their corresponding height and width dimensions, see Auto-Record to Amazon S3. Default: Null (source resolution is returned).",
+                  "nested_items": []
+                },
+                {
+                  "name": "storage",
+                  "type": "list",
+                  "description": "Indicates the format in which thumbnails are recorded. SEQUENTIAL records all generated thumbnails in a serial manner, to the media/thumbnails directory. LATEST saves the latest thumbnail in media/latest_thumbnail/thumb.jpg and overwrites it at the interval specified by targetIntervalSeconds. You can enable both SEQUENTIAL and LATEST. Default: SEQUENTIAL.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "string",
+                      "description": "(string) ---",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "targetIntervalSeconds",
+                  "type": "integer",
+                  "description": "The targeted thumbnail-generation interval in seconds. This is configurable (and required) only if recordingMode is INTERVAL. Default: 60.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

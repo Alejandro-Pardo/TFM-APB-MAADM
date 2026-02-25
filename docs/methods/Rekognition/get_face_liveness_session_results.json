@@ -1,0 +1,205 @@
+{
+  "method_name": "get_face_liveness_session_results",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/get_face_liveness_session_results.html",
+  "description": "Retrieves the results of a specific Face Liveness session. It requires the sessionId as input, which was created using CreateFaceLivenessSession. Returns the corresponding Face Liveness confidence score, a reference image that includes a face bounding box, and audit images that also contain face bounding boxes. The Face Liveness confidence score ranges from 0 to 100. The number of audit images returned by GetFaceLivenessSessionResults is defined by the AuditImagesLimit paramater when calling CreateFaceLivenessSession. Reference images are always returned when possible.",
+  "parameters": [
+    {
+      "name": "SessionId",
+      "type": "string",
+      "required": true,
+      "description": "A unique 128-bit UUID. This is used to uniquely identify the session and also acts as an idempotency token for all operations associated with the session.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "SessionId",
+          "type": "string",
+          "description": "The sessionId for which this request was called.",
+          "nested_items": []
+        },
+        {
+          "name": "Status",
+          "type": "string",
+          "description": "Represents a status corresponding to the state of the session. Possible statuses are: CREATED, IN_PROGRESS, SUCCEEDED, FAILED, EXPIRED.",
+          "nested_items": []
+        },
+        {
+          "name": "Confidence",
+          "type": "float",
+          "description": "Probabalistic confidence score for if the person in the given video was live, represented as a float value between 0 to 100.",
+          "nested_items": []
+        },
+        {
+          "name": "ReferenceImage",
+          "type": "dict",
+          "description": "A high-quality image from the Face Liveness video that can be used for face comparison or search. It includes a bounding box of the face and the Base64-encoded bytes that return an image. If the CreateFaceLivenessSession request included an OutputConfig argument, the image will be uploaded to an S3Object specified in the output configuration. In case the reference image is not returned, it's recommended to retry the Liveness check.",
+          "nested_items": [
+            {
+              "name": "Bytes",
+              "type": "bytes",
+              "description": "The Base64-encoded bytes representing an image selected from the Face Liveness video and returned for audit purposes.",
+              "nested_items": []
+            },
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "description": "Name of the S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "S3 object key name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "If the bucket is versioning enabled, you can specify the object version.",
+                  "nested_items": []
+                }
+              ]
+            },
+            {
+              "name": "BoundingBox",
+              "type": "dict",
+              "description": "Identifies the bounding box around the label, face, text, object of interest, or personal protective equipment. The left (x-coordinate) and top (y-coordinate) are coordinates representing the top and left sides of the bounding box. Note that the upper-left corner of the image is the origin (0,0).",
+              "nested_items": [
+                {
+                  "name": "Width",
+                  "type": "float",
+                  "description": "Width of the bounding box as a ratio of the overall image width.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Height",
+                  "type": "float",
+                  "description": "Height of the bounding box as a ratio of the overall image height.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Left",
+                  "type": "float",
+                  "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Top",
+                  "type": "float",
+                  "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AuditImages",
+          "type": "list",
+          "description": "A set of images from the Face Liveness video that can be used for audit purposes. It includes a bounding box of the face and the Base64-encoded bytes that return an image. If the CreateFaceLivenessSession request included an OutputConfig argument, the image will be uploaded to an S3Object specified in the output configuration. If no Amazon S3 bucket is defined, raw bytes are sent instead.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bytes",
+                  "type": "bytes",
+                  "description": "The Base64-encoded bytes representing an image selected from the Face Liveness video and returned for audit purposes.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Bucket",
+                      "type": "string",
+                      "description": "Name of the S3 bucket.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Name",
+                      "type": "string",
+                      "description": "S3 object key name.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Version",
+                      "type": "string",
+                      "description": "If the bucket is versioning enabled, you can specify the object version.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "BoundingBox",
+                  "type": "dict",
+                  "description": "Identifies the bounding box around the label, face, text, object of interest, or personal protective equipment. The left (x-coordinate) and top (y-coordinate) are coordinates representing the top and left sides of the bounding box. Note that the upper-left corner of the image is the origin (0,0).",
+                  "nested_items": [
+                    {
+                      "name": "Width",
+                      "type": "float",
+                      "description": "Width of the bounding box as a ratio of the overall image width.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Height",
+                      "type": "float",
+                      "description": "Height of the bounding box as a ratio of the overall image height.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Left",
+                      "type": "float",
+                      "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "Top",
+                      "type": "float",
+                      "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Challenge",
+          "type": "dict",
+          "description": "Contains information regarding the challenge type used for the Face Liveness check.",
+          "nested_items": [
+            {
+              "name": "Type",
+              "type": "string",
+              "description": "The type of the challenge being used for the Face Liveness session.",
+              "nested_items": []
+            },
+            {
+              "name": "Version",
+              "type": "string",
+              "description": "The version of the challenge being used for the Face Liveness session.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

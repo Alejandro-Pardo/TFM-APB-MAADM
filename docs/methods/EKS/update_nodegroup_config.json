@@ -1,0 +1,337 @@
+{
+  "method_name": "update_nodegroup_config",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/eks/client/update_nodegroup_config.html",
+  "description": "Updates an Amazon EKS managed node group configuration. Your node group continues to function during the update. The response output includes an update ID that you can use to track the status of your node group update with the DescribeUpdate API operation. You can update the Kubernetes labels and taints for a node group and the scaling and version update configuration.",
+  "parameters": [
+    {
+      "name": "clusterName",
+      "type": "string",
+      "required": true,
+      "description": "The name of your cluster.",
+      "nested_params": []
+    },
+    {
+      "name": "nodegroupName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the managed node group to update.",
+      "nested_params": []
+    },
+    {
+      "name": "labels",
+      "type": "dict",
+      "required": false,
+      "description": "The Kubernetes labels to apply to the nodes in the node group after the update. addOrUpdateLabels (dict) --- The Kubernetes labels to add or update. (string) --- (string) --- removeLabels (list) --- The Kubernetes labels to remove. (string) ---",
+      "nested_params": [
+        {
+          "name": "addOrUpdateLabels",
+          "type": "dict",
+          "required": false,
+          "description": "The Kubernetes labels to add or update.",
+          "nested_params": []
+        },
+        {
+          "name": "removeLabels",
+          "type": "list",
+          "required": false,
+          "description": "The Kubernetes labels to remove.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "taints",
+      "type": "dict",
+      "required": false,
+      "description": "The Kubernetes taints to be applied to the nodes in the node group after the update. For more information, see Node taints on managed node groups. addOrUpdateTaints (list) --- Kubernetes taints to be added or updated. (dict) --- A property that allows a node to repel a Pod. For more information, see Node taints on managed node groups in the Amazon EKS User Guide. key (string) --- The key of the taint. value (string) --- The value of the taint. effect (string) --- The effect of the taint. removeTaints (list) --- Kubernetes taints to remove. effect (string) --- The effect of the taint.",
+      "nested_params": [
+        {
+          "name": "addOrUpdateTaints",
+          "type": "list",
+          "required": false,
+          "description": "Kubernetes taints to be added or updated.",
+          "nested_params": [
+            {
+              "name": "key",
+              "type": "string",
+              "required": false,
+              "description": "The key of the taint.",
+              "nested_params": []
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "The value of the taint.",
+              "nested_params": []
+            },
+            {
+              "name": "effect",
+              "type": "string",
+              "required": false,
+              "description": "The effect of the taint.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "removeTaints",
+          "type": "list",
+          "required": false,
+          "description": "Kubernetes taints to remove.",
+          "nested_params": [
+            {
+              "name": "key",
+              "type": "string",
+              "required": false,
+              "description": "The key of the taint.",
+              "nested_params": []
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": false,
+              "description": "The value of the taint.",
+              "nested_params": []
+            },
+            {
+              "name": "effect",
+              "type": "string",
+              "required": false,
+              "description": "The effect of the taint.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scalingConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The scaling configuration details for the Auto Scaling group after the update. minSize (integer) --- The minimum number of nodes that the managed node group can scale in to. maxSize (integer) --- The maximum number of nodes that the managed node group can scale out to. For information about the maximum number that you can specify, see Amazon EKS service quotas in the Amazon EKS User Guide. desiredSize (integer) --- The current number of nodes that the managed node group should maintain. Whenever this parameter changes, the number of worker nodes in the node group is updated to the specified size. If this parameter is given a value that is smaller than the current number of running worker nodes, the necessary number of worker nodes are terminated to match the given value. When using CloudFormation, no action occurs if you remove this parameter from your CFN template. This parameter can be different from minSize in some cases, such as when starting with extra hosts for testing. This parameter can also be different when you want to start with an estimated number of needed hosts, but let the Cluster Autoscaler reduce the number if there are too many. When the Cluster Autoscaler is used, the desiredSize parameter is altered by the Cluster Autoscaler (but can be out-of-date for short periods of time). the Cluster Autoscaler doesn't scale a managed node group lower than minSize or higher than maxSize.",
+      "nested_params": [
+        {
+          "name": "minSize",
+          "type": "integer",
+          "required": false,
+          "description": "The minimum number of nodes that the managed node group can scale in to.",
+          "nested_params": []
+        },
+        {
+          "name": "maxSize",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of nodes that the managed node group can scale out to. For information about the maximum number that you can specify, see Amazon EKS service quotas in the Amazon EKS User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "desiredSize",
+          "type": "integer",
+          "required": false,
+          "description": "The current number of nodes that the managed node group should maintain. Whenever this parameter changes, the number of worker nodes in the node group is updated to the specified size. If this parameter is given a value that is smaller than the current number of running worker nodes, the necessary number of worker nodes are terminated to match the given value. When using CloudFormation, no action occurs if you remove this parameter from your CFN template. This parameter can be different from minSize in some cases, such as when starting with extra hosts for testing. This parameter can also be different when you want to start with an estimated number of needed hosts, but let the Cluster Autoscaler reduce the number if there are too many. When the Cluster Autoscaler is used, the desiredSize parameter is altered by the Cluster Autoscaler (but can be out-of-date for short periods of time). the Cluster Autoscaler doesn't scale a managed node group lower than minSize or higher than maxSize.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "updateConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The node group update configuration. maxUnavailable (integer) --- The maximum number of nodes unavailable at once during a version update. Nodes are updated in parallel. This value or maxUnavailablePercentage is required to have a value.The maximum number is 100. maxUnavailablePercentage (integer) --- The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or maxUnavailable is required to have a value. updateStrategy (string) --- The configuration for the behavior to follow during a node group version update of this managed node group. You choose between two possible strategies for replacing nodes during an UpdateNodegroupVersion action. An Amazon EKS managed node group updates by replacing nodes with new nodes of newer AMI versions in parallel. The update strategy changes the managed node update behavior of the managed node group for each quantity. The default strategy has guardrails to protect you from misconfiguration and launches the new instances first, before terminating the old instances. The minimal strategy removes the guardrails and terminates the old instances before launching the new instances. This minimal strategy is useful in scenarios where you are constrained to resources or costs (for example, with hardware accelerators such as GPUs).",
+      "nested_params": [
+        {
+          "name": "maxUnavailable",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum number of nodes unavailable at once during a version update. Nodes are updated in parallel. This value or maxUnavailablePercentage is required to have a value.The maximum number is 100.",
+          "nested_params": []
+        },
+        {
+          "name": "maxUnavailablePercentage",
+          "type": "integer",
+          "required": false,
+          "description": "The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or maxUnavailable is required to have a value.",
+          "nested_params": []
+        },
+        {
+          "name": "updateStrategy",
+          "type": "string",
+          "required": false,
+          "description": "The configuration for the behavior to follow during a node group version update of this managed node group. You choose between two possible strategies for replacing nodes during an UpdateNodegroupVersion action. An Amazon EKS managed node group updates by replacing nodes with new nodes of newer AMI versions in parallel. The update strategy changes the managed node update behavior of the managed node group for each quantity. The default strategy has guardrails to protect you from misconfiguration and launches the new instances first, before terminating the old instances. The minimal strategy removes the guardrails and terminates the old instances before launching the new instances. This minimal strategy is useful in scenarios where you are constrained to resources or costs (for example, with hardware accelerators such as GPUs).",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "nodeRepairConfig",
+      "type": "dict",
+      "required": false,
+      "description": "The node auto repair configuration for the node group. enabled (boolean) --- Specifies whether to enable node auto repair for the node group. Node auto repair is disabled by default.",
+      "nested_params": [
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies whether to enable node auto repair for the node group. Node auto repair is disabled by default.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "clientRequestToken",
+      "type": "string",
+      "required": false,
+      "description": "A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This field is autopopulated if not provided.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "id",
+              "type": "string",
+              "description": "A UUID that is used to track the update.",
+              "nested_items": []
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The current status of the update.",
+              "nested_items": []
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of the update.",
+              "nested_items": []
+            },
+            {
+              "name": "params",
+              "type": "list",
+              "description": "A key-value map that contains the parameters associated with the update.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "type",
+                      "type": "string",
+                      "description": "The keys associated with an update request.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "value",
+                      "type": "string",
+                      "description": "The value of the keys submitted as part of an update request.",
+                      "nested_items": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "createdAt",
+              "type": "datetime",
+              "description": "The Unix epoch timestamp at object creation.",
+              "nested_items": []
+            },
+            {
+              "name": "errors",
+              "type": "list",
+              "description": "Any errors associated with a Failed update.",
+              "nested_items": [
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "errorCode",
+                      "type": "string",
+                      "description": "A brief description of the error.",
+                      "nested_items": [
+                        {
+                          "name": "SubnetNotFound",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "SecurityGroupNotFound",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "EniLimitReached",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "IpNotAvailable",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "AccessDenied",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "OperationNotPermitted",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "VpcIdNotFound",
+                          "type": "",
+                          "description": "",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "errorMessage",
+                      "type": "string",
+                      "description": "A more complete description of the error.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "resourceIds",
+                      "type": "list",
+                      "description": "An optional field that contains the resource IDs associated with the error.",
+                      "nested_items": [
+                        {
+                          "name": "",
+                          "type": "string",
+                          "description": "(string) ---",
+                          "nested_items": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

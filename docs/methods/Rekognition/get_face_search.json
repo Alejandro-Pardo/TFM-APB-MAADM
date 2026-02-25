@@ -1,0 +1,674 @@
+{
+  "method_name": "get_face_search",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/rekognition/client/get_face_search.html",
+  "description": "Gets the face search results for Amazon Rekognition Video face search started by  StartFaceSearch. The search returns faces in a collection that match the faces of persons detected in a video. It also includes the time(s) that faces are matched in the video. Face search in a video is an asynchronous operation. You start face search by calling to  StartFaceSearch which returns a job identifier ( JobId). When the search operation finishes, Amazon Rekognition Video publishes a completion status to the Amazon Simple Notification Service topic registered in the initial call to StartFaceSearch. To get the search results, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If so, call GetFaceSearch and pass the job identifier ( JobId) from the initial call to StartFaceSearch. For more information, see Searching Faces in a Collection in the Amazon Rekognition Developer Guide. The search results are retured in an array, Persons, of  PersonMatch objects. Each PersonMatch element contains details about the matching faces in the input collection, person information (facial attributes, bounding boxes, and person identifer) for the matched person, and the time the person was matched in the video. By default, the Persons array is sorted by the time, in milliseconds from the start of the video, persons are matched. You can also sort by persons by specifying INDEX for the SORTBY input parameter.",
+  "parameters": [
+    {
+      "name": "JobId",
+      "type": "string",
+      "required": true,
+      "description": "The job identifer for the search request. You get the job identifier from an initial call to StartFaceSearch.",
+      "nested_params": []
+    },
+    {
+      "name": "MaxResults",
+      "type": "integer",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "NextToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "SortBy",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "JobStatus",
+          "type": "string",
+          "description": "The current status of the face search job.",
+          "nested_items": []
+        },
+        {
+          "name": "StatusMessage",
+          "type": "string",
+          "description": "If the job fails, StatusMessage provides a descriptive error message.",
+          "nested_items": []
+        },
+        {
+          "name": "NextToken",
+          "type": "string",
+          "description": "If the response is truncated, Amazon Rekognition Video returns this token that you can use in the subsequent request to retrieve the next set of search results.",
+          "nested_items": []
+        },
+        {
+          "name": "VideoMetadata",
+          "type": "dict",
+          "description": "Information about a video that Amazon Rekognition analyzed. Videometadata is returned in every page of paginated responses from a Amazon Rekognition Video operation.",
+          "nested_items": [
+            {
+              "name": "Codec",
+              "type": "string",
+              "description": "Type of compression used in the analyzed video.",
+              "nested_items": []
+            },
+            {
+              "name": "DurationMillis",
+              "type": "integer",
+              "description": "Length of the video in milliseconds.",
+              "nested_items": []
+            },
+            {
+              "name": "Format",
+              "type": "string",
+              "description": "Format of the analyzed video. Possible values are MP4, MOV and AVI.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameRate",
+              "type": "float",
+              "description": "Number of frames per second in the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameHeight",
+              "type": "integer",
+              "description": "Vertical pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "FrameWidth",
+              "type": "integer",
+              "description": "Horizontal pixel dimension of the video.",
+              "nested_items": []
+            },
+            {
+              "name": "ColorRange",
+              "type": "string",
+              "description": "A description of the range of luminance values in a video, either LIMITED (16 to 235) or FULL (0 to 255).",
+              "nested_items": []
+            }
+          ]
+        },
+        {
+          "name": "Persons",
+          "type": "list",
+          "description": "An array of persons,  PersonMatch, in the video whose face(s) match the face(s) in an Amazon Rekognition collection. It also includes time information for when persons are matched in the video. You specify the input collection in an initial call to StartFaceSearch. Each Persons element includes a time the person was matched, face match details ( FaceMatches) for matching faces in the collection, and person information ( Person) for the matched person.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Timestamp",
+                  "type": "integer",
+                  "description": "The time, in milliseconds from the beginning of the video, that the person was matched in the video.",
+                  "nested_items": []
+                },
+                {
+                  "name": "",
+                  "type": "dict",
+                  "description": "",
+                  "nested_items": [
+                    {
+                      "name": "Index",
+                      "type": "integer",
+                      "description": "Identifier for the person detected person within a video. Use to keep track of the person throughout the video. The identifier is not stored by Amazon Rekognition.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "BoundingBox",
+                      "type": "dict",
+                      "description": "Bounding box around the detected person.",
+                      "nested_items": [
+                        {
+                          "name": "Width",
+                          "type": "float",
+                          "description": "Width of the bounding box as a ratio of the overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Height",
+                          "type": "float",
+                          "description": "Height of the bounding box as a ratio of the overall image height.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Left",
+                          "type": "float",
+                          "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "Top",
+                          "type": "float",
+                          "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                          "nested_items": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "BoundingBox",
+                          "type": "dict",
+                          "description": "Bounding box of the face. Default attribute.",
+                          "nested_items": [
+                            {
+                              "name": "Width",
+                              "type": "float",
+                              "description": "Width of the bounding box as a ratio of the overall image width.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Height",
+                              "type": "float",
+                              "description": "Height of the bounding box as a ratio of the overall image height.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Left",
+                              "type": "float",
+                              "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Top",
+                              "type": "float",
+                              "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Low",
+                              "type": "integer",
+                              "description": "The lowest estimated age.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "High",
+                              "type": "integer",
+                              "description": "The highest estimated age.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the face is smiling or not.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Eyeglasses",
+                          "type": "dict",
+                          "description": "Indicates whether or not the face is wearing eye glasses, and the confidence level in the determination.",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the face is wearing eye glasses or not.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Sunglasses",
+                          "type": "dict",
+                          "description": "Indicates whether or not the face is wearing sunglasses, and the confidence level in the determination.",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the face is wearing sunglasses or not.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "string",
+                              "description": "The predicted gender of the face.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the prediction.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the face has beard or not.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the face has mustache or not.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the eyes on the face are open.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "MouthOpen",
+                          "type": "dict",
+                          "description": "Indicates whether or not the mouth on the face is open, and the confidence level in the determination.",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "Boolean value that indicates whether the mouth on the face is open or not.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Level of confidence in the determination.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Emotions",
+                          "type": "list",
+                          "description": "The emotions that appear to be expressed on the face, and the confidence level in the determination. The API is only making a determination of the physical appearance of a person's face. It is not a determination of the person's internal emotional state and should not be used in such a way. For example, a person pretending to have a sad face might not be sad emotionally.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Type",
+                                  "type": "string",
+                                  "description": "Type of emotion detected.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Confidence",
+                                  "type": "float",
+                                  "description": "Level of confidence in the determination.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Landmarks",
+                          "type": "list",
+                          "description": "Indicates the location of landmarks on the face. Default attribute.",
+                          "nested_items": [
+                            {
+                              "name": "",
+                              "type": "dict",
+                              "description": "",
+                              "nested_items": [
+                                {
+                                  "name": "Type",
+                                  "type": "string",
+                                  "description": "Type of landmark.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "X",
+                                  "type": "float",
+                                  "description": "The x-coordinate of the landmark expressed as a ratio of the width of the image. The x-coordinate is measured from the left-side of the image. For example, if the image is 700 pixels wide and the x-coordinate of the landmark is at 350 pixels, this value is 0.5.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Y",
+                                  "type": "float",
+                                  "description": "The y-coordinate of the landmark expressed as a ratio of the height of the image. The y-coordinate is measured from the top of the image. For example, if the image height is 200 pixels and the y-coordinate of the landmark is at 50 pixels, this value is 0.25.",
+                                  "nested_items": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Roll",
+                              "type": "float",
+                              "description": "Value representing the face rotation on the roll axis.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Yaw",
+                              "type": "float",
+                              "description": "Value representing the face rotation on the yaw axis.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Pitch",
+                              "type": "float",
+                              "description": "Value representing the face rotation on the pitch axis.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "Brightness",
+                              "type": "float",
+                              "description": "Value representing brightness of the face. The service returns a value between 0 and 100 (inclusive). A higher value indicates a brighter face image.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Sharpness",
+                              "type": "float",
+                              "description": "Value representing sharpness of the face. The service returns a value between 0 and 100 (inclusive). A higher value indicates a sharper face image.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "Confidence",
+                          "type": "float",
+                          "description": "Confidence level that the bounding box contains a face (and not a different object such as a tree). Default attribute.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "FaceOccluded",
+                          "type": "dict",
+                          "description": "FaceOccluded should return 'true' with a high confidence score if a detected face's eyes, nose, and mouth are partially captured or if they are covered by masks, dark sunglasses, cell phones, hands, or other objects. FaceOccluded should return 'false' with a high confidence score if common occurrences that do not impact face verification are detected, such as eye glasses, lightly tinted sunglasses, strands of hair, and others.",
+                          "nested_items": [
+                            {
+                              "name": "Value",
+                              "type": "boolean",
+                              "description": "True if a detected face's eyes, nose, and mouth are partially captured or if they are covered by masks, dark sunglasses, cell phones, hands, or other objects. False if common occurrences that do not impact face verification are detected, such as eye glasses, lightly tinted sunglasses, strands of hair, and others.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "The confidence that the service has detected the presence of a face occlusion.",
+                              "nested_items": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "EyeDirection",
+                          "type": "dict",
+                          "description": "Indicates the direction the eyes are gazing in, as defined by pitch and yaw.",
+                          "nested_items": [
+                            {
+                              "name": "Yaw",
+                              "type": "float",
+                              "description": "Value representing eye direction on the yaw axis.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Pitch",
+                              "type": "float",
+                              "description": "Value representing eye direction on the pitch axis.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "The confidence that the service has in its predicted eye direction.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "FaceMatches",
+                  "type": "list",
+                  "description": "Information about the faces in the input collection that match the face of a person in the video.",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "dict",
+                      "description": "",
+                      "nested_items": [
+                        {
+                          "name": "Similarity",
+                          "type": "float",
+                          "description": "Confidence in the match of this face with the input face.",
+                          "nested_items": []
+                        },
+                        {
+                          "name": "",
+                          "type": "dict",
+                          "description": "",
+                          "nested_items": [
+                            {
+                              "name": "FaceId",
+                              "type": "string",
+                              "description": "Unique identifier that Amazon Rekognition assigns to the face.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "BoundingBox",
+                              "type": "dict",
+                              "description": "Bounding box of the face.",
+                              "nested_items": [
+                                {
+                                  "name": "Width",
+                                  "type": "float",
+                                  "description": "Width of the bounding box as a ratio of the overall image width.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Height",
+                                  "type": "float",
+                                  "description": "Height of the bounding box as a ratio of the overall image height.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Left",
+                                  "type": "float",
+                                  "description": "Left coordinate of the bounding box as a ratio of overall image width.",
+                                  "nested_items": []
+                                },
+                                {
+                                  "name": "Top",
+                                  "type": "float",
+                                  "description": "Top coordinate of the bounding box as a ratio of overall image height.",
+                                  "nested_items": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ImageId",
+                              "type": "string",
+                              "description": "Unique identifier that Amazon Rekognition assigns to the input image.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "ExternalImageId",
+                              "type": "string",
+                              "description": "Identifier that you assign to all the faces in the input image.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "Confidence",
+                              "type": "float",
+                              "description": "Confidence level that the bounding box contains a face (and not a different object such as a tree).",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "IndexFacesModelVersion",
+                              "type": "string",
+                              "description": "The version of the face detect and storage model that was used when indexing the face vector.",
+                              "nested_items": []
+                            },
+                            {
+                              "name": "UserId",
+                              "type": "string",
+                              "description": "Unique identifier assigned to the user.",
+                              "nested_items": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobId",
+          "type": "string",
+          "description": "Job identifier for the face search operation for which you want to obtain results. The job identifer is returned by an initial call to StartFaceSearch.",
+          "nested_items": []
+        },
+        {
+          "name": "",
+          "type": "dict",
+          "description": "",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "Bucket",
+                  "type": "string",
+                  "description": "Name of the S3 bucket.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Name",
+                  "type": "string",
+                  "description": "S3 object key name.",
+                  "nested_items": []
+                },
+                {
+                  "name": "Version",
+                  "type": "string",
+                  "description": "If the bucket is versioning enabled, you can specify the object version.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "JobTag",
+          "type": "string",
+          "description": "A job identifier specified in the call to StartFaceSearch and returned in the job completion notification sent to your Amazon Simple Notification Service topic.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

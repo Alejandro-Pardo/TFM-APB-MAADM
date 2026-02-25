@@ -1,0 +1,167 @@
+{
+  "method_name": "send_message",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sqs/client/send_message.html",
+  "description": "Delivers a message to the specified queue.",
+  "parameters": [
+    {
+      "name": "QueueUrl",
+      "type": "string",
+      "required": true,
+      "description": "The URL of the Amazon SQS queue to which a message is sent. Queue URLs and names are case-sensitive.",
+      "nested_params": []
+    },
+    {
+      "name": "MessageBody",
+      "type": "string",
+      "required": true,
+      "description": "The message to send. The minimum size is one character. The maximum size is 256 KiB.",
+      "nested_params": []
+    },
+    {
+      "name": "DelaySeconds",
+      "type": "integer",
+      "required": false,
+      "description": "The length of time, in seconds, for which to delay a specific message. Valid values: 0 to 900. Maximum: 15 minutes. Messages with a positive DelaySeconds value become available for processing after the delay period is finished. If you don't specify a value, the default value for the queue applies.",
+      "nested_params": []
+    },
+    {
+      "name": "MessageAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "Each message attribute consists of a Name, Type, and Value. For more information, see Amazon SQS message attributes in the Amazon SQS Developer Guide. (string) --- (dict) --- The user-specified message attribute value. For string data types, the Value attribute has the same restrictions on the content as the message body. For more information, see SendMessage. Name, type, value and the message body must not be empty or null. All parts of the message attribute, including Name, Type, and Value, are part of the message size restriction (256 KiB or 262,144 bytes). StringValue (string) --- Strings are Unicode with UTF-8 binary encoding. For a list of code values, see ASCII Printable Characters. BinaryValue (bytes) --- Binary type attributes can store any binary data, such as compressed data, encrypted data, or images. StringListValues (list) --- Not implemented. Reserved for future use. (string) --- BinaryListValues (list) --- Not implemented. (bytes) --- Amazon SQS supports the following logical data types: String, Number, and Binary. For the Number data type, you must use StringValue. You can also append custom labels. For more information, see Amazon SQS Message Attributes in the Amazon SQS Developer Guide.",
+      "nested_params": [
+        {
+          "name": "StringValue",
+          "type": "string",
+          "required": false,
+          "description": "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see ASCII Printable Characters.",
+          "nested_params": []
+        },
+        {
+          "name": "BinaryValue",
+          "type": "bytes",
+          "required": false,
+          "description": "Binary type attributes can store any binary data, such as compressed data, encrypted data, or images.",
+          "nested_params": []
+        },
+        {
+          "name": "StringListValues",
+          "type": "list",
+          "required": false,
+          "description": "Not implemented. Reserved for future use.",
+          "nested_params": []
+        },
+        {
+          "name": "BinaryListValues",
+          "type": "list",
+          "required": false,
+          "description": "Not implemented. Reserved for future use.",
+          "nested_params": []
+        },
+        {
+          "name": "DataType",
+          "type": "string",
+          "required": false,
+          "description": "Amazon SQS supports the following logical data types: String, Number, and Binary. For the Number data type, you must use StringValue. You can also append custom labels. For more information, see Amazon SQS Message Attributes in the Amazon SQS Developer Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "MessageSystemAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The message system attribute to send. Each message system attribute consists of a Name, Type, and Value. (string) --- (dict) --- The user-specified message system attribute value. For string data types, the Value attribute has the same restrictions on the content as the message body. For more information, see SendMessage. Name, type, value and the message body must not be empty or null. StringValue (string) --- Strings are Unicode with UTF-8 binary encoding. For a list of code values, see ASCII Printable Characters. BinaryValue (bytes) --- Binary type attributes can store any binary data, such as compressed data, encrypted data, or images. StringListValues (list) --- Not implemented. Reserved for future use. (string) --- BinaryListValues (list) --- Not implemented. (bytes) --- Amazon SQS supports the following logical data types: String, Number, and Binary. For the Number data type, you must use StringValue. You can also append custom labels. For more information, see Amazon SQS Message Attributes in the Amazon SQS Developer Guide.",
+      "nested_params": [
+        {
+          "name": "StringValue",
+          "type": "string",
+          "required": false,
+          "description": "Strings are Unicode with UTF-8 binary encoding. For a list of code values, see ASCII Printable Characters.",
+          "nested_params": []
+        },
+        {
+          "name": "BinaryValue",
+          "type": "bytes",
+          "required": false,
+          "description": "Binary type attributes can store any binary data, such as compressed data, encrypted data, or images.",
+          "nested_params": []
+        },
+        {
+          "name": "StringListValues",
+          "type": "list",
+          "required": false,
+          "description": "Not implemented. Reserved for future use.",
+          "nested_params": []
+        },
+        {
+          "name": "BinaryListValues",
+          "type": "list",
+          "required": false,
+          "description": "Not implemented. Reserved for future use.",
+          "nested_params": []
+        },
+        {
+          "name": "DataType",
+          "type": "string",
+          "required": false,
+          "description": "Amazon SQS supports the following logical data types: String, Number, and Binary. For the Number data type, you must use StringValue. You can also append custom labels. For more information, see Amazon SQS Message Attributes in the Amazon SQS Developer Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "MessageDeduplicationId",
+      "type": "string",
+      "required": false,
+      "description": "This parameter applies only to FIFO (first-in-first-out) queues. The token used for deduplication of sent messages. If a message with a particular MessageDeduplicationId is sent successfully, any messages sent with the same MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute deduplication interval. For more information, see Exactly-once processing in the Amazon SQS Developer Guide. Every message must have a unique MessageDeduplicationId, You may provide a MessageDeduplicationId explicitly. If you aren't able to provide a MessageDeduplicationId and you enable ContentBasedDeduplication for your queue, Amazon SQS uses a SHA-256 hash to generate the MessageDeduplicationId using the body of the message (but not the attributes of the message). If you don't provide a MessageDeduplicationId and the queue doesn't have ContentBasedDeduplication set, the action fails with an error. If the queue has ContentBasedDeduplication set, your MessageDeduplicationId overrides the generated one. When ContentBasedDeduplication is in effect, messages with identical content sent within the deduplication interval are treated as duplicates and only one copy of the message is delivered. If you send one message with ContentBasedDeduplication enabled and then another message with a MessageDeduplicationId that is the same as the one generated for the first MessageDeduplicationId, the two messages are treated as duplicates and only one copy of the message is delivered. The maximum length of MessageDeduplicationId is 128 characters. MessageDeduplicationId can contain alphanumeric characters ( a-z, A-Z, 0-9) and punctuation ( !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~). For best practices of using MessageDeduplicationId, see Using the MessageDeduplicationId Property in the Amazon SQS Developer Guide.",
+      "nested_params": []
+    },
+    {
+      "name": "MessageGroupId",
+      "type": "string",
+      "required": false,
+      "description": "This parameter applies only to FIFO (first-in-first-out) queues. The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are processed in a FIFO manner (however, messages in different message groups might be processed out of order). To interleave multiple ordered streams within a single queue, use MessageGroupId values (for example, session data for multiple users). In this scenario, multiple consumers can process the queue, but the session data of each user is processed in a FIFO fashion. You must associate a non-empty MessageGroupId with a message. If you don't provide a MessageGroupId, the action fails. ReceiveMessage might return messages with multiple MessageGroupId values. For each MessageGroupId, the messages are sorted by time sent. The caller can't specify a MessageGroupId. The maximum length of MessageGroupId is 128 characters. Valid values: alphanumeric characters and punctuation (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~). For best practices of using MessageGroupId, see Using the MessageGroupId Property in the Amazon SQS Developer Guide.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "MD5OfMessageBody",
+          "type": "string",
+          "description": "An MD5 digest of the non-URL-encoded message body string. You can use this attribute to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message before creating the MD5 digest. For information about MD5, see RFC1321.",
+          "nested_items": []
+        },
+        {
+          "name": "MD5OfMessageAttributes",
+          "type": "string",
+          "description": "An MD5 digest of the non-URL-encoded message attribute string. You can use this attribute to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message before creating the MD5 digest. For information about MD5, see RFC1321.",
+          "nested_items": []
+        },
+        {
+          "name": "MD5OfMessageSystemAttributes",
+          "type": "string",
+          "description": "An MD5 digest of the non-URL-encoded message system attribute string. You can use this attribute to verify that Amazon SQS received the message correctly. Amazon SQS URL-decodes the message before creating the MD5 digest.",
+          "nested_items": []
+        },
+        {
+          "name": "MessageId",
+          "type": "string",
+          "description": "An attribute containing the MessageId of the message sent to the queue. For more information, see Queue and Message Identifiers in the Amazon SQS Developer Guide.",
+          "nested_items": []
+        },
+        {
+          "name": "SequenceNumber",
+          "type": "string",
+          "description": "This parameter applies only to FIFO (first-in-first-out) queues.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

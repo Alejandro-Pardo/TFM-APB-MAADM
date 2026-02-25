@@ -1,0 +1,136 @@
+{
+  "method_name": "resolve_component_candidates",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/greengrassv2/client/resolve_component_candidates.html",
+  "description": "Retrieves a list of components that meet the component, version, and platform requirements of a deployment. Greengrass core devices call this operation when they receive a deployment to identify the components to install. This operation identifies components that meet all dependency requirements for a deployment. If the requirements conflict, then this operation returns an error and the deployment fails. For example, this occurs if component A requires version >2.0.0 and component B requires version <2.0.0 of a component dependency. When you specify the component candidates to resolve, IoT Greengrass compares each component's digest from the core device with the component's digest in the Amazon Web Services Cloud. If the digests don't match, then IoT Greengrass specifies to use the version from the Amazon Web Services Cloud.",
+  "parameters": [
+    {
+      "name": "platform",
+      "type": "dict",
+      "required": false,
+      "description": "The platform to use to resolve compatible components. name (string) --- The friendly name of the platform. This name helps you identify the platform. If you omit this parameter, IoT Greengrass creates a friendly name from the os and architecture of the platform. attributes (dict) --- A dictionary of attributes for the platform. The IoT Greengrass Core software defines the os and architecture by default. You can specify additional platform attributes for a core device when you deploy the Greengrass nucleus component. For more information, see the Greengrass nucleus component in the IoT Greengrass V2 Developer Guide. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The friendly name of the platform. This name helps you identify the platform. If you omit this parameter, IoT Greengrass creates a friendly name from the os and architecture of the platform.",
+          "nested_params": []
+        },
+        {
+          "name": "attributes",
+          "type": "dict",
+          "required": false,
+          "description": "A dictionary of attributes for the platform. The IoT Greengrass Core software defines the os and architecture by default. You can specify additional platform attributes for a core device when you deploy the Greengrass nucleus component. For more information, see the Greengrass nucleus component in the IoT Greengrass V2 Developer Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "componentCandidates",
+      "type": "list",
+      "required": false,
+      "description": "The list of components to resolve. (dict) --- Contains information about a component that is a candidate to deploy to a Greengrass core device. componentName (string) --- The name of the component. componentVersion (string) --- The version of the component. versionRequirements (dict) --- The version requirements for the component's dependencies. Greengrass core devices get the version requirements from component recipes. IoT Greengrass V2 uses semantic version constraints. For more information, see Semantic Versioning. (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "componentName",
+          "type": "string",
+          "required": false,
+          "description": "The name of the component.",
+          "nested_params": []
+        },
+        {
+          "name": "componentVersion",
+          "type": "string",
+          "required": false,
+          "description": "The version of the component.",
+          "nested_params": []
+        },
+        {
+          "name": "versionRequirements",
+          "type": "dict",
+          "required": false,
+          "description": "The version requirements for the component's dependencies. Greengrass core devices get the version requirements from component recipes. IoT Greengrass V2 uses semantic version constraints. For more information, see Semantic Versioning.",
+          "nested_params": []
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "resolvedComponentVersions",
+          "type": "list",
+          "description": "A list of components that meet the requirements that you specify in the request. This list includes each component's recipe that you can use to install the component.",
+          "nested_items": [
+            {
+              "name": "",
+              "type": "dict",
+              "description": "",
+              "nested_items": [
+                {
+                  "name": "arn",
+                  "type": "string",
+                  "description": "The ARN of the component version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "componentName",
+                  "type": "string",
+                  "description": "The name of the component.",
+                  "nested_items": []
+                },
+                {
+                  "name": "componentVersion",
+                  "type": "string",
+                  "description": "The version of the component.",
+                  "nested_items": []
+                },
+                {
+                  "name": "recipe",
+                  "type": "bytes",
+                  "description": "The recipe of the component version.",
+                  "nested_items": []
+                },
+                {
+                  "name": "vendorGuidance",
+                  "type": "string",
+                  "description": "The vendor guidance state for the component version. This state indicates whether the component version has any issues that you should consider before you deploy it. The vendor guidance state can be:",
+                  "nested_items": [
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "ACTIVE --- This component version is available and recommended for use.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DISCONTINUED --- This component version has been discontinued by its publisher. You can deploy this component version, but we recommend that you use a different version of this component.",
+                      "nested_items": []
+                    },
+                    {
+                      "name": "",
+                      "type": "",
+                      "description": "DELETED --- This component version has been deleted by its publisher, so you can't deploy it. If you have any existing deployments that specify this component version, those deployments will fail.",
+                      "nested_items": []
+                    }
+                  ]
+                },
+                {
+                  "name": "message",
+                  "type": "string",
+                  "description": "A message that communicates details about the vendor guidance state of the component version. This message communicates why a component version is discontinued or deleted.",
+                  "nested_items": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

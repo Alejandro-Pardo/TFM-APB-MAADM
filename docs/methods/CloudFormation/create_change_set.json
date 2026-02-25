@@ -1,0 +1,242 @@
+{
+  "method_name": "create_change_set",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cloudformation/client/create_change_set.html",
+  "description": "Creates a list of changes that will be applied to a stack so that you can review the changes before executing them. You can create a change set for a stack that doesn't exist or an existing stack. If you create a change set for a stack that doesn't exist, the change set shows all of the resources that CloudFormation will create. If you create a change set for an existing stack, CloudFormation compares the stack's information with the information that you submit in the change set and lists the differences. Use change sets to understand which resources CloudFormation will create or change, and how it will change resources in an existing stack, before you create or update a stack. To create a change set for a stack that doesn't exist, for the ChangeSetType parameter, specify CREATE. To create a change set for an existing stack, specify UPDATE for the ChangeSetType parameter. To create a change set for an import operation, specify IMPORT for the ChangeSetType parameter. After the CreateChangeSet call successfully completes, CloudFormation starts creating the change set. To check the status of the change set or to review it, use the  DescribeChangeSet action. When you are satisfied with the changes the change set will make, execute the change set by using the  ExecuteChangeSet action. CloudFormation doesn't make changes until you execute the change set. To create a change set for the entire stack hierarchy, set IncludeNestedStacks to True.",
+  "parameters": [
+    {
+      "name": "StackName",
+      "type": "string",
+      "required": true,
+      "description": "The name or the unique ID of the stack for which you are creating a change set. CloudFormation generates the change set by comparing this stack's information with the information that you submit, such as a modified template or different parameter input values.",
+      "nested_params": []
+    },
+    {
+      "name": "TemplateBody",
+      "type": "string",
+      "required": false,
+      "description": "A structure that contains the body of the revised template, with a minimum length of 1 byte and a maximum length of 51,200 bytes. CloudFormation generates the change set by comparing this template with the template of the stack that you specified. Conditional: You must specify only TemplateBody or TemplateURL.",
+      "nested_params": []
+    },
+    {
+      "name": "TemplateURL",
+      "type": "string",
+      "required": false,
+      "description": "The URL of the file that contains the revised template. The URL must point to a template (max size: 1 MB) that's located in an Amazon S3 bucket or a Systems Manager document. CloudFormation generates the change set by comparing this template with the stack that you specified. The location for an Amazon S3 bucket must start with https://. Conditional: You must specify only TemplateBody or TemplateURL.",
+      "nested_params": []
+    },
+    {
+      "name": "UsePreviousTemplate",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Parameters",
+      "type": "list",
+      "required": false,
+      "description": "A list of Parameter structures that specify input parameters for the change set. For more information, see the  Parameter data type. (dict) --- The Parameter data type. ParameterKey (string) --- The key associated with the parameter. If you don't specify a key and value for a particular parameter, CloudFormation uses the default value that's specified in your template. ParameterValue (string) --- The input value associated with the parameter. UsePreviousValue (boolean) --- During a stack update, use the existing parameter value that the stack is using for a given parameter key. If you specify true, do not specify a parameter value. ResolvedValue (string) --- Read-only. The value that corresponds to a Systems Manager parameter key. This field is returned only for Systems Manager parameter types in the template. For more information, see Specify existing resources at runtime with CloudFormation-supplied parameter types in the CloudFormation User Guide.",
+      "nested_params": [
+        {
+          "name": "ParameterKey",
+          "type": "string",
+          "required": false,
+          "description": "The key associated with the parameter. If you don't specify a key and value for a particular parameter, CloudFormation uses the default value that's specified in your template.",
+          "nested_params": []
+        },
+        {
+          "name": "ParameterValue",
+          "type": "string",
+          "required": false,
+          "description": "The input value associated with the parameter.",
+          "nested_params": []
+        },
+        {
+          "name": "UsePreviousValue",
+          "type": "boolean",
+          "required": false,
+          "description": "During a stack update, use the existing parameter value that the stack is using for a given parameter key. If you specify true, do not specify a parameter value.",
+          "nested_params": []
+        },
+        {
+          "name": "ResolvedValue",
+          "type": "string",
+          "required": false,
+          "description": "Read-only. The value that corresponds to a Systems Manager parameter key. This field is returned only for Systems Manager parameter types in the template. For more information, see Specify existing resources at runtime with CloudFormation-supplied parameter types in the CloudFormation User Guide.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "Capabilities",
+      "type": "list",
+      "required": false,
+      "description": "In some cases, you must explicitly acknowledge that your stack template contains certain capabilities in order for CloudFormation to create the stack. CAPABILITY_IAM and CAPABILITY_NAMED_IAM Some stack templates might include resources that can affect permissions in your Amazon Web Services account; for example, by creating new IAM users. For those stacks, you must explicitly acknowledge this by specifying one of these capabilities. The following IAM resources require you to specify either the CAPABILITY_IAM or CAPABILITY_NAMED_IAM capability. If you have IAM resources, you can specify either capability. If you have IAM resources with custom names, you must specify CAPABILITY_NAMED_IAM. If you don't specify either of these capabilities, CloudFormation returns an InsufficientCapabilities error. If your stack template contains these resources, we suggest that you review all permissions associated with them and edit their permissions if necessary. AWS::IAM::AccessKey AWS::IAM::Group AWS::IAM::InstanceProfile AWS::IAM::ManagedPolicy AWS::IAM::Policy AWS::IAM::Role AWS::IAM::User AWS::IAM::UserToGroupAddition For more information, see Acknowledging IAM resources in CloudFormation templates. CAPABILITY_AUTO_EXPAND Some template contain macros. Macros perform custom processing on templates; this can include simple actions like find-and-replace operations, all the way to extensive transformations of entire templates. Because of this, users typically create a change set from the processed template, so that they can review the changes resulting from the macros before actually creating the stack. If your stack template contains one or more macros, and you choose to create a stack directly from the processed template, without first reviewing the resulting changes in a change set, you must acknowledge this capability. This includes the AWS::Include and AWS::Serverless transforms, which are macros hosted by CloudFormation. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "ResourceTypes",
+      "type": "list",
+      "required": false,
+      "description": "The template resource types that you have permissions to work with if you execute this change set, such as AWS::EC2::Instance, AWS::EC2::*, or Custom::MyCustomInstance. If the list of resource types doesn't include a resource type that you're updating, the stack update fails. By default, CloudFormation grants permissions to all resource types. IAM uses this parameter for condition keys in IAM policies for CloudFormation. For more information, see Control access with Identity and Access Management in the CloudFormation User Guide. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "RoleARN",
+      "type": "string",
+      "required": false,
+      "description": "The Amazon Resource Name (ARN) of an IAM role that CloudFormation assumes when executing the change set. CloudFormation uses the role's credentials to make calls on your behalf. CloudFormation uses this role for all future operations on the stack. Provided that users have permission to operate on the stack, CloudFormation uses this role even if the users don't have permission to pass it. Ensure that the role grants least permission. If you don't specify a value, CloudFormation uses the role that was previously associated with the stack. If no role is available, CloudFormation uses a temporary session that is generated from your user credentials.",
+      "nested_params": []
+    },
+    {
+      "name": "RollbackConfiguration",
+      "type": "dict",
+      "required": true,
+      "description": "The rollback triggers for CloudFormation to monitor during stack creation and updating operations, and for the specified monitoring period afterwards. RollbackTriggers (list) --- The triggers to monitor during stack creation or update actions. By default, CloudFormation saves the rollback triggers specified for a stack and applies them to any subsequent update operations for the stack, unless you specify otherwise. If you do specify rollback triggers for this parameter, those triggers replace any list of triggers previously specified for the stack. This means: To use the rollback triggers previously specified for this stack, if any, don't specify this parameter. To specify new or updated rollback triggers, you must specify all the triggers that you want used for this stack, even triggers you've specified before (for example, when creating the stack or during a previous stack update). Any triggers that you don't include in the updated list of triggers are no longer applied to the stack. To remove all currently specified triggers, specify an empty list for this parameter. If a specified trigger is missing, the entire stack operation fails and is rolled back. (dict) --- A rollback trigger CloudFormation monitors during creation and updating of stacks. If any of the alarms you specify goes to ALARM state during the stack operation or within the specified monitoring period afterwards, CloudFormation rolls back the entire stack operation. The Amazon Resource Name (ARN) of the rollback trigger. The resource type of the rollback trigger. Specify either AWS::CloudWatch::Alarm or AWS::CloudWatch::CompositeAlarm resource types. MonitoringTimeInMinutes (integer) --- The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after the stack creation or update operation deploys all necessary resources. The default is 0 minutes. If you specify a monitoring period but don't specify any rollback triggers, CloudFormation still waits the specified period of time before cleaning up old resources after update operations. You can use this monitoring period to perform any manual stack validation desired, and manually cancel the stack creation or update (using CancelUpdateStack, for example) as necessary. If you specify 0 for this parameter, CloudFormation still monitors the specified rollback triggers during stack creation and update operations. Then, for update operations, it begins disposing of old resources immediately once the operation completes.",
+      "nested_params": [
+        {
+          "name": "RollbackTriggers",
+          "type": "list",
+          "required": false,
+          "description": "The triggers to monitor during stack creation or update actions. By default, CloudFormation saves the rollback triggers specified for a stack and applies them to any subsequent update operations for the stack, unless you specify otherwise. If you do specify rollback triggers for this parameter, those triggers replace any list of triggers previously specified for the stack. This means:",
+          "nested_params": []
+        },
+        {
+          "name": "MonitoringTimeInMinutes",
+          "type": "integer",
+          "required": false,
+          "description": "The amount of time, in minutes, during which CloudFormation should monitor all the rollback triggers after the stack creation or update operation deploys all necessary resources. The default is 0 minutes. If you specify a monitoring period but don't specify any rollback triggers, CloudFormation still waits the specified period of time before cleaning up old resources after update operations. You can use this monitoring period to perform any manual stack validation desired, and manually cancel the stack creation or update (using CancelUpdateStack, for example) as necessary. If you specify 0 for this parameter, CloudFormation still monitors the specified rollback triggers during stack creation and update operations. Then, for update operations, it begins disposing of old resources immediately once the operation completes.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "NotificationARNs",
+      "type": "list",
+      "required": false,
+      "description": "The Amazon Resource Names (ARNs) of Amazon SNS topics that CloudFormation associates with the stack. To remove all associated notification topics, specify an empty list. (string) ---",
+      "nested_params": []
+    },
+    {
+      "name": "Tags",
+      "type": "list",
+      "required": true,
+      "description": "Key-value pairs to associate with this stack. CloudFormation also propagates these tags to resources in the stack. You can specify a maximum of 50 tags. (dict) --- The Tag type enables you to specify a key-value pair that can be used to store information about an CloudFormation stack. Required. A string used to identify this tag. You can specify a maximum of 128 characters for a tag key. Tags owned by Amazon Web Services have the reserved prefix: aws:. A string containing the value for this tag. You can specify a maximum of 256 characters for a tag value.",
+      "nested_params": [
+        {
+          "name": "Key",
+          "type": "string",
+          "required": false,
+          "description": "Required. A string used to identify this tag. You can specify a maximum of 128 characters for a tag key. Tags owned by Amazon Web Services have the reserved prefix: aws:.",
+          "nested_params": []
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": false,
+          "description": "Required. A string containing the value for this tag. You can specify a maximum of 256 characters for a tag value.",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "ChangeSetName",
+      "type": "string",
+      "required": true,
+      "description": "The name of the change set. The name must be unique among all change sets that are associated with the specified stack. A change set name can contain only alphanumeric, case sensitive characters, and hyphens. It must start with an alphabetical character and can't exceed 128 characters.",
+      "nested_params": []
+    },
+    {
+      "name": "ClientToken",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "ChangeSetType",
+      "type": "string",
+      "required": false,
+      "description": "The type of change set operation. To create a change set for a new stack, specify CREATE. To create a change set for an existing stack, specify UPDATE. To create a change set for an import operation, specify IMPORT. If you create a change set for a new stack, CloudFormation creates a stack with a unique stack ID, but no template or resources. The stack will be in the REVIEW_IN_PROGRESS state until you execute the change set. By default, CloudFormation specifies UPDATE. You can't use the UPDATE type to create a change set for a new stack or the CREATE type to create a change set for an existing stack.",
+      "nested_params": []
+    },
+    {
+      "name": "ResourcesToImport",
+      "type": "list",
+      "required": true,
+      "description": "The resources to import into your stack. (dict) --- Describes the target resource of an import operation. The type of resource to import into your stack, such as AWS::S3::Bucket. For a list of supported resource types, see Resource type support for imports and drift detection in the CloudFormation User Guide. The logical ID of the target resource as specified in the template. A key-value pair that identifies the target resource. The key is an identifier property (for example, BucketName for AWS::S3::Bucket resources) and the value is the actual property value (for example, MyS3Bucket). (string) --- (string) ---",
+      "nested_params": [
+        {
+          "name": "ResourceType",
+          "type": "string",
+          "required": false,
+          "description": "The type of resource to import into your stack, such as AWS::S3::Bucket. For a list of supported resource types, see Resource type support for imports and drift detection in the CloudFormation User Guide.",
+          "nested_params": []
+        },
+        {
+          "name": "LogicalResourceId",
+          "type": "string",
+          "required": false,
+          "description": "The logical ID of the target resource as specified in the template.",
+          "nested_params": []
+        },
+        {
+          "name": "ResourceIdentifier",
+          "type": "dict",
+          "required": false,
+          "description": "A key-value pair that identifies the target resource. The key is an identifier property (for example, BucketName for AWS::S3::Bucket resources) and the value is the actual property value (for example, MyS3Bucket).",
+          "nested_params": []
+        }
+      ]
+    },
+    {
+      "name": "IncludeNestedStacks",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "nested_params": []
+    },
+    {
+      "name": "OnStackFailure",
+      "type": "string",
+      "required": false,
+      "description": "Determines what action will be taken if stack creation fails. If this parameter is specified, the DisableRollback parameter to the ExecuteChangeSet API operation must not be specified. This must be one of these values: DELETE - Deletes the change set if the stack creation fails. This is only valid when the ChangeSetType parameter is set to CREATE. If the deletion of the stack fails, the status of the stack is DELETE_FAILED. DO_NOTHING - if the stack creation fails, do nothing. This is equivalent to specifying true for the DisableRollback parameter to the ExecuteChangeSet API operation. ROLLBACK - if the stack creation fails, roll back the stack. This is equivalent to specifying false for the DisableRollback parameter to the ExecuteChangeSet API operation. For nested stacks, when the OnStackFailure parameter is set to DELETE for the change set for the parent stack, any failure in a child stack will cause the parent stack creation to fail and all stacks to be deleted.",
+      "nested_params": []
+    },
+    {
+      "name": "ImportExistingResources",
+      "type": "boolean",
+      "required": false,
+      "description": "Indicates if the change set imports resources that already exist.",
+      "nested_params": []
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "Id",
+          "type": "string",
+          "description": "The Amazon Resource Name (ARN) of the change set.",
+          "nested_items": []
+        },
+        {
+          "name": "StackId",
+          "type": "string",
+          "description": "The unique ID of the stack.",
+          "nested_items": []
+        }
+      ]
+    }
+  ]
+}

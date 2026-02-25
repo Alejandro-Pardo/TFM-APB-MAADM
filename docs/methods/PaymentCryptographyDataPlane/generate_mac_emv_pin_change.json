@@ -1,0 +1,404 @@
+{
+  "method_name": "generate_mac_emv_pin_change",
+  "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/payment-cryptography-data/client/generate_mac_emv_pin_change.html",
+  "description": "Generates an issuer script mac for EMV payment cards that use offline PINs as the cardholder verification method (CVM). This operation generates an authenticated issuer script response by appending the incoming message data (APDU command) with the target encrypted PIN block in ISO2 format. The command structure and method to send the issuer script update to the card is not defined by this operation and is typically determined by the applicable payment card scheme. The primary inputs to this operation include the incoming new encrypted pinblock, PIN encryption key (PEK), issuer master key (IMK), primary account number (PAN), and the payment card derivation method. The operation uses two issuer master keys - secure messaging for confidentiality (IMK-SMC) and secure messaging for integrity (IMK-SMI). The SMC key is used to internally derive a key to secure the pin, while SMI key is used to internally derive a key to authenticate the script reponse as per the EMV 4.4 - Book 2 - Security and Key Management specification. This operation supports Amex, EMV2000, EMVCommon, Mastercard and Visa derivation methods, each requiring specific input parameters. Users must follow the specific derivation method and input parameters defined by the respective payment card scheme. Cross-account use: This operation can't be used across different Amazon Web Services accounts.",
+  "parameters": [
+    {
+      "name": "NewPinPekIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the PEK protecting the incoming new encrypted PIN block.",
+      "nested_params": []
+    },
+    {
+      "name": "NewEncryptedPinBlock",
+      "type": "string",
+      "required": true,
+      "description": "The incoming new encrypted PIN block data for offline pin change on an EMV card.",
+      "nested_params": []
+    },
+    {
+      "name": "PinBlockFormat",
+      "type": "string",
+      "required": true,
+      "description": "The PIN encoding format of the incoming new encrypted PIN block as specified in ISO 9564.",
+      "nested_params": []
+    },
+    {
+      "name": "SecureMessagingIntegrityKeyIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the issuer master key (IMK-SMI) used to authenticate the issuer script response.",
+      "nested_params": []
+    },
+    {
+      "name": "SecureMessagingConfidentialityKeyIdentifier",
+      "type": "string",
+      "required": true,
+      "description": "The keyARN of the issuer master key (IMK-SMC) used to protect the PIN block data in the issuer script response.",
+      "nested_params": []
+    },
+    {
+      "name": "MessageData",
+      "type": "string",
+      "required": true,
+      "description": "The message data is the APDU command from the card reader or terminal. The target encrypted PIN block, after translation to ISO2 format, is appended to this message data to generate an issuer script response.",
+      "nested_params": []
+    },
+    {
+      "name": "DerivationMethodAttributes",
+      "type": "dict",
+      "required": true,
+      "description": "The attributes and data values to derive payment card specific confidentiality and integrity keys. EmvCommon (dict) --- Parameters to derive the confidentiality and integrity keys for a payment card using Emv common derivation method. The method to use when deriving the master key for the payment card. The Primary Account Number (PAN) of the cardholder. A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal. The application cryptogram for the current transaction that is provided by the terminal during transaction processing. The block cipher method to use for encryption. The padding to be added to the PIN block prior to encryption. Padding type should be ISO_IEC_7816_4, if PinBlockLengthPosition is set to FRONT_OF_PIN_BLOCK. No padding is required, if PinBlockLengthPosition is set to NONE. Specifies if PIN block length should be added to front of the pin block. If value is set to FRONT_OF_PIN_BLOCK, then PIN block padding type should be ISO_IEC_7816_4. Amex (dict) --- Parameters to derive the confidentiality and integrity keys for a payment card using Amex derivation method. The method to use when deriving the master key for a payment card using Amex derivation. The transaction counter of the current transaction that is provided by the terminal during transaction processing. The keyArn of the issuer master key for cryptogram (IMK-AC) for the payment card. CurrentPinAttributes (dict) --- The encrypted pinblock of the old pin stored on the chip card. The keyArn of the current PIN PEK. The encrypted pinblock of the current pin stored on the chip card. Visa (dict) --- Parameters to derive the confidentiality and integrity keys for a a payment card using Visa derivation method. Emv2000 (dict) --- Parameters to derive the confidentiality and integrity keys for a payment card using Emv2000 derivation method. Mastercard (dict) --- Parameters to derive the confidentiality and integrity keys for a payment card using Mastercard derivation method. The application cryptogram for the current transaction that is provided by the terminal during transaction processing.",
+      "nested_params": [
+        {
+          "name": "EmvCommon",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters to derive the confidentiality and integrity keys for a payment card using Emv common derivation method.",
+          "nested_params": [
+            {
+              "name": "MajorKeyDerivationMode",
+              "type": "string",
+              "required": false,
+              "description": "The method to use when deriving the master key for the payment card.",
+              "nested_params": []
+            },
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder.",
+              "nested_params": []
+            },
+            {
+              "name": "PanSequenceNumber",
+              "type": "string",
+              "required": false,
+              "description": "A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.",
+              "nested_params": []
+            },
+            {
+              "name": "ApplicationCryptogram",
+              "type": "string",
+              "required": false,
+              "description": "The application cryptogram for the current transaction that is provided by the terminal during transaction processing.",
+              "nested_params": []
+            },
+            {
+              "name": "Mode",
+              "type": "string",
+              "required": false,
+              "description": "The block cipher method to use for encryption.",
+              "nested_params": []
+            },
+            {
+              "name": "PinBlockPaddingType",
+              "type": "string",
+              "required": false,
+              "description": "The padding to be added to the PIN block prior to encryption. Padding type should be ISO_IEC_7816_4, if PinBlockLengthPosition is set to FRONT_OF_PIN_BLOCK. No padding is required, if PinBlockLengthPosition is set to NONE.",
+              "nested_params": []
+            },
+            {
+              "name": "PinBlockLengthPosition",
+              "type": "string",
+              "required": false,
+              "description": "Specifies if PIN block length should be added to front of the pin block. If value is set to FRONT_OF_PIN_BLOCK, then PIN block padding type should be ISO_IEC_7816_4.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Amex",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters to derive the confidentiality and integrity keys for a payment card using Amex derivation method.",
+          "nested_params": [
+            {
+              "name": "MajorKeyDerivationMode",
+              "type": "string",
+              "required": false,
+              "description": "The method to use when deriving the master key for a payment card using Amex derivation.",
+              "nested_params": []
+            },
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder.",
+              "nested_params": []
+            },
+            {
+              "name": "PanSequenceNumber",
+              "type": "string",
+              "required": false,
+              "description": "A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.",
+              "nested_params": []
+            },
+            {
+              "name": "ApplicationTransactionCounter",
+              "type": "string",
+              "required": false,
+              "description": "The transaction counter of the current transaction that is provided by the terminal during transaction processing.",
+              "nested_params": []
+            },
+            {
+              "name": "AuthorizationRequestKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The keyArn of the issuer master key for cryptogram (IMK-AC) for the payment card.",
+              "nested_params": []
+            },
+            {
+              "name": "CurrentPinAttributes",
+              "type": "dict",
+              "required": false,
+              "description": "The encrypted pinblock of the old pin stored on the chip card.",
+              "nested_params": [
+                {
+                  "name": "CurrentPinPekIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "The keyArn of the current PIN PEK.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CurrentEncryptedPinBlock",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encrypted pinblock of the current pin stored on the chip card.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Visa",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters to derive the confidentiality and integrity keys for a a payment card using Visa derivation method.",
+          "nested_params": [
+            {
+              "name": "MajorKeyDerivationMode",
+              "type": "string",
+              "required": false,
+              "description": "The method to use when deriving the master key for the payment card.",
+              "nested_params": []
+            },
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder.",
+              "nested_params": []
+            },
+            {
+              "name": "PanSequenceNumber",
+              "type": "string",
+              "required": false,
+              "description": "A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.",
+              "nested_params": []
+            },
+            {
+              "name": "ApplicationTransactionCounter",
+              "type": "string",
+              "required": false,
+              "description": "The transaction counter of the current transaction that is provided by the terminal during transaction processing.",
+              "nested_params": []
+            },
+            {
+              "name": "AuthorizationRequestKeyIdentifier",
+              "type": "string",
+              "required": false,
+              "description": "The keyArn of the issuer master key for cryptogram (IMK-AC) for the payment card.",
+              "nested_params": []
+            },
+            {
+              "name": "CurrentPinAttributes",
+              "type": "dict",
+              "required": false,
+              "description": "The encrypted pinblock of the old pin stored on the chip card.",
+              "nested_params": [
+                {
+                  "name": "CurrentPinPekIdentifier",
+                  "type": "string",
+                  "required": false,
+                  "description": "The keyArn of the current PIN PEK.",
+                  "nested_params": []
+                },
+                {
+                  "name": "CurrentEncryptedPinBlock",
+                  "type": "string",
+                  "required": false,
+                  "description": "The encrypted pinblock of the current pin stored on the chip card.",
+                  "nested_params": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Emv2000",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters to derive the confidentiality and integrity keys for a payment card using Emv2000 derivation method.",
+          "nested_params": [
+            {
+              "name": "MajorKeyDerivationMode",
+              "type": "string",
+              "required": false,
+              "description": "The method to use when deriving the master key for the payment card.",
+              "nested_params": []
+            },
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder.",
+              "nested_params": []
+            },
+            {
+              "name": "PanSequenceNumber",
+              "type": "string",
+              "required": false,
+              "description": "A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.",
+              "nested_params": []
+            },
+            {
+              "name": "ApplicationTransactionCounter",
+              "type": "string",
+              "required": false,
+              "description": "The transaction counter of the current transaction that is provided by the terminal during transaction processing.",
+              "nested_params": []
+            }
+          ]
+        },
+        {
+          "name": "Mastercard",
+          "type": "dict",
+          "required": false,
+          "description": "Parameters to derive the confidentiality and integrity keys for a payment card using Mastercard derivation method.",
+          "nested_params": [
+            {
+              "name": "MajorKeyDerivationMode",
+              "type": "string",
+              "required": false,
+              "description": "The method to use when deriving the master key for the payment card.",
+              "nested_params": []
+            },
+            {
+              "name": "PrimaryAccountNumber",
+              "type": "string",
+              "required": false,
+              "description": "The Primary Account Number (PAN) of the cardholder.",
+              "nested_params": []
+            },
+            {
+              "name": "PanSequenceNumber",
+              "type": "string",
+              "required": false,
+              "description": "A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.",
+              "nested_params": []
+            },
+            {
+              "name": "ApplicationCryptogram",
+              "type": "string",
+              "required": false,
+              "description": "The application cryptogram for the current transaction that is provided by the terminal during transaction processing.",
+              "nested_params": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "return_structure": [
+    {
+      "name": "",
+      "type": "dict",
+      "description": "",
+      "nested_items": [
+        {
+          "name": "NewPinPekArn",
+          "type": "string",
+          "description": "Returns the keyArn of the PEK protecting the incoming new encrypted PIN block.",
+          "nested_items": []
+        },
+        {
+          "name": "SecureMessagingIntegrityKeyArn",
+          "type": "string",
+          "description": "Returns the keyArn of the IMK-SMI used by the operation.",
+          "nested_items": []
+        },
+        {
+          "name": "SecureMessagingConfidentialityKeyArn",
+          "type": "string",
+          "description": "Returns the keyArn of the IMK-SMC used by the operation.",
+          "nested_items": []
+        },
+        {
+          "name": "Mac",
+          "type": "string",
+          "description": "Returns the mac of the issuer script containing message data and appended target encrypted pin block in ISO2 format.",
+          "nested_items": []
+        },
+        {
+          "name": "EncryptedPinBlock",
+          "type": "string",
+          "description": "Returns the incoming new encrpted PIN block.",
+          "nested_items": []
+        },
+        {
+          "name": "NewPinPekKeyCheckValue",
+          "type": "string",
+          "description": "The key check value (KCV) of the PEK uprotecting the incoming new encrypted PIN block.",
+          "nested_items": []
+        },
+        {
+          "name": "SecureMessagingIntegrityKeyCheckValue",
+          "type": "string",
+          "description": "The key check value (KCV) of the SMI issuer master key used by the operation.",
+          "nested_items": []
+        },
+        {
+          "name": "SecureMessagingConfidentialityKeyCheckValue",
+          "type": "string",
+          "description": "The key check value (KCV) of the SMC issuer master key used by the operation.",
+          "nested_items": []
+        },
+        {
+          "name": "VisaAmexDerivationOutputs",
+          "type": "dict",
+          "description": "The attribute values used for Amex and Visa derivation methods.",
+          "nested_items": [
+            {
+              "name": "AuthorizationRequestKeyArn",
+              "type": "string",
+              "description": "The keyArn of the issuer master key for cryptogram (IMK-AC) used by the operation.",
+              "nested_items": []
+            },
+            {
+              "name": "AuthorizationRequestKeyCheckValue",
+              "type": "string",
+              "description": "The key check value (KCV) of the issuer master key for cryptogram (IMK-AC) used by the operation.",
+              "nested_items": []
+            },
+            {
+              "name": "CurrentPinPekArn",
+              "type": "string",
+              "description": "The keyArn of the current PIN PEK.",
+              "nested_items": []
+            },
+            {
+              "name": "CurrentPinPekKeyCheckValue",
+              "type": "string",
+              "description": "The key check value (KCV) of the current PIN PEK.",
+              "nested_items": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
