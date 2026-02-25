@@ -110,7 +110,7 @@ TFM-APB-MAADM/
 ## Installation
 
 ```bash
-git clone https://github.com/AlejandroPardworkyWorky/TFM-APB-MAADM.git
+git clone https://github.com/Alejandro-Pardo/TFM-APB-MAADM.git
 cd TFM-APB-MAADM
 python -m venv .venv
 # Linux / macOS
