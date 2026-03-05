@@ -194,10 +194,10 @@ Constraining cross-service propagation within functionally related service group
                Classification of AWS API Methods for Taint Analysis},
     author  = {Pardo Bascu{\~n}ana, Alejandro},
     year    = {2026},
-    school  = {Universidad Polit{\'e}cnica de Madrid},
+    month = {February},
+    school  = {E.T.S.I. de Sistemas Informáticos (UPM)},
     type    = {Master's Thesis},
-    note    = {Escuela T{\'e}cnica Superior de Ingenier{\'i}a de Sistemas
-               Inform{\'a}ticos, Master's Degree in Aprendizaje Autom{\'a}tico
+    note    = {Master's Degree in Aprendizaje Autom{\'a}tico
                y Datos Masivos. Supervised by Dr. Jorge Blasco Al{\'i}s},
     url     = {https://oa.upm.es/94609/}
 }
