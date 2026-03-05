@@ -194,7 +194,7 @@ Constraining cross-service propagation within functionally related service group
                Classification of AWS API Methods for Taint Analysis},
     author  = {Pardo Bascu{\~n}ana, Alejandro},
     year    = {2026},
-    month = {February},
+    month   = {February},
     school  = {E.T.S.I. de Sistemas Informáticos (UPM)},
     type    = {Master's Thesis},
     note    = {Master's Degree in Aprendizaje Autom{\'a}tico
