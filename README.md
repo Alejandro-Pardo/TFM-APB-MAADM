@@ -189,7 +189,7 @@ Constraining cross-service propagation within functionally related service group
 ## Citation
 
 ```bibtex
-@mastersthesis{pardo2026documentation,
+@mastersthesis{upm94609,
     title   = {From Documentation to Security Labels: Semantic Embedding-Based
                Classification of AWS API Methods for Taint Analysis},
     author  = {Pardo Bascu{\~n}ana, Alejandro},
