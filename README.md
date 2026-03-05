@@ -192,13 +192,13 @@ Constraining cross-service propagation within functionally related service group
 @mastersthesis{upm94609,
     title   = {From Documentation to Security Labels: Semantic Embedding-Based
                Classification of AWS API Methods for Taint Analysis},
-    author  = {Pardo Bascu{\~n}ana, Alejandro},
+    author  = {Pardo-Bascu{\~n}ana, Alejandro},
     year    = {2026},
     month   = {February},
     school  = {E.T.S.I. de Sistemas Informáticos (UPM)},
     type    = {Master's Thesis},
     note    = {Master's Degree in Aprendizaje Autom{\'a}tico
-               y Datos Masivos. Supervised by Dr. Jorge Blasco Al{\'i}s},
+               y Datos Masivos. Supervised by Dr. Jorge Blasco-Al{\'i}s},
     url     = {https://oa.upm.es/94609/}
 }
 ```
