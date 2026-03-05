@@ -9,7 +9,7 @@
 > Master's Degree in Aprendizaje Automático y Datos Masivos  
 > Supervisor: Dr. Jorge Blasco Alís — Madrid, 2026
 
-> **Full text:** *[URL pending — to be published by UPM]*
+> **Full text:** https://oa.upm.es/94609/
 
 ---
 
@@ -199,7 +199,7 @@ Constraining cross-service propagation within functionally related service group
     note    = {Escuela T{\'e}cnica Superior de Ingenier{\'i}a de Sistemas
                Inform{\'a}ticos, Master's Degree in Aprendizaje Autom{\'a}tico
                y Datos Masivos. Supervised by Dr. Jorge Blasco Al{\'i}s},
-    url     = {}
+    url     = {https://oa.upm.es/94609/}
 }
 ```
 
